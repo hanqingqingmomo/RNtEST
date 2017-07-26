@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Platform } from 'react-native';
 import { connect, Provider } from 'react-redux';
 import KeyboardManager from 'react-native-keyboard-manager';
 
@@ -60,5 +60,7 @@ class Bootstrap extends Component {
 
 AppRegistry.registerComponent('app', () => Bootstrap);
 
-KeyboardManager.setEnable(true);
-KeyboardManager.setEnableAutoToolbar(false);
+if (Platform.OS === 'ios') {
+  KeyboardManager.setEnable(true);
+  KeyboardManager.setEnableAutoToolbar(false);
+}
