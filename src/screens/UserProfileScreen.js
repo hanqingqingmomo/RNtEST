@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 @connect(null, d => bindActionCreators({ invalidateSession }, d))
 export default class UserProfileScreen extends React.Component<*, *, *> {
   static navigationOptions = {
-    headerTitle: 'Welcome',
+    headerTitle: 'Profile',
   };
 
   openEmailClient = (address: string) => async () => {
