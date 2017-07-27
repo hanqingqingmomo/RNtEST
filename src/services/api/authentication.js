@@ -28,9 +28,11 @@ const getProfile = transport => async accessToken => {
  */
 const verifyCredentials = transport => async (email, password) => {
   if (Math.random() < 0.5) {
-    await transport.get('/abc');
+    // Failing request
+    await transport.post('bin/f44f7512-1a41-4757-a963-6e82b65aeb2a');
   }
 
+  // Success request
   return '{{access token}}';
 };
 

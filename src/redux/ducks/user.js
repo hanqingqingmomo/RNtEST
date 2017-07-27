@@ -3,11 +3,18 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { API } from '../../services';
+import {
+  startRequest,
+  endRequest,
+  endRequestWithError,
+  REQUEST_IDS,
+} from './requests';
 import type { ActionT, ActionP, User } from '../../Types';
 
 //
 // Typedefs
 //
+
 type AccessToken = string;
 
 type Profile = User;
@@ -38,6 +45,7 @@ type VerifyCredentialsAction = ActionP<
 //
 // Action creators
 //
+
 export function verifyCredentials(
   email: string,
   password: string
@@ -73,19 +81,20 @@ export function invalidateSession(): InvalidateSessionAction {
 //
 // Saga
 //
+
 const workerVerifyCredentials = function*(action: VerifyCredentialsAction) {
+  yield put(startRequest(REQUEST_IDS.VERIFY_CREDENTIALS));
   try {
     const accessToken = yield call(
       API.authentication.verifyCredentials,
       action.payload.email,
       action.payload.password
     );
-
     const profile = yield call(API.authentication.getProfile, accessToken);
-
     yield put(authenticate(profile, accessToken));
+    yield put(endRequest(REQUEST_IDS.VERIFY_CREDENTIALS));
   } catch (error) {
-    // @TODO dispatch request error action
+    yield put(endRequestWithError(REQUEST_IDS.VERIFY_CREDENTIALS, error));
   }
 };
 
@@ -96,6 +105,7 @@ export const saga = function*(): Generator<*, *, *> {
 //
 // Reducer
 //
+
 const INITIAL_STATE: State = {
   profile: null,
   accessToken: null,
@@ -111,10 +121,8 @@ export default function(
         accessToken: action.payload.accessToken,
         profile: action.payload.profile,
       };
-
     case 'app/INVALIDATE_SESSION':
       return INITIAL_STATE;
-
     default:
       return state;
   }
