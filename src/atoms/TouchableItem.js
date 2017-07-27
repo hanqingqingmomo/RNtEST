@@ -24,6 +24,7 @@ type Props = {
   delayPressIn?: number,
   borderless?: boolean,
   pressColor?: string,
+  useForeground?: boolean,
   activeOpacity?: number,
   children?: React.Element<*>,
   style?: any,
@@ -57,10 +58,12 @@ export default class TouchableItem extends Component<
       Platform.Version >= ANDROID_VERSION_LOLLIPOP
     ) {
       const { style, ...rest } = this.props; // eslint-disable-line no-unused-vars
+
       return (
         <TouchableNativeFeedback
           {...rest}
           style={null}
+          useForeground={this.props.useForeground}
           background={TouchableNativeFeedback.Ripple(
             this.props.pressColor || '',
             this.props.borderless || false

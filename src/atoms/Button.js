@@ -3,12 +3,20 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Text, TouchableItem, View } from './index';
+import { Text, TouchableItem, TouchableNativeFeedback, View } from './index';
+
+const HIT_SLOP = {
+  top: 6,
+  right: 6,
+  bottom: 6,
+  left: 6,
+};
 
 const styles = StyleSheet.create({
   touchableWrapper: {
-    padding: 6,
+    margin: 6,
     alignSelf: 'center',
+    borderRadius: 2,
   },
   view: {
     flexDirection: 'row',
@@ -16,33 +24,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 64,
     minHeight: 36,
-    borderRadius: 2,
     paddingHorizontal: 16,
   },
   title: {
     fontWeight: '500',
     fontSize: 16,
     marginHorizontal: 8,
+    transform: [{ translateY: -1 }],
   },
 });
 
 const appearanceStyles = {
-  default: {
+  default: StyleSheet.create({
     view: {
       backgroundColor: '#ccc',
     },
     title: {
       color: '#666',
     },
-  },
-  primary: {
+  }),
+  primary: StyleSheet.create({
     view: {
       backgroundColor: Platform.select({ ios: '#006FFF', android: '#2196F3' }),
     },
     title: {
       color: Platform.select({ ios: 'white', android: 'white' }),
     },
-  },
+  }),
 };
 
 type AppearanceStyleName = $Keys<typeof appearanceStyles>;
@@ -59,9 +67,19 @@ type P = {
 export default function Button(props: P) {
   const { appearance, buttonLeft, buttonRight, onPress, style, title } = props;
   const activeAppearanceStyle = appearanceStyles[appearance];
+
   return (
-    <TouchableItem onPress={onPress} style={styles.touchableWrapper}>
-      <View style={[activeAppearanceStyle.view, styles.view, style]}>
+    <TouchableItem
+      pressColor="white"
+      useForeground={Platform.select({
+        ios: () => false,
+        android: TouchableNativeFeedback.canUseNativeForeground,
+      })()}
+      hitSlop={HIT_SLOP}
+      onPress={onPress}
+      style={[activeAppearanceStyle.view, styles.touchableWrapper]}
+    >
+      <View style={[styles.view, style]}>
         {buttonLeft || null}
 
         {title !== ''

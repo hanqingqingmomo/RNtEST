@@ -5,6 +5,7 @@ export {
   ScrollView,
   Text,
   TextInput,
+  TouchableNativeFeedback,
   TouchableOpacity,
   View,
 } from 'react-native';
