@@ -81,7 +81,11 @@ export default class LoginScreen extends React.Component<*, P, *> {
           value={this.props.password}
         />
         <View style={styles.button}>
-          <Button title="Log in" onPress={this.verifyCredentials} />
+          <Button
+            title="Log in"
+            appearance="primary"
+            onPress={this.verifyCredentials}
+          />
         </View>
         <TouchableOpacity onPress={this.pushForgottenPasswordScreen}>
           <Text style={styles.forgottenPasswordText}>Forgotten password</Text>

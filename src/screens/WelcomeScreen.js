@@ -10,6 +10,7 @@ export default class WelcomeScreen extends React.Component<*, *, *> {
     headerRight: (
       <Button
         title="Profile"
+        appearance="default"
         onPress={() =>
           props.navigation.navigate('UserProfileScreen', {
             profile: props.screenProps.user,

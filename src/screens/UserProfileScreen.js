@@ -67,9 +67,12 @@ export default class UserProfileScreen extends React.Component<*, *, *> {
         >
           {profile.email}
         </Text>
-        <View style={styles.logoutButton}>
-          <Button title="Logout" onPress={this.confirmLogout} />
-        </View>
+        <Button
+          title="Log out"
+          appearance="primary"
+          onPress={this.confirmLogout}
+          style={styles.logoutButton}
+        />
       </View>
     );
   }
