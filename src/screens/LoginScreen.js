@@ -13,7 +13,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from '../atoms';
 import { RequestMonitor } from '../hoc';
 import { verifyCredentials } from '../redux/ducks/user';
@@ -101,18 +100,15 @@ export default class LoginScreen extends React.Component<*, P, *> {
                 onChangeText={this.props.setPassword}
                 value={this.props.password}
               />
-              <View style={styles.button}>
-                <Button
-                  title="Log in"
-                  appearance="primary"
-                  onPress={this.verifyCredentials}
-                  buttonRight={
-                    requestIsRunning
-                      ? <ActivityIndicator color="white" />
-                      : null
-                  }
-                />
-              </View>
+              <Button
+                title="Log in"
+                appearance="primary"
+                onPress={this.verifyCredentials}
+                style={styles.button}
+                buttonRight={
+                  requestIsRunning ? <ActivityIndicator color="white" /> : null
+                }
+              />
               <TouchableOpacity onPress={this.pushForgottenPasswordScreen}>
                 <Text style={styles.forgottenPasswordText}>
                   Forgotten password

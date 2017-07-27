@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 64,
     minHeight: 36,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
   },
   title: {
     fontWeight: '500',
@@ -77,9 +77,9 @@ export default function Button(props: P) {
       })()}
       hitSlop={HIT_SLOP}
       onPress={onPress}
-      style={[activeAppearanceStyle.view, styles.touchableWrapper]}
+      style={[activeAppearanceStyle.view, styles.touchableWrapper, style]}
     >
-      <View style={[styles.view, style]}>
+      <View style={[styles.view]}>
         {buttonLeft || null}
 
         {title !== ''
