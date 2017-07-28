@@ -2,7 +2,7 @@
 
 import update from 'immutability-helper';
 
-import type { Action, ActionP } from '../../Types';
+import type { Action, ActionP, ActionT } from '../../Types';
 
 export const REQUEST_IDS = {
   VERIFY_CREDENTIALS: 'VERIFY_CREDENTIALS',
@@ -56,6 +56,15 @@ type RequestEndedAction = Action<
   }
 >;
 
+type ClearRequestAction = ActionP<
+  'request/CLEAR',
+  {
+    id: RequestID,
+  }
+>;
+
+type ClearAllRequestsAction = ActionT<'request/CLEAR_ALL'>;
+
 //
 // Action creators
 //
@@ -92,6 +101,21 @@ export function endRequestWithError(
   };
 }
 
+export function clearRequest(requestId: RequestID): ClearRequestAction {
+  return {
+    type: 'request/CLEAR',
+    payload: {
+      id: requestId,
+    },
+  };
+}
+
+export function clearAllRequests(): ClearAllRequestsAction {
+  return {
+    type: 'request/CLEAR_ALL',
+  };
+}
+
 //
 // Reducer
 //
@@ -122,6 +146,18 @@ export default function(
           [action.payload.id]: { $set: action.error },
         }),
         running: state.running.filter(id => id !== action.payload.id),
+      };
+
+    case 'request/CLEAR':
+      return {
+        errors: update(state.errors, { $unset: [action.payload.id] }),
+        running: state.running.filter(id => id !== action.payload.id),
+      };
+
+    case 'request/CLEAR_ALL':
+      return {
+        errors: {},
+        running: [],
       };
 
     default:
