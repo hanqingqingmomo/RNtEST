@@ -1,6 +1,6 @@
 // @flow
 
-import { REHYDRATE } from 'redux-persist/constants';
+import { REHYDRATE } from 'redux-persist/lib/constants';
 
 //
 // Typedefs

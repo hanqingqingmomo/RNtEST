@@ -2,7 +2,7 @@
 
 import { AsyncStorage } from 'react-native';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { persistStore, autoRehydrate } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from './reducers';
@@ -11,16 +11,23 @@ import rootSaga from './sagas';
 export async function initStore() {
   const sagaMiddleware = createSagaMiddleware();
 
-  const store = createStore(
-    rootReducer,
-    rootReducer(undefined, {}),
-    compose(applyMiddleware(sagaMiddleware), autoRehydrate())
+  const persistedReducer = persistReducer(
+    {
+      key: 'redux-state',
+      version: 1,
+      storage: AsyncStorage,
+      whitelist: ['user'],
+    },
+    rootReducer
   );
 
-  persistStore(store, {
-    storage: AsyncStorage,
-    whitelist: ['user'],
-  });
+  const store = createStore(
+    persistedReducer,
+    rootReducer(undefined, {}),
+    compose(applyMiddleware(sagaMiddleware))
+  );
+
+  persistStore(store);
 
   sagaMiddleware.run(rootSaga);
 

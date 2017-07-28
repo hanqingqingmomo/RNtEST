@@ -22,7 +22,7 @@
     "react-redux": "^5.0.5",
     "recompose": "^0.24.0",
     "redux": "^3.7.2",
-    "redux-persist": "^4.8.2",
+    "redux-persist": "next",
     "redux-saga": "^0.15.5"
   },
   "devDependencies": {
