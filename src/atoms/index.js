@@ -4,7 +4,6 @@ export {
   ActivityIndicator,
   ScrollView,
   Text,
-  TextInput,
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
@@ -12,4 +11,5 @@ export {
 
 export { default as Button } from './Button';
 export { default as CenterView } from './CenterView';
+export { default as TextInput } from './TextInput';
 export { default as TouchableItem } from './TouchableItem';
