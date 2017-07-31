@@ -13,6 +13,8 @@ import {
   selectUser,
 } from './redux/selectors';
 import { LoginRouter, MainRouter } from './Router';
+import { View } from './atoms';
+import { OfflineStatusOverlay } from './blocks';
 import { BootScreen } from './screens';
 
 @connect(s => ({
@@ -52,9 +54,14 @@ class Bootstrap extends Component {
   }
 
   render() {
-    return this.state.store
-      ? <Application store={this.state.store} />
-      : <BootScreen />;
+    return (
+      <View style={{ flexGrow: 1 }}>
+        {this.state.store
+          ? <Application store={this.state.store} />
+          : <BootScreen />}
+        <OfflineStatusOverlay />
+      </View>
+    );
   }
 }
 
