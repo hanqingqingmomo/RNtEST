@@ -14,8 +14,9 @@ type Props = {
   touched?: {
     [string]: string,
   },
-  onChangeText: (name: string, value: string) => void,
-  setFieldTouched: (name: string, isTouched: boolean) => void,
+  onBlur?: () => *,
+  onChangeText?: *,
+  setFieldTouched?: *,
 };
 
 type State = {
@@ -32,14 +33,15 @@ export default class FormikReactNativeTextInput extends React.Component<
   };
 
   handleChange = (value: string) => {
-    this.props.onChangeText(this.props.id, value);
+    const { id, onChangeText } = this.props;
+    onChangeText && onChangeText(id, value);
   };
 
   handleBlur = () => {
-    this.props.setFieldTouched(
-      this.props.id,
-      this.props.value !== this.state.initialValue
-    );
+    const { id, onBlur, value, setFieldTouched } = this.props;
+
+    setFieldTouched && setFieldTouched(id, value !== this.state.initialValue);
+    onBlur && onBlur();
   };
 
   render() {
@@ -54,11 +56,11 @@ export default class FormikReactNativeTextInput extends React.Component<
 
     return (
       <TextField
-        onChangeText={this.handleChange}
-        onBlur={this.handleBlur}
+        {...otherProps}
         error={errors[id] && touched[id] ? errors[id] : null}
         title={description}
-        {...otherProps}
+        onChangeText={this.handleChange}
+        onBlur={this.handleBlur}
       />
     );
   }

@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "flux-standard-action": "^1.2.0",
-    "formik": "^0.8.8",
+    "formik": "^0.8.9",
     "immutability-helper": "^2.3.0",
     "indicative": "^2.2.1",
     "react": "16.0.0-alpha.12",
@@ -23,7 +23,6 @@
     "react-native-material-textfield": "^0.8.1",
     "react-navigation": "^1.0.0-beta.12",
     "react-redux": "^5.0.5",
-    "recompose": "^0.24.0",
     "redux": "^3.7.2",
     "redux-persist": "next",
     "redux-saga": "^0.15.5"

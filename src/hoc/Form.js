@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import validator from '../services/validation/validator';
 import defaultMessages from '../services/validation/messages';
 
-type P = {
+type Config = {
   rules?: {
     [string]: string,
   },
@@ -14,13 +14,13 @@ type P = {
   },
 };
 
-export default function FormikFactory(config: P) {
+export default function FormikFactory(config: Config) {
   return Formik({
     ...config,
     validate: config.rules
       ? async function(values) {
           try {
-            await validator.validate(values, config.rules, {
+            await validator.validateAll(values, config.rules, {
               ...defaultMessages,
               ...config.messages,
             });
