@@ -3,42 +3,58 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { selectIsRequestRunning, selectRequestError } from '../redux/selectors';
 import {
   clearRequest,
-  type RequestError,
+  type RequestProps,
   type RequestID,
 } from '../redux/ducks/requests';
 
-type P = {
-  clearRequest: Function,
-  children: Function,
-  requestId: RequestID,
-  requestIsRunning: boolean,
-  requestError: ?RequestError,
-};
+function selectRequestIsRunning(state: Store, requestId: RequestID): boolean {
+  return state.requests.running.indexOf(requestId) > -1;
+}
 
-@connect(
-  (s, props) => ({
-    requestIsRunning: selectIsRequestRunning(s, props.requestId),
-    requestError: selectRequestError(s, props.requestId),
-  }),
-  d => bindActionCreators({ clearRequest }, d)
-)
-export default class RequestMonitor extends React.Component<*, P, *> {
-  componentWillMount() {
-    this.props.clearRequest(this.props.requestId);
-  }
+function selectRequestError(
+  state: Store,
+  requestId: RequestID
+): ?$PropertyType<RequestProps, 'requestError'> {
+  return state.requests.errors[requestId] || null;
+}
 
-  componentWillUnmount() {
-    this.props.clearRequest(this.props.requestId);
-  }
+/**
+ * HOC
+ */
+export default function withRequestMonitor(requestId: RequestID) {
+  return (WrappedComponent: *) => {
+    class RequestMonitor extends React.Component<*, RequestProps, *> {
+      componentWillMount() {
+        this.props.clearRequest(requestId);
+      }
 
-  render() {
-    return this.props.children({
-      requestIsRunning: this.props.requestIsRunning,
-      requestError: this.props.requestError,
-    });
-  }
+      componentWillUnmount() {
+        this.props.clearRequest(requestId);
+      }
+
+      render() {
+        return (
+          <WrappedComponent
+            requestIsRunning={this.props.requestIsRunning}
+            requestError={this.props.requestError}
+            {...this.props}
+          />
+        );
+      }
+    }
+
+    const connectedComponent = connect(
+      state => ({
+        requestIsRunning: selectRequestIsRunning(state, requestId),
+        requestError: selectRequestError(state, requestId),
+      }),
+      (dispatch: *) => bindActionCreators({ clearRequest }, dispatch)
+    )(RequestMonitor);
+
+    return hoistNonReactStatic(connectedComponent, WrappedComponent);
+  };
 }

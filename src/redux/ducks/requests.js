@@ -32,6 +32,12 @@ export type RequestError = {
   },
 };
 
+export type RequestProps = {
+  clearRequest: RequestID => ClearRequestAction,
+  requestIsRunning: boolean,
+  requestError: ?RequestError,
+};
+
 type State = {
   running: Array<RequestID>,
   errors: {

@@ -11,20 +11,6 @@ export function selectApplicationIsReady(state: Store): boolean {
   return state.application.ready;
 }
 
-export function selectIsRequestRunning(
-  state: Store,
-  requestId: RequestID
-): boolean {
-  return state.requests.running.indexOf(requestId) > -1;
-}
-
-export function selectRequestError(
-  state: Store,
-  requestId: RequestID
-): ?RequestError {
-  return state.requests.errors[requestId] || null;
-}
-
 //
 // Authenticated user
 //
