@@ -11,5 +11,6 @@ export {
 
 export { default as Button } from './Button';
 export { default as CenterView } from './CenterView';
+export { default as Screen } from './Screen';
 export { default as TextInput } from './TextInput';
 export { default as TouchableItem } from './TouchableItem';

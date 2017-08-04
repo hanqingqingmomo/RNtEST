@@ -6,7 +6,7 @@ import { connect, type Connector } from 'react-redux';
 import { API } from './services';
 import { selectAccessToken, selectUser } from './redux/selectors';
 import { LoginRouter, MainRouter } from './routers';
-import { View } from './atoms';
+import { Screen } from './atoms';
 import { OfflineStatusOverlay } from './blocks';
 import type { Store, User } from './Types';
 
@@ -30,10 +30,10 @@ class Application extends React.Component<*, Props, *> {
   render = () => {
     const { user } = this.props;
     return (
-      <View style={{ flexGrow: 1 }}>
+      <Screen>
         {user ? <MainRouter screenProps={{ user }} /> : <LoginRouter />}
         <OfflineStatusOverlay />
-      </View>
+      </Screen>
     );
   };
 }
