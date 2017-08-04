@@ -1,13 +1,12 @@
 // @flow
-
 import { StackNavigator } from 'react-navigation';
 
 import {
-  LoginScreen,
   ForgottenPasswordScreen,
+  LoginScreen,
   UserProfileScreen,
   WelcomeScreen,
-} from './screens';
+} from '../screens';
 
 export const LoginRouter = StackNavigator(
   {
