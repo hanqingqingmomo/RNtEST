@@ -14,7 +14,8 @@ type Props = {
   accessToken: ?string,
   user: ?User,
 };
-class Application extends React.Component<*, Props, *> {
+
+class Application extends React.PureComponent<void, Props, void> {
   componentDidMount() {
     API._transport.interceptors.request.use(config => {
       config.headers = {
