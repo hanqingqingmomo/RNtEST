@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
-export async function initStore() {
+export function initStore() {
   const sagaMiddleware = createSagaMiddleware();
 
   const persistedReducer = persistReducer(

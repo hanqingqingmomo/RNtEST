@@ -1,6 +1,5 @@
 // @flow
 
-import { type RequestID, type RequestError } from './ducks/requests';
 import type { User, Store } from '../Types';
 
 //
