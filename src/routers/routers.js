@@ -22,16 +22,11 @@ export const LoginRouter = StackNavigator(
   }
 );
 
-export const MainRouter = StackNavigator(
-  {
-    WelcomeScreen: {
-      screen: WelcomeScreen,
-    },
-    UserProfileScreen: {
-      screen: UserProfileScreen,
-    },
+export const MainRouter = StackNavigator({
+  WelcomeScreen: {
+    screen: WelcomeScreen,
   },
-  {
-    initialRouteName: 'WelcomeScreen',
-  }
-);
+  UserProfileScreen: {
+    screen: UserProfileScreen,
+  },
+});

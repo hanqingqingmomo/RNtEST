@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "flux-standard-action": "^1.2.0",
-    "formik": "^0.8.9",
+    "formik": "next",
     "hoist-non-react-statics": "^2.2.1",
     "immutability-helper": "^2.3.0",
     "indicative": "^2.2.1",

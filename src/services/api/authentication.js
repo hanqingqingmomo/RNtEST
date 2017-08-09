@@ -27,13 +27,7 @@ const getProfile = transport => async accessToken => {
  * @TODO implement your credentials verification!
  */
 const verifyCredentials = transport => async (email, password) => {
-  if (Math.random() < 0.5) {
-    // Failing request
-    await transport.post('bin/f44f7512-1a41-4757-a963-6e82b65aeb2a');
-  }
-
-  // Success request
-  return '{{access token}}';
+  return '{{access_token}}';
 };
 
 export default function factory(transport: Axios): Service {
