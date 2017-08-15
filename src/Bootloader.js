@@ -12,6 +12,7 @@ import Application from './Application';
 import { selectApplicationIsReady } from './redux/selectors';
 
 if (Platform.OS === 'ios') {
+  KeyboardManager.setEnableDebugging(__DEV__);
   KeyboardManager.setEnable(true);
   KeyboardManager.setEnableAutoToolbar(false);
 }

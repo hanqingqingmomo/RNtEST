@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "android-shake": "adb shell input keyevent KEYCODE_MENU",
     "flow": "flow",
     "flow-stop": "flow stop",
     "flow:watch": "flow-watch --ignore node_modules/ --watch *.js --watch .flowconfig",
@@ -25,6 +26,7 @@
     "react-navigation": "^1.0.0-beta.12",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
     "redux-persist": "next",
     "redux-saga": "^0.15.5"
   },

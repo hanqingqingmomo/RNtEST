@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
-import { Text, TouchableItem, TouchableNativeFeedback, View } from './index';
+import { Text, TouchableItem, TouchableNativeFeedback } from './index';
 
 const HIT_SLOP = {
   top: 6,
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
 const appearanceStyles = {
   default: StyleSheet.create({
     view: {
-      backgroundColor: '#ccc',
+      backgroundColor: 'transparent',
     },
     title: {
-      color: '#666',
+      color: Platform.select({ ios: '#006FFF', android: '#2196F3' }),
     },
   }),
   primary: StyleSheet.create({
@@ -59,37 +59,56 @@ type P = {
   appearance: AppearanceStyleName,
   buttonLeft?: ?React$Element<*>,
   buttonRight?: ?React$Element<*>,
+  disabled?: boolean,
   onPress: Function,
   style?: any,
   title: string,
 };
 
-export default function Button(props: P) {
-  const { appearance, buttonLeft, buttonRight, onPress, style, title } = props;
-  const activeAppearanceStyle = appearanceStyles[appearance];
+export default class Button extends React.Component<*, P, *> {
+  id = `button-${Math.random()}`;
 
-  return (
-    <TouchableItem
-      pressColor="white"
-      useForeground={Platform.select({
-        ios: () => false,
-        android: TouchableNativeFeedback.canUseNativeForeground,
-      })()}
-      hitSlop={HIT_SLOP}
-      onPress={onPress}
-      style={[activeAppearanceStyle.view, styles.touchableWrapper, style]}
-    >
-      <View style={[styles.view]}>
-        {buttonLeft || null}
+  render() {
+    const {
+      appearance,
+      buttonLeft,
+      buttonRight,
+      disabled,
+      onPress,
+      style,
+      title,
+    } = this.props;
+    const activeAppearanceStyle = appearanceStyles[appearance];
+    return (
+      <TouchableItem
+        key={`${this.id}-${disabled ? 'disabled' : 'enabled'}`}
+        disabled={disabled}
+        pressColor="white"
+        useForeground={Platform.select({
+          ios: () => false,
+          android: TouchableNativeFeedback.canUseNativeForeground,
+        })()}
+        hitSlop={HIT_SLOP}
+        onPress={onPress}
+        style={[
+          { opacity: disabled ? 0.5 : 1 },
+          activeAppearanceStyle.view,
+          styles.touchableWrapper,
+          style,
+        ]}
+      >
+        <View style={[styles.view]}>
+          {buttonLeft || null}
 
-        {title !== ''
-          ? <Text style={[activeAppearanceStyle.title, styles.title]}>
-              {title}
-            </Text>
-          : null}
+          {title !== ''
+            ? <Text style={[activeAppearanceStyle.title, styles.title]}>
+                {title}
+              </Text>
+            : null}
 
-        {buttonRight || null}
-      </View>
-    </TouchableItem>
-  );
+          {buttonRight || null}
+        </View>
+      </TouchableItem>
+    );
+  }
 }
