@@ -19,7 +19,7 @@
     "immutability-helper": "^2.3.0",
     "indicative": "^2.2.1",
     "react": "16.0.0-alpha.12",
-    "react-native": "0.46.4",
+    "react-native": "0.48.3",
     "react-native-config": "^0.5.0",
     "react-native-keyboard-manager": "^4.0.10-2",
     "react-native-material-textfield": "^0.8.1",

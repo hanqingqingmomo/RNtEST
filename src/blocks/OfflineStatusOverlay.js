@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Animated, NetInfo, StyleSheet } from 'react-native';
+import { Animated, Keyboard, NetInfo, StyleSheet } from 'react-native';
 
 import { Text } from '../atoms';
 
@@ -34,16 +34,19 @@ export default class OfflineStatusOverlay extends React.Component<*, *, S> {
   animOpacity = new Animated.Value(INITIAL_OPACITY);
 
   componentDidMount() {
-    NetInfo.isConnected.addEventListener('change', this.getStatus);
+    NetInfo.isConnected.addEventListener('connectionChange', this.getStatus);
   }
 
   componentWillUnmount() {
-    NetInfo.isConnected.removeEventListener('change', this.getStatus);
+    NetInfo.removeEventListener('connectionChange', this.getStatus);
   }
 
   componentWillUpdate(nextProps: any, nextState: S) {
     if (nextState.isConnected !== this.state.isConnected) {
+      Keyboard.dismiss();
+
       nextState.animationFinished = false;
+
       Animated.timing(this.animOpacity, {
         toValue: nextState.isConnected ? INITIAL_OPACITY : 1,
         useNativeDriver: true,
