@@ -1,17 +1,8 @@
 import React from 'react';
-import { Formik } from 'formik/next';
+import { Formik } from 'formik';
 
 import validator from '../services/validation/validator';
 import defaultMessages from '../services/validation/messages';
-
-type ExtendedFormConfig = {
-  rules?: {
-    [string]: string,
-  },
-  messages?: {
-    [string]: string,
-  },
-};
 
 export default class Form extends React.Component<void, void, void> {
   render() {
@@ -20,21 +11,23 @@ export default class Form extends React.Component<void, void, void> {
       <Formik
         {...this.props}
         validate={
-          rules
-            ? async function(values) {
-                try {
-                  await validator.validateAll(values, rules, {
-                    ...defaultMessages,
-                    ...messages,
-                  });
-                } catch (err) {
-                  throw err.reduce((errorBag, err) => {
-                    errorBag[err.field] = err.message;
-                    return errorBag;
-                  }, {});
-                }
+          rules ? (
+            async function(values) {
+              try {
+                await validator.validateAll(values, rules, {
+                  ...defaultMessages,
+                  ...messages,
+                });
+              } catch (err) {
+                throw err.reduce((errorBag, err) => {
+                  errorBag[err.field] = err.message;
+                  return errorBag;
+                }, {});
               }
-            : undefined
+            }
+          ) : (
+            undefined
+          )
         }
       />
     );
