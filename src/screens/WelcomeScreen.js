@@ -34,16 +34,6 @@ const styles = StyleSheet.create({
 export default class UseruserScreen extends React.Component<*, *, *> {
   static navigationOptions = props => ({
     headerTitle: 'Welcome',
-    headerRight: (
-      <Button
-        title="Profile"
-        appearance="default"
-        onPress={() =>
-          props.navigation.navigate('UserProfileScreen', {
-            profile: props.screenProps.user,
-          })}
-      />
-    ),
   });
 
   openEmailClient = (address: string) => async () => {
@@ -77,10 +67,13 @@ export default class UseruserScreen extends React.Component<*, *, *> {
         </Text>
 
         <Button
-          title="Log out"
-          appearance="primary"
+          color="rgba(59,89,152,1)"
           onPress={this.confirmLogout}
+          outline
+          size="large"
           style={styles.logoutButton}
+          textColor="rgba(59,89,152,1)"
+          title="Sign Up!"
         />
       </View>
     );

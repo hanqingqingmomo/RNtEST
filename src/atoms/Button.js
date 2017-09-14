@@ -13,100 +13,117 @@ const HIT_SLOP = {
 };
 
 const styles = StyleSheet.create({
-  touchableWrapper: {
-    margin: 6,
-    alignSelf: 'center',
-    borderRadius: 2,
-  },
-  view: {
-    flexDirection: 'row',
+  button: {
     alignItems: 'center',
+    borderRadius: 100,
     justifyContent: 'center',
-    minWidth: 64,
-    minHeight: 36,
-    paddingHorizontal: 8,
   },
   title: {
     fontWeight: '500',
-    fontSize: 16,
-    marginHorizontal: 8,
     transform: [{ translateY: -1 }],
+  },
+  touchableWrapper: {
+    alignSelf: 'center',
+    borderRadius: 100,
+    margin: 6,
   },
 });
 
-const appearanceStyles = {
-  default: StyleSheet.create({
-    view: {
-      backgroundColor: 'transparent',
-    },
+const sizeStyles = {
+  base: StyleSheet.create({
     title: {
-      color: Platform.select({ ios: '#006FFF', android: '#2196F3' }),
+      fontSize: 15,
+    },
+    view: {
+      height: 34,
+      width: 80,
     },
   }),
-  primary: StyleSheet.create({
-    view: {
-      backgroundColor: Platform.select({ ios: '#006FFF', android: '#2196F3' }),
-    },
+  large: StyleSheet.create({
     title: {
-      color: Platform.select({ ios: 'white', android: 'white' }),
+      fontSize: 17,
+    },
+    view: {
+      height: 48,
+      width: 275,
     },
   }),
 };
 
-type AppearanceStyleName = $Keys<typeof appearanceStyles>;
+type SizeStyleName = $Keys<typeof sizeStyles>;
 
 type P = {
-  appearance: AppearanceStyleName,
-  buttonLeft?: ?React$Element<*>,
-  buttonRight?: ?React$Element<*>,
+  color: string,
   disabled?: boolean,
   onPress: Function,
+  outline?: boolean,
+  size: SizeStyleName,
   style?: any,
-  title: string,
+  textColor: string,
+  title:
+    | string
+    | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
 };
 
 export default class Button extends React.Component<*, P, *> {
+  static defaultProps = {
+    outline: false,
+  };
+
   id = `button-${Math.random()}`;
 
   render() {
     const {
-      appearance,
-      buttonLeft,
-      buttonRight,
+      color,
       disabled,
       onPress,
+      outline,
+      size,
       style,
+      textColor,
       title,
     } = this.props;
-    const activeAppearanceStyle = appearanceStyles[appearance];
+
+    const activeSizeStyle = sizeStyles[size];
+
+    const textStyle = [
+      styles.title,
+      outline ? { color } : undefined,
+      { color: textColor },
+      activeSizeStyle.title,
+    ];
+
     return (
       <TouchableItem
-        key={`${this.id}-${disabled ? 'disabled' : 'enabled'}`}
         disabled={disabled}
-        pressColor="white"
-        useForeground={Platform.select({
-          ios: () => false,
-          android: TouchableNativeFeedback.canUseNativeForeground,
-        })()}
         hitSlop={HIT_SLOP}
+        key={`${this.id}-${disabled ? 'disabled' : 'enabled'}`}
         onPress={onPress}
+        pressColor="white"
         style={[
           { opacity: disabled ? 0.5 : 1 },
-          activeAppearanceStyle.view,
           styles.touchableWrapper,
           style,
         ]}
+        useForeground={Platform.select({
+          android: TouchableNativeFeedback.canUseNativeForeground,
+          ios: () => false,
+        })()}
       >
-        <View style={[styles.view]}>
-          {buttonLeft || null}
-
-          {title !== ''
-            ? <Text style={[activeAppearanceStyle.title, styles.title]}>
-                {title}
-              </Text>
-            : null}
-
-          {buttonRight || null}
+        <View
+          style={[
+            styles.button,
+            outline
+              ? { borderColor: color, borderWidth: 1 }
+              : { backgroundColor: color },
+            activeSizeStyle.view,
+          ]}
+        >
+          {typeof title === 'string' ? (
+            <Text style={textStyle}>{title}</Text>
+          ) : (
+            title({ textColor, textStyle })
+          )}
         </View>
       </TouchableItem>
     );
