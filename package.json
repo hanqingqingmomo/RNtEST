@@ -6,7 +6,7 @@
     "android-shake": "adb shell input keyevent KEYCODE_MENU",
     "flow": "flow",
     "flow-stop": "flow stop",
-    "flow:watch": "flow-watch --ignore node_modules/ --watch *.js --watch .flowconfig",
+    "flow-watch": "flow-watch",
     "format": "prettier --single-quote --trailing-comma es5 --write '{src,__{tests,mocks}__}/**/*.js'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
