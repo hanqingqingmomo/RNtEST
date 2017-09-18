@@ -1,9 +1,18 @@
 // @flow
 
 import type { Reducers } from './redux/reducers';
+import { colors } from './utils/color';
+
+// Styling
+export type ColorName = $Keys<typeof colors>;
+
+export type Style =
+  | {
+      [key: string]: number | { [string]: string | number },
+    }
+  | Array<Style>;
 
 // ScreenProps: props are passed to every "screen" component
-
 export type ScreenProps<S> = {
   navigation: {
     navigate: Function,
@@ -11,10 +20,7 @@ export type ScreenProps<S> = {
   },
 };
 
-//
 // Entities
-//
-
 export type User = $Exact<{
   id: number,
   firstName: string,
@@ -22,12 +28,7 @@ export type User = $Exact<{
   email: string,
 }>;
 
-//
 // Redux
-//
-
-// Generic Actions
-
 export type Action<T, A> = {
   type: T,
 } & A;
@@ -35,8 +36,6 @@ export type Action<T, A> = {
 export type ActionT<T> = Action<T, {}>;
 
 export type ActionP<T, P> = Action<T, { payload: P }>;
-
-// Store shape
 
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
 
