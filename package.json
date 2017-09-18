@@ -27,7 +27,7 @@
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-persist": "next",
+    "redux-persist": "^5.0.0-proto.8",
     "redux-saga": "^0.15.5"
   },
   "devDependencies": {
