@@ -6,7 +6,6 @@ import { connect, type Connector } from 'react-redux';
 import { API } from './services';
 import { selectAccessToken, selectUser } from './redux/selectors';
 import { LoginRouter, MainRouter } from './routers';
-import { PlaygroundRouter } from './playground';
 import { Screen } from './atoms';
 import { OfflineStatusOverlay } from './blocks';
 import type { Store, User } from './Types';
@@ -31,12 +30,6 @@ class Application extends React.PureComponent<void, Props, void> {
 
   render = () => {
     const { user } = this.props;
-
-    return (
-      <Screen>
-        <PlaygroundRouter />
-      </Screen>
-    );
 
     return (
       <Screen>
