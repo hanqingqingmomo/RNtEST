@@ -26,7 +26,6 @@
     "react-navigation": "^1.0.0-beta.12",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
     "redux-persist": "^5.0.0-proto.8",
     "redux-saga": "^0.15.5"
   },
@@ -45,7 +44,10 @@
     "flow-watch": "^1.1.1",
     "jest": "20.0.4",
     "prettier": "^1.5.3",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "react-test-renderer": "16.0.0-alpha.12",
+    "reactotron-react-native": "^1.12.3",
+    "reactotron-redux": "^1.12.2",
+    "reactotron-redux-saga": "^1.12.2"
   },
   "jest": {
     "preset": "react-native"
