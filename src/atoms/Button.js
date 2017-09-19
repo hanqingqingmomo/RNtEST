@@ -67,6 +67,7 @@ type P = {
 
 export default class Button extends React.Component<*, P, *> {
   static defaultProps = {
+    disabled: false,
     outline: false,
   };
 
