@@ -26,13 +26,13 @@ const Icon = ({ style }) => (
 
 export default function SearchBox({ onChangeText, placeholder, value }: Props) {
   return (
-    <View style={[styles.border, styles.inputContainer]}>
-      <Icon style={styles.iconPosition} />
+    <View style={styles.container}>
+      <Icon style={styles.icon} />
       <TextInput
         onChangeText={onChangeText}
         placeholder={placeholder}
         returnKeyType="search"
-        style={styles.inputStyle}
+        style={styles.input}
         underlineColorAndroid="transparent"
         value={value}
       />
@@ -41,25 +41,22 @@ export default function SearchBox({ onChangeText, placeholder, value }: Props) {
 }
 
 const styles = StyleSheet.create({
-  border: {
+  container: {
     borderColor: '#ECEFF1',
     backgroundColor: '#ECEFF1',
     borderWidth: 1,
     borderRadius: 100,
     height: 35,
-  },
-
-  iconPosition: {
-    marginLeft: 10,
-  },
-
-  inputContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  
+  icon: {
+    marginLeft: 10,
+  },
 
-  inputStyle: {
+  input: {
     flex: 1,
     color: '#90A4AE',
     fontSize: 14,
