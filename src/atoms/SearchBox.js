@@ -32,7 +32,7 @@ export default function SearchBox({ onChangeText, placeholder, value }: Props) {
         onChangeText={onChangeText}
         placeholder={placeholder}
         returnKeyType="search"
-        style={[styles.inputPosition, styles.inputStyle]}
+        style={styles.inputStyle}
         underlineColorAndroid="transparent"
         value={value}
       />
@@ -59,11 +59,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  inputPosition: {
-    flex: 1,
-  },
-
   inputStyle: {
+    flex: 1,
     color: '#90A4AE',
     fontSize: 14,
     fontWeight: '500',
