@@ -23,26 +23,36 @@ You can find configuration example in `.env.example` file at project root.
 We will use `react-native` CLI to launch application on Android simulator, or device if connected.
 RN CLI allows us to launch application in specific environment using `--variant` flag.
 
-Launching application in selected environment:
+Make sure configuration file for selected environment exists before launching!
+
+**1. Run application in development environment:**
 
 ```shell
-// Run debug build of React Native
-react-native run-android --variant {environment}Debug
-
-// Run production build of React Native
-react-native run-android --variant {environment}Release
+react-native run-android --variant devDebug
 ```
+
+**2. Run application in other environments:**
+
+```shell
+react-native run-android --variant {environment}Debug
+```
+
+
+
+### iOS
+Unfortunately, RN CLI does not work correctly with `--scheme` flag as of now. We will be using xCode in order to launch application in other than development environment.
 
 Make sure configuration file for selected environment exists before launching!
 
-### iOS
-Unfortunately, RN CLI does not work correctly with `--scheme` flag as of now. We will be using xCode in order to launch application on iOS simulator or connected device.
+Also, after selecting different schema, do "Clean (Shift + Cmd + K)" before running build task. If you skip this step, configuration file will be ignored.
 
-Launching application in selected environment:
+**1. Run application in development environment:**
+
+```shell
+react-native run-ios
+```
+**2. Run application in other environments:**
 
 * Open `ios/app.xcodeproj` in xCode
 * Select desired product schema and device
 * Press "Build"
-
-Make sure configuration file for selected environment exists before launching!
-Also, after selecting different schema, do "Clean (Shift + Cmd + K)" before running build task. If you skip this step, configuration file will be ignored.
