@@ -1,13 +1,17 @@
 // @flow
 import React, { Component } from 'react';
-import { CenterView, ImageInput } from '../atoms';
+import { CenterView } from '../atoms';
 
-export default class ImageInputScreen extends Component<*, *, *> {
+type S = {
+  imageUri: ?string,
+};
+
+export default class ImageInputScreen extends Component<*, *, S> {
   state = {
     imageUri: null,
   };
 
-  onChange = imageUri => {
+  onChange = (imageUri: string) => {
     this.setState({ imageUri });
   };
 
