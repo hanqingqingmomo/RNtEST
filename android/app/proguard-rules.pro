@@ -58,7 +58,7 @@
 
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class okhttp3.** { *; }
+-keep class okhttp3.** { *; }-keep class com.mypackage.BuildConfig { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
 
@@ -68,3 +68,6 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
+
+# React Native Config
+-keep class com.app.BuildConfig { *; }

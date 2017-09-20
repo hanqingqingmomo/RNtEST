@@ -5,8 +5,9 @@
 
 .*/node_modules/eslint-plugin-jsx-a11y/.*
 .*/node_modules/react-navigation/.*
-.*/node_modules/react-native-tab-view/.*
 .*/node_modules/mitt/src.*
+.*/node_modules/redux-persist/es.*
+.*/node_modules/redux-persist/src.*
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/

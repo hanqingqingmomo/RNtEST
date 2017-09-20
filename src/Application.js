@@ -34,12 +34,6 @@ class Application extends React.PureComponent<void, Props, void> {
 
     return (
       <Screen>
-        <PlaygroundRouter />
-      </Screen>
-    );
-
-    return (
-      <Screen>
         {user ? <MainRouter screenProps={{ user }} /> : <LoginRouter />}
         <OfflineStatusOverlay />
       </Screen>

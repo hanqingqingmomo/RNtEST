@@ -4,7 +4,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import Config from 'react-native-config';
+console.log(Config);
 import { View, Text } from '../atoms';
 import { LoginForm } from '../blocks';
 import { RequestMonitor } from '../hoc';
@@ -42,16 +43,12 @@ export default class LoginScreen extends React.Component<*, *, *> {
     const { requestIsRunning, requestError } = this.props;
     return (
       <View contentContainerStyle={styles.contentContainer}>
-        <LoginForm
-          onSubmit={this.verifyCredentials}
-          disabled={requestIsRunning}
-          invalidCredentials={!!requestError}
-        />
         <Text
           style={styles.forgottenPasswordText}
           onPress={this.pushForgottenPasswordScreen}
         >
           Forgotten password?
+          {JSON.stringify(Config)}
         </Text>
       </View>
     );

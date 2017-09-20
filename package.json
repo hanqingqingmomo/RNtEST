@@ -6,7 +6,7 @@
     "android-shake": "adb shell input keyevent KEYCODE_MENU",
     "flow": "flow",
     "flow-stop": "flow stop",
-    "flow:watch": "flow-watch --ignore node_modules/ --watch *.js --watch .flowconfig",
+    "flow-watch": "flow-watch",
     "format": "prettier --single-quote --trailing-comma es5 --write '{src,__{tests,mocks}__}/**/*.js'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
@@ -20,14 +20,13 @@
     "indicative": "^2.2.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.48.3",
-    "react-native-config": "^0.5.0",
+    "react-native-config": "^0.6.1",
     "react-native-keyboard-manager": "^4.0.10-2",
     "react-native-material-textfield": "^0.8.1",
     "react-navigation": "^1.0.0-beta.12",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
-    "redux-persist": "next",
+    "redux-persist": "^5.0.0-proto.8",
     "redux-saga": "^0.15.5"
   },
   "devDependencies": {
@@ -45,7 +44,10 @@
     "flow-watch": "^1.1.1",
     "jest": "20.0.4",
     "prettier": "^1.5.3",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "react-test-renderer": "16.0.0-alpha.12",
+    "reactotron-react-native": "^1.12.3",
+    "reactotron-redux": "^1.12.2",
+    "reactotron-redux-saga": "^1.12.2"
   },
   "jest": {
     "preset": "react-native"
