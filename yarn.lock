@@ -2135,9 +2135,9 @@ form-data@~2.1.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-formik@^0.9.0-beta.3:
-  version "0.9.0-beta.3"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-0.9.0-beta.3.tgz#f7b337d780ba38ecc9ba19c3df8f7e621b697e1c"
+formik@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-0.9.0.tgz#7552237a9606c31cb7814fe7b88840d149d15fb2"
   dependencies:
     prop-types "^15.5.10"
     warning "^3.0.0"
