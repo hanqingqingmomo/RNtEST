@@ -12,17 +12,17 @@ export default class ImageInputScreen extends Component<*, *, *> {
   };
 
   render() {
-    const { imageUri } = this.state;
+    // const { imageUri } = this.state;
 
     return (
       <CenterView>
-        <ImageInput
+        {/* <ImageInput
           color="red"
           size={70}
           title="Choose Profile Picture source"
           imageUri={imageUri}
           onChange={this.onChange}
-        />
+        /> */}
       </CenterView>
     );
   }
