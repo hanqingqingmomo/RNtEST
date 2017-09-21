@@ -41,8 +41,12 @@ const backgroundStyles = createStyleDefinitionForCssProp(
 );
 
 // Export getter functions
-export function getColor(colorName: ColorName): string {
-  return colors[colorName];
+export function getColor(color: string | ColorName): string {
+  if (colors[color]) {
+    return colors[color];
+  }
+
+  return color;
 }
 
 export function getColorStyle(colorName: ColorName): number {
