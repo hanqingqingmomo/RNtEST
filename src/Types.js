@@ -2,15 +2,22 @@
 
 import type { Reducers } from './redux/reducers';
 import { colors } from './utils/color';
+import {
+  type IconSize as _IconSize,
+  type IconName as _IconName,
+} from './atoms/Icon/Utils';
+
+export type IconName = _IconName;
+export type IconSize = _IconSize;
 
 // Styling
 export type ColorName = $Keys<typeof colors>;
 
-export type Style =
-  | {
-      [key: string]: number | { [string]: string | number },
-    }
-  | Array<Style>;
+export type Style = any;
+// | {
+//     [key: string]: number | { [string]: string | number },
+//   }
+// | Array<Style>;
 
 // ScreenProps: props are passed to every "screen" component
 export type ScreenProps<S> = {
