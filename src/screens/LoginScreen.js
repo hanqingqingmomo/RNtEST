@@ -4,9 +4,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Config from 'react-native-config';
-console.log(Config);
-import { View, Text } from '../atoms';
+
+import { View, Text, Icon } from '../atoms';
 import { LoginForm } from '../blocks';
 import { RequestMonitor } from '../hoc';
 import { verifyCredentials } from '../redux/ducks/user';
@@ -43,13 +42,7 @@ export default class LoginScreen extends React.Component<*, *, *> {
     const { requestIsRunning, requestError } = this.props;
     return (
       <View contentContainerStyle={styles.contentContainer}>
-        <Text
-          style={styles.forgottenPasswordText}
-          onPress={this.pushForgottenPasswordScreen}
-        >
-          Forgotten password?
-          {JSON.stringify(Config)}
-        </Text>
+        <Icon name="attachment" size="lg" color="facebookBlue" />
       </View>
     );
   }
