@@ -25,20 +25,14 @@ export default function ProfileForm() {
       handleSubmit={(values, formBag) => {
         alert(JSON.stringify(values));
       }}
-      render={({ handleReset, handleSubmit }) =>
+      render={({ handleReset, handleSubmit }) => (
         <View style={styles.container}>
           <FormField name="email" label="Enter your email" />
           <FormField name="facebook" label="facebook username" />
           <FormField name="twitter" label="twitter username" />
-          <View style={styles.buttons}>
-            <Button title="Reset" appearance="default" onPress={handleReset} />
-            <Button
-              title="Submit"
-              appearance="primary"
-              onPress={handleSubmit}
-            />
-          </View>
-        </View>}
+          <View style={styles.buttons} />
+        </View>
+      )}
     />
   );
 }

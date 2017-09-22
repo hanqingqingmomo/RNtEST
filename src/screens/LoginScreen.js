@@ -5,11 +5,12 @@ import { StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { View, Text, Icon } from '../atoms';
+import { View, Text, Icon, Button, CenterView } from '../atoms';
 import { LoginForm } from '../blocks';
 import { RequestMonitor } from '../hoc';
 import { verifyCredentials } from '../redux/ducks/user';
 import { REQUEST_IDS } from '../redux/ducks/requests';
+import { css } from '../utils/style';
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -42,7 +43,14 @@ export default class LoginScreen extends React.Component<*, *, *> {
     const { requestIsRunning, requestError } = this.props;
     return (
       <View contentContainerStyle={styles.contentContainer}>
-        <Icon name="attachment" size="lg" color="facebookBlue" />
+        <View style={{ padding: 50 }}>
+          <Text size={26} color="facebookBlue">
+            Title 1
+          </Text>
+          <Text size={26} style={[css('color', '#f0f')]}>
+            Title
+          </Text>
+        </View>
       </View>
     );
   }
