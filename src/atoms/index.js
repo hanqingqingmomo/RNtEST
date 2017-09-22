@@ -2,6 +2,8 @@
 
 export {
   ActivityIndicator,
+  Image,
+  ImageBackground,
   ScrollView,
   Text,
   TouchableNativeFeedback,
@@ -12,6 +14,7 @@ export {
 export { default as Avatar } from './Avatar';
 export { default as Button } from './Button';
 export { default as CenterView } from './CenterView';
+export { default as CommunityProfileHeader } from './CommunityProfileHeader';
 export { default as Icon } from './Icon/Icon';
 export { default as FormField } from './FormField';
 export { default as Pill } from './Pill';
