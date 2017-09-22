@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from '../atoms';
+import { TextDeprecated, View } from '../atoms';
 
 type P = {
   style: any,
@@ -32,10 +32,9 @@ const styles = StyleSheet.create({
 export default function Avatar(props: P) {
   return (
     <View {...props} style={[props.style, styles.container]}>
-      <Text style={styles.text}>
-        {props.firstName[0]}
-        {props.lastName[0]}
-      </Text>
+      <TextDeprecated style={styles.text}>
+        {`${props.firstName[0]} ${props.lastName[0]}`}
+      </TextDeprecated>
     </View>
   );
 }

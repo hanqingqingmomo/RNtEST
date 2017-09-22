@@ -3,7 +3,12 @@
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
-import { Text, TouchableItem, TouchableNativeFeedback } from './index';
+import {
+  TextDeprecated,
+  TouchableItem,
+  TouchableNativeFeedback,
+} from './index';
+import { type ColorName } from '../Types';
 
 const HIT_SLOP = {
   top: 6,
@@ -121,7 +126,7 @@ export default class Button extends React.Component<*, P, *> {
           ]}
         >
           {typeof title === 'string' ? (
-            <Text style={textStyle}>{title}</Text>
+            <TextDeprecated style={textStyle}>{title}</TextDeprecated>
           ) : (
             title({ textColor, textStyle })
           )}

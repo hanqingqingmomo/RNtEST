@@ -5,7 +5,7 @@ import { Alert, Linking, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Text, View } from '../atoms';
+import { Button, TextDeprecated, View } from '../atoms';
 import { Avatar } from '../blocks';
 import { invalidateSession } from '../redux/ducks/user';
 
@@ -59,22 +59,15 @@ export default class UseruserScreen extends React.Component<*, *, *> {
           firstName={user.firstName}
           lastName={user.lastName}
         />
-        <Text style={styles.name}>
+        <TextDeprecated style={styles.name}>
           {user.firstName} {user.lastName}
-        </Text>
-        <Text style={styles.email} onPress={this.openEmailClient(user.email)}>
+        </TextDeprecated>
+        <TextDeprecated
+          style={styles.email}
+          onPress={this.openEmailClient(user.email)}
+        >
           {user.email}
-        </Text>
-
-        <Button
-          color="rgba(59,89,152,1)"
-          onPress={this.confirmLogout}
-          outline
-          size="large"
-          style={styles.logoutButton}
-          textColor="rgba(59,89,152,1)"
-          title="Sign Up!"
-        />
+        </TextDeprecated>
       </View>
     );
   }

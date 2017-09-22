@@ -3,7 +3,6 @@
 export {
   ActivityIndicator,
   ScrollView,
-  Text,
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
@@ -16,5 +15,7 @@ export { default as Icon } from './Icon/Icon';
 export { default as FormField } from './FormField';
 export { default as Pill } from './Pill';
 export { default as Screen } from './Screen';
+export { default as Text } from './Text';
+export { default as TextDeprecated } from './TextDeprecated';
 export { TextField } from 'react-native-material-textfield';
 export { default as TouchableItem } from './TouchableItem';

@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from './index';
+import { TextDeprecated, View } from './index';
 
 type Props = {
   color: string,
@@ -13,7 +13,7 @@ type Props = {
 export default function Pill({ color, title }: Props) {
   return (
     <View style={[styles.view, { borderColor: color }]}>
-      <Text style={[styles.title, { color }]}>{title}</Text>
+      <TextDeprecated style={[styles.title, { color }]}>{title}</TextDeprecated>
     </View>
   );
 }

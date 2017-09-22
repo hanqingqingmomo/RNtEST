@@ -2,11 +2,13 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import ImageInputScreen from './ImageInputScreen';
-import { CenterView, Text } from '../atoms';
+import { CenterView, TextDeprecated } from '../atoms';
 
 const PlaygroundIndexScreen = ({ navigation }) => (
   <CenterView>
-    <Text onPress={() => navigation.navigate('ImageInput')}>Image Input</Text>
+    <TextDeprecated onPress={() => navigation.navigate('ImageInput')}>
+      Image Input
+    </TextDeprecated>
   </CenterView>
 );
 

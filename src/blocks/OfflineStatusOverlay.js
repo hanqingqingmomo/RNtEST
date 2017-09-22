@@ -3,7 +3,7 @@
 import React from 'react';
 import { Animated, Keyboard, NetInfo, StyleSheet } from 'react-native';
 
-import { Text } from '../atoms';
+import { TextDeprecated } from '../atoms';
 
 const INITIAL_OPACITY = 0;
 
@@ -68,17 +68,17 @@ export default class OfflineStatusOverlay extends React.Component<*, *, S> {
 
   render() {
     const { animationFinished, isConnected } = this.state;
-    return isConnected && animationFinished
-      ? null
-      : <Animated.View
-          pointerEvents={isConnected ? 'none' : undefined}
-          style={[
-            StyleSheet.absoluteFillObject,
-            styles.fill,
-            { opacity: this.animOpacity },
-          ]}
-        >
-          <Text style={styles.text}>Offline</Text>
-        </Animated.View>;
+    return isConnected && animationFinished ? null : (
+      <Animated.View
+        pointerEvents={isConnected ? 'none' : undefined}
+        style={[
+          StyleSheet.absoluteFillObject,
+          styles.fill,
+          { opacity: this.animOpacity },
+        ]}
+      >
+        <TextDeprecated style={styles.text}>Offline</TextDeprecated>
+      </Animated.View>
+    );
   }
 }

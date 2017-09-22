@@ -1,23 +1,19 @@
 // @flow
 
 import type { Reducers } from './redux/reducers';
-import { colors } from './utils/color';
 import {
   type IconSize as _IconSize,
   type IconName as _IconName,
 } from './atoms/Icon/Utils';
 
+import { type ColorName as _ColorName } from './utils/color';
+
 export type IconName = _IconName;
 export type IconSize = _IconSize;
 
-// Styling
-export type ColorName = $Keys<typeof colors>;
+export type ColorName = _ColorName;
 
-export type Style = any;
-// | {
-//     [key: string]: number | { [string]: string | number },
-//   }
-// | Array<Style>;
+export type Style = number | boolean | Object | Array<?Style>;
 
 // ScreenProps: props are passed to every "screen" component
 export type ScreenProps<S> = {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { CenterView, Text } from '../atoms';
+import { CenterView, TextDeprecated } from '../atoms';
 
 export default class ForgottenPasswordScreen extends React.Component<*, *, *> {
   static navigationOptions = {
@@ -12,7 +12,7 @@ export default class ForgottenPasswordScreen extends React.Component<*, *, *> {
   render() {
     return (
       <CenterView>
-        <Text>Password reset instructions</Text>
+        <TextDeprecated>Password reset instructions</TextDeprecated>
       </CenterView>
     );
   }
