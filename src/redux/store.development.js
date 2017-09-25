@@ -1,8 +1,8 @@
 // @flow
 
-import { AsyncStorage } from 'react-native';
 import { applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import Reactotron from 'reactotron-react-native';
 
@@ -18,7 +18,7 @@ export function initStore(): Store {
     {
       key: 'redux-state',
       version: 1,
-      storage: AsyncStorage,
+      storage: storage,
       whitelist: ['user'],
     },
     rootReducer
