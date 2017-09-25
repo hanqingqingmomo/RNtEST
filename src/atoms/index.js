@@ -10,6 +10,7 @@ export {
 
 export { default as Avatar } from './Avatar';
 export { default as Button } from './Button';
+export { default as DateCard } from './DateCard';
 export { default as CenterView } from './CenterView';
 export { default as Icon } from './Icon/Icon';
 export { default as FormField } from './FormField';
