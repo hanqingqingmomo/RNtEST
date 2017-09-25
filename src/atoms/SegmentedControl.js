@@ -13,11 +13,11 @@ const HIT_SLOP = {
 
 type Props = {
   labels: Array<string>,
-  onChange: value => void,
+  onChange: string => void,
   selectedLabel: string,
 };
 
-export default function SegmentedControls({
+export default function SegmentedControl({
   labels,
   onChange,
   selectedLabel,

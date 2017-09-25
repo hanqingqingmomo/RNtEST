@@ -17,7 +17,7 @@ export { default as Icon } from './Icon/Icon';
 export { default as Pill } from './Pill';
 export { default as Screen } from './Screen';
 export { default as SearchBox } from './SearchBox';
-export { default as SegmentedControls } from './SegmentedControls';
+export { default as SegmentedControl } from './SegmentedControl';
 export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { TextField } from 'react-native-material-textfield';
