@@ -17,5 +17,6 @@ export { default as Pill } from './Pill';
 export { default as Screen } from './Screen';
 export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
+export { default as SearchBox } from './SearchBox';
 export { TextField } from 'react-native-material-textfield';
 export { default as TouchableItem } from './TouchableItem';
