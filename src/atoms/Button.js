@@ -1,14 +1,9 @@
 // @flow
 
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
-import {
-  TextDeprecated,
-  TouchableItem,
-  TouchableNativeFeedback,
-} from './index';
-import { type ColorName } from '../Types';
+import { Text, TouchableItem, TouchableNativeFeedback, View } from './index';
 
 const HIT_SLOP = {
   top: 6,
@@ -35,7 +30,25 @@ const styles = StyleSheet.create({
 });
 
 const sizeStyles = {
-  base: StyleSheet.create({
+  xs: StyleSheet.create({
+    title: {
+      fontSize: 12,
+    },
+    view: {
+      height: 20,
+      paddingHorizontal: 11,
+    },
+  }),
+  sm: StyleSheet.create({
+    title: {
+      fontSize: 12,
+    },
+    view: {
+      height: 24,
+      paddingHorizontal: 15,
+    },
+  }),
+  md: StyleSheet.create({
     title: {
       fontSize: 15,
     },
@@ -44,7 +57,7 @@ const sizeStyles = {
       width: 80,
     },
   }),
-  large: StyleSheet.create({
+  lg: StyleSheet.create({
     title: {
       fontSize: 17,
     },
@@ -126,7 +139,7 @@ export default class Button extends React.Component<*, P, *> {
           ]}
         >
           {typeof title === 'string' ? (
-            <TextDeprecated style={textStyle}>{title}</TextDeprecated>
+            <Text style={textStyle}>{title}</Text>
           ) : (
             title({ textColor, textStyle })
           )}
