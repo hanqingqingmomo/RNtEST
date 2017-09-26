@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
+import AvatarGroupPlayground from './AvatarGroupPlayground';
 import ImageInputPlayground from './ImageInputPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
@@ -29,6 +30,11 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 
 const PlaygroundIndexScreen = ({ navigation }) => (
   <View>
+    <Link
+      title="Avatar Group"
+      screen="AvatarGroupPlayground"
+      navigation={navigation}
+    />
     <Link
       title="Image Input"
       screen="ImageInputPlayground"
@@ -64,6 +70,9 @@ export const PlaygroundRouter = StackNavigator(
       navigationOptions: {
         title: 'Component Playground',
       },
+    },
+    AvatarGroupPlayground: {
+      screen: AvatarGroupPlayground,
     },
     ImageInputPlayground: {
       screen: ImageInputPlayground,

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { Button, TextDeprecated, View } from '../atoms';
-import { Avatar } from '../blocks';
 import { invalidateSession } from '../redux/ducks/user';
 
 const styles = StyleSheet.create({
@@ -54,11 +53,6 @@ export default class UseruserScreen extends React.Component<*, *, *> {
 
     return (
       <View style={styles.container}>
-        <Avatar
-          style={styles.avatar}
-          firstName={user.firstName}
-          lastName={user.lastName}
-        />
         <TextDeprecated style={styles.name}>
           {user.firstName} {user.lastName}
         </TextDeprecated>

@@ -11,8 +11,8 @@ export default class CommunityHeaderPlayground extends React.Component {
     return (
       <CommunityHeader
         title="Child Care Assistance Program"
-        profileImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
-        coverImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
+        profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
+        coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
       />
     );
   }
