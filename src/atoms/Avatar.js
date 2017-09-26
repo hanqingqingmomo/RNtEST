@@ -4,14 +4,14 @@ import React from 'react';
 import { Image } from 'react-native';
 
 type Props = {
-  imageUri: string,
+  imageURI: string,
   size: number,
 };
 
-export default function Avatar({ imageUri, size }: Props) {
+export default function Avatar({ imageURI, size }: Props) {
   return (
     <Image
-      source={{ uri: imageUri }}
+      source={{ uri: imageURI }}
       style={[
         {
           borderRadius: size / 2,
