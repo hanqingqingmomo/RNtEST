@@ -12,7 +12,7 @@ type Props = {
   title: string,
 };
 
-export default function CommunityProfileHeader({
+export default function CommunityHeader({
   coverImageURI,
   profileImageURI,
   title,
