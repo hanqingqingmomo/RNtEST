@@ -1,11 +1,13 @@
 // @flow
 
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import ImageInputScreen from './ImageInputScreen';
-import EventCardContainer from './EventCardContainer';
-import CommunityCardContainer from './CommunityCardContainer';
+import ImageInputPlayground from './ImageInputPlayground';
+import EventCardPlayground from './EventCardPlayground';
+import CommunityCardPlayground from './CommunityCardPlayground';
+import SegmentedControlPlayground from './SegmentedControlPlayground';
 import { Text, View } from '../atoms';
 
 type LinkProps = {
@@ -15,38 +17,63 @@ type LinkProps = {
 };
 
 const Link = ({ screen, navigation, title }: LinkProps) => (
-  <Text size={16} onPress={() => navigation.navigate(screen)}>
+  <Text
+    size={16}
+    onPress={() => navigation.navigate(screen)}
+    style={{ padding: 10 }}
+  >
     {title}
   </Text>
 );
 
 const PlaygroundIndexScreen = ({ navigation }) => (
   <View>
-    <Link title="Image Input" screen="ImageInput" navigation={navigation} />
+    <Link
+      title="Image Input"
+      screen="ImageInputPlayground"
+      navigation={navigation}
+    />
     <Link
       title="Event Card"
-      screen="EventCardContainer"
+      screen="EventCardPlayground"
       navigation={navigation}
     />
     <Link
       title="Community Card"
-      screen="CommunityCardContainer"
+      screen="CommunityCardPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Segmented control"
+      screen="SegmentedControlPlayground"
       navigation={navigation}
     />
   </View>
 );
 
-export const PlaygroundRouter = StackNavigator({
-  PlaygroundIndex: {
-    screen: PlaygroundIndexScreen,
+export const PlaygroundRouter = StackNavigator(
+  {
+    PlaygroundIndex: {
+      screen: PlaygroundIndexScreen,
+    },
+    ImageInputPlayground: {
+      screen: ImageInputPlayground,
+    },
+    EventCardPlayground: {
+      screen: EventCardPlayground,
+    },
+    CommunityCardPlayground: {
+      screen: CommunityCardPlayground,
+    },
+    SegmentedControlPlayground: {
+      screen: SegmentedControlPlayground,
+    },
   },
-  ImageInput: {
-    screen: ImageInputScreen,
-  },
-  EventCardContainer: {
-    screen: EventCardContainer,
-  },
-  CommunityCardContainer: {
-    screen: CommunityCardContainer,
-  },
-});
+  {
+    ...StyleSheet.create({
+      cardStyle: {
+        backgroundColor: 'white',
+      },
+    }),
+  }
+);
