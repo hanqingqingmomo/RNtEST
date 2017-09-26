@@ -2,6 +2,7 @@
 
 export {
   ActivityIndicator,
+  Image,
   ImageBackground,
   ScrollView,
   TouchableHighlight,
@@ -13,7 +14,10 @@ export {
 export { default as Avatar } from './Avatar';
 export { default as Button } from './Button';
 export { default as CenterView } from './CenterView';
+export { default as CommunityCard } from './CommunityCard';
+export { default as CommunityProfileHeader } from './CommunityProfileHeader';
 export { default as DateCard } from './DateCard';
+export { default as EventCard } from './EventCard';
 export { default as FormField } from './FormField';
 export { default as Icon } from './Icon/Icon';
 export { default as Pill } from './Pill';
@@ -24,5 +28,3 @@ export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { TextField } from 'react-native-material-textfield';
 export { default as TouchableItem } from './TouchableItem';
-export { default as EventCard } from './EventCard';
-export { default as CommunityCard } from './CommunityCard';
