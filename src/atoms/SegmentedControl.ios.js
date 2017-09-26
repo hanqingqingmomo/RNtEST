@@ -19,7 +19,7 @@ export default function SegmentedControl({
   return (
     <SegmentedControlIOS
       values={labels}
-      onChange={onChange}
+      onValueChange={onChange}
       selectedIndex={labels.indexOf(selectedLabel)}
       tintColor={getColor('orange')}
     />
