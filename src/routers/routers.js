@@ -1,4 +1,6 @@
 // @flow
+
+import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import {
@@ -19,6 +21,11 @@ export const LoginRouter = StackNavigator(
   },
   {
     initialRouteName: 'LoginScreen',
+    ...StyleSheet.create({
+      cardStyle: {
+        backgroundColor: 'white',
+      },
+    }),
   }
 );
 
