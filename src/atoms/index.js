@@ -3,6 +3,7 @@
 export {
   ActivityIndicator,
   ScrollView,
+  TouchableHighlight,
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
