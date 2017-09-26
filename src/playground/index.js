@@ -7,6 +7,7 @@ import { StackNavigator } from 'react-navigation';
 import ImageInputPlayground from './ImageInputPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
+import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import { Text, View } from '../atoms';
 
@@ -44,6 +45,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
+      title="Community Header"
+      screen="CommunityHeaderPlayground"
+      navigation={navigation}
+    />
+    <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
       navigation={navigation}
@@ -55,6 +61,9 @@ export const PlaygroundRouter = StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
+      navigationOptions: {
+        title: 'Component Playground',
+      },
     },
     ImageInputPlayground: {
       screen: ImageInputPlayground,
@@ -64,6 +73,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
+    },
+    CommunityHeaderPlayground: {
+      screen: CommunityHeaderPlayground,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,

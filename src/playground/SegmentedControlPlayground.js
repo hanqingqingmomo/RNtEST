@@ -16,15 +16,14 @@ type S = {
   labelB: string,
 };
 
-export default class LoginScreen extends React.Component<*, *, S> {
-  static navigationOptions = {
-    headerTitle: 'Segmented Control',
-  };
+export default class SegmentedControlPlayground extends React.Component<
+  *,
+  *,
+  S
+> {
+  static navigationOptions = { headerTitle: 'Segmented Control' };
 
-  state = {
-    labelA: 'A',
-    labelB: 'A',
-  };
+  state = { labelA: 'A', labelB: 'A' };
 
   render() {
     return (

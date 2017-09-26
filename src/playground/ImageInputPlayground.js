@@ -6,10 +6,10 @@ type S = {
   imageUri: ?string,
 };
 
-export default class ImageInputScreen extends Component<*, *, S> {
-  state = {
-    imageUri: null,
-  };
+export default class ImageInputPlayground extends Component<*, *, S> {
+  static navigationOptions = { title: 'Image input' };
+
+  state = { imageUri: null };
 
   onChange = (imageUri: string) => {
     this.setState({ imageUri });

@@ -44,7 +44,8 @@ const items = [
   },
 ];
 
-export default class EventCardContainer extends React.Component<*, P, *> {
+export default class EventCardPlayground extends React.Component<*, P, *> {
+  static navigationOptions = { title: 'Event card' };
   render() {
     return (
       <View style={style.container}>
