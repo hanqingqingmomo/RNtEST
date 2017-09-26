@@ -20,11 +20,16 @@ const styles = StyleSheet.create({
 });
 
 export default class Text extends React.Component<void, Props, void> {
+  setNativeProps(nativeProps: any) {
+    this.refs['root'].setNativeProps(nativeProps);
+  }
+
   render(): React$Element<*> {
     const { size, color, style, ...bag } = this.props;
     return (
       <ReactNativeText
         {...bag}
+        ref="root"
         style={[
           styles.fontFamily,
           style,
