@@ -68,6 +68,15 @@ export default class UseruserScreen extends React.Component<*, *, *> {
         >
           {user.email}
         </TextDeprecated>
+        <Button
+          color="rgba(59,89,152,1)"
+          onPress={this.confirmLogout}
+          outline
+          size="lg"
+          style={styles.logoutButton}
+          textColor="rgba(59,89,152,1)"
+          title="Sign Up!"
+        />
       </View>
     );
   }

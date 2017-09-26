@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   touchableWrapper: {
     alignSelf: 'center',
     borderRadius: 100,
-    margin: 6,
   },
 });
 

@@ -2,6 +2,7 @@
 
 export {
   ActivityIndicator,
+  ImageBackground,
   ScrollView,
   TouchableHighlight,
   TouchableNativeFeedback,
@@ -23,3 +24,5 @@ export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { TextField } from 'react-native-material-textfield';
 export { default as TouchableItem } from './TouchableItem';
+export { default as EventCard } from './EventCard';
+export { default as CommunityCard } from './CommunityCard';

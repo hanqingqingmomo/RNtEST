@@ -10,6 +10,8 @@ import { css } from '../utils/style';
 type Props = {
   color?: ColorName,
   size: number,
+  weight?: string,
+  lineHeight?: number,
   style?: Style,
 };
 
@@ -25,7 +27,7 @@ export default class Text extends React.Component<void, Props, void> {
   }
 
   render(): React$Element<*> {
-    const { size, color, style, ...bag } = this.props;
+    const { size, color, weight, lineHeight, style, ...bag } = this.props;
     return (
       <ReactNativeText
         {...bag}
@@ -33,8 +35,10 @@ export default class Text extends React.Component<void, Props, void> {
         style={[
           styles.fontFamily,
           style,
-          color !== undefined ? css('color', getColor(color)) : undefined,
           css('fontSize', size),
+          color !== undefined ? css('color', getColor(color)) : undefined,
+          weight !== undefined ? css('fontWeight', weight) : undefined,
+          lineHeight !== undefined ? css('lineHeight', lineHeight) : undefined,
         ]}
       />
     );
