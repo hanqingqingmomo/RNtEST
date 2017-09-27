@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
-import { ImageBackground, View, Text, TouchableItem } from './';
+import { View, Text, TouchableItem, Image } from './index';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
@@ -24,43 +24,54 @@ export default class CommunityCard extends React.Component<*, P, *> {
     const { title, imageURI, subtitle, isNew } = this.props;
 
     return (
-      <TouchableItem style={style.shadow} onPress={this.onPress}>
-        {isNew && (
-          <Text
-            style={style.badgeGreen}
-            size={13}
-            color="white"
-            weight="bold"
-            lineHeight={20}
-          >
-            New
-          </Text>
-        )}
-        <View
-          style={[style.container, isNew ? style.containerGreen : undefined]}
-        >
-          <ImageBackground style={style.image} source={{ uri: imageURI }}>
-            <View style={style.textContainer}>
-              <Text
-                style={css('color', '#FC612D')}
-                size={15}
-                weight="500"
-                lineHeight={18}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-              >
-                {title}
-              </Text>
-              <Text
-                style={css('color', '#90A4AE')}
-                size={13}
-                weight="600"
-                lineHeight={22}
-              >
-                {subtitle}
-              </Text>
+      <TouchableItem onPress={this.onPress}>
+        <View style={style.container}>
+          {isNew ? (
+            <Text
+              style={style.badgeGreen}
+              size={13}
+              color="white"
+              weight="bold"
+              lineHeight={Platform.OS === 'android' ? 19 : 20}
+            >
+              New
+            </Text>
+          ) : null}
+          <View style={style.wrapper}>
+            <View
+              style={[
+                style.border,
+                Platform.OS === 'android' ? style.borderStyle : undefined,
+                isNew ? style.borderGreen : undefined,
+              ]}
+            >
+              <Image
+                style={style.image}
+                source={{ uri: imageURI }}
+                resizeMode="cover"
+              />
+              <View style={style.textContainer}>
+                <Text
+                  style={css('color', '#FC612D')}
+                  size={15}
+                  weight="500"
+                  lineHeight={18}
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                >
+                  {title}
+                </Text>
+                <Text
+                  style={css('color', '#90A4AE')}
+                  size={13}
+                  weight="600"
+                  lineHeight={22}
+                >
+                  {subtitle}
+                </Text>
+              </View>
             </View>
-          </ImageBackground>
+          </View>
         </View>
       </TouchableItem>
     );
@@ -69,21 +80,31 @@ export default class CommunityCard extends React.Component<*, P, *> {
 
 const style = StyleSheet.create({
   container: {
+    paddingTop: 4,
+    backgroundColor: 'transparent',
+  },
+  wrapper: {
     borderRadius: 3,
-    overflow: 'hidden',
-  },
-  containerGreen: {
-    borderColor: 'rgba(0,230,118,0.7)',
-    borderWidth: 1,
-    borderStyle: 'solid',
-  },
-  shadow: {
+    backgroundColor: 'transparent',
     shadowColor: 'black',
     shadowOpacity: 0.14,
     shadowRadius: 3,
     shadowOffset: { width: 1, height: 4 },
-    position: 'relative',
-    paddingTop: 4,
+  },
+  borderStyle: {
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.14)',
+  },
+  border: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+  },
+  borderGreen: {
+    borderColor: 'rgba(0,230,118,0.7)',
+    borderWidth: 1,
   },
   badgeGreen: {
     backgroundColor: getColor('green'),
@@ -97,12 +118,16 @@ const style = StyleSheet.create({
   },
   image: {
     width: '100%',
+    borderTopRightRadius: 3,
+    borderTopLeftRadius: 3,
+    height: 84,
   },
   textContainer: {
     backgroundColor: getColor('white'),
-    marginTop: 84,
     minHeight: 88,
     paddingHorizontal: 9,
     paddingVertical: 10,
+    borderBottomLeftRadius: 3,
+    borderBottomRightRadius: 3,
   },
 });

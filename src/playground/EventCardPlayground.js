@@ -38,8 +38,7 @@ const items = [
     startDate: new Date(),
     endDate: new Date(),
     members: 35,
-    imageURI:
-      'https://photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg',
+    imageURI: 'https://www.w3schools.com/css/img_fjords.jpg',
     isCommunityMember: true,
   },
 ];

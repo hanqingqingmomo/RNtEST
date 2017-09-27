@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import {
   distanceInWordsToNow,
   format,
@@ -10,7 +10,7 @@ import {
   isYesterday,
 } from 'date-fns';
 
-import { ImageBackground, View, Text, TouchableItem, Button } from './';
+import { Image, View, Text, TouchableItem, Button } from './index';
 import { getColor } from '../utils/color';
 
 const HIT_SLOP = {
@@ -79,70 +79,81 @@ export default class EventCard extends React.Component<*, P, *> {
     } = this.props;
 
     return (
-      <TouchableItem style={style.wrapper} onPress={this.onPress}>
-        {isLive && (
-          <Text
-            style={style.badgeRed}
-            size={13}
-            color="white"
-            weight="bold"
-            lineHeight={20}
-          >
-            Live
-          </Text>
-        )}
-        <View style={style.shadow}>
-          <ImageBackground style={style.image} source={{ uri: imageURI }}>
-            <View
-              style={[style.container, isLive ? style.containerRed : undefined]}
+      <TouchableItem onPress={this.onPress}>
+        <View style={style.container}>
+          {isLive ? (
+            <Text
+              style={style.badgeRed}
+              size={13}
+              color="white"
+              weight="bold"
+              lineHeight={Platform.OS === 'android' ? 19 : 20}
             >
-              <View style={style.contentTop}>
-                <Text
-                  style={style.title}
-                  size={15}
-                  color="white"
-                  fontWeight="600"
-                  lineHeight={18}
-                  numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
-                  {title}
-                </Text>
-                <Text size={13} color="white" lineHeight={15} weight="500">
-                  {this.formatDate(startDate)},{'\n'}
-                  {this.getDateRange(startDate, endDate)}
-                </Text>
-              </View>
-              <View style={style.contentBottom}>
-                <View style={style.verticalCenter}>
-                  <View style={style.icon} />
+              Live
+            </Text>
+          ) : null}
+          <View style={style.wrapper}>
+            <View
+              style={[
+                style.border,
+                Platform.OS === 'android' ? style.borderStyle : undefined,
+                isLive ? style.borderRed : undefined,
+              ]}
+            >
+              <Image
+                style={style.image}
+                source={{ uri: imageURI }}
+                resizeMode="cover"
+              />
+              <View style={style.overlay}>
+                <View style={style.contentTop}>
+                  <Text
+                    style={style.title}
+                    size={15}
+                    color="white"
+                    fontWeight="600"
+                    lineHeight={18}
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {title}
+                  </Text>
                   <Text size={13} color="white" lineHeight={15} weight="500">
-                    {`  ${members}`}
+                    {this.formatDate(startDate)},{'\n'}
+                    {this.getDateRange(startDate, endDate)}
                   </Text>
                 </View>
-                {isCommunityMember ? (
-                  <TouchableItem
-                    style={btnStyle.touchableWrapper}
-                    onPress={this.onInviteMember}
-                    hitSlop={HIT_SLOP}
-                  >
-                    <Text style={btnStyle.view} size={21} color="white">
-                      +
+                <View style={style.contentBottom}>
+                  <View style={style.verticalCenter}>
+                    <View style={style.icon} />
+                    <Text size={13} color="white" lineHeight={15} weight="500">
+                      {`  ${members}`}
                     </Text>
-                  </TouchableItem>
-                ) : (
-                  <Button
-                    title="Join"
-                    size="sm"
-                    color="#00E676"
-                    textColor="white"
-                    style={{ marginVertical: 1 }}
-                    onPress={this.onJoin}
-                  />
-                )}
+                  </View>
+                  {isCommunityMember ? (
+                    <TouchableItem
+                      style={btnStyle.touchableWrapper}
+                      onPress={this.onInviteMember}
+                      hitSlop={HIT_SLOP}
+                    >
+                      <Text style={btnStyle.view} size={21} color="white">
+                        +
+                      </Text>
+                    </TouchableItem>
+                  ) : (
+                    <Button
+                      title="Join"
+                      size="sm"
+                      color="#00E676"
+                      textColor="white"
+                      style={{ marginVertical: 1 }}
+                      onPress={this.onJoin}
+                    />
+                  )}
+                </View>
               </View>
             </View>
-          </ImageBackground>
+          </View>
         </View>
       </TouchableItem>
     );
@@ -170,20 +181,31 @@ const btnStyle = StyleSheet.create({
 
 const style = StyleSheet.create({
   wrapper: {
-    position: 'relative',
-    paddingTop: 4,
-    flexGrow: 1,
+    shadowColor: 'black',
+    shadowOpacity: 0.14,
+    shadowRadius: 3,
+    shadowOffset: { width: 1, height: 4 },
   },
   container: {
+    paddingTop: 4,
+  },
+  overlay: {
+    backgroundColor: 'rgba(69, 90, 100, 0.7)',
     paddingHorizontal: 8,
     paddingTop: 23,
     paddingBottom: 13,
-    borderRadius: 3,
-    position: 'relative',
-    backgroundColor: 'rgba(69, 90, 100, 0.7)',
-    minHeight: 155,
+    height: '100%',
+    top: '-100%',
+    borderRadius: 2,
   },
-  containerRed: {
+  border: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    height: 155,
+  },
+  borderRed: {
     borderColor: 'rgba(255,23,68,0.7)',
     borderWidth: 1,
     borderStyle: 'solid',
@@ -202,15 +224,9 @@ const style = StyleSheet.create({
     zIndex: 10,
   },
   image: {
-    borderRadius: 3,
-    overflow: 'hidden',
-    backgroundColor: 'transparent',
-  },
-  shadow: {
-    shadowColor: 'black',
-    shadowOpacity: 0.14,
-    shadowRadius: 3,
-    shadowOffset: { width: 1, height: 4 },
+    width: '100%',
+    height: '100%',
+    borderRadius: 2,
   },
   contentTop: {
     flexGrow: 1,
