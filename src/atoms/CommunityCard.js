@@ -2,90 +2,85 @@
 
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
+import Color from 'color';
 
-import { View, Text, TouchableItem, Image } from './index';
+import { View, Text, Image } from './index';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
 type P = {
   imageURI: string,
   isNew: boolean,
-  onPress: Function,
   subtitle: string,
   title: string,
 };
 
 export default class CommunityCard extends React.Component<*, P, *> {
-  onPress = (): void => {
-    this.props.onPress(this.props);
-  };
-
   render() {
     const { title, imageURI, subtitle, isNew } = this.props;
 
     return (
-      <TouchableItem onPress={this.onPress}>
-        <View style={style.container}>
-          {isNew ? (
-            <Text
-              style={style.badgeGreen}
-              size={13}
-              color="white"
-              weight="bold"
-              lineHeight={Platform.OS === 'android' ? 19 : 20}
-            >
-              New
-            </Text>
-          ) : null}
-          <View style={style.wrapper}>
-            <View
-              style={[
-                style.border,
-                Platform.OS === 'android' ? style.borderStyle : undefined,
-                isNew ? style.borderGreen : undefined,
-              ]}
-            >
-              <Image
-                style={style.image}
-                source={{ uri: imageURI }}
-                resizeMode="cover"
-              />
-              <View style={style.textContainer}>
-                <Text
-                  style={css('color', '#FC612D')}
-                  size={15}
-                  weight="500"
-                  lineHeight={18}
-                  numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
-                  {title}
-                </Text>
-                <Text
-                  style={css('color', '#90A4AE')}
-                  size={13}
-                  weight="600"
-                  lineHeight={22}
-                >
-                  {subtitle}
-                </Text>
-              </View>
+      <View style={styles.container}>
+        {isNew ? (
+          <Text
+            style={styles.badgeGreen}
+            size={13}
+            color="white"
+            weight="bold"
+            lineHeight={Platform.select({ android: 19, ios: 20 })}
+          >
+            New
+          </Text>
+        ) : null}
+        <View style={styles.wrapper}>
+          <View
+            style={[
+              styles.border,
+              Platform.select({
+                android: styles.borderStyle,
+                ios: undefined,
+              }),
+              isNew ? styles.borderGreen : undefined,
+            ]}
+          >
+            <Image
+              style={styles.image}
+              source={{ uri: imageURI }}
+              resizeMode="cover"
+            />
+            <View style={styles.textContainer}>
+              <Text
+                style={css('color', '#FC612D')}
+                size={15}
+                weight="500"
+                lineHeight={18}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {title}
+              </Text>
+              <Text
+                style={css('color', '#90A4AE')}
+                size={13}
+                weight="600"
+                lineHeight={22}
+              >
+                {subtitle}
+              </Text>
             </View>
           </View>
         </View>
-      </TouchableItem>
+      </View>
     );
   }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     paddingTop: 4,
-    backgroundColor: 'transparent',
   },
   wrapper: {
     borderRadius: 3,
-    backgroundColor: 'transparent',
     shadowColor: 'black',
     shadowOpacity: 0.14,
     shadowRadius: 3,
@@ -103,7 +98,7 @@ const style = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   borderGreen: {
-    borderColor: 'rgba(0,230,118,0.7)',
+    borderColor: Color(getColor('green')).alpha(0.7),
     borderWidth: 1,
   },
   badgeGreen: {
