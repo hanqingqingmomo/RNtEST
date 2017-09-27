@@ -1,2 +1,13 @@
 
-.icon-attachment:before { content: '\e800'; } /* '' */
+.icon-call-1:before { content: '\e800'; } /* '' */
+.icon-pen:before { content: '\e801'; } /* '' */
+.icon-attachment:before { content: '\e802'; } /* '' */
+.icon-call-2:before { content: '\e803'; } /* '' */
+.icon-call-3:before { content: '\e804'; } /* '' */
+.icon-conversation:before { content: '\e805'; } /* '' */
+.icon-search-thin:before { content: '\e806'; } /* '' */
+.icon-search:before { content: '\e807'; } /* '' */
+.icon-attachment-thin:before { content: '\e808'; } /* '' */
+.icon-plus:before { content: '\e809'; } /* '' */
+.icon-user:before { content: '\e80a'; } /* '' */
+.icon-close:before { content: '\e80b'; } /* '' */
