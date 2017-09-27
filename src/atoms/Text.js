@@ -9,7 +9,7 @@ import { css } from '../utils/style';
 
 type Props = {
   color?: ColorName,
-  size: number,
+  size?: number,
   weight?: string,
   lineHeight?: number,
   style?: Style,
@@ -35,7 +35,7 @@ export default class Text extends React.Component<void, Props, void> {
         style={[
           styles.fontFamily,
           style,
-          css('fontSize', size),
+          size !== undefined ? css('fontSize', size) : undefined,
           color !== undefined ? css('color', getColor(color)) : undefined,
           weight !== undefined ? css('fontWeight', weight) : undefined,
           lineHeight !== undefined ? css('lineHeight', lineHeight) : undefined,

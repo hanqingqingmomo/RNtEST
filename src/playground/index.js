@@ -10,6 +10,7 @@ import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
+import DonationFormPlayground from './DonationFormPlayground';
 import { Text, View } from '../atoms';
 
 type LinkProps = {
@@ -60,6 +61,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Donation Form"
+      screen="DonationFormPlayground"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -88,6 +94,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
+    },
+    DonationFormPlayground: {
+      screen: DonationFormPlayground,
     },
   },
   {
