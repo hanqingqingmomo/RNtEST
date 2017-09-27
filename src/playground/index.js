@@ -4,14 +4,13 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import AvatarGroupPlayground from './AvatarGroupPlayground';
-import ImageInputPlayground from './ImageInputPlayground';
+import { Text, View } from '../atoms';
+import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
-import { Text, View } from '../atoms';
 
 type LinkProps = {
   screen: string,
@@ -32,13 +31,8 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 const PlaygroundIndexScreen = ({ navigation }) => (
   <View>
     <Link
-      title="Avatar Group"
-      screen="AvatarGroupPlayground"
-      navigation={navigation}
-    />
-    <Link
-      title="Image Input"
-      screen="ImageInputPlayground"
+      title="Avatar, Avatar group &amp; Avatar picker"
+      screen="AvatarPlayground"
       navigation={navigation}
     />
     <Link
@@ -77,11 +71,8 @@ export const PlaygroundRouter = StackNavigator(
         title: 'Component Playground',
       },
     },
-    AvatarGroupPlayground: {
-      screen: AvatarGroupPlayground,
-    },
-    ImageInputPlayground: {
-      screen: ImageInputPlayground,
+    AvatarPlayground: {
+      screen: AvatarPlayground,
     },
     EventCardPlayground: {
       screen: EventCardPlayground,

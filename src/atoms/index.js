@@ -13,6 +13,7 @@ export {
 
 export { default as Avatar } from './Avatar';
 export { default as AvatarGroup } from './AvatarGroup';
+export { default as AvatarPicker } from './AvatarPicker';
 export { default as Button } from './Button';
 export { default as CenterView } from './CenterView';
 export { default as CommunityCard } from './CommunityCard';
@@ -29,4 +30,3 @@ export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { TextField } from 'react-native-material-textfield';
 export { default as TouchableItem } from './TouchableItem';
-export { default as ImageInput } from './ImageInput';
