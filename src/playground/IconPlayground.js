@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import fontelloConfig from '../atoms/Icon/fontello/config';
-import { Icon, Text, View } from '../atoms';
+import { Icon, Text, View, SearchBox, ScrollView } from '../atoms';
 
 const names = fontelloConfig.glyphs.reduce(
   (acc, glyph) => acc.concat(glyph.css),
@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
   },
+  searchBox: {
+    padding: 10,
+  },
   iconWrapper: {
     padding: 10,
     alignItems: 'center',
@@ -29,34 +32,45 @@ const styles = StyleSheet.create({
 });
 
 type S = {
-  imageUri: ?string,
+  searchTerm: string,
 };
 
 export default class AvatarPlayground extends React.Component<*, *, S> {
   static navigationOptions = {
-    headerTitle: 'Avatar, Avatar Group &amp; Avatar picker',
+    headerTitle: 'Icons',
   };
 
   state = {
-    imageUri: null,
-  };
-
-  onChange = (imageUri: string) => {
-    this.setState({ imageUri });
+    searchTerm: '',
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        {names.map(name => (
-          <View key={name} style={styles.iconWrapper}>
-            <Icon key={name} name={name} color="#444" size={24} />
-            <Text size={12} style={{ color: '#ccc' }}>
-              {name}
-            </Text>
-          </View>
-        ))}
-      </View>
+      <ScrollView>
+        <View style={styles.searchBox}>
+          <SearchBox
+            value={this.state.searchTerm}
+            onChangeText={searchTerm => this.setState({ searchTerm })}
+            placeholder="Search icons"
+          />
+        </View>
+        <View style={styles.container}>
+          {names
+            .filter(
+              name =>
+                this.state.searchTerm === '' ||
+                name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+            )
+            .map(name => (
+              <View key={name} style={styles.iconWrapper}>
+                <Icon key={name} name={name} color="#444" size={24} />
+                <Text size={12} style={{ color: '#ccc' }}>
+                  {name}
+                </Text>
+              </View>
+            ))}
+        </View>
+      </ScrollView>
     );
   }
 }

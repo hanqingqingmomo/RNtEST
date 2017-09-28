@@ -16,11 +16,7 @@ type S = {
   imageUri: ?string,
 };
 
-export default class SegmentedControlPlayground extends React.Component<
-  *,
-  *,
-  S
-> {
+export default class AvatarPlayground extends React.Component<*, *, S> {
   static navigationOptions = {
     headerTitle: 'Avatar, Avatar Group &amp; Avatar picker',
   };
