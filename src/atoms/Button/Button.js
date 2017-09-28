@@ -3,7 +3,7 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Text, TouchableItem, TouchableNativeFeedback, View } from './index';
+import { Text, TouchableItem, TouchableNativeFeedback, View } from '../index';
 
 const HIT_SLOP = {
   top: 6,
@@ -12,62 +12,12 @@ const HIT_SLOP = {
   left: 6,
 };
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    borderRadius: 100,
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: '500',
-    transform: [{ translateY: -1 }],
-  },
-  touchableWrapper: {
-    alignSelf: 'center',
-    borderRadius: 100,
-  },
-});
-
-const sizeStyles = {
-  xs: StyleSheet.create({
-    title: {
-      fontSize: 12,
-    },
-    view: {
-      height: 20,
-      paddingHorizontal: 11,
-    },
-  }),
-  sm: StyleSheet.create({
-    title: {
-      fontSize: 12,
-    },
-    view: {
-      height: 24,
-      paddingHorizontal: 15,
-    },
-  }),
-  md: StyleSheet.create({
-    title: {
-      fontSize: 15,
-    },
-    view: {
-      height: 34,
-      width: 80,
-    },
-  }),
-  lg: StyleSheet.create({
-    title: {
-      fontSize: 17,
-    },
-    view: {
-      height: 48,
-      width: 275,
-    },
-  }),
-};
-
 type SizeStyleName = $Keys<typeof sizeStyles>;
+
+type DP = {
+  disabled: boolean,
+  outline: boolean,
+};
 
 type P = {
   color: string,
@@ -82,7 +32,7 @@ type P = {
     | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
 };
 
-export default class Button extends React.Component<*, P, *> {
+export default class Button extends React.Component<DP, DP & P, *> {
   static defaultProps = {
     disabled: false,
     outline: false,
@@ -147,3 +97,58 @@ export default class Button extends React.Component<*, P, *> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    borderRadius: 100,
+    justifyContent: 'center',
+  },
+  title: {
+    fontWeight: '500',
+    transform: [{ translateY: -1 }],
+  },
+  touchableWrapper: {
+    alignSelf: 'center',
+    borderRadius: 100,
+  },
+});
+
+const sizeStyles = {
+  xs: StyleSheet.create({
+    title: {
+      fontSize: 12,
+    },
+    view: {
+      height: 20,
+      paddingHorizontal: 11,
+    },
+  }),
+  sm: StyleSheet.create({
+    title: {
+      fontSize: 12,
+    },
+    view: {
+      height: 24,
+      paddingHorizontal: 15,
+    },
+  }),
+  md: StyleSheet.create({
+    title: {
+      fontSize: 15,
+    },
+    view: {
+      height: 34,
+      width: 80,
+    },
+  }),
+  lg: StyleSheet.create({
+    title: {
+      fontSize: 17,
+    },
+    view: {
+      height: 48,
+      width: 275,
+    },
+  }),
+};

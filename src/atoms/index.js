@@ -22,7 +22,6 @@ export { default as DateCard } from './DateCard';
 export { default as EventCard } from './EventCard';
 export { default as FormField } from './FormField';
 export { default as Icon } from './Icon/Icon';
-export { default as IconButton } from './IconButton';
 export { default as Pill } from './Pill';
 export { default as Screen } from './Screen';
 export { default as SearchBox } from './SearchBox';

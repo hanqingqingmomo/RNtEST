@@ -3,7 +3,7 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Icon, TouchableItem, TouchableNativeFeedback, View } from './index';
+import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
 
 const HIT_SLOP = {
   top: 6,
@@ -19,49 +19,12 @@ const ICON_SIZES = {
   lg: 27,
 };
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    borderRadius: 100,
-    justifyContent: 'center',
-  },
-  icon: {
-    backgroundColor: 'transparent',
-  },
-  touchableWrapper: {
-    alignSelf: 'center',
-    borderRadius: 100,
-  },
-});
-
-const sizeStyles = {
-  xs: StyleSheet.create({
-    view: {
-      height: 27,
-      width: 27,
-    },
-  }),
-  sm: StyleSheet.create({
-    view: {
-      height: 34,
-      width: 34,
-    },
-  }),
-  md: StyleSheet.create({
-    view: {
-      height: 60,
-      width: 60,
-    },
-  }),
-  lg: StyleSheet.create({
-    view: {
-      height: 70,
-      width: 70,
-    },
-  }),
-};
-
 type SizeStyleName = $Keys<typeof sizeStyles>;
+
+type DP = {
+  disabled: boolean,
+  outline: boolean,
+};
 
 type P = {
   color: string,
@@ -74,7 +37,7 @@ type P = {
   style?: any,
 };
 
-export default class Button extends React.Component<*, P, *> {
+export default class IconButton extends React.Component<DP, DP & P, *> {
   static defaultProps = {
     disabled: false,
     outline: false,
@@ -133,3 +96,45 @@ export default class Button extends React.Component<*, P, *> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    borderRadius: 100,
+    justifyContent: 'center',
+  },
+  icon: {
+    backgroundColor: 'transparent',
+  },
+  touchableWrapper: {
+    alignSelf: 'center',
+    borderRadius: 100,
+  },
+});
+
+const sizeStyles = {
+  xs: StyleSheet.create({
+    view: {
+      height: 27,
+      width: 27,
+    },
+  }),
+  sm: StyleSheet.create({
+    view: {
+      height: 34,
+      width: 34,
+    },
+  }),
+  md: StyleSheet.create({
+    view: {
+      height: 60,
+      width: 60,
+    },
+  }),
+  lg: StyleSheet.create({
+    view: {
+      height: 70,
+      width: 70,
+    },
+  }),
+};
