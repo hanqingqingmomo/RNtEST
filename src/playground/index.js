@@ -11,6 +11,7 @@ import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
+import ContactGroupPlayground from './ContactGroupPlayground';
 import IconPlayground from './IconPlayground';
 
 type LinkProps = {
@@ -62,6 +63,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Contact Group"
+      screen="ContactGroupPlayground"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -93,6 +99,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
+    },
+    ContactGroupPlayground: {
+      screen: ContactGroupPlayground,
     },
   },
   {
