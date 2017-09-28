@@ -11,6 +11,7 @@ import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
+import IconPlayground from './IconPlayground';
 
 type LinkProps = {
   screen: string,
@@ -50,6 +51,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="CommunityHeaderPlayground"
       navigation={navigation}
     />
+    <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
@@ -82,6 +84,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
+    },
+    IconPlayground: {
+      screen: IconPlayground,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
