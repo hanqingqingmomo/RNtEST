@@ -37,11 +37,6 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
-      title="Event Card"
-      screen="EventCardPlayground"
-      navigation={navigation}
-    />
-    <Link
       title="Community Card"
       screen="CommunityCardPlayground"
       navigation={navigation}
@@ -51,15 +46,20 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="CommunityHeaderPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Donation Form"
+      screen="DonationFormPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Event Card"
+      screen="EventCardPlayground"
+      navigation={navigation}
+    />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
-      navigation={navigation}
-    />
-    <Link
-      title="Donation Form"
-      screen="DonationFormPlayground"
       navigation={navigation}
     />
   </View>
