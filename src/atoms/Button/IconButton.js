@@ -4,6 +4,7 @@ import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
+import { type ColorName, type IconName, type IconSize } from '../../Types';
 
 const HIT_SLOP = {
   top: 6,
@@ -12,28 +13,19 @@ const HIT_SLOP = {
   left: 6,
 };
 
-const ICON_SIZES = {
-  xs: 13,
-  sm: 18,
-  md: 24,
-  lg: 27,
-};
-
-type SizeStyleName = $Keys<typeof sizeStyles>;
-
 type DP = {
   disabled: boolean,
   outline: boolean,
 };
 
 type P = {
-  color: string,
+  color: ColorName | string,
   disabled?: boolean,
-  iconColor: string,
-  iconName: string,
+  iconColor: ColorName | string,
+  iconName: IconName,
   onPress: Function,
   outline?: boolean,
-  size: SizeStyleName,
+  size: IconSize | number,
   style?: any,
 };
 
@@ -88,7 +80,7 @@ export default class IconButton extends React.Component<DP, DP & P, *> {
           <Icon
             color={iconColor}
             name={iconName}
-            size={ICON_SIZES[size]}
+            size={size}
             style={styles.icon}
           />
         </View>

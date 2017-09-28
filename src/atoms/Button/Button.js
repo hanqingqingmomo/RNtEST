@@ -4,6 +4,7 @@ import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Text, TouchableItem, TouchableNativeFeedback, View } from '../index';
+import { type ColorName } from '../../Types';
 
 const HIT_SLOP = {
   top: 6,
@@ -20,13 +21,13 @@ type DP = {
 };
 
 type P = {
-  color: string,
+  color: ColorName | string,
   disabled?: boolean,
   onPress: Function,
   outline?: boolean,
   size: SizeStyleName,
   style?: any,
-  textColor: string,
+  textColor: ColorName | string,
   title:
     | string
     | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
