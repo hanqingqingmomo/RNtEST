@@ -5,6 +5,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
 import { type ColorName, type IconName, type IconSize } from '../../Types';
+import { css } from '../../utils/style';
 
 const HIT_SLOP = {
   top: 6,
@@ -59,7 +60,7 @@ export default class IconButton extends React.Component<DP, DP & P, *> {
         onPress={onPress}
         pressColor="white"
         style={[
-          { opacity: disabled ? 0.5 : 1 },
+          css('opacity', disabled ? 0.5 : 1),
           styles.touchableWrapper,
           style,
         ]}
@@ -72,8 +73,8 @@ export default class IconButton extends React.Component<DP, DP & P, *> {
           style={[
             styles.button,
             outline
-              ? { borderColor: color, borderWidth: 1 }
-              : { backgroundColor: color },
+              ? [css('borderColor', color), css('borderWidth', 1)]
+              : css('backgroundColor', color),
             activeSizeStyle.view,
           ]}
         >
