@@ -14,7 +14,7 @@ type Props = {
 export default function SearchBox({ onChangeText, placeholder, value }: Props) {
   return (
     <View style={styles.container}>
-      <Icon name="attachment" color="#B0BEC5" size={16} style={styles.icon} />
+      <Icon name="search" color="#B0BEC5" size={16} style={styles.icon} />
       <TextInput
         onChangeText={onChangeText}
         placeholder={placeholder}
