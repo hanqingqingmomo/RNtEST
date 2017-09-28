@@ -5,6 +5,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 import { Text, TouchableItem, TouchableNativeFeedback, View } from '../index';
 import { type ColorName } from '../../Types';
+import { css } from '../../utils/style';
 
 const HIT_SLOP = {
   top: 6,
@@ -57,8 +58,7 @@ export default class Button extends React.Component<DP, DP & P, *> {
 
     const textStyle = [
       styles.title,
-      outline ? { color } : undefined,
-      { color: textColor },
+      css('color', textColor),
       activeSizeStyle.title,
     ];
 
@@ -70,7 +70,7 @@ export default class Button extends React.Component<DP, DP & P, *> {
         onPress={onPress}
         pressColor="white"
         style={[
-          { opacity: disabled ? 0.5 : 1 },
+          css('opacity', disabled ? 0.5 : 1),
           styles.touchableWrapper,
           style,
         ]}
@@ -83,8 +83,8 @@ export default class Button extends React.Component<DP, DP & P, *> {
           style={[
             styles.button,
             outline
-              ? { borderColor: color, borderWidth: 1 }
-              : { backgroundColor: color },
+              ? [css('borderColor', color), css('borderWidth', 1)]
+              : css('backgroundColor', color),
             activeSizeStyle.view,
           ]}
         >

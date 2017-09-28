@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Button, View } from '../atoms';
 
-export default class IconButtonPlayground extends React.Component<*, *, *> {
+export default class ButtonPlayground extends React.Component<*, *, *> {
   static navigationOptions = {
     title: 'Icon Buttons',
   };
@@ -56,6 +56,23 @@ export default class IconButtonPlayground extends React.Component<*, *, *> {
             onPress={() => {}}
             size="lg"
             style={[styles.marginTop]}
+          />
+          <Button
+            color="rgba(0,230,118,1)"
+            onPress={() => {}}
+            size="lg"
+            style={[styles.marginTop]}
+            textColor="white"
+            title="Join now!"
+          />
+          <Button
+            color="rgba(0,230,118,1)"
+            onPress={() => {}}
+            outline
+            size="lg"
+            style={[styles.marginTop]}
+            textColor="rgba(0,230,118,1)"
+            title="Join now!"
           />
         </View>
       </View>
