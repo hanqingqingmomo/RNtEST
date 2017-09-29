@@ -27,10 +27,11 @@ export default function AvatarGroup({ imageURIs }: Props) {
         </View>
       ))}
       <Text
+        color="gray"
         size={12}
         weight="600"
         lineHeight={18}
-        style={[css('color', '#90A4AE'), css('marginLeft', 5)]}
+        style={css('marginLeft', 5)}
       >
         {total - visibleCount > 0 ? `+${total - visibleCount}` : ''}
       </Text>
