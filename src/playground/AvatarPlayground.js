@@ -117,6 +117,7 @@ export default class AvatarPlayground extends React.Component<*, *, S> {
               'https://s3.amazonaws.com/uifaces/faces/twitter/mattsince87/128.jpg',
               'https://s3.amazonaws.com/uifaces/faces/twitter/jgoillot/128.jpg',
             ]}
+            title={(diff: number) => `+${diff}`}
           />
         </View>
 
