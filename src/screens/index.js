@@ -1,5 +1,6 @@
 // @flow
 
+export { default as AuthenticationRootScreen } from './AuthenticationRootScreen';
 export { default as BootScreen } from './BootScreen';
 export { default as ForgottenPasswordScreen } from './ForgottenPasswordScreen';
 export { default as LoginScreen } from './LoginScreen';

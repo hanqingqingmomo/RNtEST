@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
+import { AuthenticationRootScreen } from '../screens';
 import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
@@ -62,6 +63,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Authentication Root"
+      screen="AuthenticationRootScreen"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -93,6 +99,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
+    },
+    AuthenticationRootScreen: {
+      screen: AuthenticationRootScreen,
     },
   },
   {
