@@ -4,18 +4,64 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, ScrollView } from '../atoms';
-import { NewsfeedItem } from '../blocks';
+import { NewsFeedItem } from '../blocks';
 
 export default class NewsfeedPlayground extends React.Component<*, *, *> {
   static navigationOptions = {
-    title: 'Newsfeed',
+    title: 'News Feed',
   };
 
   render() {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.item}>
-          <NewsfeedItem
+          <NewsFeedItem
+            tags={[
+              {
+                name: 'Event',
+                disabled: true,
+              },
+              {
+                name: 'Child Care...',
+              },
+            ]}
+            image={{
+              title:
+                'A donation is a gift given by physical or legal A donation is a gift given by physical or legal',
+              imageURI:
+                'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
+            }}
+            donation={{
+              title: 'YWCA',
+              imageURI:
+                'https://pbs.twimg.com/profile_images/697175174651600897/fqbU2kNN.png',
+              donors: [
+                {
+                  username: 'Maurice Ramirez',
+                  imageURI:
+                    'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
+                },
+                {
+                  username: 'Maurice Ramirez',
+                  imageURI:
+                    'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
+                },
+                {
+                  username: 'Maurice Ramirez',
+                  imageURI:
+                    'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
+                },
+                {
+                  username: 'Maurice Ramirez',
+                  imageURI:
+                    'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
+                },
+              ],
+            }}
+          />
+        </View>
+        <View style={styles.item}>
+          <NewsFeedItem
             isNew
             title="The YWCA Aurora has partnered with YWCA Metropolitan Chicago to
             offer parents and child care providers The YWCA Aurora has partnered with YWCA Metropolitan Chicago to
@@ -33,16 +79,15 @@ export default class NewsfeedPlayground extends React.Component<*, *, *> {
               imageURI: 'https://www.w3schools.com/w3css/img_avatar2.png',
             }}
             date={new Date()}
-            onReplayPress={props => {
-              console.log(props);
+            attachment={{
+              imageURI:
+                'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+              title: 'YWCA new initiative set to increase the',
             }}
-            onLinkPress={(key: 'share' | 'comment', props) =>
-              console.log(key, props)}
-            onTagPress={tag => console.log(tag)}
           />
         </View>
         <View style={styles.item}>
-          <NewsfeedItem
+          <NewsFeedItem
             isNew
             title="Watching the news the other day, it occurred to me that people who have “words to live by” often begin to attack and"
             tags={[
@@ -56,16 +101,11 @@ export default class NewsfeedPlayground extends React.Component<*, *, *> {
                 'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
             }}
             date={new Date()}
-            onReplayPress={props => {
-              console.log(props);
-            }}
-            onLinkPress={(key: 'share' | 'comment', props) =>
-              console.log(key, props)}
-            onTagPress={tag => console.log(tag)}
           />
         </View>
+
         <View style={styles.item}>
-          <NewsfeedItem
+          <NewsFeedItem
             tags={[
               {
                 name: 'Make a Donation',
@@ -73,15 +113,37 @@ export default class NewsfeedPlayground extends React.Component<*, *, *> {
               },
             ]}
             user={{
-              username: 'Maurice Ramirez',
+              username: 'Lucinda Taylor',
               imageURI:
                 'https://thumbs.dreamstime.com/t/man-avatar-icon-flat-style-illustration-vector-web-lime-background-86384399.jpg',
             }}
             date={new Date()}
-            onReplayPress={props => console.log(props)}
-            onLinkPress={(key: 'share' | 'comment', props) =>
-              console.log(key, props)}
-            onTagPress={tag => console.log(tag)}
+            image={{
+              imageURI:
+                'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+              title: 'YWCA new initiative set to increase the',
+            }}
+          />
+        </View>
+        <View style={styles.item}>
+          <NewsFeedItem
+            tags={[
+              {
+                name: 'Event',
+                disabled: true,
+              },
+              {
+                name: 'Child Care...',
+              },
+            ]}
+            event={{
+              startDate: new Date(),
+              endDate: new Date(),
+              title:
+                'YWCA new initiative set to increase the YWCA new initiative set to increase the',
+              imageURI:
+                'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+            }}
           />
         </View>
       </ScrollView>

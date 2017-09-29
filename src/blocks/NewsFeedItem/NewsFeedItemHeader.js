@@ -1,37 +1,39 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Text, View, Pill, Icon, TouchableItem } from '../../atoms';
+import { View, Pill, Icon, TouchableItem } from '../../atoms';
 
 type TagProps = {
-  name: string,
   disabled?: boolean,
+  name: string,
 };
 
 type P = {
+  onMorePress: () => void,
+  onTagPress: TagProps => void,
   tags: Array<TagProps>,
 };
 
+const HIT_SLOP = {
+  top: 2,
+  right: 2,
+  bottom: 2,
+  left: 2,
+};
+
 export default class NewsFeedItemHeader extends React.Component<*, P, *> {
-  onTagPress(tag) {
-    return () => {
-      console.log(tag);
-    };
-  }
-
   render() {
-    const { tags } = this.props;
-
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {tags.map(tag => (
+          {this.props.tags.map((tag: TagProps) => (
             <View style={styles.tag} key={tag.name}>
               <TouchableItem
-                onPress={this.onTagPress(tag)}
+                onPress={() => this.props.onTagPress(tag)}
                 disabled={tag.disabled}
+                hitSlop={HIT_SLOP}
               >
                 <View style={{ backgroundColor: 'white' }}>
                   <Pill
@@ -44,12 +46,14 @@ export default class NewsFeedItemHeader extends React.Component<*, P, *> {
           ))}
         </View>
         <View>
-          <Icon
-            name="attachment"
-            color="#C6D3D8"
-            size={20}
-            style={{ backgroundColor: 'red' }}
-          />
+          <TouchableItem onPress={this.props.onMorePress} hitSlop={HIT_SLOP}>
+            <Icon
+              name="attachment"
+              color="#C6D3D8"
+              size={20}
+              style={{ backgroundColor: 'red' }}
+            />
+          </TouchableItem>
         </View>
       </View>
     );
@@ -60,7 +64,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
-
   header: {
     paddingVertical: 15,
   },
