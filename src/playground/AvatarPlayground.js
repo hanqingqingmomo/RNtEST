@@ -39,7 +39,6 @@ export default class AvatarPlayground extends React.Component<*, *, S> {
 
         <View style={{ marginVertical: 50 }}>
           <AvatarGroup
-            size={20}
             imageURIs={[
               'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
               'https://s3.amazonaws.com/uifaces/faces/twitter/iannnnn/128.jpg',

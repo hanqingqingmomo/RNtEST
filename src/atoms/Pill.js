@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    backgroundColor: 'transparent',
     fontSize: 11,
     fontWeight: '500',
     lineHeight: 13,

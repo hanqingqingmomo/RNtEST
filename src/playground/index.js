@@ -7,6 +7,7 @@ import { StackNavigator } from 'react-navigation';
 import { Text, View } from '../atoms';
 import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
+import EventFeedPlayground from './EventFeedPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import ButtonPlayground from './ButtonPlayground';
@@ -68,6 +69,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="ButtonPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Event Feed"
+      screen="EventFeedPlayground"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -102,6 +108,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
+    },
+    EventFeedPlayground: {
+      screen: EventFeedPlayground,
     },
   },
   {
