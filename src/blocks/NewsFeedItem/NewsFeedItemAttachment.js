@@ -29,7 +29,7 @@ export default class NewsFeedItemAttachment extends React.Component<*, P, *> {
         </View>
         <View style={styles.decription}>
           <View style={styles.icon}>
-            <Icon name="attachment" size={24} color="#B0BEC5" />
+            <Icon name="link" size={24} color="#B0BEC5" />
           </View>
           <View style={styles.text}>
             <Text
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignItems: 'center',
-    backgroundColor: 'red',
     width: 30,
   },
   text: {

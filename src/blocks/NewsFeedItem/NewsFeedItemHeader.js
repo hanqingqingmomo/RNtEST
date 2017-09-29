@@ -47,12 +47,7 @@ export default class NewsFeedItemHeader extends React.Component<*, P, *> {
         </View>
         <View>
           <TouchableItem onPress={this.props.onMorePress} hitSlop={HIT_SLOP}>
-            <Icon
-              name="attachment"
-              color="#C6D3D8"
-              size={20}
-              style={{ backgroundColor: 'red' }}
-            />
+            <Icon name="menu" color="#C6D3D8" size={20} />
           </TouchableItem>
         </View>
       </View>
