@@ -9,6 +9,7 @@ import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
+import ButtonPlayground from './ButtonPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
 import IconPlayground from './IconPlayground';
@@ -62,6 +63,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Icon Button"
+      screen="ButtonPlayground"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -87,6 +93,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     IconPlayground: {
       screen: IconPlayground,
+    },
+    ButtonPlayground: {
+      screen: ButtonPlayground,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,

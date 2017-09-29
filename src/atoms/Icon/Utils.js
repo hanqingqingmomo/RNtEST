@@ -11,9 +11,10 @@ const namesMap = fontelloConfig.glyphs.reduce((map, glyph) => {
 export type IconName = $Keys<typeof namesMap>;
 
 // Icon sizes
-export type IconSize = 'sm' | 'md' | 'lg' | number;
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | number;
 
 export const sizeMap = {
+  xs: 12,
   sm: 16,
   md: 24,
   lg: 32,
