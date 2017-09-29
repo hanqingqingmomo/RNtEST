@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   normalText: {
-    color: '#90A4AE',
+    color: getColor('gray'),
   },
 
   monthContainer: {

@@ -4,15 +4,15 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import AvatarGroupPlayground from './AvatarGroupPlayground';
-import ImageInputPlayground from './ImageInputPlayground';
+import { Text, View } from '../atoms';
+import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
-import { Text, View } from '../atoms';
+import IconPlayground from './IconPlayground';
 
 type LinkProps = {
   screen: string,
@@ -33,18 +33,8 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 const PlaygroundIndexScreen = ({ navigation }) => (
   <View>
     <Link
-      title="Avatar Group"
-      screen="AvatarGroupPlayground"
-      navigation={navigation}
-    />
-    <Link
-      title="Image Input"
-      screen="ImageInputPlayground"
-      navigation={navigation}
-    />
-    <Link
-      title="Event Card"
-      screen="EventCardPlayground"
+      title="Avatar, Avatar group &amp; Avatar picker"
+      screen="AvatarPlayground"
       navigation={navigation}
     />
     <Link
@@ -57,6 +47,17 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="CommunityHeaderPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Donation Form"
+      screen="DonationFormPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Event Card"
+      screen="EventCardPlayground"
+      navigation={navigation}
+    />
+    <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
@@ -83,11 +84,8 @@ export const PlaygroundRouter = StackNavigator(
         title: 'Component Playground',
       },
     },
-    AvatarGroupPlayground: {
-      screen: AvatarGroupPlayground,
-    },
-    ImageInputPlayground: {
-      screen: ImageInputPlayground,
+    AvatarPlayground: {
+      screen: AvatarPlayground,
     },
     EventCardPlayground: {
       screen: EventCardPlayground,
@@ -97,6 +95,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
+    },
+    IconPlayground: {
+      screen: IconPlayground,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,

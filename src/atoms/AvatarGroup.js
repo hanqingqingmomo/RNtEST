@@ -3,12 +3,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
+import { css } from '../utils/style';
 import { Avatar, Text, View } from './index';
 
 const AVATAR_WIDTH = 22;
 const OUTLINE_WIDTH = 2;
-const TOTAL_WIDTH = AVATAR_WIDTH + OUTLINE_WIDTH * 2;
-const OVERLAP = TOTAL_WIDTH * 0.45;
+const OVERLAP = AVATAR_WIDTH * 0.45;
 
 type Props = {
   imageURIs: Array<string>,
@@ -26,10 +26,18 @@ export default function AvatarGroup({ imageURIs, title }: Props) {
     <View style={styles.groupContainer}>
       {imageURIs.slice(0, visibleCount).map((img, i) => (
         <View key={i} style={styles.avatarContainer}>
-          <Avatar imageURI={img} size={AVATAR_WIDTH} />
+          <Avatar imageURI={img} size={AVATAR_WIDTH - OUTLINE_WIDTH * 2} />
         </View>
       ))}
-      <Text style={styles.userCount}>{title(diff)}</Text>
+      <Text
+        color="gray"
+        size={12}
+        weight="600"
+        lineHeight={18}
+        style={css('marginLeft', 5)}
+      >
+        {title(diff)}
+      </Text>
     </View>
   );
 }
@@ -41,17 +49,10 @@ const styles = StyleSheet.create({
     paddingLeft: OVERLAP,
   },
   avatarContainer: {
-    backgroundColor: '#90A4AE',
-    borderColor: '#fff',
-    borderRadius: TOTAL_WIDTH / 2,
+    backgroundColor: '#fff',
+    borderColor: 'transparent',
+    borderRadius: AVATAR_WIDTH / 2,
     borderWidth: OUTLINE_WIDTH,
     marginLeft: -OVERLAP,
-  },
-  userCount: {
-    color: '#90A4AE',
-    fontSize: 12,
-    fontWeight: '600',
-    lineHeight: 18,
-    marginLeft: 1,
   },
 });
