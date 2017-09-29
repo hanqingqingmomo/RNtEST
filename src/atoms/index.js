@@ -30,3 +30,4 @@ export { default as TextDeprecated } from './TextDeprecated';
 export { TextField } from 'react-native-material-textfield';
 export { default as TouchableItem } from './TouchableItem';
 export { default as ImageInput } from './ImageInput';
+export { default as ShadowView } from './ShadowView';
