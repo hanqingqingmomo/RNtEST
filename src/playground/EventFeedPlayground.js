@@ -8,8 +8,8 @@ import { View } from '../atoms';
 
 const ATTENDING_STATUS = {
   GOING: 'GOING',
-  PENDING: 'PENDING',
   NOT_GOING: 'NOT_GOING',
+  PENDING: 'PENDING',
 };
 
 const participants = [
@@ -93,108 +93,94 @@ const participants = [
 const mocks = [
   {
     id: 'faefaeqeqereq1131',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.NOT_GOING,
-      date: new Date(2017, 5, 10),
-      live: false,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Omg Curriculum for Preschool: Exploring',
-      tag: 'Whatever',
+    participants,
+    status: ATTENDING_STATUS.NOT_GOING,
+    date: new Date(2017, 5, 10),
+    live: false,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Omg Curriculum for Preschool: Exploring',
+    tag: 'Whatever',
   },
   {
     id: 'hmm',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.GOING,
-      date: new Date(2017, 5, 13),
-      live: false,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Creative Curriculum for Preschool: Exploring',
-      tag: 'Whatever',
+    participants,
+    status: ATTENDING_STATUS.GOING,
+    date: new Date(2017, 5, 13),
+    live: false,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Creative Curriculum for Preschool: Exploring',
+    tag: 'Whatever',
   },
   {
     id: 'rhrsklhsak',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.NOT_GOING,
-      date: new Date(2017, 9, 29),
-      live: false,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Some Charity Event',
-      tag: 'Child Care...',
+    participants,
+    status: ATTENDING_STATUS.NOT_GOING,
+    date: new Date(2017, 9, 29),
+    live: false,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Some Charity Event',
+    tag: 'Child Care...',
   },
   {
     id: 'like',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.PENDING,
-      date: new Date(2017, 9, 29),
-      live: true,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Child Care Provider Training & Assistance',
-      tag: 'Child Care...',
+    participants,
+    status: ATTENDING_STATUS.PENDING,
+    date: new Date(2017, 9, 29),
+    live: true,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Child Care Provider Training & Assistance',
+    tag: 'Child Care...',
   },
   {
     id: 'toy',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.PENDING,
-      date: new Date(2017, 9, 30),
-      live: false,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Economic Empowerment Institute Job Club',
-      tag: 'Child Care...',
+    participants,
+    status: ATTENDING_STATUS.PENDING,
+    date: new Date(2017, 9, 30),
+    live: false,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Economic Empowerment Institute Job Club',
+    tag: 'Child Care...',
   },
   {
     id: 'soldiers',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.NOT_GOING,
-      date: new Date(2017, 10, 1),
-      live: false,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Open Lab @ YWCA Julian Grace Center',
-      tag: '3D Youth',
+    participants,
+    status: ATTENDING_STATUS.NOT_GOING,
+    date: new Date(2017, 10, 1),
+    live: false,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Open Lab @ YWCA Julian Grace Center',
+    tag: '3D Youth',
   },
   {
-    id: 'eq',
-    event: {
-      participants,
-      status: ATTENDING_STATUS.GOING,
-      date: new Date(2017, 12, 24),
-      live: false,
-      duration: {
-        from: new Date(2017, 5, 13, 9, 0),
-        to: new Date(2017, 5, 13, 11, 0),
-      },
-      name: 'Christmas Party',
-      tag: 'Bozkov',
+    id: '400iq',
+    participants,
+    status: ATTENDING_STATUS.GOING,
+    date: new Date(2017, 12, 24),
+    live: false,
+    duration: {
+      from: new Date(2017, 5, 13, 9, 0),
+      to: new Date(2017, 5, 13, 11, 0),
     },
+    name: 'Christmas Party',
+    tag: 'Bozkov',
   },
 ];
 
@@ -211,5 +197,3 @@ export default class EventFeedPlayground extends React.Component<*, *, *> {
     );
   }
 }
-
-const styles = StyleSheet.create({});

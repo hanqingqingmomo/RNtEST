@@ -11,63 +11,81 @@ import { getColor } from '../../utils/color';
 
 const ATTENDING_STATUS = {
   GOING: 'GOING',
-  PENDING: 'PENDING',
   NOT_GOING: 'NOT_GOING',
+  PENDING: 'PENDING',
 };
 
-type Props = {
-  imageURI: string,
-  size: number,
+const EVENT_STATUS = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+};
+
+type P = {
+  actions: {
+    onJoin: id => void,
+    onGoing: id => void,
+    onNotGoing: id => void,
+  },
+  event: {
+    date: Date,
+    duration: { from: Date, to: Date },
+    id: string,
+    live: boolean,
+    name: string,
+    participants: Array<string>,
+    status: $Keys<typeof ATTENDING_STATUS>,
+    tag: string,
+  },
 };
 
 const palettes = {
-  inactive: {
-    GOING: {
-      color: {
-        true: getColor('gray'),
-        false: getColor('gray'),
+  [EVENT_STATUS.ACTIVE]: {
+    [ATTENDING_STATUS.GOING]: {
+      goingButton: {
+        color: getColor('green'),
+        iconColor: getColor('white'),
       },
-      iconColor: {
-        true: getColor('white'),
-        false: getColor('gray'),
-      },
-    },
-    NOT_GOING: {
-      color: {
-        true: getColor('gray'),
-        false: getColor('gray'),
-      },
-      iconColor: {
-        true: getColor('white'),
-        false: getColor('gray'),
+      notGoingButton: {
+        color: getColor('gray'),
+        iconColor: getColor('gray'),
       },
     },
-    titleColor: getColor('gray'),
-    pillTextColor: getColor('gray'),
-  },
-  active: {
-    GOING: {
-      color: {
-        true: getColor('green'),
-        false: getColor('gray'),
+    [ATTENDING_STATUS.NOT_GOING]: {
+      goingButton: {
+        color: getColor('gray'),
+        iconColor: getColor('gray'),
       },
-      iconColor: {
-        true: getColor('white'),
-        false: getColor('gray'),
+      notGoingButton: {
+        color: getColor('red'),
+        iconColor: getColor('white'),
       },
     },
-    NOT_GOING: {
-      color: {
-        true: getColor('red'),
-        false: getColor('gray'),
-      },
-      iconColor: {
-        true: getColor('white'),
-        false: getColor('gray'),
-      },
-    },
-    titleColor: 'rgba(69,90,100,1)',
     pillTextColor: getColor('orange'),
+    titleColor: 'rgba(69,90,100,1)',
+  },
+  [EVENT_STATUS.INACTIVE]: {
+    [ATTENDING_STATUS.GOING]: {
+      goingButton: {
+        color: getColor('gray'),
+        iconColor: getColor('white'),
+      },
+      notGoingButton: {
+        color: getColor('gray'),
+        iconColor: getColor('gray'),
+      },
+    },
+    [ATTENDING_STATUS.NOT_GOING]: {
+      goingButton: {
+        color: getColor('gray'),
+        iconColor: getColor('gray'),
+      },
+      notGoingButton: {
+        color: getColor('gray'),
+        iconColor: getColor('white'),
+      },
+    },
+    pillTextColor: getColor('gray'),
+    titleColor: getColor('gray'),
   },
 };
 
@@ -76,30 +94,29 @@ const common = {
     color: getColor('green'),
     text: getColor('white'),
   },
-  pendingButton: {
-    color: getColor('gray'),
-    iconColor: getColor('white'),
-  },
-  PENDING: {
-    color: {
-      true: getColor('gray'),
-      false: getColor('white'),
+  [ATTENDING_STATUS.PENDING]: {
+    goingButton: {
+      color: getColor('gray'),
+      iconColor: getColor('gray'),
     },
-    iconColor: {
-      true: getColor('white'),
-      false: getColor('gray'),
+    notGoingButton: {
+      color: getColor('gray'),
+      iconColor: getColor('gray'),
     },
   },
 };
 
-export default function Event({ event }: Props) {
-  const { date, duration, live, name, participants, status, tag } = event;
+export default function Event({ actions, event }: P) {
+  const { date, duration, id, live, name, participants, status, tag } = event;
 
   const pastEvent = isPast(date);
-  const palette = { ...palettes[pastEvent ? 'inactive' : 'active'], ...common };
+  const palette = {
+    ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
+    ...common,
+  };
 
   return (
-    <View style={[styles.eventWrapper]}>
+    <View style={[styles.alignment]}>
       <View style={[styles.eventInfo]}>
         <View style={[styles.topSection]}>
           <Text style={[styles.eventName, css('color', palette.titleColor)]}>
@@ -131,7 +148,7 @@ export default function Event({ event }: Props) {
         {live ? (
           <Button
             color={palette.joinButton.color}
-            onPress={() => {}}
+            onPress={() => actions.onJoin(id)}
             size="md"
             textColor={palette.joinButton.text}
             title="Join"
@@ -139,33 +156,21 @@ export default function Event({ event }: Props) {
         ) : (
           <View style={[styles.alignment]}>
             <Button.Icon
-              color={
-                palette[ATTENDING_STATUS.NOT_GOING].color[
-                  status === ATTENDING_STATUS.NOT_GOING
-                ]
-              }
+              color={palette[status].notGoingButton.color}
               disabled={pastEvent}
-              iconColor={
-                palette[status].iconColor[status === ATTENDING_STATUS.NOT_GOING]
-              }
+              iconColor={palette[status].notGoingButton.iconColor}
               iconName="close"
-              onPress={() => {}}
+              onPress={() => actions.onNotGoing(id)}
               outline={status !== ATTENDING_STATUS.NOT_GOING}
               size="sm"
               style={css('paddingRight', 12)}
             />
             <Button.Icon
-              color={
-                palette[ATTENDING_STATUS.GOING].color[
-                  status === ATTENDING_STATUS.GOING
-                ]
-              }
+              color={palette[status].goingButton.color}
               disabled={pastEvent}
-              iconColor={
-                palette[status].iconColor[status === ATTENDING_STATUS.GOING]
-              }
+              iconColor={palette[status].goingButton.iconColor}
               iconName="close"
-              onPress={() => {}}
+              onPress={() => actions.onGoing(id)}
               outline={status !== ATTENDING_STATUS.GOING}
               size="sm"
             />
@@ -188,21 +193,18 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
   eventActions: {
-    backgroundColor: '#f0ece5',
+    // backgroundColor: '#f0ece5',
     justifyContent: 'center',
     width: '30%',
   },
   eventInfo: {
-    backgroundColor: '#ffede0',
+    // backgroundColor: '#ffede0',
     width: '70%',
   },
   eventName: {
     fontSize: 13,
     fontWeight: '500',
     lineHeight: 16,
-  },
-  eventWrapper: {
-    flexDirection: 'row',
   },
   liveLabel: {
     color: getColor('white'),
