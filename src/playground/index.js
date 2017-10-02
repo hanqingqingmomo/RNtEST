@@ -9,6 +9,7 @@ import { Text, View } from '../atoms';
 import AvatarPlayground from './AvatarPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
+import ContactGroupPlayground from './ContactGroupPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import FormPlayground from './FormPlayground';
@@ -48,6 +49,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Community Header"
       screen="CommunityHeaderPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Contact Group"
+      screen="ContactGroupPlayground"
       navigation={navigation}
     />
     <Link
@@ -100,6 +106,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
+    },
+    ContactGroupPlayground: {
+      screen: ContactGroupPlayground,
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
