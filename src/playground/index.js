@@ -94,6 +94,9 @@ export const PlaygroundRouter = StackNavigator(
     DonationFormPlayground: {
       screen: DonationFormPlayground,
     },
+    TabsPlayground: {
+      screen: TabsPlayground,
+    },
   },
   {
     ...StyleSheet.create({
