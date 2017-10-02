@@ -42,7 +42,7 @@ class SignupForm extends React.Component<void, Props, void> {
         <Icon name="ywca" color={getColor('orange')} size={100} />
 
         <Text
-          style={[styles.addText, css('color', '#90A4AE')]}
+          style={[styles.addText, css('color', getColor('gray'))]}
           size={17}
           lineHeight={20}
         >
@@ -75,7 +75,7 @@ class SignupForm extends React.Component<void, Props, void> {
         <Text
           size={13}
           lineHeight={20}
-          style={[css('color', '#90A4AE'), styles.policyText]}
+          style={[css('color', getColor('gray')), styles.policyText]}
         >
           By signing up, you agree to our{' '}
           <Text style={styles.specialText} weight="bold" onPress={() => {}}>
