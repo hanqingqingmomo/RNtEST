@@ -7,8 +7,8 @@ import { type ColorName, type Style } from '../Types';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
-type Props = {
-  color?: ColorName,
+export type Props = {
+  color?: ColorName | string,
   size?: number,
   weight?: string,
   lineHeight?: number,

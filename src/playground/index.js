@@ -5,14 +5,16 @@ import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
+
 import AvatarPlayground from './AvatarPlayground';
-import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
-import FormPlayground from './FormPlayground';
-import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
+import EventCardPlayground from './EventCardPlayground';
+import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
+import SegmentedControlPlayground from './SegmentedControlPlayground';
+import UserProfilePlayground from './UserProfilePlayground';
 
 type LinkProps = {
   screen: string,
@@ -68,6 +70,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link
+      title="User Profile"
+      screen="UserProfilePlayground"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -88,6 +95,9 @@ export const PlaygroundRouter = StackNavigator(
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
     },
+    DonationFormPlayground: {
+      screen: DonationFormPlayground,
+    },
     EventCardPlayground: {
       screen: EventCardPlayground,
     },
@@ -100,8 +110,8 @@ export const PlaygroundRouter = StackNavigator(
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
     },
-    DonationFormPlayground: {
-      screen: DonationFormPlayground,
+    UserProfilePlayground: {
+      screen: UserProfilePlayground,
     },
   },
   {
