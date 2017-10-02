@@ -59,12 +59,7 @@ export default class CommunityCard extends React.Component<*, P, *> {
               >
                 {title}
               </Text>
-              <Text
-                style={css('color', '#90A4AE')}
-                size={13}
-                weight="600"
-                lineHeight={22}
-              >
+              <Text color="gray" size={13} weight="600" lineHeight={22}>
                 {subtitle}
               </Text>
             </View>
