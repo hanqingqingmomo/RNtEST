@@ -10,6 +10,7 @@ import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
+import FormPlayground from './FormPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
 import IconPlayground from './IconPlayground';
@@ -57,6 +58,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="EventCardPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Form &amp; Form fields"
+      screen="FormPlayground"
+      navigation={navigation}
+    />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
       title="Segmented control"
@@ -78,14 +84,17 @@ export const PlaygroundRouter = StackNavigator(
     AvatarPlayground: {
       screen: AvatarPlayground,
     },
-    EventCardPlayground: {
-      screen: EventCardPlayground,
-    },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
     },
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
+    },
+    EventCardPlayground: {
+      screen: EventCardPlayground,
+    },
+    FormPlayground: {
+      screen: FormPlayground,
     },
     IconPlayground: {
       screen: IconPlayground,
