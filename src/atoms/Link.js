@@ -8,6 +8,7 @@ import { TouchableItem } from '../atoms';
 type P = {
   type: 'mail' | 'phone',
   value: string,
+  children: React$Element<*>,
 };
 
 const PROTOCOL_MAP = {
