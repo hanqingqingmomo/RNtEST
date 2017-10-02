@@ -35,7 +35,4 @@ const styles = StyleSheet.create({
       borderColor: 'rgba(143,142,148,0.3)',
     },
   }),
-  button: {
-    justifyContent: 'flex-end',
-  },
 });
