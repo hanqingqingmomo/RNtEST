@@ -6,6 +6,7 @@ import { StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
 
+import { LandingScreen } from '../screens';
 import AvatarPlayground from './AvatarPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
@@ -73,6 +74,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
+      title="Landing screen"
+      screen="LandingScreen"
+      navigation={navigation}
+    />
+    <Link
       title="Newsfeed"
       screen="NewsfeedPlayground"
       navigation={navigation}
@@ -121,6 +127,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     IconPlayground: {
       screen: IconPlayground,
+    },
+    LandingScreen: {
+      screen: LandingScreen,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
