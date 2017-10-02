@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, FormField, TextDeprecated, View } from '../atoms';
+import { Button, TextInput, TextDeprecated, View } from '../atoms';
 import { Form } from '../hoc';
 
 type P = {
@@ -36,8 +36,8 @@ export default function LoginForm(props: P) {
               Email or password are incorrect.
             </TextDeprecated>
           ) : null}
-          <FormField name="email" label="Email" keyboardType="email-address" />
-          <FormField name="password" label="Password" secureTextEntry />
+          <TextInput name="email" label="Email" keyboardType="email-address" />
+          <TextInput name="password" label="Password" secureTextEntry />
         </View>
       )}
     />
