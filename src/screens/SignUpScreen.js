@@ -1,116 +1,130 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { View, Button, Text, AvatarPicker } from '../atoms';
+import {
+  AvatarPicker,
+  Button,
+  Form,
+  FormField,
+  Icon,
+  ScrollView,
+  Text,
+  View,
+} from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
-const CONTAINER_WIDTH = 275;
-
-const Reserved = ({ style }) => (
-  <View
-    style={[
-      {
-        backgroundColor: getColor('orange'),
-        height: 45,
-        width: CONTAINER_WIDTH,
-      },
-      style,
-    ]}
-  />
-);
-
-type Props = {
-  onPolicyPress: Function,
-  onSignupPress: Function,
-  onTermsPress: Function,
+type FormDataProps = {
+  [string]: string,
 };
 
-export default function SignUpScreen({
-  onPolicyPress,
-  onSignupPress,
-  onTermsPress,
-}: Props) {
-  return (
-    <View style={styles.screenContainer}>
-      <View style={css('width', CONTAINER_WIDTH)}>
-        <Reserved style={styles.icon} />
-        <Text style={styles.addText}>Add Photo</Text>
+type Props = {
+  handleSubmit: () => void,
+};
+
+const RULES = {
+  email: 'required|email',
+  firstName: 'required',
+  lastName: 'required',
+  password: 'required',
+};
+
+class SignupForm extends React.Component<void, Props, void> {
+  static navigationOptions = {
+    title: 'SignUp Form',
+  };
+
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        <Icon name="ywca" color={getColor('orange')} size={100} />
+
+        <Text
+          style={[styles.addText, css('color', '#90A4AE')]}
+          size={17}
+          lineHeight={20}
+        >
+          Add Photo
+        </Text>
+
         <View style={styles.picker}>
           <AvatarPicker />
         </View>
-        <Reserved style={styles.input} />
-        <Reserved style={styles.input} />
-        <Reserved style={styles.input} />
+
+        <FormField label="First Name" name="firstName" />
+        <FormField label="Last Name" name="lastName" />
+        <FormField
+          label="E-mail Address"
+          name="email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <FormField label="Password" name="password" />
+
         <Button
           color={getColor('orange')}
-          onPress={onSignupPress}
-          outline
+          onPress={this.props.handleSubmit}
           size="lg"
           style={styles.button}
           textColor={getColor('white')}
           title="Sign Up"
         />
-        <View style={styles.policyText}>
-          <Text style={css('textAlign', 'center')}>
-            <Text>By signing up, you agree to our </Text>
-            <Text onPress={onTermsPress} style={styles.specialText}>
-              Terms
-            </Text>
-            <Text>{' & '}</Text>
-            <Text onPress={onPolicyPress} style={styles.specialText}>
-              Privacy Policy
-            </Text>
+
+        <Text
+          size={13}
+          lineHeight={20}
+          style={[css('color', '#90A4AE'), styles.policyText]}
+        >
+          By signing up, you agree to our{' '}
+          <Text style={styles.specialText} weight="bold" onPress={() => {}}>
+            Terms
           </Text>
-        </View>
-      </View>
-    </View>
+          {' & '}
+          <Text style={styles.specialText} weight="bold" onPress={() => {}}>
+            Privacy Policy
+          </Text>
+        </Text>
+      </ScrollView>
+    );
+  }
+}
+
+export default function SignUpScreen() {
+  const handleSubmit = (formData: FormDataProps) => {
+    console.log(formData);
+  };
+
+  return (
+    <Form
+      render={formProps => <SignupForm handleSubmit={formProps.handleSubmit} />}
+      onSubmit={handleSubmit}
+      rules={RULES}
+    />
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 50,
+    backgroundColor: getColor('white'),
+  },
   addText: {
-    fontSize: 17,
-    lineHeight: 20,
     marginBottom: 15,
+  },
+  button: {
     marginTop: 25,
   },
-
-  button: {
-    backgroundColor: getColor('orange'),
-    marginTop: 30,
-  },
-
-  icon: {
-    marginTop: 45,
-    width: 150,
-  },
-
-  input: {
+  picker: {
     marginBottom: 5,
   },
-
-  picker: {
-    marginBottom: 30,
-  },
-
   policyText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
+    marginTop: 30,
+    marginBottom: 30,
+    textAlign: 'center',
   },
-
-  screenContainer: {
-    backgroundColor: getColor('white'),
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-
   specialText: {
     textDecorationLine: 'underline',
-    fontWeight: 'bold',
   },
 });

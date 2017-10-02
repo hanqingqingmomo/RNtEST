@@ -3,7 +3,7 @@
 import React from 'react';
 import { Field } from 'formik';
 
-import { TextInput, View } from './index';
+import { TextInput } from './index';
 import { type Props as TextInputProps } from './TextInput';
 
 // Note: only props in use are documented here
@@ -16,6 +16,9 @@ type FormikFieldProps = {
   },
   form: {
     setFieldValue: (name: string, value: any) => void,
+    errors: {
+      [string]: string,
+    },
   },
 };
 
@@ -30,9 +33,12 @@ class FormFieldInner extends React.Component<void, FormikFieldProps, void> {
   };
 
   render() {
+    const { errors } = this.props.form;
+
     return (
       <TextInput
         {...this.props}
+        error={errors[this.props.field.name]}
         value={this.props.field.value}
         onChangeText={this.onChangeText}
       />
