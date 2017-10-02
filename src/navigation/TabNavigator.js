@@ -8,6 +8,32 @@ import {
   TabBarTop,
 } from 'react-navigation';
 
+type ScreenProps = {
+  screen: any,
+};
+
+type Props = {
+  [string]: ScreenProps,
+};
+
+type TabBarProps = {
+  upperCaseLabel: boolean,
+  showIcon: boolean,
+  scrollEnabled: boolean,
+  activeTintColor: string,
+  style: Object | number,
+  labelStyle: Object | number,
+  tabStyle: Object | number,
+  indicatorStyle: Object | number,
+};
+
+type OptionProps = {
+  tabBarPosition?: string,
+  tabBarComponent?: React$Element<*>,
+  animationEnabled?: boolean,
+  tabBarOptions?: TabBarProps,
+};
+
 const DEFAULTS = screens => ({
   tabBarPosition: 'top',
   tabBarComponent: TabBarTop,
@@ -24,22 +50,15 @@ const DEFAULTS = screens => ({
   },
 });
 
-export default function TabNavigator(screens, options = {}) {
+export default function TabNavigator(
+  screens: Props,
+  options: OptionProps = {}
+) {
   return ReactNavigationTabNavigator(
     screens,
     merge(options, DEFAULTS(screens))
   );
 }
-
-// type ScreenProps = {
-//   screen: React$Element,
-// };
-
-// type P = {
-//   screens: {
-//     [string]: ScreenProps,
-//   },
-// };
 
 const styles = StyleSheet.create({
   tabBarStyle: {
