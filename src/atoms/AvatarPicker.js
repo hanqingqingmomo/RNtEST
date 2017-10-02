@@ -40,8 +40,8 @@ export default class AvatarPicker extends Component<*, P, *> {
   render() {
     const { imageUri } = this.props;
     return (
-      <TouchableItem onPress={this.onPress}>
-        <View style={[styles.wrapper, styles.shadow, styles.centerContent]}>
+      <TouchableItem onPress={this.onPress} style={styles.sizeConstraint}>
+        <View style={[styles.circle, styles.shadow, styles.centerContent]}>
           {!imageUri && <Icon name="plus" size={18} color="#B0BEC5" />}
           {imageUri && (
             <Avatar imageURI={imageUri} size={SIZE - OUTLINE_WIDTH * 2} />
@@ -64,6 +64,18 @@ export default class AvatarPicker extends Component<*, P, *> {
 }
 
 const styles = StyleSheet.create({
+  sizeConstraint: {
+    width: SIZE,
+    height: SIZE,
+    borderRadius: SIZE / 2,
+  },
+  circle: {
+    borderColor: 'white',
+    borderWidth: 2,
+    width: '100%',
+    height: '100%',
+    borderRadius: SIZE / 2,
+  },
   shadow: {
     shadowOffset: { width: 0, height: 0 },
     shadowColor: 'black',
@@ -73,13 +85,6 @@ const styles = StyleSheet.create({
   centerContent: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  wrapper: {
-    width: SIZE,
-    height: SIZE,
-    borderColor: 'white',
-    borderWidth: 2,
-    borderRadius: SIZE / 2,
   },
   editIconCircle: {
     position: 'absolute',
