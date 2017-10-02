@@ -15,7 +15,7 @@ export default function TextInput(props: Props) {
       baseColor={getColor('gray')}
       tintColor={getColor('gray')}
       textColor="#455A64"
-      errorColor={getColor('red')}
+      errorColor="#FF0000"
       inputContainerStyle={styles.inputContainerStyle}
       labelTextStyle={styles.labelTextStyle}
       {...props}
