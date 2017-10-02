@@ -13,6 +13,7 @@ import DonationFormPlayground from './DonationFormPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
+import NewsfeedPlayground from './NewsfeedPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
 
@@ -66,6 +67,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
+      title="Newsfeed"
+      screen="NewsfeedPlayground"
+      navigation={navigation}
+    />
+    <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
       navigation={navigation}
@@ -112,6 +118,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     UserProfilePlayground: {
       screen: UserProfilePlayground,
+    },
+    NewsfeedPlayground: {
+      screen: NewsfeedPlayground,
     },
   },
   {

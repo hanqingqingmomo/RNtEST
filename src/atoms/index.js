@@ -32,3 +32,4 @@ export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { default as TextInput } from './TextInput';
 export { default as TouchableItem } from './TouchableItem';
+export { default as ShadowView } from './ShadowView';
