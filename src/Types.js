@@ -24,12 +24,24 @@ export type ScreenProps<S> = {
 };
 
 // Entities
-export type User = $Exact<{
+export type User = {
   id: number,
-  firstName: string,
-  lastName: string,
+  first_name: string,
+  last_name: string,
   email: string,
-}>;
+  profilePhoto: string,
+  role: string,
+};
+
+export type SignupUser = {
+  email: string,
+  first_name?: string,
+  last_name?: string,
+  password?: string,
+  pasword_confirmation?: string,
+  timezone?: string,
+  photo?: string,
+};
 
 // Redux
 export type Action<T, A> = {

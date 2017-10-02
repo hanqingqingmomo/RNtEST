@@ -3,8 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, FormField, View } from '../atoms';
-import { Form } from '../hoc';
+import { Button, Form, FormField, View } from '../atoms';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,8 +27,8 @@ export default function ProfileForm() {
       render={({ handleReset, handleSubmit }) => (
         <View style={styles.container}>
           <FormField name="email" label="Enter your email" />
-          <FormField name="facebook" label="facebook username" />
-          <FormField name="twitter" label="twitter username" />
+          <FormField name="facebook" label="Facebook username" />
+          <FormField name="twitter" label="Twitter username" />
           <View style={styles.buttons} />
         </View>
       )}

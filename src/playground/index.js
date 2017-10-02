@@ -4,14 +4,19 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import AvatarGroupPlayground from './AvatarGroupPlayground';
-import ImageInputPlayground from './ImageInputPlayground';
-import EventCardPlayground from './EventCardPlayground';
+import { Text, View } from '../atoms';
+
+import AvatarPlayground from './AvatarPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
-import SegmentedControlPlayground from './SegmentedControlPlayground';
+import ContactGroupPlayground from './ContactGroupPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
-import { Text, View } from '../atoms';
+import EventCardPlayground from './EventCardPlayground';
+import FormPlayground from './FormPlayground';
+import IconPlayground from './IconPlayground';
+import NewsfeedPlayground from './NewsfeedPlayground';
+import SegmentedControlPlayground from './SegmentedControlPlayground';
+import UserProfilePlayground from './UserProfilePlayground';
 
 type LinkProps = {
   screen: string,
@@ -32,18 +37,8 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 const PlaygroundIndexScreen = ({ navigation }) => (
   <View>
     <Link
-      title="Avatar Group"
-      screen="AvatarGroupPlayground"
-      navigation={navigation}
-    />
-    <Link
-      title="Image Input"
-      screen="ImageInputPlayground"
-      navigation={navigation}
-    />
-    <Link
-      title="Event Card"
-      screen="EventCardPlayground"
+      title="Avatar, Avatar group &amp; Avatar picker"
+      screen="AvatarPlayground"
       navigation={navigation}
     />
     <Link
@@ -57,13 +52,39 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
-      title="Segmented control"
-      screen="SegmentedControlPlayground"
+      title="Contact Group"
+      screen="ContactGroupPlayground"
       navigation={navigation}
     />
     <Link
       title="Donation Form"
       screen="DonationFormPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Event Card"
+      screen="EventCardPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Form &amp; Form fields"
+      screen="FormPlayground"
+      navigation={navigation}
+    />
+    <Link title="Icons" screen="IconPlayground" navigation={navigation} />
+    <Link
+      title="Newsfeed"
+      screen="NewsfeedPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Segmented control"
+      screen="SegmentedControlPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="User Profile"
+      screen="UserProfilePlayground"
       navigation={navigation}
     />
   </View>
@@ -77,14 +98,8 @@ export const PlaygroundRouter = StackNavigator(
         title: 'Component Playground',
       },
     },
-    AvatarGroupPlayground: {
-      screen: AvatarGroupPlayground,
-    },
-    ImageInputPlayground: {
-      screen: ImageInputPlayground,
-    },
-    EventCardPlayground: {
-      screen: EventCardPlayground,
+    AvatarPlayground: {
+      screen: AvatarPlayground,
     },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
@@ -92,11 +107,29 @@ export const PlaygroundRouter = StackNavigator(
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
     },
-    SegmentedControlPlayground: {
-      screen: SegmentedControlPlayground,
+    ContactGroupPlayground: {
+      screen: ContactGroupPlayground,
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
+    },
+    EventCardPlayground: {
+      screen: EventCardPlayground,
+    },
+    FormPlayground: {
+      screen: FormPlayground,
+    },
+    IconPlayground: {
+      screen: IconPlayground,
+    },
+    SegmentedControlPlayground: {
+      screen: SegmentedControlPlayground,
+    },
+    UserProfilePlayground: {
+      screen: UserProfilePlayground,
+    },
+    NewsfeedPlayground: {
+      screen: NewsfeedPlayground,
     },
   },
   {

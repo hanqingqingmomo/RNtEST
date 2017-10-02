@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 import { Icon, View } from './index';
+import { getColor } from '../utils/color';
 
 type Props = {
   onChangeText: string => void,
@@ -14,7 +15,7 @@ type Props = {
 export default function SearchBox({ onChangeText, placeholder, value }: Props) {
   return (
     <View style={styles.container}>
-      <Icon name="attachment" color="#B0BEC5" size={16} style={styles.icon} />
+      <Icon name="search" color="#B0BEC5" size={16} style={styles.icon} />
       <TextInput
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: '#90A4AE',
+    color: getColor('gray'),
     fontSize: 14,
     fontWeight: '500',
     paddingLeft: 7,
