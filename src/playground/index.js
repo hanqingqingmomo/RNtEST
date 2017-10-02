@@ -12,6 +12,7 @@ import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
 import IconPlayground from './IconPlayground';
+import TabsPlayground from './TabsPlayground';
 
 type LinkProps = {
   screen: string,
@@ -62,6 +63,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
   </View>
 );
 

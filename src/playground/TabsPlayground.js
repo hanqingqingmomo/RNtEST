@@ -58,6 +58,10 @@ const SCREENS = {
 };
 
 export default class TabsPlayground extends React.Component<*, *, *> {
+  static navigationOptions = {
+    headerTitle: 'Tabs',
+  };
+
   render() {
     const C = TabNavigator(SCREENS);
     return <C />;
