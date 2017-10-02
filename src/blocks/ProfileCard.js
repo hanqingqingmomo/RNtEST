@@ -4,18 +4,22 @@ import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
 import { View, Text, Avatar, Icon, Link } from '../atoms';
+import { css } from '../utils/style';
 
+// TODO use type after merge
 type P = {
-  imageURI: string,
-  username: string,
-  position: string,
-  email: string,
-  phone: string,
+  user: {
+    imageURI: string,
+    username: string,
+    position: string,
+    email: string,
+    phone: string,
+  },
 };
 
-export default class UserProfile extends React.Component<*, P, *> {
+export default class ProfileCard extends React.Component<*, P, *> {
   render() {
-    const { username, position, imageURI, email, phone } = this.props;
+    const { username, position, imageURI, email, phone } = this.props.user;
 
     return (
       <View style={[styles.container, styles.containerByPlatform]}>

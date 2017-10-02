@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View } from '../atoms';
-import { UserProfile } from '../blocks';
+import { ProfileCard } from '../blocks';
 
 const data = {
   imageURI:
@@ -23,7 +23,7 @@ export default class UserProfilePlayground extends React.Component<*, *, *> {
   render() {
     return (
       <View style={styles.container}>
-        <UserProfile {...data} />
+        <ProfileCard user={data} />
       </View>
     );
   }
