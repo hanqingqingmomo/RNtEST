@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, TouchableItem, Icon } from '../../atoms';
+import { Text, TouchableItem, Icon, View } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { type Style } from '../../Types';
@@ -16,18 +16,41 @@ const HIT_SLOP = {
 };
 
 type P = {
+  disabled?: boolean,
   icon?: string,
   isActive?: boolean,
   onPress: () => void,
   size: 'lg' | 'md' | 'sm',
   style: Style,
+  textColor?: {
+    color: string,
+  },
   title: string,
-  disabled?: boolean,
+};
+
+const HEIGHT = {
+  sm: 40,
+  md: 48,
+  lg: 58,
+};
+
+const ICON_LINE_HEIGHT = {
+  sm: 45,
+  md: 60,
+  lg: 65,
 };
 
 export default class DonationButton extends React.Component<*, P, *> {
   render() {
-    const { size, title, isActive, icon, disabled } = this.props;
+    const {
+      disabled,
+      icon,
+      isActive,
+      size,
+      style,
+      textColor,
+      title,
+    } = this.props;
 
     return (
       <TouchableItem
@@ -35,29 +58,34 @@ export default class DonationButton extends React.Component<*, P, *> {
         disabled={disabled}
         onPress={this.props.onPress}
       >
-        <Text
+        <View
           style={[
-            css('color', '#455A64'),
-            styles[size],
             styles.container,
+            css('height', HEIGHT[size]),
             isActive ? styles.active : undefined,
             disabled ? css('opacity', 0.45) : undefined,
-            this.props.style,
+            style,
           ]}
-          weight="500"
         >
-          {title}
-
-          {icon ? `  ` : null}
+          <Text
+            style={[
+              css('color', isActive ? 'white' : '#455A64'),
+              textColor,
+              styles[size],
+            ]}
+            weight="500"
+          >
+            {title}
+          </Text>
           {icon ? (
             <Icon
-              name="attachment"
-              size={24}
+              name={icon}
+              size={60}
               color="white"
-              style={{ backgroundColor: 'red' }}
+              style={[styles.icon, css('lineHeight', ICON_LINE_HEIGHT[size])]}
             />
           ) : null}
-        </Text>
+        </View>
       </TouchableItem>
     );
   }
@@ -66,30 +94,31 @@ export default class DonationButton extends React.Component<*, P, *> {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#B0BEC5',
     borderRadius: 3,
     overflow: 'hidden',
-    textAlign: 'center',
+    flexGrow: 1,
   },
   active: {
-    color: 'white',
     backgroundColor: getColor('orange'),
     borderColor: getColor('orange'),
   },
+  icon: {
+    marginLeft: 10,
+    overflow: 'hidden',
+  },
   sm: {
-    paddingVertical: 10,
     fontSize: 14,
   },
   md: {
-    paddingVertical: 10,
     fontSize: 19,
   },
   lg: {
-    paddingVertical: 15,
     fontSize: 18,
   },
 });
