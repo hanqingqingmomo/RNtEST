@@ -18,6 +18,7 @@ import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
+import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
 
 type LinkProps = {
@@ -90,6 +91,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link title="SignUp screen" screen="SignUpScreen" navigation={navigation} />
+    <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
     <Link
       title="User Profile"
       screen="UserProfilePlayground"
@@ -108,6 +110,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     AvatarPlayground: {
       screen: AvatarPlayground,
+    },
+    AuthenticationRootScreen: {
+      screen: AuthenticationRootScreen,
     },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
@@ -139,11 +144,11 @@ export const PlaygroundRouter = StackNavigator(
     SignUpScreen: {
       screen: SignUpScreen,
     },
+    TabsPlayground: {
+      screen: TabsPlayground,
+    },
     UserProfilePlayground: {
       screen: UserProfilePlayground,
-    },
-    AuthenticationRootScreen: {
-      screen: AuthenticationRootScreen,
     },
   },
   {
