@@ -2,6 +2,7 @@
 
 export {
   ActivityIndicator,
+  FlatList,
   Image,
   ImageBackground,
   ScrollView,

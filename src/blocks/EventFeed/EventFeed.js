@@ -1,9 +1,10 @@
 // @flow
 
 import React from 'react';
+import { Dimensions } from 'react-native';
 
 import Event from './Event';
-import { ScrollView } from '../../atoms';
+import { View, DateCard, FlatList } from '../../atoms';
 
 const ATTENDING_STATUS = {
   GOING: 'GOING',
@@ -11,7 +12,7 @@ const ATTENDING_STATUS = {
   PENDING: 'PENDING',
 };
 
-type ItemProps = {
+type EventProps = {
   date: Date,
   duration: { from: Date, to: Date },
   id: string,
@@ -22,8 +23,13 @@ type ItemProps = {
   tag: string,
 };
 
+type ItemProps = {
+  date: Date,
+  events: Array<EventProps>,
+};
+
 type P = {
-  events: Array<ItemProps>,
+  data: Array<ItemProps>,
 };
 
 export default class EventFeed extends React.Component<*, P, *> {
@@ -33,26 +39,52 @@ export default class EventFeed extends React.Component<*, P, *> {
 
   onNotGoing = id => {};
 
-  render() {
-    const { events } = this.props;
-
-    const actions = {
-      onJoin: this.onJoin,
-      onGoing: this.onGoing,
-      onNotGoing: this.onNotGoing,
-    };
-
+  renderEvent = (event, border) => {
     return (
-      <ScrollView>
-        {events.map((event, idx) => (
-          <Event
-            actions={actions}
-            event={event}
-            key={event.id}
-            border={idx !== events.length - 1}
-          />
-        ))}
-      </ScrollView>
+      <Event
+        actions={{
+          onJoin: this.onJoin,
+          onGoing: this.onGoing,
+          onNotGoing: this.onNotGoing,
+        }}
+        event={event}
+        key={event.id}
+        border={border}
+      />
+    );
+  };
+
+  renderItem = ({ item: { date, events }, index }) => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+        key={index}
+      >
+        <View
+          style={{
+            paddingVertical: 14,
+            paddingRight: 12,
+            paddingLeft: 15,
+          }}
+        >
+          <DateCard date={date} size="md" />
+        </View>
+        <View style={{ flex: 1 }}>
+          {events.map((event, idx) => this.renderEvent(event, true))}
+        </View>
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <FlatList
+        data={this.props.data}
+        renderItem={this.renderItem}
+        keyExtractor={data => data.date}
+      />
     );
   }
 }

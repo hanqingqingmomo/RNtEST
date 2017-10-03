@@ -81,7 +81,7 @@ export default class IconButton extends React.Component<DP, DP & P, *> {
           <Icon
             color={iconColor}
             name={iconName}
-            size={size}
+            size={activeSizeStyle.iconSize}
             style={styles.icon}
           />
         </View>
@@ -106,28 +106,32 @@ const styles = StyleSheet.create({
 });
 
 const sizeStyles = {
-  xs: StyleSheet.create({
-    view: {
-      height: 27,
-      width: 27,
-    },
-  }),
-  sm: StyleSheet.create({
-    view: {
+  xs: {
+    iconSize: 10,
+    view: StyleSheet.create({
+      height: 20,
+      width: 20,
+    }),
+  },
+  sm: {
+    iconSize: 12,
+    view: StyleSheet.create({
+      height: 24,
+      width: 24,
+    }),
+  },
+  md: {
+    iconSize: 14,
+    view: StyleSheet.create({
       height: 34,
       width: 34,
-    },
-  }),
-  md: StyleSheet.create({
-    view: {
-      height: 60,
-      width: 60,
-    },
-  }),
-  lg: StyleSheet.create({
-    view: {
-      height: 70,
-      width: 70,
-    },
-  }),
+    }),
+  },
+  lg: {
+    iconSize: 16,
+    view: StyleSheet.create({
+      height: 48,
+      width: 48,
+    }),
+  },
 };

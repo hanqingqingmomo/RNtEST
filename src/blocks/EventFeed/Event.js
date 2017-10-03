@@ -137,9 +137,10 @@ export default function Event({ actions, event, border }: P) {
           <Button
             color={palette.joinButton.color}
             onPress={() => actions.onJoin(id)}
-            size="md"
+            size="sm"
             textColor={palette.joinButton.text}
             title="Join"
+            style={styles.buttonJoin}
           />
         </View>
       ) : (
@@ -186,9 +187,9 @@ export default function Event({ actions, event, border }: P) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 14,
     width: '100%',
     paddingRight: 15,
+    paddingVertical: 14,
   },
   borderBottom: {
     borderColor: '#EDEFF2',
@@ -199,6 +200,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  buttonJoin: {
+    width: 60,
+  },
   liveLabel: {
     paddingHorizontal: 7,
     paddingVertical: 3,
@@ -208,7 +212,7 @@ const styles = StyleSheet.create({
   },
   midSection: {
     justifyContent: 'space-between',
-    marginVertical: 2,
+    marginVertical: 8,
   },
   pillWrapper: {
     maxWidth: '50%',
