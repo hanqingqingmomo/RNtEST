@@ -30,6 +30,7 @@ export type User = {
   last_name: string,
   email: string,
   profilePhoto: string,
+  role: string,
 };
 
 export type SignupUser = {

@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 20,
     justifyContent: 'center',
+    overflow: 'hidden',
   },
 
   title: {

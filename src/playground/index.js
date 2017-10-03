@@ -6,14 +6,24 @@ import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
 import { Drawer } from '../blocks';
+import {
+  AuthenticationRootScreen,
+  LandingScreen,
+  SignUpScreen,
+} from '../screens';
+
 import AvatarPlayground from './AvatarPlayground';
-import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
-import FormPlayground from './FormPlayground';
-import SegmentedControlPlayground from './SegmentedControlPlayground';
+import ContactGroupPlayground from './ContactGroupPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
+import EventCardPlayground from './EventCardPlayground';
+import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
+import NewsfeedPlayground from './NewsfeedPlayground';
+import SegmentedControlPlayground from './SegmentedControlPlayground';
+import TabsPlayground from './TabsPlayground';
+import UserProfilePlayground from './UserProfilePlayground';
 
 type LinkProps = {
   screen: string,
@@ -39,6 +49,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
+      title="Authentication Root"
+      screen="AuthenticationRootScreen"
+      navigation={navigation}
+    />
+    <Link
       title="Community Card"
       screen="CommunityCardPlayground"
       navigation={navigation}
@@ -46,6 +61,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Community Header"
       screen="CommunityHeaderPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Contact Group"
+      screen="ContactGroupPlayground"
       navigation={navigation}
     />
     <Link
@@ -65,8 +85,25 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
+      title="Landing screen"
+      screen="LandingScreen"
+      navigation={navigation}
+    />
+    <Link
+      title="Newsfeed"
+      screen="NewsfeedPlayground"
+      navigation={navigation}
+    />
+    <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
+      navigation={navigation}
+    />
+    <Link title="SignUp screen" screen="SignUpScreen" navigation={navigation} />
+    <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
+    <Link
+      title="User Profile"
+      screen="UserProfilePlayground"
       navigation={navigation}
     />
   </View>
@@ -83,11 +120,20 @@ const PlaygroundRoutes = StackNavigator(
     AvatarPlayground: {
       screen: AvatarPlayground,
     },
+    AuthenticationRootScreen: {
+      screen: AuthenticationRootScreen,
+    },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
     },
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
+    },
+    ContactGroupPlayground: {
+      screen: ContactGroupPlayground,
+    },
+    DonationFormPlayground: {
+      screen: DonationFormPlayground,
     },
     EventCardPlayground: {
       screen: EventCardPlayground,
@@ -98,11 +144,23 @@ const PlaygroundRoutes = StackNavigator(
     IconPlayground: {
       screen: IconPlayground,
     },
+    LandingScreen: {
+      screen: LandingScreen,
+    },
+    NewsfeedPlayground: {
+      screen: NewsfeedPlayground,
+    },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
     },
-    DonationFormPlayground: {
-      screen: DonationFormPlayground,
+    SignUpScreen: {
+      screen: SignUpScreen,
+    },
+    TabsPlayground: {
+      screen: TabsPlayground,
+    },
+    UserProfilePlayground: {
+      screen: UserProfilePlayground,
     },
   },
   {
