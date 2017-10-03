@@ -6,7 +6,7 @@ import { StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
 
-import { SignUpScreen } from '../screens';
+import { AuthenticationRootScreen, SignUpScreen } from '../screens';
 
 import AvatarPlayground from './AvatarPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
@@ -41,6 +41,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Avatar, Avatar group &amp; Avatar picker"
       screen="AvatarPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Authentication Root"
+      screen="AuthenticationRootScreen"
       navigation={navigation}
     />
     <Link
@@ -136,6 +141,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     UserProfilePlayground: {
       screen: UserProfilePlayground,
+    },
+    AuthenticationRootScreen: {
+      screen: AuthenticationRootScreen,
     },
   },
   {
