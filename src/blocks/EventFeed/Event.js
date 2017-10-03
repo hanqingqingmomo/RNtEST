@@ -22,9 +22,9 @@ const EVENT_STATUS = {
 
 type P = {
   actions: {
-    onJoin: id => void,
-    onGoing: id => void,
-    onNotGoing: id => void,
+    onJoin: (number | string) => void,
+    onGoing: (number | string) => void,
+    onNotGoing: (number | string) => void,
   },
   border?: boolean,
   event: {

@@ -28,18 +28,23 @@ type ItemProps = {
   events: Array<EventProps>,
 };
 
+type FlatListItemProps = {
+  item: ItemProps,
+  index: number,
+};
+
 type P = {
   data: Array<ItemProps>,
 };
 
 export default class EventFeed extends React.Component<*, P, *> {
-  onJoin = id => {};
+  onJoin = (id: number | string) => {};
 
-  onGoing = id => {};
+  onGoing = (id: number | string) => {};
 
-  onNotGoing = id => {};
+  onNotGoing = (id: number | string) => {};
 
-  renderEvent = (event, border) => {
+  renderEvent = (event: EventProps, border: boolean) => {
     return (
       <Event
         actions={{
@@ -54,7 +59,7 @@ export default class EventFeed extends React.Component<*, P, *> {
     );
   };
 
-  renderItem = ({ item: { date, events }, index }) => {
+  renderItem = ({ item: { date, events }, index }: FlatListItemProps) => {
     return (
       <View style={styles.rowContainer} key={index}>
         <View style={styles.dateColumn}>
