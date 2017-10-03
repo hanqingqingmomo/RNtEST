@@ -13,6 +13,7 @@ import {
 } from '../screens';
 
 import AvatarPlayground from './AvatarPlayground';
+import ButtonPlayground from './ButtonPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import ContactGroupPlayground from './ContactGroupPlayground';
@@ -53,6 +54,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="AuthenticationRootScreen"
       navigation={navigation}
     />
+    <Link title="Buttons" screen="ButtonPlayground" navigation={navigation} />
     <Link
       title="Community Card"
       screen="CommunityCardPlayground"
@@ -122,6 +124,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     AuthenticationRootScreen: {
       screen: AuthenticationRootScreen,
+    },
+    ButtonPlayground: {
+      screen: ButtonPlayground,
     },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
