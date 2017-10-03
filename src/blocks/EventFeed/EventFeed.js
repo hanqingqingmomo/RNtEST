@@ -3,7 +3,7 @@
 import React from 'react';
 
 import Event from './Event';
-import { View } from '../../atoms';
+import { ScrollView } from '../../atoms';
 
 const ATTENDING_STATUS = {
   GOING: 'GOING',
@@ -43,11 +43,16 @@ export default class EventFeed extends React.Component<*, P, *> {
     };
 
     return (
-      <View style={{ paddingLeft: 70 }}>
-        {events.map(event => (
-          <Event actions={actions} event={event} key={event.id} />
+      <ScrollView>
+        {events.map((event, idx) => (
+          <Event
+            actions={actions}
+            event={event}
+            key={event.id}
+            border={idx !== events.length - 1}
+          />
         ))}
-      </View>
+      </ScrollView>
     );
   }
 }

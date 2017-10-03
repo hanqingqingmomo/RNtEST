@@ -26,6 +26,7 @@ type P = {
     onGoing: id => void,
     onNotGoing: id => void,
   },
+  border?: boolean,
   event: {
     date: Date,
     duration: { from: Date, to: Date },
@@ -106,7 +107,7 @@ const common = {
   },
 };
 
-export default function Event({ actions, event }: P) {
+export default function Event({ actions, event, border }: P) {
   const { date, duration, id, live, name, participants, status, tag } = event;
 
   const pastEvent = isPast(date);
@@ -116,36 +117,23 @@ export default function Event({ actions, event }: P) {
   };
 
   return (
-    <View style={[styles.alignment]}>
-      <View style={[styles.eventInfo]}>
-        <View style={[styles.topSection]}>
-          <Text style={[styles.eventName, css('color', palette.titleColor)]}>
-            {name}
+    <View style={[styles.container, border ? styles.borderBottom : undefined]}>
+      <Text
+        style={css('color', palette.titleColor)}
+        fontSize={13}
+        weight="500"
+        lineHeight={16}
+        numberOfLines={2}
+        ellipsizeMode="tail"
+      >
+        {name}
+      </Text>
+
+      {live ? (
+        <View style={[styles.midSection, styles.alignment]}>
+          <Text style={styles.liveLabel} color="white" size={13} weight="bold">
+            Live
           </Text>
-        </View>
-        <View style={[styles.midSection]}>
-          {live ? (
-            <View style={[styles.liveLabelWrapper]}>
-              <Text style={[styles.liveLabel]}>Live</Text>
-            </View>
-          ) : (
-            <Text style={[styles.durationText]}>
-              {`${format(duration.from, 'h:mm A')} - ${format(
-                duration.to,
-                'h:mm A'
-              )}`}
-            </Text>
-          )}
-        </View>
-        <View style={[styles.alignment]}>
-          <View style={[styles.pillWrapper]}>
-            <Pill color={palette.pillTextColor} title={tag} />
-          </View>
-          <AvatarGroup imageURIs={participants} />
-        </View>
-      </View>
-      <View style={[styles.alignment, styles.eventActions]}>
-        {live ? (
           <Button
             color={palette.joinButton.color}
             onPress={() => actions.onJoin(id)}
@@ -153,8 +141,16 @@ export default function Event({ actions, event }: P) {
             textColor={palette.joinButton.text}
             title="Join"
           />
-        ) : (
-          <View style={[styles.alignment]}>
+        </View>
+      ) : (
+        <View style={[styles.midSection, styles.alignment]}>
+          <Text color="gray" size={13} lineHeight={15}>
+            {`${format(duration.from, 'h:mm A')} - ${format(
+              duration.to,
+              'h:mm A'
+            )}`}
+          </Text>
+          <View style={styles.alignment}>
             <Button.Icon
               color={palette[status].notGoingButton.color}
               disabled={pastEvent}
@@ -175,58 +171,47 @@ export default function Event({ actions, event }: P) {
               size="sm"
             />
           </View>
-        )}
+        </View>
+      )}
+
+      <View style={styles.alignment}>
+        <View style={styles.pillWrapper}>
+          <Pill color={palette.pillTextColor} title={tag} />
+        </View>
+        <AvatarGroup imageURIs={participants} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 14,
+    width: '100%',
+    paddingRight: 15,
+  },
+  borderBottom: {
+    borderColor: '#EDEFF2',
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+  },
   alignment: {
     alignItems: 'center',
     flexDirection: 'row',
   },
-  bottomSection: {},
-  durationText: {
-    color: getColor('gray'),
-    fontSize: 13,
-    lineHeight: 15,
-  },
-  eventActions: {
-    // backgroundColor: '#f0ece5',
-    justifyContent: 'center',
-    width: '30%',
-  },
-  eventInfo: {
-    // backgroundColor: '#ffede0',
-    width: '70%',
-  },
-  eventName: {
-    fontSize: 13,
-    fontWeight: '500',
-    lineHeight: 16,
-  },
   liveLabel: {
-    color: getColor('white'),
-    fontSize: 13,
-    fontWeight: 'bold',
-    paddingTop: 1,
-    paddingRight: 7,
-    paddingBottom: 1,
-    paddingLeft: 7,
-  },
-  liveLabelWrapper: {
-    alignSelf: 'flex-start',
+    paddingHorizontal: 7,
+    paddingVertical: 3,
     backgroundColor: getColor('red'),
+    borderRadius: 3,
+    overflow: 'hidden',
   },
   midSection: {
-    paddingBottom: 12,
+    justifyContent: 'space-between',
+    marginVertical: 2,
   },
   pillWrapper: {
     maxWidth: '50%',
-    paddingRight: 10,
-  },
-  topSection: {
-    paddingBottom: 6,
+    paddingRight: 8,
   },
 });
