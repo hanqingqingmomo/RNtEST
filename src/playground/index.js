@@ -22,6 +22,7 @@ import EventCardPlayground from './EventCardPlayground';
 import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
+import PopoverPlayground from './PopoverPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
@@ -108,6 +109,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="UserProfilePlayground"
       navigation={navigation}
     />
+    <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
   </View>
 );
 
@@ -166,6 +168,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     UserProfilePlayground: {
       screen: UserProfilePlayground,
+    },
+    PopoverPlayground: {
+      screen: PopoverPlayground,
     },
   },
   {
