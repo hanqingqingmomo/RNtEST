@@ -24,13 +24,13 @@ type P = {
   disabled?: boolean,
   iconColor: ColorName | string,
   iconName: IconName,
-  onPress: Function,
+  onPress: () => void,
   outline?: boolean,
   size: IconSize | number,
   style?: any,
 };
 
-export default class IconButton extends React.Component<DP, DP & P, *> {
+export default class IconButton extends React.Component<DP, P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,
@@ -75,7 +75,7 @@ export default class IconButton extends React.Component<DP, DP & P, *> {
             outline
               ? [css('borderColor', color), css('borderWidth', 1)]
               : css('backgroundColor', color),
-            activeSizeStyle.view,
+            activeSizeStyle.size.view,
           ]}
         >
           <Icon
@@ -108,30 +108,38 @@ const styles = StyleSheet.create({
 const sizeStyles = {
   xs: {
     iconSize: 10,
-    view: StyleSheet.create({
-      height: 20,
-      width: 20,
+    size: StyleSheet.create({
+      view: {
+        height: 20,
+        width: 20,
+      },
     }),
   },
   sm: {
     iconSize: 12,
-    view: StyleSheet.create({
-      height: 24,
-      width: 24,
+    size: StyleSheet.create({
+      view: {
+        height: 24,
+        width: 24,
+      },
     }),
   },
   md: {
-    iconSize: 14,
-    view: StyleSheet.create({
-      height: 34,
-      width: 34,
+    iconSize: 18,
+    size: StyleSheet.create({
+      view: {
+        height: 34,
+        width: 34,
+      },
     }),
   },
   lg: {
-    iconSize: 16,
-    view: StyleSheet.create({
-      height: 48,
-      width: 48,
+    iconSize: 30,
+    size: StyleSheet.create({
+      view: {
+        height: 48,
+        width: 48,
+      },
     }),
   },
 };
