@@ -1,9 +1,8 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
-import { ScrollView, TableView, Text, View, Image, Icon } from '../atoms';
+import { ScrollView, TableView, Text, Icon } from '../atoms';
 import { ProfileCard } from '../blocks';
 
 const { Table, Section, Cell } = TableView;
@@ -26,7 +25,7 @@ export default class UserProfilePlayground extends React.Component<*, *, *> {
     return (
       <ScrollView>
         <Table>
-          <Section sectionPaddingTop={0}>
+          <Section sectionPaddingTop={0} radius={0}>
             <ProfileCard user={data} />
           </Section>
           <Section header="Communities">

@@ -39,7 +39,7 @@ export default class NewsFeedItemDonation extends React.Component<*, P, *> {
     return (
       <View style={styles.container}>
         <View style={styles.dateContainer}>
-          <ShadowView style={styles.dateBox}>
+          <ShadowView style={styles.dateBox} radius={3}>
             <Image
               source={{ uri: imageURI }}
               style={styles.image}

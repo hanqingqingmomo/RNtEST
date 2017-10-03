@@ -11,7 +11,15 @@ import {
 } from 'date-fns';
 import Color from 'color';
 
-import { Icon, Image, View, Text, TouchableItem, Button } from './index';
+import {
+  Icon,
+  Image,
+  View,
+  Text,
+  TouchableItem,
+  Button,
+  ShadowView,
+} from './index';
 import { getColor } from '../utils/color';
 
 const HIT_SLOP = {
@@ -88,7 +96,7 @@ export default class EventCard extends React.Component<*, P, *> {
             Live
           </Text>
         ) : null}
-        <View style={styles.wrapper}>
+        <ShadowView radius={3}>
           <View style={[styles.border, isLive ? styles.borderRed : undefined]}>
             <Image
               style={styles.image}
@@ -143,7 +151,7 @@ export default class EventCard extends React.Component<*, P, *> {
               </View>
             </View>
           </View>
-        </View>
+        </ShadowView>
       </View>
     );
   }
@@ -164,12 +172,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     backgroundColor: getColor('red'),
-  },
-  wrapper: {
-    shadowColor: 'black',
-    shadowOpacity: 0.14,
-    shadowRadius: 3,
-    shadowOffset: { width: 1, height: 4 },
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

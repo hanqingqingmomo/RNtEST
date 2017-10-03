@@ -99,7 +99,7 @@ export default class NewsFeedItem extends React.Component<*, P, *> {
     const shortedTitle = this.shortenString(title, 110);
 
     return (
-      <ShadowView style={isNew ? styles.borderIsNew : undefined}>
+      <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader
             tags={tags}

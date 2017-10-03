@@ -1,10 +1,9 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { View, Text, Avatar, Icon, Link } from '../atoms';
-import { css } from '../utils/style';
+import { View, Text, Avatar, Icon, Link, ShadowView } from '../atoms';
 
 // TODO use type after merge
 type P = {
@@ -22,7 +21,7 @@ export default class ProfileCard extends React.Component<*, P, *> {
     const { username, position, imageURI, email, phone } = this.props.user;
 
     return (
-      <View style={[styles.container, styles.containerByPlatform]}>
+      <ShadowView style={styles.container}>
         <Avatar imageURI={imageURI} size={100} />
         <Text
           size={19}
@@ -79,7 +78,7 @@ export default class ProfileCard extends React.Component<*, P, *> {
             </Link>
           </View>
         </View>
-      </View>
+      </ShadowView>
     );
   }
 }
@@ -91,19 +90,6 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     backgroundColor: 'white',
   },
-  containerByPlatform: Platform.select({
-    ios: {
-      shadowColor: 'rgba(143,142,148,0.3)',
-      shadowOpacity: 0.14,
-      shadowRadius: 3,
-      shadowOffset: { width: 1, height: 4 },
-    },
-    android: {
-      borderColor: 'rgba(143,142,148,0.3)',
-      borderStyle: 'solid',
-      borderBottomWidth: 1,
-    },
-  }),
   links: {
     flexDirection: 'row',
     maxWidth: 230,

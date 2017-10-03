@@ -8,12 +8,30 @@ import { View } from './index';
 type P = {
   style?: Object,
   children?: React$Element<*>,
+  radius: number,
 };
 
 export default class Shadow extends React.Component<*, P, *> {
   render() {
+    const { radius } = this.props;
+
     return (
-      <View style={[styles.shadowByPlatform, this.props.style]}>
+      <View
+        style={[
+          styles.shadowByPlatform,
+          radius
+            ? Platform.select({
+                ios: {
+                  shadowRadius: radius,
+                },
+                android: {
+                  borderRadius: radius,
+                },
+              })
+            : undefined,
+          this.props.style,
+        ]}
+      >
         {this.props.children}
       </View>
     );

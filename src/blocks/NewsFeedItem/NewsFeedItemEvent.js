@@ -21,7 +21,7 @@ export default class NewsFeedItemEvent extends React.Component<*, *, *> {
           />
         </View>
         <View style={styles.dateContainer}>
-          <ShadowView style={styles.dateBox}>
+          <ShadowView style={styles.dateBox} radius={3}>
             <Text
               size={20}
               lineHeight={20}
