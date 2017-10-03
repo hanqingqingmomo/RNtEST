@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import Event from './Event';
 import { View, DateCard, FlatList } from '../../atoms';
@@ -56,22 +56,11 @@ export default class EventFeed extends React.Component<*, P, *> {
 
   renderItem = ({ item: { date, events }, index }) => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-        }}
-        key={index}
-      >
-        <View
-          style={{
-            paddingVertical: 14,
-            paddingRight: 12,
-            paddingLeft: 15,
-          }}
-        >
+      <View style={styles.rowContainer} key={index}>
+        <View style={styles.dateColumn}>
           <DateCard date={date} size="md" />
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={styles.eventColumn}>
           {events.map((event, idx) => this.renderEvent(event, true))}
         </View>
       </View>
@@ -88,3 +77,17 @@ export default class EventFeed extends React.Component<*, P, *> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  rowContainer: {
+    flexDirection: 'row',
+  },
+  dateColumn: {
+    paddingVertical: 14,
+    paddingRight: 12,
+    paddingLeft: 15,
+  },
+  eventColumn: {
+    flex: 1,
+  },
+});
