@@ -3,23 +3,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View, Button, Text } from '../atoms';
+import { Icon, View, Button, Text } from '../atoms';
 import { getColor } from '../utils/color';
 
 const BUTTON_WIDTH = 275;
-
-const Icon = ({ style }) => (
-  <View
-    style={[
-      style,
-      {
-        backgroundColor: getColor('orange'),
-        height: 45,
-        width: 150,
-      },
-    ]}
-  />
-);
 
 type Props = {
   onFacebookButtonPress: Function,
@@ -40,7 +27,7 @@ export default function AuthenticationRootScreen({
     <View style={styles.screenContainer}>
       <View style={styles.iconContainer}>
         <View style={{ width: BUTTON_WIDTH }}>
-          <Icon style={styles.icon} />
+          <Icon name="ywca" color="orange" size={100} style={styles.icon} />
         </View>
       </View>
       <View style={styles.buttonsContainer}>
