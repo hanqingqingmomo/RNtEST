@@ -3,8 +3,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View } from '../atoms';
+import { ScrollView, TableView, Text, View, Image, Icon } from '../atoms';
 import { ProfileCard } from '../blocks';
+
+const { Table, Section, Cell } = TableView;
 
 const data = {
   imageURI:
@@ -22,16 +24,22 @@ export default class UserProfilePlayground extends React.Component<*, *, *> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ProfileCard user={data} />
-      </View>
+      <ScrollView>
+        <Table>
+          <Section sectionPaddingTop={0}>
+            <ProfileCard user={data} />
+          </Section>
+          <Section header="Communities">
+            <Cell title={<Text>comp</Text>} />
+            <Cell
+              title="def"
+              image={<Icon name="ywca" size="lg" />}
+              accessory="DisclosureIndicator"
+              disableImageResize
+            />
+          </Section>
+        </Table>
+      </ScrollView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'rgba(236, 239, 241, 0.6)',
-    flex: 1,
-  },
-});
