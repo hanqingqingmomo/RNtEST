@@ -6,6 +6,8 @@ import { StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
 
+import { SignUpScreen } from '../screens';
+
 import AvatarPlayground from './AvatarPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
@@ -82,6 +84,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link title="SignUp screen" screen="SignUpScreen" navigation={navigation} />
     <Link
       title="User Profile"
       screen="UserProfilePlayground"
@@ -122,14 +125,17 @@ export const PlaygroundRouter = StackNavigator(
     IconPlayground: {
       screen: IconPlayground,
     },
+    NewsfeedPlayground: {
+      screen: NewsfeedPlayground,
+    },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
     },
+    SignUpScreen: {
+      screen: SignUpScreen,
+    },
     UserProfilePlayground: {
       screen: UserProfilePlayground,
-    },
-    NewsfeedPlayground: {
-      screen: NewsfeedPlayground,
     },
   },
   {
