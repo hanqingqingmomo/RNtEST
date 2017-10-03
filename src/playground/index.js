@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
+import { Drawer } from '../blocks';
 import AvatarPlayground from './AvatarPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
@@ -71,7 +72,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
   </View>
 );
 
-export const PlaygroundRouter = StackNavigator(
+const PlaygroundRoutes = StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
@@ -110,5 +111,20 @@ export const PlaygroundRouter = StackNavigator(
         backgroundColor: 'white',
       },
     }),
+  }
+);
+
+export const PlaygroundRouter = DrawerNavigator(
+  {
+    Playground: {
+      screen: PlaygroundRoutes,
+      navigationOptions: {
+        drawerLabel: 'Playground',
+      },
+    },
+  },
+  {
+    initialRouteName: 'Playground',
+    contentComponent: Drawer,
   }
 );
