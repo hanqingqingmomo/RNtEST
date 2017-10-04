@@ -3,8 +3,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View, ScrollView } from '../atoms';
-import { NewsFeedItem } from '../blocks';
+import { View, ScrollView } from '../../atoms';
+import { NewsFeedItem } from '../../blocks';
 
 export default class NewsfeedPlayground extends React.Component<*, *, *> {
   static navigationOptions = {

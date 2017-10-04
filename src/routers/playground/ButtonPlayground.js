@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, View } from '../atoms';
+import { Button, View } from '../../atoms';
 
 export default class ButtonPlayground extends React.Component<*, *, *> {
   static navigationOptions = {

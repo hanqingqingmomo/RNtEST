@@ -3,8 +3,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import fontelloConfig from '../atoms/Icon/fontello/config';
-import { Icon, Text, View, SearchBox, ScrollView } from '../atoms';
+import fontelloConfig from '../../atoms/Icon/fontello/config';
+import { Icon, Text, View, SearchBox, ScrollView } from '../../atoms';
 
 const names = fontelloConfig.glyphs.reduce(
   (acc, glyph) => acc.concat(glyph.css),

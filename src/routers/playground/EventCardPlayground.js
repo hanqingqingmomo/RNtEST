@@ -3,8 +3,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View } from '../atoms';
-import { EventCard } from '../atoms';
+import { View } from '../../atoms';
+import { EventCard } from '../../atoms';
 
 type ItemProps = {
   endDate?: Date,

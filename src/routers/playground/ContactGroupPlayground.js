@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { ContactGroup } from '../atoms';
-import { type User } from '../Types';
+import { ContactGroup } from '../../atoms';
+import { type User } from '../../Types';
 
 const users: Array<User> = [
   {

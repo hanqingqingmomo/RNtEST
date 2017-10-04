@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Form, FormField, TextInput, View, Text } from '../atoms';
+import { Form, FormField, TextInput, View, Text } from '../../atoms';
 
 const styles = StyleSheet.create({
   container: {

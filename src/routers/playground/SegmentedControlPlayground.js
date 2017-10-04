@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View, SegmentedControl } from '../atoms';
+import { View, SegmentedControl } from '../../atoms';
 
 const styles = StyleSheet.create({
   container: {

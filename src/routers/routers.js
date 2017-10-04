@@ -1,8 +1,16 @@
 // @flow
 
+import React from 'react';
 import { StyleSheet } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import {
+  StackNavigator,
+  TabNavigator,
+  DrawerNavigator,
+} from 'react-navigation';
 
+import { PlaygroundRouter } from './playground';
+
+import { Text } from '../atoms';
 import {
   ForgottenPasswordScreen,
   LoginScreen,
@@ -29,11 +37,27 @@ export const LoginRouter = StackNavigator(
   }
 );
 
-export const MainRouter = StackNavigator({
-  WelcomeScreen: {
-    screen: WelcomeScreen,
+// export const MainRouter = StackNavigator({
+//   WelcomeScreen: {
+//     screen: WelcomeScreen,
+//   },
+//   UserProfileScreen: {
+//     screen: UserProfileScreen,
+//   },
+// });
+
+export const MainRouter = DrawerNavigator({
+  PlaygroundTab: {
+    screen: PlaygroundRouter,
+    // navigationOptions: ({ navigation }) => {
+    //   console.log('navigation: ', navigation);
+
+    //   return {
+    //     headerLeft: <Text>=</Text>,
+    //   };
+    // },
   },
   UserProfileScreen: {
-    screen: UserProfileScreen,
+    screen: PlaygroundRouter,
   },
 });
