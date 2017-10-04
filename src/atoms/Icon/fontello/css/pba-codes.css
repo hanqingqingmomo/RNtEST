@@ -64,8 +64,6 @@
 .icon-recent:before { content: '\e854'; } /* '' */
 .icon-rotate-left:before { content: '\e855'; } /* '' */
 .icon-rotate-right:before { content: '\e856'; } /* '' */
-.icon-search-thin-1:before { content: '\e857'; } /* '' */
-.icon-search-1:before { content: '\e858'; } /* '' */
 .icon-selection-1:before { content: '\e859'; } /* '' */
 .icon-selection-2:before { content: '\e85a'; } /* '' */
 .icon-settings:before { content: '\e85b'; } /* '' */
@@ -77,8 +75,7 @@
 .icon-text-editor-3:before { content: '\e861'; } /* '' */
 .icon-text-editor-4:before { content: '\e862'; } /* '' */
 .icon-text-editor-5:before { content: '\e863'; } /* '' */
-.icon-text-editor-6:before { content: '\e864'; } /* '' */
-.icon-text-editor-7:before { content: '\e865'; } /* '' */
+.icon-text-editor-6:before { content: '\e865'; } /* '' */
 .icon-user-plus:before { content: '\e866'; } /* '' */
 .icon-video-arrow-full:before { content: '\e867'; } /* '' */
 .icon-video-arrow:before { content: '\e868'; } /* '' */
