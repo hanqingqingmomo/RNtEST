@@ -9,6 +9,7 @@ import { Text, View } from '../atoms';
 import {
   AuthenticationRootScreen,
   LandingScreen,
+  SettingsScreen,
   SignUpScreen,
 } from '../screens';
 
@@ -101,6 +102,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Segmented control"
+      screen="SettingsScreen"
+      navigation={navigation}
+    />
     <Link title="SignUp screen" screen="SignUpScreen" navigation={navigation} />
     <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
     <Link
@@ -157,6 +163,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
+    },
+    SettingsScreen: {
+      screen: SettingsScreen,
     },
     SignUpScreen: {
       screen: SignUpScreen,
