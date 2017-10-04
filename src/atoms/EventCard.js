@@ -29,7 +29,6 @@ type P = {
   members: number,
   onInviteMember: P => void,
   onJoin: P => void,
-
   startDate: Date,
   title: string,
 };
@@ -126,8 +125,8 @@ export default class EventCard extends React.Component<*, P, *> {
                     onPress={this.onInviteMember}
                     hitSlop={HIT_SLOP}
                   >
-                    <Text style={styles.button} size={21} color="white">
-                      +
+                    <Text style={styles.button} color="white">
+                      <Icon name="plus" size={16} color="white" />
                     </Text>
                   </TouchableItem>
                 ) : (
