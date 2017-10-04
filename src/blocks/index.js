@@ -7,4 +7,4 @@ export { default as NewsFeedItem } from './NewsFeedItem/NewsFeedItem';
 export { default as OfflineStatusOverlay } from './OfflineStatusOverlay';
 export { default as ProfileCard } from './ProfileCard';
 export { default as ProfileForm } from './ProfileForm';
-export { default as Drawer } from './drawer/Drawer';
+export { default as Drawer } from './Drawer/Drawer';

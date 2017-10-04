@@ -1,10 +1,10 @@
 // @flow
 
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
-import { Text, View } from '../atoms';
+import { Icon, Text, View } from '../atoms';
 import { Drawer } from '../blocks';
 import {
   AuthenticationRootScreen,
@@ -177,12 +177,20 @@ const PlaygroundRoutes = StackNavigator(
   }
 );
 
-export const PlaygroundRouter = DrawerNavigator(
+const DrawerRouter = DrawerNavigator(
   {
     Playground: {
       screen: PlaygroundRoutes,
       navigationOptions: {
         drawerLabel: 'Playground',
+        drawerIcon: <Icon name="user" size={24} color="rgba(69,90,100,1)" />,
+      },
+    },
+    AnotherScreen: {
+      screen: PlaygroundRoutes,
+      navigationOptions: {
+        drawerLabel: 'Another Screen',
+        drawerIcon: <Icon name="search" size={24} color="rgba(69,90,100,1)" />,
       },
     },
   },
@@ -191,3 +199,19 @@ export const PlaygroundRouter = DrawerNavigator(
     contentComponent: Drawer,
   }
 );
+
+export class PlaygroundRouter extends Component {
+  handleNavigationState = (previous: any, next: any, action: any) => {
+    if (action.routeName === 'DrawerOpen') {
+      StatusBar.setBarStyle('light-content');
+    } else if (action.routeName === 'DrawerClose') {
+      StatusBar.setBarStyle('dark-content');
+    }
+  };
+
+  render() {
+    return (
+      <DrawerRouter onNavigationStateChange={this.handleNavigationState} />
+    );
+  }
+}

@@ -2,17 +2,23 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { DrawerItems } from 'react-navigation';
-import { View, Text } from '../../atoms';
-import DrawerItem from './DrawerItem';
+
+import { View } from '../../atoms';
+import DrawerHeader from './DrawerHeader';
+import DrawerItems from './DrawerItems';
+
+const onDonatePress = () => {};
+const communityImageURI =
+  'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
+const communityTitle = 'YWCA';
 
 const Drawer = ({ ...rest }: any) => (
   <View style={styles.container}>
-    <DrawerItem>
-      <Text size={16} color="white">
-        Hi User
-      </Text>
-    </DrawerItem>
+    <DrawerHeader
+      onDonatePress={onDonatePress}
+      communityImageURI={communityImageURI}
+      communityTitle={communityTitle}
+    />
     <DrawerItems {...rest} />
   </View>
 );
