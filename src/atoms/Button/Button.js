@@ -22,6 +22,7 @@ type DP = {
 };
 
 type P = {
+  block?: boolean,
   color: ColorName | string,
   disabled?: boolean,
   onPress: Function,
@@ -44,6 +45,7 @@ export default class Button extends React.Component<DP, DP & P, *> {
 
   render() {
     const {
+      block,
       color,
       disabled,
       onPress,
@@ -73,6 +75,7 @@ export default class Button extends React.Component<DP, DP & P, *> {
           css('opacity', disabled ? 0.5 : 1),
           styles.touchableWrapper,
           style,
+          block ? { width: '100%' } : undefined,
         ]}
         useForeground={Platform.select({
           android: TouchableNativeFeedback.canUseNativeForeground,
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 100,
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   title: {
     fontWeight: '500',
@@ -140,7 +144,7 @@ const sizeStyles = {
     },
     view: {
       height: 34,
-      width: 80,
+      paddingHorizontal: 15,
     },
   }),
   lg: StyleSheet.create({
@@ -149,7 +153,7 @@ const sizeStyles = {
     },
     view: {
       height: 48,
-      width: 275,
+      paddingHorizontal: 15,
     },
   }),
 };
