@@ -30,6 +30,7 @@ export type User = {
   last_name: string,
   email: string,
   profilePhoto: string,
+  role: string,
 };
 
 export type SignupUser = {
@@ -41,18 +42,6 @@ export type SignupUser = {
   timezone?: string,
   photo?: string,
 };
-
-export type Comment = $Exact<{
-  id: number,
-  parentId?: number,
-  timestamp: number,
-  content: string,
-  author: {
-    id: number,
-    name: string,
-    avatar: string,
-  },
-}>;
 
 // Redux
 export type Action<T, A> = {

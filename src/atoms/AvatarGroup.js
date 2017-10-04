@@ -12,12 +12,15 @@ const OVERLAP = AVATAR_WIDTH * 0.45;
 
 type Props = {
   imageURIs: Array<string>,
+  title: number => string,
 };
 
-export default function AvatarGroup({ imageURIs }: Props) {
+export default function AvatarGroup({ imageURIs, title }: Props) {
   const total = imageURIs.length;
   let visibleCount = Math.floor(total / 10);
   visibleCount = Math.max(2, Math.min(visibleCount, 10));
+
+  const diff = total - visibleCount;
 
   return (
     <View style={styles.groupContainer}>
@@ -27,12 +30,13 @@ export default function AvatarGroup({ imageURIs }: Props) {
         </View>
       ))}
       <Text
+        color="gray"
         size={12}
         weight="600"
         lineHeight={18}
-        style={[css('color', '#90A4AE'), css('marginLeft', 5)]}
+        style={css('marginLeft', 5)}
       >
-        {total - visibleCount > 0 ? `+${total - visibleCount}` : ''}
+        {title(diff)}
       </Text>
     </View>
   );

@@ -35,7 +35,7 @@ type S = {
   searchTerm: string,
 };
 
-export default class AvatarPlayground extends React.Component<*, *, S> {
+export default class IconPlayground extends React.Component<*, *, S> {
   static navigationOptions = {
     headerTitle: 'Icons',
   };
@@ -61,6 +61,11 @@ export default class AvatarPlayground extends React.Component<*, *, S> {
                 this.state.searchTerm === '' ||
                 name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
             )
+            .sort(function(a, b) {
+              if (a < b) return -1;
+              if (a > b) return 1;
+              return 0;
+            })
             .map(name => (
               <View key={name} style={styles.iconWrapper}>
                 <Icon key={name} name={name} color="#444" size={24} />

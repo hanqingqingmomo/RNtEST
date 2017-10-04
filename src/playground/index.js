@@ -5,16 +5,26 @@ import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import { Text, View } from '../atoms';
+
+import {
+  AuthenticationRootScreen,
+  LandingScreen,
+  SignUpScreen,
+} from '../screens';
+
 import AvatarPlayground from './AvatarPlayground';
-import EventCardPlayground from './EventCardPlayground';
+import ButtonPlayground from './ButtonPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
-import SegmentedControlPlayground from './SegmentedControlPlayground';
+import ContactGroupPlayground from './ContactGroupPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
+import EventCardPlayground from './EventCardPlayground';
+import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
-import TimeAgoPlayground from './TimeAgoPlayground';
-import LikePlayground from './LikePlayground';
-import CommentsPlayground from './CommentsPlayground';
+import NewsfeedPlayground from './NewsfeedPlayground';
+import SegmentedControlPlayground from './SegmentedControlPlayground';
+import TabsPlayground from './TabsPlayground';
+import UserProfilePlayground from './UserProfilePlayground';
 
 type LinkProps = {
   screen: string,
@@ -40,10 +50,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
-      title="Comments"
-      screen="CommentsPlayground"
+      title="Authentication Root"
+      screen="AuthenticationRootScreen"
       navigation={navigation}
     />
+    <Link title="Buttons" screen="ButtonPlayground" navigation={navigation} />
     <Link
       title="Community Card"
       screen="CommunityCardPlayground"
@@ -52,6 +63,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Community Header"
       screen="CommunityHeaderPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Contact Group"
+      screen="ContactGroupPlayground"
       navigation={navigation}
     />
     <Link
@@ -64,14 +80,34 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="EventCardPlayground"
       navigation={navigation}
     />
+    <Link
+      title="Form &amp; Form fields"
+      screen="FormPlayground"
+      navigation={navigation}
+    />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
+    <Link
+      title="Landing screen"
+      screen="LandingScreen"
+      navigation={navigation}
+    />
+    <Link
+      title="Newsfeed"
+      screen="NewsfeedPlayground"
+      navigation={navigation}
+    />
     <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
-    <Link title="Like" screen="LikePlayground" navigation={navigation} />
-    <Link title="Time Ago" screen="TimeAgoPlayground" navigation={navigation} />
+    <Link title="SignUp screen" screen="SignUpScreen" navigation={navigation} />
+    <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
+    <Link
+      title="User Profile"
+      screen="UserProfilePlayground"
+      navigation={navigation}
+    />
   </View>
 );
 
@@ -86,11 +122,11 @@ export const PlaygroundRouter = StackNavigator(
     AvatarPlayground: {
       screen: AvatarPlayground,
     },
-    EventCardPlayground: {
-      screen: EventCardPlayground,
+    AuthenticationRootScreen: {
+      screen: AuthenticationRootScreen,
     },
-    CommentsPlayground: {
-      screen: CommentsPlayground,
+    ButtonPlayground: {
+      screen: ButtonPlayground,
     },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
@@ -98,20 +134,38 @@ export const PlaygroundRouter = StackNavigator(
     CommunityHeaderPlayground: {
       screen: CommunityHeaderPlayground,
     },
-    IconPlayground: {
-      screen: IconPlayground,
-    },
-    SegmentedControlPlayground: {
-      screen: SegmentedControlPlayground,
+    ContactGroupPlayground: {
+      screen: ContactGroupPlayground,
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
     },
-    TimeAgoPlayground: {
-      screen: TimeAgoPlayground,
+    EventCardPlayground: {
+      screen: EventCardPlayground,
     },
-    LikePlayground: {
-      screen: LikePlayground,
+    FormPlayground: {
+      screen: FormPlayground,
+    },
+    IconPlayground: {
+      screen: IconPlayground,
+    },
+    LandingScreen: {
+      screen: LandingScreen,
+    },
+    NewsfeedPlayground: {
+      screen: NewsfeedPlayground,
+    },
+    SegmentedControlPlayground: {
+      screen: SegmentedControlPlayground,
+    },
+    SignUpScreen: {
+      screen: SignUpScreen,
+    },
+    TabsPlayground: {
+      screen: TabsPlayground,
+    },
+    UserProfilePlayground: {
+      screen: UserProfilePlayground,
     },
   },
   {
