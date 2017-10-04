@@ -4,10 +4,11 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import { Text, View } from '../atoms';
+import { Text, ScrollView } from '../atoms';
 
 import {
   AuthenticationRootScreen,
+  InvitationScreen,
   LandingScreen,
   SignUpScreen,
 } from '../screens';
@@ -43,7 +44,7 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 );
 
 const PlaygroundIndexScreen = ({ navigation }) => (
-  <View>
+  <ScrollView>
     <Link
       title="Avatar, Avatar group &amp; Avatar picker"
       screen="AvatarPlayground"
@@ -87,6 +88,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
+      title="Invite Friends"
+      screen="InvitationScreen"
+      navigation={navigation}
+    />
+    <Link
       title="Landing screen"
       screen="LandingScreen"
       navigation={navigation}
@@ -108,7 +114,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="UserProfilePlayground"
       navigation={navigation}
     />
-  </View>
+  </ScrollView>
 );
 
 export const PlaygroundRouter = StackNavigator(
@@ -149,6 +155,9 @@ export const PlaygroundRouter = StackNavigator(
     IconPlayground: {
       screen: IconPlayground,
     },
+    InvitationScreen: {
+      screen: InvitationScreen,
+    },
     LandingScreen: {
       screen: LandingScreen,
     },
@@ -174,5 +183,6 @@ export const PlaygroundRouter = StackNavigator(
         backgroundColor: 'white',
       },
     }),
+    initialRouteName: 'InvitationScreen',
   }
 );
