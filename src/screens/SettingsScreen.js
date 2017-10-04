@@ -92,7 +92,7 @@ export default class SettingsScreen extends React.Component<void, void, void> {
   cellAccessoryView(setting: SettingProps): React$Element<*> {
     return (
       <View style={[styles.icon, styles.accessoryIcon]}>
-        <Icon size={28} name="calendar" color="#CFD8DC" />
+        <Icon size="md" name="calendar" color="#CFD8DC" />
       </View>
     );
   }
