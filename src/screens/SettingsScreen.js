@@ -29,7 +29,7 @@ const SETTINGS = [
   {
     id: 2,
     name: 'Use Invite Code',
-    iconName: 'plus',
+    iconName: 'plus-bold',
   },
   {
     id: 3,
@@ -92,7 +92,7 @@ export default class SettingsScreen extends React.Component<void, void, void> {
   cellAccessoryView(setting: SettingProps): React$Element<*> {
     return (
       <View style={[styles.icon, styles.accessoryIcon]}>
-        <Icon size="sm" name="arrow-open-right" color="#CFD8DC" />
+        <Icon size="lg" name="arrow-open-right" color="#CFD8DC" />
       </View>
     );
   }
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   accessoryIcon: {
-    paddingRight: 15,
+    paddingRight: 5,
   },
   section: {
     marginBottom: 57,

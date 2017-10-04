@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'pba';
-  src: url('../font/pba.eot?54224240');
-  src: url('../font/pba.eot?54224240#iefix') format('embedded-opentype'),
-       url('../font/pba.woff2?54224240') format('woff2'),
-       url('../font/pba.woff?54224240') format('woff'),
-       url('../font/pba.ttf?54224240') format('truetype'),
-       url('../font/pba.svg?54224240#pba') format('svg');
+  src: url('../font/pba.eot?82357005');
+  src: url('../font/pba.eot?82357005#iefix') format('embedded-opentype'),
+       url('../font/pba.woff2?82357005') format('woff2'),
+       url('../font/pba.woff?82357005') format('woff'),
+       url('../font/pba.ttf?82357005') format('truetype'),
+       url('../font/pba.svg?82357005#pba') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'pba';
-    src: url('../font/pba.svg?54224240#pba') format('svg');
+    src: url('../font/pba.svg?82357005#pba') format('svg');
   }
 }
 */
@@ -77,10 +77,10 @@
 .icon-add-file:before { content: '\e828'; } /* '' */
 .icon-apple-pay:before { content: '\e82a'; } /* '' */
 .icon-arrow-left:before { content: '\e82b'; } /* '' */
-.icon-arrow-open-bottom:before { content: '\e82c'; } /* '' */
-.icon-arrow-open-left:before { content: '\e82d'; } /* '' */
+.icon-arrow-open-bottom-thin:before { content: '\e82c'; } /* '' */
+.icon-arrow-open-left-thin:before { content: '\e82d'; } /* '' */
 .icon-arrow-open-right-full:before { content: '\e82e'; } /* '' */
-.icon-arrow-open-right:before { content: '\e82f'; } /* '' */
+.icon-arrow-open-right-thin:before { content: '\e82f'; } /* '' */
 .icon-arrow-right:before { content: '\e830'; } /* '' */
 .icon-calendar:before { content: '\e831'; } /* '' */
 .icon-communities-thin:before { content: '\e832'; } /* '' */
@@ -120,6 +120,8 @@
 .icon-recent:before { content: '\e854'; } /* '' */
 .icon-rotate-left:before { content: '\e855'; } /* '' */
 .icon-rotate-right:before { content: '\e856'; } /* '' */
+.icon-plus-bold:before { content: '\e857'; } /* '' */
+.icon-arrow-open-right:before { content: '\e858'; } /* '' */
 .icon-selection-1:before { content: '\e859'; } /* '' */
 .icon-selection-2:before { content: '\e85a'; } /* '' */
 .icon-settings:before { content: '\e85b'; } /* '' */
