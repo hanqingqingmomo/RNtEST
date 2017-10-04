@@ -11,31 +11,7 @@ import {
 import { PlaygroundRouter } from './playground';
 
 import { Text } from '../atoms';
-import {
-  ForgottenPasswordScreen,
-  LoginScreen,
-  UserProfileScreen,
-  WelcomeScreen,
-} from '../screens';
-
-export const LoginRouter = StackNavigator(
-  {
-    LoginScreen: {
-      screen: LoginScreen,
-    },
-    ForgottenPasswordScreen: {
-      screen: ForgottenPasswordScreen,
-    },
-  },
-  {
-    initialRouteName: 'LoginScreen',
-    ...StyleSheet.create({
-      cardStyle: {
-        backgroundColor: 'white',
-      },
-    }),
-  }
-);
+import { ForgottenPasswordScreen, LoginScreen } from '../screens';
 
 // export const MainRouter = StackNavigator({
 //   WelcomeScreen: {
@@ -46,7 +22,7 @@ export const LoginRouter = StackNavigator(
 //   },
 // });
 
-export const MainRouter = DrawerNavigator({
+export default DrawerNavigator({
   PlaygroundTab: {
     screen: PlaygroundRouter,
     // navigationOptions: ({ navigation }) => {

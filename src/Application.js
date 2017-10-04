@@ -6,7 +6,8 @@ import SplashScreen from 'react-native-splash-screen';
 
 import { API } from './services';
 import { selectAccessToken, selectUser } from './redux/selectors';
-import { LoginRouter, MainRouter } from './routers';
+import { AuthenticationRouter, MainRouter } from './routers';
+
 import { Screen } from './atoms';
 import { OfflineStatusOverlay } from './blocks';
 import type { Store, User } from './Types';
@@ -36,8 +37,12 @@ class Application extends React.PureComponent<void, Props, void> {
 
     return (
       <Screen>
-        {user ? <MainRouter screenProps={{ user }} /> : <LoginRouter />}
         <OfflineStatusOverlay />
+        {user ? (
+          <MainRouter screenProps={{ user }} />
+        ) : (
+          <AuthenticationRouter />
+        )}
       </Screen>
     );
   };
