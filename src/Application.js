@@ -8,7 +8,7 @@ import { selectAccessToken, selectUser } from './redux/selectors';
 // import { LoginRouter, MainRouter } from './routers';
 import { PlaygroundRouter } from './playground';
 // import { Screen } from './atoms';
-// import { OfflineStatusOverlay } from './blocks';
+// import { Network } from './blocks';
 import type { Store, User } from './Types';
 
 type Props = {
@@ -35,8 +35,12 @@ class Application extends React.PureComponent<void, Props, void> {
 
     // return (
     //   <Screen>
-    //     {user ? <MainRouter screenProps={{ user }} /> : <LoginRouter />}
-    //     <OfflineStatusOverlay />
+    //     {user ? (
+    //       <MainRouter screenProps={{ user }} />
+    //     ) : (
+    //       <AuthenticationRouter />
+    //     )}
+    //     <Network />
     //   </Screen>
     // );
   };
