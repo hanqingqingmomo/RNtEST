@@ -39,7 +39,7 @@ const SETTINGS = [
   {
     id: 4,
     name: 'Change Password',
-    iconName: 'calendar',
+    iconName: 'lock-close',
   },
 ];
 
@@ -92,7 +92,7 @@ export default class SettingsScreen extends React.Component<void, void, void> {
   cellAccessoryView(setting: SettingProps): React$Element<*> {
     return (
       <View style={[styles.icon, styles.accessoryIcon]}>
-        <Icon size="md" name="calendar" color="#CFD8DC" />
+        <Icon size="sm" name="arrow-open-right" color="#CFD8DC" />
       </View>
     );
   }
