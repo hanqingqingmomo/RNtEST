@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import { Text, View } from '../atoms';
+import { Text, ScrollView } from '../atoms';
 
 import {
   AuthenticationRootScreen,
@@ -44,7 +44,7 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 );
 
 const PlaygroundIndexScreen = ({ navigation }) => (
-  <View>
+  <ScrollView>
     <Link
       title="Avatar, Avatar group &amp; Avatar picker"
       screen="AvatarPlayground"
@@ -103,7 +103,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
-      title="Segmented control"
+      title="Settings Screen"
       screen="SettingsScreen"
       navigation={navigation}
     />
@@ -114,7 +114,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="UserProfilePlayground"
       navigation={navigation}
     />
-  </View>
+  </ScrollView>
 );
 
 export const PlaygroundRouter = StackNavigator(
