@@ -7,17 +7,17 @@ import { View } from '../../atoms';
 import DrawerHeader from './DrawerHeader';
 import DrawerItems from './DrawerItems';
 
-const onDonatePress = () => {};
 const communityImageURI =
   'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
 const communityTitle = 'YWCA';
+const onDonatePress = () => {};
 
 const Drawer = ({ ...rest }: any) => (
   <View style={styles.container}>
     <DrawerHeader
-      onDonatePress={onDonatePress}
       communityImageURI={communityImageURI}
       communityTitle={communityTitle}
+      onDonatePress={onDonatePress}
     />
     <DrawerItems {...rest} />
   </View>

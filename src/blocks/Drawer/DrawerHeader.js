@@ -1,14 +1,14 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import { Button, Image, Text, View } from '../../atoms';
 
 type Props = {
-  onDonatePress: Function,
   communityImageURI: string,
   communityTitle: string,
+  onDonatePress: Function,
 };
 
 const DrawerHeader = ({
@@ -18,15 +18,15 @@ const DrawerHeader = ({
 }: Props) => (
   <View style={styles.container}>
     <Image source={{ uri: communityImageURI }} style={styles.image} />
-    <Text size={15} color="white" weight="600" style={styles.title}>
+    <Text color="white" size={15} style={styles.title} weight="600">
       {communityTitle}
     </Text>
     <Button
-      title="Donate"
-      size="sm"
       color="#FC612D"
-      textColor="white"
       onPress={onDonatePress}
+      size="sm"
+      textColor="white"
+      title="Donate"
     />
   </View>
 );
