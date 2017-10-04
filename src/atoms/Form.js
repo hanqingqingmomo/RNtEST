@@ -15,25 +15,23 @@ type Props = {
   messages?: {
     [string]: string,
   },
-  validate: ({
+  validate?: ({
     [string]: string,
   }) => boolean | Promise<*>,
 };
 
-export default class Form extends React.Component {
+export default class Form extends React.Component<void, Props, void> {
   get validate(): ?(Object) => Promise<*> {
     if (this.props.validate) {
       return this.props.validate;
     }
 
-    if (this.props.rules) {
+    const { rules, messages } = this.props;
+
+    if (rules) {
       return async values => {
         try {
-          await validator.validateAll(
-            values,
-            this.props.rules,
-            this.props.messages
-          );
+          await validator.validateAll(values, rules, messages);
         } catch (err) {
           const errorBag = err.reduce((errorBag, err) => {
             errorBag[err.field] = err.message;
