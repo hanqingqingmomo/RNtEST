@@ -3,8 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View } from '../atoms';
-import { CommunityCard } from '../atoms';
+import { CommunityCard, View } from '../../atoms';
 
 type ItemProps = {
   imageURI: string,

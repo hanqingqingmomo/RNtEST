@@ -4,13 +4,13 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import { Text, View } from '../atoms';
+import { ScrollView, Text } from '../../atoms';
 
 import {
   AuthenticationRootScreen,
   LandingScreen,
   SignUpScreen,
-} from '../screens';
+} from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
 import ButtonPlayground from './ButtonPlayground';
@@ -43,7 +43,7 @@ const Link = ({ screen, navigation, title }: LinkProps) => (
 );
 
 const PlaygroundIndexScreen = ({ navigation }) => (
-  <View>
+  <ScrollView>
     <Link
       title="Avatar, Avatar group &amp; Avatar picker"
       screen="AvatarPlayground"
@@ -108,7 +108,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="UserProfilePlayground"
       navigation={navigation}
     />
-  </View>
+  </ScrollView>
 );
 
 export const PlaygroundRouter = StackNavigator(

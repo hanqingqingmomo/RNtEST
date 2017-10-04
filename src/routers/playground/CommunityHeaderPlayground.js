@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { CommunityHeader } from '../atoms';
+import { CommunityHeader } from '../../atoms';
 
 export default class CommunityHeaderPlayground extends React.Component {
   static navigationOptions = { headerTitle: 'Community header' };

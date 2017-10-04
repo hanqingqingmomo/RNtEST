@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { Text } from '../atoms/';
-import { TabNavigator } from '../navigation';
+import { Text } from '../../atoms';
+import { TabNavigator } from '../../navigation';
 
 class NewsScreen extends React.Component {
   static navigationOptions = {

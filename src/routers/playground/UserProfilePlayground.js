@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { ScrollView, TableView, Text, Icon } from '../atoms';
-import { ProfileCard } from '../blocks';
+import { ScrollView, TableView, Text, Icon } from '../../atoms';
+import { ProfileCard } from '../../blocks';
 
 const { Table, Section, Cell } = TableView;
 

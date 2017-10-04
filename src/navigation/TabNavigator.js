@@ -56,7 +56,7 @@ export default function TabNavigator(
 ) {
   return ReactNavigationTabNavigator(
     screens,
-    merge(options, DEFAULTS(screens))
+    merge(DEFAULTS(screens), options)
   );
 }
 

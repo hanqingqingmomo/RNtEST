@@ -3,29 +3,23 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, Icon, View } from '../atoms';
+import { Button, View } from '../atoms';
+import { LaunchScreenBackground } from '../blocks';
 import { getColor } from '../utils/color';
 
 export default class LandingScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Landing Screen',
-  };
-
   onGetStarted = () => {
-    console.log('started');
+    this.props.navigation.navigate('AuthenticationRootScreen');
   };
 
   onInviteCode = () => {
-    console.log('invite');
+    this.props.navigation.navigate('InvitationCodeScreen');
   };
 
   render() {
     return (
-      <View style={styles.screenContainer}>
-        <View style={styles.icon}>
-          <Icon name="ywca" color="white" size={150} />
-        </View>
-        <View style={styles.viewContainer}>
+      <LaunchScreenBackground>
+        <View style={styles.buttonContainer}>
           <Button
             color={getColor('white')}
             onPress={this.onGetStarted}
@@ -43,28 +37,19 @@ export default class LandingScreen extends React.Component {
             title="Invite Code"
           />
         </View>
-      </View>
+      </LaunchScreenBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  screenContainer: {
-    backgroundColor: getColor('orange'),
-    flex: 1,
-  },
-  marginBottom: {
-    marginBottom: 15,
-  },
-  viewContainer: {
+  buttonContainer: {
     alignItems: 'center',
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
     paddingBottom: 48,
   },
-  icon: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: 'center',
-    justifyContent: 'center',
+  marginBottom: {
+    marginBottom: 15,
   },
 });

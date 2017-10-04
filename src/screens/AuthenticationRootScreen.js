@@ -3,129 +3,92 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, View, Button, Text } from '../atoms';
+import { Icon, View, Button, Screen, Text } from '../atoms';
 import { getColor } from '../utils/color';
 
-const BUTTON_WIDTH = 275;
+type Action =
+  | 'facebookAuthentication'
+  | 'linkedinAuthentication'
+  | 'twitterAuthentication'
+  | 'emailAuthentication'
+  | 'emailRegistration';
 
-type Props = {
-  onFacebookButtonPress: Function,
-  onTwitterButtonPress: Function,
-  onLinkedInButtonPress: Function,
-  onSignupPress: Function,
-  onLoginPress: Function,
-};
+function AuthenticationButton(props) {
+  return <Button {...props} size="lg" style={styles.button} />;
+}
 
-export default function AuthenticationRootScreen({
-  onFacebookButtonPress,
-  onTwitterButtonPress,
-  onLinkedInButtonPress,
-  onSignupPress,
-  onLoginPress,
-}: Props) {
-  return (
-    <View style={styles.screenContainer}>
-      <View style={styles.iconContainer}>
-        <View style={{ width: BUTTON_WIDTH }}>
-          <Icon name="ywca" color="orange" size={100} style={styles.icon} />
+export default class AuthenticationRootScreen extends React.Component {
+  onPress = (action: Action) => () => {
+    switch (action) {
+      case 'emailAuthentication':
+        return this.props.navigation.navigate('EmailLoginScreen');
+      default:
+        alert(action);
+    }
+  };
+
+  render() {
+    return (
+      <Screen tintColor="white">
+        <View style={styles.container}>
+          <Icon name="ywca" color="orange" size={100} />
+
+          <View>
+            <AuthenticationButton
+              color={getColor('facebookBlue')}
+              textColor={getColor('white')}
+              onPress={this.onPress('facebookAuthentication')}
+              title="Continue with Facebook"
+            />
+            <AuthenticationButton
+              color={getColor('twitterBlue')}
+              textColor={getColor('white')}
+              onPress={this.onPress('twitterAuthentication')}
+              title="Continue with Twitter"
+            />
+            <AuthenticationButton
+              color={getColor('linkedinBlue')}
+              textColor={getColor('white')}
+              onPress={this.onPress('linkedinAuthentication')}
+              title="Continue with LinkedIn"
+            />
+            <AuthenticationButton
+              outline
+              color={getColor('orange')}
+              textColor={getColor('orange')}
+              onPress={this.onPress('emailRegistration')}
+              title="Sign Up"
+            />
+
+            <Text size={15} color="#455A64" style={styles.footerText}>
+              {'Already have an account? '}
+              <Text
+                color="orange"
+                onPress={this.onPress('emailAuthentication')}
+              >
+                Log In
+              </Text>
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.buttonsContainer}>
-        <Button
-          color={getColor('white')}
-          onPress={onFacebookButtonPress}
-          outline
-          size="lg"
-          style={[styles.buttonStyle, styles.facebookButton]}
-          textSyle={{ marginLeft: 100 }}
-          textColor={getColor('white')}
-          title="Continue with Facebook"
-        />
-        <Button
-          color={getColor('white')}
-          onPress={onTwitterButtonPress}
-          outline
-          size="lg"
-          style={[styles.buttonStyle, styles.twitterButton]}
-          textColor={getColor('white')}
-          title="Continue with Twitter"
-        />
-        <Button
-          color={getColor('white')}
-          onPress={onLinkedInButtonPress}
-          outline
-          size="lg"
-          style={[styles.buttonStyle, styles.linkedinButton]}
-          textColor={getColor('white')}
-          title="Continue with LinkedIn"
-        />
-        <Button
-          color={getColor('orange')}
-          onPress={onSignupPress}
-          outline
-          size="lg"
-          textColor={getColor('orange')}
-          title="Sign Up"
-        />
-        <View style={styles.loginContainer}>
-          <Text>Already have an account?</Text>
-          <Text onPress={onLoginPress} style={styles.loginText}>
-            Log In
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
+      </Screen>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'flex-end',
+  container: {
+    width: 275,
+    flexGrow: 1,
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 40,
   },
-
-  buttonStyle: {
-    marginBottom: 15,
+  button: {
+    marginTop: 15,
   },
-
-  facebookButton: {
-    backgroundColor: getColor('facebookBlue'),
-  },
-
-  icon: {
-    alignSelf: 'flex-start',
-  },
-
-  iconContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'flex-start',
-    marginTop: 45,
-  },
-
-  linkedinButton: {
-    backgroundColor: getColor('linkedinBlue'),
-  },
-
-  loginContainer: {
-    flexDirection: 'row',
-    marginBottom: 30,
+  footerText: {
+    alignSelf: 'center',
     marginTop: 30,
-  },
-
-  loginText: {
-    color: getColor('orange'),
-    marginLeft: 2,
-  },
-
-  screenContainer: {
-    backgroundColor: getColor('white'),
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  twitterButton: {
-    backgroundColor: getColor('twitterBlue'),
   },
 });

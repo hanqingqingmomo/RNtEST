@@ -3,8 +3,8 @@
 import React from 'react';
 import { Alert, StyleSheet } from 'react-native';
 
-import { DonationForm, DonationAppeal } from '../blocks';
-import { View, CommunityHeader, ScrollView } from '../atoms';
+import { DonationForm, DonationAppeal } from '../../blocks';
+import { View, CommunityHeader, ScrollView } from '../../atoms';
 
 export default class DonationFormPlayground extends React.Component<*, *, *> {
   static navigationOptions = {

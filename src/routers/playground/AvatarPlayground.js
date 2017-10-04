@@ -3,7 +3,13 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Avatar, AvatarGroup, AvatarPicker, CenterView, View } from '../atoms';
+import {
+  Avatar,
+  AvatarGroup,
+  AvatarPicker,
+  CenterView,
+  View,
+} from '../../atoms';
 
 const styles = StyleSheet.create({
   container: {

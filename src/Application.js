@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { connect, type Connector } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 
 import { API } from './services';
 import { selectAccessToken, selectUser } from './redux/selectors';
-// import { LoginRouter, MainRouter } from './routers';
-import { PlaygroundRouter } from './playground';
-// import { Screen } from './atoms';
-// import { Network } from './blocks';
+import { AuthenticationRouter, MainRouter } from './routers';
+import { Screen } from './atoms';
+import { Network } from './blocks';
 import type { Store, User } from './Types';
 
 type Props = {
@@ -18,6 +18,8 @@ type Props = {
 
 class Application extends React.PureComponent<void, Props, void> {
   componentDidMount() {
+    SplashScreen.hide();
+
     API._transport.interceptors.request.use(config => {
       config.headers = {
         Authorization: this.props.accessToken
@@ -30,19 +32,18 @@ class Application extends React.PureComponent<void, Props, void> {
   }
 
   render = () => {
-    return <PlaygroundRouter />;
-    // const { user } = this.props;
+    const { user } = this.props;
 
-    // return (
-    //   <Screen>
-    //     {user ? (
-    //       <MainRouter screenProps={{ user }} />
-    //     ) : (
-    //       <AuthenticationRouter />
-    //     )}
-    //     <Network />
-    //   </Screen>
-    // );
+    return (
+      <Screen>
+        <Network />
+        {user ? (
+          <MainRouter screenProps={{ user }} />
+        ) : (
+          <AuthenticationRouter />
+        )}
+      </Screen>
+    );
   };
 }
 

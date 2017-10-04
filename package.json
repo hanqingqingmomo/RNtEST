@@ -28,6 +28,7 @@
     "react-native-image-picker": "^0.26.7",
     "react-native-keyboard-manager": "^4.0.10-2",
     "react-native-material-textfield": "^0.10.0",
+    "react-native-splash-screen": "^3.0.1",
     "react-native-tableview-simple": "^0.16.12",
     "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.12",
