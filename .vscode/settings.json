@@ -1,12 +1,7 @@
+// Place your settings in this file to overwrite default and user settings.
 {
-  // Place your settings in this file to overwrite default and user settings.
-  "editor.formatOnSave": true,
-  "flow.enabled": true,
-  "flow.runOnEdit": false,
-  "flow.showStatus": true,
-  "flow.stopFlowOnExit": true,
-  "flow.useNPMPackagedFlow": true,
   "javascript.validate.enable": false,
+  "editor.formatOnSave": true,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5"
 }

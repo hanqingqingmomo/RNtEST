@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, Button, TouchableItem, Icon } from '../atoms';
+import { Text, View, Button, TouchableItem } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
@@ -41,14 +41,16 @@ export default class DonationScreen extends React.Component<*, P, *> {
             style={style.closeBtn}
             hitSlop={HIT_SLOP}
           >
-            <Icon
+            <Text
               style={style.closeBtnText}
               size={20}
+              lineHeight={20}
               color="white"
-              name="close"
-            />
+            >
+              ×
+            </Text>
           </TouchableItem>
-          <Icon size={100} name="donate" color="white" style={style.icon} />
+          <View size={19} style={style.icon} />
         </View>
         <View style={style.contentBottom}>
           <Text
@@ -130,10 +132,11 @@ const style = StyleSheet.create({
   },
   closeBtnText: {
     textAlign: 'center',
+    backgroundColor: 'red',
   },
   icon: {
     width: 100,
-    height: 100,
-    textAlign: 'center',
+    height: 80,
+    backgroundColor: 'red',
   },
 });

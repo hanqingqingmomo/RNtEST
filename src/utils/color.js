@@ -1,14 +1,15 @@
 // @flow
 
 export const colors = {
-  orange: 'rgba(252,97,45,1)',
-  white: 'rgba(255,255,255,1)',
-  green: 'rgba(0,230,118,1)',
-  red: 'rgba(255,23,68,1)',
+  orange: '#fc612d',
+  blue: '#00b0ff',
+  white: '#ffffff',
+  green: '#00e676',
+  red: '#ff1744',
   gray: '#90A4AE',
-  facebookBlue: 'rgba(59,89,152,1)',
-  twitterBlue: 'rgba(29,161,242,1)',
-  linkedinBlue: 'rgba(0,123,182,1)',
+  facebookBlue: '#3b5998',
+  twitterBlue: '#1da1f2',
+  linkedinBlue: '#007bb6',
 };
 
 export type ColorName = $Keys<typeof colors>;

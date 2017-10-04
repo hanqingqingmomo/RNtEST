@@ -3,7 +3,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, Form, FormField, TextDeprecated, View } from '../atoms';
+import { Button, FormField, TextDeprecated, View } from '../atoms';
+import { Form } from '../hoc';
 
 type P = {
   disabled: boolean,
@@ -23,15 +24,20 @@ export default function LoginForm(props: P) {
   return (
     <Form
       validateOnChange
-      initialValues={{ email: '', password: '' }}
+      getInitialValues={{ email: '', password: '' }}
       rules={{ email: 'required|email', password: 'required' }}
       handleSubmit={(values, formBag) => {
         props.onSubmit(values);
       }}
       render={({ handleSubmit, isValid }) => (
         <View>
-          <FormField label="Email" name="email" keyboardType="email-address" />
-          <FormField label="Password" name="password" secureTextEntry />
+          {props.invalidCredentials ? (
+            <TextDeprecated style={styles.errorText}>
+              Email or password are incorrect.
+            </TextDeprecated>
+          ) : null}
+          <FormField name="email" label="Email" keyboardType="email-address" />
+          <FormField name="password" label="Password" secureTextEntry />
         </View>
       )}
     />

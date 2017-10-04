@@ -19,6 +19,11 @@ if (__DEV__) {
     .use(openInEditor())
     .use(overlay())
     .use(asyncStorage())
-    .use(networking())
-    .connect();
+    .use(networking());
+
+  setTimeout(() => {
+    Reactotron.connect();
+  }, 0);
+
+  console.tron = Reactotron;
 }

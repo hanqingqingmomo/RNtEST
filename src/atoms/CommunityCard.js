@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import Color from 'color';
 
-import { View, Text, Image, ShadowView } from './index';
+import { View, Text, Image } from './index';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
@@ -32,8 +32,17 @@ export default class CommunityCard extends React.Component<*, P, *> {
             New
           </Text>
         ) : null}
-        <ShadowView radius={3}>
-          <View style={[styles.border, isNew ? styles.borderGreen : undefined]}>
+        <View style={styles.wrapper}>
+          <View
+            style={[
+              styles.border,
+              Platform.select({
+                android: styles.borderStyle,
+                ios: undefined,
+              }),
+              isNew ? styles.borderGreen : undefined,
+            ]}
+          >
             <Image
               style={styles.image}
               source={{ uri: imageURI }}
@@ -50,12 +59,17 @@ export default class CommunityCard extends React.Component<*, P, *> {
               >
                 {title}
               </Text>
-              <Text color="gray" size={13} weight="600" lineHeight={22}>
+              <Text
+                style={css('color', '#90A4AE')}
+                size={13}
+                weight="600"
+                lineHeight={22}
+              >
                 {subtitle}
               </Text>
             </View>
           </View>
-        </ShadowView>
+        </View>
       </View>
     );
   }
@@ -65,9 +79,22 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 4,
   },
-  border: {
-    overflow: 'hidden',
+  wrapper: {
     borderRadius: 3,
+    shadowColor: 'black',
+    shadowOpacity: 0.14,
+    shadowRadius: 3,
+    shadowOffset: { width: 1, height: 4 },
+  },
+  borderStyle: {
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.14)',
+  },
+  border: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    overflow: 'hidden',
     backgroundColor: 'transparent',
   },
   borderGreen: {

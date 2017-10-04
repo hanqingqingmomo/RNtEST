@@ -5,7 +5,8 @@ import { StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { View, Text, RequestMonitor } from '../atoms';
+import { View, Text } from '../atoms';
+import { RequestMonitor } from '../hoc';
 import { verifyCredentials } from '../redux/ducks/user';
 import { REQUEST_IDS } from '../redux/ducks/requests';
 
