@@ -8,6 +8,7 @@
 .*/node_modules/mitt/src.*
 .*/node_modules/redux-persist/es.*
 .*/node_modules/redux-persist/src.*
+.*/node_modules/react-native-tab-view/.*
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
