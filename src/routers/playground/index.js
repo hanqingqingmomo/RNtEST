@@ -10,6 +10,7 @@ import {
   AuthenticationRootScreen,
   LandingScreen,
   EmailRegistrationScreen,
+  EditUserProfile,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -76,6 +77,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
+      title="Edit User Profile"
+      screen="EditUserProfile"
+      navigation={navigation}
+    />
+    <Link
       title="Event Card"
       screen="EventCardPlayground"
       navigation={navigation}
@@ -115,7 +121,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
   </ScrollView>
 );
 
-export const PlaygroundRouter = StackNavigator(
+export default StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
@@ -143,6 +149,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
+    },
+    EditUserProfile: {
+      screen: EditUserProfile,
     },
     EventCardPlayground: {
       screen: EventCardPlayground,
