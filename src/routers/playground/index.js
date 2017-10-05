@@ -22,6 +22,7 @@ import EventCardPlayground from './EventCardPlayground';
 import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
+import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
@@ -97,6 +98,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
+      title="Search Result"
+      screen="SearchResultPlayground"
+      navigation={navigation}
+    />
+    <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
       navigation={navigation}
@@ -115,7 +121,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
   </ScrollView>
 );
 
-export const PlaygroundRouter = StackNavigator(
+export default StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
@@ -158,6 +164,9 @@ export const PlaygroundRouter = StackNavigator(
     },
     NewsfeedPlayground: {
       screen: NewsfeedPlayground,
+    },
+    SearchResultPlayground: {
+      screen: SearchResultPlayground,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
