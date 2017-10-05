@@ -19,16 +19,7 @@ export default class Shadow extends React.Component<*, P, *> {
       <View
         style={[
           styles.shadowByPlatform,
-          radius
-            ? Platform.select({
-                ios: {
-                  shadowRadius: radius,
-                },
-                android: {
-                  borderRadius: radius,
-                },
-              })
-            : undefined,
+          typeof radius !== 'undefined' ? { borderRadius: radius } : undefined,
           this.props.style,
         ]}
       >
@@ -44,6 +35,7 @@ const styles = StyleSheet.create({
       shadowColor: 'rgb(143,142,148)',
       shadowOpacity: 0.3,
       shadowRadius: 3,
+      borderRadius: 3,
       shadowOffset: { width: 1, height: 4 },
     },
     android: {
