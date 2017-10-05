@@ -21,10 +21,8 @@ export default function Like({ count, liked, onPress, iconName }: P) {
         <Icon
           name={iconName}
           size={18}
-          style={[
-            styles.icon,
-            liked ? css('color', getColor('orange')) : css('color', '#cfd8dc'),
-          ]}
+          color={liked ? getColor('orange') : '#cfd8dc'}
+          style={[styles.icon]}
         />
         <Text
           style={css('color', '#8fa3ad')}

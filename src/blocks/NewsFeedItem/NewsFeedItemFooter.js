@@ -3,12 +3,15 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, TouchableItem } from '../../atoms';
+import { Text, View, TouchableItem, Like } from '../../atoms';
 import { css } from '../../utils/style';
+
+type LikeProps = 'like' | 'comment';
 
 type P = {
   links: Array<string>,
   onLinkPress: string => void,
+  onLikePress: LikeProps => void,
 };
 
 const HIT_SLOP = {
@@ -19,10 +22,32 @@ const HIT_SLOP = {
 };
 
 export default class NewsFeedItemFooter extends React.Component<*, P, *> {
+  onLikePress(status: LikeProps) {
+    return () => {
+      this.props.onLikePress(status);
+    };
+  }
+
   render() {
     return (
       <View style={[styles.footer, styles.row]}>
-        <View style={[styles.footerLeft, styles.row]} />
+        <View style={[styles.footerLeft, styles.row]}>
+          <View style={styles.likeWrapper}>
+            <Like
+              liked
+              iconName="like"
+              count={8}
+              onPress={this.onLikePress('like')}
+            />
+          </View>
+          <View style={styles.likeWrapper}>
+            <Like
+              iconName="comment"
+              count={100}
+              onPress={this.onLikePress('comment')}
+            />
+          </View>
+        </View>
         <View style={[styles.footerRight, styles.row]}>
           {this.props.links.map((link, idx) => (
             <View
@@ -66,8 +91,12 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#ECEFF1',
   },
+  likeWrapper: {
+    paddingHorizontal: 8,
+  },
   footerLeft: {
     flexGrow: 1,
+    marginHorizontal: -8,
   },
   footerRight: {
     marginHorizontal: -15,

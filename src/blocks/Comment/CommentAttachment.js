@@ -64,7 +64,7 @@ export default class CommentAttachment extends React.Component<
           {comments ? (
             <View style={styles.likeWrapper}>
               <Like
-                name="comment"
+                iconName="comment"
                 count={comments}
                 onPress={this.onCommentPress}
               />

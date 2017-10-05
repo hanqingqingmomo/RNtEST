@@ -147,6 +147,7 @@ export default class NewsFeedItem extends React.Component<*, P, *> {
           <NewsFeedItemFooter
             links={LINKS}
             onLinkPress={key => console.log(key)}
+            onLikePress={key => console.log(key)}
           />
         </View>
       </ShadowView>
