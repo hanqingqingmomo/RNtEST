@@ -8,6 +8,7 @@ import {
   AuthenticationRootScreen,
   EmailAuthenticationScreen,
   EmailRegistrationScreen,
+  InvitationCodeScreen,
   LandingScreen,
   PasswordResetScreen,
 } from '../screens';
@@ -32,6 +33,12 @@ export default StackNavigator(
         headerTitle: 'Sign Up',
       },
     },
+    InvitationCodeScreen: {
+      screen: InvitationCodeScreen,
+      navigationOptions: {
+        headerTitle: 'Invitation Code',
+      },
+    },
     LandingScreen: {
       screen: LandingScreen,
       navigationOptions: {
@@ -48,8 +55,6 @@ export default StackNavigator(
   },
   {
     initialRouteName: 'LandingScreen',
-    initialRouteName: 'PasswordResetScreen',
-    // initialRouteName: 'EmailRegistrationScreen',
     ...StyleSheet.create({
       cardStyle: {
         backgroundColor: 'white',
