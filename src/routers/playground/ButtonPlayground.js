@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, View } from '../../atoms';
+import { Button, View, Text, ScrollView } from '../../atoms';
 
 export default class ButtonPlayground extends React.Component<*, *, *> {
   static navigationOptions = {
@@ -12,7 +12,7 @@ export default class ButtonPlayground extends React.Component<*, *, *> {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <View style={[styles.container, styles.darkBackground]}>
           <Button.Icon
             color="rgba(255,23,68,1)"
@@ -57,6 +57,9 @@ export default class ButtonPlayground extends React.Component<*, *, *> {
             size="lg"
             style={[styles.marginTop]}
           />
+          <Text style={[{ textAlign: 'center' }, styles.marginTop]}>
+            Normal width (without 'block' property)
+          </Text>
           <Button
             color="rgba(0,230,118,1)"
             onPress={() => {}}
@@ -65,6 +68,9 @@ export default class ButtonPlayground extends React.Component<*, *, *> {
             textColor="white"
             title="Join now!"
           />
+          <Text style={[{ textAlign: 'center' }, styles.marginTop]}>
+            Full width (with 'block' property)
+          </Text>
           <Button
             color="rgba(0,230,118,1)"
             onPress={() => {}}
@@ -73,9 +79,10 @@ export default class ButtonPlayground extends React.Component<*, *, *> {
             style={[styles.marginTop]}
             textColor="rgba(0,230,118,1)"
             title="Join now!"
+            block
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

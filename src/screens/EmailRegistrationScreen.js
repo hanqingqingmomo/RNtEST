@@ -79,6 +79,7 @@ export default class EmailRegistrationScreen extends React.Component {
             <FormField label="Password" name="password" />
 
             <Button
+              block
               color={getColor('orange')}
               onPress={form.handleSubmit}
               size="lg"

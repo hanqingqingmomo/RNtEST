@@ -20,6 +20,7 @@ export default class LandingScreen extends React.Component {
       <LaunchScreenBackground>
         <View style={styles.buttonContainer}>
           <Button
+            block
             color={getColor('white')}
             onPress={this.navigate('AuthenticationRootScreen')}
             size="lg"
@@ -28,6 +29,7 @@ export default class LandingScreen extends React.Component {
             title="Get Started"
           />
           <Button
+            block
             color={getColor('white')}
             onPress={this.navigate('InvitationCodeScreen')}
             outline
@@ -43,9 +45,9 @@ export default class LandingScreen extends React.Component {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'flex-end',
+    width: 275,
+    alignSelf: 'center',
+    marginTop: 'auto',
     paddingBottom: 48,
   },
   marginBottom: {

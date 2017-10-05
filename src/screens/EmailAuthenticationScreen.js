@@ -56,6 +56,7 @@ export default class PasswordResetScreen extends React.Component {
                 </Text>
               </View>
               <Button
+                block
                 size="lg"
                 color={getColor('orange')}
                 textColor={getColor('white')}

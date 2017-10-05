@@ -37,6 +37,7 @@ export default class InvitationCodeScreen extends React.Component {
                 autoCapitalize="none"
               />
               <Button
+                block
                 size="lg"
                 color={getColor('orange')}
                 textColor={getColor('white')}

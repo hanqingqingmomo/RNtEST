@@ -14,7 +14,7 @@ type Route =
   | 'EmailRegistrationScreen';
 
 function AuthenticationButton(props) {
-  return <Button {...props} size="lg" style={styles.button} />;
+  return <Button block {...props} size="lg" style={styles.button} />;
 }
 
 export default class AuthenticationRootScreen extends React.Component {
