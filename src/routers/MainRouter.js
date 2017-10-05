@@ -22,18 +22,18 @@ import { ForgottenPasswordScreen, LoginScreen } from '../screens';
 //   },
 // });
 
-export default DrawerNavigator({
-  PlaygroundTab: {
-    screen: PlaygroundRouter,
-    // navigationOptions: ({ navigation }) => {
-    //   console.log('navigation: ', navigation);
+// export default DrawerNavigator({
+//   PlaygroundTab: {
+//     screen: PlaygroundRouter,
+//     // navigationOptions: ({ navigation }) => {
+//     //   console.log('navigation: ', navigation);
 
-    //   return {
-    //     headerLeft: <Text>=</Text>,
-    //   };
-    // },
-  },
-  UserProfileScreen: {
-    screen: PlaygroundRouter,
-  },
-});
+//     //   return {
+//     //     headerLeft: <Text>=</Text>,
+//     //   };
+//     // },
+//   },
+//   UserProfileScreen: {
+//     screen: PlaygroundRouter,
+//   },
+// });
