@@ -8,12 +8,11 @@ import { LaunchScreenBackground } from '../blocks';
 import { getColor } from '../utils/color';
 
 export default class LandingScreen extends React.Component {
-  onGetStarted = () => {
-    this.props.navigation.navigate('AuthenticationRootScreen');
-  };
-
-  onInviteCode = () => {
-    this.props.navigation.navigate('InvitationCodeScreen');
+  navigate = (
+    route: 'AuthenticationRootScreen' | 'InvitationCodeScreen'
+  ) => () => {
+    this.props.navigation.navigate('');
+    this.props.navigation.navigate(route);
   };
 
   render() {
@@ -22,7 +21,7 @@ export default class LandingScreen extends React.Component {
         <View style={styles.buttonContainer}>
           <Button
             color={getColor('white')}
-            onPress={this.onGetStarted}
+            onPress={this.navigate('AuthenticationRootScreen')}
             size="lg"
             style={styles.marginBottom}
             textColor={getColor('orange')}
@@ -30,11 +29,11 @@ export default class LandingScreen extends React.Component {
           />
           <Button
             color={getColor('white')}
-            onPress={this.onInviteCode}
+            onPress={this.navigate('InvitationCodeScreen')}
             outline
             size="lg"
             textColor={getColor('white')}
-            title="Invite Code"
+            title="Invitation Code"
           />
         </View>
       </LaunchScreenBackground>
