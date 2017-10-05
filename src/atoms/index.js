@@ -8,7 +8,6 @@ export {
   TouchableHighlight,
   TouchableNativeFeedback,
   TouchableOpacity,
-  View,
 } from 'react-native';
 
 export { default as Avatar } from './Avatar';
@@ -36,3 +35,4 @@ export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { default as TextInput } from './TextInput';
 export { default as TouchableItem } from './TouchableItem';
+export { default as View } from './View';
