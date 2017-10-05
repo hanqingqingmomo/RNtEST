@@ -11,4 +11,4 @@ export { default as EmailRegistrationScreen } from './EmailRegistrationScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
 export { default as LandingScreen } from './LandingScreen';
 export { default as PasswordResetScreen } from './PasswordResetScreen';
-export { default as EditUserProfile } from './EditUserProfile';
+export { default as EditUserProfileScreen } from './EditUserProfileScreen';

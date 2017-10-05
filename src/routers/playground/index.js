@@ -8,9 +8,9 @@ import { ScrollView, Text } from '../../atoms';
 
 import {
   AuthenticationRootScreen,
-  LandingScreen,
+  EditUserProfileScreen,
   EmailRegistrationScreen,
-  EditUserProfile,
+  LandingScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -78,7 +78,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link
       title="Edit User Profile"
-      screen="EditUserProfile"
+      screen="EditUserProfileScreen"
       navigation={navigation}
     />
     <Link
@@ -150,8 +150,8 @@ export default StackNavigator(
     DonationFormPlayground: {
       screen: DonationFormPlayground,
     },
-    EditUserProfile: {
-      screen: EditUserProfile,
+    EditUserProfileScreen: {
+      screen: EditUserProfileScreen,
     },
     EventCardPlayground: {
       screen: EventCardPlayground,

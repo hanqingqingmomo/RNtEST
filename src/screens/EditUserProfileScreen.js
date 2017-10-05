@@ -2,6 +2,10 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import {
+  ActionSheetProvider,
+  connectActionSheet,
+} from '@expo/react-native-action-sheet';
 
 import {
   AvatarPicker,
@@ -20,6 +24,12 @@ type Row = {
   imageURI?: string,
   leftText?: string,
   rightText?: string,
+};
+
+type CommunityProps = {
+  id: number | string,
+  name: string,
+  imageURI: string,
 };
 
 const BG_COLOR = '#ECEFF1';
@@ -96,10 +106,27 @@ const SECTIONS = [
   },
 ];
 
-export default class AuthenticationRootScreen extends React.Component {
+@connectActionSheet
+class EditUserProfileScreen extends React.Component {
   static navigationOptions = {
     title: 'Edit Profile',
   };
+
+  onLeaveCommunity(community: CommunityProps) {
+    return () => {
+      this.props.showActionSheetWithOptions(
+        {
+          options: ['Leave Community', 'Cancel'],
+          cancelButtonIndex: 1,
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            console.log('leave', community);
+          }
+        }
+      );
+    };
+  }
 
   cellPhotoContentView(row: Row) {
     return (
@@ -129,6 +156,7 @@ export default class AuthenticationRootScreen extends React.Component {
                 }}
               />
             }
+            onPress={this.onLeaveCommunity(row)}
           />
         );
       case 'details':
@@ -192,6 +220,14 @@ export default class AuthenticationRootScreen extends React.Component {
     );
   }
 }
+
+export default ({ ...props }) => {
+  return (
+    <ActionSheetProvider>
+      <EditUserProfileScreen {...props} />
+    </ActionSheetProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
