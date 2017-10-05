@@ -7,23 +7,34 @@ import { type Style } from '../Types';
 
 type Props = {
   style?: Style,
-  row?: boolean,
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse',
+  flexGrow?: number,
 };
 
 export default class View extends React.Component<void, Props, void> {
   render() {
-    const { style, row, ...bag } = this.props;
+    const { style, flexDirection, flexGrow, ...bag } = this.props;
     return (
-      <OriginalView {...bag} style={[styles[row ? 'row' : 'column'], style]} />
+      <OriginalView
+        {...bag}
+        flexGrow={flexGrow}
+        style={[styles[flexDirection ? 'row' : 'column'], style]}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+  },
+  'row-reverse': {
+    flexDirection: 'row-reverse',
+  },
   column: {
     flexDirection: 'column',
   },
-  row: {
-    flexDirection: 'row',
+  'column-reverse': {
+    flexDirection: 'column-reverse',
   },
 });

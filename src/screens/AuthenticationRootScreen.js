@@ -6,30 +6,31 @@ import { StyleSheet } from 'react-native';
 import { Icon, View, Button, Screen, Text } from '../atoms';
 import { getColor } from '../utils/color';
 
-type Action =
-  | 'facebookAuthentication'
-  | 'linkedinAuthentication'
-  | 'twitterAuthentication'
-  | 'emailAuthentication'
-  | 'emailRegistration';
+type Route =
+  | 'FacebookAuthenticationScreen'
+  | 'LinkedinAuthenticationScreen'
+  | 'TwitterAuthenticationScreen'
+  | 'EmailAuthenticationScreen'
+  | 'EmailRegistrationScreen';
 
 function AuthenticationButton(props) {
   return <Button {...props} size="lg" style={styles.button} />;
 }
 
 export default class AuthenticationRootScreen extends React.Component {
-  onPress = (action: Action) => () => {
-    switch (action) {
-      case 'emailAuthentication':
-        return this.props.navigation.navigate('EmailLoginScreen');
+  navigate = (route: Route) => () => {
+    switch (route) {
+      case 'EmailAuthenticationScreen':
+      case 'EmailRegistrationScreen':
+        return this.props.navigation.navigate(route);
       default:
-        alert(action);
+        alert(route);
     }
   };
 
   render() {
     return (
-      <Screen tintColor="white">
+      <Screen>
         <View style={styles.container}>
           <Icon name="ywca" color="orange" size={100} />
 
@@ -37,26 +38,26 @@ export default class AuthenticationRootScreen extends React.Component {
             <AuthenticationButton
               color={getColor('facebookBlue')}
               textColor={getColor('white')}
-              onPress={this.onPress('facebookAuthentication')}
+              onPress={this.navigate('FacebookAuthenticationScreen')}
               title="Continue with Facebook"
             />
             <AuthenticationButton
               color={getColor('twitterBlue')}
               textColor={getColor('white')}
-              onPress={this.onPress('twitterAuthentication')}
+              onPress={this.navigate('TwitterAuthenticationScreen')}
               title="Continue with Twitter"
             />
             <AuthenticationButton
               color={getColor('linkedinBlue')}
               textColor={getColor('white')}
-              onPress={this.onPress('linkedinAuthentication')}
+              onPress={this.navigate('LinkedinAuthenticationScreen')}
               title="Continue with LinkedIn"
             />
             <AuthenticationButton
               outline
               color={getColor('orange')}
               textColor={getColor('orange')}
-              onPress={this.onPress('emailRegistration')}
+              onPress={this.navigate('EmailRegistrationScreen')}
               title="Sign Up"
             />
 
@@ -64,7 +65,7 @@ export default class AuthenticationRootScreen extends React.Component {
               {'Already have an account? '}
               <Text
                 color="orange"
-                onPress={this.onPress('emailAuthentication')}
+                onPress={this.navigate('EmailAuthenticationScreen')}
               >
                 Log In
               </Text>

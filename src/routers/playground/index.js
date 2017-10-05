@@ -9,7 +9,7 @@ import { ScrollView, Text } from '../../atoms';
 import {
   AuthenticationRootScreen,
   LandingScreen,
-  SignUpScreen,
+  EmailRegistrationScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -101,7 +101,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
-    <Link title="SignUp screen" screen="SignUpScreen" navigation={navigation} />
+    <Link
+      title="SignUp screen"
+      screen="EmailRegistrationScreen"
+      navigation={navigation}
+    />
     <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
     <Link
       title="User Profile"
@@ -158,8 +162,8 @@ export const PlaygroundRouter = StackNavigator(
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
     },
-    SignUpScreen: {
-      screen: SignUpScreen,
+    EmailRegistrationScreen: {
+      screen: EmailRegistrationScreen,
     },
     TabsPlayground: {
       screen: TabsPlayground,
