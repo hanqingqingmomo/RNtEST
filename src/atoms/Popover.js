@@ -9,14 +9,15 @@ import { getColor } from '../utils/color';
 
 type Props = {
   labels: Array<Object>,
+  button: Object,
 };
 
-export default function Popover({ labels }: Props) {
+export default function Popover({ labels, button }: Props) {
   return (
     <PopoverTooltip
-      buttonComponent={<Icon name="menu" color="orange" size={25} />}
-      items={labels}
       animationType="spring"
+      buttonComponent={button}
+      items={labels}
       labelContainerStyle={{
         backgroundColor: getColor('white'),
         width: Dimensions.get('window').width,

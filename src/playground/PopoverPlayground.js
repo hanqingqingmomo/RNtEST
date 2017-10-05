@@ -2,43 +2,26 @@
 
 import React from 'react';
 import PopoverTooltip from 'react-native-popover-tooltip';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Switch } from 'react-native';
 
-import { View, Text, Icon, Popover } from '../atoms';
+import { View, Text, Icon, Popover, PopoverItem } from '../atoms';
 import { getColor } from '../utils/color';
 
 const Item = () => (
-  <View
-    style={{
-      flexDirection: 'row',
-      backgroundColor: getColor('white'),
-    }}
-  >
-    <Icon
-      name="search"
-      color="#B0BEC5"
-      size={20}
-      style={{ alignSelf: 'center' }}
-    />
-    <Text style={{ fontSize: 15, marginLeft: 20 }}>Press</Text>
-  </View>
+  <PopoverItem
+    accessoryView={
+      <Switch onValueChange={() => {}} value={true} style={{ height: 45 }} />
+    }
+    contentView="Press"
+    imageView={<Icon name="search" color="#B0BEC5" size={22} />}
+  />
 );
 
 const Item2 = () => (
-  <View
-    style={{
-      flexDirection: 'row',
-      backgroundColor: getColor('white'),
-    }}
-  >
-    <Icon
-      name="search"
-      color="#B0BEC5"
-      size={20}
-      style={{ alignSelf: 'center' }}
-    />
-    <Text style={{ fontSize: 15, marginLeft: 20 }}>Press2</Text>
-  </View>
+  <PopoverItem
+    contentView="Press"
+    imageView={<Icon name="search" color="#B0BEC5" size={22} />}
+  />
 );
 
 const items = [
@@ -61,11 +44,24 @@ export default class PopoverPlayground extends React.Component {
         style={{
           flex: 1,
           flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           alignItems: 'center',
         }}
       >
-        <Popover labels={items} />
+        <Popover
+          labels={items}
+          button={<Icon name="menu" color="black" size={60} />}
+        />
+        <View style={{ alignSelf: 'flex-end' }}>
+          <Popover
+            labels={items}
+            button={<Icon name="menu" color="black" size={60} />}
+          />
+        </View>
+        <Popover
+          labels={items}
+          button={<Icon name="menu" color="black" size={60} />}
+        />
       </View>
     );
   }
