@@ -10,7 +10,9 @@ const SIZE = 68;
 const OUTLINE_WIDTH = 2;
 
 type P = {
-  imageUri?: string,
+  imageURI?: string,
+  size?: number,
+  outlineWidth?: number,
   onChange: (imageURI: string) => void,
 };
 
@@ -38,15 +40,32 @@ export default class AvatarPicker extends Component<*, P, *> {
   };
 
   render() {
-    const { imageUri } = this.props;
+    const { imageURI, size, outlineWidth } = this.props;
+
+    const s = typeof size !== 'undefined' ? size : SIZE;
+    const o =
+      typeof outlineWidth !== 'undefined' ? outlineWidth : OUTLINE_WIDTH;
+
     return (
-      <TouchableItem onPress={this.onPress} style={styles.sizeConstraint}>
-        <View style={[styles.circle, styles.shadow, styles.centerContent]}>
-          {!imageUri && <Icon name="plus" size={18} color="#B0BEC5" />}
-          {imageUri && (
-            <Avatar imageURI={imageUri} size={SIZE - OUTLINE_WIDTH * 2} />
-          )}
-          {imageUri && (
+      <TouchableItem
+        onPress={this.onPress}
+        style={{
+          width: s,
+          height: s,
+          borderRadius: s / 2,
+        }}
+      >
+        <View
+          style={[
+            styles.circle,
+            styles.shadow,
+            styles.centerContent,
+            { borderRadius: s / 2 },
+          ]}
+        >
+          {!imageURI && <Icon name="plus" size={18} color="#B0BEC5" />}
+          {imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
+          {imageURI && (
             <View
               style={[
                 styles.editIconCircle,
@@ -64,17 +83,11 @@ export default class AvatarPicker extends Component<*, P, *> {
 }
 
 const styles = StyleSheet.create({
-  sizeConstraint: {
-    width: SIZE,
-    height: SIZE,
-    borderRadius: SIZE / 2,
-  },
   circle: {
     borderColor: 'white',
     borderWidth: 2,
     width: '100%',
     height: '100%',
-    borderRadius: SIZE / 2,
   },
   shadow: {
     shadowOffset: { width: 0, height: 0 },

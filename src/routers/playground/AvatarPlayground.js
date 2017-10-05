@@ -127,7 +127,13 @@ export default class AvatarPlayground extends React.Component<*, *, S> {
           />
         </View>
 
-        <AvatarPicker imageUri={this.state.imageUri} onChange={this.onChange} />
+        <AvatarPicker imageURI={this.state.imageUri} onChange={this.onChange} />
+        <View style={{ marginVertical: 50 }}>
+          <AvatarPicker
+            imageURI="https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg"
+            onChange={this.onChange}
+          />
+        </View>
       </CenterView>
     );
   }
