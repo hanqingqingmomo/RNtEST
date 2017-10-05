@@ -4,26 +4,36 @@ import React from 'react';
 import { View as OriginalView, StyleSheet } from 'react-native';
 
 import { type Style } from '../Types';
+import { css } from '../utils/style';
 
 type Props = {
   style?: Style,
-  row?: boolean,
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse',
+  flexGrow?: number,
 };
 
 export default class View extends React.Component<void, Props, void> {
   render() {
-    const { style, row, ...bag } = this.props;
+    const { style, flexDirection, flexGrow, ...bag } = this.props;
     return (
-      <OriginalView {...bag} style={[styles[row ? 'row' : 'column'], style]} />
+      <OriginalView
+        {...bag}
+        flexGrow={flexGrow}
+        style={[flexDirectionStyle(flexDirection), style]}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  column: {
-    flexDirection: 'column',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-});
+function flexDirectionStyle(value): ?number {
+  switch (value) {
+    case 'row':
+    case 'row-reverse':
+    case 'column':
+    case 'column-reverse':
+      return css('flexDirection', value);
+
+    default:
+      return undefined;
+  }
+}
