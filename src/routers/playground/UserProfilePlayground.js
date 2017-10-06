@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { ScrollView, TableView, Text, Icon } from '../../atoms';
 import { ProfileCard } from '../../blocks';
@@ -16,7 +16,7 @@ const data = {
   phone: '0918053935',
 };
 
-export default class UserProfilePlayground extends React.Component<*, *, *> {
+export default class UserProfilePlayground extends Component<{}, void> {
   static navigationOptions = {
     title: 'User Profile',
   };
@@ -25,7 +25,7 @@ export default class UserProfilePlayground extends React.Component<*, *, *> {
     return (
       <ScrollView>
         <Table>
-          <Section sectionPaddingTop={0} radius={0}>
+          <Section sectionPaddingTop={0}>
             <ProfileCard user={data} />
           </Section>
           <Section header="Communities">

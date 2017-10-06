@@ -1,18 +1,18 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 
 import { Text, View, Image, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
 
-export default class NewsFeedItemEvent extends React.Component<*, *, *> {
+export default class NewsFeedItemEvent extends Component<{}, void> {
   render() {
     const { title, imageURI, startDate, endDate } = this.props;
 
     return (
-      <View style={styles.container}>
+      <View>
         <View style={styles.imageWrapper}>
           <Image
             source={{ uri: imageURI }}
@@ -64,7 +64,6 @@ export default class NewsFeedItemEvent extends React.Component<*, *, *> {
 }
 
 const styles = StyleSheet.create({
-  container: {},
   imageWrapper: {
     height: 200,
     marginBottom: 13,

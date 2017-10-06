@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 import { css } from '../../utils/style';
@@ -12,7 +12,7 @@ type P = {
   value: string,
 };
 
-export default class DonationInput extends React.Component<*, P, *> {
+export default class DonationInput extends Component<P, void> {
   onChangeText = (value: string) => {
     this.props.onChangeText(value);
   };

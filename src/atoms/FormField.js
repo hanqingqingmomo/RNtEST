@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Field } from 'formik';
 
 import { TextInput } from './index';
@@ -27,7 +27,7 @@ type FormFieldProps = TextInputProps & {
   label: string,
 };
 
-class FormFieldInner extends React.Component<void, FormikFieldProps, void> {
+class FormFieldInner extends Component<FormikFieldProps, void> {
   onChangeText = (value: any) => {
     this.props.form.setFieldValue(this.props.field.name, value);
   };
@@ -46,11 +46,7 @@ class FormFieldInner extends React.Component<void, FormikFieldProps, void> {
   }
 }
 
-export default class FormField extends React.Component<
-  void,
-  FormFieldProps,
-  void
-> {
+export default class FormField extends Component<FormFieldProps, void> {
   render() {
     return <Field component={FormFieldInner} {...this.props} />;
   }

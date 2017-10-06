@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { distanceInWordsToNow, differenceInMinutes } from 'date-fns';
 
 import { Text } from '../../atoms';
@@ -11,7 +11,7 @@ type P = {
   style?: Object,
 };
 
-export default class NewsFeedItemHeader extends React.Component<*, P, *> {
+export default class NewsFeedItemHeader extends Component<P, void> {
   formatDate(date: Date) {
     const diffInMinutes = differenceInMinutes(new Date(), date);
     const diff = distanceInWordsToNow(date);

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { ContactGroup } from '../../atoms';
 import { type User } from '../../Types';
@@ -143,7 +143,7 @@ const users: Array<User> = [
   },
 ];
 
-export default class CommunityHeaderPlayground extends React.Component {
+export default class CommunityHeaderPlayground extends Component<{}, void> {
   static navigationOptions = { headerTitle: 'Contact Group' };
 
   render() {

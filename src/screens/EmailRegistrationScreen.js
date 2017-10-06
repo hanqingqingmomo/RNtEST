@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import {
@@ -22,6 +22,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   password: '',
+  avatarImageUri: '',
 };
 
 const RULES = {
@@ -33,9 +34,21 @@ const RULES = {
 
 type FormValues = typeof INITIAL_VALUES;
 
-export default class EmailRegistrationScreen extends React.Component {
+type State = {
+  avatarImageUri: ?string,
+};
+
+export default class EmailRegistrationScreen extends Component<{}, State> {
+  state = {
+    avatarImageUri: null,
+  };
+
   handleSubmit = (values: FormValues) => {
     alert(JSON.stringify(values));
+  };
+
+  onAvatarChange = (avatarImageUri: string) => {
+    this.setState({ avatarImageUri });
   };
 
   render() {
@@ -57,7 +70,10 @@ export default class EmailRegistrationScreen extends React.Component {
             </Text>
 
             <View style={styles.picker}>
-              <AvatarPicker />
+              <AvatarPicker
+                imageUri={this.state.avatarImageUri}
+                onChange={this.onAvatarChange}
+              />
             </View>
 
             <View flexDirection="row">

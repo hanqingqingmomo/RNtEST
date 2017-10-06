@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, Text, Avatar, Icon, Link, ShadowView } from '../atoms';
@@ -16,7 +16,7 @@ type P = {
   },
 };
 
-export default class ProfileCard extends React.Component<*, P, *> {
+export default class ProfileCard extends Component<P, void> {
   render() {
     const { username, position, imageURI, email, phone } = this.props.user;
 

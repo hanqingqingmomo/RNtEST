@@ -1,39 +1,41 @@
 // @flow
 
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import {
-  StackNavigator,
-  TabNavigator,
-  DrawerNavigator,
-} from 'react-navigation';
+import React, { Component } from 'react';
+import { StatusBar } from 'react-native';
 
-import { PlaygroundRouter } from './playground';
+import { DrawerNavigator } from '../navigation';
+import Drawer from '../navigation/Drawer/Drawer';
+import { Icon } from '../atoms';
+import PlaygroundRouter from './playground';
 
-import { Text } from '../atoms';
-import { ForgottenPasswordScreen, LoginScreen } from '../screens';
-
-// export const MainRouter = StackNavigator({
-//   WelcomeScreen: {
-//     screen: WelcomeScreen,
-//   },
-//   UserProfileScreen: {
-//     screen: UserProfileScreen,
-//   },
-// });
-
-export default DrawerNavigator({
-  PlaygroundTab: {
-    screen: PlaygroundRouter,
-    // navigationOptions: ({ navigation }) => {
-    //   console.log('navigation: ', navigation);
-
-    //   return {
-    //     headerLeft: <Text>=</Text>,
-    //   };
-    // },
+const DrawerRouter = DrawerNavigator(
+  {
+    PlaygroundRouter: {
+      screen: PlaygroundRouter,
+      navigationOptions: {
+        drawerLabel: 'Playground',
+        drawerIcon: <Icon name="user" size={24} color="rgba(69,90,100,1)" />,
+      },
+    },
   },
-  UserProfileScreen: {
-    screen: PlaygroundRouter,
-  },
-});
+  {
+    initialRouteName: 'PlaygroundRouter',
+    contentComponent: Drawer,
+  }
+);
+
+export default class MainRouter extends Component<{}, void> {
+  handleNavigationState = (previous: any, next: any, action: any) => {
+    if (action.routeName === 'DrawerOpen') {
+      StatusBar.setBarStyle('light-content');
+    } else if (action.routeName === 'DrawerClose') {
+      StatusBar.setBarStyle('dark-content');
+    }
+  };
+
+  render() {
+    return (
+      <DrawerRouter onNavigationStateChange={this.handleNavigationState} />
+    );
+  }
+}

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import {
   distanceInWordsToNow,
@@ -41,7 +41,7 @@ type P = {
   title: string,
 };
 
-export default class EventCard extends React.Component<*, P, *> {
+export default class EventCard extends Component<P, void> {
   formatDate(date: Date): string {
     if (isToday(date)) {
       return 'Today';

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Text, TouchableItem, TouchableNativeFeedback, View } from '../index';
@@ -16,17 +16,12 @@ const HIT_SLOP = {
 
 type SizeStyleName = $Keys<typeof sizeStyles>;
 
-type DP = {
-  disabled: boolean,
-  outline: boolean,
-};
-
 type P = {
   block?: boolean,
   color: ColorName | string,
-  disabled?: boolean,
+  disabled: boolean,
   onPress: Function,
-  outline?: boolean,
+  outline: boolean,
   size: SizeStyleName,
   style?: any,
   textColor: ColorName | string,
@@ -35,7 +30,7 @@ type P = {
     | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
 };
 
-export default class Button extends React.Component<DP, DP & P, *> {
+export default class Button extends Component<P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,

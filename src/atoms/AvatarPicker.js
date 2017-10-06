@@ -10,7 +10,7 @@ const SIZE = 68;
 const OUTLINE_WIDTH = 2;
 
 type P = {
-  imageUri?: string,
+  imageUri: ?string,
   onChange: (imageURI: string) => void,
 };
 
@@ -23,7 +23,7 @@ const DEFAULT_OPTIONS = {
   allowsEditing: true,
 };
 
-export default class AvatarPicker extends Component<*, P, *> {
+export default class AvatarPicker extends Component<P, void> {
   onPress = () => {
     const { onChange } = this.props;
 

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import Color from 'color';
 
@@ -15,7 +15,7 @@ type P = {
   title: string,
 };
 
-export default class CommunityCard extends React.Component<*, P, *> {
+export default class CommunityCard extends Component<P, void> {
   render() {
     const { title, imageURI, subtitle, isNew } = this.props;
 

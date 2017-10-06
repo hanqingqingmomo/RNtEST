@@ -1,10 +1,10 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { CommunityHeader } from '../../atoms';
 
-export default class CommunityHeaderPlayground extends React.Component {
+export default class CommunityHeaderPlayground extends Component<{}, void> {
   static navigationOptions = { headerTitle: 'Community header' };
 
   render() {

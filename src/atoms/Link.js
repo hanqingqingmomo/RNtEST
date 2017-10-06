@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Linking } from 'react-native';
 
 import { TouchableItem } from '../atoms';
@@ -16,7 +16,7 @@ const PROTOCOL_MAP = {
   mail: 'mailto',
 };
 
-export default class Link extends React.Component<*, P, *> {
+export default class Link extends Component<P, void> {
   openUrl = (url: string) => {
     Linking.canOpenURL(url).then(supported => {
       if (supported) {

@@ -1,11 +1,11 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text } from '../index';
 
-export default class SectionLabel extends React.Component {
+export default class SectionLabel extends Component {
   render() {
     return (
       <Text

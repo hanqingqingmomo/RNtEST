@@ -16,7 +16,7 @@
     "color": "^2.0.0",
     "date-fns": "^1.28.5",
     "flux-standard-action": "^1.2.0",
-    "formik": "^0.9.3",
+    "formik": "^0.9.4",
     "hoist-non-react-statics": "^2.2.1",
     "immutability-helper": "^2.4.0",
     "indicative": "https://github.com/Andreyco/indicative#764ed4838b82f0efb7c19b4960db3aad7fd95441",

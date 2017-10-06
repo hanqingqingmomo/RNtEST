@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, TouchableItem, Icon, View } from '../../atoms';
@@ -40,7 +40,7 @@ const ICON_LINE_HEIGHT = {
   lg: 65,
 };
 
-export default class DonationButton extends React.Component<*, P, *> {
+export default class DonationButton extends Component<P, void> {
   render() {
     const {
       disabled,

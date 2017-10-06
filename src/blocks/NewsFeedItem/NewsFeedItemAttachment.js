@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
 import { Text, View, Icon, Image } from '../../atoms';
@@ -12,7 +12,7 @@ type P = {
   videoURI?: string,
 };
 
-export default class NewsFeedItemAttachment extends React.Component<*, P, *> {
+export default class NewsFeedItemAttachment extends Component<P, void> {
   render() {
     const { imageURI, title, videoURI } = this.props;
 

@@ -16,7 +16,7 @@ type Props = {
   user: ?User,
 };
 
-class Application extends React.PureComponent<void, Props, void> {
+class Application extends React.PureComponent<Props, void> {
   componentDidMount() {
     SplashScreen.hide();
 
@@ -37,11 +37,7 @@ class Application extends React.PureComponent<void, Props, void> {
     return (
       <Screen>
         <Network />
-        {user ? (
-          <MainRouter screenProps={{ user }} />
-        ) : (
-          <AuthenticationRouter />
-        )}
+        {user ? <MainRouter /> : <AuthenticationRouter />}
       </Screen>
     );
   };

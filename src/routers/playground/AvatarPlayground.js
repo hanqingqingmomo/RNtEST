@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import {
@@ -22,7 +22,7 @@ type S = {
   imageUri: ?string,
 };
 
-export default class AvatarPlayground extends React.Component<*, *, S> {
+export default class AvatarPlayground extends Component<{}, S> {
   static navigationOptions = {
     headerTitle: 'Avatar, Avatar Group &amp; Avatar picker',
   };

@@ -1,12 +1,12 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 
 import { DonationForm, DonationAppeal } from '../../blocks';
 import { View, CommunityHeader, ScrollView } from '../../atoms';
 
-export default class DonationFormPlayground extends React.Component<*, *, *> {
+export default class DonationFormPlayground extends Component<{}, void> {
   static navigationOptions = {
     title: 'Donation Form',
   };

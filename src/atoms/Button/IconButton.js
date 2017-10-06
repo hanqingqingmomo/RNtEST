@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
@@ -14,23 +14,18 @@ const HIT_SLOP = {
   left: 6,
 };
 
-type DP = {
-  disabled: boolean,
-  outline: boolean,
-};
-
 type P = {
   color: ColorName | string,
-  disabled?: boolean,
+  disabled: boolean,
   iconColor: ColorName | string,
   iconName: IconName,
   onPress: Function,
-  outline?: boolean,
+  outline: boolean,
   size: IconSize | number,
   style?: any,
 };
 
-export default class IconButton extends React.Component<DP, DP & P, *> {
+export default class IconButton extends Component<P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,

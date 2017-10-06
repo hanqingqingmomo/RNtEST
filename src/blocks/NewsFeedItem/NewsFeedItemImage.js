@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View, Image } from '../../atoms';
@@ -11,7 +11,7 @@ type P = {
   title: string,
 };
 
-export default class NewsFeedItemAttachment extends React.Component<*, P, *> {
+export default class NewsFeedItemAttachment extends Component<P, void> {
   render() {
     const { title, imageURI } = this.props;
 

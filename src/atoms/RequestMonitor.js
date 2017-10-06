@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
@@ -27,7 +27,7 @@ function selectRequestError(
  */
 export default function withRequestMonitor(requestId: RequestID) {
   return (WrappedComponent: *) => {
-    class RequestMonitor extends React.Component<*, RequestProps, *> {
+    class RequestMonitor extends Component<RequestProps, void> {
       componentWillMount() {
         this.props.clearRequest(requestId);
       }

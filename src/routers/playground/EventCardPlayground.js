@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View } from '../../atoms';
@@ -43,7 +43,7 @@ const items = [
   },
 ];
 
-export default class EventCardPlayground extends React.Component<*, P, *> {
+export default class EventCardPlayground extends Component<P, void> {
   static navigationOptions = { title: 'Event card' };
   render() {
     return (

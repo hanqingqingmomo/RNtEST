@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Button, Form, FormField, Icon, View, Screen } from '../atoms';
@@ -16,7 +16,7 @@ const RULES = {
   invitationCode: 'required|min:6',
 };
 
-export default class InvitationCodeScreen extends React.Component {
+export default class InvitationCodeScreen extends Component<{}, void> {
   handleFormSubmit = (values: FormValues) => {
     alert(JSON.stringify(values));
   };

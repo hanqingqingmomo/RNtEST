@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { StackNavigator } from 'react-navigation';
 
+import { StackNavigator } from '../../navigation';
 import { ScrollView, Text } from '../../atoms';
-
 import {
   AuthenticationRootScreen,
   LandingScreen,
   EmailRegistrationScreen,
+  SettingsScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -112,6 +112,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="EmailRegistrationScreen"
       navigation={navigation}
     />
+    <Link
+      title="Settings Screen"
+      screen="SettingsScreen"
+      navigation={navigation}
+    />
     <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
     <Link
       title="User Profile"
@@ -125,8 +130,20 @@ export default StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
-      navigationOptions: {
-        title: 'Component Playground',
+      navigationOptions: ({ navigation }) => {
+        console.log('navigation: ', navigation);
+        return {
+          title: 'Component Playground',
+          headerLeft: (
+            <Text
+              onPress={() => {
+                navigation.navigate('DrawerOpen');
+              }}
+            >
+              left
+            </Text>
+          ),
+        };
       },
     },
     AvatarPlayground: {
@@ -173,6 +190,9 @@ export default StackNavigator(
     },
     EmailRegistrationScreen: {
       screen: EmailRegistrationScreen,
+    },
+    SettingsScreen: {
+      screen: SettingsScreen,
     },
     TabsPlayground: {
       screen: TabsPlayground,
