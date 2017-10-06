@@ -2,10 +2,9 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { StackNavigator } from 'react-navigation';
 
+import { StackNavigator } from '../../navigation';
 import { ScrollView, Text } from '../../atoms';
-
 import {
   AuthenticationRootScreen,
   LandingScreen,
@@ -115,12 +114,24 @@ const PlaygroundIndexScreen = ({ navigation }) => (
   </ScrollView>
 );
 
-export const PlaygroundRouter = StackNavigator(
+export default StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
-      navigationOptions: {
-        title: 'Component Playground',
+      navigationOptions: ({ navigation }) => {
+        console.log('navigation: ', navigation);
+        return {
+          title: 'Component Playground',
+          headerLeft: (
+            <Text
+              onPress={() => {
+                navigation.navigate('DrawerOpen');
+              }}
+            >
+              left
+            </Text>
+          ),
+        };
       },
     },
     AvatarPlayground: {
