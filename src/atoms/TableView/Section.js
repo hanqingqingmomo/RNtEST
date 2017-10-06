@@ -3,8 +3,6 @@
 import React from 'react';
 import { Section as OriginalSection } from 'react-native-tableview-simple';
 
-import { View } from '../index';
-
 import SectionLabel from './SectionLabel';
 
 export default class Section extends React.Component {

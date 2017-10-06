@@ -1,10 +1,12 @@
 // @flow
 
-import { TableView, Cell } from 'react-native-tableview-simple';
+import { TableView } from 'react-native-tableview-simple';
+
+import Cell from './Cell';
 import Section from './Section';
 
 export default {
-  Table: TableView,
-  Section,
   Cell,
+  Section,
+  Table: TableView,
 };
