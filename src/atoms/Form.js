@@ -20,8 +20,8 @@ type Props = {
   }) => boolean | Promise<*>,
 };
 
-export default class Form extends React.Component<void, Props, void> {
-  get validate(): ?(Object) => Promise<*> {
+export default class Form extends React.Component<Props, void> {
+  makeValidator = () => {
     if (this.props.validate) {
       return this.props.validate;
     }
@@ -43,9 +43,17 @@ export default class Form extends React.Component<void, Props, void> {
     }
 
     return undefined;
-  }
+  };
 
   render() {
-    return <Formik {...this.props} validate={this.validate} />;
+    const { messages, rules, validate, ...bag } = this.props;
+    return (
+      <Formik
+        validateOnChange={false}
+        validateOnBlur={false}
+        {...bag}
+        validate={this.makeValidator()}
+      />
+    );
   }
 }
