@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { type Persistor } from 'redux-persist';
 import { AppRegistry, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import KeyboardManager from 'react-native-keyboard-manager';
@@ -18,15 +17,15 @@ if (Platform.OS === 'ios') {
 }
 
 type Props = {
-  persistor: Persistor,
-  render: (persistor: Persistor, ready: boolean) => React$Element<*>,
+  persistor: any,
+  render: (persistor: any, ready: boolean) => React$Element<*>,
 };
 
 type State = {
   ready: boolean,
 };
 
-export default class Bootloader extends React.PureComponent<*, Props, State> {
+export default class Bootloader extends React.PureComponent<Props, State> {
   state = {
     ready: false,
   };
