@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Text extends React.Component<void, Props, void> {
+export default class Text extends React.Component<Props, void> {
   setNativeProps(nativeProps: any) {
     this.refs['root'].setNativeProps(nativeProps);
   }

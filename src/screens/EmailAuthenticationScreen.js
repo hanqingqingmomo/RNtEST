@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Button, Form, FormField, Icon, Text, View, Screen } from '../atoms';
@@ -18,7 +18,7 @@ const RULES = {
   password: 'required',
 };
 
-export default class PasswordResetScreen extends React.Component {
+export default class PasswordResetScreen extends Component<{}, void> {
   navigateToPasswordResetScreen = () => {
     this.props.navigation.navigate('PasswordResetScreen');
   };

@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Button, View, Text, ScrollView } from '../../atoms';
 
-export default class ButtonPlayground extends React.Component<*, *, *> {
+export default class ButtonPlayground extends React.Component<{}, void> {
   static navigationOptions = {
     title: 'Icon Buttons',
   };

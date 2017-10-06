@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Network extends React.Component<*, *, S> {
+export default class Network extends React.Component<{}, S> {
   state = {
     animationFinished: true,
     isConnected: true,

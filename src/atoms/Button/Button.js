@@ -16,17 +16,12 @@ const HIT_SLOP = {
 
 type SizeStyleName = $Keys<typeof sizeStyles>;
 
-type DP = {
-  disabled: boolean,
-  outline: boolean,
-};
-
 type P = {
   block?: boolean,
   color: ColorName | string,
-  disabled?: boolean,
+  disabled: boolean,
   onPress: Function,
-  outline?: boolean,
+  outline: boolean,
   size: SizeStyleName,
   style?: any,
   textColor: ColorName | string,
@@ -35,7 +30,7 @@ type P = {
     | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
 };
 
-export default class Button extends React.Component<DP, DP & P, *> {
+export default class Button extends React.Component<P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,

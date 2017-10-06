@@ -143,7 +143,10 @@ const users: Array<User> = [
   },
 ];
 
-export default class CommunityHeaderPlayground extends React.Component {
+export default class CommunityHeaderPlayground extends React.Component<
+  {},
+  void
+> {
   static navigationOptions = { headerTitle: 'Contact Group' };
 
   render() {

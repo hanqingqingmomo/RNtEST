@@ -12,7 +12,7 @@ type Props = {
   flexGrow?: number,
 };
 
-export default class View extends React.Component<void, Props, void> {
+export default class View extends React.Component<Props, void> {
   render() {
     const { style, flexDirection, flexGrow, ...bag } = this.props;
     return (

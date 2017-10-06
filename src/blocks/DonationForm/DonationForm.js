@@ -31,7 +31,7 @@ function printMoney(amount: number): string {
   return `$${amount}`;
 }
 
-export default class DonationForm extends React.Component<*, P, S> {
+export default class DonationForm extends React.Component<P, S> {
   state = {
     interval: 'Monthly',
     price: 50,
@@ -82,11 +82,9 @@ export default class DonationForm extends React.Component<*, P, S> {
               onChangeText={price =>
                 this.setState({ price, priceTypedManualy: true })}
               value={
-                this.state.priceTypedManualy ? (
-                  (this.state.price || '').toString()
-                ) : (
-                  ''
-                )
+                this.state.priceTypedManualy
+                  ? (this.state.price || '').toString()
+                  : ''
               }
               size="lg"
             />

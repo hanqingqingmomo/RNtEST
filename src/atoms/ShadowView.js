@@ -3,15 +3,16 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
+import { type Style } from '../Types';
 import { View } from './index';
 
 type P = {
-  style?: Object,
+  style?: Style,
   children?: React$Element<*>,
-  radius: number,
+  radius?: number,
 };
 
-export default class Shadow extends React.Component<*, P, *> {
+export default class Shadow extends React.Component<P, void> {
   render() {
     const { radius } = this.props;
 

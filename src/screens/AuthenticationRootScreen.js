@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Icon, View, Button, Screen, Text } from '../atoms';
@@ -17,7 +17,7 @@ function AuthenticationButton(props) {
   return <Button block {...props} size="lg" style={styles.button} />;
 }
 
-export default class AuthenticationRootScreen extends React.Component {
+export default class AuthenticationRootScreen extends Component<{}, void> {
   navigate = (route: Route) => () => {
     switch (route) {
       case 'EmailAuthenticationScreen':

@@ -1,13 +1,13 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Button, View } from '../atoms';
 import { LaunchScreenBackground } from '../blocks';
 import { getColor } from '../utils/color';
 
-export default class LandingScreen extends React.Component {
+export default class LandingScreen extends Component<{}, void> {
   navigate = (
     route: 'AuthenticationRootScreen' | 'InvitationCodeScreen'
   ) => () => {

@@ -6,7 +6,7 @@ import { Alert, StyleSheet } from 'react-native';
 import { DonationForm, DonationAppeal } from '../../blocks';
 import { View, CommunityHeader, ScrollView } from '../../atoms';
 
-export default class DonationFormPlayground extends React.Component<*, *, *> {
+export default class DonationFormPlayground extends React.Component<{}, void> {
   static navigationOptions = {
     title: 'Donation Form',
   };

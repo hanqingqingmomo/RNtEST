@@ -36,7 +36,7 @@ const items = [
   },
 ];
 
-export default class CommunityCardPlayground extends React.Component<*, P, *> {
+export default class CommunityCardPlayground extends React.Component<P, void> {
   static navigationOptions = {
     title: 'Community card',
   };

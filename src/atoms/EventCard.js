@@ -41,7 +41,7 @@ type P = {
   title: string,
 };
 
-export default class EventCard extends React.Component<*, P, *> {
+export default class EventCard extends React.Component<P, void> {
   formatDate(date: Date): string {
     if (isToday(date)) {
       return 'Today';

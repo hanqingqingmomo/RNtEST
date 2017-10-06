@@ -35,7 +35,7 @@ type S = {
   searchTerm: string,
 };
 
-export default class IconPlayground extends React.Component<*, *, S> {
+export default class IconPlayground extends React.Component<{}, S> {
   static navigationOptions = {
     headerTitle: 'Icons',
   };

@@ -5,7 +5,7 @@ import React from 'react';
 import { Text } from '../../atoms';
 import { TabNavigator } from '../../navigation';
 
-class NewsScreen extends React.Component {
+class NewsScreen extends React.Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'News',
   };
@@ -15,7 +15,7 @@ class NewsScreen extends React.Component {
   }
 }
 
-class MembersScreen extends React.Component {
+class MembersScreen extends React.Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'Members (123)',
   };
@@ -25,7 +25,7 @@ class MembersScreen extends React.Component {
   }
 }
 
-class FilesScreen extends React.Component {
+class FilesScreen extends React.Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'Files',
   };
@@ -35,7 +35,7 @@ class FilesScreen extends React.Component {
   }
 }
 
-class AboutScreen extends React.Component {
+class AboutScreen extends React.Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'About',
   };
@@ -57,7 +57,7 @@ const SCREENS = {
   },
 };
 
-export default class TabsPlayground extends React.Component<*, *, *> {
+export default class TabsPlayground extends React.Component<{}, void> {
   static navigationOptions = {
     headerTitle: 'Tabs',
   };

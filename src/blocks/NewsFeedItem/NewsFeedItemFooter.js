@@ -18,7 +18,7 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemFooter extends React.Component<*, P, *> {
+export default class NewsFeedItemFooter extends React.Component<P, void> {
   render() {
     return (
       <View style={[styles.footer, styles.row]}>

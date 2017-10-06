@@ -16,11 +16,7 @@ type S = {
   labelB: string,
 };
 
-export default class SegmentedControlPlayground extends React.Component<
-  *,
-  *,
-  S
-> {
+export default class SegmentedControlPlayground extends React.Component<{}, S> {
   static navigationOptions = { headerTitle: 'Segmented Control' };
 
   state = { labelA: 'A', labelB: 'A' };

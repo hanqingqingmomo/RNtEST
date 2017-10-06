@@ -40,7 +40,7 @@ const ICON_LINE_HEIGHT = {
   lg: 65,
 };
 
-export default class DonationButton extends React.Component<*, P, *> {
+export default class DonationButton extends React.Component<P, void> {
   render() {
     const {
       disabled,

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Button, Form, FormField, Icon, Screen, View } from '../atoms';
@@ -16,7 +16,7 @@ const RULES = {
   email: 'required|email',
 };
 
-export default class PasswordResetScreen extends React.Component {
+export default class PasswordResetScreen extends Component<{}, void> {
   handleFormSubmit = (values: FormValues) => {
     alert(JSON.stringify(values));
   };

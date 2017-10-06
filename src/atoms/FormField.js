@@ -27,7 +27,7 @@ type FormFieldProps = TextInputProps & {
   label: string,
 };
 
-class FormFieldInner extends React.Component<void, FormikFieldProps, void> {
+class FormFieldInner extends React.Component<FormikFieldProps, void> {
   onChangeText = (value: any) => {
     this.props.form.setFieldValue(this.props.field.name, value);
   };

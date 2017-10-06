@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { TableView, Screen, Text, Icon } from '../atoms';
 import { css } from '../utils/style';
@@ -50,7 +50,7 @@ const ACTIONS = [
   },
 ];
 
-export default class SettingsScreen extends React.Component<void, void> {
+export default class SettingsScreen extends Component<{}, void> {
   static navigationOptions = {
     title: 'Settings',
   };

@@ -11,7 +11,7 @@ type P = {
   style?: Object,
 };
 
-export default class NewsFeedItemHeader extends React.Component<*, P, *> {
+export default class NewsFeedItemHeader extends React.Component<P, void> {
   formatDate(date: Date) {
     const diffInMinutes = differenceInMinutes(new Date(), date);
     const diff = distanceInWordsToNow(date);

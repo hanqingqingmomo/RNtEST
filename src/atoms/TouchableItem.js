@@ -22,19 +22,15 @@ const ANDROID_VERSION_LOLLIPOP = 21;
 type Props = {
   onPress: () => void,
   delayPressIn?: number,
-  borderless?: boolean,
-  pressColor?: string,
+  borderless: boolean,
+  pressColor: string,
   useForeground?: boolean,
   activeOpacity?: number,
-  children?: React.Element<*>,
+  children?: React$Element<*>,
   style?: any,
 };
 
-type DefaultProps = {
-  pressColor: string,
-};
-
-export default class TouchableItem extends Component<DefaultProps, Props, *> {
+export default class TouchableItem extends Component<Props, void> {
   static defaultProps = {
     borderless: false,
     pressColor: 'rgba(0, 0, 0, .32)',
@@ -73,9 +69,7 @@ export default class TouchableItem extends Component<DefaultProps, Props, *> {
     }
 
     return (
-      <TouchableOpacity {...this.props}>
-        {this.props.children}
-      </TouchableOpacity>
+      <TouchableOpacity {...this.props}>{this.props.children}</TouchableOpacity>
     );
   }
 }

@@ -23,7 +23,7 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemHeader extends React.Component<*, P, *> {
+export default class NewsFeedItemHeader extends React.Component<P, void> {
   render() {
     return (
       <View style={[styles.header, styles.row]}>

@@ -12,7 +12,7 @@ type P = {
   value: string,
 };
 
-export default class DonationInput extends React.Component<*, P, *> {
+export default class DonationInput extends React.Component<P, void> {
   onChangeText = (value: string) => {
     this.props.onChangeText(value);
   };
