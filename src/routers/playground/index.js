@@ -9,6 +9,7 @@ import {
   AuthenticationRootScreen,
   LandingScreen,
   EmailRegistrationScreen,
+  SettingsScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -105,6 +106,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="EmailRegistrationScreen"
       navigation={navigation}
     />
+    <Link
+      title="Settings Screen"
+      screen="SettingsScreen"
+      navigation={navigation}
+    />
     <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
     <Link
       title="User Profile"
@@ -175,6 +181,9 @@ export default StackNavigator(
     },
     EmailRegistrationScreen: {
       screen: EmailRegistrationScreen,
+    },
+    SettingsScreen: {
+      screen: SettingsScreen,
     },
     TabsPlayground: {
       screen: TabsPlayground,
