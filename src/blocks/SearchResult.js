@@ -1,12 +1,26 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { format } from 'date-fns';
 
 import { View, TableView, Icon, Text, Image, DateCard } from '../atoms';
 import { css } from '../utils/style';
 
 const { Table, Section, Cell } = TableView;
+
+type ItemProps = {
+  city?: string,
+  date?: Date,
+  endDate?: Date,
+  fileType?: string,
+  imageURI?: string,
+  isJoined?: boolean,
+  startDate?: Date,
+  state?: string,
+  subtitle?: string,
+  title: string,
+  type?: string,
+};
 
 const RECENT_SEARCHES = [
   {
@@ -174,12 +188,12 @@ const RESULTS = [
   },
 ];
 
-export default class NewsfeedPlayground extends React.Component<*, *, *> {
-  renderTitle(data) {
+export default class NewsfeedPlayground extends Component<{}, void> {
+  renderTitle(data: ItemProps): React$Element<*> {
     return <Text color="#3E515B">{data.title}</Text>;
   }
 
-  formatEventDate(data) {
+  formatEventDate(data: ItemProps): string {
     return [
       format(data.startDate, 'MMM Qo'),
       `${format(data.startDate, 'HH:MM A')} - ${format(
@@ -191,7 +205,7 @@ export default class NewsfeedPlayground extends React.Component<*, *, *> {
     ].join(', ');
   }
 
-  formatComunityDate(data) {
+  formatComunityDate(data: ItemProps): string {
     if (data.isJoined) {
       return [
         `Joined on ${format(data.date, 'MMM Qo')}`,
@@ -202,15 +216,15 @@ export default class NewsfeedPlayground extends React.Component<*, *, *> {
     return 'Not Joined';
   }
 
-  formatFileDate(data) {
+  formatFileDate(data: ItemProps): string {
     return [
       format(data.date, 'MMM Qo'),
       format(data.date, 'YYYY'),
-      data.fileType.toUpperCase(),
+      (data.fileType || '').toUpperCase(),
     ].join(', ');
   }
 
-  renderSubTitle(data) {
+  renderSubTitle(data: ItemProps): ?string {
     switch (data.type) {
       case 'event':
         return this.formatEventDate(data);
@@ -223,7 +237,7 @@ export default class NewsfeedPlayground extends React.Component<*, *, *> {
     }
   }
 
-  renderImage(data) {
+  renderImage(data: ItemProps): React$Element<*> {
     switch (data.type) {
       case 'event':
         return <DateCard size="sm" date={data.startDate} />;
