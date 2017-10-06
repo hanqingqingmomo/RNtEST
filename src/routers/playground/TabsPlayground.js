@@ -1,11 +1,11 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { Text } from '../../atoms';
 import { TabNavigator } from '../../navigation';
 
-class NewsScreen extends React.Component<{}, void> {
+class NewsScreen extends Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'News',
   };
@@ -15,7 +15,7 @@ class NewsScreen extends React.Component<{}, void> {
   }
 }
 
-class MembersScreen extends React.Component<{}, void> {
+class MembersScreen extends Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'Members (123)',
   };
@@ -25,7 +25,7 @@ class MembersScreen extends React.Component<{}, void> {
   }
 }
 
-class FilesScreen extends React.Component<{}, void> {
+class FilesScreen extends Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'Files',
   };
@@ -35,7 +35,7 @@ class FilesScreen extends React.Component<{}, void> {
   }
 }
 
-class AboutScreen extends React.Component<{}, void> {
+class AboutScreen extends Component<{}, void> {
   static navigationOptions = {
     tabBarLabel: 'About',
   };
@@ -57,7 +57,7 @@ const SCREENS = {
   },
 };
 
-export default class TabsPlayground extends React.Component<{}, void> {
+export default class TabsPlayground extends Component<{}, void> {
   static navigationOptions = {
     headerTitle: 'Tabs',
   };

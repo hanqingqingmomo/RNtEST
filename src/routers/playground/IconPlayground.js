@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import fontelloConfig from '../../atoms/Icon/fontello/config';
@@ -35,7 +35,7 @@ type S = {
   searchTerm: string,
 };
 
-export default class IconPlayground extends React.Component<{}, S> {
+export default class IconPlayground extends Component<{}, S> {
   static navigationOptions = {
     headerTitle: 'Icons',
   };

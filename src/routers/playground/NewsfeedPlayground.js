@@ -1,12 +1,12 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, ScrollView } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
 
-export default class NewsfeedPlayground extends React.Component<{}, void> {
+export default class NewsfeedPlayground extends Component<{}, void> {
   static navigationOptions = {
     title: 'News Feed',
   };

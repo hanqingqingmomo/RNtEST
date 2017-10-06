@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View, TouchableItem } from '../../atoms';
@@ -18,7 +18,7 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemFooter extends React.Component<P, void> {
+export default class NewsFeedItemFooter extends Component<P, void> {
   render() {
     return (
       <View style={[styles.footer, styles.row]}>

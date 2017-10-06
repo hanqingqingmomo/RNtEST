@@ -1,13 +1,13 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 
 import { Text, View, Image, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
 
-export default class NewsFeedItemEvent extends React.Component<{}, void> {
+export default class NewsFeedItemEvent extends Component<{}, void> {
   render() {
     const { title, imageURI, startDate, endDate } = this.props;
 

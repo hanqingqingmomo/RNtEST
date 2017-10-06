@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Platform, Text as ReactNativeText } from 'react-native';
 
 import { type ColorName, type Style } from '../Types';
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Text extends React.Component<Props, void> {
+export default class Text extends Component<Props, void> {
   setNativeProps(nativeProps: any) {
     this.refs['root'].setNativeProps(nativeProps);
   }

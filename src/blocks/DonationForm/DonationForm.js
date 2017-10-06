@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, Text } from '../../atoms';
@@ -31,7 +31,7 @@ function printMoney(amount: number): string {
   return `$${amount}`;
 }
 
-export default class DonationForm extends React.Component<P, S> {
+export default class DonationForm extends Component<P, S> {
   state = {
     interval: 'Monthly',
     price: 50,

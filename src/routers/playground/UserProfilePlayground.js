@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { ScrollView, TableView, Text, Icon } from '../../atoms';
 import { ProfileCard } from '../../blocks';
@@ -16,7 +16,7 @@ const data = {
   phone: '0918053935',
 };
 
-export default class UserProfilePlayground extends React.Component<{}, void> {
+export default class UserProfilePlayground extends Component<{}, void> {
   static navigationOptions = {
     title: 'User Profile',
   };

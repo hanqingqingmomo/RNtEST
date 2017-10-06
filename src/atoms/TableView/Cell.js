@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Cell as OriginalCell } from 'react-native-tableview-simple';
 
@@ -11,7 +11,7 @@ type Props = {
   titleTextColor?: string,
 };
 
-export default class Cell extends React.Component<Props, void> {
+export default class Cell extends Component<Props, void> {
   render() {
     const { titleTextStyle, titleTextColor, ...bag } = this.props;
     return (

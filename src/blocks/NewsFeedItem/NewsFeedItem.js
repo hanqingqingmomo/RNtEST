@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
@@ -63,7 +63,7 @@ type P = {
 
 const LINKS = ['Share', 'Comment'];
 
-export default class NewsFeedItem extends React.Component<P, void> {
+export default class NewsFeedItem extends Component<P, void> {
   shortenString(
     string?: string,
     maxChars?: number

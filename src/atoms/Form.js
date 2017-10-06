@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Formik } from 'formik';
 
 import validator from '../services/validation/validator';
@@ -20,7 +20,7 @@ type Props = {
   }) => boolean | Promise<*>,
 };
 
-export default class Form extends React.Component<Props, void> {
+export default class Form extends Component<Props, void> {
   makeValidator = () => {
     if (this.props.validate) {
       return this.props.validate;

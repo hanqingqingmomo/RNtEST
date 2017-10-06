@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, SegmentedControl } from '../../atoms';
@@ -16,7 +16,7 @@ type S = {
   labelB: string,
 };
 
-export default class SegmentedControlPlayground extends React.Component<{}, S> {
+export default class SegmentedControlPlayground extends Component<{}, S> {
   static navigationOptions = { headerTitle: 'Segmented Control' };
 
   state = { labelA: 'A', labelB: 'A' };

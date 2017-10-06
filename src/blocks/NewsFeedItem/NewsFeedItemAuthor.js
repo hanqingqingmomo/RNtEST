@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View, Avatar, Button, TouchableItem } from '../../atoms';
@@ -24,7 +24,7 @@ const HIT_SLOP = {
   left: 6,
 };
 
-export default class NewsFeedItemAuthor extends React.Component<P, void> {
+export default class NewsFeedItemAuthor extends Component<P, void> {
   onUserPress = () => {
     this.props.onUserPress(this.props.user);
   };

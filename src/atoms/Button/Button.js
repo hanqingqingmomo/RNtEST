@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Text, TouchableItem, TouchableNativeFeedback, View } from '../index';
@@ -30,7 +30,7 @@ type P = {
     | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
 };
 
-export default class Button extends React.Component<P, void> {
+export default class Button extends Component<P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,

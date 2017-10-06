@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import {
@@ -24,7 +24,7 @@ type P = {
   title: string,
 };
 
-export default class NewsFeedItemDonation extends React.Component<P, void> {
+export default class NewsFeedItemDonation extends Component<P, void> {
   get imageURIs(): Array<string> {
     return this.props.donors.map(donor => donor.imageURI);
   }

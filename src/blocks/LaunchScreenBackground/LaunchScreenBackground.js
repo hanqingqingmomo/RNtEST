@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Image } from 'react-native';
 
 import { View, Screen } from '../../atoms';
@@ -10,7 +10,7 @@ type P = {
   children: React$Node,
 };
 
-export default class LandingScreen extends React.Component<P, void> {
+export default class LandingScreen extends Component<P, void> {
   render() {
     return (
       <Screen tintColor={getColor('orange')}>

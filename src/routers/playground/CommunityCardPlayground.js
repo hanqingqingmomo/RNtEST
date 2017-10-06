@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { CommunityCard, View } from '../../atoms';
@@ -36,7 +36,7 @@ const items = [
   },
 ];
 
-export default class CommunityCardPlayground extends React.Component<P, void> {
+export default class CommunityCardPlayground extends Component<P, void> {
   static navigationOptions = {
     title: 'Community card',
   };

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
@@ -25,7 +25,7 @@ type P = {
   style?: any,
 };
 
-export default class IconButton extends React.Component<P, void> {
+export default class IconButton extends Component<P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,

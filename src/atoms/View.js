@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { View as OriginalView, StyleSheet } from 'react-native';
 
 import { type Style } from '../Types';
@@ -12,7 +12,7 @@ type Props = {
   flexGrow?: number,
 };
 
-export default class View extends React.Component<Props, void> {
+export default class View extends Component<Props, void> {
   render() {
     const { style, flexDirection, flexGrow, ...bag } = this.props;
     return (

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View, Button, TouchableItem, Icon } from '../atoms';
@@ -19,7 +19,7 @@ type P = {
   onConfirm: (status: 'confirmed' | 'declined') => void,
 };
 
-export default class DonationScreen extends React.Component<P, void> {
+export default class DonationScreen extends Component<P, void> {
   confirm = () => {
     this.props.onConfirm('confirmed');
   };

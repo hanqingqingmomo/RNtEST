@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Animated, Keyboard, NetInfo, StyleSheet } from 'react-native';
 
 import { TextDeprecated } from '../atoms';
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Network extends React.Component<{}, S> {
+export default class Network extends Component<{}, S> {
   state = {
     animationFinished: true,
     isConnected: true,

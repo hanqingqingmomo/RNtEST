@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
 import { type Style } from '../Types';
@@ -12,7 +12,7 @@ type P = {
   radius?: number,
 };
 
-export default class Shadow extends React.Component<P, void> {
+export default class Shadow extends Component<P, void> {
   render() {
     const { radius } = this.props;
 

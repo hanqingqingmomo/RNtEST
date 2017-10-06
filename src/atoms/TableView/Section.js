@@ -1,11 +1,11 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Section as OriginalSection } from 'react-native-tableview-simple';
 
 import SectionLabel from './SectionLabel';
 
-export default class Section extends React.Component {
+export default class Section extends Component {
   renderHeader(header: string) {
     if (this.props.header) {
       return <SectionLabel title={this.props.header} />;

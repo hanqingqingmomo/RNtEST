@@ -54,14 +54,16 @@ export default class Bootloader extends React.PureComponent<*, Props, State> {
   }
 }
 
-AppRegistry.registerComponent('app', () => () =>
+AppRegistry.registerComponent('app', () => () => (
   <Bootloader
     persistor={initStore()}
     render={(store, ready) =>
-      ready
-        ? <Provider store={store}>
-            <Application />
-          </Provider>
-        : <BootScreen />}
+      ready ? (
+        <Provider store={store}>
+          <Application />
+        </Provider>
+      ) : (
+        <BootScreen />
+      )}
   />
-);
+));
