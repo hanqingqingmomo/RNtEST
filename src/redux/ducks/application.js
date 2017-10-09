@@ -74,11 +74,16 @@ export default function(
 ): State {
   switch (action.type) {
     case REHYDRATE:
-      return {
-        ...state,
-        ...action.payload.application,
-        ready: true,
-      };
+      return action.payload
+        ? {
+            ...state,
+            ...action.payload.application,
+            ready: true,
+          }
+        : {
+            ...state,
+            ready: true,
+          };
 
     case 'application/SET_USER_ACCESS_TOKEN':
       return {
