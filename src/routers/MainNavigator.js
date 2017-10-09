@@ -44,6 +44,14 @@ const navigationItems: Array<NavigationItem> = [
   },
 ];
 
+if (__DEV__) {
+  navigationItems.push({
+    name: 'Playground',
+    icon: 'smile',
+    routeName: 'PlaygroundModal',
+  });
+}
+
 type State = {
   modalRoute: ?NavigationItem,
 };

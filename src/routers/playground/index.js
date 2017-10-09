@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { StackNavigator } from '../../navigation';
 import { ScrollView, Text } from '../../atoms';
@@ -176,18 +175,10 @@ export default StackNavigator(
   {
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
-      navigationOptions: ({ navigation }) => {
+      navigationOptions: ({ navigation, screenProps }) => {
         return {
           title: 'Component Playground',
-          headerLeft: (
-            <Text
-              onPress={() => {
-                navigation.navigate('DrawerToggle');
-              }}
-            >
-              =
-            </Text>
-          ),
+          headerLeft: <Text onPress={screenProps.dismissModalRoute}>=</Text>,
         };
       },
     },
