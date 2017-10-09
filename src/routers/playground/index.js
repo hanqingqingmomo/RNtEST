@@ -31,6 +31,7 @@ import IconPlayground from './IconPlayground';
 import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
 import PopoverPlayground from './PopoverPlayground';
+import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
@@ -143,6 +144,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
     <Link
+      title="Search Result"
+      screen="SearchResultPlayground"
+      navigation={navigation}
+    />
+    <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
       navigation={navigation}
@@ -247,6 +253,9 @@ export default StackNavigator(
     },
     PopoverPlayground: {
       screen: PopoverPlayground,
+    },
+    SearchResultPlayground: {
+      screen: SearchResultPlayground,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,

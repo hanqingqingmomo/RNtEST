@@ -10,3 +10,4 @@ export {
 export { default as Network } from './Network';
 export { default as NewsFeedItem } from './NewsFeedItem/NewsFeedItem';
 export { default as ProfileCard } from './ProfileCard';
+export { default as SearchResult } from './SearchResult';
