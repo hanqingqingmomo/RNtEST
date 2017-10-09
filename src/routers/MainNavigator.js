@@ -8,6 +8,7 @@ import Modal from 'react-native-modalbox';
 import { View } from '../atoms';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
 import DonationNavigator from './DonationNavigator';
+import HelpNavigator from './HelpNavigator';
 import InviteFriendsNavigator from './InviteFriendsNavigator';
 import NotificationsSettingsNavigator from './NotificationsSettingsNavigator';
 import OrganisationNavigator from './OrganisationNavigator';
@@ -111,6 +112,8 @@ export default class MainNavigator extends Component<{}, State> {
         return <InviteFriendsNavigator {...props} />;
       case 'PlaygroundModal':
         return <PlaygroundNavigator {...props} />;
+      case 'HelpModal':
+        return <HelpNavigator {...props} />;
       default:
         if (__DEV__) {
           console.warn(
