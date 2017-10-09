@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 
 import { Text, View, Image, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
+import { getColor } from '../../utils/color';
 
 export default class NewsFeedItemEvent extends Component<{}, void> {
   render() {
@@ -26,7 +27,7 @@ export default class NewsFeedItemEvent extends Component<{}, void> {
               size={20}
               lineHeight={20}
               weight="bold"
-              style={css('color', '#90A4AE')}
+              style={css('color', getColor('gray'))}
             >
               {format(startDate, 'DD')}
             </Text>
@@ -34,7 +35,7 @@ export default class NewsFeedItemEvent extends Component<{}, void> {
               size={11}
               lineHeight={11}
               weight="600"
-              style={css('color', '#90A4AE')}
+              style={css('color', getColor('gray'))}
             >
               {format(startDate, 'MMM')}
             </Text>
@@ -50,10 +51,14 @@ export default class NewsFeedItemEvent extends Component<{}, void> {
             >
               {title}
             </Text>
-            <Text size={13} lineHeight={18} style={css('color', '#9EA4AF')}>
-              {`${format(startDate, 'HH-MM A')} - ${format(
+            <Text
+              size={13}
+              lineHeight={18}
+              style={css('color', getColor('gray'))}
+            >
+              {`${format(startDate, 'HH:MM A')} - ${format(
                 endDate,
-                'HH-MM A'
+                'HH:MM A'
               )}`}
             </Text>
           </View>

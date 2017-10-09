@@ -5,6 +5,7 @@ import { distanceInWordsToNow, differenceInMinutes } from 'date-fns';
 
 import { Text } from '../../atoms';
 import { css } from '../../utils/style';
+import { getColor } from '../../utils/color';
 
 type P = {
   date: Date,
@@ -30,7 +31,7 @@ export default class NewsFeedItemHeader extends Component<P, void> {
 
     return (
       <Text
-        style={[this.props.style, css('color', '#90A4AE')]}
+        style={[this.props.style, css('color', getColor('gray'))]}
         size={11}
         weight="500"
         lineHeight={13}
