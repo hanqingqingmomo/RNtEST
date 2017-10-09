@@ -11,7 +11,7 @@ import DonationNavigator from './DonationNavigator';
 import HelpNavigator from './HelpNavigator';
 import InviteFriendsNavigator from './InviteFriendsNavigator';
 import NotificationsSettingsNavigator from './NotificationsSettingsNavigator';
-import OrganisationNavigator from './OrganisationNavigator';
+import MainOrganisationNavigator from './Organisation/MainOrganisationNavigator';
 import PlaygroundNavigator from './playground';
 import UserProfileNavigator from './UserProfileNavigator';
 import UserSettingsNavigator from './UserSettingsNavigator';
@@ -140,7 +140,7 @@ export default class MainNavigator extends Component<{}, State> {
             StatusBar.setBarStyle('dark-content');
           }}
         >
-          <OrganisationNavigator
+          <MainOrganisationNavigator
             screenProps={{
               openDrawer: () => {
                 if (this._drawerRef) {
