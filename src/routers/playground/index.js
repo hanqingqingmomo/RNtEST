@@ -30,6 +30,7 @@ import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
+import PopoverPlayground from './PopoverPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
@@ -140,13 +141,14 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="NotificationSettingsScreen"
       navigation={navigation}
     />
+    <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
     <Link
       title="Segmented control"
       screen="SegmentedControlPlayground"
       navigation={navigation}
     />
     <Link
-      title="SignUp screen"
+      title="Sign Up screen"
       screen="EmailRegistrationScreen"
       navigation={navigation}
     />
@@ -213,6 +215,9 @@ export default StackNavigator(
     EventFeedPlayground: {
       screen: EventFeedPlayground,
     },
+    EmailRegistrationScreen: {
+      screen: EmailRegistrationScreen,
+    },
     FormPlayground: {
       screen: FormPlayground,
     },
@@ -240,14 +245,11 @@ export default StackNavigator(
     NotificationSettingsScreen: {
       screen: NotificationSettingsScreen,
     },
+    PopoverPlayground: {
+      screen: PopoverPlayground,
+    },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
-    },
-    EmailRegistrationScreen: {
-      screen: EmailRegistrationScreen,
-    },
-    UserSettingsScreen: {
-      screen: UserSettingsScreen,
     },
     TabsPlayground: {
       screen: TabsPlayground,
@@ -257,6 +259,9 @@ export default StackNavigator(
     },
     UserProfileScreen: {
       screen: UserProfileScreen,
+    },
+    UserSettingsScreen: {
+      screen: UserSettingsScreen,
     },
   },
   {
