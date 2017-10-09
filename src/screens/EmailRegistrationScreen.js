@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import {
   AvatarPicker,
@@ -16,39 +17,61 @@ import {
 } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
+import { api } from '../services';
+import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
+
+type State = {
+  authenticationError: ?boolean,
+  avatarImageURI: ?string,
+};
 
 const INITIAL_VALUES = {
-  firstName: '',
-  lastName: '',
+  first_name: '',
+  last_name: '',
   email: '',
   password: '',
-  avatarImageUri: '',
+  avatarImageURI: '',
 };
 
 const RULES = {
   email: 'required|email',
-  firstName: 'required',
-  lastName: 'required',
+  first_name: 'required',
+  last_name: 'required',
   password: 'required',
 };
 
 type FormValues = typeof INITIAL_VALUES;
 
-type State = {
-  avatarImageUri: ?string,
-};
-
-export default class EmailRegistrationScreen extends Component<{}, State> {
+class EmailRegistrationScreen extends Component<{}, State> {
   state = {
-    avatarImageUri: null,
+    avatarImageURI: null,
+    authenticationError: false,
   };
 
-  handleSubmit = (values: FormValues) => {
-    alert(JSON.stringify(values));
+  handleSubmit = async (values: FormValues) => {
+    this.setState({ registrationError: false, busy: true });
+    try {
+      await api.authentication.signUp({
+        ...values,
+        password_confirmation: values.password,
+        time_zone: 'Europe/Bratislava',
+      });
+      const userAccessToken = await api.authentication.signIn(
+        values.email,
+        values.password
+      );
+      this.props.setUserAccessToken(userAccessToken);
+      const userProfile = await api.user.getProfile('me');
+      this.props.setUserProfile(userProfile);
+    } catch (err) {
+      this.setState({ registrationError: true });
+    } finally {
+      this.setState({ busy: false });
+    }
   };
 
-  onAvatarChange = (avatarImageUri: string) => {
-    this.setState({ avatarImageUri });
+  onAvatarChange = (avatarImageURI: string) => {
+    this.setState({ avatarImageURI });
   };
 
   render() {
@@ -71,19 +94,19 @@ export default class EmailRegistrationScreen extends Component<{}, State> {
 
             <View style={styles.picker}>
               <AvatarPicker
-                imageUri={this.state.avatarImageUri}
+                imageURI={this.state.avatarImageURI}
                 onChange={this.onAvatarChange}
               />
             </View>
 
             <View flexDirection="row">
               <View flexGrow={1}>
-                <FormField label="First Name" name="firstName" />
+                <FormField label="First Name" name="first_name" />
               </View>
               <Spacer width={10} />
 
               <View flexGrow={1}>
-                <FormField label="Last Name" name="lastName" />
+                <FormField label="Last Name" name="last_name" />
               </View>
             </View>
             <FormField
@@ -94,6 +117,12 @@ export default class EmailRegistrationScreen extends Component<{}, State> {
             />
             <FormField label="Password" name="password" />
 
+            {this.state.registrationError ? (
+              <Text color={getColor('red')}>
+                {'\n'}Registration failed. Check provided information.
+              </Text>
+            ) : null}
+
             <Button
               block
               color={getColor('orange')}
@@ -101,7 +130,7 @@ export default class EmailRegistrationScreen extends Component<{}, State> {
               size="lg"
               style={styles.button}
               textColor={getColor('white')}
-              title="Sign Up"
+              title={this.state.busy ? 'Signing Up...' : 'Sign Up'}
             />
 
             <Text
@@ -124,6 +153,10 @@ export default class EmailRegistrationScreen extends Component<{}, State> {
     );
   }
 }
+
+export default connect(null, { setUserAccessToken, setUserProfile })(
+  EmailRegistrationScreen
+);
 
 const styles = StyleSheet.create({
   container: {

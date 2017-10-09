@@ -4,16 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import {
-  Button,
-  Form,
-  FormField,
-  Icon,
-  Text,
-  View,
-  Screen,
-  ScrollView,
-} from '../atoms';
+import { Button, Form, FormField, Icon, Text, View, Screen } from '../atoms';
 import { getColor } from '../utils/color';
 import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
 import { api } from '../services';
@@ -25,11 +16,11 @@ const INITIAL_VALUES = {
 
 type FormValues = typeof INITIAL_VALUES;
 
-type Props = {
-  authenticateRemotely: (email: string, password: string) => void,
-};
+type Props = {};
+
 type State = {
   authenticationError: ?boolean,
+  busy: boolean,
 };
 
 const RULES = {
@@ -40,6 +31,7 @@ const RULES = {
 class EmailAuthenticationScreen extends Component<Props, State> {
   state = {
     authenticationError: null,
+    busy: false,
   };
 
   navigateToPasswordResetScreen = () => {
@@ -48,7 +40,7 @@ class EmailAuthenticationScreen extends Component<Props, State> {
 
   handleFormSubmit = async (values: FormValues) => {
     const { email, password } = values;
-    this.setState({ authenticationError: null });
+    this.setState({ authenticationError: null, busy: true });
     try {
       const userAccessToken = await api.authentication.signIn(email, password);
       this.props.setUserAccessToken(userAccessToken);
@@ -56,8 +48,9 @@ class EmailAuthenticationScreen extends Component<Props, State> {
       const userProfile = await api.user.getProfile('me');
       this.props.setUserProfile(userProfile);
     } catch (err) {
-      console.log(err);
       this.setState({ authenticationError: true });
+    } finally {
+      this.setState({ busy: false });
     }
   };
 
@@ -104,7 +97,7 @@ class EmailAuthenticationScreen extends Component<Props, State> {
                 color={getColor('orange')}
                 textColor={getColor('white')}
                 onPress={formProps.handleSubmit}
-                title="Sign In"
+                title={this.state.busy ? 'Signing In...' : 'Sign In'}
               />
             </View>
           )}

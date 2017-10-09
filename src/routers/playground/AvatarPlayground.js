@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 });
 
 type S = {
-  imageUri: ?string,
+  imageURI: ?string,
 };
 
 export default class AvatarPlayground extends Component<{}, S> {
@@ -28,11 +28,11 @@ export default class AvatarPlayground extends Component<{}, S> {
   };
 
   state = {
-    imageUri: null,
+    imageURI: null,
   };
 
-  onChange = (imageUri: string) => {
-    this.setState({ imageUri });
+  onChange = (imageURI: string) => {
+    this.setState({ imageURI });
   };
 
   render() {
@@ -126,7 +126,7 @@ export default class AvatarPlayground extends Component<{}, S> {
           />
         </View>
 
-        <AvatarPicker imageURI={this.state.imageUri} onChange={this.onChange} />
+        <AvatarPicker imageURI={this.state.imageURI} onChange={this.onChange} />
         <View style={{ marginVertical: 50 }}>
           <AvatarPicker
             imageURI="https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg"

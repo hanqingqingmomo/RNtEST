@@ -1,9 +1,9 @@
 // @flow
 
 type Service = {
-  // signUp(user: SignupUser): Promise<string>,
+  signUp(user: Object): Promise<Object>,
   signIn(email: string, password: string): string,
-  // updateSettings(user: SignupUser): Promise<SignupUser>,
+  // updateSettings(user: Object): Promise<Object>,
 };
 
 const signIn = (transport: *) => async (email, password) => {
@@ -19,15 +19,15 @@ const signIn = (transport: *) => async (email, password) => {
   return mobile_token;
 };
 
-// const signUp = (transport: *) => async data => {
-//   const response = await transport.request({
-//     method: 'post',
-//     url: '/v1/members/signup',
-//     data,
-//   });
+const signUp = (transport: *) => async data => {
+  const { data: { mobile_token } } = await transport.request({
+    method: 'post',
+    url: '/v1/members/signup',
+    data,
+  });
 
-//   return response.data.api_token;
-// };
+  return mobile_token;
+};
 
 // const updateSettings = (transport: *) => async data => {
 //   const response = await transport.request({
@@ -50,5 +50,6 @@ const signIn = (transport: *) => async (email, password) => {
 export default function(http) {
   return ({
     signIn: signIn(http),
+    signUp: signUp(http),
   }: Service);
 }

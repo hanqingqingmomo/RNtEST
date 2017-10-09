@@ -46,16 +46,6 @@ export type User = {
   role: string,
 };
 
-export type SignupUser = {
-  email: string,
-  first_name?: string,
-  last_name?: string,
-  password?: string,
-  pasword_confirmation?: string,
-  timezone?: string,
-  photo?: string,
-};
-
 // Redux
 export type Action<T, A> = {
   type: T,
