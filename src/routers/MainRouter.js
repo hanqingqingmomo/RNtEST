@@ -8,6 +8,7 @@ import { DrawerNavigator, StackNavigator, TabNavigator } from '../navigation';
 import Drawer from '../navigation/Drawer/Drawer';
 import PlaygroundRouter from './playground';
 import {
+  InvitationCodeScreen,
   InviteFriendsScreen,
   NewsFeedSettingsScreen,
   NotificationSettingsScreen,
@@ -131,6 +132,12 @@ const DrawerRouter = DrawerNavigator(
               headerTitle: 'Settings',
             }),
           },
+          InvitationCodeScreen: {
+            screen: InvitationCodeScreen,
+            navigationOptions: ({ navigation }) => ({
+              headerTitle: 'Invitation Code',
+            }),
+          },
         },
         {
           ...StyleSheet.create({
@@ -172,7 +179,7 @@ const DrawerRouter = DrawerNavigator(
     },
   },
   {
-    initialRouteName: 'NotificationsTab',
+    initialRouteName: 'UserSettingsTab',
     contentComponent: Drawer,
     order: [
       'OrganizationTab',

@@ -47,7 +47,12 @@ class UserProfileScreen extends Component<{}, void> {
 
   navigateToScreen(action: Action): Function {
     return () => {
-      alert(action.name);
+      switch (action.name) {
+        case 'Use Invite Code':
+          this.props.navigation.navigate('InvitationCodeScreen');
+        default:
+          console.log(action.name);
+      }
     };
   }
 
