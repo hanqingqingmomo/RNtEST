@@ -274,11 +274,6 @@ export default StackNavigator(
     },
   },
   {
-    ...StyleSheet.create({
-      cardStyle: {
-        backgroundColor: 'white',
-      },
-    }),
     initialRouteName: 'PlaygroundIndex',
   }
 );

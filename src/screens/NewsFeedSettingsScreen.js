@@ -43,7 +43,7 @@ export default class NewsFeedSettingsScreen extends React.Component<{}> {
 
   render() {
     return (
-      <Screen tintColor="#F3F3F6">
+      <Screen>
         <Table>
           <Section sectionPaddingTop={0}>
             <CenterView style={styles.infoContainer}>

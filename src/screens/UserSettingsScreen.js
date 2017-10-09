@@ -5,8 +5,7 @@ import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import { clearUserData } from '../redux/ducks/application';
-import { TableView, Screen, Text, Icon } from '../atoms';
-import { css } from '../utils/style';
+import { TableView, Screen, Icon } from '../atoms';
 import { getColor } from '../utils/color';
 import type { IconName } from '../Types';
 
@@ -68,7 +67,7 @@ class UserProfileScreen extends Component<{}, void> {
 
   render() {
     return (
-      <Screen tintColor="#F3F3F6">
+      <Screen>
         <TableView.Table>
           <TableView.Section>
             {SETTINGS.map(setting => (

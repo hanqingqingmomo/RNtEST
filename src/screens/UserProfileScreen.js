@@ -230,7 +230,7 @@ class EditUserProfileScreen extends React.Component<Props, State> {
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         render={form => (
-          <Screen tintColor="#F3F3F6" style={css('marginTop', -1)}>
+          <Screen>
             <Button block onPress={form.handleSubmit} size="lg" title="save" />
             <Table>
               <Section sectionPaddingTop={0}>

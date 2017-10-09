@@ -1,10 +1,9 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, ScrollView, Switch } from 'react-native';
+import { StyleSheet, Switch } from 'react-native';
 
-import { TableView, Text, View, Screen } from '../atoms';
-import { getColor } from '../utils/color';
+import { TableView, Screen } from '../atoms';
 
 const { Table, Section, Cell } = TableView;
 
@@ -15,7 +14,7 @@ export default class NotificationSettingsScreen extends React.Component<{}> {
 
   render() {
     return (
-      <Screen tintColor="#F3F3F6">
+      <Screen>
         <Table>
           <Section header="Newsfeed">
             <Cell

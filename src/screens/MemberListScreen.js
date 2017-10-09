@@ -129,7 +129,7 @@ export default class MemberListScreen extends React.Component {
 
   render() {
     return (
-      <Screen tintColor="#F3F3F6">
+      <Screen>
         <Table>
           <FlatList
             data={data}
