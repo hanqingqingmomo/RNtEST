@@ -7,6 +7,7 @@ import { StackNavigator } from '../../navigation';
 import { ScrollView, Text } from '../../atoms';
 import {
   AuthenticationRootScreen,
+  InvitationScreen,
   LandingScreen,
   EmailRegistrationScreen,
   SettingsScreen,
@@ -86,6 +87,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
+    <Link
+      title="Invite Friends"
+      screen="InvitationScreen"
+      navigation={navigation}
+    />
     <Link
       title="Landing screen"
       screen="LandingScreen"
@@ -169,6 +175,9 @@ export default StackNavigator(
     IconPlayground: {
       screen: IconPlayground,
     },
+    InvitationScreen: {
+      screen: InvitationScreen,
+    },
     LandingScreen: {
       screen: LandingScreen,
     },
@@ -197,5 +206,6 @@ export default StackNavigator(
         backgroundColor: 'white',
       },
     }),
+    initialRouteName: 'InvitationScreen',
   }
 );
