@@ -30,6 +30,10 @@ type SetUserProfileAction = {
   },
 };
 
+type ClearUserDataAction = {
+  type: 'application/CLEAR_USER_DATA',
+};
+
 export function setUserAccessToken(
   userAccessToken: string
 ): SetUserAccessTokenAction {
@@ -44,6 +48,10 @@ export function setUserProfile(userProfile: Object): SetUserProfileAction {
     type: 'application/SET_USER_ACCESS_TOKEN',
     payload: { userProfile },
   };
+}
+
+export function clearUserData(): ClearUserDataAction {
+  return { type: 'application/CLEAR_USER_DATA' };
 }
 
 //
@@ -62,6 +70,7 @@ export default function(
     | { type: typeof REHYDRATE }
     | SetUserAccessTokenAction
     | SetUserProfileAction
+    | ClearUserDataAction
 ): State {
   switch (action.type) {
     case REHYDRATE:
@@ -70,11 +79,19 @@ export default function(
         ...action.payload.application,
         ready: true,
       };
+
     case 'application/SET_USER_ACCESS_TOKEN':
       return {
         ...state,
         ...action.payload,
       };
+
+    case 'application/CLEAR_USER_DATA':
+      return {
+        ...INITIAL_STATE,
+        ready: true,
+      };
+
     default:
       return state;
   }

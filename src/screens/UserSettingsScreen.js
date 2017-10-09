@@ -1,88 +1,65 @@
 // @flow
 
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
+import { connect } from 'react-redux';
 
+import { clearUserData } from '../redux/ducks/application';
 import { TableView, Screen, Text, Icon } from '../atoms';
 import { css } from '../utils/style';
 import { getColor } from '../utils/color';
-import type { ColorName, IconName } from '../Types';
+import type { IconName } from '../Types';
 
-type SettingProps = {
-  id: number,
-  name: string,
+type ActionName =
+  | 'Sync Calendars'
+  | 'Use Invite Code'
+  | 'Legal & Privacy'
+  | 'Change Password';
+
+type Action = {
+  name: ActionName,
   iconName: IconName,
-};
-
-type ActionProps = {
-  id: number,
-  name: string,
-  color: ColorName | string,
 };
 
 const SETTINGS = [
   {
-    id: 1,
     name: 'Sync Calendars',
     iconName: 'calendar',
   },
   {
-    id: 2,
     name: 'Use Invite Code',
     iconName: 'plus-bold',
   },
   {
-    id: 3,
     name: 'Legal & Privacy',
     iconName: 'file-empty',
   },
   {
-    id: 4,
     name: 'Change Password',
     iconName: 'lock-close',
   },
 ];
 
-const ACTIONS = [
-  {
-    id: 1,
-    name: 'Sign out',
-    color: getColor('red'),
-  },
-];
-
-export default class UserProfileSettingsScreen extends Component<{}, void> {
+class UserProfileScreen extends Component<{}, void> {
   static navigationOptions = {
     title: 'Settings',
   };
 
-  cellContentViewAction(action: ActionProps): React$Element<*> {
-    return (
-      <Text
-        size={15}
-        lineHeight={18}
-        color={action.color}
-        style={css('color', '#455A64')}
-      >
-        {action.name}
-      </Text>
-    );
-  }
-
-  cellImageView(setting: SettingProps): React$Element<*> {
-    return <Icon size="md" name={setting.iconName} color="#CFD8DC" />;
-  }
-
-  onPushDetail(setting: SettingProps) {
+  navigateToScreen(action: Action): Function {
     return () => {
-      console.log('setting', setting);
+      alert(action.name);
     };
   }
 
-  onPressAction(action: ActionProps): Function {
-    return () => {
-      console.log('action', action);
-    };
-  }
+  signOut = () => {
+    Alert.alert('Log out', 'Are you sure you want to log out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        onPress: this.props.clearUserData,
+      },
+    ]);
+  };
 
   render() {
     return (
@@ -92,26 +69,27 @@ export default class UserProfileSettingsScreen extends Component<{}, void> {
             {SETTINGS.map(setting => (
               <TableView.Cell
                 cellStyle="Basic"
-                key={setting.id}
+                key={setting.name}
                 title={setting.name}
-                image={this.cellImageView(setting)}
+                image={
+                  <Icon size="md" name={setting.iconName} color="#CFD8DC" />
+                }
                 accessory="DisclosureIndicator"
-                onPress={this.onPushDetail(setting)}
+                onPress={this.navigateToScreen(setting)}
               />
             ))}
           </TableView.Section>
           <TableView.Section>
-            {ACTIONS.map(action => (
-              <TableView.Cell
-                key={action.id}
-                title={action.name}
-                titleTextColor="red"
-                onPress={this.onPressAction(action)}
-              />
-            ))}
+            <TableView.Cell
+              title="Sign Out"
+              titleTextColor={getColor('red')}
+              onPress={this.signOut}
+            />
           </TableView.Section>
         </TableView.Table>
       </Screen>
     );
   }
 }
+
+export default connect(null, { clearUserData })(UserProfileScreen);
