@@ -2,65 +2,105 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import Contacts from 'react-native-contacts';
 
-import { Button, View, SearchBox, TableView, Text, Avatar } from '../atoms';
+import {
+  Avatar,
+  Button,
+  Icon,
+  SearchBox,
+  TableView,
+  Text,
+  View,
+} from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
-type UserProps = {
-  id: number,
-  username: string,
+type EmailAddressProps = {
   email: string,
-  imageURI: string,
+  label: string,
+};
+
+type PhoneProps = {
+  label: string,
+  number: string,
+};
+
+type PostalAddressProps = {
+  city: string,
+  country: string,
+  label: string,
+  postCode: string,
+  region: string,
+  state: string,
+  street: string,
+};
+
+type ContactProps = {
+  emailAddresses: Array<EmailAddressProps>,
+  familyName: string,
+  givenName: string,
+  hasThumbnail: boolean,
+  jobTitle: string,
+  middleName: string,
+  phoneNumbers: Array<PhoneProps>,
+  postalAddresses: Array<PostalAddressProps>,
+  recordID: string,
+  thumbnailPath: string,
 };
 
 type S = {
   searchValue: string,
+  contacts: Array<ContactProps>,
 };
-
-const USERS = [
-  {
-    id: 1,
-    username: 'Marvin Baker',
-    email: 'baker@example.com',
-    imageURI:
-      'https://t4.ftcdn.net/jpg/01/05/72/55/240_F_105725565_vVl8Hc6kIRQsgquqdQYrz7fWFrfQAGCw.jpg',
-  },
-  {
-    id: 2,
-    username: 'James Beck',
-    email: 'beckJames@example.com',
-    imageURI:
-      'https://t4.ftcdn.net/jpg/01/05/72/55/240_F_105725565_vVl8Hc6kIRQsgquqdQYrz7fWFrfQAGCw.jpg',
-  },
-  {
-    id: 3,
-    username: 'Jessie Carpenter',
-    email: 'carpenter@example.com',
-    imageURI:
-      'https://t4.ftcdn.net/jpg/01/05/72/55/240_F_105725565_vVl8Hc6kIRQsgquqdQYrz7fWFrfQAGCw.jpg',
-  },
-];
 
 export default class InviteFriendsScreen extends React.Component<{}, S> {
   state = {
     searchValue: '',
+    contacts: [],
   };
 
-  cellContentView(user: UserProps): React$Element<*> {
+  componentDidMount() {
+    Contacts.checkPermission((err, permission) => {
+      if (permission === 'undefined') {
+        Contacts.requestPermission((err, permission) => {
+          if (permission === 'authorized') {
+            this.readContacts();
+          }
+        });
+      } else if (permission === 'authorized') {
+        this.readContacts();
+      }
+    });
+  }
+
+  readContacts() {
+    Contacts.getAll((err, contacts) => {
+      if (err !== 'denied') {
+        this.setState({ contacts });
+      }
+    });
+  }
+
+  cellContentView(user: ContactProps): React$Element<*> {
+    const { emailAddresses, familyName, givenName, middleName } = user;
     return (
       <View style={styles.row}>
         <View style={styles.textWrapper}>
           <Text size={15} lineHeight={18} style={css('color', '#455A64')}>
-            {user.username}
+            {`${givenName}${middleName ? ` ${middleName}` : ''}${familyName
+              ? ` ${familyName}`
+              : ''}`}
           </Text>
-          <Text
-            size={15}
-            lineHeight={18}
-            style={css('color', getColor('gray'))}
-          >
-            {user.email}
-          </Text>
+          {emailAddresses.length ? (
+            <Text
+              size={15}
+              lineHeight={18}
+              style={css('color', getColor('gray'))}
+            >
+              {emailAddresses[0].email}
+            </Text>
+          ) : null}
         </View>
         <Button
           title="Send"
@@ -73,27 +113,32 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     );
   }
 
-  cellImageView(user: UserProps): React$Element<*> {
-    return <Avatar size={28} imageURI={user.imageURI} />;
+  cellImageView(user: ContactProps): React$Element<*> {
+    if (user.hasThumbnail) {
+      return <Avatar size={28} imageURI={user.imageURI} />;
+    }
+    return <Icon name="user" size="md" color={getColor('gray')} />;
   }
 
-  onInvite(user: UserProps) {
+  onInvite(user: ContactProps) {
     return () => {
       console.log('invite', user);
     };
   }
 
-  get users(): Array<UserProps> {
-    const { searchValue } = this.state;
+  get users(): Array<ContactProps> {
+    const { searchValue, contacts } = this.state;
 
-    const filtered = USERS.filter(
+    const filtered = contacts.filter(
       user =>
-        `${user.username} ${user.email}`
+        `${user.givenName} ${user.givenName} ${user.emailAddresses.length
+          ? user.emailAddresses[0].email
+          : ''}`
           .toLowerCase()
           .indexOf(searchValue.toLowerCase()) !== -1
     );
 
-    return filtered || USERS;
+    return filtered || contacts;
   }
 
   render() {
@@ -111,7 +156,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
           {this.users.map(user => {
             return (
               <TableView.Cell
-                key={user.id}
+                key={user.recordID}
                 cellContentView={this.cellContentView(user)}
                 cellImageView={this.cellImageView(user)}
                 contentContainerStyle={styles.cell}
