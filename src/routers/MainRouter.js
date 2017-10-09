@@ -2,9 +2,11 @@
 
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
+import DrawerLayout from 'react-native-drawer-layout';
 
-import { Icon, Text } from '../atoms';
+import { Icon, Text, View } from '../atoms';
 import { DrawerNavigator, StackNavigator, TabNavigator } from '../navigation';
+import DrawerView from '../navigation/Drawer/Drawer';
 import Drawer from '../navigation/Drawer/Drawer';
 import PlaygroundRouter from './playground';
 import {
@@ -24,7 +26,7 @@ function DrawerIcon({ name }: { name: IconName }) {
   return <Icon size={24} color="#455a64" name={name} />;
 }
 
-const DrawerRouter = DrawerNavigator(
+const DrawerRouter = StackNavigator(
   {
     InviteFriendsTab: {
       screen: StackNavigator(
@@ -201,9 +203,29 @@ export default class MainRouter extends Component<{}> {
     }
   };
 
+  openModalWithRoute = item => {
+    console.log(item);
+  };
+
   render() {
     return (
-      <DrawerRouter onNavigationStateChange={this.handleNavigationState} />
+      <DrawerLayout
+        ref={ref => {
+          ref.openDrawer();
+        }}
+        drawerWidth={300}
+        drawerPosition={DrawerLayout.positions.Left}
+        renderNavigationView={() => (
+          <DrawerView onPress={this.openModalWithRoute} />
+        )}
+      >
+        <DrawerRouter onNavigationStateChange={this.handleNavigationState} />
+      </DrawerLayout>
     );
   }
+  // render() {
+  //   return (
+  //     <DrawerRouter onNavigationStateChange={this.handleNavigationState} />
+  //   );
+  // }
 }

@@ -12,12 +12,17 @@ type Props = {
   flexGrow?: number,
 };
 
-export default class View extends Component<Props, void> {
+export default class View extends Component<Props> {
+  setNativeProps(nativeProps: any) {
+    this.refs['root'].setNativeProps(nativeProps);
+  }
+
   render() {
     const { style, flexDirection, flexGrow, ...bag } = this.props;
     return (
       <OriginalView
         {...bag}
+        ref="root"
         flexGrow={flexGrow}
         style={[flexDirectionStyle(flexDirection), style]}
       />
