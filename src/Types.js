@@ -23,6 +23,19 @@ export type ScreenProps<S> = {
   },
 };
 
+export type Comment = $Exact<{
+  id: number,
+  parentId?: number,
+  timestamp: number,
+  content: string,
+  replies: Array<Comment>,
+  author: {
+    id: number,
+    name: string,
+    avatar: string,
+  },
+}>;
+
 // Entities
 export type User = {
   id: number,

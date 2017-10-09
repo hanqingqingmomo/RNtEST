@@ -16,6 +16,7 @@ import {
 
 import AvatarPlayground from './AvatarPlayground';
 import ButtonPlayground from './ButtonPlayground';
+import CommentPlayground from './CommentPlayground';
 import CommunityCardPlayground from './CommunityCardPlayground';
 import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import ContactGroupPlayground from './ContactGroupPlayground';
@@ -23,6 +24,7 @@ import DonationFormPlayground from './DonationFormPlayground';
 import EventCardPlayground from './EventCardPlayground';
 import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
+import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
@@ -57,6 +59,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link title="Buttons" screen="ButtonPlayground" navigation={navigation} />
+    <Link title="Comments" screen="CommentPlayground" navigation={navigation} />
     <Link
       title="Community Card"
       screen="CommunityCardPlayground"
@@ -101,6 +104,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Landing screen"
       screen="LandingScreen"
+      navigation={navigation}
+    />
+    <Link
+      title="Likes &amp; Comments"
+      screen="LikePlayground"
       navigation={navigation}
     />
     <Link
@@ -160,6 +168,9 @@ export default StackNavigator(
     ButtonPlayground: {
       screen: ButtonPlayground,
     },
+    CommentPlayground: {
+      screen: CommentPlayground,
+    },
     CommunityCardPlayground: {
       screen: CommunityCardPlayground,
     },
@@ -189,6 +200,9 @@ export default StackNavigator(
     },
     LandingScreen: {
       screen: LandingScreen,
+    },
+    LikePlayground: {
+      screen: LikePlayground,
     },
     NewsfeedPlayground: {
       screen: NewsfeedPlayground,

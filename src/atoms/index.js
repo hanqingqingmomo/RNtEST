@@ -2,6 +2,7 @@
 
 export {
   ActivityIndicator,
+  FlatList,
   Image,
   ImageBackground,
   ScrollView,
@@ -23,6 +24,7 @@ export { default as EventCard } from './EventCard';
 export { default as Form } from './Form';
 export { default as FormField } from './FormField';
 export { default as Icon } from './Icon/Icon';
+export { default as Like } from './Like';
 export { default as Link } from './Link';
 export { default as Pill } from './Pill';
 export { default as RequestMonitor } from './RequestMonitor';
@@ -35,5 +37,6 @@ export { default as TableView } from './TableView';
 export { default as Text } from './Text';
 export { default as TextDeprecated } from './TextDeprecated';
 export { default as TextInput } from './TextInput';
+export { default as TimeAgo } from './TimeAgo';
 export { default as TouchableItem } from './TouchableItem';
 export { default as View } from './View';
