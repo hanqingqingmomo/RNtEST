@@ -12,7 +12,7 @@ type P = {
   value: string,
 };
 
-export default class DonationInput extends Component<P, void> {
+export default class DonationInput extends Component<P> {
   onChangeText = (value: string) => {
     this.props.onChangeText(value);
   };

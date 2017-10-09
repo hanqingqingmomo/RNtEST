@@ -10,7 +10,7 @@ type P = {
   children: React$Node,
 };
 
-export default class LandingScreen extends Component<P, void> {
+export default class LandingScreen extends Component<P> {
   render() {
     return (
       <Screen fill tintColor={getColor('orange')}>

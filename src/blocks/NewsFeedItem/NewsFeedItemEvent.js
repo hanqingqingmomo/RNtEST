@@ -8,7 +8,7 @@ import { Text, View, Image, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 
-export default class NewsFeedItemEvent extends Component<{}, void> {
+export default class NewsFeedItemEvent extends Component<{}> {
   render() {
     const { title, imageURI, startDate, endDate } = this.props;
 

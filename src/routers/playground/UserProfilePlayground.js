@@ -16,7 +16,7 @@ const data = {
   phone: '0918053935',
 };
 
-export default class UserProfilePlayground extends Component<{}, void> {
+export default class UserProfilePlayground extends Component<{}> {
   static navigationOptions = {
     title: 'User Profile',
   };

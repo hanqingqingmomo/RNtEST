@@ -48,6 +48,7 @@ export default class MainRouter extends Component<{}, State> {
   state = {
     isModalRouterOpen: false,
   };
+
   // handleNavigationState = (previous: any, next: any, action: any) => {
   //   if (action.routeName === 'DrawerOpen') {
   //     StatusBar.setBarStyle('light-content');

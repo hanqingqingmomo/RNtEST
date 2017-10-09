@@ -12,7 +12,7 @@ type P = {
   videoURI?: string,
 };
 
-export default class NewsFeedItemAttachment extends Component<P, void> {
+export default class NewsFeedItemAttachment extends Component<P> {
   render() {
     const { imageURI, title, videoURI } = this.props;
 

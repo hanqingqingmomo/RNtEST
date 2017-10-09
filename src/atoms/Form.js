@@ -20,7 +20,7 @@ type Props = {
   }) => boolean | Promise<*>,
 };
 
-export default class Form extends Component<Props, void> {
+export default class Form extends Component<Props> {
   makeValidator = () => {
     if (this.props.validate) {
       return this.props.validate;

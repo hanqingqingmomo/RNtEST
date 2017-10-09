@@ -7,7 +7,7 @@ import { Button, View } from '../atoms';
 import { LaunchScreenBackground } from '../blocks';
 import { getColor } from '../utils/color';
 
-export default class LandingScreen extends Component<{}, void> {
+export default class LandingScreen extends Component<{}> {
   navigate = (
     route: 'AuthenticationRootScreen' | 'InvitationCodeScreen'
   ) => () => {

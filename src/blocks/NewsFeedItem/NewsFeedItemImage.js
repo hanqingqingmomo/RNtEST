@@ -11,7 +11,7 @@ type P = {
   title: string,
 };
 
-export default class NewsFeedItemAttachment extends Component<P, void> {
+export default class NewsFeedItemAttachment extends Component<P> {
   render() {
     const { title, imageURI } = this.props;
 

@@ -27,7 +27,7 @@ function selectRequestError(
  */
 export default function withRequestMonitor(requestId: RequestID) {
   return (WrappedComponent: *) => {
-    class RequestMonitor extends Component<RequestProps, void> {
+    class RequestMonitor extends Component<RequestProps> {
       componentWillMount() {
         this.props.clearRequest(requestId);
       }

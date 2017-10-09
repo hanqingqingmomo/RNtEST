@@ -16,7 +16,7 @@ const PROTOCOL_MAP = {
   mail: 'mailto',
 };
 
-export default class Link extends Component<P, void> {
+export default class Link extends Component<P> {
   openUrl = (url: string) => {
     Linking.canOpenURL(url).then(supported => {
       if (supported) {

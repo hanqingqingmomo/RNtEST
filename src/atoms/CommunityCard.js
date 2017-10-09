@@ -15,7 +15,7 @@ type P = {
   title: string,
 };
 
-export default class CommunityCard extends Component<P, void> {
+export default class CommunityCard extends Component<P> {
   render() {
     const { title, imageURI, subtitle, isNew } = this.props;
 

@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { View, ScrollView } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
 
-export default class NewsfeedPlayground extends Component<{}, void> {
+export default class NewsfeedPlayground extends Component<{}> {
   static navigationOptions = {
     title: 'News Feed',
   };

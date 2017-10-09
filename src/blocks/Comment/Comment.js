@@ -31,7 +31,7 @@ type S = {
 
 const AVATAR_SIZE = 25;
 
-export default class Comment extends React.Component<void, P, S> {
+export default class Comment extends React.Component<P, S> {
   state = {
     showReplies: false,
   };

@@ -27,7 +27,7 @@ type FormFieldProps = TextInputProps & {
   label: string,
 };
 
-class FormFieldInner extends Component<FormikFieldProps, void> {
+class FormFieldInner extends Component<FormikFieldProps> {
   onChangeText = (value: any) => {
     this.props.form.setFieldValue(this.props.field.name, value);
   };
@@ -46,7 +46,7 @@ class FormFieldInner extends Component<FormikFieldProps, void> {
   }
 }
 
-export default class FormField extends Component<FormFieldProps, void> {
+export default class FormField extends Component<FormFieldProps> {
   render() {
     return (
       <Field

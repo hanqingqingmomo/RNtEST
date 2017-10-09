@@ -17,7 +17,7 @@ function AuthenticationButton(props) {
   return <Button block {...props} size="lg" style={styles.button} />;
 }
 
-export default class AuthenticationRootScreen extends Component<{}, void> {
+export default class AuthenticationRootScreen extends Component<{}> {
   navigate = (route: Route) => () => {
     switch (route) {
       case 'EmailAuthenticationScreen':

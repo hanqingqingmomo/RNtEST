@@ -30,7 +30,7 @@ type P = {
     | (({ textColor: string, textStyle: Array<any> }) => React$Element<*>),
 };
 
-export default class Button extends Component<P, void> {
+export default class Button extends Component<P> {
   static defaultProps = {
     disabled: false,
     outline: false,

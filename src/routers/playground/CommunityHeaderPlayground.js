@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 import { CommunityHeader } from '../../atoms';
 
-export default class CommunityHeaderPlayground extends Component<{}, void> {
+export default class CommunityHeaderPlayground extends Component<{}> {
   static navigationOptions = { headerTitle: 'Community header' };
 
   render() {

@@ -188,7 +188,7 @@ const RESULTS = [
   },
 ];
 
-export default class NewsfeedPlayground extends Component<{}, void> {
+export default class NewsfeedPlayground extends Component<{}> {
   renderTitle(data: ItemProps): React$Element<*> {
     return <Text color="#3E515B">{data.title}</Text>;
   }

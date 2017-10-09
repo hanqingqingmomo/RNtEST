@@ -39,7 +39,7 @@ const SETTINGS = [
   },
 ];
 
-class UserProfileScreen extends Component<{}, void> {
+class UserProfileScreen extends Component<{}> {
   static navigationOptions = {
     title: 'Settings',
   };

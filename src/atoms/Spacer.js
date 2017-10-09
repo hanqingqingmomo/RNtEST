@@ -9,7 +9,7 @@ type Props = {
   width?: number,
   height?: number,
 };
-export default class View extends Component<Props, void> {
+export default class View extends Component<Props> {
   render() {
     const { width, height } = this.props;
     return (

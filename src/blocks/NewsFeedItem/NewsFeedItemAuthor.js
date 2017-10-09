@@ -24,7 +24,7 @@ const HIT_SLOP = {
   left: 6,
 };
 
-export default class NewsFeedItemAuthor extends Component<P, void> {
+export default class NewsFeedItemAuthor extends Component<P> {
   onUserPress = () => {
     this.props.onUserPress(this.props.user);
   };

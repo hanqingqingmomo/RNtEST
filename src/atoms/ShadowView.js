@@ -12,7 +12,7 @@ type P = {
   radius?: number,
 };
 
-export default class Shadow extends Component<P, void> {
+export default class Shadow extends Component<P> {
   render() {
     const { radius } = this.props;
 

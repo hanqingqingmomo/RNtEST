@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class FormPlayground extends Component<{}, void> {
+export default class FormPlayground extends Component<{}> {
   static navigationOptions = { title: 'Text input & Form fields' };
 
   handleSubmit = () => {};

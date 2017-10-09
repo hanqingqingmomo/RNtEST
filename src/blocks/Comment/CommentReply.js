@@ -13,7 +13,7 @@ type P = {
   onLikePress: () => void,
 };
 
-export default class Comment extends React.Component<void, P, void> {
+export default class Comment extends React.Component<P> {
   render() {
     const { data } = this.props;
 

@@ -19,7 +19,7 @@ type P = {
   onConfirm: (status: 'confirmed' | 'declined') => void,
 };
 
-export default class DonationScreen extends Component<P, void> {
+export default class DonationScreen extends Component<P> {
   confirm = () => {
     this.props.onConfirm('confirmed');
   };

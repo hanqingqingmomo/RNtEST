@@ -16,7 +16,7 @@ const RULES = {
   email: 'required|email',
 };
 
-export default class PasswordResetScreen extends Component<{}, void> {
+export default class PasswordResetScreen extends Component<{}> {
   handleFormSubmit = (values: FormValues) => {
     alert(JSON.stringify(values));
   };

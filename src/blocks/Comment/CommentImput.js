@@ -18,7 +18,7 @@ type S = {
   content: string,
 };
 
-export default class CommentImput extends Component<void, P, S> {
+export default class CommentImput extends Component<P, S> {
   state = {
     content: '',
   };

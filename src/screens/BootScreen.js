@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { ActivityIndicator } from '../atoms';
 import { LaunchScreenBackground } from '../blocks';
 
-export default class LandingScreen extends Component<{}, void> {
+export default class LandingScreen extends Component<{}> {
   render() {
     return (
       <LaunchScreenBackground>

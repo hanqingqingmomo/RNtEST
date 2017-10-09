@@ -30,7 +30,7 @@ type Props = {
   style?: any,
 };
 
-export default class TouchableItem extends Component<Props, void> {
+export default class TouchableItem extends Component<Props> {
   static defaultProps = {
     borderless: false,
     pressColor: 'rgba(0, 0, 0, .32)',

@@ -43,7 +43,7 @@ const items = [
   },
 ];
 
-export default class EventCardPlayground extends Component<P, void> {
+export default class EventCardPlayground extends Component<P> {
   static navigationOptions = { title: 'Event card' };
   render() {
     return (

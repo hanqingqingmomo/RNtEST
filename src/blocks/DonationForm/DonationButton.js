@@ -21,7 +21,7 @@ type P = {
   isActive?: boolean,
   onPress: () => void,
   size: 'lg' | 'md' | 'sm',
-  style: Style,
+  style?: Style,
   textColor?: {
     color: string,
   },
@@ -40,7 +40,7 @@ const ICON_LINE_HEIGHT = {
   lg: 65,
 };
 
-export default class DonationButton extends Component<P, void> {
+export default class DonationButton extends Component<P> {
   render() {
     const {
       disabled,

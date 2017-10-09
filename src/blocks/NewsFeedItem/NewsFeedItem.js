@@ -63,7 +63,7 @@ type P = {
 
 const LINKS = ['Share', 'Comment'];
 
-export default class NewsFeedItem extends Component<P, void> {
+export default class NewsFeedItem extends Component<P> {
   shortenString(
     string?: string,
     maxChars?: number

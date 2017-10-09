@@ -16,7 +16,7 @@ const RULES = {
   invitationCode: 'required|min:6',
 };
 
-export default class InvitationCodeScreen extends Component<{}, void> {
+export default class InvitationCodeScreen extends Component<{}> {
   handleFormSubmit = (values: FormValues) => {
     alert(JSON.stringify(values));
   };

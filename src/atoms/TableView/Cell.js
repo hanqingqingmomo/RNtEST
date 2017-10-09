@@ -11,7 +11,7 @@ type Props = {
   titleTextColor?: string,
 };
 
-export default class Cell extends Component<Props, void> {
+export default class Cell extends Component<Props> {
   render() {
     const { titleTextStyle, titleTextColor, ...bag } = this.props;
     return (

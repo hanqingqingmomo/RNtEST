@@ -16,7 +16,7 @@ type P = {
   },
 };
 
-export default class ProfileCard extends Component<P, void> {
+export default class ProfileCard extends Component<P> {
   render() {
     const { username, position, imageURI, email, phone } = this.props.user;
 

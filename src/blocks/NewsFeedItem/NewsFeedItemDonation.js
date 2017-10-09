@@ -24,7 +24,7 @@ type P = {
   title: string,
 };
 
-export default class NewsFeedItemDonation extends Component<P, void> {
+export default class NewsFeedItemDonation extends Component<P> {
   get imageURIs(): Array<string> {
     return this.props.donors.map(donor => donor.imageURI);
   }
