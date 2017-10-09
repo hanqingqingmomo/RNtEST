@@ -17,7 +17,7 @@ export default class ButtonPlayground extends Component<{}, void> {
           <Button.Icon
             color="rgba(255,23,68,1)"
             iconColor="white"
-            iconName="attachment"
+            iconName="call-1"
             onPress={() => {}}
             size="lg"
             style={[styles.shadow, styles.marginTop]}
@@ -33,8 +33,17 @@ export default class ButtonPlayground extends Component<{}, void> {
           />
           <Button.Icon
             color="white"
+            iconColor="white"
+            iconName="call-1"
+            onPress={() => {}}
+            outline
+            size="sm"
+            style={[styles.marginTop]}
+          />
+          <Button.Icon
+            color="white"
             iconColor="rgba(31,51,61,1)"
-            iconName="close"
+            iconName="call-1"
             onPress={() => {}}
             size="xs"
             style={[styles.marginTop]}

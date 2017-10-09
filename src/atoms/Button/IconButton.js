@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
@@ -14,18 +14,23 @@ const HIT_SLOP = {
   left: 6,
 };
 
+type DP = {
+  disabled: boolean,
+  outline: boolean,
+};
+
 type P = {
   color: ColorName | string,
-  disabled: boolean,
+  disabled?: boolean,
   iconColor: ColorName | string,
   iconName: IconName,
-  onPress: Function,
-  outline: boolean,
+  onPress: () => void,
+  outline?: boolean,
   size: IconSize | number,
   style?: any,
 };
 
-export default class IconButton extends Component<P, void> {
+export default class IconButton extends React.Component<DP, P, void> {
   static defaultProps = {
     disabled: false,
     outline: false,
@@ -70,13 +75,13 @@ export default class IconButton extends Component<P, void> {
             outline
               ? [css('borderColor', color), css('borderWidth', 1)]
               : css('backgroundColor', color),
-            activeSizeStyle.view,
+            activeSizeStyle.size.view,
           ]}
         >
           <Icon
             color={iconColor}
             name={iconName}
-            size={size}
+            size={activeSizeStyle.iconSize}
             style={styles.icon}
           />
         </View>
@@ -101,28 +106,40 @@ const styles = StyleSheet.create({
 });
 
 const sizeStyles = {
-  xs: StyleSheet.create({
-    view: {
-      height: 27,
-      width: 27,
-    },
-  }),
-  sm: StyleSheet.create({
-    view: {
-      height: 34,
-      width: 34,
-    },
-  }),
-  md: StyleSheet.create({
-    view: {
-      height: 60,
-      width: 60,
-    },
-  }),
-  lg: StyleSheet.create({
-    view: {
-      height: 70,
-      width: 70,
-    },
-  }),
+  xs: {
+    iconSize: 10,
+    size: StyleSheet.create({
+      view: {
+        height: 20,
+        width: 20,
+      },
+    }),
+  },
+  sm: {
+    iconSize: 12,
+    size: StyleSheet.create({
+      view: {
+        height: 24,
+        width: 24,
+      },
+    }),
+  },
+  md: {
+    iconSize: 18,
+    size: StyleSheet.create({
+      view: {
+        height: 34,
+        width: 34,
+      },
+    }),
+  },
+  lg: {
+    iconSize: 30,
+    size: StyleSheet.create({
+      view: {
+        height: 48,
+        width: 48,
+      },
+    }),
+  },
 };

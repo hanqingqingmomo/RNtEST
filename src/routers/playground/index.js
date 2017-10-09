@@ -22,6 +22,7 @@ import CommunityHeaderPlayground from './CommunityHeaderPlayground';
 import ContactGroupPlayground from './ContactGroupPlayground';
 import DonationFormPlayground from './DonationFormPlayground';
 import EventCardPlayground from './EventCardPlayground';
+import EventFeedPlayground from './EventFeedPlayground';
 import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import LikePlayground from './LikePlayground';
@@ -88,6 +89,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Event Card"
       screen="EventCardPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Event Feed"
+      screen="EventFeedPlayground"
       navigation={navigation}
     />
     <Link
@@ -183,11 +189,11 @@ export default StackNavigator(
     DonationFormPlayground: {
       screen: DonationFormPlayground,
     },
-    UserProfileScreen: {
-      screen: UserProfileScreen,
-    },
     EventCardPlayground: {
       screen: EventCardPlayground,
+    },
+    EventFeedPlayground: {
+      screen: EventFeedPlayground,
     },
     FormPlayground: {
       screen: FormPlayground,
@@ -221,6 +227,9 @@ export default StackNavigator(
     },
     UserProfilePlayground: {
       screen: UserProfilePlayground,
+    },
+    UserProfileScreen: {
+      screen: UserProfileScreen,
     },
   },
   {
