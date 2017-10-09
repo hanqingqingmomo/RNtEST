@@ -3,27 +3,28 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { ScrollView, TableView, Text, View, Icon, Screen } from '../atoms';
+import { CenterView, Icon, Screen, TableView, Text } from '../atoms';
 import { getColor } from '../utils/color';
+import { css } from '../utils/style';
 
 const { Table, Section, Cell } = TableView;
 
 const communities = [
   {
     img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community1',
+    name: 'Child Care Provider Training & Assistance',
   },
   {
     img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community2',
+    name: 'Drive to Thrive',
   },
   {
     img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community3',
+    name: 'Child Care Assistance Program',
   },
   {
     img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community4',
+    name: '3D Youth',
   },
   {
     img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
@@ -31,61 +32,54 @@ const communities = [
   },
   {
     img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community6',
-  },
-  {
-    img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community7',
-  },
-  {
-    img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community8',
-  },
-  {
-    img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community9',
-  },
-  {
-    img: 'https://d30y9cdsu7xlg0.cloudfront.net/png/223566-200.png',
-    name: 'Community10',
+    name: 'Young Parents Program',
   },
 ];
 
-export default class NewsFeedSettingsScreen extends React.Component<*, *, *> {
+export default class NewsFeedSettingsScreen extends React.Component<{}> {
   static navigationOptions = {
     title: 'Prioritize',
   };
 
   render() {
     return (
-      <Screen>
-        <ScrollView>
-          <Table>
-            <Section sectionPaddingTop={0}>
-              <View style={styles.infoContainer}>
-                <View style={styles.margin}>
-                  <Text style={styles.bigText}>Choose what to see first</Text>
-                  <Text style={styles.regularText}>
-                    You can select which community posts you want to see on the
-                    top of your main News Feed.
-                  </Text>
-                </View>
-              </View>
-            </Section>
-            <Section header="Your communities">
-              {communities.map((community, i) => (
-                <Cell
-                  key={i + community.name}
-                  title={community.name}
-                  image={<Icon name="ywca" size="lg" />}
-                  accessory="Checkmark"
-                  onPress={() => {}}
-                  disableImageResize
-                />
-              ))}
-            </Section>
-          </Table>
-        </ScrollView>
+      <Screen tintColor="#F3F3F6">
+        <Table>
+          <Section sectionPaddingTop={0}>
+            <CenterView style={styles.infoContainer}>
+              <Text
+                size={19}
+                color="#455A64"
+                weight="500"
+                style={css('lineHeight', 25)}
+              >
+                Choose what to see first
+              </Text>
+              <Text
+                size={14}
+                color="#455A64"
+                style={css('textAlign', 'center')}
+              >
+                You can select which community posts you want to see on the top
+                of your main News Feed.
+              </Text>
+            </CenterView>
+          </Section>
+          <Section header="Your communities">
+            {communities.map((community, i) => (
+              <Cell
+                key={i + community.name}
+                title={community.name}
+                image={
+                  <Icon name="communities" color={getColor('gray')} size="lg" />
+                }
+                accessory="Checkmark"
+                onPress={() => {}}
+                disableImageResize
+              />
+            ))}
+          </Section>
+        </Table>
       </Screen>
     );
   }
@@ -93,30 +87,9 @@ export default class NewsFeedSettingsScreen extends React.Component<*, *, *> {
 
 const styles = StyleSheet.create({
   infoContainer: {
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: getColor('white'),
-  },
-
-  margin: {
-    marginTop: 30,
-    marginBottom: 30,
-    marginRight: 35,
-    marginLeft: 35,
-  },
-
-  bigText: {
-    fontSize: 21,
-    fontWeight: '500',
-    lineHeight: 20,
-    textAlign: 'center',
-  },
-
-  regularText: {
-    fontSize: 14,
-    lineHeight: 25,
-    textAlign: 'center',
+    paddingVertical: 30,
+    paddingHorizontal: 35,
+    marginTop: -1,
   },
 });

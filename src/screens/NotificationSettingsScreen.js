@@ -8,7 +8,7 @@ import { getColor } from '../utils/color';
 
 const { Table, Section, Cell } = TableView;
 
-export default class NotificationSettingsScreen extends React.Component {
+export default class NotificationSettingsScreen extends React.Component<{}> {
   static navigationOptions = {
     title: 'Notifications',
   };

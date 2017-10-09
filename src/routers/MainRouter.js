@@ -4,11 +4,13 @@ import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 
 import { Icon, Text } from '../atoms';
-import { DrawerNavigator, StackNavigator } from '../navigation';
+import { DrawerNavigator, StackNavigator, TabNavigator } from '../navigation';
 import Drawer from '../navigation/Drawer/Drawer';
 import PlaygroundRouter from './playground';
 import {
   InviteFriendsScreen,
+  NewsFeedSettingsScreen,
+  NotificationSettingsScreen,
   UserProfileScreen,
   UserSettingsScreen,
 } from '../screens';
@@ -70,13 +72,41 @@ const DrawerRouter = DrawerNavigator(
     NotificationsTab: {
       screen: StackNavigator(
         {
-          InviteFriendsScreen: {
-            screen: InviteFriendsScreen,
+          NotificationSettingsScreen: {
+            screen: NotificationSettingsScreen,
             navigationOptions: ({ navigation }) => ({
               drawerLabel: 'Notifications',
               drawerIcon: <DrawerIcon name="notification" />,
               headerLeft: <DrawerButton navigation={navigation} />,
-              headerTitle: 'Intive Friends',
+              headerTitle: 'Notifications',
+            }),
+          },
+          NewsFeedSettingsScreen: {
+            screen: NewsFeedSettingsScreen,
+            navigationOptions: {
+              headerTitle: 'Prioritize',
+            },
+          },
+        },
+        {
+          ...StyleSheet.create({
+            cardStyle: {
+              backgroundColor: 'white',
+            },
+          }),
+        }
+      ),
+    },
+    OrganizationTab: {
+      screen: TabNavigator(
+        {
+          NotificationSettingsScreen: {
+            screen: NotificationSettingsScreen,
+            navigationOptions: ({ navigation }) => ({
+              drawerLabel: 'YWCA',
+              drawerIcon: <DrawerIcon name="communities" />,
+              headerLeft: <DrawerButton navigation={navigation} />,
+              headerTitle: 'Notifications',
             }),
           },
         },
@@ -142,15 +172,15 @@ const DrawerRouter = DrawerNavigator(
     },
   },
   {
-    initialRouteName: 'UserProfileTab',
+    initialRouteName: 'NotificationsTab',
     contentComponent: Drawer,
     order: [
+      'OrganizationTab',
       'UserProfileTab',
       'NotificationsTab',
       'UserSettingsTab',
-      'HelpTab',
+      // 'HelpTab',
       'InviteFriendsTab',
-      'PlaygroundRouter',
     ],
   }
 );
