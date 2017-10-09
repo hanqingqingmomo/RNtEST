@@ -12,6 +12,9 @@ import {
   LandingScreen,
   UserProfileScreen,
   UserSettingsScreen,
+  MemberListScreen,
+  NewsFeedSettingsScreen,
+  NotificationSettingsScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -118,8 +121,23 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
+      title="Members listing"
+      screen="MemberListScreen"
+      navigation={navigation}
+    />
+    <Link
       title="Newsfeed"
       screen="NewsfeedPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Newsfeed Settings"
+      screen="NewsFeedSettingsScreen"
+      navigation={navigation}
+    />
+    <Link
+      title="Notification Settings"
+      screen="NotificationSettingsScreen"
       navigation={navigation}
     />
     <Link
@@ -210,8 +228,17 @@ export default StackNavigator(
     LikePlayground: {
       screen: LikePlayground,
     },
+    MemberListScreen: {
+      screen: MemberListScreen,
+    },
     NewsfeedPlayground: {
       screen: NewsfeedPlayground,
+    },
+    NewsFeedSettingsScreen: {
+      screen: NewsFeedSettingsScreen,
+    },
+    NotificationSettingsScreen: {
+      screen: NotificationSettingsScreen,
     },
     SegmentedControlPlayground: {
       screen: SegmentedControlPlayground,
