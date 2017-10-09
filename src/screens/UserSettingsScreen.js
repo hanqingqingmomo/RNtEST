@@ -7,8 +7,6 @@ import { css } from '../utils/style';
 import { getColor } from '../utils/color';
 import type { ColorName, IconName } from '../Types';
 
-const { Table, Cell, Section } = TableView;
-
 type SettingProps = {
   id: number,
   name: string,
@@ -52,7 +50,7 @@ const ACTIONS = [
   },
 ];
 
-export default class SettingsScreen extends Component<{}, void> {
+export default class UserProfileSettingsScreen extends Component<{}, void> {
   static navigationOptions = {
     title: 'Settings',
   };
@@ -89,10 +87,10 @@ export default class SettingsScreen extends Component<{}, void> {
   render() {
     return (
       <Screen tintColor="#F3F3F6">
-        <Table>
-          <Section sectionPaddingTop={0}>
+        <TableView.Table>
+          <TableView.Section>
             {SETTINGS.map(setting => (
-              <Cell
+              <TableView.Cell
                 cellStyle="Basic"
                 key={setting.id}
                 title={setting.name}
@@ -101,18 +99,18 @@ export default class SettingsScreen extends Component<{}, void> {
                 onPress={this.onPushDetail(setting)}
               />
             ))}
-          </Section>
-          <Section sectionPaddingTop={40}>
+          </TableView.Section>
+          <TableView.Section>
             {ACTIONS.map(action => (
-              <Cell
+              <TableView.Cell
                 key={action.id}
                 title={action.name}
                 titleTextColor="red"
                 onPress={this.onPressAction(action)}
               />
             ))}
-          </Section>
-        </Table>
+          </TableView.Section>
+        </TableView.Table>
       </Screen>
     );
   }

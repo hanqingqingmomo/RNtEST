@@ -12,4 +12,4 @@ export { default as InvitationCodeScreen } from './InvitationCodeScreen';
 export { default as InviteFriendsScreen } from './InviteFriendsScreen';
 export { default as LandingScreen } from './LandingScreen';
 export { default as PasswordResetScreen } from './PasswordResetScreen';
-export { default as SettingsScreen } from './SettingsScreen';
+export { default as UserSettingsScreen } from './UserSettingsScreen';

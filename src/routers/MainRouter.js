@@ -7,11 +7,15 @@ import { Icon, Text } from '../atoms';
 import { DrawerNavigator, StackNavigator } from '../navigation';
 import Drawer from '../navigation/Drawer/Drawer';
 import PlaygroundRouter from './playground';
-import { InviteFriendsScreen } from '../screens';
+import { InviteFriendsScreen, UserSettingsScreen } from '../screens';
+
+function DrawerButton({ navigation }) {
+  return <Text onPress={() => navigation.navigate('DrawerOpen')}>=</Text>;
+}
 
 const DrawerRouter = DrawerNavigator(
   {
-    InviteFriendsScreenTab: {
+    InviteFriendsTab: {
       screen: StackNavigator(
         {
           InviteFriendsScreen: {
@@ -25,12 +29,32 @@ const DrawerRouter = DrawerNavigator(
                   color="rgba(69,90,100,1)"
                 />
               ),
-              headerLeft: (
-                <Text onPress={() => navigation.navigate('DrawerToggle')}>
-                  =
-                </Text>
-              ),
+              headerLeft: <DrawerButton navigation={navigation} />,
               headerTitle: 'Intive Friends',
+            }),
+          },
+        },
+        {
+          ...StyleSheet.create({
+            cardStyle: {
+              backgroundColor: 'white',
+            },
+          }),
+        }
+      ),
+    },
+    UserSettingsTab: {
+      screen: StackNavigator(
+        {
+          UserSettingsScreen: {
+            screen: UserSettingsScreen,
+            navigationOptions: ({ navigation }) => ({
+              drawerLabel: 'Settings',
+              drawerIcon: (
+                <Icon name="settings" size={24} color="rgba(69,90,100,1)" />
+              ),
+              headerLeft: <DrawerButton navigation={navigation} />,
+              headerTitle: 'Settings',
             }),
           },
         },
@@ -52,7 +76,7 @@ const DrawerRouter = DrawerNavigator(
     },
   },
   {
-    initialRouteName: 'InviteFriendsScreenTab',
+    initialRouteName: 'UserSettingsTab',
     contentComponent: Drawer,
   }
 );

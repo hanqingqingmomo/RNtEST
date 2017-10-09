@@ -10,7 +10,7 @@ import {
   EmailRegistrationScreen,
   InviteFriendsScreen,
   LandingScreen,
-  SettingsScreen,
+  UserSettingsScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -114,7 +114,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link
       title="Settings Screen"
-      screen="SettingsScreen"
+      screen="UserSettingsScreen"
       navigation={navigation}
     />
     <Link title="Tabs" screen="TabsPlayground" navigation={navigation} />
@@ -190,8 +190,8 @@ export default StackNavigator(
     EmailRegistrationScreen: {
       screen: EmailRegistrationScreen,
     },
-    SettingsScreen: {
-      screen: SettingsScreen,
+    UserSettingsScreen: {
+      screen: UserSettingsScreen,
     },
     TabsPlayground: {
       screen: TabsPlayground,
