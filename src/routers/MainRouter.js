@@ -8,9 +8,13 @@ import { DrawerNavigator, StackNavigator } from '../navigation';
 import Drawer from '../navigation/Drawer/Drawer';
 import PlaygroundRouter from './playground';
 import { InviteFriendsScreen, UserSettingsScreen } from '../screens';
-
+import { type IconName } from '../Types';
 function DrawerButton({ navigation }) {
   return <Text onPress={() => navigation.navigate('DrawerOpen')}>=</Text>;
+}
+
+function DrawerIcon({ name }: { name: IconName }) {
+  return <Icon size={24} color="#455a64" name={name} />;
 }
 
 const DrawerRouter = DrawerNavigator(
@@ -22,13 +26,51 @@ const DrawerRouter = DrawerNavigator(
             screen: InviteFriendsScreen,
             navigationOptions: ({ navigation }) => ({
               drawerLabel: 'Invite Friends',
-              drawerIcon: (
-                <Icon
-                  name="invite-sidebar"
-                  size={24}
-                  color="rgba(69,90,100,1)"
-                />
-              ),
+              drawerIcon: <DrawerIcon name="invite-sidebar" />,
+              headerLeft: <DrawerButton navigation={navigation} />,
+              headerTitle: 'Intive Friends',
+            }),
+          },
+        },
+        {
+          ...StyleSheet.create({
+            cardStyle: {
+              backgroundColor: 'white',
+            },
+          }),
+        }
+      ),
+    },
+    HelpTab: {
+      screen: StackNavigator(
+        {
+          InviteFriendsScreen: {
+            screen: () => <Text>Help</Text>,
+            navigationOptions: ({ navigation }) => ({
+              drawerLabel: 'Help',
+              drawerIcon: <DrawerIcon name="chat-start" />,
+              headerLeft: <DrawerButton navigation={navigation} />,
+              headerTitle: 'Help',
+            }),
+          },
+        },
+        {
+          ...StyleSheet.create({
+            cardStyle: {
+              backgroundColor: 'white',
+            },
+          }),
+        }
+      ),
+    },
+    NotificationsTab: {
+      screen: StackNavigator(
+        {
+          InviteFriendsScreen: {
+            screen: InviteFriendsScreen,
+            navigationOptions: ({ navigation }) => ({
+              drawerLabel: 'Notifications',
+              drawerIcon: <DrawerIcon name="notification" />,
               headerLeft: <DrawerButton navigation={navigation} />,
               headerTitle: 'Intive Friends',
             }),
@@ -50,11 +92,31 @@ const DrawerRouter = DrawerNavigator(
             screen: UserSettingsScreen,
             navigationOptions: ({ navigation }) => ({
               drawerLabel: 'Settings',
-              drawerIcon: (
-                <Icon name="settings" size={24} color="rgba(69,90,100,1)" />
-              ),
+              drawerIcon: <DrawerIcon name="settings" />,
               headerLeft: <DrawerButton navigation={navigation} />,
               headerTitle: 'Settings',
+            }),
+          },
+        },
+        {
+          ...StyleSheet.create({
+            cardStyle: {
+              backgroundColor: 'white',
+            },
+          }),
+        }
+      ),
+    },
+    UserProfileTab: {
+      screen: StackNavigator(
+        {
+          UserSettingsScreen: {
+            screen: UserSettingsScreen,
+            navigationOptions: ({ navigation }) => ({
+              drawerLabel: 'Your Profile',
+              drawerIcon: <DrawerIcon name="user" />,
+              headerLeft: <DrawerButton navigation={navigation} />,
+              headerTitle: 'Your Profile',
             }),
           },
         },
@@ -70,7 +132,7 @@ const DrawerRouter = DrawerNavigator(
     PlaygroundRouter: {
       screen: PlaygroundRouter,
       navigationOptions: {
-        drawerIcon: <Icon name="user" size={24} color="rgba(69,90,100,1)" />,
+        drawerIcon: <DrawerIcon name="user" />,
         drawerLabel: 'Playground',
       },
     },
@@ -78,6 +140,14 @@ const DrawerRouter = DrawerNavigator(
   {
     initialRouteName: 'UserSettingsTab',
     contentComponent: Drawer,
+    order: [
+      'UserProfileTab',
+      'NotificationsTab',
+      'UserSettingsTab',
+      'HelpTab',
+      'InviteFriendsTab',
+      'PlaygroundRouter',
+    ],
   }
 );
 
