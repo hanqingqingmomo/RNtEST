@@ -3,17 +3,20 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { TextDeprecated, View } from './index';
+import { View, Text } from './index';
+import { type ColorName } from '../Types';
 
 type Props = {
-  color: string,
+  color?: ColorName | string,
   title: string,
 };
 
 export default function Pill({ color, title }: Props) {
   return (
     <View style={[styles.view, { borderColor: color }]}>
-      <TextDeprecated style={[styles.title, { color }]}>{title}</TextDeprecated>
+      <Text color={color} size={11} weight="500" lineHeight={13}>
+        {title}
+      </Text>
     </View>
   );
 }
@@ -27,14 +30,6 @@ const styles = StyleSheet.create({
     height: 20,
     justifyContent: 'center',
     overflow: 'hidden',
-  },
-
-  title: {
-    backgroundColor: 'transparent',
-    fontSize: 11,
-    fontWeight: '500',
-    lineHeight: 13,
-    paddingRight: 10,
-    paddingLeft: 10,
+    paddingHorizontal: 10,
   },
 });

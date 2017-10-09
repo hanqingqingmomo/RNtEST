@@ -37,7 +37,6 @@ export { default as ShadowView } from './ShadowView';
 export { default as Spacer } from './Spacer';
 export { default as TableView } from './TableView';
 export { default as Text } from './Text';
-export { default as TextDeprecated } from './TextDeprecated';
 export { default as TextInput } from './TextInput';
 export { default as TimeAgo } from './TimeAgo';
 export { default as TouchableItem } from './TouchableItem';

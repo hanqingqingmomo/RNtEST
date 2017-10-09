@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Animated, Keyboard, NetInfo, StyleSheet } from 'react-native';
 
-import { TextDeprecated } from '../atoms';
+import { Text } from '../atoms';
 
 const INITIAL_OPACITY = 0;
 
@@ -18,8 +18,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 40,
-    color: 'white',
     alignSelf: 'center',
     textAlign: 'center',
   },
@@ -77,7 +75,9 @@ export default class Network extends Component<{}, S> {
           { opacity: this.animOpacity },
         ]}
       >
-        <TextDeprecated style={styles.text}>Offline</TextDeprecated>
+        <Text size={40} color="white" style={styles.text}>
+          Offline
+        </Text>
       </Animated.View>
     );
   }
