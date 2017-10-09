@@ -17,11 +17,14 @@ import {
   Screen,
   TableView,
   Text,
+  Button,
   View,
 } from '../atoms';
+import { api } from '../services';
 import { css } from '../utils/style';
-import type { Store, User } from '../Types';
 import { selectUser } from '../redux/selectors';
+import { setUserProfile } from '../redux/ducks/application';
+import type { Store, User } from '../Types';
 
 const { Table, Section, Cell } = TableView;
 
@@ -45,6 +48,8 @@ type State = {
     id: number,
     placeholder: string,
   },
+  registrationError: boolean,
+  busy: boolean,
 };
 
 type Props = {
@@ -111,10 +116,20 @@ class EditUserProfileScreen extends React.Component<Props, State> {
   state = {
     imageURI:
       'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
+    registrationError: false,
+    busy: false,
   };
 
-  onSubmit = data => {
-    console.log(data);
+  handleSubmit = async (user: FormValues) => {
+    this.setState({ registrationError: false, busy: true, user });
+    try {
+      await api.user.updateProfile(user);
+      this.props.setUserProfile(user);
+    } catch (err) {
+      this.setState({ registrationError: true });
+    } finally {
+      this.setState({ busy: false });
+    }
   };
 
   onLeaveCommunity(community: CommunityProps) {
@@ -211,37 +226,42 @@ class EditUserProfileScreen extends React.Component<Props, State> {
     const { id, photo, username, ...initialValues } = this.props.user;
 
     return (
-      <Screen tintColor="#F3F3F6" style={css('marginTop', -1)}>
-        <Form onSubmit={this.onSubmit} initialValues={initialValues}>
-          <Table>
-            <Section sectionPaddingTop={0}>
-              <Cell
-                cellContentView={
-                  <CenterView style={styles.avatarPickerCell}>
-                    <AvatarPicker
-                      imageURI={this.state.imageURI}
-                      size={82}
-                      outline={3}
-                      onChange={(imageURI: string) =>
-                        this.setState({ imageURI })}
-                    />
-                  </CenterView>
-                }
-              />
-            </Section>
-            {SECTIONS.map(section => (
-              <Section
-                key={section.id}
-                sectionPaddingTop={section.sectionTitle ? 15 : 0}
-                header={section.sectionTitle}
-                separatorTintColor={BG_COLOR}
-              >
-                {section.rows.map(row => this.renderCell(section.id, row))}
+      <Form
+        onSubmit={this.handleSubmit}
+        initialValues={initialValues}
+        render={form => (
+          <Screen tintColor="#F3F3F6" style={css('marginTop', -1)}>
+            <Button block onPress={form.handleSubmit} size="lg" title="save" />
+            <Table>
+              <Section sectionPaddingTop={0}>
+                <Cell
+                  cellContentView={
+                    <CenterView style={styles.avatarPickerCell}>
+                      <AvatarPicker
+                        imageURI={this.state.imageURI}
+                        size={82}
+                        outline={3}
+                        onChange={(imageURI: string) =>
+                          this.setState({ imageURI })}
+                      />
+                    </CenterView>
+                  }
+                />
               </Section>
-            ))}
-          </Table>
-        </Form>
-      </Screen>
+              {SECTIONS.map(section => (
+                <Section
+                  key={section.id}
+                  sectionPaddingTop={section.sectionTitle ? 15 : 0}
+                  header={section.sectionTitle}
+                  separatorTintColor={BG_COLOR}
+                >
+                  {section.rows.map(row => this.renderCell(section.id, row))}
+                </Section>
+              ))}
+            </Table>
+          </Screen>
+        )}
+      />
     );
   }
 }
@@ -254,9 +274,12 @@ const Provider = ({ ...props }: Object) => {
   );
 };
 
-export default (connect((state: Store) => ({
-  user: selectUser(state),
-})): Connector<{}, Props>)(Provider);
+export default (connect(
+  (state: Store) => ({
+    user: selectUser(state),
+  }),
+  { setUserProfile }
+): Connector<{}, Props>)(Provider);
 
 const styles = StyleSheet.create({
   container: {

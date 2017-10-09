@@ -2,6 +2,7 @@
 
 type Service = {
   getProfile(id: string | number): Object,
+  updateProfile(data: Object): Object,
 };
 
 const getProfile = (transport: *) => async id => {
@@ -9,8 +10,14 @@ const getProfile = (transport: *) => async id => {
   return response.data;
 };
 
+const updateProfile = (transport: *) => async data => {
+  const response = await transport.put(`/v1/members/profile_settings`, data);
+  return response.data;
+};
+
 export default function(http) {
   return ({
     getProfile: getProfile(http),
+    updateProfile: updateProfile(http),
   }: Service);
 }
