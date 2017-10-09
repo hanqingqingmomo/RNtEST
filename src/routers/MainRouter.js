@@ -7,7 +7,11 @@ import { Icon, Text } from '../atoms';
 import { DrawerNavigator, StackNavigator } from '../navigation';
 import Drawer from '../navigation/Drawer/Drawer';
 import PlaygroundRouter from './playground';
-import { InviteFriendsScreen, UserSettingsScreen } from '../screens';
+import {
+  InviteFriendsScreen,
+  UserProfileScreen,
+  UserSettingsScreen,
+} from '../screens';
 import { type IconName } from '../Types';
 function DrawerButton({ navigation }) {
   return <Text onPress={() => navigation.navigate('DrawerOpen')}>=</Text>;
@@ -110,8 +114,8 @@ const DrawerRouter = DrawerNavigator(
     UserProfileTab: {
       screen: StackNavigator(
         {
-          UserSettingsScreen: {
-            screen: UserSettingsScreen,
+          UserProfileScreen: {
+            screen: UserProfileScreen,
             navigationOptions: ({ navigation }) => ({
               drawerLabel: 'Your Profile',
               drawerIcon: <DrawerIcon name="user" />,
@@ -138,7 +142,7 @@ const DrawerRouter = DrawerNavigator(
     },
   },
   {
-    initialRouteName: 'UserSettingsTab',
+    initialRouteName: 'UserProfileTab',
     contentComponent: Drawer,
     order: [
       'UserProfileTab',

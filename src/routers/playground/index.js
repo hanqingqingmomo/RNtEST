@@ -10,6 +10,7 @@ import {
   EmailRegistrationScreen,
   InviteFriendsScreen,
   LandingScreen,
+  UserProfileScreen,
   UserSettingsScreen,
 } from '../../screens';
 
@@ -74,6 +75,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Donation Form"
       screen="DonationFormPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Edit User Profile"
+      screen="UserProfileScreen"
       navigation={navigation}
     />
     <Link
@@ -165,6 +171,9 @@ export default StackNavigator(
     },
     DonationFormPlayground: {
       screen: DonationFormPlayground,
+    },
+    UserProfileScreen: {
+      screen: UserProfileScreen,
     },
     EventCardPlayground: {
       screen: EventCardPlayground,
