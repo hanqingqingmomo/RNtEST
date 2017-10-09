@@ -6,6 +6,7 @@ import { TabBarBottom, TabNavigator } from 'react-navigation';
 // import { TabNavigator } from '../navigation';
 import { CenterView, Icon, Text } from '../../atoms';
 import OrganisationNewsFeedNavigator from './OrganisationNewsFeedNavigator';
+import { getColor } from '../../utils/color';
 
 // function OpenDrawerButton({ onPress }) {
 //   return <Text onPress={onPress}>open</Text>;
@@ -19,34 +20,34 @@ function ScreenComponent(props) {
   );
 }
 
-function TabBarIcon(props) {
-  return <Icon {...props} size={24} />;
-}
+const makeTabBarIcon = name => iconProps => (
+  <Icon name={name} size={24} color={iconProps.tintColor} />
+);
 
 export default TabNavigator(
   {
     OrganisationNewsFeedTab: {
       screen: OrganisationNewsFeedNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: <TabBarIcon name="home" />,
+        tabBarIcon: makeTabBarIcon('home'),
       }),
     },
     ConversationsTab: {
       screen: () => <ScreenComponent>Conversations</ScreenComponent>,
       navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: <TabBarIcon name="conversation" />,
+        tabBarIcon: makeTabBarIcon('conversation'),
       }),
     },
     CalendarTab: {
       screen: () => <ScreenComponent>Calendar</ScreenComponent>,
       navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: <TabBarIcon name="calendar" />,
+        tabBarIcon: makeTabBarIcon('calendar'),
       }),
     },
     CommunitiesTab: {
       screen: () => <ScreenComponent>Communities</ScreenComponent>,
       navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: <TabBarIcon name="communities" />,
+        tabBarIcon: makeTabBarIcon('communities'),
       }),
     },
   },
@@ -55,6 +56,8 @@ export default TabNavigator(
     tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
+      activeTintColor: getColor('orange'),
+      inactiveTintColor: '#CFD8DC',
     },
   }
 );
