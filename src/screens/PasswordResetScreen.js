@@ -23,7 +23,7 @@ export default class PasswordResetScreen extends Component<{}, void> {
 
   render() {
     return (
-      <Screen>
+      <Screen fill>
         <Form
           initialValues={INITIAL_VALUES}
           rules={RULES}

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import { type Style } from '../Types';
 import { css } from '../utils/style';
@@ -10,19 +10,29 @@ type Props = {
   children?: React$Node,
   style?: Style,
   tintColor?: string,
+  fill?: boolean,
 };
 
 export default function Screen(props: Props): React$Element<*> {
-  const { children, style, tintColor } = props;
+  const { children, fill, style, tintColor } = props;
   return (
-    <View
+    <ScrollView
+      alwaysBounceVertical={false}
+      overScrollMode="auto"
+      contentContainerStyle={fill ? styles.fillContentView : undefined}
       style={[
-        StyleSheet.absoluteFill,
+        { flexGrow: 1 },
         tintColor ? css('backgroundColor', tintColor) : undefined,
         style,
       ]}
     >
       {children}
-    </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  fillContentView: {
+    minHeight: '100%',
+  },
+});

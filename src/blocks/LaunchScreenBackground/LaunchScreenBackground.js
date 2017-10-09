@@ -13,7 +13,7 @@ type P = {
 export default class LandingScreen extends Component<P, void> {
   render() {
     return (
-      <Screen tintColor={getColor('orange')}>
+      <Screen fill tintColor={getColor('orange')}>
         <View style={styles.logo}>
           <Image source={require('./logo.png')} />
         </View>

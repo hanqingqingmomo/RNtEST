@@ -30,7 +30,7 @@ export default class AuthenticationRootScreen extends Component<{}, void> {
 
   render() {
     return (
-      <Screen>
+      <Screen fill>
         <View style={styles.container}>
           <Icon name="ywca" color="orange" size={100} />
 

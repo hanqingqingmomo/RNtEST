@@ -4,10 +4,10 @@ import React from 'react';
 import { connect, type Connector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
-import { API } from './services';
+import { api } from './services';
 import { selectAccessToken, selectUser } from './redux/selectors';
 import { AuthenticationRouter, MainRouter } from './routers';
-import { Screen } from './atoms';
+import { View } from './atoms';
 import { Network } from './blocks';
 import type { Store, User } from './Types';
 
@@ -16,7 +16,7 @@ type Props = {
   user: ?User,
 };
 
-class Application extends React.PureComponent<Props, void> {
+class Application extends React.PureComponent<Props> {
   componentDidMount() {
     SplashScreen.hide();
 
@@ -35,10 +35,10 @@ class Application extends React.PureComponent<Props, void> {
     const { user } = this.props;
 
     return (
-      <Screen>
+      <View flexGrow={1}>
         <Network />
         {user ? <MainRouter /> : <AuthenticationRouter />}
-      </Screen>
+      </View>
     );
   };
 }

@@ -125,7 +125,6 @@ export default StackNavigator(
     PlaygroundIndex: {
       screen: PlaygroundIndexScreen,
       navigationOptions: ({ navigation }) => {
-        console.log('navigation: ', navigation);
         return {
           title: 'Component Playground',
           headerLeft: (

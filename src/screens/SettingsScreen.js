@@ -5,12 +5,12 @@ import React, { Component } from 'react';
 import { TableView, Screen, Text, Icon } from '../atoms';
 import { css } from '../utils/style';
 import { getColor } from '../utils/color';
-import type { ColorName } from '../utils/color';
+import type { ColorName, IconName } from '../Types';
 
 type SettingProps = {
   id: number,
   name: string,
-  iconName: string,
+  iconName: IconName,
 };
 
 type ActionProps = {
