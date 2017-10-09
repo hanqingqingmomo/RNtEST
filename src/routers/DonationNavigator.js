@@ -6,15 +6,17 @@ import { StackNavigator } from '../navigation';
 import { Text } from '../atoms';
 import { DonationAppealScreen } from '../screens';
 
-function DrawerButton({ navigation }) {
-  return <Text onPress={() => navigation.navigate('DrawerOpen')}>=</Text>;
+function DismissModalButton({ onPress }) {
+  return <Text onPress={onPress}>=</Text>;
 }
 
 export default StackNavigator({
   DonationAppealScreen: {
     screen: DonationAppealScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerLeft: <DrawerButton navigation={navigation} />,
+    navigationOptions: ({ navigation, screenProps }) => ({
+      headerLeft: (
+        <DismissModalButton onPress={screenProps.dismissModalRoute} />
+      ),
       headerTitle: 'Donate',
     }),
   },

@@ -9,37 +9,25 @@ import DrawerHeader from './DrawerHeader';
 const communityImageURI =
   'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
 const communityTitle = 'YWCA';
-const onDonatePress = () => {};
 
-type TDrawerItem = {
+export type NavigationItem = {
   name: string,
   icon: string,
+  routeName: string,
 };
 
-const ITEMS: Array<TDrawerItem> = [
-  {
-    name: 'Your Profile',
-    icon: 'user',
-  },
-  {
-    name: 'Notifications',
-    icon: 'notification',
-  },
-  {
-    name: 'Settings',
-    icon: 'settings',
-  },
-  {
-    name: 'Help',
-    icon: 'chat-start',
-  },
-  {
-    name: 'Invite Friends',
-    icon: 'invite-sidebar',
-  },
-];
+type Props = {
+  navigationItems: Array<NavigationItem>,
+  handleNavigationItemPress: (navigationItem: NavigationItem) => void,
+  handleDonationButtonPress: () => void,
+};
 
-function DrawerItem(props: { item: TDrawerItem }) {
+type NavigationItemProps = {
+  item: NavigationItem,
+  onPress: () => void,
+};
+
+function DrawerItem(props: NavigationItemProps) {
   return (
     <TouchableHighlight onPress={props.onPress} key={props.item.name}>
       <View style={styles.item}>
@@ -56,18 +44,18 @@ function DrawerItem(props: { item: TDrawerItem }) {
   );
 }
 
-const Drawer = ({ ...props }: any) => (
+const Drawer = (props: Props) => (
   <View style={styles.container}>
     <DrawerHeader
       communityImageURI={communityImageURI}
       communityTitle={communityTitle}
-      onDonatePress={onDonatePress}
+      onDonatePress={props.handleDonationButtonPress}
     />
-    {ITEMS.map((item: TDrawerItem) => (
+    {props.navigationItems.map((item: NavigationItem) => (
       <DrawerItem
         key={item.icon}
         item={item}
-        onPress={() => props.onPress(item)}
+        onPress={() => props.handleNavigationItemPress(item)}
       />
     ))}
   </View>

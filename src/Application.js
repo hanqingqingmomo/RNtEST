@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import { api } from './services';
 import { selectAccessToken, selectUser } from './redux/selectors';
-import { AuthenticationRouter, MainRouter } from './routers';
+import { AuthenticationNavigator, MainNavigator } from './routers';
 import { View } from './atoms';
 import { Network } from './blocks';
 import type { Store, User } from './Types';
@@ -37,7 +37,7 @@ class Application extends React.PureComponent<Props> {
     return (
       <View flexGrow={1}>
         <Network />
-        {user ? <MainRouter /> : <AuthenticationRouter />}
+        {user ? <MainNavigator /> : <AuthenticationNavigator />}
       </View>
     );
   };
