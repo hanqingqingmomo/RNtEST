@@ -23,7 +23,7 @@ class Application extends React.PureComponent<Props> {
     api.http.interceptors.request.use(config => {
       config.headers = {
         Authorization: this.props.accessToken
-          ? `Bearer ${this.props.accessToken}`
+          ? `API-KEY ${this.props.accessToken}`
           : '',
         ...config.headers,
       };
