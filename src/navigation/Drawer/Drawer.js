@@ -5,19 +5,18 @@ import { StyleSheet } from 'react-native';
 
 import { Icon, View, Text, TouchableHighlight } from '../../atoms';
 import DrawerHeader from './DrawerHeader';
-import DrawerItems from './DrawerItems';
 
 const communityImageURI =
   'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
 const communityTitle = 'YWCA';
 const onDonatePress = () => {};
 
-type DrawerItem = {
+type TDrawerItem = {
   name: string,
   icon: string,
 };
 
-const ITEMS: Array<DrawerItem> = [
+const ITEMS: Array<TDrawerItem> = [
   {
     name: 'Your Profile',
     icon: 'user',
@@ -40,12 +39,18 @@ const ITEMS: Array<DrawerItem> = [
   },
 ];
 
-function DrawerItem(props: { item: DrawerItem }) {
+function DrawerItem(props: { item: TDrawerItem }) {
   return (
     <TouchableHighlight onPress={props.onPress} key={props.item.name}>
-      <View style={{ flexDirection: 'row' }}>
-        <Icon name={props.item.icon} color="red" />
-        <Text>{props.item.name}</Text>
+      <View style={styles.item}>
+        <View style={styles.icon}>
+          <Icon name={props.item.icon} color="#455A64" size="md" />
+        </View>
+        <View style={styles.text}>
+          <Text size={16} color="white" lineHeight={20}>
+            {props.item.name}
+          </Text>
+        </View>
       </View>
     </TouchableHighlight>
   );
@@ -58,8 +63,12 @@ const Drawer = ({ ...props }: any) => (
       communityTitle={communityTitle}
       onDonatePress={onDonatePress}
     />
-    {ITEMS.map((item: DrawerItem) => (
-      <DrawerItem item={item} onPress={() => props.onPress(item)} />
+    {ITEMS.map((item: TDrawerItem) => (
+      <DrawerItem
+        key={item.icon}
+        item={item}
+        onPress={() => props.onPress(item)}
+      />
     ))}
   </View>
 );
@@ -69,6 +78,21 @@ export default Drawer;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: 'rgba(31,51,61,1)',
+    backgroundColor: '#1F333D',
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    paddingVertical: 25,
+    borderBottomWidth: 1,
+    flexGrow: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
   },
 });
