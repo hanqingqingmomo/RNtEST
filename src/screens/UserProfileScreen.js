@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { connect, type Connector } from 'react-redux';
 import {
   ActionSheetProvider,
   connectActionSheet,
@@ -10,12 +11,17 @@ import {
 import {
   AvatarPicker,
   CenterView,
+  Form,
+  FormField,
   Image,
   Screen,
   TableView,
   Text,
+  View,
 } from '../atoms';
 import { css } from '../utils/style';
+import type { Store, User } from '../Types';
+import { selectUser } from '../redux/selectors';
 
 const { Table, Section, Cell } = TableView;
 
@@ -33,6 +39,18 @@ type CommunityProps = {
   imageURI: string,
 };
 
+type State = {
+  imageURI: string,
+  user: {
+    id: number,
+    placeholder: string,
+  },
+};
+
+type Props = {
+  user: User,
+};
+
 const BG_COLOR = '#ECEFF1';
 
 const SECTIONS = [
@@ -40,21 +58,9 @@ const SECTIONS = [
     id: 'details',
     sectionTitle: 'PERSONAL DETAILS',
     rows: [
-      {
-        id: 11,
-        leftText: 'First Name',
-        rightText: 'Sean',
-      },
-      {
-        id: 12,
-        leftText: 'Last Name',
-        rightText: 'Rodgers',
-      },
-      {
-        id: 13,
-        leftText: 'Email',
-        rightText: 'Sean.Rodgers@ywca.com',
-      },
+      { name: 'first_name', placeholder: 'First name' },
+      { name: 'last_name', placeholder: 'Last name' },
+      { name: 'email', placeholder: 'Email' },
     ],
   },
   {
@@ -96,12 +102,8 @@ const SECTIONS = [
   },
 ];
 
-type State = {
-  imageURI: string,
-};
-
 @connectActionSheet
-class EditUserProfileScreen extends React.Component<{}, State> {
+class EditUserProfileScreen extends React.Component<Props, State> {
   static navigationOptions = {
     title: 'Edit Profile',
   };
@@ -109,6 +111,10 @@ class EditUserProfileScreen extends React.Component<{}, State> {
   state = {
     imageURI:
       'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
+  };
+
+  onSubmit = data => {
+    console.log(data);
   };
 
   onLeaveCommunity(community: CommunityProps) {
@@ -127,7 +133,7 @@ class EditUserProfileScreen extends React.Component<{}, State> {
     };
   }
 
-  renderCell(id: string, row: Row): React$Element<*> {
+  renderCell(id: string, row: Row | string): React$Element<*> {
     switch (id) {
       case 'communities':
         return (
@@ -153,15 +159,28 @@ class EditUserProfileScreen extends React.Component<{}, State> {
       case 'details':
         return (
           <Cell
-            key={row.id}
+            key={`id-${row.name}`}
             cellStyle="RightDetail"
-            title={
-              <Text size={15} lineHeight={18} color="#90A4AE">
-                {row.leftText}
-              </Text>
+            title={row.placeholder}
+            titleTextColor="#90A4AE"
+            cellAccessoryView={
+              <View style={{ flexGrow: 1 }}>
+                <FormField
+                  style={{ fontSize: 16, textAlign: 'right' }}
+                  label=""
+                  name={row.name}
+                  baseColor="transparent"
+                  inputContainerStyle={{
+                    marginBottom: 0,
+                    paddingTop: 5,
+                    height: 30,
+                  }}
+                  labelTextStyle={{
+                    transform: [{ translateY: -5 }],
+                  }}
+                />
+              </View>
             }
-            rightDetailColor="#455A64"
-            detail={row.rightText}
           />
         );
 
@@ -189,47 +208,55 @@ class EditUserProfileScreen extends React.Component<{}, State> {
   }
 
   render() {
+    const { id, photo, username, ...initialValues } = this.props.user;
+
     return (
       <Screen tintColor="#F3F3F6" style={css('marginTop', -1)}>
-        <Table>
-          <Section sectionPaddingTop={0}>
-            <Cell
-              cellContentView={
-                <CenterView style={styles.avatarPickerCell}>
-                  <AvatarPicker
-                    imageURI={this.state.imageURI}
-                    size={82}
-                    outline={3}
-                    onChange={(imageURI: string) => this.setState({ imageURI })}
-                  />
-                </CenterView>
-              }
-            />
-          </Section>
-          {SECTIONS.map(section => (
-            <Section
-              key={section.id}
-              sectionPaddingTop={section.sectionTitle ? 15 : 0}
-              header={section.sectionTitle}
-              separatorTintColor={BG_COLOR}
-              sectionTintColor={BG_COLOR}
-            >
-              {section.rows.map(row => this.renderCell(section.id, row))}
+        <Form onSubmit={this.onSubmit} initialValues={initialValues}>
+          <Table>
+            <Section sectionPaddingTop={0}>
+              <Cell
+                cellContentView={
+                  <CenterView style={styles.avatarPickerCell}>
+                    <AvatarPicker
+                      imageURI={this.state.imageURI}
+                      size={82}
+                      outline={3}
+                      onChange={(imageURI: string) =>
+                        this.setState({ imageURI })}
+                    />
+                  </CenterView>
+                }
+              />
             </Section>
-          ))}
-        </Table>
+            {SECTIONS.map(section => (
+              <Section
+                key={section.id}
+                sectionPaddingTop={section.sectionTitle ? 15 : 0}
+                header={section.sectionTitle}
+                separatorTintColor={BG_COLOR}
+              >
+                {section.rows.map(row => this.renderCell(section.id, row))}
+              </Section>
+            ))}
+          </Table>
+        </Form>
       </Screen>
     );
   }
 }
 
-export default ({ ...props }) => {
+const Provider = ({ ...props }: Object) => {
   return (
     <ActionSheetProvider>
       <EditUserProfileScreen {...props} />
     </ActionSheetProvider>
   );
 };
+
+export default (connect((state: Store) => ({
+  user: selectUser(state),
+})): Connector<{}, Props>)(Provider);
 
 const styles = StyleSheet.create({
   container: {

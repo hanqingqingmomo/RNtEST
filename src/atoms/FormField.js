@@ -48,6 +48,11 @@ class FormFieldInner extends Component<FormikFieldProps, void> {
 
 export default class FormField extends Component<FormFieldProps, void> {
   render() {
-    return <Field component={FormFieldInner} {...this.props} />;
+    return (
+      <Field
+        component={this.props.component || FormFieldInner}
+        {...this.props}
+      />
+    );
   }
 }
