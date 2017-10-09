@@ -5,8 +5,12 @@ import { Section as OriginalSection } from 'react-native-tableview-simple';
 
 import SectionLabel from './SectionLabel';
 
-export default class Section extends Component {
-  renderHeader(header: string) {
+type Props = {
+  header?: string,
+};
+
+export default class Section extends Component<Props> {
+  renderHeader(header?: string) {
     if (this.props.header) {
       return <SectionLabel title={this.props.header} />;
     }
