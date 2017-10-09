@@ -155,7 +155,7 @@ const DrawerRouter = DrawerNavigator(
   }
 );
 
-export default class MainRouter extends Component<{}, void> {
+export default class MainRouter extends Component<{}> {
   handleNavigationState = (previous: any, next: any, action: any) => {
     if (action.routeName === 'DrawerOpen') {
       StatusBar.setBarStyle('light-content');

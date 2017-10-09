@@ -9,12 +9,13 @@ import {
 
 import {
   AvatarPicker,
+  CenterView,
   Image,
-  ScrollView,
+  Screen,
   TableView,
   Text,
-  View,
 } from '../atoms';
+import { css } from '../utils/style';
 
 const { Table, Section, Cell } = TableView;
 
@@ -35,17 +36,6 @@ type CommunityProps = {
 const BG_COLOR = '#ECEFF1';
 
 const SECTIONS = [
-  {
-    id: 'photo',
-    sectionTitle: '',
-    rows: [
-      {
-        id: 21,
-        imageURI:
-          'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
-      },
-    ],
-  },
   {
     id: 'details',
     sectionTitle: 'PERSONAL DETAILS',
@@ -106,10 +96,19 @@ const SECTIONS = [
   },
 ];
 
+type State = {
+  imageURI: string,
+};
+
 @connectActionSheet
-class EditUserProfileScreen extends React.Component {
+class EditUserProfileScreen extends React.Component<{}, State> {
   static navigationOptions = {
     title: 'Edit Profile',
+  };
+
+  state = {
+    imageURI:
+      'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
   };
 
   onLeaveCommunity(community: CommunityProps) {
@@ -126,14 +125,6 @@ class EditUserProfileScreen extends React.Component {
         }
       );
     };
-  }
-
-  cellPhotoContentView(row: Row) {
-    return (
-      <View style={[{ flexGrow: 1, paddingVertical: 20 }, styles.center]}>
-        <AvatarPicker imageURI={row.imageURI} size={82} outline={3} />
-      </View>
-    );
   }
 
   renderCell(id: string, row: Row): React$Element<*> {
@@ -173,10 +164,7 @@ class EditUserProfileScreen extends React.Component {
             detail={row.rightText}
           />
         );
-      case 'photo':
-        return (
-          <Cell key={row.id} cellContentView={this.cellPhotoContentView(row)} />
-        );
+
       default:
         return (
           <Cell
@@ -202,8 +190,22 @@ class EditUserProfileScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <Screen tintColor="#F3F3F6" style={css('marginTop', -1)}>
         <Table>
+          <Section sectionPaddingTop={0}>
+            <Cell
+              cellContentView={
+                <CenterView style={styles.avatarPickerCell}>
+                  <AvatarPicker
+                    imageURI={this.state.imageURI}
+                    size={82}
+                    outline={3}
+                    onChange={(imageURI: string) => this.setState({ imageURI })}
+                  />
+                </CenterView>
+              }
+            />
+          </Section>
           {SECTIONS.map(section => (
             <Section
               key={section.id}
@@ -216,7 +218,7 @@ class EditUserProfileScreen extends React.Component {
             </Section>
           ))}
         </Table>
-      </ScrollView>
+      </Screen>
     );
   }
 }
@@ -233,6 +235,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BG_COLOR,
+  },
+  avatarPickerCell: {
+    padding: 20,
   },
   center: {
     alignItems: 'center',

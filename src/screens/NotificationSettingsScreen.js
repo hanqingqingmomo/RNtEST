@@ -15,7 +15,7 @@ export default class NotificationSettingsScreen extends React.Component {
 
   render() {
     return (
-      <Screen tintColor="#F7F7F7">
+      <Screen tintColor="#F3F3F6">
         <Table>
           <Section header="Newsfeed">
             <Cell
