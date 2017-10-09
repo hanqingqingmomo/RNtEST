@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 import type { Action, ActionP, ActionT } from '../../Types';
 
 export const REQUEST_IDS = {
-  VERIFY_CREDENTIALS: 'VERIFY_CREDENTIALS',
+  VERIFY_CREDENTIALS_REMOTELY: 'VERIFY_CREDENTIALS_REMOTELY',
 };
 
 //

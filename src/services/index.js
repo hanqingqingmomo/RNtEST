@@ -1,3 +1,3 @@
 // @flow
 
-export { default as API } from './api';
+export { default as api } from './api';

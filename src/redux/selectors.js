@@ -15,9 +15,9 @@ export function selectApplicationIsReady(state: Store): boolean {
 //
 
 export function selectAccessToken(state: Store): ?string {
-  return state.user.accessToken;
+  return state.application.userAccessToken;
 }
 
 export function selectUser(state: Store): ?User {
-  return state.user.profile;
+  return state.application.userProfile;
 }

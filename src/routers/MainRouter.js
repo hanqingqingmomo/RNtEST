@@ -1,25 +1,58 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 
-import { DrawerNavigator } from '../navigation';
+import { Icon, Text } from '../atoms';
+import { DrawerNavigator, StackNavigator } from '../navigation';
 import Drawer from '../navigation/Drawer/Drawer';
-import { Icon } from '../atoms';
 import PlaygroundRouter from './playground';
+import { InviteFriendsScreen } from '../screens';
 
 const DrawerRouter = DrawerNavigator(
   {
+    InviteFriendsScreenTab: {
+      screen: StackNavigator(
+        {
+          InviteFriendsScreen: {
+            screen: InviteFriendsScreen,
+            navigationOptions: ({ navigation }) => ({
+              drawerLabel: 'Invite Friends',
+              drawerIcon: (
+                <Icon
+                  name="invite-sidebar"
+                  size={24}
+                  color="rgba(69,90,100,1)"
+                />
+              ),
+              headerLeft: (
+                <Text onPress={() => navigation.navigate('DrawerToggle')}>
+                  =
+                </Text>
+              ),
+              headerTitle: 'Intive Friends',
+            }),
+          },
+        },
+        {
+          ...StyleSheet.create({
+            cardStyle: {
+              backgroundColor: 'white',
+            },
+          }),
+        }
+      ),
+    },
     PlaygroundRouter: {
       screen: PlaygroundRouter,
       navigationOptions: {
-        drawerLabel: 'Playground',
         drawerIcon: <Icon name="user" size={24} color="rgba(69,90,100,1)" />,
+        drawerLabel: 'Playground',
       },
     },
   },
   {
-    initialRouteName: 'PlaygroundRouter',
+    initialRouteName: 'InviteFriendsScreenTab',
     contentComponent: Drawer,
   }
 );

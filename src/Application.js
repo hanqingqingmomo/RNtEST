@@ -20,7 +20,7 @@ class Application extends React.PureComponent<Props> {
   componentDidMount() {
     SplashScreen.hide();
 
-    API._transport.interceptors.request.use(config => {
+    api.http.interceptors.request.use(config => {
       config.headers = {
         Authorization: this.props.accessToken
           ? `Bearer ${this.props.accessToken}`

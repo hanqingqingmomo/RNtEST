@@ -1,38 +1,54 @@
 // @flow
 
-import { type Axios } from 'axios';
-import { type User } from '../../Types';
-
 type Service = {
-  getProfile(accessToken: string): Promise<User>,
-  verifyCredentials(email: string, password: string): Promise<string>,
+  // signUp(user: SignupUser): Promise<string>,
+  signIn(email: string, password: string): string,
+  // updateSettings(user: SignupUser): Promise<SignupUser>,
 };
 
-/**
- * Get user profile.
- * @TODO implement your own profile retrieval
- */
-const getProfile = transport => async accessToken => {
-  return {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Wick',
-    email: 'john@wick.com',
-  };
+const signIn = (transport: *) => async (email, password) => {
+  const { data: { mobile_token } } = await transport.request({
+    method: 'post',
+    url: '/v1/members/login',
+    data: {
+      email,
+      password,
+    },
+  });
+
+  return mobile_token;
 };
 
-/**
- * Verify users credentials
- * Returns access token or throws HTTP exception.
- * @TODO implement your credentials verification!
- */
-const verifyCredentials = transport => async (email, password) => {
-  return '{{access_token}}';
-};
+// const signUp = (transport: *) => async data => {
+//   const response = await transport.request({
+//     method: 'post',
+//     url: '/v1/members/signup',
+//     data,
+//   });
 
-export default function factory(transport: Axios): Service {
-  return {
-    getProfile: getProfile(transport),
-    verifyCredentials: verifyCredentials(transport),
-  };
+//   return response.data.api_token;
+// };
+
+// const updateSettings = (transport: *) => async data => {
+//   const response = await transport.request({
+//     method: 'put',
+//     url: '/v1/members/profile_settings',
+//     data,
+//   });
+
+//   console.log(response);
+// };
+
+// export default function factory(transport: Axios): Service {
+//   return {
+//     // signUp: signUp(transport),
+//     // signIn: signIn(transport),
+//     // updateSettings: updateSettings(transport),
+//   };
+// }
+
+export default function(http) {
+  return ({
+    signIn: signIn(http),
+  }: Service);
 }

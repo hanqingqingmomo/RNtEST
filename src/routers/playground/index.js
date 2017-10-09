@@ -7,9 +7,9 @@ import { StackNavigator } from '../../navigation';
 import { ScrollView, Text } from '../../atoms';
 import {
   AuthenticationRootScreen,
-  InvitationScreen,
-  LandingScreen,
   EmailRegistrationScreen,
+  InviteFriendsScreen,
+  LandingScreen,
   SettingsScreen,
 } from '../../screens';
 
@@ -89,7 +89,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link title="Icons" screen="IconPlayground" navigation={navigation} />
     <Link
       title="Invite Friends"
-      screen="InvitationScreen"
+      screen="InviteFriendsScreen"
       navigation={navigation}
     />
     <Link
@@ -136,10 +136,10 @@ export default StackNavigator(
           headerLeft: (
             <Text
               onPress={() => {
-                navigation.navigate('DrawerOpen');
+                navigation.navigate('DrawerToggle');
               }}
             >
-              left
+              =
             </Text>
           ),
         };
@@ -175,8 +175,8 @@ export default StackNavigator(
     IconPlayground: {
       screen: IconPlayground,
     },
-    InvitationScreen: {
-      screen: InvitationScreen,
+    InviteFriendsScreen: {
+      screen: InviteFriendsScreen,
     },
     LandingScreen: {
       screen: LandingScreen,
@@ -206,6 +206,6 @@ export default StackNavigator(
         backgroundColor: 'white',
       },
     }),
-    initialRouteName: 'InvitationScreen',
+    initialRouteName: 'PlaygroundIndex',
   }
 );

@@ -9,7 +9,7 @@ export {
 } from './EmailAuthenticationScreen';
 export { default as EmailRegistrationScreen } from './EmailRegistrationScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
-export { default as InvitationScreen } from './InvitationScreen';
+export { default as InviteFriendsScreen } from './InviteFriendsScreen';
 export { default as LandingScreen } from './LandingScreen';
 export { default as PasswordResetScreen } from './PasswordResetScreen';
 export { default as SettingsScreen } from './SettingsScreen';

@@ -42,11 +42,7 @@ const USERS = [
   },
 ];
 
-export default class LandingScreen extends React.Component<void, void, S> {
-  static navigationOptions = {
-    title: 'Invite Friends',
-  };
-
+export default class InviteFriendsScreen extends React.Component<{}, S> {
   state = {
     searchValue: '',
   };

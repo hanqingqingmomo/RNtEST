@@ -19,7 +19,7 @@ export function initStore(): Store {
       key: 'redux-state',
       version: 1,
       storage: storage,
-      whitelist: ['user'],
+      whitelist: ['application'],
     },
     rootReducer
   );
