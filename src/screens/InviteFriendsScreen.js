@@ -1,8 +1,14 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  InteractionManager,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
 import Contacts from 'react-native-contacts';
+import { Separator } from 'react-native-tableview-simple';
 
 import {
   Avatar,
@@ -65,8 +71,10 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
   };
 
   componentWillMount() {
-    Contacts.requestPermission((err, permission) => {
-      this.setState({ permission });
+    InteractionManager.runAfterInteractions(() => {
+      Contacts.requestPermission((err, permission) => {
+        this.setState({ permission });
+      });
     });
   }
 
@@ -147,9 +155,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
       case 'undefined':
         return (
           <CenterView>
-            <Text color="#90A4AE" size={16}>
-              Waiting for user permission
-            </Text>
+            <ActivityIndicator />
           </CenterView>
         );
 
@@ -178,18 +184,22 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
                   this.setState({ searchValue })}
               />
             </View>
-            <TableView.Table style={styles.table}>
+            <TableView.Table>
               <TableView.Section>
-                {this.users.map(user => {
-                  return (
+                <FlatList
+                  data={this.users}
+                  keyExtractor={item => item.recordID}
+                  renderItem={({ item }) => (
                     <TableView.Cell
-                      key={user.recordID}
-                      cellContentView={this.cellContentView(user)}
-                      image={this.cellImageView(user)}
+                      cellContentView={this.cellContentView(item)}
+                      image={this.cellImageView(item)}
                       contentContainerStyle={styles.cell}
                     />
-                  );
-                })}
+                  )}
+                  ItemSeparatorComponent={({ highlighted }) => (
+                    <Separator isHidden={highlighted} />
+                  )}
+                />
               </TableView.Section>
             </TableView.Table>
           </Screen>
