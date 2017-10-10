@@ -45,8 +45,7 @@ export default class OrganisationNewsFeedScreen extends Component<{}> {
                 image={{
                   title:
                     'A donation is a gift given by physical or legal A donation is a gift given by physical or legal',
-                  imageURI:
-                    'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+                  imageURI: require('../images/1.jpg'),
                 }}
                 donation={{
                   title: 'YWCA',
@@ -97,8 +96,7 @@ export default class OrganisationNewsFeedScreen extends Component<{}> {
                 }}
                 date={new Date()}
                 attachment={{
-                  imageURI:
-                    'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+                  imageURI: require('../images/2.jpg'),
                   title: 'YWCA new initiative set to increase the',
                 }}
               />
@@ -135,8 +133,7 @@ export default class OrganisationNewsFeedScreen extends Component<{}> {
                 }}
                 date={new Date()}
                 image={{
-                  imageURI:
-                    'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+                  imageURI: require('../images/3.jpg'),
                   title: 'YWCA new initiative set to increase the',
                 }}
               />
@@ -157,8 +154,7 @@ export default class OrganisationNewsFeedScreen extends Component<{}> {
                   endDate: new Date(),
                   title:
                     'YWCA new initiative set to increase the YWCA new initiative set to increase the',
-                  imageURI:
-                    'https://s3-us-west-1.amazonaws.com/powr/defaults/Siberian-Tiger-Running-Through-Snow-Tom-Brakefield-Getty-Images-200353826-001.jpg',
+                  imageURI: require('../images/4.jpg'),
                 }}
               />
             </View>

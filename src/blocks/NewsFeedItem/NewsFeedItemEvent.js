@@ -15,11 +15,7 @@ export default class NewsFeedItemEvent extends Component<{}> {
     return (
       <View>
         <View style={styles.imageWrapper}>
-          <Image
-            source={{ uri: imageURI }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <Image source={imageURI} style={styles.image} resizeMode="cover" />
         </View>
         <View style={styles.dateContainer}>
           <ShadowView style={styles.dateBox} radius={3}>

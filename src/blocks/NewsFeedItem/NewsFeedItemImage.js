@@ -18,11 +18,7 @@ export default class NewsFeedItemAttachment extends Component<P> {
     return (
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
-          <Image
-            source={{ uri: imageURI }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <Image source={imageURI} style={styles.image} resizeMode="cover" />
         </View>
         <Text
           size={14}
