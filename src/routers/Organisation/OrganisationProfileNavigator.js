@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { StackNavigator } from '../../navigation';
 import {
@@ -18,11 +17,5 @@ export default StackNavigator({
   },
   OrganisationMemberProfileScreen: {
     screen: OrganisationMemberProfileScreen,
-  },
-});
-
-const styles = StyleSheet.create({
-  item: {
-    paddingBottom: 10,
   },
 });

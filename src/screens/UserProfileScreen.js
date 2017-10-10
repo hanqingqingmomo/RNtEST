@@ -3,6 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { connect, type Connector } from 'react-redux';
+
 import {
   ActionSheetProvider,
   connectActionSheet,
@@ -17,7 +18,6 @@ import {
   Screen,
   TableView,
   Text,
-  Button,
   View,
 } from '../atoms';
 import { api } from '../services';
@@ -107,7 +107,7 @@ const SECTIONS = [
 ];
 
 @connectActionSheet
-class EditUserProfileScreen extends React.Component<Props, State> {
+class UserProfileScreen extends React.Component<Props, State> {
   static navigationOptions = {
     title: 'Edit Profile',
   };
@@ -230,7 +230,6 @@ class EditUserProfileScreen extends React.Component<Props, State> {
         initialValues={initialValues}
         render={form => (
           <Screen>
-            <Button block onPress={form.handleSubmit} size="lg" title="save" />
             <Table>
               <Section sectionPaddingTop={0}>
                 <Cell
@@ -268,7 +267,7 @@ class EditUserProfileScreen extends React.Component<Props, State> {
 const Provider = ({ ...props }: Object) => {
   return (
     <ActionSheetProvider>
-      <EditUserProfileScreen {...props} />
+      <UserProfileScreen {...props} />
     </ActionSheetProvider>
   );
 };
