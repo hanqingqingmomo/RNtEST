@@ -39,7 +39,6 @@ const DEFAULTS = screens => ({
   ...StyleSheet.create({
     cardStyle: {
       backgroundColor: '#F4F5F7',
-      // backgroundColor: 'pink',
     },
   }),
 });
