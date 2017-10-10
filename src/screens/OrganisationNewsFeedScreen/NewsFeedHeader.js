@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, SearchBox, View } from '../atoms';
+import { Icon, SearchBox, View } from '../../atoms';
 
 export default function NewsFeedHeader() {
   return (

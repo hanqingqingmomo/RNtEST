@@ -3,16 +3,16 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 
-import { Avatar, Icon, ShadowView, View, TableView } from '../atoms';
-import { getColor } from '../utils/color';
-import { css } from '../utils/style';
+import { Avatar, Icon, ShadowView, View, TableView, Text } from '../../atoms';
+import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 
 const { Table, Section, Cell } = TableView;
 const AVATAR_WIDTH = 30;
 
 export default function NewsFeedConversation() {
   return (
-    <View style={styles.cellContainer}>
+    <ShadowView style={styles.cellContainer}>
       <Cell
         title="Start a conversation..."
         titleTextColor={getColor('gray')}
@@ -30,23 +30,22 @@ export default function NewsFeedConversation() {
           <View style={styles.container}>
             <Icon
               name="attachment"
-              size={22}
-              color="orange"
+              size="md"
+              color="#CFD8DC"
               style={css('marginRight', 10)}
             />
-            <Icon name="pen" size={22} color="orange" />
+            <Icon name="pen" size="md" color="#CFD8DC" />
           </View>
         }
         onPress={() => {}}
         disableImageResize
       />
-    </View>
+    </ShadowView>
   );
 }
 
 const styles = StyleSheet.create({
   cellContainer: {
-    marginBottom: 10,
     backgroundColor: getColor('white'),
   },
 
