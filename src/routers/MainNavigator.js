@@ -163,6 +163,11 @@ export default class MainNavigator extends Component<{}, State> {
         >
           <MainOrganisationNavigator
             screenProps={{
+              openFriendsInitationModal: () => {
+                this.openModalRoute({
+                  routeName: 'InviteFriendModal',
+                });
+              },
               openDrawer: () => {
                 if (this._drawerRef) {
                   this._drawerRef.openDrawer();

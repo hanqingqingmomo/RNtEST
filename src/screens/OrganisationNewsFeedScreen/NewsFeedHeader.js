@@ -3,13 +3,16 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, SearchBox, View } from '../../atoms';
+import { Icon, SearchBox, View, TouchableOpacity } from '../../atoms';
 
-export default function NewsFeedHeader() {
+export default function NewsFeedHeader(props) {
+  console.log(props);
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <Icon name="ywca" size={33} color="orange" />
+        <TouchableOpacity onPress={props.openDrawer}>
+          <Icon name="ywca" size={33} color="orange" />
+        </TouchableOpacity>
       </View>
       <View style={styles.searchContainer}>
         <SearchBox

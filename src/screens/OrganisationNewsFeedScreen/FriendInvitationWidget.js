@@ -52,7 +52,7 @@ export default class FriendInvitationWidget extends Component<{}, State> {
             color={getColor('orange')}
             textColor={getColor('white')}
             size="lg"
-            onPress={() => console.warn('Invite Friends')}
+            onPress={this.props.openModal}
           />
         </View>
       </Collapsible>

@@ -11,10 +11,10 @@ import {
   NewsFeedConversation,
 } from './index';
 
-function NavigatorHeader() {
+function NavigatorHeader(props) {
   return (
     <ShadowView radius={0} style={{ paddingTop: 20, backgroundColor: 'white' }}>
-      <NewsFeedHeader />
+      <NewsFeedHeader openDrawer={props.screenProps.openDrawer} />
     </ShadowView>
   );
 }
@@ -29,7 +29,9 @@ export default class OrganisationNewsFeedScreen extends Component<{}> {
       <Screen>
         <View>
           <NewsFeedConversation />
-          <FriendInvitationWidget />
+          <FriendInvitationWidget
+            openModal={this.props.screenProps.openFriendsInitationModal}
+          />
           <View style={styles.itemsContainer}>
             <View style={styles.item}>
               <NewsFeedItem
