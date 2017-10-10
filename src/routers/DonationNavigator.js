@@ -4,7 +4,7 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import { Text } from '../atoms';
-import { DonationAppealScreen } from '../screens';
+import { DonationAppealScreen, DonationResultScreen } from '../screens';
 
 function DismissModalButton({ onPress }) {
   return <Text onPress={onPress}>=</Text>;
@@ -19,5 +19,8 @@ export default StackNavigator({
       ),
       headerTitle: 'Donate',
     }),
+  },
+  DonationResultScreen: {
+    screen: DonationResultScreen,
   },
 });

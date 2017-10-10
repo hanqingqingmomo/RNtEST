@@ -4,6 +4,7 @@ export { default as Comment } from './Comment/Comment';
 export { default as EventFeed } from './EventFeed';
 export { default as DonationAppeal } from './DonationAppeal';
 export { default as DonationForm } from './DonationForm/DonationForm';
+export { default as DonationResult } from './DonationResult';
 export {
   default as LaunchScreenBackground,
 } from './LaunchScreenBackground/LaunchScreenBackground';

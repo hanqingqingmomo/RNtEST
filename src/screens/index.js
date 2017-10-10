@@ -8,6 +8,7 @@ export {
   default as EmailAuthenticationScreen,
 } from './EmailAuthenticationScreen';
 export { default as DonationAppealScreen } from './DonationAppealScreen';
+export { default as DonationResultScreen } from './DonationResultScreen';
 export { default as EmailRegistrationScreen } from './EmailRegistrationScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
 export { default as InviteFriendsScreen } from './InviteFriendsScreen';
