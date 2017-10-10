@@ -3,10 +3,12 @@
 import React from 'react';
 
 import { StackNavigator } from '../navigation';
-import { CenterView, Text } from '../atoms';
+import { CenterView, Text, NavigationIconButton } from '../atoms';
 
-function DismissModalButton({ onPress }) {
-  return <Text onPress={onPress}>=</Text>;
+function DismissModalButton({ onPress, ...a }) {
+  return (
+    <NavigationIconButton name="close" color="#fc612d" onPress={onPress} />
+  );
 }
 
 function ScreenComponent() {

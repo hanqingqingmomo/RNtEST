@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { StackNavigator } from '../../navigation';
-import { ScrollView, Text } from '../../atoms';
+import { ScrollView, Text, NavigationIconButton } from '../../atoms';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -178,7 +178,13 @@ export default StackNavigator(
       navigationOptions: ({ navigation, screenProps }) => {
         return {
           title: 'Component Playground',
-          headerLeft: <Text onPress={screenProps.dismissModalRoute}>=</Text>,
+          headerLeft: (
+            <NavigationIconButton
+              name="close"
+              color="#fc612d"
+              onPress={screenProps.dismissModalRoute}
+            />
+          ),
         };
       },
     },

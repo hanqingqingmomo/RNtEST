@@ -3,11 +3,13 @@
 import React from 'react';
 
 import { StackNavigator } from '../navigation';
-import { Text } from '../atoms';
+import { NavigationIconButton } from '../atoms';
 import { InviteFriendsScreen } from '../screens';
 
-function DismissModalButton({ onPress }) {
-  return <Text onPress={onPress}>=</Text>;
+function DismissModalButton({ onPress, ...a }) {
+  return (
+    <NavigationIconButton name="close" color="#fc612d" onPress={onPress} />
+  );
 }
 
 export default StackNavigator({

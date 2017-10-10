@@ -9,7 +9,7 @@ import { type IconName } from '../Types';
 type Props = {
   disabled?: boolean,
   name: IconName,
-  onPress: Function,
+  onPress: () => void,
 };
 
 const styles = StyleSheet.create({
@@ -29,7 +29,7 @@ export default function NavigationTextButton(props: Props) {
       style={styles.touchableItem}
       disabled={props.disabled}
     >
-      <Icon name={props.name} size="md" />
+      <Icon name={props.name} color={props.color} size="md" />
     </TouchableItem>
   );
 }
