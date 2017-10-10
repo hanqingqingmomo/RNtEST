@@ -147,14 +147,24 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
       case 'undefined':
         return (
           <CenterView>
-            <Text>Waiting for user permission</Text>
+            <Text color="#90A4AE" size={16}>
+              Waiting for user permission
+            </Text>
           </CenterView>
         );
 
       case 'denied':
         return (
           <CenterView>
-            <Text>Allow permission thru system settings</Text>
+            <Icon
+              name="sad-face"
+              color="#90A4AE"
+              size={100}
+              style={{ paddingBottom: 25 }}
+            />
+            <Text color="#90A4AE" size={16}>
+              Allow permission thru system settings
+            </Text>
           </CenterView>
         );
       case 'authorized':
