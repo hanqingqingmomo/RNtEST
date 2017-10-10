@@ -115,7 +115,7 @@ class EmailRegistrationScreen extends Component<{}, State> {
               keyboardType="email-address"
               autoCapitalize="none"
             />
-            <FormField label="Password" name="password" />
+            <FormField label="Password" name="password" secureTextEntry />
 
             {this.state.registrationError ? (
               <Text color={getColor('red')}>
