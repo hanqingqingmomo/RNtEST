@@ -21,7 +21,6 @@ import {
   View,
 } from '../atoms';
 import { api } from '../services';
-import { css } from '../utils/style';
 import { selectUser } from '../redux/selectors';
 import { setUserProfile } from '../redux/ducks/application';
 import type { Store, User } from '../Types';

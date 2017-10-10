@@ -1,5 +1,6 @@
 // @flow
 
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { StackNavigator } from '../../navigation';
@@ -10,10 +11,9 @@ import {
 
 export default StackNavigator({
   OrganisationProfileScreen: {
-    screen: OrganisationProfileScreen,
+    screen: props => <OrganisationProfileScreen {...props} />,
     navigationOptions: {
       header: null,
-      headerTitle: 'Organization Profile',
     },
   },
   OrganisationMemberProfileScreen: {

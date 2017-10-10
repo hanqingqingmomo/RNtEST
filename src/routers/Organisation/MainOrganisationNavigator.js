@@ -3,14 +3,9 @@
 import React from 'react';
 import { TabBarBottom, TabNavigator } from 'react-navigation';
 
-// import { TabNavigator } from '../navigation';
 import { CenterView, Icon, Text } from '../../atoms';
 import OrganisationNewsFeedNavigator from './OrganisationNewsFeedNavigator';
 import { getColor } from '../../utils/color';
-
-// function OpenDrawerButton({ onPress }) {
-//   return <Text onPress={onPress}>open</Text>;
-// }
 
 function ScreenComponent(props) {
   return (

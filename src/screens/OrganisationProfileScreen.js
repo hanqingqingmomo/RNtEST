@@ -1,7 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { NavigationIconButton } from '../atoms';
 
 import {
   ContactGroup,
@@ -16,6 +17,10 @@ import { css } from '../utils/style';
 import { type User } from '../Types';
 
 const { Table, Section, Cell } = TableView;
+
+function DismissModalButton({ onPress }) {
+  return <NavigationIconButton name="close" color="white" onPress={onPress} />;
+}
 
 const users: Array<User> = [
   {
@@ -91,6 +96,11 @@ export default class OrganisationProfileScreen extends Component<{}, void> {
   render() {
     return (
       <Screen>
+        <View style={styles.dismisalButton}>
+          <DismissModalButton
+            onPress={this.props.screenProps.dismissModalRoute}
+          />
+        </View>
         <Table>
           <Section sectionPaddingTop={0}>
             <View style={css('backgroundColor', 'white')}>
@@ -166,6 +176,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(69, 90, 100, 0.5)',
     paddingHorizontal: 25,
     justifyContent: 'center',
+  },
+  dismisalButton: {
+    position: 'absolute',
+    top: 20,
+    zIndex: 1,
   },
   users: {
     alignItems: 'center',

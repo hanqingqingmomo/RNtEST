@@ -29,7 +29,12 @@ export default function NavigationTextButton(props: Props) {
       style={styles.touchableItem}
       disabled={props.disabled}
     >
-      <Icon name={props.name} color={props.color} size="md" />
+      <Icon
+        name={props.name}
+        color={props.color}
+        size="md"
+        style={{ backgroundColor: 'transparent' }}
+      />
     </TouchableItem>
   );
 }
