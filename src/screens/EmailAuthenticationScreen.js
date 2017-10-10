@@ -10,8 +10,8 @@ import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
 import { api } from '../services';
 
 const INITIAL_VALUES = {
-  email: 'test@dispostable.com',
-  password: 'secret',
+  email: '',
+  password: '',
 };
 
 type FormValues = typeof INITIAL_VALUES;
