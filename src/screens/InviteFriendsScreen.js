@@ -7,7 +7,9 @@ import Contacts from 'react-native-contacts';
 import {
   Avatar,
   Button,
+  CenterView,
   Icon,
+  Screen,
   SearchBox,
   TableView,
   Text,
@@ -52,34 +54,33 @@ type ContactProps = {
 type S = {
   searchValue: string,
   contacts: Array<ContactProps>,
+  permission: 'undefined' | 'denied' | 'authorized',
 };
 
 export default class InviteFriendsScreen extends React.Component<{}, S> {
   state = {
     searchValue: '',
     contacts: [],
+    permission: 'undefined',
   };
 
-  componentDidMount() {
-    Contacts.checkPermission((err, permission) => {
-      if (permission === 'undefined') {
-        Contacts.requestPermission((err, permission) => {
-          if (permission === 'authorized') {
-            this.readContacts();
-          }
-        });
-      } else if (permission === 'authorized') {
-        this.readContacts();
-      }
+  componentWillMount() {
+    Contacts.requestPermission((err, permission) => {
+      this.setState({ permission });
     });
   }
 
-  readContacts() {
-    Contacts.getAll((err, contacts) => {
-      if (err !== 'denied') {
-        this.setState({ contacts });
-      }
-    });
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.permission !== this.state.permission &&
+      this.state.permission === 'authorized'
+    ) {
+      Contacts.getAll((err, contacts) => {
+        if (err !== 'denied') {
+          this.setState({ contacts });
+        }
+      });
+    }
   }
 
   cellContentView(user: ContactProps): React$Element<*> {
@@ -142,50 +143,60 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.searchBox}>
-          <SearchBox
-            placeholder="Search..."
-            value={this.state.searchValue}
-            onChangeText={(searchValue: string) =>
-              this.setState({ searchValue })}
-          />
-        </View>
-        <TableView.Table style={styles.table}>
-          {this.users.map(user => {
-            return (
-              <TableView.Cell
-                key={user.recordID}
-                cellContentView={this.cellContentView(user)}
-                cellImageView={this.cellImageView(user)}
-                contentContainerStyle={styles.cell}
+    switch (this.state.permission) {
+      case 'undefined':
+        return (
+          <CenterView>
+            <Text>Waiting for user permission</Text>
+          </CenterView>
+        );
+
+      case 'denied':
+        return (
+          <CenterView>
+            <Text>Allow permission thru system settings</Text>
+          </CenterView>
+        );
+      case 'authorized':
+        return (
+          <Screen>
+            <View style={styles.searchBox}>
+              <SearchBox
+                placeholder="Search..."
+                value={this.state.searchValue}
+                onChangeText={(searchValue: string) =>
+                  this.setState({ searchValue })}
               />
-            );
-          })}
-        </TableView.Table>
-      </View>
-    );
+            </View>
+            <TableView.Table style={styles.table}>
+              <TableView.Section>
+                {this.users.map(user => {
+                  return (
+                    <TableView.Cell
+                      key={user.recordID}
+                      cellContentView={this.cellContentView(user)}
+                      image={this.cellImageView(user)}
+                      contentContainerStyle={styles.cell}
+                    />
+                  );
+                })}
+              </TableView.Section>
+            </TableView.Table>
+          </Screen>
+        );
+      default:
+        return null;
+    }
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
   searchBox: {
     paddingHorizontal: 15,
-    paddingVertical: 20,
-  },
-  table: {
-    backgroundColor: 'white',
+    paddingTop: 15,
   },
   cell: {
     paddingVertical: 9,
-    paddingLeft: 0,
-    paddingRight: 15,
-    marginLeft: 15,
-    borderBottomWidth: 1,
-    borderColor: '#ECEFF1',
-    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',
