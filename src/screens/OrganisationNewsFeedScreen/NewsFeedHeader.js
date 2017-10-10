@@ -6,7 +6,6 @@ import { StyleSheet } from 'react-native';
 import { Icon, SearchBox, View, TouchableOpacity } from '../../atoms';
 
 export default function NewsFeedHeader(props) {
-  console.log(props);
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
