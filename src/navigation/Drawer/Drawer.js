@@ -6,10 +6,6 @@ import { StyleSheet } from 'react-native';
 import { Icon, View, Text, TouchableHighlight } from '../../atoms';
 import DrawerHeader from './DrawerHeader';
 
-const communityImageURI =
-  'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
-const communityTitle = 'YWCA';
-
 export type NavigationItem = {
   name: string,
   icon: string,
@@ -20,6 +16,7 @@ type Props = {
   navigationItems: Array<NavigationItem>,
   handleNavigationItemPress: (navigationItem: NavigationItem) => void,
   handleDonationButtonPress: () => void,
+  handleOrganisationTilePress: () => void,
 };
 
 type NavigationItemProps = {
@@ -47,9 +44,8 @@ function DrawerItem(props: NavigationItemProps) {
 const Drawer = (props: Props) => (
   <View style={styles.container}>
     <DrawerHeader
-      communityImageURI={communityImageURI}
-      communityTitle={communityTitle}
-      onDonatePress={props.handleDonationButtonPress}
+      onDonateButtonPress={props.handleDonationButtonPress}
+      onOrganisationTilePress={props.handleOrganisationTilePress}
     />
     {props.navigationItems.map((item: NavigationItem) => (
       <DrawerItem

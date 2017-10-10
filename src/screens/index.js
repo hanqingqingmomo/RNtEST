@@ -17,6 +17,9 @@ export { default as NewsFeedSettingsScreen } from './NewsFeedSettingsScreen';
 export {
   default as NotificationSettingsScreen,
 } from './NotificationSettingsScreen';
+export {
+  default as OrganisationProfileScreen,
+} from './OrganisationProfileScreen';
 export { default as PasswordResetScreen } from './PasswordResetScreen';
 export { default as UserProfileScreen } from './UserProfileScreen';
 export { default as UserSettingsScreen } from './UserSettingsScreen';

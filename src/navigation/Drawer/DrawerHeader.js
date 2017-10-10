@@ -3,27 +3,33 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Button, Image, Text, View } from '../../atoms';
+import { Button, Image, Text, View, TouchableOpacity } from '../../atoms';
+
+const communityTitle = 'YWCA';
+const communityImageURI =
+  'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
 
 type Props = {
-  communityImageURI: string,
-  communityTitle: string,
-  onDonatePress: Function,
+  onDonateButtonPress: () => void,
+  onOrganisationTilePress: () => void,
 };
 
 const DrawerHeader = ({
-  communityImageURI,
-  communityTitle,
-  onDonatePress,
+  onOrganisationTilePress,
+  onDonateButtonPress,
 }: Props) => (
   <View style={styles.container}>
-    <Image source={{ uri: communityImageURI }} style={styles.image} />
-    <Text color="white" size={15} style={styles.title} weight="600">
-      {communityTitle}
-    </Text>
+    <TouchableOpacity onPress={onOrganisationTilePress}>
+      <View style={styles.logoTile}>
+        <Image source={{ uri: communityImageURI }} style={styles.image} />
+        <Text color="white" size={15} style={styles.title} weight="600">
+          {communityTitle}
+        </Text>
+      </View>
+    </TouchableOpacity>
     <Button
       color="#FC612D"
-      onPress={onDonatePress}
+      onPress={onDonateButtonPress}
       size="sm"
       textColor="white"
       title="Donate"
@@ -35,6 +41,7 @@ export default DrawerHeader;
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: Platform.OS === 'ios' ? 42 : 22,
@@ -42,6 +49,10 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 23,
     backgroundColor: 'rgba(25,42,51,1)',
+  },
+  logoTile: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   image: {
     borderRadius: 3,

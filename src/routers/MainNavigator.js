@@ -12,6 +12,7 @@ import HelpNavigator from './HelpNavigator';
 import InviteFriendsNavigator from './InviteFriendsNavigator';
 import NotificationsSettingsNavigator from './NotificationsSettingsNavigator';
 import MainOrganisationNavigator from './Organisation/MainOrganisationNavigator';
+import OrganisationProfileNavigator from './Organisation/OrganisationProfileNavigator';
 import PlaygroundNavigator from './playground';
 import UserProfileNavigator from './UserProfileNavigator';
 import UserSettingsNavigator from './UserSettingsNavigator';
@@ -75,6 +76,14 @@ export default class MainNavigator extends Component<{}, State> {
     });
   };
 
+  openOrganisationModal = () => {
+    this.openModalRoute({
+      name: '',
+      routeName: 'OrganisationProfileModal',
+      icon: 'none',
+    });
+  };
+
   openModalRoute = (item: NavigationItem) => {
     this.setState({ modalRoute: item });
     StatusBar.setBarStyle('dark-content');
@@ -91,6 +100,7 @@ export default class MainNavigator extends Component<{}, State> {
         navigationItems={navigationItems}
         handleNavigationItemPress={this.openModalRoute}
         handleDonationButtonPress={this.openDonationModal}
+        handleOrganisationTilePress={this.openOrganisationModal}
       />
     );
   };
@@ -122,6 +132,8 @@ export default class MainNavigator extends Component<{}, State> {
         return <PlaygroundNavigator {...props} />;
       case 'HelpModal':
         return <HelpNavigator {...props} />;
+      case 'OrganisationProfileModal':
+        return <OrganisationProfileNavigator {...props} />;
       default:
         if (__DEV__) {
           console.warn(
