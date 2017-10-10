@@ -33,6 +33,8 @@ export { default as RequestMonitor } from './RequestMonitor';
 export { default as Screen } from './Screen';
 export { default as SearchBox } from './SearchBox';
 export { default as SegmentedControl } from './SegmentedControl';
+export { default as NavigationIconButton } from './NavigationIconButton';
+export { default as NavigationTextButton } from './NavigationTextButton';
 export { default as ShadowView } from './ShadowView';
 export { default as Spacer } from './Spacer';
 export { default as TableView } from './TableView';
