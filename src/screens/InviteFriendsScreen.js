@@ -163,7 +163,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
               style={{ paddingBottom: 25 }}
             />
             <Text color="#90A4AE" size={16}>
-              Allow permission thru system settings
+              Allow permission via system settings
             </Text>
           </CenterView>
         );
