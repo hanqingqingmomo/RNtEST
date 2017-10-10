@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 import { Image, ImageBackground, Text, View } from './index';
 import { getColor } from '../utils/color';
@@ -9,15 +9,17 @@ import { getColor } from '../utils/color';
 type Props = {
   coverImageURI: string,
   profileImageURI: string,
-  subtitle?: string,
   title: string,
+  subtitle?: string,
 };
 
-export default function CommunityHeader({
+const RATIO = 0.66;
+
+export default function OrganizationHeader({
   coverImageURI,
   profileImageURI,
-  subtitle,
   title,
+  subtitle,
 }: Props) {
   return (
     <ImageBackground
@@ -31,6 +33,7 @@ export default function CommunityHeader({
           style={styles.profileImage}
           resizeMode="contain"
         />
+
         <View style={styles.titleWrapper}>
           <Text
             color={getColor('white')}
@@ -60,7 +63,7 @@ export default function CommunityHeader({
 const styles = StyleSheet.create({
   coverContainer: {
     width: '100%',
-    height: 185,
+    height: Dimensions.get('window').width * RATIO,
     justifyContent: 'flex-end',
   },
   dimm: {
@@ -79,12 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 92,
     paddingLeft: 15,
-  },
-  title: {
-    color: getColor('white'),
-    fontSize: 20,
-    lineHeight: 24,
-    width: '60%',
   },
   titleWrapper: {
     flex: 1,

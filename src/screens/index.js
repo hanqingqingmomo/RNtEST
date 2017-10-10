@@ -18,6 +18,9 @@ export {
   default as NotificationSettingsScreen,
 } from './NotificationSettingsScreen';
 export {
+  default as OrganisationMemberProfileScreen,
+} from './OrganisationMemberProfileScreen';
+export {
   default as OrganisationProfileScreen,
 } from './OrganisationProfileScreen';
 export { default as PasswordResetScreen } from './PasswordResetScreen';

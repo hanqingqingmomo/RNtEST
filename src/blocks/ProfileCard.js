@@ -8,74 +8,98 @@ import { View, Text, Avatar, Icon, Link, ShadowView } from '../atoms';
 // TODO use type after merge
 type P = {
   user: {
-    imageURI: string,
-    username: string,
-    position: string,
     email: string,
+    first_name: string,
+    last_name: string,
     phone: string,
+    profilePhoto: string,
+    role: string,
   },
 };
 
 export default class ProfileCard extends Component<P> {
   render() {
-    const { username, position, imageURI, email, phone } = this.props.user;
+    const {
+      email,
+      first_name,
+      last_name,
+      phone,
+      profilePhoto,
+      role,
+    } = this.props.user;
 
     return (
-      <ShadowView style={styles.container}>
-        <Avatar imageURI={imageURI} size={100} />
-        <Text
-          size={19}
-          color="#455A64"
-          weight="500"
-          lineHeight={20}
-          style={styles.title}
-        >
-          {username}
-        </Text>
-        <Text
-          size={14}
-          color="#4e5f67"
-          weight="500"
-          lineHeight={16}
-          style={styles.subtitle}
-        >
-          {position}
-        </Text>
-        <Link type="mail" value={email}>
-          <Text size={14} color="orange" weight="500" lineHeight={16}>
-            {email}
+      <ShadowView radius={0}>
+        <View style={styles.container}>
+          <Avatar imageURI={profilePhoto} size={100} />
+          <Text
+            size={19}
+            color="#455A64"
+            weight="500"
+            lineHeight={20}
+            style={styles.title}
+          >
+            {`${first_name} ${last_name}`}
           </Text>
-        </Link>
-        <View style={styles.links}>
-          <View style={styles.link}>
-            <Link type="mail" value={email}>
-              <View style={styles.linkWrapper}>
-                <Icon
-                  name="conversation"
-                  size={32}
-                  style={styles.icon}
-                  color="orange"
-                />
-                <Text size={14} color="#4e5f67" weight="500" lineHeight={16}>
-                  Message
-                </Text>
+          <Text
+            size={14}
+            color="#4e5f67"
+            weight="500"
+            lineHeight={16}
+            style={styles.subtitle}
+          >
+            {role}
+          </Text>
+          <Link type="mail" value={email}>
+            <Text size={14} color="orange" weight="500" lineHeight={16}>
+              {email}
+            </Text>
+          </Link>
+          <View style={styles.links}>
+            {email ? (
+              <View style={styles.link}>
+                <Link type="mail" value={email}>
+                  <View style={styles.linkWrapper}>
+                    <Icon
+                      name="conversation"
+                      size={32}
+                      style={styles.icon}
+                      color="orange"
+                    />
+                    <Text
+                      size={14}
+                      color="#4e5f67"
+                      weight="500"
+                      lineHeight={16}
+                    >
+                      Message
+                    </Text>
+                  </View>
+                </Link>
               </View>
-            </Link>
-          </View>
-          <View style={styles.link}>
-            <Link type="phone" value={phone}>
-              <View style={styles.linkWrapper}>
-                <Icon
-                  name="call-1"
-                  size={32}
-                  style={styles.icon}
-                  color="orange"
-                />
-                <Text size={14} color="#4e5f67" weight="500" lineHeight={16}>
-                  Call
-                </Text>
+            ) : null}
+            {phone ? (
+              <View style={styles.link}>
+                <Link type="phone" value={phone}>
+                  <View style={styles.linkWrapper}>
+                    <Icon
+                      name="call-1"
+                      size={32}
+                      style={styles.icon}
+                      color="orange"
+                    />
+                    <Text
+                      size={14}
+                      color="#4e5f67"
+                      weight="500"
+                      lineHeight={16}
+                    >
+                      Call
+                    </Text>
+                  </View>
+                </Link>
               </View>
-            </Link>
+            ) : null}
           </View>
         </View>
       </ShadowView>

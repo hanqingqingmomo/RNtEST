@@ -1,13 +1,28 @@
 // @flow
 
+import { StyleSheet } from 'react-native';
+
 import { StackNavigator } from '../../navigation';
-import { OrganisationProfileScreen } from '../../screens';
+import {
+  OrganisationMemberProfileScreen,
+  OrganisationProfileScreen,
+} from '../../screens';
 
 export default StackNavigator({
   OrganisationProfileScreen: {
     screen: OrganisationProfileScreen,
     navigationOptions: {
-      headerTitle: 'Profile',
+      header: null,
+      headerTitle: 'Organization Profile',
     },
+  },
+  OrganisationMemberProfileScreen: {
+    screen: OrganisationMemberProfileScreen,
+  },
+});
+
+const styles = StyleSheet.create({
+  item: {
+    paddingBottom: 10,
   },
 });
