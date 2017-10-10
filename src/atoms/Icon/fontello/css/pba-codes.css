@@ -19,6 +19,8 @@
 .icon-ywca:before { content: '\e811'; } /* '' */
 .icon-apple-pay:before { content: '\e812'; } /* '' */
 .icon-android-pay:before { content: '\e813'; } /* '' */
+.icon-close-bold:before { content: '\e814'; } /* '' */
+.icon-sad-face:before { content: '\e815'; } /* '' */
 .icon-add-file:before { content: '\e828'; } /* '' */
 .icon-arrow-left:before { content: '\e82b'; } /* '' */
 .icon-arrow-open-bottom-thin:before { content: '\e82c'; } /* '' */

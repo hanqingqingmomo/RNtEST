@@ -26,3 +26,15 @@ export {
 export { default as PasswordResetScreen } from './PasswordResetScreen';
 export { default as UserProfileScreen } from './UserProfileScreen';
 export { default as UserSettingsScreen } from './UserSettingsScreen';
+export {
+  default as NewsFeedHeader,
+} from './OrganisationNewsFeedScreen/NewsFeedHeader';
+export {
+  default as NewsFeedConversation,
+} from './OrganisationNewsFeedScreen/NewsFeedConversation';
+export {
+  default as FriendInvitationWidget,
+} from './OrganisationNewsFeedScreen/FriendInvitationWidget';
+export {
+  default as OrganisationNewsFeedScreen,
+} from './OrganisationNewsFeedScreen';
