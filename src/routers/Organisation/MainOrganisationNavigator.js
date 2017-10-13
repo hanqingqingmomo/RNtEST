@@ -5,6 +5,8 @@ import { TabBarBottom, TabNavigator } from 'react-navigation';
 
 import { CenterView, Icon, Text } from '../../atoms';
 import OrganisationNewsFeedNavigator from './OrganisationNewsFeedNavigator';
+import CommunitiesNavigator from './CommunitiesNavigator';
+import EventFeedNavigator from './EventFeedNavigator';
 import { getColor } from '../../utils/color';
 
 function ScreenComponent(props) {
@@ -34,13 +36,13 @@ export default TabNavigator(
       }),
     },
     CalendarTab: {
-      screen: () => <ScreenComponent>Calendar</ScreenComponent>,
+      screen: EventFeedNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('calendar'),
       }),
     },
     CommunitiesTab: {
-      screen: () => <ScreenComponent>Communities</ScreenComponent>,
+      screen: CommunitiesNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('communities'),
       }),
