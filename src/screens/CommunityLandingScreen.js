@@ -2,19 +2,82 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { Section } from 'react-native-tableview-simple';
 
 import {
+  Avatar,
   CommunityHeader,
   EventCard,
+  Icon,
   Screen,
-  TableView,
   ScrollView,
+  Text,
   View,
 } from '../atoms';
 import { NewsFeedItem } from '../blocks';
 import { NewsFeedConversation } from './index';
+import { getColor } from '../utils/color';
+import { css } from '../utils/style';
 
-const { Table, Section, Cell } = TableView;
+const SectionComponent = ({ headerLeft, headerRight }) => {
+  return (
+    <View
+      style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}
+    >
+      <Text
+        color="#90A4AE"
+        style={[
+          styles.headerContainer,
+          styles.headerText,
+          css('alignSelf', 'flex-start'),
+        ]}
+      >
+        {headerLeft.toUpperCase()}
+      </Text>
+      <Text
+        color={getColor('orange')}
+        onPress={() => {}}
+        style={[
+          styles.headerContainer,
+          styles.headerText,
+          css('alignSelf', 'flex-end'),
+        ]}
+      >
+        {headerRight.toUpperCase()}
+      </Text>
+    </View>
+  );
+};
+
+const PinnedComponent = () => {
+  return (
+    <View style={styles.pinnedContainer}>
+      <View
+        style={[
+          styles.shadow,
+          styles.centerContent,
+          css('marginLeft', 10),
+          css('width', 55),
+        ]}
+      >
+        <Avatar
+          imageURI={
+            'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg'
+          }
+          size={38}
+        />
+        <View
+          style={[styles.editIconCircle, styles.centerContent, styles.shadow]}
+        >
+          <Icon name="pin" size={16} color="#90A4AE" />
+        </View>
+      </View>
+      <View style={styles.pinnedTextContainer}>
+        <Text>Don’t forget about the upcoming workshop on August 12</Text>
+      </View>
+    </View>
+  );
+};
 
 const items = [
   {
@@ -46,9 +109,16 @@ export default class CommunityLandingScreen extends React.Component {
           coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
         />
         <NewsFeedConversation />
-        <View style={styles.container}>
+        <Section
+          sectionPaddingBottom={0}
+          sectionPaddingTop={20}
+          headerComponent={
+            <SectionComponent headerLeft="Events" headerRight="See All" />
+          }
+        />
+        <View style={styles.eventsContainer}>
           {items.map((item, idx) => (
-            <View style={styles.item} key={idx}>
+            <View style={styles.eventItem} key={idx}>
               <EventCard
                 {...item}
                 onPress={item => console.log('press', item)}
@@ -58,6 +128,14 @@ export default class CommunityLandingScreen extends React.Component {
             </View>
           ))}
         </View>
+        <Section
+          sectionPaddingBottom={0}
+          sectionPaddingTop={20}
+          headerComponent={
+            <SectionComponent headerLeft="Pinned items" headerRight="See All" />
+          }
+        />
+        <PinnedComponent />
         <View style={styles.itemsContainer}>
           <View style={styles.newsFeedItem}>
             <NewsFeedItem
@@ -104,68 +182,6 @@ export default class CommunityLandingScreen extends React.Component {
               }}
             />
           </View>
-          <View style={styles.newsFeedItem}>
-            <NewsFeedItem
-              isNew
-              title="The YWCA Aurora has partnered with YWCA Metropolitan Chicago to
-            offer parents and child care providers The YWCA Aurora has partnered with YWCA Metropolitan Chicago to
-            offer parents and child care providers"
-              tags={[
-                {
-                  name: 'Child Care',
-                },
-                {
-                  name: '3D Youth',
-                },
-              ]}
-              user={{
-                username: 'Kyle Day',
-                imageURI: 'https://www.w3schools.com/w3css/img_avatar2.png',
-              }}
-              date={new Date()}
-              attachment={{
-                imageURI: require('../images/2.jpg'),
-                title: 'YWCA new initiative set to increase the',
-              }}
-            />
-          </View>
-          <View style={styles.newsFeedItem}>
-            <NewsFeedItem
-              isNew
-              title="Watching the news the other day, it occurred to me that people who have “words to live by” often begin to attack and"
-              tags={[
-                {
-                  name: 'Young Parents Program',
-                },
-              ]}
-              user={{
-                username: 'Maurice Ramirez',
-                imageURI:
-                  'https://www.m3sm.co.uk/wp-content/uploads/2016/06/avatar-m3sm-fahd.jpg',
-              }}
-              date={new Date()}
-            />
-          </View>
-          <View style={styles.newsFeedItem}>
-            <NewsFeedItem
-              tags={[
-                {
-                  name: 'Make a Donation',
-                  disabled: true,
-                },
-              ]}
-              user={{
-                username: 'Lucinda Taylor',
-                imageURI:
-                  'https://thumbs.dreamstime.com/t/man-avatar-icon-flat-style-illustration-vector-web-lime-background-86384399.jpg',
-              }}
-              date={new Date()}
-              image={{
-                imageURI: require('../images/3.jpg'),
-                title: 'YWCA new initiative set to increase the',
-              }}
-            />
-          </View>
         </View>
       </Screen>
     );
@@ -173,14 +189,30 @@ export default class CommunityLandingScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  centerContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  editIconCircle: {
+    position: 'absolute',
+    top: 0,
+    right: -8,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: getColor('white'),
+  },
+
+  eventsContainer: {
     paddingHorizontal: 5,
     paddingVertical: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    backgroundColor: getColor('white'),
   },
 
-  item: {
+  eventItem: {
     paddingTop: 1,
     paddingBottom: 5,
     paddingHorizontal: 5,
@@ -188,12 +220,45 @@ const styles = StyleSheet.create({
     width: '50%',
   },
 
+  headerContainer: {
+    marginHorizontal: 8,
+    marginBottom: 8,
+  },
+
+  headerText: {
+    lineHeight: 13,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+
+  itemsContainer: {
+    backgroundColor: '#ECEFF1',
+    margin: 0,
+    padding: 10,
+    paddingBottom: 0,
+  },
+
   newsFeedItem: {
     paddingBottom: 10,
   },
 
-  itemsContainer: {
-    padding: 10,
-    paddingBottom: 0,
+  pinnedContainer: {
+    flexDirection: 'row',
+    height: 80,
+    backgroundColor: getColor('white'),
+  },
+
+  pinnedTextContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+
+  shadow: {
+    shadowOffset: { width: 0, height: 0 },
+    shadowColor: 'black',
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   },
 });
