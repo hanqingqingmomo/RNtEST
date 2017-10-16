@@ -6,7 +6,7 @@ export {
 export { default as BootScreen } from './BootScreen';
 export {
   default as EmailAuthenticationScreen,
-} from './EmailAuthenticationScreen';
+} from './EmailAuthenticationScreen/EmailAuthenticationScreen';
 export { default as DonationAppealScreen } from './DonationAppealScreen';
 export { default as EmailRegistrationScreen } from './EmailRegistrationScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
