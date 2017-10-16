@@ -49,6 +49,7 @@ export default class DonationScreen extends Component<Props, State> {
       <Modal
         isOpen={this.props.forceOpen || this.state.open}
         backdrop
+        backdropPressToClose={false}
         swipeToClose={false}
         position="center"
         style={styles.modalWrapper}
