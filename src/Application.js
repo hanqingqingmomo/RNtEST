@@ -4,46 +4,33 @@ import React from 'react';
 import { connect, type Connector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
-import { api } from './services';
-import { selectAccessToken, selectUser } from './redux/selectors';
+import { selectUser } from './redux/selectors';
 import { AuthenticationNavigator, MainNavigator } from './routers';
 import { View } from './atoms';
 import { Network } from './blocks';
-import type { Store, User } from './Types';
+import { type Store } from './Types';
 
 type Props = {
-  accessToken: ?string,
-  user: ?User,
+  authenticated: boolean,
 };
 
 class Application extends React.PureComponent<Props> {
   componentDidMount() {
     SplashScreen.hide();
-
-    api.http.interceptors.request.use(config => {
-      config.headers = {
-        Authorization: this.props.accessToken
-          ? `API-KEY ${this.props.accessToken}`
-          : '',
-        ...config.headers,
-      };
-      return config;
-    });
   }
 
   render = () => {
-    const { user } = this.props;
+    const { authenticated } = this.props;
 
     return (
       <View flexGrow={1}>
         <Network />
-        {user ? <MainNavigator /> : <AuthenticationNavigator />}
+        {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
       </View>
     );
   };
 }
 
 export default (connect((state: Store) => ({
-  accessToken: selectAccessToken(state),
-  user: selectUser(state),
+  authenticated: selectUser(state) !== null,
 })): Connector<{}, Props>)(Application);
