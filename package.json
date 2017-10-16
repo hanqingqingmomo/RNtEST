@@ -35,6 +35,8 @@
     "react-native-keyboard-manager": "^4.0.13-3",
     "react-native-material-textfield": "^0.10.0",
     "react-native-modalbox": "^1.4.2",
+    "react-native-payments": "^0.3.1",
+    "react-native-payments-addon-braintree": "^4.8.4-1",
     "react-native-popover-tooltip": "^1.1.1",
     "react-native-splash-screen": "^3.0.1",
     "react-native-tableview-simple": "^0.16.13",
@@ -61,6 +63,7 @@
     "flow-watch": "^1.1.1",
     "jest": "^21.2.1",
     "prettier": "^1.7.4",
+    "react-native-payments-cli": "^0.2.0",
     "reactotron-react-native": "^1.12.3",
     "reactotron-redux": "^1.12.2",
     "reactotron-redux-saga": "^1.12.2"
