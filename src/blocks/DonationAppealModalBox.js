@@ -15,12 +15,16 @@ const HIT_SLOP = {
   left: 6,
 };
 
-type P = {
-  onClose: () => void,
-  onConfirm: (status: 'confirmed' | 'declined') => void,
+type Props = {
+  forceOpen?: boolean,
+  onConfirm: () => void,
 };
 
-export default class DonationScreen extends Component<P> {
+type State = {
+  open: boolean,
+};
+
+export default class DonationScreen extends Component<Props, State> {
   state = {
     open: false,
   };
@@ -28,28 +32,24 @@ export default class DonationScreen extends Component<P> {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ open: true });
-    }, 10000);
+    }, 60000);
   }
+
   confirm = () => {
     this.props.onConfirm();
-    this.setState({ open: false });
-    // this.props.onConfirm('confirmed');
-  };
-
-  decline = () => {
     this.setState({ open: false });
   };
 
   close = () => {
     this.setState({ open: false });
-    // this.props.onClose();
   };
 
   render() {
     return (
       <Modal
-        isOpen={this.state.open}
+        isOpen={this.props.forceOpen || this.state.open}
         backdrop
+        backdropPressToClose={false}
         swipeToClose={false}
         position="center"
         style={styles.modalWrapper}
@@ -99,7 +99,7 @@ export default class DonationScreen extends Component<P> {
               size="lg"
               color="transparent"
               textColor={getColor('orange')}
-              onPress={this.decline}
+              onPress={this.close}
             />
           </View>
         </View>

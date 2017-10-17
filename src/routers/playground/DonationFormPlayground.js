@@ -1,27 +1,21 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert } from 'react-native';
 
-import { DonationForm, DonationAppeal } from '../../blocks';
-import { View, CommunityHeader, ScrollView } from '../../atoms';
+import { DonationForm, DonationAppealModalBox } from '../../blocks';
+import { CommunityHeader, ScrollView, Screen } from '../../atoms';
 
-export default class DonationFormPlayground extends Component<{}> {
+type Props = {};
+
+export default class DonationFormPlayground extends Component<Props> {
   static navigationOptions = {
     title: 'Donation Form',
   };
 
-  state = {
-    showDonationAppeal: true,
-  };
-
-  onClose = () => {
-    this.setState({ showDonationAppeal: false });
-  };
-
   render() {
     return (
-      <ScrollView>
+      <Screen fill>
         <CommunityHeader
           title="Child Care Assistance Program"
           profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
@@ -30,21 +24,8 @@ export default class DonationFormPlayground extends Component<{}> {
         <DonationForm
           onPaymentConfirmed={payment => Alert.alert(JSON.stringify(payment))}
         />
-        {this.state.showDonationAppeal ? (
-          <View style={styles.overlay}>
-            <DonationAppeal onClose={this.onClose} />
-          </View>
-        ) : null}
-      </ScrollView>
+        <DonationAppealModalBox forceOpen onConfirm={() => {}} />
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(69, 90, 100, 0.5)',
-    paddingHorizontal: 25,
-    justifyContent: 'center',
-  },
-});

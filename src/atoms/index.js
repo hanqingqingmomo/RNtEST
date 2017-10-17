@@ -21,6 +21,8 @@ export { default as CommunityHeader } from './CommunityHeader';
 export { default as ContactGroup } from './ContactGroup';
 export { default as DateCard } from './DateCard';
 export { default as EventCard } from './EventCard';
+export { default as Fetch } from './Fetch';
+export { default as FetchProvider } from './FetchProvider';
 export { default as Form } from './Form';
 export { default as FormField } from './FormField';
 export { default as Icon } from './Icon/Icon';
