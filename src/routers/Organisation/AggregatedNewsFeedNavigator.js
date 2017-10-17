@@ -1,10 +1,10 @@
 // @flow
 
 import { StackNavigator } from '../../navigation';
-import { OrganisationNewsFeedScreen } from '../../screens';
+import { AggregatedNewsFeedScreen } from '../../screens';
 
 export default StackNavigator({
-  OrganisationNewsFeedScreen: {
-    screen: OrganisationNewsFeedScreen,
+  AggregatedNewsFeedScreen: {
+    screen: AggregatedNewsFeedScreen,
   },
 });
