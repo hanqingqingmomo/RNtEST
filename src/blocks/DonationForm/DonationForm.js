@@ -3,29 +3,31 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View, Text } from '../../atoms';
+import { View } from '../../atoms';
 import { getColor } from '../../utils/color';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
 
-type PaymentMethod = 'applePay' | 'creditCard';
+export type Payment = {
+  amount: number,
+  interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
+};
 
 type P = {
-  onPaymentConfirmed: ({
-    paymentMethod: PaymentMethod,
-    price: number,
-    interval: string,
-  }) => void,
+  onInitiatePayment: (payment: Payment) => any,
 };
 
-type S = {
-  price: ?number,
-  interval: ?string,
-  priceTypedManualy: boolean,
+type S = Payment & {
+  amountTypedManualy: boolean,
 };
 
-const BUTTONS = [50, 100, 300, 500];
-const INTERVALS = ['One time', 'Monthly', 'Quaterly', 'Annually'];
+const AMOUNTS = [25, 50, 100, 250];
+const INTERVALS = [
+  { label: 'One time', value: 'one-time' },
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Quarterly', value: 'quarterly' },
+  { label: 'Annually', value: 'annually' },
+];
 
 function printMoney(amount: number): string {
   return `$${amount}`;
@@ -33,107 +35,89 @@ function printMoney(amount: number): string {
 
 export default class DonationForm extends Component<P, S> {
   state = {
-    interval: 'Monthly',
-    price: 50,
-    priceTypedManualy: false,
+    interval: 'monthly',
+    amount: 50,
+    amountTypedManualy: false,
   };
 
-  onConfirm = (paymentMethod: PaymentMethod) => {
-    return () => {
-      this.props.onPaymentConfirmed({
-        paymentMethod,
-        price: parseInt(this.state.price, 10),
-        interval: this.state.interval || '',
-      });
-    };
+  initiatePayment = () => {
+    this.props.onInitiatePayment({
+      amount: this.state.amount,
+      interval: this.state.interval,
+    });
   };
 
   render() {
     return (
       <View style={style.container}>
-        {this.state.showTextInput ? (
-          <View style={style.inputContainer}>
-            <Text>aa</Text>
-          </View>
-        ) : (
+        <View>
           <View style={style.buttonContainer}>
-            {BUTTONS.map(price => (
+            {AMOUNTS.map(amount => (
               <View
-                style={[style.button, { width: `${100 / BUTTONS.length}%` }]}
-                key={price}
+                style={[style.button, { width: `${100 / AMOUNTS.length}%` }]}
+                key={amount}
               >
                 <DonationButton
-                  title={printMoney(price)}
+                  title={printMoney(amount)}
                   size="lg"
                   onPress={() =>
-                    this.setState({ price, priceTypedManualy: false })}
+                    this.setState({ amount, amountTypedManualy: false })}
                   isActive={
-                    !this.state.priceTypedManualy && this.state.price === price
+                    !this.state.amountTypedManualy &&
+                    this.state.amount === amount
                   }
                 />
               </View>
             ))}
           </View>
-        )}
-        <View style={style.buttonContainer}>
-          <View style={style.button}>
-            <DonationInput
-              placeholder="Other amount"
-              onChangeText={price =>
-                this.setState({ price, priceTypedManualy: true })}
-              value={
-                this.state.priceTypedManualy
-                  ? (this.state.price || '').toString()
-                  : ''
-              }
-              size="lg"
-            />
-          </View>
-        </View>
-        <View style={style.buttonContainer}>
-          {INTERVALS.map(interval => (
-            <View
-              style={[style.button, { width: `${100 / INTERVALS.length}%` }]}
-              key={interval}
-            >
-              <DonationButton
-                title={interval}
-                size="sm"
-                onPress={() => this.setState({ interval })}
-                isActive={this.state.interval === interval}
+
+          <View style={style.buttonContainer}>
+            <View style={style.button}>
+              <DonationInput
+                placeholder="Other amount"
+                onChangeText={amount =>
+                  this.setState({
+                    amount: parseInt(amount, 10),
+                    amountTypedManualy: true,
+                  })}
+                value={
+                  this.state.amountTypedManualy
+                    ? (this.state.amount || '').toString()
+                    : ''
+                }
+                size="lg"
               />
             </View>
-          ))}
+          </View>
+          <View style={style.buttonContainer}>
+            {INTERVALS.map(interval => (
+              <View
+                style={[style.button, { width: `${100 / INTERVALS.length}%` }]}
+                key={interval.value}
+              >
+                <DonationButton
+                  title={interval.label}
+                  size="sm"
+                  onPress={() => this.setState({ interval: interval.value })}
+                  isActive={this.state.interval === interval.value}
+                />
+              </View>
+            ))}
+          </View>
         </View>
 
-        <View style={style.buttonApplePay}>
-          <DonationButton
-            title="Donate with"
-            icon="apple-pay"
-            size="md"
-            onPress={this.onConfirm('applePay')}
-            style={{
-              backgroundColor: getColor('black'),
-              borderColor: getColor('black'),
-            }}
-            textColor={{ color: getColor('white') }}
-            disabled={!this.state.price}
-          />
-        </View>
-
-        <View style={style.buttonCreditCard}>
-          <DonationButton
-            title="Donate with Credit Card"
-            size="md"
-            onPress={this.onConfirm('creditCard')}
-            style={{
-              backgroundColor: 'transparent',
-              borderWidth: 0,
-            }}
-            textColor={{ color: getColor('orange') }}
-            disabled={!this.state.price}
-          />
-        </View>
+        <DonationButton
+          title="Donate with"
+          icon="apple-pay"
+          size="md"
+          onPress={this.initiatePayment}
+          style={{
+            backgroundColor: getColor('black'),
+            borderColor: getColor('black'),
+          }}
+          textColor={{ color: getColor('white') }}
+          disabled={!this.state.amount}
+        />
       </View>
     );
   }
@@ -141,21 +125,19 @@ export default class DonationForm extends Component<P, S> {
 
 const style = StyleSheet.create({
   container: {
-    paddingTop: 30,
-    paddingHorizontal: 15,
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    padding: 15,
   },
-  contentTop: {},
-  contentBottom: {},
+
   buttonContainer: {
     flexDirection: 'row',
     marginHorizontal: -4,
   },
-  inputContainer: {},
+
   button: {
     width: '100%',
     paddingHorizontal: 4,
     paddingVertical: 7,
   },
-  buttonApplePay: { marginTop: 30 },
-  buttonCreditCard: { marginVertical: 10 },
 });

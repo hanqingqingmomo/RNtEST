@@ -7,7 +7,7 @@ import Fetch from 'react-fetch-component';
 
 import { join } from '../utils/url';
 
-type RequestOptions = $Exact<{
+export type RequestOptions = $Exact<{
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD',
   url?: false | string,
   headers?: Object,

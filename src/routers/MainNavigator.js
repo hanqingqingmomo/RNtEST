@@ -177,7 +177,6 @@ export default class MainNavigator extends Component<{}, State> {
           />
         </DrawerLayout>
         <Modal
-          coverScreen
           swipeToClose={false}
           isOpen={this.state.modalRoute !== null}
           onClosed={this.closeModalRoute}
