@@ -4,7 +4,7 @@ import React from 'react';
 import { TabBarBottom, TabNavigator } from 'react-navigation';
 
 import { Icon } from '../../atoms';
-import OrganisationNewsFeedNavigator from './OrganisationNewsFeedNavigator';
+import AggregatedNewsFeedNavigator from './AggregatedNewsFeedNavigator';
 import CommunitiesNavigator from './CommunitiesNavigator';
 // import EventFeedNavigator from './EventFeedNavigator';
 import { getColor } from '../../utils/color';
@@ -15,8 +15,8 @@ const makeTabBarIcon = name => iconProps => (
 
 export default TabNavigator(
   {
-    OrganisationNewsFeedTab: {
-      screen: OrganisationNewsFeedNavigator,
+    AggregatedNewsFeedTab: {
+      screen: AggregatedNewsFeedNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('home'),
       }),
