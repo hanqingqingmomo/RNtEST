@@ -14,7 +14,7 @@ import { NewsFeedItem } from '../../blocks';
 import FriendInvitationWidget from './FriendInvitationWidget';
 import NewsFeedHeader from './NewsFeedHeader';
 import NewsFeedConversation from './NewsFeedConversation';
-import { getAggegatedFeedRq } from '../../utils/requestFactory';
+import { makeReadAggregatedFeedRq } from '../../utils/requestFactory';
 
 function NavigatorHeader(props) {
   return (
@@ -42,7 +42,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
   };
 
   render() {
-    const { url, options } = getAggegatedFeedRq();
+    const { url, options } = makeReadAggregatedFeedRq();
     console.log(url, options);
 
     return (

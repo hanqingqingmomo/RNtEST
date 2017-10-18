@@ -99,8 +99,11 @@ export const makeReadCommunityMembersRq = (
     },
   }: Request);
 
+/**
+ * Aggregated feed request
+ */
 // TODO serialise params into URL in some automated way
-export const getAggegatedFeedRq = (cursor: ?Cursor) =>
+export const makeReadAggregatedFeedRq = (cursor: ?Cursor) =>
   ({
     url: `${join(MOCK_API_URL, 'feed')}`,
     options: {
