@@ -17,16 +17,14 @@ export default class NewsFeedItemAttachment extends Component<P> {
   render() {
     const { image_url, title, url } = this.props;
 
-    return (
+    return image_url ? (
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
-          {image_url ? (
-            <Image
-              source={{ uri: image_url.replace('?raw-', '?raw=') }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          ) : null}
+          <Image
+            source={{ uri: image_url }}
+            style={styles.image}
+            resizeMode="cover"
+          />
         </View>
         <View style={styles.decription}>
           <View style={styles.icon}>
@@ -57,7 +55,7 @@ export default class NewsFeedItemAttachment extends Component<P> {
           </View>
         </View>
       </View>
-    );
+    ) : null;
   }
 }
 

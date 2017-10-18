@@ -44,16 +44,17 @@ type DonationProps = {
 };
 
 type P = {
-  attachment?: AttachmentProps,
   attachments?: Array<AttachmentProps>,
+  author?: UserProps,
+  comments?: number,
+  communities: Array<TagProps>,
   created_at?: Date,
   donation?: DonationProps,
   event?: EventProps,
   isNew?: boolean,
-  communities: Array<TagProps>,
-  text_content?: string,
-  author?: UserProps,
+  likes?: number,
   replies: number,
+  text_content?: string,
 };
 
 const LINKS = ['Share', 'Comment'];
@@ -78,9 +79,16 @@ export default class NewsFeedItem extends Component<P> {
     };
   }
 
+  get attachment() {
+    return this.props.attachments[0];
+  }
+
+  get hasAttachment() {
+    return !!this.props.attachments[0];
+  }
+
   render() {
     const {
-      attachment,
       created_at,
       donation,
       event,
@@ -89,25 +97,23 @@ export default class NewsFeedItem extends Component<P> {
       text_content,
       author,
       replies,
-      attachments,
+      comments,
+      likes,
     } = this.props;
 
     const shortedTitle = this.shortenString(text_content, 110);
-
-    const att = Array.isArray(attachments) ? attachments[0] : attachment;
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader
-            tags={communities.map(comm => ({
-              name: comm.name,
-            }))}
-            onTagPress={tag => console.log('tag', tag)}
+            communities={communities}
+            onPillPress={tag => console.log('tag', tag)}
             onMorePress={() => console.log('more')}
           />
 
-          {att && att.type === 'link' && shortedTitle ? (
+          {(this.hasAttachment && this.attachment.type === 'link') ||
+          !this.hasAttachment ? (
             <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
               {shortedTitle.string}
               {shortedTitle.isShorted ? (
@@ -119,10 +125,10 @@ export default class NewsFeedItem extends Component<P> {
             </Text>
           ) : null}
 
-          {att && att.type.includes('image') ? (
-            <NewsFeedItemImage {...att} title={text_content} />
+          {this.hasAttachment && this.attachment.type.includes('image') ? (
+            <NewsFeedItemImage {...this.attachment} title={text_content} />
           ) : (
-            <NewsFeedItemAttachment {...att} />
+            <NewsFeedItemAttachment {...this.attachment} />
           )}
 
           {created_at ? (
@@ -151,6 +157,8 @@ export default class NewsFeedItem extends Component<P> {
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
           <NewsFeedItemFooter
+            likes={likes}
+            comments={comments}
             links={LINKS}
             onLinkPress={key => console.log(key)}
             onLikePress={key => console.log(key)}

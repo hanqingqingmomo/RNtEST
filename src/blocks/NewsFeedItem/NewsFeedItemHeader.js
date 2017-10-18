@@ -5,15 +5,15 @@ import { StyleSheet } from 'react-native';
 
 import { View, Pill, Icon, TouchableItem } from '../../atoms';
 
-type TagProps = {
+type ItemProps = {
   disabled?: boolean,
   name: string,
 };
 
 type P = {
+  communities: Array<ItemProps>,
   onMorePress: () => void,
-  onTagPress: TagProps => void,
-  tags: Array<TagProps>,
+  onPillPress: ItemProps => void,
 };
 
 const HIT_SLOP = {
@@ -28,17 +28,17 @@ export default class NewsFeedItemHeader extends Component<P> {
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {this.props.tags.map((tag: TagProps) => (
-            <View style={styles.tag} key={tag.name}>
+          {this.props.communities.map((item: ItemProps) => (
+            <View style={styles.tag} key={item.name}>
               <TouchableItem
-                onPress={() => this.props.onTagPress(tag)}
-                disabled={tag.disabled}
+                onPress={() => this.props.onPillPress(item)}
+                disabled={item.disabled}
                 hitSlop={HIT_SLOP}
               >
                 <View style={{ backgroundColor: 'white' }}>
                   <Pill
-                    title={tag.name}
-                    color={tag.disabled ? '#B0BEC5' : '#FC612D'}
+                    title={item.name}
+                    color={item.disabled ? '#B0BEC5' : '#FC612D'}
                   />
                 </View>
               </TouchableItem>

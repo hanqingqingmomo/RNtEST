@@ -7,20 +7,20 @@ import { Text, View, Image } from '../../atoms';
 import { css } from '../../utils/style';
 
 type P = {
-  url: string,
-  type: string,
   title?: string,
+  type: string,
+  url: string,
 };
 
 export default class NewsFeedItemAttachment extends Component<P> {
   render() {
-    const { url, type, title } = this.props;
+    const { url, title } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
           <Image
-            source={{ uri: url.replace('?raw-', '?raw=') }}
+            source={{ uri: url }}
             style={styles.image}
             resizeMode="cover"
           />

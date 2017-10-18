@@ -44,7 +44,7 @@ export default class NewsFeedItemAuthor extends Component<P> {
           hitSlop={HIT_SLOP}
         >
           <View style={styles.row}>
-            {/* <Avatar imageURI={{ uri: profile_photo }} size={28} /> */}
+            <Avatar imageURI={profile_photo} size={28} />
             <Text
               style={[styles.username, css('color', '#455A64')]}
               size={13}
@@ -57,15 +57,13 @@ export default class NewsFeedItemAuthor extends Component<P> {
         </TouchableItem>
 
         <View style={[styles.button, styles.row]}>
-          {this.props.replies ? (
-            <Button
-              size="sm"
-              color="#00E676"
-              textColor="white"
-              title={`${this.props.replies} Reply`}
-              onPress={this.props.onReplayPress}
-            />
-          ) : null}
+          <Button
+            size="sm"
+            color="#00E676"
+            textColor="white"
+            title={`${this.props.replies || 0} Reply`}
+            onPress={this.props.onReplayPress}
+          />
         </View>
       </View>
     );

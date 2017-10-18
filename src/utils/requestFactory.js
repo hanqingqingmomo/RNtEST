@@ -105,7 +105,7 @@ export const makeReadCommunityMembersRq = (
 // TODO serialise params into URL in some automated way
 export const makeReadAggregatedFeedRq = () =>
   ({
-    url: `${join(MOCK_API_URL, 'feed')}`,
+    url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
     options: {
       method: 'GET',
     },
