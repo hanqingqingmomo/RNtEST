@@ -11,42 +11,61 @@ import {
   Text,
   View,
 } from '../atoms';
+import { makeReadCommunityDetailRq } from '../utils/requestFactory';
 import { TabNavigator } from '../navigation';
 import NewsTab from './CommunityLandingScreen/NewsTab';
 import MembersTab from './CommunityLandingScreen/MembersTab';
 import FilesTab from './CommunityLandingScreen/FilesTab';
 import AboutTab from './CommunityLandingScreen/AboutTab';
 
-const Tabs = ({ screenProps }) => {
-  const C = TabNavigator(
-    {
-      NewsTab: {
-        screen: NewsTab,
-      },
-      MembersTab: {
-        screen: MembersTab,
-      },
-      FilesTab: {
-        screen: FilesTab,
-      },
-      AboutTab: {
-        screen: AboutTab,
-      },
+const Tabs = TabNavigator(
+  {
+    NewsTab: {
+      screen: NewsTab,
     },
-    {
-      initialRouteName: 'NewsTab',
-    }
-  );
+    MembersTab: {
+      screen: MembersTab,
+    },
+    FilesTab: {
+      screen: FilesTab,
+    },
+    AboutTab: {
+      screen: AboutTab,
+    },
+  },
+  {
+    initialRouteName: 'NewsTab',
+  }
+);
 
-  return <C screenProps={screenProps} />;
+type State = {
+  activeTabIndex: number,
 };
 
-export default class CommunityLandingScreen extends Component<{}> {
+export default class CommunityLandingScreen extends Component<*, State> {
+  state = {
+    activeTabIndex: 0,
+  };
+
+  trackTabChange = (prevState, currentState) => {
+    this.setState({
+      activeTabIndex: currentState.index,
+    });
+  };
+
   render() {
     const { navigation } = this.props;
+    const { activeTabIndex } = this.state;
+
+    const readCommunityDetailRq = makeReadCommunityDetailRq(
+      navigation.state.params.communityId
+    );
 
     return (
-      <Fetch url={`v1/communities/${navigation.state.params.communityId}`}>
+      <Fetch
+        url={readCommunityDetailRq.url}
+        options={readCommunityDetailRq.options}
+      >
         {({ loading, error, data }) => (
           <Screen fill>
             {loading && (
@@ -59,25 +78,26 @@ export default class CommunityLandingScreen extends Component<{}> {
                 <Text>{error.message}</Text>
               </CenterView>
             )}
-            {data && (
-              <View>
-                <CommunityHeader
-                  title={data.name}
-                  subtitle={data.description}
-                  profileImageURI={
-                    data.profile_photo ||
-                    undefined /* TODO remove when doesnt return NULL */
-                  }
-                  coverImageURI={
-                    data.cover_photo ||
-                    undefined /* TODO remove when doesnt return NULL */
-                  }
-                />
-                <Tabs
-                  screenProps={{ communityId: data.id, members: data.members }}
-                />
-              </View>
-            )}
+            {!loading &&
+              data && (
+                <View>
+                  {activeTabIndex === 0 && (
+                    <CommunityHeader
+                      title={data.name}
+                      profileImageURI={data.profile_photo}
+                      coverImageURI={data.cover_photo}
+                    />
+                  )}
+                  <Tabs
+                    onNavigationStateChange={this.trackTabChange}
+                    screenProps={{
+                      communityId: data.id,
+                      members: data.members,
+                      communitiesNavigation: navigation,
+                    }}
+                  />
+                </View>
+              )}
           </Screen>
         )}
       </Fetch>

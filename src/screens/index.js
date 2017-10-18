@@ -20,7 +20,6 @@ export { default as EventFeedScreen } from './EventFeedScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
 export { default as InviteFriendsScreen } from './InviteFriendsScreen';
 export { default as LandingScreen } from './LandingScreen';
-export { default as MemberListScreen } from './MemberListScreen';
 export { default as NewsFeedSettingsScreen } from './NewsFeedSettingsScreen';
 export {
   default as NotificationSettingsScreen,

@@ -3,7 +3,6 @@
 export {
   ActivityIndicator,
   FlatList,
-  Image,
   ImageBackground,
   ScrollView,
   TouchableHighlight,
@@ -27,6 +26,7 @@ export { default as FetchProvider } from './FetchProvider';
 export { default as Form } from './Form';
 export { default as FormField } from './FormField';
 export { default as Icon } from './Icon/Icon';
+export { default as Image } from './Image';
 export { default as Like } from './Like';
 export { default as Link } from './Link';
 export { default as NavigationIconButton } from './NavigationIconButton';

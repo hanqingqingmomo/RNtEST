@@ -120,7 +120,7 @@ export default class CommunityListScreen extends Component<{}, State> {
                   <CommunityCard
                     imageURI={community.profile_photo}
                     title={community.name}
-                    subtitle={community.description}
+                    subtitle={`${community.members} members`}
                   />
                 </TouchableItem>
               ))}

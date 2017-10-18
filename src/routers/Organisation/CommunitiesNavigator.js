@@ -1,7 +1,11 @@
 // @flow
 
 import { StackNavigator } from '../../navigation';
-import { CommunityListScreen, CommunityLandingScreen } from '../../screens';
+import {
+  CommunityListScreen,
+  CommunityLandingScreen,
+  OrganisationMemberProfileScreen,
+} from '../../screens';
 
 export default StackNavigator(
   {
@@ -14,6 +18,9 @@ export default StackNavigator(
       navigationOptions: {
         title: 'Community',
       },
+    },
+    MemberProfileScreen: {
+      screen: OrganisationMemberProfileScreen,
     },
   },
   {

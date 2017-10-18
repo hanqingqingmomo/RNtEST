@@ -77,6 +77,28 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
     },
   }: Request);
 
+export const makeReadCommunityDetailRq = (communityId: number) =>
+  ({
+    url: join(Config.API_URL, `/v1/communities/${communityId}`),
+    options: {
+      method: 'GET',
+    },
+  }: Request);
+
+export const makeReadCommunityMembersRq = (
+  communityId: number,
+  limit: number
+) =>
+  ({
+    url: join(
+      Config.API_URL,
+      `/v1/communities/${communityId}/members?limit=${limit}`
+    ),
+    options: {
+      method: 'GET',
+    },
+  }: Request);
+
 // TODO serialise params into URL in some automated way
 export const getAggegatedFeedRq = (cursor: ?Cursor) =>
   ({
