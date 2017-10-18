@@ -16,7 +16,7 @@ export default class NewsfeedPlayground extends Component<{}> {
       <ScrollView style={styles.container}>
         <View style={styles.item}>
           <NewsFeedItem
-            tags={[
+            communities={[
               {
                 name: 'Event',
                 disabled: true,
@@ -66,7 +66,7 @@ export default class NewsfeedPlayground extends Component<{}> {
             title="The YWCA Aurora has partnered with YWCA Metropolitan Chicago to
             offer parents and child care providers The YWCA Aurora has partnered with YWCA Metropolitan Chicago to
             offer parents and child care providers"
-            tags={[
+            communities={[
               {
                 name: 'Child Care',
               },
@@ -90,7 +90,7 @@ export default class NewsfeedPlayground extends Component<{}> {
           <NewsFeedItem
             isNew
             title="Watching the news the other day, it occurred to me that people who have “words to live by” often begin to attack and"
-            tags={[
+            communities={[
               {
                 name: 'Young Parents Program',
               },
@@ -106,7 +106,7 @@ export default class NewsfeedPlayground extends Component<{}> {
 
         <View style={styles.item}>
           <NewsFeedItem
-            tags={[
+            communities={[
               {
                 name: 'Make a Donation',
                 disabled: true,
@@ -127,7 +127,7 @@ export default class NewsfeedPlayground extends Component<{}> {
         </View>
         <View style={styles.item}>
           <NewsFeedItem
-            tags={[
+            communities={[
               {
                 name: 'Event',
                 disabled: true,

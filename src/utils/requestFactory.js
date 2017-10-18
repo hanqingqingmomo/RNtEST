@@ -80,9 +80,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
 // TODO serialise params into URL in some automated way
 export const getAggegatedFeedRq = (cursor: ?Cursor) =>
   ({
-    url: `${join(MOCK_API_URL, 'feed')}?${cursor
-      ? stringify({ cursor: cursor.next, limit: cursor.limit || 20 })
-      : ''}`,
+    url: `${join(MOCK_API_URL, 'feed')}`,
     options: {
       method: 'GET',
     },

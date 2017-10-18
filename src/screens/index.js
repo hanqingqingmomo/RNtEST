@@ -7,10 +7,6 @@ export {
   default as AuthenticationRootScreen,
 } from './AuthenticationRootScreen';
 export { default as BootScreen } from './BootScreen';
-export {
-  default as CommunitiesHeader,
-  labels as communitiesHeaderLabels,
-} from './CommunitiesScreen/CommunitiesHeader';
 export { default as CommunityListScreen } from './CommunityListScreen';
 export { default as CommunityLandingScreen } from './CommunityLandingScreen';
 export {

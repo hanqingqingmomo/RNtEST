@@ -56,7 +56,7 @@ type P = {
   event?: EventProps,
   image?: ImageProps,
   isNew?: boolean,
-  tags: Array<TagProps>,
+  communities: Array<TagProps>,
   title?: string,
   user?: UserProps,
 };
@@ -91,7 +91,7 @@ export default class NewsFeedItem extends Component<P> {
       event,
       image,
       isNew,
-      tags,
+      communities,
       title,
       user,
     } = this.props;
@@ -102,7 +102,9 @@ export default class NewsFeedItem extends Component<P> {
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader
-            tags={tags}
+            tags={communities.map(comm => ({
+              name: comm.name,
+            }))}
             onTagPress={tag => console.log('tag', tag)}
             onMorePress={() => console.log('more')}
           />
