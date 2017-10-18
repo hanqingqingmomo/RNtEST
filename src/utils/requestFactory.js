@@ -100,10 +100,10 @@ export const makeReadCommunityMembersRq = (
   }: Request);
 
 /**
- * Aggregated feed request
+ * News feed requests
  */
 // TODO serialise params into URL in some automated way
-export const makeReadAggregatedFeedRq = (cursor: ?Cursor) =>
+export const makeReadAggregatedFeedRq = () =>
   ({
     url: `${join(MOCK_API_URL, 'feed')}`,
     options: {
@@ -111,9 +111,17 @@ export const makeReadAggregatedFeedRq = (cursor: ?Cursor) =>
     },
   }: Request);
 
+export const makeReadCommunityFeedRq = (communityId: string | number) =>
+  ({
+    url: `${join(Config.API_URL, `/v1/content_objects/posts/${communityId}`)}`,
+    options: {
+      method: 'GET',
+    },
+  }: Request);
+
 /**
-   * User Invitations
-   */
+ * User Invitations
+ */
 
 export const makeInvitationRq = (email: string) =>
   ({
