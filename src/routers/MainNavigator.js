@@ -87,12 +87,14 @@ export default class MainNavigator extends Component<{}, State> {
 
   openModalRoute = (item: NavigationItem) => {
     this.setState({ modalRoute: item });
-    StatusBar.setBarStyle('dark-content');
+    // TODO bring back
+    // StatusBar.setBarStyle('dark-content');
   };
 
   closeModalRoute = () => {
     this.setState({ modalRoute: null });
-    StatusBar.setBarStyle('light-content');
+    // TODO bring back
+    // StatusBar.setBarStyle('light-content');
   };
 
   renderNavigationView = () => {
@@ -155,10 +157,12 @@ export default class MainNavigator extends Component<{}, State> {
           drawerPosition={DrawerLayout.positions.Left}
           renderNavigationView={this.renderNavigationView}
           onDrawerOpen={() => {
-            StatusBar.setBarStyle('light-content');
+            // TODO bring back
+            // StatusBar.setBarStyle('light-content');
           }}
           onDrawerClose={() => {
-            StatusBar.setBarStyle('dark-content');
+            // TODO bring back
+            // StatusBar.setBarStyle('dark-content');
           }}
         >
           <MainOrganisationNavigator
