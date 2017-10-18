@@ -33,7 +33,8 @@ export default class CursorBaseFetch extends Component<{}, State> {
     const { data, meta } = fetchProps;
 
     this.setState(state => ({
-      nextCursor: meta.cursor,
+      // TODO should not fail, API needs to be adjusted
+      nextCursor: meta ? meta.cursor : { next: null, limit: 10 },
       batch: state.batch + 1,
       data: (state.data || []).concat(data),
     }));
