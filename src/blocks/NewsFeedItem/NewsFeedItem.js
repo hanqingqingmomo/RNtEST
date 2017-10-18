@@ -26,14 +26,8 @@ type UserProps = {
 };
 
 type AttachmentProps = {
-  imageURI?: string,
-  title: string,
-  videoURI?: string,
-};
-
-type ImageProps = {
-  imageURI: string,
-  title: string,
+  url: string,
+  type: 'image' | 'link',
 };
 
 type EventProps = {
@@ -51,14 +45,14 @@ type DonationProps = {
 
 type P = {
   attachment?: AttachmentProps,
-  date?: Date,
+  created_at?: Date,
   donation?: DonationProps,
   event?: EventProps,
-  image?: ImageProps,
   isNew?: boolean,
   communities: Array<TagProps>,
-  title?: string,
-  user?: UserProps,
+  text_content?: string,
+  author?: UserProps,
+  replies: number,
 };
 
 const LINKS = ['Share', 'Comment'];
@@ -86,17 +80,17 @@ export default class NewsFeedItem extends Component<P> {
   render() {
     const {
       attachment,
-      date,
+      created_at,
       donation,
       event,
-      image,
       isNew,
       communities,
-      title,
-      user,
+      text_content,
+      author,
+      replies,
     } = this.props;
 
-    const shortedTitle = this.shortenString(title, 110);
+    const shortedTitle = this.shortenString(text_content, 110);
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
@@ -109,7 +103,7 @@ export default class NewsFeedItem extends Component<P> {
             onMorePress={() => console.log('more')}
           />
 
-          {shortedTitle ? (
+          {attachment.type === 'link' && shortedTitle ? (
             <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
               {shortedTitle.string}
               {shortedTitle.isShorted ? (
@@ -121,17 +115,23 @@ export default class NewsFeedItem extends Component<P> {
             </Text>
           ) : null}
 
-          {attachment ? <NewsFeedItemAttachment {...attachment} /> : null}
+          {attachment.type === 'image' ? (
+            <NewsFeedItemImage {...attachment} title={text_content} />
+          ) : (
+            <NewsFeedItemAttachment {...attachment} />
+          )}
 
-          {image ? <NewsFeedItemImage {...image} /> : null}
-
-          {date ? (
-            <NewsFeedItemPostedTime date={date} style={styles.postedTime} />
+          {created_at ? (
+            <NewsFeedItemPostedTime
+              date={created_at}
+              style={styles.postedTime}
+            />
           ) : null}
 
-          {user ? (
+          {author ? (
             <NewsFeedItemAuthor
-              user={user}
+              replies={replies}
+              author={author}
               onReplayPress={() => console.log('reply')}
               onUserPress={user => console.log('user', user)}
             />

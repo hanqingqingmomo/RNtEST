@@ -7,20 +7,25 @@ import { Text, View, Icon, Image } from '../../atoms';
 import { css } from '../../utils/style';
 
 type P = {
-  imageURI?: string,
-  title: string,
-  videoURI?: string,
+  image_url?: string,
+  title?: string,
+  type: 'link',
+  url?: string,
 };
 
 export default class NewsFeedItemAttachment extends Component<P> {
   render() {
-    const { imageURI, title, videoURI } = this.props;
+    const { image_url, title, url } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
-          {imageURI ? (
-            <Image source={imageURI} style={styles.image} resizeMode="cover" />
+          {image_url ? (
+            <Image
+              source={{ uri: image_url.replace('?raw-', '?raw=') }}
+              style={styles.image}
+              resizeMode="cover"
+            />
           ) : null}
         </View>
         <View style={styles.decription}>
@@ -28,16 +33,18 @@ export default class NewsFeedItemAttachment extends Component<P> {
             <Icon name="link" size={24} color="#B0BEC5" />
           </View>
           <View style={styles.text}>
-            <Text
-              size={14}
-              weight="600"
-              lineHeight={18}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={css('color', '#38505A')}
-            >
-              {title}
-            </Text>
+            {title ? (
+              <Text
+                size={14}
+                weight="600"
+                lineHeight={18}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={css('color', '#38505A')}
+              >
+                {title}
+              </Text>
+            ) : null}
             <Text
               size={14}
               lineHeight={18}
@@ -45,8 +52,7 @@ export default class NewsFeedItemAttachment extends Component<P> {
               ellipsizeMode="tail"
               style={css('color', '#00B0FF')}
             >
-              {imageURI}
-              {videoURI}
+              {url}
             </Text>
           </View>
         </View>

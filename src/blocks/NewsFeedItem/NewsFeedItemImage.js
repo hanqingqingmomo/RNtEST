@@ -7,28 +7,35 @@ import { Text, View, Image } from '../../atoms';
 import { css } from '../../utils/style';
 
 type P = {
-  imageURI: string,
-  title: string,
+  url: string,
+  type: string,
+  title?: string,
 };
 
 export default class NewsFeedItemAttachment extends Component<P> {
   render() {
-    const { title, imageURI } = this.props;
+    const { url, type, title } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
-          <Image source={imageURI} style={styles.image} resizeMode="cover" />
+          <Image
+            source={{ uri: url.replace('?raw-', '?raw=') }}
+            style={styles.image}
+            resizeMode="cover"
+          />
         </View>
-        <Text
-          size={14}
-          lineHeight={18}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          style={css('color', '#455A64')}
-        >
-          {title}
-        </Text>
+        {title ? (
+          <Text
+            size={14}
+            lineHeight={18}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={css('color', '#455A64')}
+          >
+            {title}
+          </Text>
+        ) : null}
       </View>
     );
   }
