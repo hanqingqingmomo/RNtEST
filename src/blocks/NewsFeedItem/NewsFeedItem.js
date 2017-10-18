@@ -45,6 +45,7 @@ type DonationProps = {
 
 type P = {
   attachment?: AttachmentProps,
+  attachments?: Array<AttachmentProps>,
   created_at?: Date,
   donation?: DonationProps,
   event?: EventProps,
@@ -88,9 +89,12 @@ export default class NewsFeedItem extends Component<P> {
       text_content,
       author,
       replies,
+      attachments,
     } = this.props;
 
     const shortedTitle = this.shortenString(text_content, 110);
+
+    const att = Array.isArray(attachments) ? attachments[0] : attachment;
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
@@ -103,7 +107,7 @@ export default class NewsFeedItem extends Component<P> {
             onMorePress={() => console.log('more')}
           />
 
-          {attachment.type === 'link' && shortedTitle ? (
+          {att && att.type === 'link' && shortedTitle ? (
             <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
               {shortedTitle.string}
               {shortedTitle.isShorted ? (
@@ -115,10 +119,10 @@ export default class NewsFeedItem extends Component<P> {
             </Text>
           ) : null}
 
-          {attachment.type === 'image' ? (
-            <NewsFeedItemImage {...attachment} title={text_content} />
+          {att && att.type.includes('image') ? (
+            <NewsFeedItemImage {...att} title={text_content} />
           ) : (
-            <NewsFeedItemAttachment {...attachment} />
+            <NewsFeedItemAttachment {...att} />
           )}
 
           {created_at ? (
