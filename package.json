@@ -7,7 +7,8 @@
     "flow": "flow",
     "flow-stop": "flow stop",
     "flow-watch": "flow-watch",
-    "format": "prettier --single-quote --trailing-comma es5 --write '{src,__{tests,mocks}__}/**/*.js'",
+    "format":
+      "prettier --single-quote --trailing-comma es5 --write '{src,__{tests,mocks}__}/**/*.js'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "list-iphones": "instruments -s devices"
@@ -21,9 +22,11 @@
     "formik": "^0.9.4",
     "hoist-non-react-statics": "^2.2.1",
     "immutability-helper": "^2.4.0",
-    "indicative": "https://github.com/Andreyco/indicative#764ed4838b82f0efb7c19b4960db3aad7fd95441",
+    "indicative":
+      "https://github.com/Andreyco/indicative#764ed4838b82f0efb7c19b4960db3aad7fd95441",
     "lodash.memoize": "^4.1.2",
     "lodash.merge": "^4.6.0",
+    "query-string": "^5.0.0",
     "react": "16.0.0-beta.5",
     "react-fetch-component": "^5.0.0",
     "react-native": "0.49.3",
