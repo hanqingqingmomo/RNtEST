@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { Text, View, Icon, Image } from '../../atoms';
 import { css } from '../../utils/style';

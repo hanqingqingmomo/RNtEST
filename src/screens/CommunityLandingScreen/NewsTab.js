@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 import { View } from '../../atoms';
-import { NewsFeedConversation } from '../index';
+import NewsFeedConversation from '../AggregatedNewsFeedScreen/NewsFeedConversation';
 import PinnedSection from './PinnedSection';
 import EventsSection from './EventsSection';
 import CommunityNewsfeed from './CommunityNewsfeed';

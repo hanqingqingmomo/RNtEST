@@ -4,6 +4,7 @@ import React from 'react';
 
 import { StackNavigator } from '../../navigation';
 import { ScrollView, Text, NavigationIconButton } from '../../atoms';
+import { MemberList } from '../../blocks';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -11,7 +12,6 @@ import {
   LandingScreen,
   UserProfileScreen,
   UserSettingsScreen,
-  MemberListScreen,
   NewsFeedSettingsScreen,
   NotificationSettingsScreen,
 } from '../../screens';
@@ -237,7 +237,7 @@ export default StackNavigator(
       screen: LikePlayground,
     },
     MemberListScreen: {
-      screen: MemberListScreen,
+      screen: MemberList,
     },
     NewsfeedPlayground: {
       screen: NewsfeedPlayground,

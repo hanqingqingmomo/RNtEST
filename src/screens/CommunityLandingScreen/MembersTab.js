@@ -2,16 +2,9 @@
 
 import React, { Component } from 'react';
 
-import {
-  ActivityIndicator,
-  CenterView,
-  Fetch,
-  Screen,
-  Text,
-  View,
-} from '../../atoms';
-
-const limit = 9999; // TODO pagination
+import { ActivityIndicator, CenterView, Fetch, Text, View } from '../../atoms';
+import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
+import { MemberList } from '../../blocks';
 
 export default class MembersTab extends Component<{}> {
   static navigationOptions = ({ screenProps }) => ({
@@ -19,12 +12,20 @@ export default class MembersTab extends Component<{}> {
   });
 
   render() {
-    const { communityId } = this.props.screenProps;
+    const { screenProps } = this.props;
+
+    const readCommunityMembersRq = makeReadCommunityMembersRq(
+      screenProps.communityId,
+      9999 // TODO pagination
+    );
 
     return (
-      <Fetch url={`v1/communities/${communityId}/members?limit=${limit}`}>
+      <Fetch
+        url={readCommunityMembersRq.url}
+        options={readCommunityMembersRq.options}
+      >
         {({ loading, error, data }) => (
-          <Screen fill>
+          <View>
             {loading && (
               <CenterView>
                 <ActivityIndicator />
@@ -35,14 +36,14 @@ export default class MembersTab extends Component<{}> {
                 <Text>{error.message}</Text>
               </CenterView>
             )}
-            {data && (
-              <View>
-                {data.data.map(member => (
-                  <Text key={member.id}>{member.first_name}</Text>
-                ))}
-              </View>
-            )}
-          </Screen>
+            {!loading &&
+              data && (
+                <MemberList
+                  members={data.data}
+                  navigation={screenProps.communitiesNavigation}
+                />
+              )}
+          </View>
         )}
       </Fetch>
     );

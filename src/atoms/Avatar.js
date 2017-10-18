@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import { Image } from 'react-native';
 
+import { Image } from './index';
 import { css } from '../utils/style';
 
 type Props = {
