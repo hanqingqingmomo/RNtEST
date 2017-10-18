@@ -43,7 +43,7 @@ type RenderProp = {
 
 type Props = {
   url?: false | string,
-  options?: RequestOptions | (() => RequestOptions),
+  options?: RequestOptions | (RequestOptions => RequestOptions),
   as: 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text',
   cache: boolean,
   manual: boolean,
@@ -51,6 +51,14 @@ type Props = {
   onChange?: RenderProp => void,
   children: RenderProp => React$Node,
 };
+
+function isFunction(functionToCheck) {
+  var getType = {};
+  return (
+    functionToCheck &&
+    getType.toString.call(functionToCheck) === '[object Function]'
+  );
+}
 
 export default class FetchWrapper extends Component<Props> {
   static defaultProps = {
@@ -63,15 +71,22 @@ export default class FetchWrapper extends Component<Props> {
     getFetchConfig: PropTypes.func,
   };
 
-  render() {
-    const { url, ...bag } = this.props;
+  get options(): RequestOptions {
+    const contextOptions = this.context.getFetchConfig();
+    const { options } = this.props;
 
-    return (
-      <Fetch
-        url={join(Config.API_URL, url)}
-        options={this.context.getFetchConfig()}
-        {...bag}
-      />
-    );
+    if (!options) {
+      return contextOptions;
+    }
+
+    if (isFunction(options)) {
+      return options(contextOptions);
+    }
+
+    return contextOptions;
+  }
+
+  render() {
+    return <Fetch {...this.props} options={this.options} />;
   }
 }
