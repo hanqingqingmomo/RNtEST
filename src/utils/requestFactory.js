@@ -110,3 +110,23 @@ export const makeReadAggregatedFeedRq = (cursor: ?Cursor) =>
       method: 'GET',
     },
   }: Request);
+
+/**
+   * User Invitations
+   */
+
+export const makeInvitationRq = (email: string) =>
+  ({
+    url: join(Config.API_URL, '/v1/club_invitations/480b7b2ed0a1'),
+    options: {
+      method: 'PUT',
+      body: JSON.stringify({
+        member_invitations: email,
+      }),
+      // TODO: toto je tu len na test
+      headers: {
+        'API-KEY':
+          '3802db7f9e4c2a825cacfb401fdde565d4afe202135c00187c25896acd76e18c',
+      },
+    },
+  }: Request);

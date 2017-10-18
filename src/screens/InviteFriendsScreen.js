@@ -3,9 +3,10 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  InteractionManager,
-  StyleSheet,
   FlatList,
+  InteractionManager,
+  Linking,
+  StyleSheet,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
 import { Separator } from 'react-native-tableview-simple';
@@ -14,6 +15,7 @@ import {
   Avatar,
   Button,
   CenterView,
+  Fetch,
   Icon,
   Screen,
   SearchBox,
@@ -23,6 +25,7 @@ import {
 } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
+import { makeInvitationRq } from '../utils/requestFactory';
 
 type EmailAddressProps = {
   email: string,
@@ -53,21 +56,23 @@ type ContactProps = {
   middleName: string,
   phoneNumbers: Array<PhoneProps>,
   postalAddresses: Array<PostalAddressProps>,
-  recordID: string,
+  recordID: number,
   thumbnailPath: string,
 };
 
 type S = {
-  searchValue: string,
   contacts: Array<ContactProps>,
+  invitedUser: Array<number>,
   permission: 'undefined' | 'denied' | 'authorized',
+  searchValue: string,
 };
 
 export default class InviteFriendsScreen extends React.Component<{}, S> {
   state = {
-    searchValue: '',
     contacts: [],
+    invitedUser: [],
     permission: 'undefined',
+    searchValue: '',
   };
 
   componentWillMount() {
@@ -85,7 +90,12 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     ) {
       Contacts.getAll((err, contacts) => {
         if (err !== 'denied') {
-          this.setState({ contacts });
+          const filteredContacts = contacts.filter(contact => {
+            const { emailAddresses, phoneNumbers } = contact;
+
+            return !!emailAddresses.length || !!phoneNumbers.length;
+          });
+          this.setState({ contacts: filteredContacts });
         }
       });
     }
@@ -93,6 +103,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
 
   cellContentView(user: ContactProps): React$Element<*> {
     const { emailAddresses, familyName, givenName, middleName } = user;
+    const { invitedUser } = this.state;
     return (
       <View style={styles.row}>
         <View style={styles.textWrapper}>
@@ -111,13 +122,23 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
             </Text>
           ) : null}
         </View>
-        <Button
-          title="Send"
-          size="sm"
-          color={getColor('orange')}
-          textColor="white"
-          onPress={this.onInvite(user)}
-        />
+        {invitedUser.includes(user.recordID) ? (
+          <Button.Icon
+            iconName="check"
+            size="sm"
+            color={getColor('green')}
+            iconColor={getColor('white')}
+            disabled
+          />
+        ) : (
+          <Button
+            title="Send"
+            size="sm"
+            color={getColor('orange')}
+            textColor="white"
+            onPress={this.onInvite(user)}
+          />
+        )}
       </View>
     );
   }
@@ -129,9 +150,51 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     return <Icon name="user" size="md" color={getColor('gray')} />;
   }
 
+  hasUserEmail(user: ContactProps) {
+    return !!user.emailAddresses.length;
+  }
+
+  hasUserPhone(user: ContactProps) {
+    return !!user.phoneNumbers.length;
+  }
+
+  sendInvitationEmail = async (user: ContactProps) => {
+    const { invitedUser } = this.state;
+
+    try {
+      // await invitation(email);
+      const email = user.emailAddresses[0].email;
+      const request = makeInvitationRq(email);
+      await global.fetch(request.url, request.options);
+
+      invitedUser.push(user.recordID);
+
+      this.setState({ invitedUser });
+    } catch (err) {}
+  };
+
+  sendInvitationMessage = (user: ContactProps) => {
+    const phone = user.phoneNumbers[0].number;
+    const url = `sms:${phone}?body=fdfdsfdsfd`;
+
+    Linking.canOpenURL(url)
+      .then(supported => {
+        if (!supported) {
+          console.log("Can't handle url: " + url);
+        } else {
+          return Linking.openURL(url);
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+  };
+
   onInvite(user: ContactProps) {
     return () => {
-      console.log('invite', user);
+      if (this.hasUserEmail(user)) {
+        this.sendInvitationEmail(user);
+      } else if (this.hasUserPhone(user)) {
+        this.sendInvitationMessage(user);
+      }
     };
   }
 
@@ -175,34 +238,38 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
         );
       case 'authorized':
         return (
-          <Screen>
-            <View style={styles.searchBox}>
-              <SearchBox
-                placeholder="Search..."
-                value={this.state.searchValue}
-                onChangeText={(searchValue: string) =>
-                  this.setState({ searchValue })}
-              />
-            </View>
-            <TableView.Table>
-              <TableView.Section>
-                <FlatList
-                  data={this.users}
-                  keyExtractor={item => item.recordID}
-                  renderItem={({ item }) => (
-                    <TableView.Cell
-                      cellContentView={this.cellContentView(item)}
-                      image={this.cellImageView(item)}
-                      contentContainerStyle={styles.cell}
+          <Fetch manual>
+            {invitation => (
+              <Screen>
+                <View style={styles.searchBox}>
+                  <SearchBox
+                    placeholder="Search..."
+                    value={this.state.searchValue}
+                    onChangeText={(searchValue: string) =>
+                      this.setState({ searchValue })}
+                  />
+                </View>
+                <TableView.Table>
+                  <TableView.Section>
+                    <FlatList
+                      data={this.users}
+                      keyExtractor={item => item.recordID}
+                      renderItem={({ item }) => (
+                        <TableView.Cell
+                          cellContentView={this.cellContentView(item)}
+                          image={this.cellImageView(item)}
+                          contentContainerStyle={styles.cell}
+                        />
+                      )}
+                      ItemSeparatorComponent={({ highlighted }) => (
+                        <Separator isHidden={highlighted} />
+                      )}
                     />
-                  )}
-                  ItemSeparatorComponent={({ highlighted }) => (
-                    <Separator isHidden={highlighted} />
-                  )}
-                />
-              </TableView.Section>
-            </TableView.Table>
-          </Screen>
+                  </TableView.Section>
+                </TableView.Table>
+              </Screen>
+            )}
+          </Fetch>
         );
       default:
         return null;
