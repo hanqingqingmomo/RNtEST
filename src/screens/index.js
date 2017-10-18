@@ -8,7 +8,9 @@ export {
 } from './AuthenticationRootScreen';
 export { default as BootScreen } from './BootScreen';
 export { default as CommunityListScreen } from './CommunityListScreen';
-export { default as CommunityLandingScreen } from './CommunityLandingScreen';
+export {
+  default as CommunityLandingScreen,
+} from './CommunityLandingScreen/CommunityLandingScreen';
 export {
   default as DonationAppealScreen,
 } from './DonationAppealScreen/DonationAppealScreen';

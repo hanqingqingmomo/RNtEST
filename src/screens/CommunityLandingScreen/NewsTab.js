@@ -2,11 +2,7 @@
 
 import React, { Component } from 'react';
 
-import { View } from '../../atoms';
-import NewsFeedConversation from '../AggregatedNewsFeedScreen/NewsFeedConversation';
-import PinnedSection from './PinnedSection';
-import EventsSection from './EventsSection';
-import CommunityNewsfeed from './CommunityNewsfeed';
+import CommunityNewsFeedScreen from '../CommunityNewsFeedScreen/CommunityNewsFeedScreen';
 
 export default class NewsTab extends Component<{}> {
   static navigationOptions = {
@@ -15,12 +11,9 @@ export default class NewsTab extends Component<{}> {
 
   render() {
     return (
-      <View>
-        <NewsFeedConversation />
-        <EventsSection />
-        <PinnedSection />
-        <CommunityNewsfeed />
-      </View>
+      <CommunityNewsFeedScreen
+        communityId={this.props.screenProps.communityId}
+      />
     );
   }
 }
