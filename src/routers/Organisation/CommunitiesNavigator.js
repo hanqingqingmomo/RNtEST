@@ -1,33 +1,22 @@
 // @flow
 
-import React from 'react';
-
 import { StackNavigator } from '../../navigation';
-import {
-  CommunitiesScreen,
-  CommunitiesHeader,
-  CommunityLandingScreen,
-  communitiesHeaderLabels,
-} from '../../screens';
+import { CommunityListScreen, CommunityLandingScreen } from '../../screens';
 
 export default StackNavigator(
   {
-    CommunitiesScreen: {
-      screen: props => <CommunitiesScreen {...props} />,
-      navigationOptions: {
-        header: CommunitiesHeader,
-      },
+    CommunityListScreen: {
+      screen: CommunityListScreen,
     },
 
     CommunityLandingScreen: {
-      screen: props => <CommunityLandingScreen {...props} />,
+      screen: CommunityLandingScreen,
       navigationOptions: {
         title: 'Community',
       },
     },
   },
   {
-    initialRouteName: 'CommunitiesScreen',
-    initialRouteParams: { label: communitiesHeaderLabels[0] },
+    initialRouteName: 'CommunityListScreen',
   }
 );

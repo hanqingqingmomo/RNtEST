@@ -11,7 +11,7 @@ export {
   default as CommunitiesHeader,
   labels as communitiesHeaderLabels,
 } from './CommunitiesScreen/CommunitiesHeader';
-export { default as CommunitiesScreen } from './CommunitiesScreen';
+export { default as CommunityListScreen } from './CommunityListScreen';
 export { default as CommunityLandingScreen } from './CommunityLandingScreen';
 export {
   default as DonationAppealScreen,

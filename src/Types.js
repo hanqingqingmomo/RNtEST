@@ -46,6 +46,33 @@ export type User = {
   role: string,
 };
 
+export type Attachment = {
+  name: string,
+  created_at: string,
+  updated_at: ?string,
+  type: 'pdf' | string,
+};
+
+export type Community = {
+  id: number,
+  name: string,
+  profile_photo: string,
+  cover_photo: string,
+  members: number,
+  description: ?string,
+  attachments: ?Array<Attachment>,
+  joined: boolean,
+};
+
+export type CommunityMember = {
+  id: number,
+  first_name: string,
+  last_name: string,
+  profile_photo: string,
+  email: string,
+  joined_communities: Array<Community>,
+};
+
 // Redux
 export type Action<T, A> = {
   type: T,
