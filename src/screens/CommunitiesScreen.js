@@ -3,47 +3,61 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View, Screen, CommunityCard, TouchableItem } from '../atoms';
-import { CommunitiesHeader } from './index';
+import {
+  ActivityIndicator,
+  CenterView,
+  CommunityCard,
+  Fetch,
+  Screen,
+  ScrollView,
+  Text,
+  TouchableItem,
+} from '../atoms';
+import { communitiesHeaderLabels } from './';
 
-const items = [
-  {
-    title: 'Child Care Assistance Program',
-    subtitle: '12 New conversations',
-    imageURI: 'https://www.w3schools.com/css/img_fjords.jpg',
-    isNew: true,
-  },
-  {
-    title: '3D Youth',
-    subtitle: '12 New conversations',
-    imageURI: 'https://www.w3schools.com/css/img_mountains.jpg',
-  },
-  {
-    title: 'Young Parents Program',
-    subtitle: '0 New convesations',
-    imageURI: 'https://www.reduceimages.com/img/image-after.jpg',
-  },
-];
-
-export default class CommunitiesScreen extends React.Component {
-  render() {
-    return (
-      <Screen tintColor="#ECEFF1">
-        <View style={style.container}>
-          {items.map((item, idx) => (
-            <TouchableItem
-              onPress={item =>
-                this.props.navigation.navigate('CommunityLandingScreen')}
-              key={idx}
-              style={style.item}
-            >
-              <CommunityCard {...item} />
-            </TouchableItem>
-          ))}
-        </View>
-      </Screen>
-    );
-  }
+export default function CommunitiesScreen({ navigation }) {
+  return (
+    <Screen tintColor="#ECEFF1" fill>
+      <Fetch
+        url={`v1/communities${navigation.state.params.label ===
+        communitiesHeaderLabels[0]
+          ? '/?membership_status=joined'
+          : ''}`}
+      >
+        {({ loading, error, data }) => (
+          <ScrollView contentContainerStyle={style.container}>
+            {loading && (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            )}
+            {error && (
+              <CenterView>
+                <Text>{error.message}</Text>
+              </CenterView>
+            )}
+            {data &&
+              data.data.map(community => (
+                <TouchableItem
+                  onPress={() =>
+                    navigation.navigate('CommunityLandingScreen', {
+                      communityId: community.id,
+                    })}
+                  key={community.id}
+                  style={style.item}
+                >
+                  <CommunityCard
+                    imageURI={community.profile_photo}
+                    title={community.name}
+                    subtitle={community.description}
+                  />
+                </TouchableItem>
+              ))}
+          </ScrollView>
+        )}
+      </Fetch>
+    </Screen>
+  );
 }
 
 const style = StyleSheet.create({
@@ -52,6 +66,7 @@ const style = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    flexGrow: 1,
   },
 
   item: {

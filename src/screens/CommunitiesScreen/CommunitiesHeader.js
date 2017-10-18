@@ -5,9 +5,9 @@ import { StyleSheet } from 'react-native';
 
 import { Icon, SegmentedControl, View } from '../../atoms';
 
-const labels = ['Joined', 'Explore'];
+export const labels = ['Joined', 'Explore'];
 
-export default function CommunitiesHeader() {
+export default function CommunitiesHeader({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
@@ -16,8 +16,9 @@ export default function CommunitiesHeader() {
       <View style={styles.controlsContainer}>
         <SegmentedControl
           labels={labels}
-          onChange={() => {}}
-          selectedLabel="Joined"
+          onChange={label =>
+            navigation.navigate('CommunitiesScreen', { label })}
+          selectedLabel={labels[0]}
         />
       </View>
     </View>

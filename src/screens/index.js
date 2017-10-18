@@ -9,6 +9,7 @@ export {
 export { default as BootScreen } from './BootScreen';
 export {
   default as CommunitiesHeader,
+  labels as communitiesHeaderLabels,
 } from './CommunitiesScreen/CommunitiesHeader';
 export { default as CommunitiesScreen } from './CommunitiesScreen';
 export { default as CommunityLandingScreen } from './CommunityLandingScreen';
