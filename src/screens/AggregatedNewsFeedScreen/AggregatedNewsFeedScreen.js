@@ -43,7 +43,6 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
 
   render() {
     const { url, options } = makeReadAggregatedFeedRq();
-    console.log(url, options);
 
     return (
       <CursorBasedFetech url={url} options={options}>
