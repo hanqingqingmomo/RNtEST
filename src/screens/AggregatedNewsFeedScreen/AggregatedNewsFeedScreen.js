@@ -4,80 +4,17 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import {
-  CenterView,
   ActivityIndicator,
-  Fetch,
-  View,
+  CenterView,
+  CursorBasedFetech,
   ShadowView,
+  View,
 } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
 import FriendInvitationWidget from './FriendInvitationWidget';
 import NewsFeedHeader from './NewsFeedHeader';
 import NewsFeedConversation from './NewsFeedConversation';
 import { getAggegatedFeedRq } from '../../utils/requestFactory';
-
-type State = {
-  cursor: ?{
-    next: ?number,
-    limit: ?number,
-  },
-  nextCursor: ?{
-    next: ?number,
-    limit: ?number,
-  },
-  data: ?Array<any>,
-  batch: number,
-};
-
-class CursorBaseFetch extends Component<{}, State> {
-  state = {
-    cursor: null,
-    nextCursor: null,
-    data: null,
-    batch: 0,
-  };
-
-  onChange = (fetchProps: *) => {
-    this.setState({ loading: fetchProps.loading });
-  };
-
-  onDataChange = (fetchProps: *) => {
-    const { data, meta } = fetchProps;
-
-    this.setState(state => ({
-      nextCursor: meta.cursor,
-      batch: state.batch + 1,
-      data: (state.data || []).concat(data),
-    }));
-  };
-
-  render() {
-    const urlWithCursor = this.state.cursor
-      ? `${this.props.url}?cursor=${this.state.cursor.next}`
-      : this.props.url;
-
-    console.log(urlWithCursor);
-    return (
-      <Fetch
-        {...this.props}
-        url={urlWithCursor}
-        onDataChange={this.onDataChange}
-        onChange={this.onChange}
-      >
-        {this.props.children({
-          loading: this.state.loading,
-          data: this.state.data,
-          batch: this.state.batch,
-          requestNextBatch: () => {
-            if (this.state.nextCursor.next) {
-              this.setState({ cursor: this.state.nextCursor });
-            }
-          },
-        })}
-      </Fetch>
-    );
-  }
-}
 
 function NavigatorHeader(props) {
   return (
@@ -109,7 +46,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     console.log(url, options);
 
     return (
-      <CursorBaseFetch url={url} options={options}>
+      <CursorBasedFetech url={url} options={options}>
         {({ data, loading, batch, requestNextBatch }) => {
           return data === null ? (
             <CenterView>
@@ -142,7 +79,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
             </View>
           );
         }}
-      </CursorBaseFetch>
+      </CursorBasedFetech>
     );
   }
 }
