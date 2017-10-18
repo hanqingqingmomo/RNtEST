@@ -44,7 +44,6 @@ export default class CursorBaseFetch extends Component<{}, State> {
       ? `${this.props.url}?cursor=${this.state.cursor.next}`
       : this.props.url;
 
-    console.log(urlWithCursor);
     return (
       <Fetch
         {...this.props}
