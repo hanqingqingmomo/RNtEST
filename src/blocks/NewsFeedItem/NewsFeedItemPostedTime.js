@@ -9,7 +9,7 @@ import { getColor } from '../../utils/color';
 
 type P = {
   date: Date,
-  style?: Object,
+  style?: Object | number,
 };
 
 export default class NewsFeedItemHeader extends Component<P> {

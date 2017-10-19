@@ -3,11 +3,16 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Button, Image, Text, View, TouchableOpacity } from '../../atoms';
+import {
+  Button,
+  Text,
+  View,
+  Icon,
+  CenterView,
+  TouchableOpacity,
+} from '../../atoms';
 
 const communityTitle = 'YWCA';
-const communityImageURI =
-  'https://seeklogo.com/images/Y/YWCA-logo-B79B872F99-seeklogo.com.gif';
 
 type Props = {
   onDonateButtonPress: () => void,
@@ -21,7 +26,16 @@ const DrawerHeader = ({
   <View style={styles.container}>
     <TouchableOpacity onPress={onOrganisationTilePress}>
       <View style={styles.logoTile}>
-        <Image source={{ uri: communityImageURI }} style={styles.image} />
+        <CenterView
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: 'white',
+            borderRadius: 4,
+          }}
+        >
+          <Icon name="ywca" color="orange" size={32} />
+        </CenterView>
         <Text color="white" size={15} style={styles.title} weight="600">
           {communityTitle}
         </Text>

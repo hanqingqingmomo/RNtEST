@@ -37,7 +37,7 @@ type P = {
   data: Array<ItemProps>,
 };
 
-export default class EventFeed extends React.Component<*, P, *> {
+export default class EventFeed extends React.Component<P> {
   onJoin = (id: number | string) => {};
 
   onGoing = (id: number | string) => {};

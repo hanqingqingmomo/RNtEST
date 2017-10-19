@@ -2,10 +2,13 @@
 
 import React from 'react';
 import { AppRegistry, Platform } from 'react-native';
+import { PortalProvider } from 'react-native-portal';
 import { Provider } from 'react-redux';
 import KeyboardManager from 'react-native-keyboard-manager';
 
+import { initFactory as initRequestFactory } from './utils/requestFactory';
 import { initStore } from './redux/store';
+import { FetchProvider } from './atoms';
 import { BootScreen } from './screens';
 import Application from './Application';
 import { selectApplicationIsReady } from './redux/selectors';
@@ -15,6 +18,10 @@ if (Platform.OS === 'ios') {
   KeyboardManager.setEnable(true);
   KeyboardManager.setEnableAutoToolbar(false);
 }
+
+const store = initStore();
+
+initRequestFactory(store);
 
 type Props = {
   persistor: any,
@@ -54,15 +61,19 @@ export default class Bootloader extends React.PureComponent<Props, State> {
 }
 
 AppRegistry.registerComponent('app', () => () => (
-  <Bootloader
-    persistor={initStore()}
-    render={(store, ready) =>
-      ready ? (
-        <Provider store={store}>
-          <Application />
-        </Provider>
-      ) : (
-        <BootScreen />
-      )}
-  />
+  <PortalProvider>
+    <Bootloader
+      persistor={store}
+      render={(store, ready) =>
+        ready ? (
+          <FetchProvider store={store}>
+            <Provider store={store}>
+              <Application />
+            </Provider>
+          </FetchProvider>
+        ) : (
+          <BootScreen />
+        )}
+    />
+  </PortalProvider>
 ));

@@ -26,14 +26,8 @@ type UserProps = {
 };
 
 type AttachmentProps = {
-  imageURI?: string,
-  title: string,
-  videoURI?: string,
-};
-
-type ImageProps = {
-  imageURI: string,
-  title: string,
+  url: string,
+  type: 'image' | 'link',
 };
 
 type EventProps = {
@@ -50,15 +44,17 @@ type DonationProps = {
 };
 
 type P = {
-  attachment?: AttachmentProps,
-  date?: Date,
+  attachments?: Array<AttachmentProps>,
+  author?: UserProps,
+  comments?: number,
+  communities: Array<TagProps>,
+  created_at?: Date,
   donation?: DonationProps,
   event?: EventProps,
-  image?: ImageProps,
   isNew?: boolean,
-  tags: Array<TagProps>,
-  title?: string,
-  user?: UserProps,
+  likes?: number,
+  replies: number,
+  text_content?: string,
 };
 
 const LINKS = ['Share', 'Comment'];
@@ -83,31 +79,41 @@ export default class NewsFeedItem extends Component<P> {
     };
   }
 
+  get attachment(): Object {
+    return this.props.attachment;
+  }
+
+  get hasAttachment(): boolean {
+    return !!this.attachment;
+  }
+
   render() {
     const {
-      attachment,
-      date,
+      created_at,
       donation,
       event,
-      image,
       isNew,
-      tags,
-      title,
-      user,
+      communities,
+      text_content,
+      author,
+      replies,
+      comments,
+      likes,
     } = this.props;
 
-    const shortedTitle = this.shortenString(title, 110);
+    const shortedTitle = this.shortenString(text_content, 110);
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader
-            tags={tags}
-            onTagPress={tag => console.log('tag', tag)}
+            communities={communities}
+            onPillPress={tag => console.log('tag', tag)}
             onMorePress={() => console.log('more')}
           />
 
-          {shortedTitle ? (
+          {(this.hasAttachment && this.attachment.type === 'link') ||
+          !this.hasAttachment ? (
             <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
               {shortedTitle.string}
               {shortedTitle.isShorted ? (
@@ -119,17 +125,23 @@ export default class NewsFeedItem extends Component<P> {
             </Text>
           ) : null}
 
-          {attachment ? <NewsFeedItemAttachment {...attachment} /> : null}
+          {this.hasAttachment && this.attachment.type.includes('image') ? (
+            <NewsFeedItemImage {...this.attachment} title={text_content} />
+          ) : (
+            <NewsFeedItemAttachment {...this.attachment} />
+          )}
 
-          {image ? <NewsFeedItemImage {...image} /> : null}
-
-          {date ? (
-            <NewsFeedItemPostedTime date={date} style={styles.postedTime} />
+          {created_at ? (
+            <NewsFeedItemPostedTime
+              date={created_at}
+              style={styles.postedTime}
+            />
           ) : null}
 
-          {user ? (
+          {author ? (
             <NewsFeedItemAuthor
-              user={user}
+              replies={replies}
+              author={author}
               onReplayPress={() => console.log('reply')}
               onUserPress={user => console.log('user', user)}
             />
@@ -145,6 +157,8 @@ export default class NewsFeedItem extends Component<P> {
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
           <NewsFeedItemFooter
+            likes={likes}
+            comments={comments}
             links={LINKS}
             onLinkPress={key => console.log(key)}
             onLikePress={key => console.log(key)}

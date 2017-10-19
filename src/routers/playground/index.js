@@ -3,7 +3,8 @@
 import React from 'react';
 
 import { StackNavigator } from '../../navigation';
-import { ScrollView, Text } from '../../atoms';
+import { ScrollView, Text, NavigationIconButton } from '../../atoms';
+import { MemberList } from '../../blocks';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -11,7 +12,6 @@ import {
   LandingScreen,
   UserProfileScreen,
   UserSettingsScreen,
-  MemberListScreen,
   NewsFeedSettingsScreen,
   NotificationSettingsScreen,
 } from '../../screens';
@@ -178,7 +178,13 @@ export default StackNavigator(
       navigationOptions: ({ navigation, screenProps }) => {
         return {
           title: 'Component Playground',
-          headerLeft: <Text onPress={screenProps.dismissModalRoute}>=</Text>,
+          headerLeft: (
+            <NavigationIconButton
+              name="close"
+              color="#fc612d"
+              onPress={screenProps.dismissModalRoute}
+            />
+          ),
         };
       },
     },
@@ -231,7 +237,7 @@ export default StackNavigator(
       screen: LikePlayground,
     },
     MemberListScreen: {
-      screen: MemberListScreen,
+      screen: MemberList,
     },
     NewsfeedPlayground: {
       screen: NewsfeedPlayground,

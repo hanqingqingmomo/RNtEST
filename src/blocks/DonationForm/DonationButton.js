@@ -34,12 +34,6 @@ const HEIGHT = {
   lg: 58,
 };
 
-const ICON_LINE_HEIGHT = {
-  sm: 45,
-  md: 60,
-  lg: 65,
-};
-
 export default class DonationButton extends Component<P> {
   render() {
     const {
@@ -78,12 +72,7 @@ export default class DonationButton extends Component<P> {
             {title}
           </Text>
           {icon ? (
-            <Icon
-              name={icon}
-              size={60}
-              color="white"
-              style={[styles.icon, css('lineHeight', ICON_LINE_HEIGHT[size])]}
-            />
+            <Icon name={icon} size="lg" color="white" style={styles.icon} />
           ) : null}
         </View>
       </TouchableItem>
@@ -110,6 +99,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+    marginTop: -3,
     overflow: 'hidden',
   },
   sm: {

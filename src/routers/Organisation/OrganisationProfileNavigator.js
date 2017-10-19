@@ -1,24 +1,21 @@
 // @flow
 
-import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
 
 import { StackNavigator } from '../../navigation';
-import { View, Screen } from '../../atoms';
-import { NewsFeedItem } from '../../blocks';
-import { OrganisationProfileScreen } from '../../screens';
+import {
+  OrganisationMemberProfileScreen,
+  OrganisationProfileScreen,
+} from '../../screens';
 
 export default StackNavigator({
   OrganisationProfileScreen: {
-    screen: OrganisationProfileScreen,
+    screen: props => <OrganisationProfileScreen {...props} />,
     navigationOptions: {
-      headerTitle: 'Profile',
+      header: null,
     },
   },
-});
-
-const styles = StyleSheet.create({
-  item: {
-    paddingBottom: 10,
+  OrganisationMemberProfileScreen: {
+    screen: OrganisationMemberProfileScreen,
   },
 });

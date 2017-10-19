@@ -3,22 +3,11 @@
 import React from 'react';
 import { TabBarBottom, TabNavigator } from 'react-navigation';
 
-// import { TabNavigator } from '../navigation';
-import { CenterView, Icon, Text } from '../../atoms';
-import OrganisationNewsFeedNavigator from './OrganisationNewsFeedNavigator';
+import { Icon } from '../../atoms';
+import AggregatedNewsFeedNavigator from './AggregatedNewsFeedNavigator';
+import CommunitiesNavigator from './CommunitiesNavigator';
+// import EventFeedNavigator from './EventFeedNavigator';
 import { getColor } from '../../utils/color';
-
-// function OpenDrawerButton({ onPress }) {
-//   return <Text onPress={onPress}>open</Text>;
-// }
-
-function ScreenComponent(props) {
-  return (
-    <CenterView>
-      <Text>{props.children}</Text>
-    </CenterView>
-  );
-}
 
 const makeTabBarIcon = name => iconProps => (
   <Icon name={name} size={24} color={iconProps.tintColor} />
@@ -26,32 +15,33 @@ const makeTabBarIcon = name => iconProps => (
 
 export default TabNavigator(
   {
-    OrganisationNewsFeedTab: {
-      screen: OrganisationNewsFeedNavigator,
+    AggregatedNewsFeedTab: {
+      screen: AggregatedNewsFeedNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('home'),
       }),
     },
-    ConversationsTab: {
-      screen: () => <ScreenComponent>Conversations</ScreenComponent>,
-      navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: makeTabBarIcon('conversation'),
-      }),
-    },
-    CalendarTab: {
-      screen: () => <ScreenComponent>Calendar</ScreenComponent>,
-      navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: makeTabBarIcon('calendar'),
-      }),
-    },
+    // ConversationsTab: {
+    //   screen: () => <ScreenComponent>Conversations</ScreenComponent>,
+    //   navigationOptions: ({ navigation, screenProps }) => ({
+    //     tabBarIcon: makeTabBarIcon('conversation'),
+    //   }),
+    // },
+    // CalendarTab: {
+    //   screen: EventFeedNavigator,
+    //   navigationOptions: ({ navigation, screenProps }) => ({
+    //     tabBarIcon: makeTabBarIcon('calendar'),
+    //   }),
+    // },
     CommunitiesTab: {
-      screen: () => <ScreenComponent>Communities</ScreenComponent>,
+      screen: CommunitiesNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('communities'),
       }),
     },
   },
   {
+    initialRouteName: 'AggregatedNewsFeedTab',
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {

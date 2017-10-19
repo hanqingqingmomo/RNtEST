@@ -1,9 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { View, Screen } from '../../atoms';
+import { Image, View, Screen } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type P = {

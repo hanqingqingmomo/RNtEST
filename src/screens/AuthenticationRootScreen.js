@@ -36,24 +36,6 @@ export default class AuthenticationRootScreen extends Component<{}> {
 
           <View>
             <AuthenticationButton
-              color={getColor('facebookBlue')}
-              textColor={getColor('white')}
-              onPress={this.navigate('FacebookAuthenticationScreen')}
-              title="Continue with Facebook"
-            />
-            <AuthenticationButton
-              color={getColor('twitterBlue')}
-              textColor={getColor('white')}
-              onPress={this.navigate('TwitterAuthenticationScreen')}
-              title="Continue with Twitter"
-            />
-            <AuthenticationButton
-              color={getColor('linkedinBlue')}
-              textColor={getColor('white')}
-              onPress={this.navigate('LinkedinAuthenticationScreen')}
-              title="Continue with LinkedIn"
-            />
-            <AuthenticationButton
               outline
               color={getColor('orange')}
               textColor={getColor('orange')}

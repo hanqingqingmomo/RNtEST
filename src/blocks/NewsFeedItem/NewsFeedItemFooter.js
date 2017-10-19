@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View, TouchableItem, Like } from '../../atoms';
@@ -9,9 +9,11 @@ import { css } from '../../utils/style';
 type LikeProps = 'like' | 'comment';
 
 type P = {
+  comments?: number,
+  likes?: number,
   links: Array<string>,
-  onLinkPress: string => void,
   onLikePress: LikeProps => void,
+  onLinkPress: string => void,
 };
 
 const HIT_SLOP = {
@@ -21,7 +23,7 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemFooter extends React.Component<*, P, *> {
+export default class NewsFeedItemFooter extends Component<P, *> {
   onLikePress(status: LikeProps) {
     return () => {
       this.props.onLikePress(status);
@@ -29,21 +31,21 @@ export default class NewsFeedItemFooter extends React.Component<*, P, *> {
   }
 
   render() {
+    const { likes, comments } = this.props;
     return (
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
           <View style={styles.likeWrapper}>
             <Like
-              liked
               iconName="like"
-              count={8}
+              count={likes || 0}
               onPress={this.onLikePress('like')}
             />
           </View>
           <View style={styles.likeWrapper}>
             <Like
               iconName="comment"
-              count={100}
+              count={comments || 0}
               onPress={this.onLikePress('comment')}
             />
           </View>

@@ -6,6 +6,7 @@ import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
 import { View } from '../atoms';
+import { DonationAppealModalBox } from '../blocks';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
 import DonationNavigator from './DonationNavigator';
 import HelpNavigator from './HelpNavigator';
@@ -86,12 +87,14 @@ export default class MainNavigator extends Component<{}, State> {
 
   openModalRoute = (item: NavigationItem) => {
     this.setState({ modalRoute: item });
-    StatusBar.setBarStyle('dark-content');
+    // TODO bring back
+    // StatusBar.setBarStyle('dark-content');
   };
 
   closeModalRoute = () => {
     this.setState({ modalRoute: null });
-    StatusBar.setBarStyle('light-content');
+    // TODO bring back
+    // StatusBar.setBarStyle('light-content');
   };
 
   renderNavigationView = () => {
@@ -154,14 +157,21 @@ export default class MainNavigator extends Component<{}, State> {
           drawerPosition={DrawerLayout.positions.Left}
           renderNavigationView={this.renderNavigationView}
           onDrawerOpen={() => {
-            StatusBar.setBarStyle('light-content');
+            // TODO bring back
+            // StatusBar.setBarStyle('light-content');
           }}
           onDrawerClose={() => {
-            StatusBar.setBarStyle('dark-content');
+            // TODO bring back
+            // StatusBar.setBarStyle('dark-content');
           }}
         >
           <MainOrganisationNavigator
             screenProps={{
+              openFriendsInitationModal: () => {
+                this.openModalRoute({
+                  routeName: 'InviteFriendModal',
+                });
+              },
               openDrawer: () => {
                 if (this._drawerRef) {
                   this._drawerRef.openDrawer();
@@ -171,13 +181,14 @@ export default class MainNavigator extends Component<{}, State> {
           />
         </DrawerLayout>
         <Modal
-          coverScreen
           swipeToClose={false}
           isOpen={this.state.modalRoute !== null}
           onClosed={this.closeModalRoute}
         >
           {this.renderModalRoute()}
         </Modal>
+
+        <DonationAppealModalBox onConfirm={this.openDonationModal} />
       </View>
     );
   }

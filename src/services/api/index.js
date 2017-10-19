@@ -3,7 +3,6 @@
 import Config from 'react-native-config';
 import { create } from 'axios';
 
-import authentication from './authentication';
 import user from './user';
 
 const http = create({
@@ -19,6 +18,6 @@ http.interceptors.response.use(
 
 export default {
   http,
-  authentication: authentication(http),
+
   user: user(http),
 };

@@ -14,7 +14,15 @@ type Props = {
 export default function Pill({ color, title }: Props) {
   return (
     <View style={[styles.view, { borderColor: color }]}>
-      <Text color={color} size={11} weight="500" lineHeight={13}>
+      <Text
+        color={color}
+        size={11}
+        weight="500"
+        lineHeight={13}
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={{ maxWidth: 70 }}
+      >
         {title}
       </Text>
     </View>

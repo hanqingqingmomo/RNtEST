@@ -9,27 +9,48 @@ import { getColor } from '../utils/color';
 type Props = {
   coverImageURI: string,
   profileImageURI: string,
+  subtitle?: string,
   title: string,
 };
 
 export default function CommunityHeader({
   coverImageURI,
   profileImageURI,
+  subtitle,
   title,
 }: Props) {
   return (
     <ImageBackground
       source={{ uri: coverImageURI }}
-      style={[styles.coverContainer]}
+      style={styles.coverContainer}
     >
       <View style={[styles.dimm, StyleSheet.absoluteFill]} />
-      <View style={[styles.profileWrapper]}>
+      <View style={styles.profileWrapper}>
         <Image
           source={{ uri: profileImageURI }}
-          style={[styles.profileImage]}
+          style={styles.profileImage}
+          resizeMode="contain"
         />
-        <View style={[styles.titleWrapper]}>
-          <Text style={[styles.title]}>{title}</Text>
+        <View style={styles.titleWrapper}>
+          <Text
+            color={getColor('white')}
+            lineHeight={24}
+            size={20}
+            weight="500"
+          >
+            {title}
+          </Text>
+          {subtitle ? (
+            <Text
+              color={getColor('white')}
+              ellipsizeMode="tail"
+              lineHeight={18}
+              numberOfLines={2}
+              size={15}
+            >
+              {subtitle}
+            </Text>
+          ) : null}
         </View>
       </View>
     </ImageBackground>
@@ -47,9 +68,10 @@ const styles = StyleSheet.create({
     opacity: 0.35,
   },
   profileImage: {
+    backgroundColor: 'white',
     borderRadius: 3,
-    width: 58,
     height: 58,
+    width: 58,
   },
   profileWrapper: {
     alignItems: 'center',
@@ -65,8 +87,7 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   titleWrapper: {
-    flexDirection: 'row',
-    flexGrow: 1,
-    paddingLeft: 12,
+    flex: 1,
+    paddingHorizontal: 12,
   },
 });

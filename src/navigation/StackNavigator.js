@@ -2,8 +2,9 @@
 
 import merge from 'lodash.merge';
 import { StyleSheet } from 'react-native';
-
 import { StackNavigator as ReactNavigationStackNavigator } from 'react-navigation';
+
+import { getColor } from '../utils/color';
 
 // type ScreenProps = {
 //   screen: any,
@@ -32,6 +33,12 @@ import { StackNavigator as ReactNavigationStackNavigator } from 'react-navigatio
 // };
 
 const DEFAULTS = screens => ({
+  navigationOptions: {
+    headerTintColor: getColor('orange'),
+    headerTitleStyle: {
+      color: '#455A64',
+    },
+  },
   ...StyleSheet.create({
     cardStyle: {
       backgroundColor: '#F4F5F7',

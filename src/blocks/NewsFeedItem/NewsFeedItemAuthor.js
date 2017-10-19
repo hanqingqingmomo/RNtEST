@@ -7,14 +7,18 @@ import { Text, View, Avatar, Button, TouchableItem } from '../../atoms';
 import { css } from '../../utils/style';
 
 type UserProps = {
-  username: string,
-  imageURI: string,
+  email: string,
+  first_name: string,
+  last_name: string,
+  profile_photo: string,
+  id: number,
 };
 
 type P = {
-  user: UserProps,
   onReplayPress: () => void,
   onUserPress: UserProps => void,
+  author: UserProps,
+  replies: number,
 };
 
 const HIT_SLOP = {
@@ -26,11 +30,11 @@ const HIT_SLOP = {
 
 export default class NewsFeedItemAuthor extends Component<P> {
   onUserPress = () => {
-    this.props.onUserPress(this.props.user);
+    this.props.onUserPress(this.props.author);
   };
 
   render() {
-    const { username, imageURI } = this.props.user;
+    const { first_name, last_name, profile_photo } = this.props.author;
 
     return (
       <View style={[styles.container, styles.row]}>
@@ -40,14 +44,14 @@ export default class NewsFeedItemAuthor extends Component<P> {
           hitSlop={HIT_SLOP}
         >
           <View style={styles.row}>
-            <Avatar imageURI={imageURI} size={28} />
+            <Avatar imageURI={profile_photo} size={28} />
             <Text
               style={[styles.username, css('color', '#455A64')]}
               size={13}
               lineHeight={15}
               weight="600"
             >
-              {username}
+              {`${first_name} ${last_name}`}
             </Text>
           </View>
         </TouchableItem>
@@ -57,7 +61,7 @@ export default class NewsFeedItemAuthor extends Component<P> {
             size="sm"
             color="#00E676"
             textColor="white"
-            title="1 Reply"
+            title={`${this.props.replies || 0} Reply`}
             onPress={this.props.onReplayPress}
           />
         </View>
