@@ -20,6 +20,16 @@ type Props = {
   }) => boolean | Promise<*>,
 };
 
+type ErrorProps = {
+  field: string,
+  message: string,
+  validation: string,
+};
+
+type Errors = {
+  [string]: string,
+};
+
 export default class Form extends Component<Props> {
   makeValidator = () => {
     if (this.props.validate) {
@@ -29,14 +39,17 @@ export default class Form extends Component<Props> {
     const { rules, messages } = this.props;
 
     if (rules) {
-      return async values => {
+      return async (values: { [string]: string }) => {
         try {
           await validator.validateAll(values, rules, messages);
         } catch (err) {
-          const errorBag = err.reduce((errorBag, err) => {
-            errorBag[err.field] = err.message;
-            return errorBag;
-          }, {});
+          const errorBag = err.reduce(
+            (errorBag: Errors, err: ErrorProps): Errors => {
+              errorBag[err.field] = messages[err.field] || err.message;
+              return errorBag;
+            },
+            {}
+          );
           throw errorBag;
         }
       };
