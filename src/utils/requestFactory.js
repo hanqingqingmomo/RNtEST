@@ -138,6 +138,16 @@ export const makeDonationRq = (donationPayload: DonationPayload) =>
   });
 
 /**
+ * Organisation
+ */
+
+export const makeReadOrganisationReq = () =>
+  inject({
+    url: join(Config.API_URL, 'v1/communities/81bad81ca2be'),
+    options: { method: 'GET' },
+  });
+
+/**
  * Communities
  */
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
