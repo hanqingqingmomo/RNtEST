@@ -36,7 +36,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
   renderItem = ({ item }) => {
     return (
       <View style={styles.item}>
-        <NewsFeedItem {...item} />
+        <NewsFeedItem {...item} navigation={this.props.navigation} />
       </View>
     );
   };

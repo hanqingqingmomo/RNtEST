@@ -24,16 +24,20 @@ export type ScreenProps<S> = {
 };
 
 export type Comment = $Exact<{
-  id: number,
-  parentId?: number,
-  timestamp: number,
-  content: string,
-  replies: Array<Comment>,
+  id: string,
+  text_content: string,
+  created_at: string,
+  attachment: {} | null,
   author: {
-    id: number,
-    name: string,
-    avatar: string,
+    id: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    profile_photo: string,
   },
+  comments_count: number,
+  likes_count: number,
+  replies: Array<Comment>,
 }>;
 
 // Entities

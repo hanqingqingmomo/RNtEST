@@ -218,6 +218,23 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
     },
   });
 
+export const makeReadPostWithCommentsRq = (postId: string | number) =>
+  inject({
+    url: `${join(Config.API_URL, `/v1/content_objects/${postId}/comments`)}`,
+    options: {
+      method: 'GET',
+    },
+  });
+
+export const makeCreatePostReq = (body: *) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+  });
+
 // export const makeCreatePostReq = (body: *) =>
 //   inject({
 //     url: join(Config.API_URL, '/v1/content_objects/'),
@@ -229,15 +246,6 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
 //       },
 //     },
 //   });
-
-export const makeCreatePostReq = (body: *) =>
-  inject({
-    url: join(Config.API_URL, '/v1/content_objects/'),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(body),
-    },
-  });
 
 /**
  * User Invitations

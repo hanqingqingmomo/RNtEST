@@ -53,6 +53,7 @@ type P = {
   event?: EventProps,
   isNew?: boolean,
   likes?: number,
+  navigation?: object,
   replies: number,
   text_content?: string,
 };
@@ -89,6 +90,7 @@ export default class NewsFeedItem extends Component<P> {
 
   render() {
     const {
+      id,
       created_at,
       donation,
       event,
@@ -160,7 +162,12 @@ export default class NewsFeedItem extends Component<P> {
             likes={likes}
             comments={comments}
             links={LINKS}
-            onLinkPress={key => console.log(key)}
+            onLinkPress={key =>
+              key === 'comment'
+                ? this.props.navigation.navigate('PostDetailScreen', {
+                    postId: id,
+                  })
+                : console.log(key)}
             onLikePress={key => console.log(key)}
           />
         </View>
