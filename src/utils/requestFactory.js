@@ -205,6 +205,20 @@ export const makeLeaveCommunity = (
     },
   });
 
+export const makeJoinCommunity = (
+  memberId: string | number,
+  communityId: string | number
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/communities/${memberId}/${communityId}/membership`
+    ),
+    options: {
+      method: 'POST',
+    },
+  });
+
 /**
  * News feed requests
  */

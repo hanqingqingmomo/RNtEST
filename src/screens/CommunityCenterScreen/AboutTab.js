@@ -2,7 +2,13 @@
 
 import React, { Component } from 'react';
 
-import { ContactGroup, ScrollView, TableView, Text, View } from '../../atoms';
+import {
+  ContactGroupCell,
+  ScrollView,
+  TableView,
+  Text,
+  View,
+} from '../../atoms';
 import { css } from '../../utils/style';
 import { type User } from '../../Types';
 
@@ -25,17 +31,9 @@ export default class AboutTab extends Component<Props> {
       <ScrollView>
         <Table>
           <Section header="contact">
-            <Cell
-              contentContainerStyle={[
-                css('paddingRight', 0),
-                css('paddingLeft', 0),
-              ]}
-              cellContentView={
-                <ContactGroup
-                  onContactSelect={this.props.navigateToMember}
-                  users={community.administrators}
-                />
-              }
+            <ContactGroupCell
+              onContactSelect={this.props.navigateToMember}
+              users={community.administrators}
             />
           </Section>
 
