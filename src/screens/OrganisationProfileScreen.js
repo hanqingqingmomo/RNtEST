@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { InteractionManager, StyleSheet } from 'react-native';
-import { NavigationIconButton } from '../atoms';
 
 import {
   ActivityIndicator,
@@ -10,6 +9,7 @@ import {
   ContactGroup,
   Fetch,
   Icon,
+  NavigationIconButton,
   OrganizationHeader,
   Screen,
   TableView,
@@ -130,12 +130,6 @@ export default class OrganisationProfileScreen extends Component<{}, State> {
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(69, 90, 100, 0.5)',
-    paddingHorizontal: 25,
-    justifyContent: 'center',
-  },
   dismisalButton: {
     position: 'absolute',
     top: 20,

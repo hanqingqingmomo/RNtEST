@@ -147,6 +147,12 @@ export const makeReadOrganisationReq = () =>
     options: { method: 'GET' },
   });
 
+export const makeReadCommunityReq = (id: string) =>
+  inject({
+    url: join(Config.API_URL, `v1/communities/${id}`),
+    options: { method: 'GET' },
+  });
+
 /**
  * Communities
  */

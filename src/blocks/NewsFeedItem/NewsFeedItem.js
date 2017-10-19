@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
+import { type Post } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -15,51 +16,9 @@ import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 import NewsFeedItemPostedTime from './NewsFeedItemPostedTime';
 
-type TagProps = {
-  disabled?: boolean,
-  name: string,
-};
-
-type UserProps = {
-  imageURI: string,
-  username: string,
-};
-
-type AttachmentProps = {
-  url: string,
-  type: 'image' | 'link',
-};
-
-type EventProps = {
-  endDate: Date,
-  imageURI: string,
-  startDate: Date,
-  title: string,
-};
-
-type DonationProps = {
-  donors: Array<UserProps>,
-  imageURI: string,
-  title: string,
-};
-
-type P = {
-  attachments?: Array<AttachmentProps>,
-  author?: UserProps,
-  comments?: number,
-  communities: Array<TagProps>,
-  created_at?: Date,
-  donation?: DonationProps,
-  event?: EventProps,
-  isNew?: boolean,
-  likes?: number,
-  replies: number,
-  text_content?: string,
-};
-
 const LINKS = ['Share', 'Comment'];
 
-export default class NewsFeedItem extends Component<P> {
+export default class NewsFeedItem extends Component<Post> {
   shortenString(
     string?: string,
     maxChars?: number

@@ -29,7 +29,7 @@ export default class NewsFeedItemHeader extends Component<P> {
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
           {this.props.communities.map((item: ItemProps) => (
-            <View style={styles.tag} key={item.name}>
+            <View style={styles.tag} key={item.id}>
               <TouchableItem
                 onPress={() => this.props.onPillPress(item)}
                 disabled={item.disabled}

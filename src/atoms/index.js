@@ -42,6 +42,7 @@ export { default as SearchBox } from './SearchBox';
 export { default as SegmentedControl } from './SegmentedControl';
 export { default as ShadowView } from './ShadowView';
 export { default as Spacer } from './Spacer';
+export { default as Tabs } from './Tabs';
 export { default as TableView } from './TableView';
 export { default as Text } from './Text';
 export { default as TextInput } from './TextInput';
