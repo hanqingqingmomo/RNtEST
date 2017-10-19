@@ -24,16 +24,56 @@ export type ScreenProps<S> = {
 };
 
 export type Comment = $Exact<{
-  id: number,
-  parentId?: number,
-  timestamp: number,
-  content: string,
-  replies: Array<Comment>,
+  id: string,
+  text_content: string,
+  created_at: string,
+  attachment: {} | null,
   author: {
-    id: number,
-    name: string,
-    avatar: string,
+    id: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    profile_photo: string,
   },
+  comments_count: number,
+  likes_count: number,
+  replies: Array<Comment>,
+}>;
+
+export type Post = $Exact<{
+  id: string,
+  attachments?: Array<{
+    url: string,
+    type: 'image' | 'link',
+  }>,
+  author?: {
+    imageURI: string,
+    username: string,
+  },
+  comments?: number,
+  communities: Array<{
+    disabled?: boolean,
+    name: string,
+  }>,
+  created_at?: Date,
+  donation?: {
+    donors: Array<{
+      imageURI: string,
+      username: string,
+    }>,
+    imageURI: string,
+    title: string,
+  },
+  event?: {
+    endDate: Date,
+    imageURI: string,
+    startDate: Date,
+    title: string,
+  },
+  isNew?: boolean,
+  likes?: number,
+  replies: number,
+  text_content?: string,
 }>;
 
 // Entities
@@ -53,7 +93,7 @@ export type User = {
   first_name: string,
   last_name: string,
   email: string,
-  profilePhoto: string,
+  profile_photo: string,
   role: string,
   joined_communities: Array<JoinedCommunity>,
 };

@@ -11,9 +11,11 @@ type LikeProps = 'like' | 'comment';
 type P = {
   comments?: number,
   likes?: number,
-  links: Array<string>,
+  links: Array<{
+    label: string,
+    onPress: Function,
+  }>,
   onLikePress: LikeProps => void,
-  onLinkPress: string => void,
 };
 
 const HIT_SLOP = {
@@ -53,13 +55,10 @@ export default class NewsFeedItemFooter extends Component<P, *> {
         <View style={[styles.footerRight, styles.row]}>
           {this.props.links.map((link, idx) => (
             <View
-              key={link}
+              key={link.label}
               style={[styles.footerLink, idx ? styles.borderLeft : undefined]}
             >
-              <TouchableItem
-                onPress={() => this.props.onLinkPress(link.toLowerCase())}
-                hitSlop={HIT_SLOP}
-              >
+              <TouchableItem onPress={link.onPress} hitSlop={HIT_SLOP}>
                 <Text
                   size={13}
                   lineHeight={18}
@@ -67,7 +66,7 @@ export default class NewsFeedItemFooter extends Component<P, *> {
                     ({ backgroundColor: 'white' }, css('color', '#00B0FF'))
                   }
                 >
-                  {link}
+                  {link.label}
                 </Text>
               </TouchableItem>
             </View>

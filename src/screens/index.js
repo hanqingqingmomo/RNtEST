@@ -9,8 +9,8 @@ export {
 export { default as BootScreen } from './BootScreen';
 export { default as CommunityListScreen } from './CommunityListScreen';
 export {
-  default as CommunityLandingScreen,
-} from './CommunityLandingScreen/CommunityLandingScreen';
+  default as CommunityCenterScreen,
+} from './CommunityCenterScreen/CommunityCenterScreen';
 export {
   default as DonationAppealScreen,
 } from './DonationAppealScreen/DonationAppealScreen';
@@ -33,6 +33,7 @@ export {
 export {
   default as OrganisationProfileScreen,
 } from './OrganisationProfileScreen';
+export { default as PostDetailScreen } from './PostDetailScreen';
 export { default as PasswordResetScreen } from './PasswordResetScreen';
 export { default as UserProfileScreen } from './UserProfileScreen';
 export { default as UserSettingsScreen } from './UserSettingsScreen';

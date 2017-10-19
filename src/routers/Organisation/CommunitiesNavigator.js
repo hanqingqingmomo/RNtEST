@@ -3,7 +3,7 @@
 import { StackNavigator } from '../../navigation';
 import {
   CommunityListScreen,
-  CommunityLandingScreen,
+  CommunityCenterScreen,
   OrganisationMemberProfileScreen,
 } from '../../screens';
 
@@ -12,14 +12,13 @@ export default StackNavigator(
     CommunityListScreen: {
       screen: CommunityListScreen,
     },
-
-    CommunityLandingScreen: {
-      screen: CommunityLandingScreen,
+    CommunityCenterScreen: {
+      screen: CommunityCenterScreen,
       navigationOptions: {
         title: 'Community',
       },
     },
-    MemberProfileScreen: {
+    CommunityMemberProfileScreen: {
       screen: OrganisationMemberProfileScreen,
     },
   },

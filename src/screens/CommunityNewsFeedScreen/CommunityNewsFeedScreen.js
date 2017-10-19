@@ -12,23 +12,24 @@ import {
 import { NewsFeedItem } from '../../blocks';
 import NewsFeedConversation from './NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
+import { type Post } from '../../Types';
 
-export default class CommunityNewsFeedScreen extends Component<{}> {
-  keyExtractor = item => {
-    return item.id.toString() + Math.random();
-  };
+type Props = {
+  communityId: string,
+  navigateToPost: Object => void,
+};
 
-  renderItem = ({ item }) => {
-    return (
-      <View style={styles.item}>
-        <NewsFeedItem {...item} />
-      </View>
-    );
-  };
+function ItemSeparatorComponent() {
+  return <View style={styles.itemSeparatorComponent} />;
+}
+
+export default class CommunityNewsFeedScreen extends Component<Props> {
+  keyExtractor = (item: Post) => item.id.toString() + Math.random();
+
+  renderItem = ({ item }: { item: Post }) => <NewsFeedItem {...item} />;
 
   render() {
     const { url, options } = makeReadCommunityFeedRq(this.props.communityId);
-
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, loading, batch, requestNextBatch }) => {
@@ -37,7 +38,7 @@ export default class CommunityNewsFeedScreen extends Component<{}> {
               <ActivityIndicator />
             </CenterView>
           ) : (
-            <View style={{ flex: 1 }}>
+            <View style={{ height: '100%' }}>
               <NewsFeedConversation />
               <View style={styles.itemsContainer}>
                 <FlatList
@@ -46,6 +47,7 @@ export default class CommunityNewsFeedScreen extends Component<{}> {
                   renderItem={this.renderItem}
                   keyExtractor={this.keyExtractor}
                   onEndReached={requestNextBatch}
+                  ItemSeparatorComponent={ItemSeparatorComponent}
                 />
               </View>
               {loading ? (
@@ -62,13 +64,11 @@ export default class CommunityNewsFeedScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    paddingBottom: 10,
+  itemSeparatorComponent: {
+    height: 10,
   },
   itemsContainer: {
     flex: 1,
-    // height: '100%',
     padding: 10,
-    paddingBottom: 0,
   },
 });

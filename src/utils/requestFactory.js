@@ -149,6 +149,12 @@ export const makeReadOrganisationReq = () =>
     options: { method: 'GET' },
   });
 
+export const makeReadCommunityReq = (id: string) =>
+  inject({
+    url: join(Config.API_URL, `v1/communities/${id}`),
+    options: { method: 'GET' },
+  });
+
 /**
  * Communities
  */
@@ -163,7 +169,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
     },
   });
 
-export const makeReadCommunityDetailRq = (communityId: number) =>
+export const makeReadCommunityDetailRq = (communityId: string | number) =>
   inject({
     url: join(Config.API_URL, `/v1/communities/${communityId}`),
     options: {
@@ -172,7 +178,7 @@ export const makeReadCommunityDetailRq = (communityId: number) =>
   });
 
 export const makeReadCommunityMembersRq = (
-  communityId: number,
+  communityId: string | number,
   limit: number
 ) =>
   inject({
@@ -182,6 +188,20 @@ export const makeReadCommunityMembersRq = (
     ),
     options: {
       method: 'GET',
+    },
+  });
+
+export const makeLeaveCommunity = (
+  memberId: string | number,
+  communityId: string | number
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/communities/${memberId}/${communityId}/membership`
+    ),
+    options: {
+      method: 'DELETE',
     },
   });
 
@@ -204,6 +224,23 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
     },
   });
 
+export const makeReadPostWithCommentsRq = (postId: string | number) =>
+  inject({
+    url: `${join(Config.API_URL, `/v1/content_objects/${postId}/comments`)}`,
+    options: {
+      method: 'GET',
+    },
+  });
+
+export const makeCreatePostReq = (body: *) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+  });
+
 // export const makeCreatePostReq = (body: *) =>
 //   inject({
 //     url: join(Config.API_URL, '/v1/content_objects/'),
@@ -215,15 +252,6 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
 //       },
 //     },
 //   });
-
-export const makeCreatePostReq = (body: *) =>
-  inject({
-    url: join(Config.API_URL, '/v1/content_objects/'),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(body),
-    },
-  });
 
 /**
  * User Invitations

@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
+import { type Post } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -43,23 +44,7 @@ type DonationProps = {
   title: string,
 };
 
-type P = {
-  attachments?: Array<AttachmentProps>,
-  author?: UserProps,
-  comments?: number,
-  communities: Array<TagProps>,
-  created_at?: Date,
-  donation?: DonationProps,
-  event?: EventProps,
-  isNew?: boolean,
-  likes?: number,
-  replies: number,
-  text_content?: string,
-};
-
-const LINKS = ['Share', 'Comment'];
-
-export default class NewsFeedItem extends Component<P> {
+export default class NewsFeedItem extends Component<Post> {
   shortenString(
     string?: string,
     maxChars?: number
@@ -86,6 +71,29 @@ export default class NewsFeedItem extends Component<P> {
   get hasAttachment(): boolean {
     return !!this.attachment;
   }
+
+  getLinks = () => {
+    const { id, navigation } = this.props;
+
+    const links = [
+      {
+        label: 'Share',
+        onPress: () => console.log('Share press'),
+      },
+    ];
+
+    if (navigation) {
+      links.push({
+        label: 'Comment',
+        onPress: () =>
+          navigation.navigate('PostDetailScreen', {
+            postId: id,
+          }),
+      });
+    }
+
+    return links;
+  };
 
   render() {
     const {
@@ -159,8 +167,7 @@ export default class NewsFeedItem extends Component<P> {
           <NewsFeedItemFooter
             likes={likes}
             comments={comments}
-            links={LINKS}
-            onLinkPress={key => console.log(key)}
+            links={this.getLinks()}
             onLikePress={key => console.log(key)}
           />
         </View>
