@@ -31,7 +31,7 @@ export default function ContactGroup({ onContactSelect, style, users }: Props) {
           <TouchableItem onPress={() => onContactSelect(user)} key={i}>
             <View style={[styles.itemStyle, css('width', ITEM_WIDTH)]}>
               <View style={styles.avatarContainer}>
-                <Avatar imageURI={user.profilePhoto} size={AVATAR_WIDTH} />
+                <Avatar imageURI={user.profile_photo} size={AVATAR_WIDTH} />
               </View>
               <Text
                 ellipsizeMode="tail"
