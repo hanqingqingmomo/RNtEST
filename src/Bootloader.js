@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { AppRegistry, Platform } from 'react-native';
+import { PortalProvider } from 'react-native-portal';
 import { Provider } from 'react-redux';
 import KeyboardManager from 'react-native-keyboard-manager';
 
@@ -57,17 +58,19 @@ export default class Bootloader extends React.PureComponent<Props, State> {
 }
 
 AppRegistry.registerComponent('app', () => () => (
-  <Bootloader
-    persistor={store}
-    render={(store, ready) =>
-      ready ? (
-        <FetchProvider store={store}>
-          <Provider store={store}>
-            <Application />
-          </Provider>
-        </FetchProvider>
-      ) : (
-        <BootScreen />
-      )}
-  />
+  <PortalProvider>
+    <Bootloader
+      persistor={store}
+      render={(store, ready) =>
+        ready ? (
+          <FetchProvider store={store}>
+            <Provider store={store}>
+              <Application />
+            </Provider>
+          </FetchProvider>
+        ) : (
+          <BootScreen />
+        )}
+    />
+  </PortalProvider>
 ));

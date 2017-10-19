@@ -2,19 +2,21 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { BlackPortal, WhitePortal } from 'react-native-portal';
 
 import {
   ActivityIndicator,
   CenterView,
   CommunityCard,
   Fetch,
+  Icon,
+  Screen,
   ScrollView,
+  SegmentedControl,
   Text,
   TouchableItem,
-  SegmentedControl,
-  View,
   TouchableOpacity,
-  Icon,
+  View,
 } from '../atoms';
 import { makeReadCommunitiesListRq } from '../utils/requestFactory';
 
@@ -39,6 +41,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const HEADER_VIEW_ID = 'HeaderView:CommListing';
+
 function NavigatorHeader(props) {
   return (
     <TouchableOpacity
@@ -59,29 +63,12 @@ type State = {
 export default class CommunityListScreen extends Component<{}, State> {
   static navigationOptions = props => ({
     headerLeft: <NavigatorHeader {...props} />,
-    headerTitle: props.navigation.state.params
-      ? props.navigation.state.params.headerTitleComponent
-      : null,
+    headerTitle: <WhitePortal name={HEADER_VIEW_ID} />,
   });
 
   state = {
     membershipStatus: 'Joined',
   };
-
-  componentDidMount() {
-    this.props.navigation.setParams({
-      headerTitleComponent: (
-        <View style={styles.segmentedControlContainer}>
-          <SegmentedControl
-            labels={['Joined', 'Explore']}
-            selectedLabel="Joined"
-            onChange={(membershipStatus: MembershipStatus) =>
-              this.setState({ membershipStatus })}
-          />
-        </View>
-      ),
-    });
-  }
 
   render() {
     const { navigation } = this.props;
@@ -90,43 +77,55 @@ export default class CommunityListScreen extends Component<{}, State> {
     );
 
     return (
-      <Fetch
-        url={readCommunitiesListRq.url}
-        options={readCommunitiesListRq.options}
-      >
-        {({ loading, error, data }) => (
-          <ScrollView contentContainerStyle={styles.container}>
-            {loading && (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            )}
-            {error && (
-              <CenterView>
-                <Text>{error.message}</Text>
-              </CenterView>
-            )}
-            {!loading &&
-              data &&
-              data.data.map(community => (
-                <TouchableItem
-                  onPress={() =>
-                    navigation.navigate('CommunityLandingScreen', {
-                      communityId: community.id,
-                    })}
-                  key={community.id}
-                  style={styles.item}
-                >
-                  <CommunityCard
-                    imageURI={community.profile_photo}
-                    title={community.name}
-                    subtitle={`${community.members} members`}
-                  />
-                </TouchableItem>
-              ))}
-          </ScrollView>
-        )}
-      </Fetch>
+      <Screen>
+        <BlackPortal name={HEADER_VIEW_ID}>
+          <View style={styles.segmentedControlContainer}>
+            <SegmentedControl
+              labels={['Joined', 'Explore']}
+              selectedLabel="Joined"
+              onChange={(membershipStatus: MembershipStatus) =>
+                this.setState({ membershipStatus })}
+            />
+          </View>
+        </BlackPortal>
+        <Fetch
+          url={readCommunitiesListRq.url}
+          options={readCommunitiesListRq.options}
+        >
+          {({ loading, error, data }) => (
+            <ScrollView contentContainerStyle={styles.container}>
+              {loading && (
+                <CenterView>
+                  <ActivityIndicator />
+                </CenterView>
+              )}
+              {error && (
+                <CenterView>
+                  <Text>{error.message}</Text>
+                </CenterView>
+              )}
+              {!loading &&
+                data &&
+                data.data.map(community => (
+                  <TouchableItem
+                    onPress={() =>
+                      navigation.navigate('CommunityLandingScreen', {
+                        communityId: community.id,
+                      })}
+                    key={community.id}
+                    style={styles.item}
+                  >
+                    <CommunityCard
+                      imageURI={community.profile_photo}
+                      title={community.name}
+                      subtitle={`${community.members} members`}
+                    />
+                  </TouchableItem>
+                ))}
+            </ScrollView>
+          )}
+        </Fetch>
+      </Screen>
     );
   }
 }

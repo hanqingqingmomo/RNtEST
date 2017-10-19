@@ -3741,7 +3741,7 @@ minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
-mitt@^1.1.2:
+mitt@*, mitt@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/mitt/-/mitt-1.1.2.tgz#380e61480d6a615b660f07abb60d51e0a4e4bed6"
 
@@ -4475,6 +4475,12 @@ react-native-payments@^0.3.1:
 react-native-popover-tooltip@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-popover-tooltip/-/react-native-popover-tooltip-1.1.1.tgz#fd69d7d9b2a8fc4d24687829596f23a97e5f5385"
+
+react-native-portal@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-portal/-/react-native-portal-1.2.1.tgz#58c5b9bd9340a9b65702470811521cb1244c3dcd"
+  dependencies:
+    mitt "*"
 
 react-native-splash-screen@^3.0.1:
   version "3.0.1"

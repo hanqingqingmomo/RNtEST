@@ -41,7 +41,7 @@ export default TabNavigator(
     },
   },
   {
-    initialRouteName: 'CommunitiesTab',
+    initialRouteName: 'AggregatedNewsFeedTab',
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {
