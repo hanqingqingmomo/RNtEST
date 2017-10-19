@@ -41,6 +41,17 @@ export type Comment = $Exact<{
 }>;
 
 // Entities
+export type JoinedCommunity = {
+  categories: Array<*>,
+  cover_photo: string,
+  description: string,
+  id: number | string,
+  members: number,
+  name: string,
+  nonprofit_id: number | string,
+  profile_photo: string,
+};
+
 export type User = {
   id: number,
   first_name: string,
@@ -48,24 +59,25 @@ export type User = {
   email: string,
   profilePhoto: string,
   role: string,
+  joined_communities: Array<JoinedCommunity>,
 };
 
 export type Attachment = {
   name: string,
   created_at: string,
   updated_at: ?string,
-  type: 'pdf' | string,
+  type: 'pdf' | 'link' | string,
 };
 
 export type Community = {
+  attachments: ?Array<Attachment>,
+  cover_photo: string,
+  description: ?string,
   id: number,
+  joined: boolean,
+  members: number,
   name: string,
   profile_photo: string,
-  cover_photo: string,
-  members: number,
-  description: ?string,
-  attachments: ?Array<Attachment>,
-  joined: boolean,
 };
 
 export type CommunityMember = {

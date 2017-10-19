@@ -58,12 +58,14 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
   const formData: FormData = new FormData();
   Object.keys(payload).forEach(key => {
     if (fileNames.includes(key)) {
-      // $FlowExpectedError
-      formData.append(key, {
-        uri: payload[key],
-        type: 'image/jpeg',
-        name: 'image.jpg',
-      });
+      if (payload[key]) {
+        // $FlowExpectedError
+        formData.append(key, {
+          uri: payload[key],
+          type: 'image/jpeg',
+          name: 'image.jpg',
+        });
+      }
     } else {
       formData.append(key, payload[key]);
     }
@@ -138,6 +140,16 @@ export const makeDonationRq = (donationPayload: DonationPayload) =>
   });
 
 /**
+ * Organisation
+ */
+
+export const makeReadOrganisationReq = () =>
+  inject({
+    url: join(Config.API_URL, 'v1/communities/81bad81ca2be'),
+    options: { method: 'GET' },
+  });
+
+/**
  * Communities
  */
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
@@ -199,6 +211,27 @@ export const makeReadPostWithCommentsRq = (postId: string | number) =>
       method: 'GET',
     },
   });
+
+export const makeCreatePostReq = (body: *) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+  });
+
+// export const makeCreatePostReq = (body: *) =>
+//   inject({
+//     url: join(Config.API_URL, '/v1/content_objects/'),
+//     options: {
+//       method: 'POST',
+//       body: makeFormData(body, ['attachment']),
+//       headers: {
+//         'content-type': 'multipart/form-data',
+//       },
+//     },
+//   });
 
 /**
  * User Invitations

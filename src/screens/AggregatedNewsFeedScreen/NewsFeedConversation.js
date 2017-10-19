@@ -7,13 +7,14 @@ import { Avatar, Icon, ShadowView, View, TableView, Text } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
-const { Table, Section, Cell } = TableView;
+const { Cell } = TableView;
 const AVATAR_WIDTH = 30;
 
-export default function NewsFeedConversation() {
+export default function NewsFeedConversation(props) {
   return (
     <ShadowView style={styles.cellContainer}>
       <Cell
+        {...props}
         title="Start a conversation..."
         titleTextColor={getColor('gray')}
         image={
@@ -37,7 +38,6 @@ export default function NewsFeedConversation() {
             <Icon name="pen" size="md" color="#CFD8DC" />
           </View>
         }
-        onPress={() => {}}
         disableImageResize
       />
     </ShadowView>

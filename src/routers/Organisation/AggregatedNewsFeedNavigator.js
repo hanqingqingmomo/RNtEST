@@ -1,7 +1,11 @@
 // @flow
 
 import { StackNavigator } from '../../navigation';
-import { AggregatedNewsFeedScreen, PostDetailScreen } from '../../screens';
+import {
+  AggregatedNewsFeedScreen,
+  PostDetailScreen,
+  PostEditorScreen,
+} from '../../screens';
 
 export default StackNavigator({
   AggregatedNewsFeedScreen: {
@@ -9,5 +13,8 @@ export default StackNavigator({
   },
   PostDetailScreen: {
     screen: PostDetailScreen,
+  },
+  PostEditorScreen: {
+    screen: PostEditorScreen,
   },
 });

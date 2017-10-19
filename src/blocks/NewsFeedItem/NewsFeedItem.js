@@ -81,15 +81,11 @@ export default class NewsFeedItem extends Component<P> {
   }
 
   get attachment(): Object {
-    if (this.hasAttachment) {
-      return this.props.attachments[0];
-    }
-
-    return {};
+    return this.props.attachment;
   }
 
   get hasAttachment(): boolean {
-    return !!this.props.attachments && !!this.props.attachments[0];
+    return !!this.attachment;
   }
 
   render() {
