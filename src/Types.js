@@ -53,7 +53,7 @@ export type User = {
   first_name: string,
   last_name: string,
   email: string,
-  profilePhoto: string,
+  profile_photo: string,
   role: string,
   joined_communities: Array<JoinedCommunity>,
 };
