@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
+import { type Post } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -43,23 +44,7 @@ type DonationProps = {
   title: string,
 };
 
-type P = {
-  attachments?: Array<AttachmentProps>,
-  author?: UserProps,
-  comments?: number,
-  communities: Array<TagProps>,
-  created_at?: Date,
-  donation?: DonationProps,
-  event?: EventProps,
-  isNew?: boolean,
-  likes?: number,
-  navigation?: any,
-  replies: number,
-  text_content?: string,
-  id: string,
-};
-
-export default class NewsFeedItem extends Component<P> {
+export default class NewsFeedItem extends Component<Post> {
   shortenString(
     string?: string,
     maxChars?: number

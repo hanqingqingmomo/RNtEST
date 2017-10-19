@@ -32,7 +32,7 @@ export default class DonationScreen extends Component<Props, State> {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ open: true });
-    }, 60000);
+    }, 30000);
   }
 
   confirm = () => {

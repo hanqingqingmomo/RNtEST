@@ -109,7 +109,7 @@ export default class CommunityListScreen extends Component<{}, State> {
                 data.data.map(community => (
                   <TouchableItem
                     onPress={() =>
-                      navigation.navigate('CommunityLandingScreen', {
+                      navigation.navigate('CommunityCenterScreen', {
                         communityId: community.id,
                       })}
                     key={community.id}

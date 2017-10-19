@@ -4,7 +4,6 @@ import React from 'react';
 
 import { StackNavigator } from '../../navigation';
 import { ScrollView, Text, NavigationIconButton } from '../../atoms';
-import { MemberList } from '../../blocks';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -122,11 +121,6 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       navigation={navigation}
     />
     <Link
-      title="Members listing"
-      screen="MemberListScreen"
-      navigation={navigation}
-    />
-    <Link
       title="Newsfeed"
       screen="NewsfeedPlayground"
       navigation={navigation}
@@ -235,9 +229,6 @@ export default StackNavigator(
     },
     LikePlayground: {
       screen: LikePlayground,
-    },
-    MemberListScreen: {
-      screen: MemberList,
     },
     NewsfeedPlayground: {
       screen: NewsfeedPlayground,

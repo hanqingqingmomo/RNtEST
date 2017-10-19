@@ -40,6 +40,42 @@ export type Comment = $Exact<{
   replies: Array<Comment>,
 }>;
 
+export type Post = $Exact<{
+  id: string,
+  attachments?: Array<{
+    url: string,
+    type: 'image' | 'link',
+  }>,
+  author?: {
+    imageURI: string,
+    username: string,
+  },
+  comments?: number,
+  communities: Array<{
+    disabled?: boolean,
+    name: string,
+  }>,
+  created_at?: Date,
+  donation?: {
+    donors: Array<{
+      imageURI: string,
+      username: string,
+    }>,
+    imageURI: string,
+    title: string,
+  },
+  event?: {
+    endDate: Date,
+    imageURI: string,
+    startDate: Date,
+    title: string,
+  },
+  isNew?: boolean,
+  likes?: number,
+  replies: number,
+  text_content?: string,
+}>;
+
 // Entities
 export type JoinedCommunity = {
   categories: Array<*>,
@@ -57,7 +93,7 @@ export type User = {
   first_name: string,
   last_name: string,
   email: string,
-  profilePhoto: string,
+  profile_photo: string,
   role: string,
   joined_communities: Array<JoinedCommunity>,
 };

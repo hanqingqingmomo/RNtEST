@@ -59,7 +59,7 @@ export default class PostEditorScreen extends Component<Props, State> {
         this.dropdown.alertWithType(
           'success',
           'Thanks!',
-          'Please check your email for a link to reset your password.'
+          'Your post has been successfully created.'
         );
       }
     }
