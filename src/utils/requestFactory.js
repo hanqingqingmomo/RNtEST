@@ -163,7 +163,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
     },
   });
 
-export const makeReadCommunityDetailRq = (communityId: number) =>
+export const makeReadCommunityDetailRq = (communityId: string | number) =>
   inject({
     url: join(Config.API_URL, `/v1/communities/${communityId}`),
     options: {
@@ -172,7 +172,7 @@ export const makeReadCommunityDetailRq = (communityId: number) =>
   });
 
 export const makeReadCommunityMembersRq = (
-  communityId: number,
+  communityId: string | number,
   limit: number
 ) =>
   inject({
@@ -182,6 +182,20 @@ export const makeReadCommunityMembersRq = (
     ),
     options: {
       method: 'GET',
+    },
+  });
+
+export const makeLeaveCommunity = (
+  communityId: string | number,
+  memberId: string | number
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/communities/${memberId}/${communityId}/membership`
+    ),
+    options: {
+      method: 'DELETE',
     },
   });
 
