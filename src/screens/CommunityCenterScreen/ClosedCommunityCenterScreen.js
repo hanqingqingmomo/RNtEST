@@ -7,25 +7,31 @@ import Collapsible from 'react-native-collapsible';
 import {
   ActivityIndicator,
   CenterView,
-  Fetch,
   CommunityHeader,
+  Fetch,
   Screen,
-  Tabs,
+  TableView,
 } from '../../atoms';
-import { makeReadCommunityReq } from '../../utils/requestFactory';
-import NewsTab from './NewsTab';
-import MembersTab from './MembersTab';
+import {
+  makeJoinCommunity,
+  makeReadCommunityReq,
+} from '../../utils/requestFactory';
 import AboutTab from './AboutTab';
+import JoinSection from './JoinSection';
 import { type User } from '../../Types';
 
-import ClosedCommunityCenterScreen from './ClosedCommunityCenterScreen';
+const { Table, Section, Cell } = TableView;
+
+type Props = {
+  navigation?: any,
+};
 
 type State = {
   screenIsReady: boolean,
   activeTab: string,
 };
 
-export default class CommunityCenterScreen extends Component<{}, State> {
+export default class CommunityCenterScreen extends Component<Props, State> {
   state = {
     screenIsReady: false,
     activeTab: 'News',
@@ -66,9 +72,7 @@ export default class CommunityCenterScreen extends Component<{}, State> {
     return (
       <Fetch url={readCommunityRes.url} options={readCommunityRes.options}>
         {({ loading, data, error }) => {
-          if (loading === false && !data.joined) {
-            return <ClosedCommunityCenterScreen {...this.props} />;
-          }
+          console.log(data);
           return loading === false ? (
             <Screen fill>
               <Collapsible collapsed={this.state.activeTab !== 'News'}>
@@ -78,40 +82,8 @@ export default class CommunityCenterScreen extends Component<{}, State> {
                   coverImageURI={data.cover_photo}
                 />
               </Collapsible>
-
-              <Tabs
-                activeItem={this.state.activeTab}
-                onChange={this.changeActiveTab}
-                items={[
-                  {
-                    label: 'News',
-                    component: () => (
-                      <NewsTab
-                        communityId={data.id}
-                        navigateToPost={this.navigateToPost}
-                      />
-                    ),
-                  },
-                  {
-                    label: 'Members',
-                    component: () => (
-                      <MembersTab
-                        community={data}
-                        navigateToMember={this.navigateToMember}
-                      />
-                    ),
-                  },
-                  {
-                    label: 'About',
-                    component: () => (
-                      <AboutTab
-                        community={data}
-                        navigateToMember={this.navigateToMember}
-                      />
-                    ),
-                  },
-                ]}
-              />
+              <JoinSection community={data} />
+              <AboutTab community={data} navigateToMember={() => {}} />
             </Screen>
           ) : (
             <CenterView>
