@@ -253,6 +253,15 @@ export const makeCreatePostReq = (body: *) =>
 //     },
 //   });
 
+export const makeCreateCommentReq = (postId: string, body: *) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${postId}/comment`),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+  });
+
 /**
  * User Invitations
  */
