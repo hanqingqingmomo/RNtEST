@@ -5,13 +5,13 @@ import distanceInWords from 'date-fns/distance_in_words';
 import { Text } from './';
 
 type P = {
-  timestamp: number,
+  date: string,
 };
 
-export default function TimeAgo({ timestamp }: P) {
+export default function TimeAgo({ date }: P) {
   return (
     <Text>
-      {distanceInWords(timestamp, new Date(), {
+      {distanceInWords(new Date(date), new Date(), {
         includeSeconds: true,
         addSuffix: true,
       })}
