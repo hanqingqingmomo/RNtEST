@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     height: 110,
+    flexGrow: 1,
   },
   textStyle: {
     alignSelf: 'center',
