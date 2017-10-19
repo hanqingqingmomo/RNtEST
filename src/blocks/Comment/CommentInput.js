@@ -69,7 +69,7 @@ export default class CommentInput extends Component<P, S> {
                 <View style={styles.targetedReplyWrapper}>
                   <Text size={12} style={css('color', '#8fa3ad')}>
                     Replying to {replyingTo.author.first_name}{' '}
-                    {replyingTo.author.last_name}
+                    {replyingTo.author.last_name}{' '}
                     <Icon
                       name="close"
                       size={12}

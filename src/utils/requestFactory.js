@@ -226,7 +226,7 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
 
 export const makeReadPostWithCommentsRq = (postId: string | number) =>
   inject({
-    url: `${join(Config.API_URL, `/v1/content_objects/${postId}/comments`)}`,
+    url: join(Config.API_URL, `/v1/content_objects/${postId}/comments`),
     options: {
       method: 'GET',
     },
@@ -274,5 +274,16 @@ export const makeInvitationRq = (email: string) =>
       body: JSON.stringify({
         member_invitations: email,
       }),
+    },
+  });
+
+/**
+   * Like
+   */
+export const makeLikeRq = (objectId: string, unlike?: boolean) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${objectId}/like`),
+    options: {
+      method: unlike ? 'DELETE' : 'POST',
     },
   });

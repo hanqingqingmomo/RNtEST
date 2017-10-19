@@ -37,6 +37,7 @@ export type Comment = $Exact<{
   },
   comments_count: number,
   likes_count: number,
+  liked: boolean,
   replies: Array<Comment>,
 }>;
 
@@ -50,7 +51,7 @@ export type Post = $Exact<{
     imageURI: string,
     username: string,
   },
-  comments?: number,
+  comments_count: number,
   communities: Array<{
     disabled?: boolean,
     name: string,
@@ -71,7 +72,8 @@ export type Post = $Exact<{
     title: string,
   },
   isNew?: boolean,
-  likes?: number,
+  likes_count: number,
+  liked: boolean,
   replies: number,
   text_content?: string,
 }>;
