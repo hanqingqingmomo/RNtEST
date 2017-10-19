@@ -11,7 +11,6 @@ export default class LandingScreen extends Component<{}> {
   navigate = (
     route: 'AuthenticationRootScreen' | 'InvitationCodeScreen'
   ) => () => {
-    this.props.navigation.navigate('');
     this.props.navigation.navigate(route);
   };
 
@@ -24,18 +23,8 @@ export default class LandingScreen extends Component<{}> {
             color={getColor('white')}
             onPress={this.navigate('AuthenticationRootScreen')}
             size="lg"
-            style={styles.marginBottom}
             textColor={getColor('orange')}
             title="Get Started"
-          />
-          <Button
-            block
-            color={getColor('white')}
-            onPress={this.navigate('InvitationCodeScreen')}
-            outline
-            size="lg"
-            textColor={getColor('white')}
-            title="Invitation Code"
           />
         </View>
       </LaunchScreenBackground>
