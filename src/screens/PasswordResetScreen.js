@@ -27,6 +27,10 @@ const RULES = {
   email: 'required|email',
 };
 
+const MESSAGES = {
+  email: 'Please enter valid email address',
+};
+
 export default class PasswordResetScreen extends Component<{}> {
   dropdown = null;
 
@@ -70,6 +74,7 @@ export default class PasswordResetScreen extends Component<{}> {
             <Form
               initialValues={INITIAL_VALUES}
               rules={RULES}
+              messages={MESSAGES}
               onSubmit={this.handleFormSubmit(fetch)}
               render={formProps => (
                 <View flexDirection="column" style={styles.container}>

@@ -41,6 +41,13 @@ const RULES = {
   password: 'required',
 };
 
+const MESSAGES = {
+  email: 'Please enter valid email address',
+  first_name: 'Please enter First name',
+  last_name: 'Please enter Last name',
+  password: 'Please enter your password',
+};
+
 type FormValues = typeof INITIAL_VALUES;
 
 class EmailRegistrationScreen extends Component<{}> {
@@ -81,6 +88,7 @@ class EmailRegistrationScreen extends Component<{}> {
           <Form
             initialValues={INITIAL_VALUES}
             onSubmit={this.handleSubmit(fetch)}
+            messages={MESSAGES}
             rules={RULES}
             render={form => (
               <ScrollView style={styles.container}>
