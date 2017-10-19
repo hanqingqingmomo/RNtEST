@@ -6,6 +6,7 @@ import { PortalProvider } from 'react-native-portal';
 import { Provider } from 'react-redux';
 import KeyboardManager from 'react-native-keyboard-manager';
 
+import { initFactory as initRequestFactory } from './utils/requestFactory';
 import { initStore } from './redux/store';
 import { FetchProvider } from './atoms';
 import { BootScreen } from './screens';
@@ -19,6 +20,8 @@ if (Platform.OS === 'ios') {
 }
 
 const store = initStore();
+
+initRequestFactory(store);
 
 type Props = {
   persistor: any,

@@ -1,22 +1,49 @@
 // @flow
 
 import Config from 'react-native-config';
-import { stringify } from 'query-string';
+import update from 'react-addons-update';
 
+import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { join } from '../utils/url';
 
-const MOCK_API_URL = 'https://private-b42b8-ywca1.apiary-mock.com';
+// const MOCK_API_URL = 'https://private-b42b8-ywca1.apiary-mock.com';
 
-type Cursor = {
-  next: ?number,
-  limit?: number,
-};
+let Store: any = null;
+
+// type Cursor = {
+//   next: ?number,
+//   limit?: number,
+// };
 
 export type Request = {
   url: string,
   options: RequestOptions,
 };
+
+export function initFactory(store: any) {
+  Store = store;
+}
+
+function inject(request: Request): Request {
+  if (__DEV__ && Store === null) {
+    console.error(
+      "RequestFactory: you probably forgot to initialise factory. If you don't initialise factory, requests might be missing several options, such as authentication tokens."
+    );
+  }
+
+  if (Store === null) {
+    return request;
+  }
+
+  const headers = update(request.options.headers || {}, {
+    'API-KEY': { $set: selectAccessToken(Store.getState()) },
+  });
+
+  return update(request, {
+    options: { headers: { $set: headers } },
+  });
+}
 
 /**
  * Login request
@@ -25,13 +52,15 @@ export const authenticateRq = (credentials: {
   email: string,
   password: string,
 }) =>
-  ({
-    url: join(Config.API_URL, '/v1/members/login'),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    },
-  }: Request);
+  inject(
+    ({
+      url: join(Config.API_URL, '/v1/members/login'),
+      options: {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+      },
+    }: Request)
+  );
 
 /**
  * Donations
@@ -46,95 +75,109 @@ type DonationPayload = {
  * Read Profile
  */
 export const readProfileRq = (id: 'me' | string | number) =>
-  ({
-    url: join(
-      Config.API_URL,
-      id === 'me' ? '/v1/members' : `/v1/members/${id}`
-    ),
-    options: { method: 'GET' },
-  }: Request);
+  inject(
+    ({
+      url: join(
+        Config.API_URL,
+        id === 'me' ? '/v1/members' : `/v1/members/${id}`
+      ),
+      options: { method: 'GET' },
+    }: Request)
+  );
 
 export const makeDonationRq = (donationPayload: DonationPayload) =>
-  ({
-    url: join(Config.API_URL, '/v1/donations'),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(donationPayload),
-    },
-  }: Request);
+  inject(
+    ({
+      url: join(Config.API_URL, '/v1/donations'),
+      options: {
+        method: 'POST',
+        body: JSON.stringify(donationPayload),
+      },
+    }: Request)
+  );
 
 /**
  * Communities
  */
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
-  ({
-    url: join(
-      Config.API_URL,
-      `/v1/communities?membership_status=${joinedOnly ? 'joined' : ''}`
-    ),
-    options: {
-      method: 'GET',
-    },
-  }: Request);
+  inject(
+    ({
+      url: join(
+        Config.API_URL,
+        `/v1/communities?membership_status=${joinedOnly ? 'joined' : ''}`
+      ),
+      options: {
+        method: 'GET',
+      },
+    }: Request)
+  );
 
 export const makeReadCommunityDetailRq = (communityId: number) =>
-  ({
-    url: join(Config.API_URL, `/v1/communities/${communityId}`),
-    options: {
-      method: 'GET',
-    },
-  }: Request);
+  inject(
+    ({
+      url: join(Config.API_URL, `/v1/communities/${communityId}`),
+      options: {
+        method: 'GET',
+      },
+    }: Request)
+  );
 
 export const makeReadCommunityMembersRq = (
   communityId: number,
   limit: number
 ) =>
-  ({
-    url: join(
-      Config.API_URL,
-      `/v1/communities/${communityId}/members?limit=${limit}`
-    ),
-    options: {
-      method: 'GET',
-    },
-  }: Request);
+  inject(
+    ({
+      url: join(
+        Config.API_URL,
+        `/v1/communities/${communityId}/members?limit=${limit}`
+      ),
+      options: {
+        method: 'GET',
+      },
+    }: Request)
+  );
 
 /**
  * News feed requests
  */
 // TODO serialise params into URL in some automated way
 export const makeReadAggregatedFeedRq = () =>
-  ({
-    url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
-    options: {
-      method: 'GET',
-    },
-  }: Request);
+  inject(
+    ({
+      url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
+      options: {
+        method: 'GET',
+      },
+    }: Request)
+  );
 
 export const makeReadCommunityFeedRq = (communityId: string | number) =>
-  ({
-    url: `${join(Config.API_URL, `/v1/content_objects/posts/${communityId}`)}`,
-    options: {
-      method: 'GET',
-    },
-  }: Request);
+  inject(
+    ({
+      url: `${join(
+        Config.API_URL,
+        `/v1/content_objects/posts/${communityId}`
+      )}`,
+      options: {
+        method: 'GET',
+      },
+    }: Request)
+  );
 
 /**
  * User Invitations
  */
 
 export const makeInvitationRq = (email: string) =>
-  ({
-    url: join(Config.API_URL, '/v1/club_invitations/480b7b2ed0a1'),
-    options: {
-      method: 'PUT',
-      body: JSON.stringify({
-        member_invitations: email,
-      }),
-      // TODO: toto je tu len na test
-      headers: {
-        'API-KEY':
-          '3802db7f9e4c2a825cacfb401fdde565d4afe202135c00187c25896acd76e18c',
+  inject(
+    ({
+      url: join(Config.API_URL, '/v1/club_invitations/480b7b2ed0a1'),
+      options: {
+        method: 'PUT',
+        body: JSON.stringify({
+          member_invitations: email,
+        }),
       },
-    },
-  }: Request);
+    }: Request)
+  );
