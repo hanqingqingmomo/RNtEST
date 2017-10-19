@@ -44,7 +44,7 @@ type State = {
   activeTabIndex: number,
 };
 
-export default class CommunityLandingScreen extends Component<*, State> {
+export default class CommunityLandingScreen extends Component<{}, State> {
   state = {
     activeTabIndex: 0,
   };

@@ -25,7 +25,7 @@ const DEFAULT_OPTIONS = {
   allowsEditing: true,
 };
 
-export default class AvatarPicker extends Component<*, P, *> {
+export default class AvatarPicker extends Component<P> {
   onPress = () => {
     const { onChange } = this.props;
 
