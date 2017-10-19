@@ -45,7 +45,8 @@ export default class Form extends Component<Props> {
         } catch (err) {
           const errorBag = err.reduce(
             (errorBag: Errors, err: ErrorProps): Errors => {
-              errorBag[err.field] = messages[err.field] || err.message;
+              errorBag[err.field] =
+                (messages && messages[err.field]) || err.message;
               return errorBag;
             },
             {}
