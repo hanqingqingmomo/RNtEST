@@ -122,7 +122,13 @@ export default class MainNavigator extends Component<{}, State> {
 
     switch (modalRoute.routeName) {
       case 'DonationModal':
-        return <DonationNavigator {...props} />;
+        const _props = {
+          screenProps: {
+            dismissModalRoute: this.closeModalRoute,
+            openModalRoute: this.openModalRoute,
+          },
+        };
+        return <DonationNavigator {..._props} />;
       case 'UserProfileModal':
         return <UserProfileNavigator {...props} />;
       case 'UserSettingsModal':
