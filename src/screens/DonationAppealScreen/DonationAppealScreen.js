@@ -14,7 +14,10 @@ export default class DonationAppealScreen extends Component<{}> {
     title: 'Donation Form',
   };
 
-  initiatePayment = (fetchProps: *) => async (payment: Payment) => {
+  initiatePayment = (
+    fetchProps: *,
+    completePaymentCallback: Function
+  ) => async (payment: Payment) => {
     const paymentRequest = new global.PaymentRequest(
       paymentMethods,
       paymentDetails(payment)
@@ -37,11 +40,32 @@ export default class DonationAppealScreen extends Component<{}> {
       paymentResponse.complete(
         donationResponse.response.ok ? 'success' : 'fail'
       );
+
+      completePaymentCallback({ donationResponse, fetchProps, payment });
     } catch (err) {
       if (err.message === 'AbortError') {
         // TODO log payment failure message
       }
     }
+  };
+
+  completePaymentCallback = ({ donationResponse, fetchProps, payment }) => {
+    setTimeout(() => {
+      this.props.navigation.navigate('DonationResultScreen', {
+        amount: payment.amount,
+        recurrent: payment.interval !== 'one-time',
+        success: donationResponse.response.ok,
+        inviteFriends: () =>
+          this.props.screenProps.openModalRoute({
+            routeName: 'InviteFriendModal',
+          }),
+        repeatPayment: () => {
+          this.initiatePayment(fetchProps, this.completePaymentCallback)(
+            payment
+          );
+        },
+      });
+    }, 1350);
   };
 
   render() {
@@ -56,7 +80,10 @@ export default class DonationAppealScreen extends Component<{}> {
                 coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
               />
               <DonationForm
-                onInitiatePayment={this.initiatePayment(fetchProps)}
+                onInitiatePayment={this.initiatePayment(
+                  fetchProps,
+                  this.completePaymentCallback
+                )}
               />
             </Screen>
           );

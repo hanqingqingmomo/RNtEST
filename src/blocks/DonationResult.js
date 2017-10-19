@@ -17,7 +17,7 @@ const HIT_SLOP = {
 type P = {
   actions: Object,
   amount: boolean,
-  recurrent: any,
+  recurrent: boolean,
   success: boolean,
 };
 
@@ -43,18 +43,6 @@ export default class DonationResult extends Component<P> {
       <View style={styles.wrapper}>
         <View>
           <View style={[styles.alignCenter, styles.contentTop]}>
-            <TouchableItem
-              onPress={actions.onClose}
-              style={styles.closeBtn}
-              hitSlop={HIT_SLOP}
-            >
-              <Icon
-                style={styles.closeBtnText}
-                size={20}
-                color="orange"
-                name="close"
-              />
-            </TouchableItem>
             <Icon
               size={128}
               name="donate"
@@ -101,14 +89,16 @@ export default class DonationResult extends Component<P> {
           </View>
         </View>
         <View style={styles.actionsWrapper}>
-          <Button
-            block
-            color={getColor('orange')}
-            onPress={success ? actions.spreadTheWord : actions.tryAgain}
-            size="lg"
-            textColor={getColor('white')}
-            title={success ? 'Spread the word' : 'Try again'}
-          />
+          {success === false ? (
+            <Button
+              block
+              color={getColor('orange')}
+              onPress={actions.tryAgain}
+              size="lg"
+              textColor={getColor('white')}
+              title={'Try again'}
+            />
+          ) : null}
           <Button
             block
             color={getColor('orange')}
@@ -117,7 +107,7 @@ export default class DonationResult extends Component<P> {
             size="lg"
             style={css('marginTop', 12)}
             textColor={getColor('orange')}
-            title={success ? 'Invite friends' : 'Do it later'}
+            title={success ? 'Invite friends' : 'Go Back'}
           />
         </View>
       </View>
@@ -134,7 +124,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   contentTop: {
-    height: 200,
+    height: 180,
   },
   contentBottom: {
     paddingTop: 24,
@@ -155,18 +145,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 24,
     marginBottom: 24,
-  },
-  closeBtn: {
-    position: 'absolute',
-    top: 15,
-    left: 20,
-    width: 20,
-    height: 20,
-    backgroundColor: 'transparent',
-    overflow: 'hidden',
-  },
-  closeBtnText: {
-    textAlign: 'center',
   },
   donateIcon: {
     paddingTop: 42,

@@ -22,7 +22,8 @@ type S = Payment & {
 };
 
 const AMOUNTS = [25, 50, 100, 250];
-const INTERVALS = [
+
+export const INTERVALS = [
   { label: 'One time', value: 'one-time' },
   { label: 'Monthly', value: 'monthly' },
   { label: 'Quarterly', value: 'quarterly' },

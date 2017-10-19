@@ -10,32 +10,33 @@ export default class DonationResultScreen extends Component<{}> {
     title: 'Donation Result',
   };
 
-  tryAgain = () => {};
+  inviteFriends = () => {
+    this.props.navigation.state.params.inviteFriends();
+  };
 
-  spreadTheWord = () => {};
+  doItLater = () => {
+    this.props.navigation.goBack();
+  };
 
-  inviteFriends = () => {};
-
-  doItLater = () => {};
-
-  onClose = () => {};
+  tryAgain = () => {
+    this.props.navigation.goBack();
+    this.props.navigation.state.params.repeatPayment();
+  };
 
   render() {
-    const { price, recurrent, success } = this.props.navigation.state.params;
+    const { amount, recurrent, success } = this.props.navigation.state.params;
 
     const actions = {
-      tryAgain: this.tryAgain,
-      spreadTheWord: this.spreadTheWord,
       inviteFriends: this.inviteFriends,
       doItLater: this.doItLater,
-      onClose: this.onClose,
+      tryAgain: this.tryAgain,
     };
 
     return (
       <Screen fill>
         <DonationResult
           actions={actions}
-          amount={price}
+          amount={amount}
           recurrent={recurrent}
           success={success}
         />
