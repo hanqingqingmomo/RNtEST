@@ -4,6 +4,7 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import { CenterView, Text, NavigationIconButton } from '../atoms';
+import { HelpScreen } from '../screens';
 
 function DismissModalButton({ onPress, ...a }) {
   return (
@@ -11,17 +12,9 @@ function DismissModalButton({ onPress, ...a }) {
   );
 }
 
-function ScreenComponent() {
-  return (
-    <CenterView>
-      <Text>Help screen</Text>
-    </CenterView>
-  );
-}
-
 export default StackNavigator({
   UserProfileScreen: {
-    screen: ScreenComponent,
+    screen: HelpScreen,
     navigationOptions: ({ navigation, screenProps }) => ({
       headerLeft: (
         <DismissModalButton onPress={screenProps.dismissModalRoute} />

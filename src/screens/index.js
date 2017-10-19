@@ -20,6 +20,7 @@ export {
 } from './EmailAuthenticationScreen/EmailAuthenticationScreen';
 export { default as EmailRegistrationScreen } from './EmailRegistrationScreen';
 export { default as EventFeedScreen } from './EventFeedScreen';
+export { default as HelpScreen } from './HelpScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
 export { default as InviteFriendsScreen } from './InviteFriendsScreen';
 export { default as LandingScreen } from './LandingScreen';
