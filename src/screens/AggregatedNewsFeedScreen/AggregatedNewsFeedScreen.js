@@ -53,7 +53,10 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
             </CenterView>
           ) : (
             <View style={{ flex: 1 }}>
-              <NewsFeedConversation />
+              <NewsFeedConversation
+                onPress={() =>
+                  this.props.navigation.navigate('PostEditorScreen')}
+              />
               <View style={styles.itemsContainer}>
                 <FlatList
                   key="list"

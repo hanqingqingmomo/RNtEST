@@ -35,6 +35,9 @@ import { getColor } from '../utils/color';
 const DEFAULTS = screens => ({
   navigationOptions: {
     headerTintColor: getColor('orange'),
+    headerTitleStyle: {
+      color: '#455A64',
+    },
   },
   ...StyleSheet.create({
     cardStyle: {
