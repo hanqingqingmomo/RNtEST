@@ -25,12 +25,18 @@ const RULES = {
   password: 'required',
 };
 
+const MESSAGES = {
+  email: 'Please enter valid email address',
+  password: 'Please enter your password',
+};
+
 export default class EmailAuthenticationBlock extends Component<Props> {
   render() {
     return (
       <Form
         initialValues={INITIAL_VALUES}
         rules={RULES}
+        messages={MESSAGES}
         onSubmit={this.props.handleAuthenticationRequest}
         render={formProps => (
           <View style={styles.container}>

@@ -16,13 +16,13 @@ import {
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
-import CommentAttachment from './CommentAttachment';
-import CommentReply from './CommentReply';
+// import CommentAttachment from './CommentAttachment';
 
 type P = {
   data: TComment,
   onReplyRequested: TComment => void,
   onMorePress: TComment => void,
+  isReply?: boolean,
 };
 
 type S = {
@@ -53,24 +53,38 @@ export default class Comment extends React.Component<P, S> {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, isReply } = this.props;
 
     return (
-      <View style={[styles.flexRow, styles.container]}>
+      <View
+        style={[
+          styles.flexRow,
+          !isReply ? styles.container : styles.containerReply,
+        ]}
+      >
         <View style={styles.avatarWrapper}>
-          <Avatar imageURI={data.author.avatar} size={AVATAR_SIZE} />
+          <Avatar imageURI={data.author.profile_photo} size={AVATAR_SIZE} />
         </View>
 
-        <View style={styles.containerWrapper}>
+        <View
+          style={
+            !isReply ? styles.containerWrapper : styles.containerWrapperReply
+          }
+        >
           <View style={[styles.alignItemsCenter, styles.flexRow]}>
-            <View style={[styles.headerInfo, styles.flexRow]}>
+            <View
+              style={[
+                !isReply ? styles.headerInfo : styles.headerInfoReply,
+                styles.flexRow,
+              ]}
+            >
               <Text
                 size={13}
                 lineHeight={15}
                 weight="600"
                 style={[styles.authorName, css('color', '#455A64')]}
               >
-                {data.author.name}
+                {data.author.first_name} {data.author.last_name}
               </Text>
               <Text
                 size={11}
@@ -78,7 +92,7 @@ export default class Comment extends React.Component<P, S> {
                 lineHeight={13}
                 style={css('color', getColor('gray'))}
               >
-                <TimeAgo timestamp={data.timestamp} />
+                <TimeAgo date={data.created_at} />
               </Text>
             </View>
             <TouchableItem onPress={this.onMorePress}>
@@ -87,16 +101,18 @@ export default class Comment extends React.Component<P, S> {
           </View>
 
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-            {data.content}
+            {data.text_content}
           </Text>
 
-          <CommentAttachment
-            imageURI="https://www.muprint.com/wp-content/uploads/2016/12/pdf-icon-png-pdf-zum-download-2.png"
-            title="Computer Hardware Desktops And Notebooks And Handhelds"
-            date={new Date()}
-            comments={8}
-            onCommentPress={this.onCommentPress}
-          />
+          {/* TODO comment attachment
+            <CommentAttachment
+              imageURI="https://www.muprint.com/wp-content/uploads/2016/12/pdf-icon-png-pdf-zum-download-2.png"
+              title="Computer Hardware Desktops And Notebooks And Handhelds"
+              date={new Date()}
+              comments={8}
+              onCommentPress={this.onCommentPress}
+            />
+          */}
 
           <View
             style={[styles.footer, styles.flexRow, styles.alignItemsCenter]}
@@ -110,14 +126,13 @@ export default class Comment extends React.Component<P, S> {
             >
               <View style={styles.likeWrapper}>
                 <Like
-                  count={10}
+                  count={data.likes_count}
                   iconName="like"
-                  liked
                   onPress={this.onLikePress}
                 />
               </View>
 
-              {!data.parentId && (
+              {!isReply && (
                 <Text
                   onPress={this.onReplyRequested}
                   size={13}
@@ -132,28 +147,29 @@ export default class Comment extends React.Component<P, S> {
               )}
             </View>
 
-            {data.replies.length ? (
+            {!isReply && data.comments_count ? (
               <Text
                 size={13}
                 lineHeight={18}
                 color="gray"
                 onPress={this.viewAllReplies}
               >
-                {`View All ${data.replies.length} Replie${data.replies
-                  .length === 1
-                  ? ''
-                  : 's'}`}
+                {data.comments_count === 1
+                  ? 'View 1 Reply'
+                  : `View All ${data.comments_count} Replies`}
               </Text>
             ) : null}
           </View>
 
-          {this.state.showReplies ? (
+          {!isReply && this.state.showReplies ? (
             <View>
               {data.replies.map(reply => (
-                <CommentReply
+                <Comment
                   key={reply.id}
                   data={reply}
-                  onLikePress={this.onLikePress}
+                  onReplyRequested={(...args) => console.log('reply', args)}
+                  onMorePress={(...args) => console.log('more', args)}
+                  isReply
                 />
               ))}
             </View>
@@ -180,6 +196,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 12,
   },
+  containerWrapperReply: {
+    flex: 1,
+    paddingTop: 5,
+  },
   avatarWrapper: {
     paddingRight: 11,
   },
@@ -187,9 +207,17 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'flex-end',
   },
+  headerInfoReply: {
+    flexGrow: 1,
+    alignItems: 'flex-end',
+    marginBottom: 4,
+  },
   container: {
     paddingTop: 12,
     paddingHorizontal: 15,
+  },
+  containerReply: {
+    paddingTop: 12,
   },
   likeWrapper: {
     paddingRight: 10,

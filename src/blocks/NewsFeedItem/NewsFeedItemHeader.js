@@ -25,6 +25,8 @@ const HIT_SLOP = {
 
 export default class NewsFeedItemHeader extends Component<P> {
   render() {
+    this.props.communities.splice(3, this.props.communities.length - 3);
+
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>

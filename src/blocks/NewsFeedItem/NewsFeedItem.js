@@ -39,19 +39,16 @@ export default class NewsFeedItem extends Component<Post> {
   }
 
   get attachment(): Object {
-    if (this.hasAttachment) {
-      return this.props.attachments[0];
-    }
-
-    return {};
+    return this.props.attachment;
   }
 
   get hasAttachment(): boolean {
-    return !!this.props.attachments && !!this.props.attachments[0];
+    return !!this.attachment;
   }
 
   render() {
     const {
+      id,
       created_at,
       donation,
       event,
@@ -123,7 +120,12 @@ export default class NewsFeedItem extends Component<Post> {
             likes={likes}
             comments={comments}
             links={LINKS}
-            onLinkPress={key => console.log(key)}
+            onLinkPress={key =>
+              key === 'comment'
+                ? this.props.navigation.navigate('PostDetailScreen', {
+                    postId: id,
+                  })
+                : console.log(key)}
             onLikePress={key => console.log(key)}
           />
         </View>

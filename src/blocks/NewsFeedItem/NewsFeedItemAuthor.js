@@ -56,7 +56,7 @@ export default class NewsFeedItemAuthor extends Component<P> {
           </View>
         </TouchableItem>
 
-        <View style={[styles.button, styles.row]}>
+        {/* <View style={[styles.button, styles.row]}>
           <Button
             size="sm"
             color="#00E676"
@@ -64,7 +64,7 @@ export default class NewsFeedItemAuthor extends Component<P> {
             title={`${this.props.replies || 0} Reply`}
             onPress={this.props.onReplayPress}
           />
-        </View>
+        </View> */}
       </View>
     );
   }
