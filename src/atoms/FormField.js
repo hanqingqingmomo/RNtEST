@@ -20,16 +20,21 @@ type FormikFieldProps = {
       [string]: string,
     },
   },
+  onChangeText?: (value: string) => void,
 };
 
 type FormFieldProps = TextInputProps & {
   name: string,
   label: string,
+  onChangeText?: (value: string) => void,
 };
 
 class FormFieldInner extends Component<FormikFieldProps> {
-  onChangeText = (value: any) => {
+  onChangeText = (value: string) => {
     this.props.form.setFieldValue(this.props.field.name, value);
+    if (this.props.onChangeText) {
+      this.props.onChangeText(value);
+    }
   };
 
   render() {

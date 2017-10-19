@@ -7,8 +7,8 @@ import { Button, Form, FormField, Icon, Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 const INITIAL_VALUES = {
-  email: 'test@dispostable.com',
-  password: 'secret',
+  email: '',
+  password: '',
 };
 
 export type FormValues = typeof INITIAL_VALUES;

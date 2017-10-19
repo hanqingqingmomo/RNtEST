@@ -21,10 +21,16 @@ export type Request = {
   options: RequestOptions,
 };
 
+/**
+ * Initialise Factory function
+ */
 export function initFactory(store: any) {
   Store = store;
 }
 
+/**
+ * Inject env variables and other stuff into request options.
+ */
 function inject(request: Request): Request {
   if (__DEV__ && Store === null) {
     console.error(
@@ -46,21 +52,54 @@ function inject(request: Request): Request {
 }
 
 /**
+ * Convert object payload into FormData with support for files
+ */
+function makeFormData(payload: Object, fileNames: Array<string> = []) {
+  const formData: FormData = new FormData();
+  Object.keys(payload).forEach(key => {
+    if (fileNames.includes(key)) {
+      // $FlowExpectedError
+      formData.append(key, {
+        uri: payload[key],
+        type: 'image/jpeg',
+        name: 'image.jpg',
+      });
+    } else {
+      formData.append(key, payload[key]);
+    }
+  });
+  return formData;
+}
+
+/**
  * Login request
  */
-export const authenticateRq = (credentials: {
+export const makeSigninRq = (credentials: {
   email: string,
   password: string,
 }) =>
-  inject(
-    ({
-      url: join(Config.API_URL, '/v1/members/login'),
-      options: {
-        method: 'POST',
-        body: JSON.stringify(credentials),
+  inject({
+    url: join(Config.API_URL, '/v1/members/login'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    },
+  });
+
+/**
+ * Signup request
+ */
+export const makeSignupRq = (body: *) =>
+  inject({
+    url: join(Config.API_URL, '/v1/members/signup'),
+    options: {
+      method: 'POST',
+      body: makeFormData(body, ['photo']),
+      headers: {
+        'content-type': 'multipart/form-data',
       },
-    }: Request)
-  );
+    },
+  });
 
 /**
  * Donations
@@ -74,110 +113,90 @@ type DonationPayload = {
 /**
  * Read Profile
  */
-export const readProfileRq = (id: 'me' | string | number) =>
-  inject(
-    ({
-      url: join(
-        Config.API_URL,
-        id === 'me' ? '/v1/members' : `/v1/members/${id}`
-      ),
-      options: { method: 'GET' },
-    }: Request)
-  );
+export const makeReadProfileRq = (id: 'me' | string | number) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      id === 'me' ? '/v1/members' : `/v1/members/${id}`
+    ),
+    options: { method: 'GET' },
+  });
 
 export const makeDonationRq = (donationPayload: DonationPayload) =>
-  inject(
-    ({
-      url: join(Config.API_URL, '/v1/donations'),
-      options: {
-        method: 'POST',
-        body: JSON.stringify(donationPayload),
-      },
-    }: Request)
-  );
+  inject({
+    url: join(Config.API_URL, '/v1/donations'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(donationPayload),
+    },
+  });
 
 /**
  * Communities
  */
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
-  inject(
-    ({
-      url: join(
-        Config.API_URL,
-        `/v1/communities?membership_status=${joinedOnly ? 'joined' : ''}`
-      ),
-      options: {
-        method: 'GET',
-      },
-    }: Request)
-  );
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/communities?membership_status=${joinedOnly ? 'joined' : ''}`
+    ),
+    options: {
+      method: 'GET',
+    },
+  });
 
 export const makeReadCommunityDetailRq = (communityId: number) =>
-  inject(
-    ({
-      url: join(Config.API_URL, `/v1/communities/${communityId}`),
-      options: {
-        method: 'GET',
-      },
-    }: Request)
-  );
+  inject({
+    url: join(Config.API_URL, `/v1/communities/${communityId}`),
+    options: {
+      method: 'GET',
+    },
+  });
 
 export const makeReadCommunityMembersRq = (
   communityId: number,
   limit: number
 ) =>
-  inject(
-    ({
-      url: join(
-        Config.API_URL,
-        `/v1/communities/${communityId}/members?limit=${limit}`
-      ),
-      options: {
-        method: 'GET',
-      },
-    }: Request)
-  );
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/communities/${communityId}/members?limit=${limit}`
+    ),
+    options: {
+      method: 'GET',
+    },
+  });
 
 /**
  * News feed requests
  */
-// TODO serialise params into URL in some automated way
 export const makeReadAggregatedFeedRq = () =>
-  inject(
-    ({
-      url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
-      options: {
-        method: 'GET',
-      },
-    }: Request)
-  );
+  inject({
+    url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
+    options: {
+      method: 'GET',
+    },
+  });
 
 export const makeReadCommunityFeedRq = (communityId: string | number) =>
-  inject(
-    ({
-      url: `${join(
-        Config.API_URL,
-        `/v1/content_objects/posts/${communityId}`
-      )}`,
-      options: {
-        method: 'GET',
-      },
-    }: Request)
-  );
+  inject({
+    url: `${join(Config.API_URL, `/v1/content_objects/posts/${communityId}`)}`,
+    options: {
+      method: 'GET',
+    },
+  });
 
 /**
  * User Invitations
  */
 
 export const makeInvitationRq = (email: string) =>
-  inject(
-    ({
-      url: join(Config.API_URL, '/v1/club_invitations/480b7b2ed0a1'),
-      options: {
-        method: 'PUT',
-        body: JSON.stringify({
-          member_invitations: email,
-        }),
-      },
-    }: Request)
-  );
+  inject({
+    url: join(Config.API_URL, '/v1/club_invitations/480b7b2ed0a1'),
+    options: {
+      method: 'PUT',
+      body: JSON.stringify({
+        member_invitations: email,
+      }),
+    },
+  });

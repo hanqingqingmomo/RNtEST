@@ -9,34 +9,29 @@ import {
   setUserProfile,
 } from '../../redux/ducks/application';
 import FormBlock, { type FormValues } from './EmailAuthenticationBlock';
-import { authenticateRq, readProfileRq } from '../../utils/requestFactory';
+import { makeSigninRq, makeReadProfileRq } from '../../utils/requestFactory';
 
 class EmailAuthenticationScreen extends Component<{}> {
   navigateToPasswordResetScreen = () => {
     this.props.navigation.navigate('PasswordResetScreen');
   };
 
-  handleAuthenticationRequest = ({ fetch }, profile) => async (
-    values: FormValues
-  ) => {
+  handleAuthenticationRequest = fetch => async (values: FormValues) => {
     const { email, password } = values;
 
-    const authenticationR = authenticateRq({ email, password });
-    const authenticationResponse = await fetch(
-      authenticationR.url,
-      authenticationR.options
-    );
+    const signinReq = makeSigninRq({ email, password });
+    const signinRes = await fetch(signinReq.url, signinReq.options);
 
-    if (authenticationResponse.response.ok) {
-      this.props.setUserAccessToken(authenticationResponse.data.mobile_token);
+    if (signinRes.response.ok) {
+      this.props.setUserAccessToken(signinRes.data.mobile_token);
 
       // TODO reinject, subscribe to store update
-      const profileR = readProfileRq('me');
-      const { data: userProfile } = await fetch(profileR.url, {
-        ...profileR.options,
+      const readProfileReq = makeReadProfileRq('me');
+      const { data: userProfile } = await fetch(readProfileReq.url, {
+        ...readProfileReq.options,
         headers: {
-          ...profileR.options.headers,
-          'API-KEY': authenticationResponse.data.mobile_token,
+          ...readProfileReq.options.headers,
+          'API-KEY': signinRes.data.mobile_token,
         },
       });
 
@@ -48,12 +43,12 @@ class EmailAuthenticationScreen extends Component<{}> {
     return (
       <Screen fill>
         <Fetch manual>
-          {authentication => (
+          {({ loading, fetch, error }) => (
             <FormBlock
-              loading={authentication.loading}
-              error={!!authentication.error}
+              loading={loading}
+              error={loading === false && error}
               handleAuthenticationRequest={this.handleAuthenticationRequest(
-                authentication
+                fetch
               )}
               handlePasswordScreenRequest={this.navigateToPasswordResetScreen}
             />

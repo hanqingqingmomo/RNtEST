@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {
   AvatarPicker,
   Button,
+  Fetch,
   Form,
   FormField,
   Icon,
@@ -17,20 +18,20 @@ import {
 } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
-import { api } from '../services';
+import {
+  makeSignupRq,
+  makeSigninRq,
+  makeReadProfileRq,
+} from '../utils/requestFactory';
 import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
-
-type State = {
-  authenticationError: ?boolean,
-  avatarImageURI: ?string,
-};
 
 const INITIAL_VALUES = {
   first_name: '',
   last_name: '',
   email: '',
   password: '',
-  avatarImageURI: '',
+  password_confirmation: '',
+  photo: null,
 };
 
 const RULES = {
@@ -42,114 +43,131 @@ const RULES = {
 
 type FormValues = typeof INITIAL_VALUES;
 
-class EmailRegistrationScreen extends Component<{}, State> {
-  state = {
-    avatarImageURI: null,
-    authenticationError: false,
-  };
+class EmailRegistrationScreen extends Component<{}> {
+  handleSubmit = fetch => async (values: FormValues) => {
+    const signupReq = makeSignupRq(values);
+    const signupRes = await fetch(signupReq.url, signupReq.options);
 
-  handleSubmit = async (values: FormValues) => {
-    this.setState({ registrationError: false, busy: true });
-    try {
-      await api.authentication.signUp({
-        ...values,
-        password_confirmation: values.password,
-        time_zone: 'Europe/Bratislava',
-      });
-      const userAccessToken = await api.authentication.signIn(
-        values.email,
-        values.password
+    if (signupRes.response.ok) {
+      const { email, password } = values;
+      const signinReq = makeSigninRq({ email, password });
+      const signinRes = await fetch(signinReq.url, signinReq.options);
+      this.props.setUserAccessToken(signinRes.data.mobile_token);
+
+      const readProfileReq = makeReadProfileRq('me');
+      const readProfileRes = await fetch(
+        readProfileReq.url,
+        readProfileReq.options
       );
-      this.props.setUserAccessToken(userAccessToken);
-      const userProfile = await api.user.getProfile('me');
-      this.props.setUserProfile(userProfile);
-    } catch (err) {
-      this.setState({ registrationError: true });
-    } finally {
-      this.setState({ busy: false });
+
+      this.props.setUserProfile(readProfileRes.data);
     }
   };
 
-  onAvatarChange = (avatarImageURI: string) => {
-    this.setState({ avatarImageURI });
+  onAvatarChange = (setFielValue: (string, any) => void) => (photo: string) => {
+    setFielValue('photo', photo);
+  };
+
+  onPasswordChange = (setFielValue: (name: string, value: string) => void) => (
+    password: string
+  ) => {
+    setFielValue('password_confirmation', password);
   };
 
   render() {
     return (
-      <Form
-        initialValues={INITIAL_VALUES}
-        onSubmit={this.handleSubmit}
-        rules={RULES}
-        render={form => (
-          <ScrollView style={styles.container}>
-            <Icon name="ywca" color={getColor('orange')} size={100} />
+      <Fetch manual>
+        {({ loading, data, fetch, error }) => (
+          <Form
+            initialValues={INITIAL_VALUES}
+            onSubmit={this.handleSubmit(fetch)}
+            rules={RULES}
+            render={form => (
+              <ScrollView style={styles.container}>
+                <Icon name="ywca" color={getColor('orange')} size={100} />
 
-            <Text
-              style={[styles.addText, css('color', getColor('gray'))]}
-              size={17}
-              lineHeight={20}
-            >
-              Add Photo
-            </Text>
+                <Text
+                  style={[styles.addText, css('color', getColor('gray'))]}
+                  size={17}
+                  lineHeight={20}
+                >
+                  Add Photo
+                </Text>
 
-            <View style={styles.picker}>
-              <AvatarPicker
-                imageURI={this.state.avatarImageURI}
-                onChange={this.onAvatarChange}
-              />
-            </View>
+                <View style={styles.picker}>
+                  <AvatarPicker
+                    imageURI={form.values.photo}
+                    onChange={this.onAvatarChange(form.setFieldValue)}
+                  />
+                </View>
 
-            <View flexDirection="row">
-              <View flexGrow={1}>
-                <FormField label="First Name" name="first_name" />
-              </View>
-              <Spacer width={10} />
+                <View flexDirection="row">
+                  <View flexGrow={1}>
+                    <FormField label="First Name" name="first_name" />
+                  </View>
+                  <Spacer width={10} />
 
-              <View flexGrow={1}>
-                <FormField label="Last Name" name="last_name" />
-              </View>
-            </View>
-            <FormField
-              label="E-mail Address"
-              name="email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-            <FormField label="Password" name="password" secureTextEntry />
+                  <View flexGrow={1}>
+                    <FormField label="Last Name" name="last_name" />
+                  </View>
+                </View>
+                <FormField
+                  label="E-mail Address"
+                  name="email"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+                <FormField
+                  label="Password"
+                  name="password"
+                  secureTextEntry
+                  onChangeText={this.onPasswordChange(form.setFieldValue)}
+                />
 
-            {this.state.registrationError ? (
-              <Text color={getColor('red')}>
-                {'\n'}Registration failed. Check provided information.
-              </Text>
-            ) : null}
+                {loading === false && error ? (
+                  <Text color={getColor('red')}>
+                    {'\n'}Registration failed. Check provided information.
+                  </Text>
+                ) : null}
 
-            <Button
-              block
-              color={getColor('orange')}
-              onPress={form.handleSubmit}
-              size="lg"
-              style={styles.button}
-              textColor={getColor('white')}
-              title={this.state.busy ? 'Signing Up...' : 'Sign Up'}
-            />
+                <Button
+                  block
+                  disabled={loading}
+                  color={getColor('orange')}
+                  onPress={form.handleSubmit}
+                  size="lg"
+                  style={styles.button}
+                  textColor={getColor('white')}
+                  title={loading ? 'Signing Up...' : 'Sign Up'}
+                />
 
-            <Text
-              size={13}
-              lineHeight={20}
-              style={[css('color', getColor('gray')), styles.policyText]}
-            >
-              {'By signing up, you agree to our '}
-              <Text style={styles.specialText} weight="bold" onPress={() => {}}>
-                Terms
-              </Text>
-              {' & '}
-              <Text style={styles.specialText} weight="bold" onPress={() => {}}>
-                Privacy Policy
-              </Text>
-            </Text>
-          </ScrollView>
+                <Text
+                  size={13}
+                  lineHeight={20}
+                  style={[css('color', getColor('gray')), styles.policyText]}
+                >
+                  {'By signing up, you agree to our '}
+                  <Text
+                    style={styles.specialText}
+                    weight="bold"
+                    onPress={() => {}}
+                  >
+                    Terms
+                  </Text>
+                  {' & '}
+                  <Text
+                    style={styles.specialText}
+                    weight="bold"
+                    onPress={() => {}}
+                  >
+                    Privacy Policy
+                  </Text>
+                </Text>
+              </ScrollView>
+            )}
+          />
         )}
-      />
+      </Fetch>
     );
   }
 }

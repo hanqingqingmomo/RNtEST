@@ -10,7 +10,7 @@ const SIZE = 68;
 const OUTLINE_WIDTH = 2;
 
 type P = {
-  imageURI?: string,
+  imageURI?: ?string,
   size?: number,
   outlineWidth?: number,
   onChange: (imageURI: string) => void,

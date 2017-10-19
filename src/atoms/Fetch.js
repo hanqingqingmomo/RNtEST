@@ -18,7 +18,7 @@ export type RequestOptions = $Exact<{
   redirect?: 'follow' | 'error' | 'manual',
   integrity?: string,
   cache?: 'default' | 'reload' | 'no-cache',
-  body?: string,
+  body?: string | FormData,
   bodyUsed?: boolean,
 }>;
 
