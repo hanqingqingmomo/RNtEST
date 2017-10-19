@@ -54,7 +54,6 @@ export default class OrganisationProfileScreen extends Component<{}, State> {
         options={readOrganisationReq.options}
       >
         {({ loading, data, error }) => {
-          console.log(data);
           return loading === false ? (
             <Screen fill>
               <View style={styles.dismisalButton}>

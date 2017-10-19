@@ -59,7 +59,7 @@ export default class CommunityCenterScreen extends Component<{}, State> {
     const readCommunityRes = makeReadCommunityReq(
       navigation.state.params.communityId
     );
-    console.log(navigation.state.params.communityId);
+
     return (
       <Fetch url={readCommunityRes.url} options={readCommunityRes.options}>
         {({ loading, data, error }) => {
