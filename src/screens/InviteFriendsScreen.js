@@ -240,7 +240,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
         return (
           <Fetch manual>
             {invitation => (
-              <Screen>
+              <Screen tintColor="white">
                 <View style={styles.searchBox}>
                   <SearchBox
                     placeholder="Search..."
@@ -250,7 +250,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
                   />
                 </View>
                 <TableView.Table>
-                  <TableView.Section>
+                  <TableView.Section sectionTintColor="white">
                     <FlatList
                       data={this.users}
                       keyExtractor={item => item.recordID}
@@ -281,6 +281,7 @@ const styles = StyleSheet.create({
   searchBox: {
     paddingHorizontal: 15,
     paddingTop: 15,
+    backgroundColor: 'white',
   },
   cell: {
     paddingVertical: 9,
