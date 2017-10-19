@@ -20,6 +20,7 @@ export { default as CommunityHeader } from './CommunityHeader';
 export { default as ContactGroup } from './ContactGroup';
 export { default as CursorBasedFetech } from './CursorBasedFetch';
 export { default as DateCard } from './DateCard';
+export { default as DropdownAlert } from './DropdownAlert';
 export { default as EventCard } from './EventCard';
 export { default as Fetch } from './Fetch';
 export { default as FetchProvider } from './FetchProvider';

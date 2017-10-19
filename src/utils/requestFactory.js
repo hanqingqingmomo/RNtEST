@@ -72,7 +72,7 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
 }
 
 /**
- * Login request
+ * Authentication requests
  */
 export const makeSigninRq = (credentials: {
   email: string,
@@ -86,9 +86,6 @@ export const makeSigninRq = (credentials: {
     },
   });
 
-/**
- * Signup request
- */
 export const makeSignupRq = (body: *) =>
   inject({
     url: join(Config.API_URL, '/v1/members/signup'),
@@ -98,6 +95,15 @@ export const makeSignupRq = (body: *) =>
       headers: {
         'content-type': 'multipart/form-data',
       },
+    },
+  });
+
+export const makePasswordResetReq = (email: string) =>
+  inject({
+    url: join(Config.API_URL, '/v1/members/reset_password'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ email }),
     },
   });
 
