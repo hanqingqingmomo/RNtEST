@@ -58,12 +58,14 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
   const formData: FormData = new FormData();
   Object.keys(payload).forEach(key => {
     if (fileNames.includes(key)) {
-      // $FlowExpectedError
-      formData.append(key, {
-        uri: payload[key],
-        type: 'image/jpeg',
-        name: 'image.jpg',
-      });
+      if (payload[key]) {
+        // $FlowExpectedError
+        formData.append(key, {
+          uri: payload[key],
+          type: 'image/jpeg',
+          name: 'image.jpg',
+        });
+      }
     } else {
       formData.append(key, payload[key]);
     }
@@ -199,6 +201,27 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
     url: `${join(Config.API_URL, `/v1/content_objects/posts/${communityId}`)}`,
     options: {
       method: 'GET',
+    },
+  });
+
+// export const makeCreatePostReq = (body: *) =>
+//   inject({
+//     url: join(Config.API_URL, '/v1/content_objects/'),
+//     options: {
+//       method: 'POST',
+//       body: makeFormData(body, ['attachment']),
+//       headers: {
+//         'content-type': 'multipart/form-data',
+//       },
+//     },
+//   });
+
+export const makeCreatePostReq = (body: *) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(body),
     },
   });
 
