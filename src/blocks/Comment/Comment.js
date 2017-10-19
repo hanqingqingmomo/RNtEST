@@ -20,9 +20,8 @@ import { css } from '../../utils/style';
 
 type P = {
   data: TComment,
-  onReplyRequested: TComment => void,
+  onReplyPress?: Function,
   onMorePress: TComment => void,
-  isReply?: boolean,
 };
 
 type S = {
@@ -36,14 +35,6 @@ export default class Comment extends React.Component<P, S> {
     showReplies: false,
   };
 
-  onReplyRequested = () => {
-    this.props.onReplyRequested(this.props.data);
-  };
-
-  onMorePress = () => {
-    this.props.onMorePress(this.props.data);
-  };
-
   onLikePress = () => {};
 
   onCommentPress = () => {};
@@ -53,7 +44,8 @@ export default class Comment extends React.Component<P, S> {
   };
 
   render() {
-    const { data, isReply } = this.props;
+    const { data, onReplyPress, onMorePress } = this.props;
+    const isReply = !onReplyPress;
 
     return (
       <View
@@ -95,7 +87,7 @@ export default class Comment extends React.Component<P, S> {
                 <TimeAgo date={data.created_at} />
               </Text>
             </View>
-            <TouchableItem onPress={this.onMorePress}>
+            <TouchableItem onPress={onMorePress}>
               <Icon name="menu" size={24} color="#CFD8DC" />
             </TouchableItem>
           </View>
@@ -134,7 +126,7 @@ export default class Comment extends React.Component<P, S> {
 
               {!isReply && (
                 <Text
-                  onPress={this.onReplyRequested}
+                  onPress={onReplyPress}
                   size={13}
                   lineHeight={18}
                   style={[
@@ -167,9 +159,7 @@ export default class Comment extends React.Component<P, S> {
                 <Comment
                   key={reply.id}
                   data={reply}
-                  onReplyRequested={(...args) => console.log('reply', args)}
                   onMorePress={(...args) => console.log('more', args)}
-                  isReply
                 />
               ))}
             </View>

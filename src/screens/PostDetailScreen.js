@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 
+import type { Comment as TComment } from '../Types';
 import {
   ActivityIndicator,
   CenterView,
@@ -10,12 +11,51 @@ import {
   Text,
   View,
 } from '../atoms';
-import { NewsFeedItem, CommentList } from '../blocks';
+import { NewsFeedItem, CommentList, CommentInput } from '../blocks';
 import { makeReadPostWithCommentsRq } from '../utils/requestFactory';
 
-export default class PostDetailScreen extends Component<{}> {
+type P = {
+  navigation: {},
+};
+
+type S = {
+  replyingTo?: TComment,
+};
+
+export default class PostDetailScreen extends Component<P, S> {
+  state = {
+    replyingTo: undefined,
+  };
+
+  inputRef: ?any;
+
+  onMorePress = (comment: TComment) => {
+    console.log('more');
+  };
+
+  onReplyPress = (comment: TComment) => {
+    this.setState({ replyingTo: comment });
+
+    if (this.inputRef) {
+      this.inputRef.focus();
+    }
+  };
+
+  onReplyCancel = () => {
+    this.setState({ replyingTo: undefined });
+
+    if (this.inputRef) {
+      this.inputRef.blur();
+    }
+  };
+
+  passRef = (ref: any) => {
+    this.inputRef = ref;
+  };
+
   render() {
     const { navigation } = this.props;
+    const { replyingTo } = this.state;
 
     const readPostWithCommentsRq = makeReadPostWithCommentsRq(
       navigation.state.params.postId
@@ -43,7 +83,16 @@ export default class PostDetailScreen extends Component<{}> {
                 data && (
                   <View>
                     <NewsFeedItem {...data} />
-                    <CommentList comments={data.replies} />
+                    <CommentList
+                      comments={data.replies}
+                      onReplyPress={this.onReplyPress}
+                      onMorePress={this.onMorePress}
+                    />
+                    <CommentInput
+                      replyingTo={replyingTo}
+                      onReplyCancel={this.onReplyCancel}
+                      passRef={this.passRef}
+                    />
                   </View>
                 )}
             </View>

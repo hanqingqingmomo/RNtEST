@@ -3,22 +3,22 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
+import type { Comment as TComment } from '../../Types';
 import { Text, TouchableItem, View, Icon } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
 type P = {
-  isReplying: boolean,
+  replyingTo?: TComment,
   onReplyCancel: Function,
   passRef: Function,
-  placeholder: string,
 };
 
 type S = {
   content: string,
 };
 
-export default class CommentImput extends Component<P, S> {
+export default class CommentInput extends Component<P, S> {
   state = {
     content: '',
   };
@@ -32,15 +32,16 @@ export default class CommentImput extends Component<P, S> {
   };
 
   render() {
-    let { isReplying, onReplyCancel, placeholder, passRef } = this.props;
+    const { replyingTo, onReplyCancel, passRef } = this.props;
     const { content } = this.state;
-    isReplying = true;
+
     return (
       <View style={styles.container}>
-        {isReplying && (
+        {!!replyingTo && (
           <View style={styles.targetedReplyWrapper}>
             <Text size={12} style={css('color', '#8fa3ad')}>
-              Replying to <Text weight="bold">abc</Text>
+              Replying to {replyingTo.author.first_name}{' '}
+              {replyingTo.author.last_name}
               <Icon
                 name="close"
                 size={12}
@@ -54,7 +55,7 @@ export default class CommentImput extends Component<P, S> {
           <TextInput
             multiline
             onChangeText={this.onChange}
-            placeholder={placeholder}
+            placeholder="Participate"
             placeholderTextColor="#8fa3ad"
             ref={passRef}
             returnKeyType="send"

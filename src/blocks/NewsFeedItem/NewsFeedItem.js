@@ -53,12 +53,11 @@ type P = {
   event?: EventProps,
   isNew?: boolean,
   likes?: number,
-  navigation?: object,
+  navigation?: any,
   replies: number,
   text_content?: string,
+  id: string,
 };
-
-const LINKS = ['Share', 'Comment'];
 
 export default class NewsFeedItem extends Component<P> {
   shortenString(
@@ -88,9 +87,31 @@ export default class NewsFeedItem extends Component<P> {
     return !!this.attachment;
   }
 
+  getLinks = () => {
+    const { id, navigation } = this.props;
+
+    const links = [
+      {
+        label: 'Share',
+        onPress: () => console.log('Share press'),
+      },
+    ];
+
+    if (navigation) {
+      links.push({
+        label: 'Comment',
+        onPress: () =>
+          navigation.navigate('PostDetailScreen', {
+            postId: id,
+          }),
+      });
+    }
+
+    return links;
+  };
+
   render() {
     const {
-      id,
       created_at,
       donation,
       event,
@@ -161,13 +182,7 @@ export default class NewsFeedItem extends Component<P> {
           <NewsFeedItemFooter
             likes={likes}
             comments={comments}
-            links={LINKS}
-            onLinkPress={key =>
-              key === 'comment'
-                ? this.props.navigation.navigate('PostDetailScreen', {
-                    postId: id,
-                  })
-                : console.log(key)}
+            links={this.getLinks()}
             onLikePress={key => console.log(key)}
           />
         </View>

@@ -2,6 +2,7 @@
 
 export { default as Comment } from './Comment/Comment';
 export { default as CommentList } from './Comment/CommentList';
+export { default as CommentInput } from './Comment/CommentInput';
 export { default as EventFeed } from './EventFeed';
 export { default as DonationAppealModalBox } from './DonationAppealModalBox';
 export { default as DonationForm } from './DonationForm/DonationForm';
