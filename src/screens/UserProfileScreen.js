@@ -188,8 +188,6 @@ class UserProfileScreen extends React.Component<Props, State> {
   render() {
     const { user } = this.props;
 
-    console.log(this.props.user);
-
     return (
       <Fetch manual>
         {({ loading, data, error, fetch }) => (
