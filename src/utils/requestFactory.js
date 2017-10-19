@@ -186,8 +186,8 @@ export const makeReadCommunityMembersRq = (
   });
 
 export const makeLeaveCommunity = (
-  communityId: string | number,
-  memberId: string | number
+  memberId: string | number,
+  communityId: string | number
 ) =>
   inject({
     url: join(
