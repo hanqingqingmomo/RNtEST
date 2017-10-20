@@ -16,7 +16,7 @@ import {
 import { ProfileCard } from '../blocks';
 import { getColor } from '../utils/color';
 import { makeReadProfileRq } from '../utils/requestFactory';
-import type { User, JoinedCommunity } from '../Types';
+import type { User, CommunitySimple } from '../Types';
 
 const { Table, Section, Cell } = TableView;
 
@@ -32,7 +32,7 @@ export default class MemberProfileScreen extends Component<Props> {
     };
   };
 
-  handleCommunityPress = (community: JoinedCommunity) => {
+  handleCommunityPress = (community: CommunitySimple) => {
     this.props.navigation.navigate('CommunityCenterScreen', {
       communityId: community.id,
     });

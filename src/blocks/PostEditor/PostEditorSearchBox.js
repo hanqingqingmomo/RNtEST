@@ -5,23 +5,23 @@ import { StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native';
 
 import { View, Text, Pill, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
-import { type JoinedCommunity } from '../../Types';
+import { type CommunitySimple } from '../../Types';
 
 type Props = {
-  communities: Array<JoinedCommunity>,
+  selection: Array<string>,
+  communities: Array<CommunitySimple>,
   selectCommunity: Function,
 };
 
 type State = {
   searchValue: string,
-  selectedCommunities: Array<JoinedCommunity>,
   isCollapsed: boolean,
 };
 
 export default class PostEditorSearchBox extends Component<Props, State> {
   state = {
     searchValue: '',
-    selectedCommunities: [],
+    selection: [],
     isCollapsed: true,
   };
 
@@ -31,7 +31,7 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     return !!!this.state.searchValue;
   }
 
-  get fileredCommunities(): ?Array<JoinedCommunity> {
+  get fileredCommunities(): ?Array<CommunitySimple> {
     const { searchValue } = this.state;
 
     return this.props.communities.filter(item => {
@@ -65,32 +65,33 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     }
   };
 
-  selectCommunity = (item: JoinedCommunity) => {
-    const { selectedCommunities } = this.state;
-    selectedCommunities.push(item);
+  selectCommunity = (item: CommunitySimple) => {
+    const selection = this.props.selection.concat(item.id);
 
-    this.props.selectCommunity(selectedCommunities);
+    this.props.selectCommunity(selection);
 
     this.setState({
-      selectedCommunities,
       searchValue: '',
       isCollapsed: true,
     });
   };
 
   removeLastComunity() {
-    const { selectedCommunities } = this.state;
-    selectedCommunities.splice(selectedCommunities.length - 1, 1);
+    const { selection } = this.state;
+    selection.splice(selection.length - 1, 1);
 
-    this.props.selectCommunity(selectedCommunities);
+    this.props.selectCommunity(selection);
 
-    this.setState({ selectedCommunities });
+    this.setState({ selection });
   }
 
-  renderSelectedCommunities() {
+  renderselection() {
+    const communities = this.props.communities.filter(community =>
+      this.props.selection.includes(community.id)
+    );
     return (
       <View style={styles.pillContainer}>
-        {this.state.selectedCommunities.map(pill => (
+        {communities.map(pill => (
           <View key={pill.id} style={styles.pillItem}>
             <Pill title={pill.name} color={getColor('orange')} />
           </View>
@@ -100,12 +101,10 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   }
 
   renderListOfCommunities(): ?React$Element<*> {
-    const selectedIds = this.state.selectedCommunities.map(comm => comm.id);
-
     return !this.state.isCollapsed ? (
       <View style={styles.listContainer}>
-        {(this.fileredCommunities || []).map((item: JoinedCommunity) => {
-          if (!selectedIds.includes(item.id)) {
+        {(this.fileredCommunities || []).map((item: CommunitySimple) => {
+          if (!this.props.selection.includes(item.id)) {
             return (
               <TouchableOpacity
                 key={item.id}
@@ -140,7 +139,7 @@ export default class PostEditorSearchBox extends Component<Props, State> {
             >
               Post in:
             </Text>
-            {this.renderSelectedCommunities()}
+            {this.renderselection()}
             <View style={styles.inputContainer}>
               <TextInput
                 onChangeText={(text: string) => this.onSearchChange(text)}
