@@ -3,7 +3,13 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Icon, TouchableItem, TouchableNativeFeedback, View } from '../index';
+import {
+  Icon,
+  Text,
+  TouchableItem,
+  TouchableNativeFeedback,
+  View,
+} from '../index';
 import { type ColorName, type IconName, type IconSize } from '../../Types';
 import { css } from '../../utils/style';
 
@@ -15,6 +21,7 @@ const HIT_SLOP = {
 };
 
 type P = {
+  block?: boolean,
   color: ColorName | string,
   disabled: boolean,
   iconColor: ColorName | string,
@@ -23,6 +30,8 @@ type P = {
   outline: boolean,
   size: IconSize | number,
   style?: any,
+  textColor?: ColorName | string,
+  title?: string,
 };
 
 export default class IconButton extends React.Component<P> {
@@ -35,6 +44,7 @@ export default class IconButton extends React.Component<P> {
 
   render() {
     const {
+      block,
       color,
       disabled,
       iconColor,
@@ -43,9 +53,17 @@ export default class IconButton extends React.Component<P> {
       outline,
       size,
       style,
+      textColor,
+      title,
     } = this.props;
 
     const activeSizeStyle = sizeStyles[size];
+
+    const textStyle = [
+      styles.title,
+      css('color', textColor),
+      activeSizeStyle.size.title,
+    ];
 
     return (
       <TouchableItem
@@ -58,6 +76,7 @@ export default class IconButton extends React.Component<P> {
           css('opacity', disabled ? 0.5 : 1),
           styles.touchableWrapper,
           style,
+          block ? css('width', '100%') : undefined,
         ]}
         useForeground={Platform.select({
           android: TouchableNativeFeedback.canUseNativeForeground,
@@ -71,14 +90,18 @@ export default class IconButton extends React.Component<P> {
               ? [css('borderColor', color), css('borderWidth', 1)]
               : css('backgroundColor', color),
             activeSizeStyle.size.view,
+            block ? css('width', '100%') : undefined,
           ]}
         >
-          <Icon
-            color={iconColor}
-            name={iconName}
-            size={activeSizeStyle.iconSize}
-            style={styles.icon}
-          />
+          {iconName ? (
+            <Icon
+              color={iconColor}
+              name={iconName}
+              size={activeSizeStyle.iconSize}
+              style={styles.icon}
+            />
+          ) : null}
+          {title ? <Text style={textStyle}>{title}</Text> : null}
         </View>
       </TouchableItem>
     );
@@ -88,15 +111,22 @@ export default class IconButton extends React.Component<P> {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: 100,
     justifyContent: 'center',
+    borderRadius: 100,
+    flexDirection: 'row',
   },
   icon: {
     backgroundColor: 'transparent',
+    marginHorizontal: 7,
+  },
+  title: {
+    marginHorizontal: 7,
+    fontWeight: '500',
+    transform: [{ translateY: -1 }],
   },
   touchableWrapper: {
-    alignSelf: 'center',
     borderRadius: 100,
+    overflow: 'hidden',
   },
 });
 
@@ -104,36 +134,48 @@ const sizeStyles = {
   xs: {
     iconSize: 10,
     size: StyleSheet.create({
+      title: {
+        fontSize: 12,
+      },
       view: {
         height: 20,
-        width: 20,
+        minWidth: 20,
       },
     }),
   },
   sm: {
     iconSize: 12,
     size: StyleSheet.create({
+      title: {
+        fontSize: 12,
+      },
       view: {
         height: 24,
-        width: 24,
+        minWidth: 24,
       },
     }),
   },
   md: {
     iconSize: 18,
     size: StyleSheet.create({
+      title: {
+        fontSize: 15,
+      },
       view: {
         height: 34,
-        width: 34,
+        minWidth: 34,
       },
     }),
   },
   lg: {
     iconSize: 30,
     size: StyleSheet.create({
+      title: {
+        fontSize: 17,
+      },
       view: {
         height: 48,
-        width: 48,
+        minWidth: 48,
       },
     }),
   },
