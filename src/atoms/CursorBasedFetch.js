@@ -34,7 +34,6 @@ export default class CursorBaseFetch extends Component<{}, State> {
   onDataChange = (fetchProps: *) => {
     // TODO reevaluate later
     const { data = [], meta } = fetchProps;
-    data[0].pinned = true;
     const pinnedPostIdx = data.findIndex(item => item.pinned);
 
     this.setState(state => ({

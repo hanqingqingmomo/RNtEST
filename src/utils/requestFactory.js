@@ -109,6 +109,15 @@ export const makePasswordResetReq = (email: string) =>
     },
   });
 
+export const makeNewPasswordReq = (password: string) =>
+  inject({
+    url: join(Config.API_URL, 'v1/members/profile_settings'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ password }),
+    },
+  });
+
 /**
  * Donations
  */
@@ -259,15 +268,34 @@ export const makeReadPostWithCommentsRq = (postId: string | number) =>
     },
   });
 
-export const makeCreatePostReq = (body: *) =>
+export const makeCreatePostReq = (
+  text_content: string,
+  communities: Array<string>
+) =>
   inject({
     url: join(Config.API_URL, '/v1/content_objects/'),
     options: {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ text_content, communities }),
     },
   });
 
+export const makeDeletePostReq = (postId: number | string) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${postId}`),
+    options: {
+      method: 'DELETE',
+    },
+  });
+
+export const makeScrapeUrlReq = (url: string) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/generate_thumbnail'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ url }),
+    },
+  });
 // export const makeCreatePostReq = (body: *) =>
 //   inject({
 //     url: join(Config.API_URL, '/v1/content_objects/'),
@@ -286,6 +314,20 @@ export const makeCreateCommentReq = (postId: string, body: *) =>
     options: {
       method: 'POST',
       body: JSON.stringify(body),
+    },
+  });
+
+export const makeDeleteCommentReq = (
+  postId: number | string,
+  commentId: number | string
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/content_objects/${postId}/comment/${commentId}`
+    ),
+    options: {
+      method: 'DELETE',
     },
   });
 

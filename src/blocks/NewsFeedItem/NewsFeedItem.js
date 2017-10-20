@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
-import { type JoinedCommunity, type Post, type User } from '../../Types';
+import { type Post, type User } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -52,10 +52,10 @@ export default class NewsFeedItem extends Component<Props> {
     const { id, navigation } = this.props;
 
     const links = [
-      {
-        label: 'Share',
-        onPress: () => console.log('Share press'),
-      },
+      // {
+      //   label: 'Share',
+      //   onPress: () => console.log('Share press'),
+      // },
     ];
 
     if (navigation) {
@@ -69,16 +69,6 @@ export default class NewsFeedItem extends Component<Props> {
     }
 
     return links;
-  };
-
-  handleCommunityPress = (community: JoinedCommunity) => {
-    const { navigation } = this.props;
-
-    if (navigation) {
-      navigation.navigate('CommunityCenterScreen', {
-        communityId: community.id,
-      });
-    }
   };
 
   handleUserPress = (user: User) => {
@@ -98,7 +88,6 @@ export default class NewsFeedItem extends Component<Props> {
       donation,
       event,
       isNew,
-      communities,
       text_content,
       author,
       replies,
@@ -112,11 +101,7 @@ export default class NewsFeedItem extends Component<Props> {
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
-          <NewsFeedItemHeader
-            communities={communities}
-            onPillPress={this.handleCommunityPress}
-            onMorePress={() => console.log('more')}
-          />
+          <NewsFeedItemHeader {...this.props} />
 
           {(this.hasAttachment && this.attachment.type === 'link') ||
           !this.hasAttachment ? (

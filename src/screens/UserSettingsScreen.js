@@ -21,14 +21,14 @@ type Action = {
 };
 
 const SETTINGS = [
-  {
+  /*{
     name: 'Sync Calendars',
     iconName: 'calendar',
   },
   {
     name: 'Use Invite Code',
     iconName: 'plus-bold',
-  },
+  },*/
   {
     name: 'Legal & Privacy',
     iconName: 'file-empty',

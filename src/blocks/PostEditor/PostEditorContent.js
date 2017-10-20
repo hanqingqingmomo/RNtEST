@@ -5,7 +5,11 @@ import { StyleSheet, TextInput } from 'react-native';
 
 import { View } from '../../atoms';
 
-export default class PostEditorContent extends Component<{}> {
+type Props = {
+  value: string,
+};
+
+export default class PostEditorContent extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
