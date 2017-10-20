@@ -19,6 +19,6 @@ export default class LandingScreen extends Component<{}> {
 const styles = StyleSheet.create({
   activityIndicator: {
     top: '50%',
-    marginTop: 38,
+    marginTop: 128,
   },
 });

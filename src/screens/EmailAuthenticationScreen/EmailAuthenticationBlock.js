@@ -40,7 +40,12 @@ export default class EmailAuthenticationBlock extends Component<Props> {
         onSubmit={this.props.handleAuthenticationRequest}
         render={formProps => (
           <View style={styles.container}>
-            <Icon name="ywca" color="orange" size={100} />
+            <Icon
+              name="mpwr-logo"
+              color="orange"
+              size={80}
+              style={styles.icon}
+            />
 
             <View style={styles.formWrapper}>
               {this.props.error ? (
@@ -102,5 +107,8 @@ const styles = StyleSheet.create({
   authenticationErrorText: {
     position: 'absolute',
     top: -20,
+  },
+  icon: {
+    marginTop: 20,
   },
 });

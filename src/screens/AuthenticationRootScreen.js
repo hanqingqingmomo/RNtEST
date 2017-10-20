@@ -32,7 +32,7 @@ export default class AuthenticationRootScreen extends Component<{}> {
     return (
       <Screen fill>
         <View style={styles.container}>
-          <Icon name="ywca" color="orange" size={100} />
+          <Icon color="orange" name="mpwr-logo" size={80} style={styles.icon} />
 
           <View>
             <AuthenticationButton
@@ -60,6 +60,9 @@ export default class AuthenticationRootScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 15,
+  },
   container: {
     width: 275,
     flexGrow: 1,
@@ -67,11 +70,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 40,
   },
-  button: {
-    marginTop: 15,
-  },
   footerText: {
     alignSelf: 'center',
     marginTop: 30,
+  },
+  icon: {
+    marginTop: 20,
   },
 });
