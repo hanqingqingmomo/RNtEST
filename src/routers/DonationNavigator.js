@@ -3,8 +3,8 @@
 import React from 'react';
 
 import { StackNavigator } from '../navigation';
+import { DonationAppealScreen, DonationResultScreen } from '../screens';
 import { NavigationIconButton } from '../atoms';
-import { DonationAppealScreen } from '../screens';
 
 function DismissModalButton({ onPress, ...a }) {
   return (
@@ -21,5 +21,8 @@ export default StackNavigator({
       ),
       headerTitle: 'Donate',
     }),
+  },
+  DonationResultScreen: {
+    screen: DonationResultScreen,
   },
 });

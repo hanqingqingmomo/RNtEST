@@ -6,7 +6,6 @@ import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
 import { View } from '../atoms';
-import { DonationAppealModalBox } from '../blocks';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
 import DonationNavigator from './DonationNavigator';
 import HelpNavigator from './HelpNavigator';
@@ -122,7 +121,13 @@ export default class MainNavigator extends Component<{}, State> {
 
     switch (modalRoute.routeName) {
       case 'DonationModal':
-        return <DonationNavigator {...props} />;
+        const _props = {
+          screenProps: {
+            dismissModalRoute: this.closeModalRoute,
+            openModalRoute: this.openModalRoute,
+          },
+        };
+        return <DonationNavigator {..._props} />;
       case 'UserProfileModal':
         return <UserProfileNavigator {...props} />;
       case 'UserSettingsModal':
@@ -187,8 +192,6 @@ export default class MainNavigator extends Component<{}, State> {
         >
           {this.renderModalRoute()}
         </Modal>
-
-        <DonationAppealModalBox onConfirm={this.openDonationModal} />
       </View>
     );
   }

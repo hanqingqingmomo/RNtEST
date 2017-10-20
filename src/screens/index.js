@@ -14,6 +14,7 @@ export {
 export {
   default as DonationAppealScreen,
 } from './DonationAppealScreen/DonationAppealScreen';
+export { default as DonationResultScreen } from './DonationResultScreen';
 export {
   default as EmailAuthenticationScreen,
 } from './EmailAuthenticationScreen/EmailAuthenticationScreen';

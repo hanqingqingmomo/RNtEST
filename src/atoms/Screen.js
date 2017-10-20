@@ -9,17 +9,21 @@ import { css } from '../utils/style';
 type Props = {
   children?: React$Node,
   style?: Style,
+  containerStyle?: Style,
   tintColor?: string,
   fill?: boolean,
 };
 
 export default function Screen(props: Props): React$Element<*> {
-  const { children, fill, style, tintColor } = props;
+  const { children, fill, style, containerStyle, tintColor } = props;
   return (
     <ScrollView
       alwaysBounceVertical={false}
       overScrollMode="auto"
-      contentContainerStyle={fill ? styles.fillContentView : undefined}
+      contentContainerStyle={[
+        fill ? styles.fillContentView : undefined,
+        containerStyle,
+      ]}
       style={[
         { flexGrow: 1 },
         tintColor ? css('backgroundColor', tintColor) : undefined,
