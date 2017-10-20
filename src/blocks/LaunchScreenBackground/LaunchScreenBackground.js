@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Image, View, Screen } from '../../atoms';
+import { Icon, View, Screen } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type P = {
@@ -15,7 +15,12 @@ export default class LandingScreen extends Component<P> {
     return (
       <Screen fill tintColor={getColor('orange')}>
         <View style={styles.logo}>
-          <Image source={require('./logo.png')} />
+          <Icon
+            name="mpwr-logo"
+            size={128}
+            color={getColor('white')}
+            style={styles.icon}
+          />
         </View>
         {this.props.children}
       </Screen>
