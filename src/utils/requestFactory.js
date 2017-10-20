@@ -265,6 +265,14 @@ export const makeCreatePostReq = (body: *) =>
     },
   });
 
+export const makeDeletePostReq = (postId: number | string) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${postId}`),
+    options: {
+      method: 'DELETE',
+    },
+  });
+
 // export const makeCreatePostReq = (body: *) =>
 //   inject({
 //     url: join(Config.API_URL, '/v1/content_objects/'),

@@ -98,7 +98,6 @@ export default class NewsFeedItem extends Component<Props> {
       donation,
       event,
       isNew,
-      communities,
       text_content,
       author,
       replies,
@@ -113,9 +112,9 @@ export default class NewsFeedItem extends Component<Props> {
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader
-            communities={communities}
             onPillPress={this.handleCommunityPress}
             onMorePress={() => console.log('more')}
+            {...this.props}
           />
 
           {(this.hasAttachment && this.attachment.type === 'link') ||

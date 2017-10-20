@@ -2,18 +2,39 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-import { View, Pill, Icon, TouchableItem } from '../../atoms';
+import {
+  ActivityIndicator,
+  CenterView,
+  Icon,
+  Pill,
+  Popover,
+  PopoverItem,
+  TouchableItem,
+  View,
+} from '../../atoms';
+import type { IconName, JoinedCommunity, User } from '../../Types';
+import { selectUser } from '../../redux/selectors';
+import { makeDeletePostReq } from '../../utils/requestFactory';
 
-type ItemProps = {
-  disabled?: boolean,
-  name: string,
+type Setting = {
+  label: string,
+  iconName: IconName,
+  key: 'pin' | 'delete' | 'share',
 };
 
-type P = {
-  communities: Array<ItemProps>,
-  onMorePress: () => void,
-  onPillPress: ItemProps => void,
+type Props = {
+  author: User,
+  communities: Array<JoinedCommunity>,
+  id: number | string,
+  onMorePress: Function,
+  onPillPress: Function,
+  user: User,
+};
+
+type State = {
+  deleting: boolean,
 };
 
 const HIT_SLOP = {
@@ -23,14 +44,92 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemHeader extends Component<P> {
+const SETTINGS = [
+  // {
+  //   key: 'share',
+  //   label: 'Share',
+  //   iconName: 'share',
+  // },
+  // {
+  //   key: 'pin',
+  //   label: 'Pin',
+  //   iconName: 'pin',
+  // },
+  {
+    key: 'delete',
+    label: 'Delete',
+    iconName: 'delete',
+  },
+];
+
+const mapStateToProps = state => ({
+  user: selectUser(state),
+});
+
+@connect(mapStateToProps)
+export default class NewsFeedItemHeader extends Component<Props, State> {
+  state = {
+    deleting: false,
+  };
+
+  get settings(): Array<*> {
+    return SETTINGS.map((setting: Setting) => ({
+      label: () => this.renderSettings(setting),
+      onPress: () => this.handleSettingPress(setting),
+    }));
+  }
+
+  get isUserAuthorOfPost(): boolean {
+    const { author, user } = this.props;
+
+    return author.id === user.id;
+  }
+
+  renderSettings = ({
+    label,
+    iconName,
+    ...args
+  }: Setting): React$Element<*> => {
+    return (
+      <PopoverItem
+        {...args}
+        contentView={label}
+        imageView={<Icon name={iconName} color="#B0BEC5" size="md" />}
+      />
+    );
+  };
+
+  handleSettingPress = async (setting: Setting) => {
+    switch (setting.key) {
+      case 'delete':
+        this.deletePost();
+        break;
+      default:
+    }
+  };
+
+  deletePost = async () => {
+    const { id } = this.props;
+    const deletePostReq = makeDeletePostReq(id);
+
+    this.setState({ deleting: true });
+
+    try {
+      await global.fetch(deletePostReq.url, deletePostReq.options);
+      this.setState({ deleting: false });
+    } catch (err) {}
+    console.log(deletePostReq);
+  };
+
   render() {
     this.props.communities.splice(3, this.props.communities.length - 3);
+
+    console.log(this.props);
 
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {this.props.communities.map((item: ItemProps) => (
+          {this.props.communities.map((item: JoinedCommunity) => (
             <View style={styles.tag} key={item.id}>
               <TouchableItem
                 onPress={() => this.props.onPillPress(item)}
@@ -47,11 +146,20 @@ export default class NewsFeedItemHeader extends Component<P> {
             </View>
           ))}
         </View>
-        <View>
-          <TouchableItem onPress={this.props.onMorePress} hitSlop={HIT_SLOP}>
-            <Icon name="menu" color="#C6D3D8" size={20} />
-          </TouchableItem>
-        </View>
+        {this.isUserAuthorOfPost ? (
+          <View>
+            {this.state.deleting ? (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            ) : (
+              <Popover
+                labels={this.settings}
+                button={<Icon name="menu" color="#C6D3D8" size={20} />}
+              />
+            )}
+          </View>
+        ) : null}
       </View>
     );
   }
