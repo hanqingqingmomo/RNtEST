@@ -12,7 +12,7 @@ type P = {
     first_name: string,
     last_name: string,
     phone: string,
-    profilePhoto: string,
+    profile_photo: string,
     role: string,
   },
 };
@@ -24,14 +24,14 @@ export default class ProfileCard extends Component<P> {
       first_name,
       last_name,
       phone,
-      profilePhoto,
+      profile_photo,
       role,
     } = this.props.user;
 
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
-          <Avatar imageURI={profilePhoto} size={100} />
+          <Avatar imageURI={profile_photo} size={100} />
           <Text
             size={19}
             color="#455A64"
@@ -41,21 +41,31 @@ export default class ProfileCard extends Component<P> {
           >
             {`${first_name} ${last_name}`}
           </Text>
-          <Text
-            size={14}
-            color="#4e5f67"
-            weight="500"
-            lineHeight={16}
-            style={styles.subtitle}
-          >
-            {role}
-          </Text>
-          <Link type="mail" value={email}>
-            <Text size={14} color="orange" weight="500" lineHeight={16}>
-              {email}
+          {role ? (
+            <Text
+              size={14}
+              color="#4e5f67"
+              weight="500"
+              lineHeight={16}
+              style={styles.subtitle}
+            >
+              {role}
             </Text>
-          </Link>
-          <View style={styles.links}>
+          ) : null}
+          {email ? (
+            <Link type="mail" value={email}>
+              <Text
+                size={14}
+                color="orange"
+                weight="500"
+                lineHeight={16}
+                style={styles.email}
+              >
+                {email}
+              </Text>
+            </Link>
+          ) : null}
+          {/* <View style={styles.links}>
             {email ? (
               <View style={styles.link}>
                 <Link type="mail" value={email}>
@@ -100,7 +110,7 @@ export default class ProfileCard extends Component<P> {
                 </Link>
               </View>
             ) : null}
-          </View>
+          </View> */}
         </View>
       </ShadowView>
     );
@@ -131,9 +141,11 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginTop: 3,
-    marginBottom: 10,
   },
   title: {
     marginTop: 15,
+  },
+  email: {
+    marginTop: 10,
   },
 });

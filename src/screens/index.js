@@ -39,3 +39,4 @@ export { default as PasswordResetScreen } from './PasswordResetScreen';
 export { default as UserProfileScreen } from './UserProfileScreen';
 export { default as UserSettingsScreen } from './UserSettingsScreen';
 export { default as PostEditorScreen } from './PostEditorScreen';
+export { default as MemberProfileScreen } from './MemberProfileScreen';
