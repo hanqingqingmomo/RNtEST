@@ -59,14 +59,14 @@ export default class CommunityCenterScreen extends Component<{}, State> {
       return <Screen fill />;
     }
 
-    const readCommunityRes = makeReadCommunityReq(
+    const readCommunityReg = makeReadCommunityReq(
       navigation.state.params.communityId
     );
 
     return (
-      <Fetch url={readCommunityRes.url} options={readCommunityRes.options}>
+      <Fetch url={readCommunityReg.url} options={readCommunityReg.options}>
         {({ loading, data, error }) => {
-          if (loading === false && !data.joined) {
+          if (loading === false && data && !data.joined) {
             return <ClosedCommunityCenterScreen {...this.props} />;
           }
           return loading === false ? (

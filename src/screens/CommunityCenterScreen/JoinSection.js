@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View, Text, Button, ShadowView, Like, Icon } from '../../atoms';
+import { View, Text, Button, ShadowView, Count, Icon } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type Props = {
@@ -24,7 +24,7 @@ export default class NewsTab extends Component<Props> {
       <ShadowView radius={0}>
         <View style={styles.container}>
           <View style={styles.likeWrapper}>
-            <Like iconName="user" count={community.members || 0} />
+            <Count iconName="user" count={community.members || 0} />
           </View>
 
           <Button.Icon
