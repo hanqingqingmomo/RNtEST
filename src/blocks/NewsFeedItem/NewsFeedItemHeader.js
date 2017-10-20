@@ -124,8 +124,6 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   render() {
     this.props.communities.splice(3, this.props.communities.length - 3);
 
-    console.log(this.props);
-
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
