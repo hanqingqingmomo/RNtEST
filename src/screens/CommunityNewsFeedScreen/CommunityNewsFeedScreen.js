@@ -42,7 +42,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
     const { url, options } = makeReadCommunityFeedRq(this.props.communityId);
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, pinnedPost, loading, batch, requestNextBatch }) => {
+        {({ data, pinnedPost, loading, batch, requestNextBatch, fetch }) => {
           return data === null ? (
             <CenterView>
               <ActivityIndicator />
@@ -51,7 +51,9 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
             <View style={{ height: '100%' }}>
               <NewsFeedConversation
                 onPress={() => {
-                  this.props.navigation.navigate('PostEditorScreen');
+                  this.props.navigation.navigate('PostEditorScreen', {
+                    onReturn: () => fetch(),
+                  });
                 }}
               />
 

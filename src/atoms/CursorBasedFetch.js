@@ -56,17 +56,20 @@ export default class CursorBaseFetch extends Component<{}, State> {
         onDataChange={this.onDataChange}
         onChange={this.onChange}
       >
-        {this.props.children({
-          pinnedPost: this.state.pinnedPost,
-          loading: this.state.loading,
-          data: this.state.data,
-          batch: this.state.batch,
-          requestNextBatch: () => {
-            if (this.state.nextCursor.next) {
-              this.setState({ cursor: this.state.nextCursor });
-            }
-          },
-        })}
+        {({ fetch }) => {
+          return this.props.children({
+            fetch,
+            pinnedPost: this.state.pinnedPost,
+            loading: this.state.loading,
+            data: this.state.data,
+            batch: this.state.batch,
+            requestNextBatch: () => {
+              if (this.state.nextCursor.next) {
+                this.setState({ cursor: this.state.nextCursor });
+              }
+            },
+          });
+        }}
       </Fetch>
     );
   }
