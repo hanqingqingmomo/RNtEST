@@ -46,7 +46,7 @@ export default class PostEditorScreen extends Component<Props, State> {
         text
       );
 
-      if (matches[0]) {
+      if (matches && matches[0]) {
         this.setState({ didRequestedUrlScraping: true });
 
         const scrapeUrlReq = makeScrapeUrlReq(matches[0]);
