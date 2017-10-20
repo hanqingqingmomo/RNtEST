@@ -205,6 +205,20 @@ export const makeLeaveCommunity = (
     },
   });
 
+export const makeJoinCommunity = (
+  memberId: string | number,
+  communityId: string | number
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/communities/${memberId}/${communityId}/membership`
+    ),
+    options: {
+      method: 'POST',
+    },
+  });
+
 /**
  * News feed requests
  */
@@ -226,7 +240,7 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
 
 export const makeReadPostWithCommentsRq = (postId: string | number) =>
   inject({
-    url: `${join(Config.API_URL, `/v1/content_objects/${postId}/comments`)}`,
+    url: join(Config.API_URL, `/v1/content_objects/${postId}/comments`),
     options: {
       method: 'GET',
     },
@@ -253,6 +267,15 @@ export const makeCreatePostReq = (body: *) =>
 //     },
 //   });
 
+export const makeCreateCommentReq = (postId: string, body: *) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${postId}/comment`),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+  });
+
 /**
  * User Invitations
  */
@@ -265,5 +288,16 @@ export const makeInvitationRq = (email: string) =>
       body: JSON.stringify({
         member_invitations: email,
       }),
+    },
+  });
+
+/**
+   * Like
+   */
+export const makeLikeRq = (objectId: string, unlike?: boolean) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${objectId}/like`),
+    options: {
+      method: unlike ? 'DELETE' : 'POST',
     },
   });

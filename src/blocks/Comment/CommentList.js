@@ -10,6 +10,7 @@ type P = {
   comments: Array<TComment>,
   onReplyPress: TComment => void,
   onMorePress: TComment => void,
+  ListHeaderComponent?: any,
 };
 
 export default class CommentList extends Component<P> {
@@ -24,13 +25,14 @@ export default class CommentList extends Component<P> {
   keyExtractor = (comment: TComment) => comment.id.toString();
 
   render() {
-    const { comments } = this.props;
+    const { comments, ListHeaderComponent } = this.props;
 
     return (
       <FlatList
         data={comments}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
+        ListHeaderComponent={ListHeaderComponent}
       />
     );
   }

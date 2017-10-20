@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 
 import type { Comment as TComment } from '../Types';
 import {
@@ -53,6 +54,14 @@ export default class PostDetailScreen extends Component<P, S> {
     this.inputRef = ref;
   };
 
+  onSubmitSuccess = (fetch: any) => () => {
+    this.setState({
+      replyingTo: undefined,
+    });
+
+    fetch();
+  };
+
   render() {
     const { navigation } = this.props;
     const { replyingTo } = this.state;
@@ -62,43 +71,60 @@ export default class PostDetailScreen extends Component<P, S> {
     );
 
     return (
-      <Screen fill>
-        <Fetch
-          url={readPostWithCommentsRq.url}
-          options={readPostWithCommentsRq.options}
-        >
-          {({ loading, error, data }) => (
-            <View>
-              {loading && (
-                <CenterView>
-                  <ActivityIndicator />
-                </CenterView>
+      <Fetch
+        url={readPostWithCommentsRq.url}
+        options={readPostWithCommentsRq.options}
+      >
+        {({ loading, error, data, fetch }) => (
+          <Screen
+            fill
+            tintColor="white"
+            containerStyle={styles.screenContainer}
+          >
+            {loading && (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            )}
+            {error && (
+              <CenterView>
+                <Text>{error.message}</Text>
+              </CenterView>
+            )}
+            {!loading &&
+              data && (
+                <View style={styles.container}>
+                  <CommentList
+                    comments={data.replies}
+                    onReplyPress={this.onReplyPress}
+                    onMorePress={this.onMorePress}
+                    ListHeaderComponent={<NewsFeedItem {...data} />}
+                  />
+                  <CommentInput
+                    postId={data.id}
+                    replyingTo={replyingTo}
+                    onReplyCancel={this.onReplyCancel}
+                    onSubmitSuccess={this.onSubmitSuccess(fetch)}
+                    passRef={this.passRef}
+                    style={styles.commentInput}
+                  />
+                </View>
               )}
-              {error && (
-                <CenterView>
-                  <Text>{error.message}</Text>
-                </CenterView>
-              )}
-              {!loading &&
-                data && (
-                  <View>
-                    <NewsFeedItem {...data} />
-                    <CommentList
-                      comments={data.replies}
-                      onReplyPress={this.onReplyPress}
-                      onMorePress={this.onMorePress}
-                    />
-                    <CommentInput
-                      replyingTo={replyingTo}
-                      onReplyCancel={this.onReplyCancel}
-                      passRef={this.passRef}
-                    />
-                  </View>
-                )}
-            </View>
-          )}
-        </Fetch>
-      </Screen>
+          </Screen>
+        )}
+      </Fetch>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    height: 100,
+  },
+  container: {
+    flex: 1,
+  },
+  commentInput: {
+    height: 100,
+  },
+});

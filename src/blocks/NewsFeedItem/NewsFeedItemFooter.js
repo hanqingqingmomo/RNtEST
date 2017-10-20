@@ -9,13 +9,14 @@ import { css } from '../../utils/style';
 type LikeProps = 'like' | 'comment';
 
 type P = {
-  comments?: number,
-  likes?: number,
+  postId: string,
+  likes_count: number,
+  liked: boolean,
+  comments_count: number,
   links: Array<{
     label: string,
     onPress: Function,
   }>,
-  onLikePress: LikeProps => void,
 };
 
 const HIT_SLOP = {
@@ -26,30 +27,22 @@ const HIT_SLOP = {
 };
 
 export default class NewsFeedItemFooter extends Component<P, *> {
-  onLikePress(status: LikeProps) {
-    return () => {
-      this.props.onLikePress(status);
-    };
-  }
-
   render() {
-    const { likes, comments } = this.props;
+    const { postId, likes_count, comments_count, liked } = this.props;
+
     return (
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
           <View style={styles.likeWrapper}>
             <Like
               iconName="like"
-              count={likes || 0}
-              onPress={this.onLikePress('like')}
+              count={likes_count}
+              liked={liked}
+              objectId={postId}
             />
           </View>
           <View style={styles.likeWrapper}>
-            <Like
-              iconName="comment"
-              count={comments || 0}
-              onPress={this.onLikePress('comment')}
-            />
+            <Like iconName="comment" count={comments_count} />
           </View>
         </View>
         <View style={[styles.footerRight, styles.row]}>

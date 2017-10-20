@@ -6,7 +6,6 @@ import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
 import { View } from '../atoms';
-import { DonationAppealModalBox } from '../blocks';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
 import DonationNavigator from './DonationNavigator';
 import HelpNavigator from './HelpNavigator';
@@ -193,8 +192,6 @@ export default class MainNavigator extends Component<{}, State> {
         >
           {this.renderModalRoute()}
         </Modal>
-
-        <DonationAppealModalBox onConfirm={this.openDonationModal} />
       </View>
     );
   }

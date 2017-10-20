@@ -35,8 +35,6 @@ export default class Comment extends React.Component<P, S> {
     showReplies: false,
   };
 
-  onLikePress = () => {};
-
   onCommentPress = () => {};
 
   viewAllReplies = () => {
@@ -119,8 +117,9 @@ export default class Comment extends React.Component<P, S> {
               <View style={styles.likeWrapper}>
                 <Like
                   count={data.likes_count}
+                  liked={data.liked}
                   iconName="like"
-                  onPress={this.onLikePress}
+                  objectId={data.id}
                 />
               </View>
 

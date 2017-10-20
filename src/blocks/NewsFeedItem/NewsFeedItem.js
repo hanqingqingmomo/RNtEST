@@ -97,6 +97,7 @@ export default class NewsFeedItem extends Component<Post> {
 
   render() {
     const {
+      id,
       created_at,
       donation,
       event,
@@ -105,8 +106,9 @@ export default class NewsFeedItem extends Component<Post> {
       text_content,
       author,
       replies,
-      comments,
-      likes,
+      comments_count,
+      likes_count,
+      liked,
     } = this.props;
 
     const shortedTitle = this.shortenString(text_content, 110);
@@ -165,10 +167,11 @@ export default class NewsFeedItem extends Component<Post> {
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
           <NewsFeedItemFooter
-            likes={likes}
-            comments={comments}
+            postId={id}
+            likes_count={likes_count}
+            liked={liked}
+            comments_count={comments_count}
             links={this.getLinks()}
-            onLikePress={key => console.log(key)}
           />
         </View>
       </ShadowView>
