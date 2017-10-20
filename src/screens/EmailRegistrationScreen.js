@@ -71,14 +71,16 @@ class EmailRegistrationScreen extends Component<{}> {
     }
   };
 
-  onAvatarChange = (setFielValue: (string, any) => void) => (photo: string) => {
-    setFielValue('photo', photo);
+  onAvatarChange = (setFieldValue: (string, any) => void) => (
+    photo: string
+  ) => {
+    setFieldValue('photo', photo);
   };
 
-  onPasswordChange = (setFielValue: (name: string, value: string) => void) => (
+  onPasswordChange = (setFieldValue: (name: string, value: string) => void) => (
     password: string
   ) => {
-    setFielValue('password_confirmation', password);
+    setFieldValue('password_confirmation', password);
   };
 
   render() {

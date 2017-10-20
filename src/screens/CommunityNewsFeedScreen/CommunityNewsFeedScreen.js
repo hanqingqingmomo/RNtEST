@@ -33,7 +33,9 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
   );
 
   renderPinnedPost(data: Post) {
-    return <PinnedPost data={data} onPress={() => console.log('aaa')} />;
+    return data ? (
+      <PinnedPost data={data} onPress={() => console.log('aaa')} />
+    ) : null;
   }
 
   render() {
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     flex: 1,
-    paddingBottom: 10,
+    paddingVertical: 10,
   },
   feedItemWrapper: {
     paddingHorizontal: 10,

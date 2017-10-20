@@ -184,7 +184,11 @@ export default class Comment extends React.Component<P, S> {
               ) : (
                 <Popover
                   labels={this.settings}
-                  button={<Icon name="menu" color="#CFD8DC" size={24} />}
+                  button={
+                    <View style={{ padding: 6 }}>
+                      <Icon name="menu" color="#CFD8DC" size={24} />
+                    </View>
+                  }
                 />
               )
             ) : null}

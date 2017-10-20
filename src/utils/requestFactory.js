@@ -127,8 +127,17 @@ type DonationPayload = {
   interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
 };
 
+export const makeDonationRq = (donationPayload: DonationPayload) =>
+  inject({
+    url: join(Config.API_URL, '/v1/donations'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(donationPayload),
+    },
+  });
+
 /**
- * Read Profile
+ * Profile
  */
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
@@ -139,12 +148,15 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     options: { method: 'GET' },
   });
 
-export const makeDonationRq = (donationPayload: DonationPayload) =>
+export const makeUpdateProfileReq = (user: object) =>
   inject({
-    url: join(Config.API_URL, '/v1/donations'),
+    url: join(Config.API_URL, '/v1/members/profile_settings'),
     options: {
-      method: 'POST',
-      body: JSON.stringify(donationPayload),
+      method: 'PUT',
+      body: makeFormData(user, ['profile_photo']),
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
     },
   });
 
@@ -335,8 +347,9 @@ export const makeInvitationRq = (email: string) =>
   });
 
 /**
-   * Like
-   */
+ * Like
+ */
+
 export const makeLikeRq = (objectId: string, unlike?: boolean) =>
   inject({
     url: join(Config.API_URL, `/v1/content_objects/${objectId}/like`),
