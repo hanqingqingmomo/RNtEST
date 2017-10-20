@@ -91,6 +91,9 @@ export default class IconButton extends React.Component<P> {
               : css('backgroundColor', color),
             activeSizeStyle.size.view,
             block ? css('width', '100%') : undefined,
+            title
+              ? css('paddingHorizontal', size === 'xs' ? 11 : 15)
+              : undefined,
           ]}
         >
           {iconName ? (
