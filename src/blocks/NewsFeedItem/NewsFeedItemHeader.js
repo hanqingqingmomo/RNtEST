@@ -102,7 +102,11 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
       <PopoverItem
         {...args}
         contentView={label}
-        imageView={<Icon name={iconName} color="#B0BEC5" size="md" />}
+        imageView={
+          <View style={{ padding: 6 }}>
+            <Icon name={iconName} color="#B0BEC5" size="md" />
+          </View>
+        }
       />
     );
   };
