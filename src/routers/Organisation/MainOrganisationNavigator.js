@@ -42,6 +42,7 @@ export default TabNavigator(
   },
   {
     initialRouteName: 'AggregatedNewsFeedTab',
+    lazy: true,
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {

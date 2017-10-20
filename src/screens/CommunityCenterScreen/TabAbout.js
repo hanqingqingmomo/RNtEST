@@ -19,7 +19,7 @@ type Props = {
   navigateToMember: (user: User) => void,
 };
 
-export default class AboutTab extends Component<Props> {
+export default class TabAbout extends Component<Props> {
   static navigationOptions = {
     tabBarLabel: 'About',
   };
