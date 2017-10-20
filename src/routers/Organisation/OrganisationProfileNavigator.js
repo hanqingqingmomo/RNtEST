@@ -3,10 +3,7 @@
 import React from 'react';
 
 import { StackNavigator } from '../../navigation';
-import {
-  OrganisationMemberProfileScreen,
-  OrganisationProfileScreen,
-} from '../../screens';
+import { MemberProfileScreen, OrganisationProfileScreen } from '../../screens';
 
 export default StackNavigator({
   OrganisationProfileScreen: {
@@ -15,7 +12,7 @@ export default StackNavigator({
       header: null,
     },
   },
-  OrganisationMemberProfileScreen: {
-    screen: OrganisationMemberProfileScreen,
+  MemberProfileScreen: {
+    screen: MemberProfileScreen,
   },
 });

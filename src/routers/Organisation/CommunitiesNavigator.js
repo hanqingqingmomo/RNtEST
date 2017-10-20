@@ -4,7 +4,7 @@ import { StackNavigator } from '../../navigation';
 import {
   CommunityListScreen,
   CommunityCenterScreen,
-  OrganisationMemberProfileScreen,
+  MemberProfileScreen,
 } from '../../screens';
 
 export default StackNavigator(
@@ -19,7 +19,7 @@ export default StackNavigator(
       },
     },
     CommunityMemberProfileScreen: {
-      screen: OrganisationMemberProfileScreen,
+      screen: MemberProfileScreen,
     },
   },
   {

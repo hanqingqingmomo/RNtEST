@@ -74,17 +74,21 @@ export default class NewsFeedItem extends Component<Props> {
   handleCommunityPress = (community: JoinedCommunity) => {
     const { navigation } = this.props;
 
-    navigation.navigate('CommunityCenterScreen', {
-      communityId: community.id,
-    });
+    if (navigation) {
+      navigation.navigate('CommunityCenterScreen', {
+        communityId: community.id,
+      });
+    }
   };
 
-  handleUserPress = (member: User) => {
+  handleUserPress = (user: User) => {
     const { navigation } = this.props;
 
-    navigation.navigate('MemberProfileScreen', {
-      member: member,
-    });
+    if (navigation) {
+      navigation.navigate('MemberProfileScreen', {
+        user,
+      });
+    }
   };
 
   render() {

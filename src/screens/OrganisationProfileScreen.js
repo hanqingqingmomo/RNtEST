@@ -95,7 +95,7 @@ export default class OrganisationProfileScreen extends Component<{}, State> {
                       <ContactGroup
                         onContactSelect={user =>
                           this.props.navigation.navigate(
-                            'OrganisationMemberProfileScreen',
+                            'MemberProfileScreen',
                             { user }
                           )}
                         users={data.administrators}

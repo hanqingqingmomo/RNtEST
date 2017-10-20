@@ -10,7 +10,6 @@ import {
   Pill,
   Screen,
   TableView,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from '../atoms';
@@ -27,7 +26,7 @@ type Props = {
 
 export default class MemberProfileScreen extends Component<Props> {
   static navigationOptions = ({ navigation }) => {
-    const { first_name, last_name } = navigation.state.params.member;
+    const { first_name, last_name } = navigation.state.params.user;
     return {
       title: `${first_name} ${last_name}`,
     };
@@ -56,9 +55,7 @@ export default class MemberProfileScreen extends Component<Props> {
   render() {
     const { navigation } = this.props;
 
-    const memberProfileReq = makeReadProfileRq(
-      navigation.state.params.member.id
-    );
+    const memberProfileReq = makeReadProfileRq(navigation.state.params.user.id);
 
     return (
       <Fetch url={memberProfileReq.url} options={memberProfileReq.options}>
