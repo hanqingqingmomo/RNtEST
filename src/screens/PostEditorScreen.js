@@ -36,7 +36,7 @@ export default class PostEditorScreen extends Component<Props, State> {
 
   state = {
     attachment: null,
-    communitiesSelection: ['153196e617d1'],
+    communitiesSelection: [],
     content: '',
   };
 
