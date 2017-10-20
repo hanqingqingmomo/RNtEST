@@ -52,10 +52,10 @@ export default class NewsFeedItem extends Component<Props> {
     const { id, navigation } = this.props;
 
     const links = [
-      {
-        label: 'Share',
-        onPress: () => console.log('Share press'),
-      },
+      // {
+      //   label: 'Share',
+      //   onPress: () => console.log('Share press'),
+      // },
     ];
 
     if (navigation) {
