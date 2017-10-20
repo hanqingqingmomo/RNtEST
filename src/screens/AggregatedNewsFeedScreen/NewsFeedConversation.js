@@ -2,15 +2,19 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Avatar, Icon, ShadowView, View, TableView } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
+import { selectUser } from '../../redux/selectors';
 
 const { Cell } = TableView;
 const AVATAR_WIDTH = 30;
 
-export default function NewsFeedConversation(props) {
+const NewsFeedConversation = props => {
+  const { user } = props;
+
   return (
     <ShadowView style={styles.cellContainer}>
       <Cell
@@ -19,12 +23,7 @@ export default function NewsFeedConversation(props) {
         titleTextColor={getColor('gray')}
         image={
           <View style={styles.container}>
-            <Avatar
-              imageURI={
-                'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg'
-              }
-              size={AVATAR_WIDTH}
-            />
+            <Avatar imageURI={user.profile_photo} size={AVATAR_WIDTH} />
           </View>
         }
         cellAccessoryView={
@@ -42,7 +41,13 @@ export default function NewsFeedConversation(props) {
       />
     </ShadowView>
   );
-}
+};
+
+const mapStateToProps = state => ({
+  user: selectUser(state),
+});
+
+export default connect(mapStateToProps)(NewsFeedConversation);
 
 const styles = StyleSheet.create({
   cellContainer: {
