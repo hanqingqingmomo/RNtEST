@@ -42,7 +42,7 @@ export default class NewsFeedItemFooter extends Component<P, *> {
             />
           </View>
           <View style={styles.likeWrapper}>
-            <Like iconName="comment" count={comments_count} />
+            <Like iconName="comment" count={comments_count} disableLink />
           </View>
         </View>
         <View style={[styles.footerRight, styles.row]}>
