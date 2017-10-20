@@ -71,7 +71,6 @@ export default class PostEditorScreen extends Component<Props, State> {
   };
 
   render() {
-    // onCommunitiesChange={this.onCommunitiesChange}
     const { attachment } = this.props;
     return (
       <View>

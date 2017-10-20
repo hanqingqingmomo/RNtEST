@@ -27,6 +27,7 @@ export type ScreenProps<S> = {
 export type Attachment = {
   type: 'image' | 'link',
   thumbnail_url: ?string,
+  url: string,
   title: ?string,
   description: ?string,
 };
