@@ -39,6 +39,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
 
   render() {
     const { community } = this.props;
+
     return (
       <View style={css('flexGrow', 1)}>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
@@ -57,6 +58,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
               label: 'News',
               component: () => (
                 <TabNewsFeed
+                  navigation={this.props.navigation}
                   communityId={community.id}
                   navigateToPost={this.navigateToPost}
                 />

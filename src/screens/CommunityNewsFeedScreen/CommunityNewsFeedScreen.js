@@ -10,7 +10,7 @@ import {
   View,
 } from '../../atoms';
 import { NewsFeedItem, PinnedPost } from '../../blocks';
-import NewsFeedConversation from './NewsFeedConversation';
+import NewsFeedConversation from './../AggregatedNewsFeedScreen/NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
 import { type Post } from '../../Types';
 
@@ -28,7 +28,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 
   renderItem = ({ item }: { item: Post }) => (
     <View style={styles.feedItemWrapper}>
-      <NewsFeedItem {...item} />
+      <NewsFeedItem {...item} navigation={this.props.navigation} />
     </View>
   );
 
@@ -49,7 +49,11 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
             </CenterView>
           ) : (
             <View style={{ height: '100%' }}>
-              <NewsFeedConversation />
+              <NewsFeedConversation
+                onPress={() => {
+                  this.props.navigation.navigate('PostEditorScreen');
+                }}
+              />
 
               <FlatList
                 style={styles.itemsContainer}

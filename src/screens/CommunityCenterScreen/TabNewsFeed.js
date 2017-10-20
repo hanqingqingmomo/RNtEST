@@ -17,6 +17,7 @@ export default class NewsTab extends Component<Props> {
   render() {
     return (
       <CommunityNewsFeedScreen
+        navigation={this.props.navigation}
         communityId={this.props.communityId}
         navigateToPost={this.props.navigateToPost}
       />

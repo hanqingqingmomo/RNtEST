@@ -14,7 +14,7 @@ import {
   TouchableItem,
   View,
 } from '../../atoms';
-import type { IconName, CommunitySimple, User } from '../../Types';
+import type { IconName, JoinedCommunity, User } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq } from '../../utils/requestFactory';
 
@@ -26,7 +26,7 @@ type Setting = {
 
 type Props = {
   author: User,
-  communities: Array<CommunitySimple>,
+  communities: Array<JoinedCommunity>,
   id: number | string,
   user: User,
 };
@@ -83,7 +83,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     return author.id === user.id;
   }
 
-  onCommunityPress = (community: CommunitySimple) => {
+  onCommunityPress = (community: JoinedCommunity) => {
     const { navigation } = this.props;
 
     if (navigation) {
@@ -130,7 +130,6 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
       await global.fetch(deletePostReq.url, deletePostReq.options);
       this.setState({ deleting: false });
     } catch (err) {}
-    console.log(deletePostReq);
   };
 
   render() {
@@ -139,7 +138,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {this.props.communities.map((item: CommunitySimple) => (
+          {this.props.communities.map((item: JoinedCommunity) => (
             <View style={styles.tag} key={item.id}>
               <TouchableItem
                 onPress={() => this.onCommunityPress(item)}
