@@ -28,8 +28,6 @@ type Props = {
   author: User,
   communities: Array<JoinedCommunity>,
   id: number | string,
-  onMorePress: Function,
-  onPillPress: Function,
   user: User,
 };
 
@@ -75,7 +73,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   get settings(): Array<*> {
     return SETTINGS.map((setting: Setting) => ({
       label: () => this.renderSettings(setting),
-      onPress: () => this.handleSettingPress(setting),
+      onPress: () => this.onSettingPress(setting),
     }));
   }
 
@@ -84,6 +82,16 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
 
     return author.id === user.id;
   }
+
+  onCommunityPress = (community: JoinedCommunity) => {
+    const { navigation } = this.props;
+
+    if (navigation) {
+      navigation.navigate('CommunityCenterScreen', {
+        communityId: community.id,
+      });
+    }
+  };
 
   renderSettings = ({
     label,
@@ -99,7 +107,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     );
   };
 
-  handleSettingPress = async (setting: Setting) => {
+  onSettingPress = async (setting: Setting) => {
     switch (setting.key) {
       case 'delete':
         this.deletePost();
@@ -130,7 +138,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
           {this.props.communities.map((item: JoinedCommunity) => (
             <View style={styles.tag} key={item.id}>
               <TouchableItem
-                onPress={() => this.props.onPillPress(item)}
+                onPress={() => this.onCommunityPress(item)}
                 disabled={item.disabled}
                 hitSlop={HIT_SLOP}
               >

@@ -95,6 +95,7 @@ export default class PostDetailScreen extends Component<P, S> {
               data && (
                 <View style={styles.container}>
                   <CommentList
+                    postId={navigation.state.params.postId}
                     comments={data.replies}
                     onReplyPress={this.onReplyPress}
                     onMorePress={this.onMorePress}

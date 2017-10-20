@@ -294,6 +294,20 @@ export const makeCreateCommentReq = (postId: string, body: *) =>
     },
   });
 
+export const makeDeleteCommentReq = (
+  postId: number | string,
+  commentId: number | string
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/content_objects/${postId}/comment/${commentId}`
+    ),
+    options: {
+      method: 'DELETE',
+    },
+  });
+
 /**
  * User Invitations
  */
