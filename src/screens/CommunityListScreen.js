@@ -70,6 +70,10 @@ export default class CommunityListScreen extends Component<{}, State> {
     membershipStatus: 'Joined',
   };
 
+  onMemershipStatusChange = (status: string) => {
+    console.warn(status, ': treba dorobit reaload');
+  };
+
   render() {
     const { navigation } = this.props;
     const readCommunitiesListRq = makeReadCommunitiesListRq(
@@ -111,6 +115,7 @@ export default class CommunityListScreen extends Component<{}, State> {
                     onPress={() =>
                       navigation.navigate('CommunityCenterScreen', {
                         communityId: community.id,
+                        onMemershipStatusChange: this.onMemershipStatusChange,
                       })}
                     key={community.id}
                     style={styles.item}

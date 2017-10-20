@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { InteractionManager } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import { connect } from 'react-redux';
 
 import {
   ActivityIndicator,
@@ -10,31 +11,37 @@ import {
   CommunityHeader,
   Fetch,
   Screen,
-  TableView,
 } from '../../atoms';
 import {
   makeJoinCommunity,
   makeReadCommunityReq,
 } from '../../utils/requestFactory';
+import { selectUser } from '../../redux/selectors';
 import AboutTab from './AboutTab';
 import JoinSection from './JoinSection';
 import { type User } from '../../Types';
 
-const { Table, Section, Cell } = TableView;
-
 type Props = {
   navigation?: any,
+  user: User,
 };
 
 type State = {
   screenIsReady: boolean,
   activeTab: string,
+  joined: boolean,
 };
 
+const mapStateToProps = state => ({
+  user: selectUser(state),
+});
+
+@connect(mapStateToProps)
 export default class CommunityCenterScreen extends Component<Props, State> {
   state = {
     screenIsReady: false,
     activeTab: 'News',
+    joined: false,
   };
 
   componentWillMount() {
@@ -53,9 +60,23 @@ export default class CommunityCenterScreen extends Component<Props, State> {
     this.props.navigation.navigate('CommunityMemberProfileScreen', { user });
   };
 
-  navigateToPost = (post: Object) => {
-    console.log(post);
-    // this.props.navigation.navigate('CommunityMemberProfileScreen', { user });
+  handleOnJoin = async (community: Object, fetch: any) => {
+    const { user, navigation } = this.props;
+    const makeJoinCommunityReq = makeJoinCommunity(user.id, community.id);
+    const makeJoinCommunityRes = await fetch(
+      makeJoinCommunityReq.url,
+      makeJoinCommunityReq.options
+    );
+
+    if (makeJoinCommunityRes.error) {
+      this.setState({ joined: false });
+    }
+
+    if (makeJoinCommunityRes.response.status < 300) {
+      this.setState({ joined: true });
+      navigation.state.params.onMemershipStatusChange('joined');
+      setTimeout(() => navigation.goBack(), 1000);
+    }
   };
 
   render() {
@@ -71,8 +92,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
 
     return (
       <Fetch url={readCommunityRes.url} options={readCommunityRes.options}>
-        {({ loading, data, error }) => {
-          console.log(data);
+        {({ loading, data, error, fetch }) => {
           return loading === false ? (
             <Screen fill>
               <Collapsible collapsed={this.state.activeTab !== 'News'}>
@@ -82,7 +102,11 @@ export default class CommunityCenterScreen extends Component<Props, State> {
                   coverImageURI={data.cover_photo}
                 />
               </Collapsible>
-              <JoinSection community={data} />
+              <JoinSection
+                community={data}
+                onJoin={() => this.handleOnJoin(data, fetch)}
+                joined={this.state.joined}
+              />
               <AboutTab community={data} navigateToMember={() => {}} />
             </Screen>
           ) : (
