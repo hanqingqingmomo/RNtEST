@@ -47,6 +47,8 @@ export default function NewsFeedConversation() {
 const styles = StyleSheet.create({
   cellContainer: {
     backgroundColor: getColor('white'),
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E2E4',
   },
 
   container: {

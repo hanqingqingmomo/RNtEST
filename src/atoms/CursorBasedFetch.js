@@ -14,6 +14,7 @@ type State = {
     limit: ?number,
   },
   data: ?Array<any>,
+  pinnedPost: any,
   batch: number,
 };
 
@@ -22,6 +23,7 @@ export default class CursorBaseFetch extends Component<{}, State> {
     cursor: null,
     nextCursor: null,
     data: null,
+    pinnedPost: null,
     batch: 0,
   };
 
@@ -30,12 +32,16 @@ export default class CursorBaseFetch extends Component<{}, State> {
   };
 
   onDataChange = (fetchProps: *) => {
-    const { data, meta } = fetchProps;
+    // TODO reevaluate later
+    const { data = [], meta } = fetchProps;
+    data[0].pinned = true;
+    const pinnedPostIdx = data.findIndex(item => item.pinned);
 
     this.setState(state => ({
+      pinnedPost: pinnedPostIdx > -1 ? data[pinnedPostIdx] : state.pinnedPost,
+      data: (state.data || []).concat(data.splice(pinnedPostIdx + 1)),
       nextCursor: meta.cursor,
       batch: state.batch + 1,
-      data: (state.data || []).concat(data),
     }));
   };
 
@@ -52,6 +58,7 @@ export default class CursorBaseFetch extends Component<{}, State> {
         onChange={this.onChange}
       >
         {this.props.children({
+          pinnedPost: this.state.pinnedPost,
           loading: this.state.loading,
           data: this.state.data,
           batch: this.state.batch,

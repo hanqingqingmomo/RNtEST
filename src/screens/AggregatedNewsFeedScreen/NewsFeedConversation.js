@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Avatar, Icon, ShadowView, View, TableView, Text } from '../../atoms';
+import { Avatar, Icon, ShadowView, View, TableView } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
@@ -47,6 +47,8 @@ export default function NewsFeedConversation(props) {
 const styles = StyleSheet.create({
   cellContainer: {
     backgroundColor: getColor('white'),
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E2E4',
   },
 
   container: {

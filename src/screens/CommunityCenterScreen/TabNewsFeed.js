@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 
-import { View } from '../../atoms';
 import CommunityNewsFeedScreen from '../CommunityNewsFeedScreen/CommunityNewsFeedScreen';
 
 type Props = {

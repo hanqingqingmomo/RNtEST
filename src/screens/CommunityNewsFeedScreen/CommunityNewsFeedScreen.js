@@ -9,7 +9,7 @@ import {
   CursorBasedFetech,
   View,
 } from '../../atoms';
-import { NewsFeedItem } from '../../blocks';
+import { NewsFeedItem, PinnedPost } from '../../blocks';
 import NewsFeedConversation from './NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
 import { type Post } from '../../Types';
@@ -26,13 +26,21 @@ function ItemSeparatorComponent() {
 export default class CommunityNewsFeedScreen extends Component<Props> {
   keyExtractor = (item: Post) => item.id.toString() + Math.random();
 
-  renderItem = ({ item }: { item: Post }) => <NewsFeedItem {...item} />;
+  renderItem = ({ item }: { item: Post }) => (
+    <View style={styles.feedItemWrapper}>
+      <NewsFeedItem {...item} />
+    </View>
+  );
+
+  renderPinnedPost(data: Post) {
+    return <PinnedPost data={data} onPress={() => console.log('aaa')} />;
+  }
 
   render() {
     const { url, options } = makeReadCommunityFeedRq(this.props.communityId);
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, loading, batch, requestNextBatch }) => {
+        {({ data, pinnedPost, loading, batch, requestNextBatch }) => {
           return data === null ? (
             <CenterView>
               <ActivityIndicator />
@@ -40,16 +48,17 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
           ) : (
             <View style={{ height: '100%' }}>
               <NewsFeedConversation />
-              <View style={styles.itemsContainer}>
-                <FlatList
-                  key="list"
-                  data={data}
-                  renderItem={this.renderItem}
-                  keyExtractor={this.keyExtractor}
-                  onEndReached={requestNextBatch}
-                  ItemSeparatorComponent={ItemSeparatorComponent}
-                />
-              </View>
+
+              <FlatList
+                style={styles.itemsContainer}
+                data={data}
+                renderItem={this.renderItem}
+                keyExtractor={this.keyExtractor}
+                onEndReached={requestNextBatch}
+                ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
+                ItemSeparatorComponent={ItemSeparatorComponent}
+              />
+
               {loading ? (
                 <CenterView style={{ height: 50, flexGrow: 0 }}>
                   <ActivityIndicator />
@@ -69,6 +78,9 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     flex: 1,
-    padding: 10,
+    paddingBottom: 10,
+  },
+  feedItemWrapper: {
+    paddingHorizontal: 10,
   },
 });

@@ -42,13 +42,13 @@ export type Comment = $Exact<{
   replies: Array<Comment>,
 }>;
 
-export type Post = $Exact<{
+export type Post = {
   id: string,
-  attachments?: Array<{
+  attachment: {
     url: string,
     type: 'image' | 'link',
-  }>,
-  author?: {
+  },
+  author: {
     imageURI: string,
     username: string,
   },
@@ -76,8 +76,8 @@ export type Post = $Exact<{
   likes_count: number,
   liked: boolean,
   replies: number,
-  text_content?: string,
-}>;
+  text_content: string,
+};
 
 // Entities
 export type JoinedCommunity = {

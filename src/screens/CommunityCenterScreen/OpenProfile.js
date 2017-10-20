@@ -8,6 +8,7 @@ import TabNewsFeed from './TabNewsFeed';
 import TabMembers from './TabMembers';
 import TabAbout from './TabAbout';
 import type { Community, User } from '../../Types';
+import { css } from '../../utils/style';
 
 type Props = {
   community: Community,
@@ -37,9 +38,8 @@ export default class CommunityCenterScreen extends Component<Props, State> {
 
   render() {
     const { community } = this.props;
-    console.log(community);
     return (
-      <View fill>
+      <View style={css('flexGrow', 1)}>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
           <CommunityHeader
             title={community.name}

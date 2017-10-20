@@ -65,7 +65,7 @@ export default class CommunityCenterScreen extends Component<{}, State> {
     return (
       <Screen fill>
         <Fetch url={readCommunityReg.url} options={readCommunityReg.options}>
-          {({ data }: FetchData) => {
+          {({ data, pinnedData }: FetchData) => {
             if (data) {
               return <OpenProfile community={data} {...this.props} />;
             }
