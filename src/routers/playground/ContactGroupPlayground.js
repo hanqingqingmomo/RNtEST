@@ -7,7 +7,7 @@ import { type User } from '../../Types';
 
 const users: Array<User> = [
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Johnathanios',
     last_name: 'Wick',
@@ -16,7 +16,7 @@ const users: Array<User> = [
     id: 1,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
     first_name: 'Johnathanios',
     last_name: 'Wick',
@@ -25,7 +25,7 @@ const users: Array<User> = [
     id: 2,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Fero',
     last_name: 'Wick',
@@ -34,7 +34,7 @@ const users: Array<User> = [
     id: 3,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/iannnnn/128.jpg',
     first_name: 'Armani',
     last_name: 'Wick',
@@ -43,7 +43,7 @@ const users: Array<User> = [
     id: 4,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Lucinda',
     last_name: 'Wick',
@@ -52,7 +52,7 @@ const users: Array<User> = [
     id: 5,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/csswizardry/128.jpg',
     first_name: 'Petko',
     last_name: 'Wick',
@@ -61,7 +61,7 @@ const users: Array<User> = [
     id: 6,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Dagmar',
     last_name: 'Wick',
@@ -70,7 +70,7 @@ const users: Array<User> = [
     id: 7,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/ekvium/128.jpg',
     first_name: 'Jozo',
     last_name: 'Wick',
@@ -79,7 +79,7 @@ const users: Array<User> = [
     id: 8,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Miro',
     last_name: 'Wick',
@@ -88,7 +88,7 @@ const users: Array<User> = [
     id: 9,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/guiiipontes/128.jpg',
     first_name: 'Vlado',
     last_name: 'Wick',
@@ -97,7 +97,7 @@ const users: Array<User> = [
     id: 10,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'John',
     last_name: 'Wick',
@@ -106,7 +106,7 @@ const users: Array<User> = [
     id: 11,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
     first_name: 'Bonifac',
     last_name: 'Wick',
@@ -115,7 +115,7 @@ const users: Array<User> = [
     id: 12,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Ingeborga',
     last_name: 'Wick',
@@ -124,7 +124,7 @@ const users: Array<User> = [
     id: 13,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://s3.amazonaws.com/uifaces/faces/twitter/iannnnn/128.jpg',
     first_name: 'Stanko',
     last_name: 'Wick',
@@ -133,7 +133,7 @@ const users: Array<User> = [
     id: 14,
   },
   {
-    profilePhoto:
+    profile_photo:
       'https://cdn1.thr.com/sites/default/files/imagecache/nfe_square_383x383/2016/10/johnwick2_0.jpg',
     first_name: 'Pato',
     last_name: 'Wick',

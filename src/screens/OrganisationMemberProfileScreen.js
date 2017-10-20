@@ -1,17 +1,14 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
 
 import { Screen, TableView } from '../atoms';
 import { ProfileCard } from '../blocks';
 
-const { Table, Section, Cell } = TableView;
+const { Table, Section } = TableView;
 
-export default class OrganisationMemberProfileScreen extends Component<
-  {},
-  void
-> {
+// TODO rename to "MemberProfileScreen"
+export default class OrganisationMemberProfileScreen extends Component<{}> {
   static navigationOptions = ({ navigation }) => {
     const { user } = navigation.state.params;
 
@@ -21,8 +18,9 @@ export default class OrganisationMemberProfileScreen extends Component<
   };
 
   render() {
+    // TODO load data
+    // /v1/members/bcb54f098a8f
     const { user } = this.props.navigation.state.params;
-
     return (
       <Screen>
         <Table>

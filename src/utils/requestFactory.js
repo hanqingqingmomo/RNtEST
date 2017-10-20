@@ -205,7 +205,8 @@ export const makeLeaveCommunity = (
     },
   });
 
-export const makeJoinCommunity = (
+// TODO: inject authenticated profile ID, even better update URL
+export const makeJoinCommunityReq = (
   memberId: string | number,
   communityId: string | number
 ) =>

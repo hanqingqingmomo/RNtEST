@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-use-before-define */
 
 import type { Reducers } from './redux/reducers';
 import {
@@ -108,14 +109,23 @@ export type Attachment = {
 };
 
 export type Community = {
-  attachments: ?Array<Attachment>,
-  cover_photo: string,
-  description: ?string,
-  id: number,
-  joined: boolean,
-  members: number,
+  id: string,
   name: string,
+  cover_photo: string,
   profile_photo: string,
+  members: number,
+  description: string,
+  nonprofit_id: string,
+  joined: boolean,
+  administrators: Array<{
+    id: number,
+    first_name: string,
+    last_name: string,
+    email: string,
+    profile_photo: string,
+    role: string,
+  }>,
+  categories: Array<*>,
 };
 
 export type CommunityMember = {

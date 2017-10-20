@@ -12,7 +12,7 @@ type P = {
     first_name: string,
     last_name: string,
     phone: string,
-    profilePhoto: string,
+    profile_photo: string,
     role: string,
   },
 };
@@ -24,14 +24,14 @@ export default class ProfileCard extends Component<P> {
       first_name,
       last_name,
       phone,
-      profilePhoto,
+      profile_photo,
       role,
     } = this.props.user;
 
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
-          <Avatar imageURI={profilePhoto} size={100} />
+          <Avatar imageURI={profile_photo} size={100} />
           <Text
             size={19}
             color="#455A64"
