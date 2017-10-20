@@ -3,19 +3,10 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-native-collapsible';
 
-import {
-  ActivityIndicator,
-  CenterView,
-  Fetch,
-  CommunityHeader,
-  Screen,
-  Tabs,
-  View,
-} from '../../atoms';
-
-import NewsTab from './NewsTab';
-import MembersTab from './MembersTab';
-import AboutTab from './AboutTab';
+import { CommunityHeader, Tabs, View } from '../../atoms';
+import TabNewsFeed from './TabNewsFeed';
+import TabMembers from './TabMembers';
+import TabAbout from './TabAbout';
 import type { Community, User } from '../../Types';
 
 type Props = {
@@ -64,7 +55,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
             {
               label: 'News',
               component: () => (
-                <NewsTab
+                <TabNewsFeed
                   communityId={community.id}
                   navigateToPost={this.navigateToPost}
                 />
@@ -73,7 +64,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
             {
               label: 'Members',
               component: () => (
-                <MembersTab
+                <TabMembers
                   community={community}
                   navigateToMember={this.navigateToMember}
                 />
@@ -82,7 +73,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
             {
               label: 'About',
               component: () => (
-                <AboutTab
+                <TabAbout
                   community={community}
                   navigateToMember={this.navigateToMember}
                 />

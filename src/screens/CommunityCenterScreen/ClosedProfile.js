@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { CommunityHeader, View } from '../../atoms';
 import { makeJoinCommunityReq } from '../../utils/requestFactory';
 import { selectUser } from '../../redux/selectors';
-import AboutTab from './AboutTab';
+import TabAbout from './TabAbout';
 import JoinSection from './JoinSection';
 import { type User } from '../../Types';
 
@@ -86,7 +86,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
           onJoin={() => this.handleOnJoin(profile, fetch)}
           joined={this.state.joined}
         />
-        <AboutTab
+        <TabAbout
           community={profile}
           navigateToMember={this.props.navigateToMember}
         />

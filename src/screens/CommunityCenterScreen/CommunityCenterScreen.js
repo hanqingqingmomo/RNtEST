@@ -2,22 +2,10 @@
 
 import React, { Component } from 'react';
 import { InteractionManager } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 
-import {
-  ActivityIndicator,
-  CenterView,
-  Fetch,
-  CommunityHeader,
-  Screen,
-  Tabs,
-} from '../../atoms';
+import { ActivityIndicator, CenterView, Fetch, Screen } from '../../atoms';
 import { makeReadCommunityReq } from '../../utils/requestFactory';
-import NewsTab from './NewsTab';
-import MembersTab from './MembersTab';
-import AboutTab from './AboutTab';
-import { type User } from '../../Types';
-
+import type { User, Community } from '../../Types';
 import ClosedProfile from './ClosedProfile';
 import OpenProfile from './OpenProfile';
 
