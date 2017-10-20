@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { connect, type Connector } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 
@@ -46,7 +46,9 @@ type P = {
 };
 
 const BG_COLOR = '#ECEFF1';
+
 const HEADER_RIGHT_ID = 'UserProfile:HeaderRight';
+const HEADER_LEFT_ID = 'UserProfile:HeaderLeft';
 
 function DismissModalButton({ onPress, ...a }) {
   return (
@@ -74,10 +76,12 @@ class UserProfileScreen extends React.Component<P> {
     }
   };
 
-  onAvatarChange = (setFieldValue: (string, any) => void) => (
-    photo: string
-  ) => {
+  onAvatarChange = (
+    setFieldValue: (string, any) => void,
+    setFieldTouched: (string, boolean) => void
+  ) => (photo: string) => {
     setFieldValue('profile_photo', photo);
+    setFieldTouched('profile_photo', true);
   };
 
   handleSubmit = (fetch: any) => async (user: User) => {
@@ -146,7 +150,11 @@ class UserProfileScreen extends React.Component<P> {
     };
   }
 
-  renderUserDetailCell = ({ placeholder, name }: Object): React$Element<*> => {
+  renderUserDetailCell = ({
+    placeholder,
+    name,
+    onChange,
+  }: Object): React$Element<*> => {
     return (
       <Cell
         cellStyle="RightDetail"
@@ -169,6 +177,7 @@ class UserProfileScreen extends React.Component<P> {
               labelTextStyle={{
                 transform: [{ translateY: -5 }],
               }}
+              onChange={onChange}
             />
           </View>
         }
@@ -199,6 +208,34 @@ class UserProfileScreen extends React.Component<P> {
     );
   };
 
+  handleFieldChange = (
+    setFieldValue: (string, boolean) => void,
+    setFieldTouched: (string, boolean) => void,
+    fieldName: string,
+    fieldValue: string
+  ) => {
+    setFieldTouched(fieldName, true);
+    setFieldValue(fieldName, fieldValue);
+  };
+
+  handleClose = (isTouched: boolean) => {
+    if (isTouched) {
+      Alert.alert(
+        'Edit profile',
+        'Are you sure you want to discard all changes?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Yes',
+            onPress: this.props.screenProps.dismissModalRoute,
+          },
+        ]
+      );
+    } else {
+      this.props.screenProps.dismissModalRoute();
+    }
+  };
+
   render() {
     const myProfileReq = makeReadProfileRq('me');
 
@@ -219,11 +256,21 @@ class UserProfileScreen extends React.Component<P> {
                 }}
                 render={form => (
                   <Screen>
-                    <BlackPortal name={HEADER_RIGHT_ID}>
-                      <NavigationTextButton
-                        title="Save"
-                        onPress={form.handleSubmit}
+                    <BlackPortal name={HEADER_LEFT_ID}>
+                      <DismissModalButton
+                        onPress={() =>
+                          this.handleClose(
+                            Object.keys(form.touched).length > 0
+                          )}
                       />
+                    </BlackPortal>
+                    <BlackPortal name={HEADER_RIGHT_ID}>
+                      {Object.keys(form.touched).length !== 0 ? (
+                        <NavigationTextButton
+                          title="Save"
+                          onPress={form.handleSubmit}
+                        />
+                      ) : null}
                     </BlackPortal>
                     <Table>
                       <Section sectionPaddingTop={0}>
@@ -233,7 +280,8 @@ class UserProfileScreen extends React.Component<P> {
                               <AvatarPicker
                                 imageURI={form.values.profile_photo}
                                 onChange={this.onAvatarChange(
-                                  form.setFieldValue
+                                  form.setFieldValue,
+                                  form.setFieldTouched
                                 )}
                                 outline={3}
                                 size={82}
@@ -249,14 +297,35 @@ class UserProfileScreen extends React.Component<P> {
                         {this.renderUserDetailCell({
                           placeholder: 'First name',
                           name: 'first_name',
+                          onChange: e =>
+                            this.handleFieldChange(
+                              form.setFieldValue,
+                              form.setFieldTouched,
+                              'first_name',
+                              e.target.value
+                            ),
                         })}
                         {this.renderUserDetailCell({
                           placeholder: 'Last name',
                           name: 'last_name',
+                          onChange: e =>
+                            this.handleFieldChange(
+                              form.setFieldValue,
+                              form.setFieldTouched,
+                              'last_name',
+                              e.target.value
+                            ),
                         })}
                         {this.renderUserDetailCell({
                           placeholder: 'Email',
                           name: 'email',
+                          onChange: e =>
+                            this.handleFieldChange(
+                              form.setFieldValue,
+                              form.setFieldTouched,
+                              'email',
+                              e.target.value
+                            ),
                         })}
                       </Section>
                       {this.hasJoinedCommunities ? (
@@ -302,7 +371,7 @@ const Provider = (props: Object) => {
 Provider.navigationOptions = ({ screenProps }) => ({
   headerTitle: 'Your Profile',
   headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
-  headerLeft: <DismissModalButton onPress={screenProps.dismissModalRoute} />,
+  headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
 });
 
 export default (connect(
