@@ -9,6 +9,10 @@ import type { User, Community } from '../../Types';
 import ClosedProfile from './ClosedProfile';
 import OpenProfile from './OpenProfile';
 
+type Props = {
+  navigation: any,
+};
+
 type FetchData = {
   data?: Community,
 };
@@ -18,7 +22,7 @@ type State = {
   activeTab: string,
 };
 
-export default class CommunityCenterScreen extends Component<{}, State> {
+export default class CommunityCenterScreen extends Component<Props, State> {
   state = {
     screenIsReady: false,
     activeTab: 'News',
@@ -66,13 +70,10 @@ export default class CommunityCenterScreen extends Component<{}, State> {
       <Screen fill>
         <Fetch url={readCommunityReg.url} options={readCommunityReg.options}>
           {({ data, pinnedData }: FetchData) => {
-            if (data) {
-              return <OpenProfile community={data} {...this.props} />;
-            }
             return !data ? (
               this.renderLoader()
             ) : data.joined ? (
-              <OpenProfile community={data} />
+              <OpenProfile community={data} {...this.props} />
             ) : (
               <ClosedProfile
                 profile={data}

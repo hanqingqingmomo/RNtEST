@@ -12,6 +12,7 @@ import { css } from '../../utils/style';
 
 type Props = {
   community: Community,
+  navigation: any,
 };
 
 type State = {
