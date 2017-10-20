@@ -46,7 +46,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
 
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, loading, batch, requestNextBatch, fetch }) => {
+        {({ data, loading, batch, requestNextBatch, refetch }) => {
           return data === null ? (
             <CenterView>
               <ActivityIndicator />
@@ -56,12 +56,11 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
               <NewsFeedConversation
                 onPress={() =>
                   this.props.navigation.navigate('PostEditorScreen', {
-                    onReturn: () => fetch(),
+                    onReturn: () => refetch(),
                   })}
               />
               <View style={styles.itemsContainer}>
                 <FlatList
-                  key="list"
                   ListHeaderComponent={
                     <FriendInvitationWidget
                       openModal={
