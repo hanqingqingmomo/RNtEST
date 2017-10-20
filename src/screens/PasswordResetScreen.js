@@ -78,7 +78,12 @@ export default class PasswordResetScreen extends Component<{}> {
               onSubmit={this.handleFormSubmit(fetch)}
               render={formProps => (
                 <View flexDirection="column" style={styles.container}>
-                  <Icon name="ywca" color="orange" size={100} />
+                  <Icon
+                    color="orange"
+                    name="mpwr-logo"
+                    size={80}
+                    style={styles.icon}
+                  />
                   <FormField
                     label="E-mail Address"
                     name="email"
@@ -119,5 +124,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'space-between',
     paddingBottom: 40,
+  },
+  icon: {
+    marginTop: 20,
   },
 });

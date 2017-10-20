@@ -92,7 +92,12 @@ class EmailRegistrationScreen extends Component<{}> {
             rules={RULES}
             render={form => (
               <ScrollView style={styles.container}>
-                <Icon name="ywca" color={getColor('orange')} size={100} />
+                <Icon
+                  color="orange"
+                  name="mpwr-logo"
+                  size={80}
+                  style={styles.icon}
+                />
 
                 <Text
                   style={[styles.addText, css('color', getColor('gray'))]}
@@ -204,5 +209,9 @@ const styles = StyleSheet.create({
   },
   specialText: {
     textDecorationLine: 'underline',
+  },
+  icon: {
+    alignSelf: 'flex-end',
+    marginTop: 20,
   },
 });
