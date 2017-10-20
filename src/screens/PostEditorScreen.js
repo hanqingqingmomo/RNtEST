@@ -64,6 +64,7 @@ export default class PostEditorScreen extends Component<Props, State> {
           'Thanks!',
           'Your post has been successfully created.'
         );
+        this.props.navigation.state.params.onReturn();
       }
     }
   };

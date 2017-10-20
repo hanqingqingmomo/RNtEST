@@ -27,6 +27,10 @@ export default class PostEditorSearchBox extends Component<Props, State> {
 
   closeInterval = null;
 
+  componentWillUnmount() {
+    clearInterval(this.closeInterval);
+  }
+
   get isEmptySearchValue(): boolean {
     return !!!this.state.searchValue;
   }

@@ -20,6 +20,7 @@ type State = {
 
 export default class CursorBaseFetch extends Component<{}, State> {
   state = {
+    tmp_remove: 1,
     cursor: null,
     nextCursor: null,
     data: null,
@@ -38,17 +39,19 @@ export default class CursorBaseFetch extends Component<{}, State> {
 
     this.setState(state => ({
       pinnedPost: pinnedPostIdx > -1 ? data[pinnedPostIdx] : state.pinnedPost,
-      data: (state.data || []).concat(data.splice(pinnedPostIdx + 1)),
+      data: data.splice(pinnedPostIdx + 1).concat(state.data || []),
       nextCursor: meta.cursor,
       batch: state.batch + 1,
     }));
   };
 
   render() {
+    console.log(this.state.tmp_remove);
     const urlWithCursor = this.state.cursor
-      ? `${this.props.url}?cursor=${this.state.cursor.next}`
-      : this.props.url;
-
+      ? `${this.props.url}?cursor=${this.state.cursor.next}&tmp-random=${this
+          .state.tmp_remove}`
+      : `${this.props.url}?tmp-random=${this.state.tmp_remove}`;
+    console.log(urlWithCursor);
     return (
       <Fetch
         {...this.props}
@@ -57,10 +60,14 @@ export default class CursorBaseFetch extends Component<{}, State> {
         onChange={this.onChange}
       >
         {this.props.children({
+          tmpRandom: this.state.tmp_remove,
           pinnedPost: this.state.pinnedPost,
           loading: this.state.loading,
           data: this.state.data,
           batch: this.state.batch,
+          refetch: () => {
+            this.setState({ tmp_remove: Math.random() });
+          },
           requestNextBatch: () => {
             if (this.state.nextCursor.next) {
               this.setState({ cursor: this.state.nextCursor });
