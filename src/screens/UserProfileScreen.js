@@ -29,7 +29,7 @@ import { makeLeaveCommunity } from '../utils/requestFactory';
 import { api } from '../services';
 import { selectUser } from '../redux/selectors';
 import { setUserProfile } from '../redux/ducks/application';
-import type { Store, User, JoinedCommunity } from '../Types';
+import type { Store, User, CommunitySimple } from '../Types';
 
 const { Table, Section, Cell } = TableView;
 
@@ -86,7 +86,7 @@ class UserProfileScreen extends React.Component<Props, State> {
     }
   };
 
-  leaveCommunity = async (fetch: any, community: JoinedCommunity) => {
+  leaveCommunity = async (fetch: any, community: CommunitySimple) => {
     const leaveCommunityReg = makeLeaveCommunity(
       this.props.user.id,
       community.id
@@ -116,7 +116,7 @@ class UserProfileScreen extends React.Component<Props, State> {
     }
   };
 
-  onLeaveCommunity(fetch: any, community: JoinedCommunity) {
+  onLeaveCommunity(fetch: any, community: CommunitySimple) {
     return () => {
       this.props.showActionSheetWithOptions(
         {

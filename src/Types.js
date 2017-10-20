@@ -25,21 +25,21 @@ export type ScreenProps<S> = {
 };
 
 export type Attachment = {
-  name: string,
-  created_at: string,
-  updated_at: ?string,
-  type: 'pdf' | 'link' | string,
+  type: 'image' | 'link',
+  thumbnail_url: ?string,
+  title: ?string,
+  description: ?string,
 };
 
-export type JoinedCommunity = {
-  categories: Array<*>,
-  cover_photo: string,
-  description: string,
-  id: number | string,
-  members: number,
+export type CommunitySimple = {
+  id: string,
   name: string,
-  nonprofit_id: number | string,
+  cover_photo: string,
   profile_photo: string,
+  members: number,
+  description: string,
+  nonprofit_id: string,
+  categories: Array<*>,
 };
 
 export type User = {
@@ -49,7 +49,7 @@ export type User = {
   email: string,
   profile_photo: string,
   role?: string,
-  joined_communities?: Array<JoinedCommunity>,
+  joined_communities: Array<CommunitySimple>,
 };
 
 export type Comment = $Exact<{
@@ -82,14 +82,7 @@ export type Post = {
 
 // Entities
 
-export type Community = {
-  id: string,
-  name: string,
-  cover_photo: string,
-  profile_photo: string,
-  members: number,
-  description: string,
-  nonprofit_id: string,
+export type Community = CommunitySimple & {
   joined: boolean,
   administrators: Array<{
     id: number,
@@ -99,7 +92,6 @@ export type Community = {
     profile_photo: string,
     role: string,
   }>,
-  categories: Array<*>,
 };
 
 export type CommunityMember = {

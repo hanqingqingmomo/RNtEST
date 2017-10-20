@@ -256,12 +256,15 @@ export const makeReadPostWithCommentsRq = (postId: string | number) =>
     },
   });
 
-export const makeCreatePostReq = (body: *) =>
+export const makeCreatePostReq = (
+  text_content: string,
+  communities: Array<string>
+) =>
   inject({
     url: join(Config.API_URL, '/v1/content_objects/'),
     options: {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ text_content, communities }),
     },
   });
 
@@ -273,6 +276,14 @@ export const makeDeletePostReq = (postId: number | string) =>
     },
   });
 
+export const makeScrapeUrlReq = (url: string) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/generate_thumbnail'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ url }),
+    },
+  });
 // export const makeCreatePostReq = (body: *) =>
 //   inject({
 //     url: join(Config.API_URL, '/v1/content_objects/'),
