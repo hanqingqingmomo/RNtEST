@@ -109,6 +109,15 @@ export const makePasswordResetReq = (email: string) =>
     },
   });
 
+export const makeNewPasswordReq = (password: string) =>
+  inject({
+    url: join(Config.API_URL, 'v1/members/profile_settings'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ password }),
+    },
+  });
+
 /**
  * Donations
  */
