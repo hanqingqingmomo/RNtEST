@@ -2,37 +2,128 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-import { type Comment as TComment } from '../../Types';
 import {
+  type Comment as TComment,
+  type User,
+  type IconName,
+} from '../../Types';
+import {
+  ActivityIndicator,
   Avatar,
+  CenterView,
   Icon,
   Like,
+  Popover,
+  PopoverItem,
   Text,
   TimeAgo,
-  TouchableItem,
   View,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
+import { selectUser } from '../../redux/selectors';
+import { makeDeleteCommentReq } from '../../utils/requestFactory';
 
 // import CommentAttachment from './CommentAttachment';
 
+type Setting = {
+  label: string,
+  iconName: IconName,
+  key: 'pin' | 'delete' | 'share',
+};
+
 type P = {
   data: TComment,
-  onReplyPress?: Function,
   onMorePress: TComment => void,
+  onReplyPress?: Function,
+  postId: number,
+  user: User,
 };
 
 type S = {
   showReplies: boolean,
+  deleting: boolean,
 };
 
 const AVATAR_SIZE = 25;
+const SETTINGS = [
+  // {
+  //   key: 'share',
+  //   label: 'Share',
+  //   iconName: 'share',
+  // },
+  // {
+  //   key: 'pin',
+  //   label: 'Pin',
+  //   iconName: 'pin',
+  // },
+  {
+    key: 'delete',
+    label: 'Delete',
+    iconName: 'delete',
+  },
+];
 
+const mapStateToProps = state => ({
+  user: selectUser(state),
+});
+
+@connect(mapStateToProps)
 export default class Comment extends React.Component<P, S> {
   state = {
     showReplies: false,
+    deleting: false,
+  };
+
+  get isUserAuthorOfPost(): boolean {
+    const { data, user } = this.props;
+
+    return data.author.id === user.id;
+  }
+
+  get settings(): Array<*> {
+    return SETTINGS.map((setting: Setting) => ({
+      label: () => this.renderSettings(setting),
+      onPress: () => this.onSettingPress(setting),
+    }));
+  }
+
+  renderSettings = ({
+    label,
+    iconName,
+    ...args
+  }: Setting): React$Element<*> => {
+    return (
+      <PopoverItem
+        {...args}
+        contentView={label}
+        imageView={<Icon name={iconName} color="#B0BEC5" size="md" />}
+      />
+    );
+  };
+
+  onSettingPress = async (setting: Setting) => {
+    switch (setting.key) {
+      case 'delete':
+        this.deletePost();
+        break;
+      default:
+    }
+  };
+
+  deletePost = async () => {
+    const { data, postId } = this.props;
+
+    const deleteCommentReq = makeDeleteCommentReq(postId, data.id);
+
+    this.setState({ deleting: true });
+
+    try {
+      await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
+      this.setState({ deleting: false });
+    } catch (err) {}
   };
 
   onCommentPress = () => {};
@@ -42,7 +133,7 @@ export default class Comment extends React.Component<P, S> {
   };
 
   render() {
-    const { data, onReplyPress, onMorePress } = this.props;
+    const { data, onReplyPress } = this.props;
     const isReply = !onReplyPress;
 
     return (
@@ -85,9 +176,22 @@ export default class Comment extends React.Component<P, S> {
                 <TimeAgo date={data.created_at} />
               </Text>
             </View>
-            <TouchableItem onPress={onMorePress}>
-              <Icon name="menu" size={24} color="#CFD8DC" />
-            </TouchableItem>
+            {this.isUserAuthorOfPost ? (
+              this.state.deleting ? (
+                <CenterView>
+                  <ActivityIndicator />
+                </CenterView>
+              ) : (
+                <Popover
+                  labels={this.settings}
+                  button={
+                    <View style={{ padding: 6 }}>
+                      <Icon name="menu" color="#CFD8DC" size={24} />
+                    </View>
+                  }
+                />
+              )
+            ) : null}
           </View>
 
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>

@@ -24,13 +24,12 @@ export { default as HelpScreen } from './HelpScreen';
 export { default as InvitationCodeScreen } from './InvitationCodeScreen';
 export { default as InviteFriendsScreen } from './InviteFriendsScreen';
 export { default as LandingScreen } from './LandingScreen';
+export { default as NewPasswordScreen } from './NewPasswordScreen';
 export { default as NewsFeedSettingsScreen } from './NewsFeedSettingsScreen';
 export {
   default as NotificationSettingsScreen,
 } from './NotificationSettingsScreen';
-export {
-  default as OrganisationMemberProfileScreen,
-} from './OrganisationMemberProfileScreen';
+export { default as MemberProfileScreen } from './MemberProfileScreen';
 export {
   default as OrganisationProfileScreen,
 } from './OrganisationProfileScreen';

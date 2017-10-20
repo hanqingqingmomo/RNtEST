@@ -3,55 +3,60 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, Text, View } from './index';
+import { View, Text } from './index';
 import { getColor } from '../utils/color';
 
 type Props = {
-  accessoryView?: Object,
-  contentView: string,
-  imageView: Icon,
+  accessoryView?: any,
+  contentView?: any,
+  imageView?: any,
 };
 
 export default function PopoverItem({
   accessoryView,
   contentView,
   imageView,
+  ...args
 }: Props) {
+  if (typeof contentView === 'string') {
+    contentView = (
+      <Text size={15} lineHeight={18} color="#455A64">
+        {contentView}
+      </Text>
+    );
+  }
+
   return (
-    <View style={styles.itemContainer}>
-      <View style={styles.imageContainer}>{imageView}</View>
-      <Text style={styles.contentContainer}>{contentView}</Text>
-      <View style={styles.accessoryContainer}>{accessoryView}</View>
+    <View style={styles.itemContainer} {...args}>
+      {imageView ? (
+        <View style={styles.imageContainer}>{imageView}</View>
+      ) : null}
+      {contentView ? (
+        <View style={styles.contentContainer}>{contentView}</View>
+      ) : null}
+      {accessoryView ? (
+        <View style={styles.accessoryContainer}>{accessoryView}</View>
+      ) : null}
     </View>
   );
 }
 
-PopoverItem.defaultProps = {
-  accessoryView: null,
-};
-
 const styles = StyleSheet.create({
   accessoryContainer: {
-    flex: 2,
-    justifyContent: 'flex-end',
+    paddingLeft: 15,
   },
-
   contentContainer: {
-    flex: 7,
-    fontSize: 15,
-    marginLeft: 20,
+    flex: 1,
+    paddingLeft: 15,
   },
-
   itemContainer: {
     alignItems: 'center',
     backgroundColor: getColor('white'),
     flex: 1,
     flexDirection: 'row',
-    height: 40,
+    height: 44,
   },
-
   imageContainer: {
-    flex: 1,
-    marginLeft: 20,
+    paddingLeft: 15,
   },
 });

@@ -8,17 +8,17 @@ import { Comment } from '../../blocks';
 
 type P = {
   comments: Array<TComment>,
-  onReplyPress: TComment => void,
-  onMorePress: TComment => void,
   ListHeaderComponent?: any,
+  onReplyPress: TComment => void,
+  postId: number,
 };
 
 export default class CommentList extends Component<P> {
   renderItem = ({ item }: { item: TComment }) => (
     <Comment
       data={item}
+      postId={this.props.postId}
       onReplyPress={() => this.props.onReplyPress(item)}
-      onMorePress={() => this.props.onMorePress(item)}
     />
   );
 

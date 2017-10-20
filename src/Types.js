@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-use-before-define */
 
 import type { Reducers } from './redux/reducers';
 import {
@@ -23,71 +24,23 @@ export type ScreenProps<S> = {
   },
 };
 
-export type Comment = $Exact<{
-  id: string,
-  text_content: string,
-  created_at: string,
-  attachment: {} | null,
-  author: {
-    id: string,
-    first_name: string,
-    last_name: string,
-    email: string,
-    profile_photo: string,
-  },
-  comments_count: number,
-  likes_count: number,
-  liked: boolean,
-  replies: Array<Comment>,
-}>;
+export type Attachment = {
+  type: 'image' | 'link',
+  thumbnail_url: ?string,
+  url: string,
+  title: ?string,
+  description: ?string,
+};
 
-export type Post = $Exact<{
+export type CommunitySimple = {
   id: string,
-  attachments?: Array<{
-    url: string,
-    type: 'image' | 'link',
-  }>,
-  author?: {
-    imageURI: string,
-    username: string,
-  },
-  comments_count: number,
-  communities: Array<{
-    disabled?: boolean,
-    name: string,
-  }>,
-  created_at?: Date,
-  donation?: {
-    donors: Array<{
-      imageURI: string,
-      username: string,
-    }>,
-    imageURI: string,
-    title: string,
-  },
-  event?: {
-    endDate: Date,
-    imageURI: string,
-    startDate: Date,
-    title: string,
-  },
-  isNew?: boolean,
-  likes_count: number,
-  liked: boolean,
-  replies: number,
-  text_content?: string,
-}>;
-
-// Entities
-export type JoinedCommunity = {
-  categories: Array<*>,
-  cover_photo: string,
-  description: string,
-  id: number | string,
-  members: number,
   name: string,
-  nonprofit_id: number | string,
+  cover_photo: string,
   profile_photo: string,
+  members: number,
+  description: string,
+  nonprofit_id: string,
+  categories: Array<*>,
 };
 
 export type User = {
@@ -96,26 +49,50 @@ export type User = {
   last_name: string,
   email: string,
   profile_photo: string,
-  role: string,
-  joined_communities: Array<JoinedCommunity>,
+  role?: string,
+  joined_communities: Array<CommunitySimple>,
 };
 
-export type Attachment = {
-  name: string,
+export type Comment = $Exact<{
+  id: string,
+  text_content: string,
   created_at: string,
-  updated_at: ?string,
-  type: 'pdf' | 'link' | string,
+  attachment: {} | null,
+  author: User,
+  comments_count: number,
+  likes_count: number,
+  liked: boolean,
+  replies: Array<Comment>,
+}>;
+
+export type Post = {
+  id: string,
+  text_content: string,
+  attachment: ?Attachment,
+  author: ?User,
+  comments_count: number,
+  communities: Array<{
+    id: string,
+    name: string,
+  }>,
+  created_at: string,
+  likes_count: number,
+  liked: boolean,
+  replies: number,
 };
 
-export type Community = {
-  attachments: ?Array<Attachment>,
-  cover_photo: string,
-  description: ?string,
-  id: number,
+// Entities
+
+export type Community = CommunitySimple & {
   joined: boolean,
-  members: number,
-  name: string,
-  profile_photo: string,
+  administrators: Array<{
+    id: number,
+    first_name: string,
+    last_name: string,
+    email: string,
+    profile_photo: string,
+    role: string,
+  }>,
 };
 
 export type CommunityMember = {

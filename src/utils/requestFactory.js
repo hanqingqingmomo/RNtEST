@@ -109,6 +109,15 @@ export const makePasswordResetReq = (email: string) =>
     },
   });
 
+export const makeNewPasswordReq = (password: string) =>
+  inject({
+    url: join(Config.API_URL, 'v1/members/profile_settings'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ password }),
+    },
+  });
+
 /**
  * Donations
  */
@@ -118,8 +127,17 @@ type DonationPayload = {
   interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
 };
 
+export const makeDonationRq = (donationPayload: DonationPayload) =>
+  inject({
+    url: join(Config.API_URL, '/v1/donations'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify(donationPayload),
+    },
+  });
+
 /**
- * Read Profile
+ * Profile
  */
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
@@ -130,12 +148,15 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     options: { method: 'GET' },
   });
 
-export const makeDonationRq = (donationPayload: DonationPayload) =>
+export const makeUpdateProfileReq = (user: object) =>
   inject({
-    url: join(Config.API_URL, '/v1/donations'),
+    url: join(Config.API_URL, '/v1/members/profile_settings'),
     options: {
-      method: 'POST',
-      body: JSON.stringify(donationPayload),
+      method: 'PUT',
+      body: makeFormData(user, ['profile_photo']),
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
     },
   });
 
@@ -205,7 +226,8 @@ export const makeLeaveCommunity = (
     },
   });
 
-export const makeJoinCommunity = (
+// TODO: inject authenticated profile ID, even better update URL
+export const makeJoinCommunityReq = (
   memberId: string | number,
   communityId: string | number
 ) =>
@@ -246,15 +268,34 @@ export const makeReadPostWithCommentsRq = (postId: string | number) =>
     },
   });
 
-export const makeCreatePostReq = (body: *) =>
+export const makeCreatePostReq = (
+  text_content: string,
+  communities: Array<string>
+) =>
   inject({
     url: join(Config.API_URL, '/v1/content_objects/'),
     options: {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ text_content, communities }),
     },
   });
 
+export const makeDeletePostReq = (postId: number | string) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${postId}`),
+    options: {
+      method: 'DELETE',
+    },
+  });
+
+export const makeScrapeUrlReq = (url: string) =>
+  inject({
+    url: join(Config.API_URL, '/v1/content_objects/generate_thumbnail'),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({ url }),
+    },
+  });
 // export const makeCreatePostReq = (body: *) =>
 //   inject({
 //     url: join(Config.API_URL, '/v1/content_objects/'),
@@ -276,6 +317,20 @@ export const makeCreateCommentReq = (postId: string, body: *) =>
     },
   });
 
+export const makeDeleteCommentReq = (
+  postId: number | string,
+  commentId: number | string
+) =>
+  inject({
+    url: join(
+      Config.API_URL,
+      `/v1/content_objects/${postId}/comment/${commentId}`
+    ),
+    options: {
+      method: 'DELETE',
+    },
+  });
+
 /**
  * User Invitations
  */
@@ -292,8 +347,9 @@ export const makeInvitationRq = (email: string) =>
   });
 
 /**
-   * Like
-   */
+ * Like
+ */
+
 export const makeLikeRq = (objectId: string, unlike?: boolean) =>
   inject({
     url: join(Config.API_URL, `/v1/content_objects/${objectId}/like`),

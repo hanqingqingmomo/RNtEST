@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
-import { type Post } from '../../Types';
+import { type Post, type User } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -16,35 +16,11 @@ import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 import NewsFeedItemPostedTime from './NewsFeedItemPostedTime';
 
-type TagProps = {
-  disabled?: boolean,
-  name: string,
+type Props = Post & {
+  navigation: Object,
 };
 
-type UserProps = {
-  imageURI: string,
-  username: string,
-};
-
-type AttachmentProps = {
-  url: string,
-  type: 'image' | 'link',
-};
-
-type EventProps = {
-  endDate: Date,
-  imageURI: string,
-  startDate: Date,
-  title: string,
-};
-
-type DonationProps = {
-  donors: Array<UserProps>,
-  imageURI: string,
-  title: string,
-};
-
-export default class NewsFeedItem extends Component<Post> {
+export default class NewsFeedItem extends Component<Props> {
   shortenString(
     string?: string,
     maxChars?: number
@@ -76,10 +52,10 @@ export default class NewsFeedItem extends Component<Post> {
     const { id, navigation } = this.props;
 
     const links = [
-      {
-        label: 'Share',
-        onPress: () => console.log('Share press'),
-      },
+      // {
+      //   label: 'Share',
+      //   onPress: () => console.log('Share press'),
+      // },
     ];
 
     if (navigation) {
@@ -95,6 +71,16 @@ export default class NewsFeedItem extends Component<Post> {
     return links;
   };
 
+  handleUserPress = (user: User) => {
+    const { navigation } = this.props;
+
+    if (navigation) {
+      navigation.navigate('MemberProfileScreen', {
+        user,
+      });
+    }
+  };
+
   render() {
     const {
       id,
@@ -102,7 +88,6 @@ export default class NewsFeedItem extends Component<Post> {
       donation,
       event,
       isNew,
-      communities,
       text_content,
       author,
       replies,
@@ -116,11 +101,7 @@ export default class NewsFeedItem extends Component<Post> {
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
-          <NewsFeedItemHeader
-            communities={communities}
-            onPillPress={tag => console.log('tag', tag)}
-            onMorePress={() => console.log('more')}
-          />
+          <NewsFeedItemHeader {...this.props} />
 
           {(this.hasAttachment && this.attachment.type === 'link') ||
           !this.hasAttachment ? (
@@ -153,7 +134,7 @@ export default class NewsFeedItem extends Component<Post> {
               replies={replies}
               author={author}
               onReplayPress={() => console.log('reply')}
-              onUserPress={user => console.log('user', user)}
+              onUserPress={this.handleUserPress}
             />
           ) : null}
 
