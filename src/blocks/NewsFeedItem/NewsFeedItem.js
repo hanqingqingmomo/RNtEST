@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
-import { type Post } from '../../Types';
+import { type JoinedCommunity, type Post, type User } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -16,35 +16,11 @@ import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 import NewsFeedItemPostedTime from './NewsFeedItemPostedTime';
 
-type TagProps = {
-  disabled?: boolean,
-  name: string,
+type Props = Post & {
+  navigation: Object,
 };
 
-type UserProps = {
-  imageURI: string,
-  username: string,
-};
-
-type AttachmentProps = {
-  url: string,
-  type: 'image' | 'link',
-};
-
-type EventProps = {
-  endDate: Date,
-  imageURI: string,
-  startDate: Date,
-  title: string,
-};
-
-type DonationProps = {
-  donors: Array<UserProps>,
-  imageURI: string,
-  title: string,
-};
-
-export default class NewsFeedItem extends Component<Post> {
+export default class NewsFeedItem extends Component<Props> {
   shortenString(
     string?: string,
     maxChars?: number
@@ -95,6 +71,26 @@ export default class NewsFeedItem extends Component<Post> {
     return links;
   };
 
+  handleCommunityPress = (community: JoinedCommunity) => {
+    const { navigation } = this.props;
+
+    if (navigation) {
+      navigation.navigate('CommunityCenterScreen', {
+        communityId: community.id,
+      });
+    }
+  };
+
+  handleUserPress = (user: User) => {
+    const { navigation } = this.props;
+
+    if (navigation) {
+      navigation.navigate('MemberProfileScreen', {
+        user,
+      });
+    }
+  };
+
   render() {
     const {
       id,
@@ -118,7 +114,7 @@ export default class NewsFeedItem extends Component<Post> {
         <View style={styles.container}>
           <NewsFeedItemHeader
             communities={communities}
-            onPillPress={tag => console.log('tag', tag)}
+            onPillPress={this.handleCommunityPress}
             onMorePress={() => console.log('more')}
           />
 
@@ -153,7 +149,7 @@ export default class NewsFeedItem extends Component<Post> {
               replies={replies}
               author={author}
               onReplayPress={() => console.log('reply')}
-              onUserPress={user => console.log('user', user)}
+              onUserPress={this.handleUserPress}
             />
           ) : null}
 

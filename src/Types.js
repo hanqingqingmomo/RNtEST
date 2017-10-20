@@ -24,62 +24,13 @@ export type ScreenProps<S> = {
   },
 };
 
-export type Comment = $Exact<{
-  id: string,
-  text_content: string,
+export type Attachment = {
+  name: string,
   created_at: string,
-  attachment: {} | null,
-  author: {
-    id: string,
-    first_name: string,
-    last_name: string,
-    email: string,
-    profile_photo: string,
-  },
-  comments_count: number,
-  likes_count: number,
-  liked: boolean,
-  replies: Array<Comment>,
-}>;
-
-export type Post = {
-  id: string,
-  attachment: {
-    url: string,
-    type: 'image' | 'link',
-  },
-  author: {
-    imageURI: string,
-    username: string,
-  },
-  comments_count: number,
-  communities: Array<{
-    disabled?: boolean,
-    name: string,
-  }>,
-  created_at?: Date,
-  donation?: {
-    donors: Array<{
-      imageURI: string,
-      username: string,
-    }>,
-    imageURI: string,
-    title: string,
-  },
-  event?: {
-    endDate: Date,
-    imageURI: string,
-    startDate: Date,
-    title: string,
-  },
-  isNew?: boolean,
-  likes_count: number,
-  liked: boolean,
-  replies: number,
-  text_content: string,
+  updated_at: ?string,
+  type: 'pdf' | 'link' | string,
 };
 
-// Entities
 export type JoinedCommunity = {
   categories: Array<*>,
   cover_photo: string,
@@ -97,16 +48,39 @@ export type User = {
   last_name: string,
   email: string,
   profile_photo: string,
-  role: string,
-  joined_communities: Array<JoinedCommunity>,
+  role?: string,
+  joined_communities?: Array<JoinedCommunity>,
 };
 
-export type Attachment = {
-  name: string,
+export type Comment = $Exact<{
+  id: string,
+  text_content: string,
   created_at: string,
-  updated_at: ?string,
-  type: 'pdf' | 'link' | string,
+  attachment: {} | null,
+  author: User,
+  comments_count: number,
+  likes_count: number,
+  liked: boolean,
+  replies: Array<Comment>,
+}>;
+
+export type Post = {
+  id: string,
+  text_content: string,
+  attachment: ?Attachment,
+  author: ?User,
+  comments_count: number,
+  communities: Array<{
+    id: string,
+    name: string,
+  }>,
+  created_at: string,
+  likes_count: number,
+  liked: boolean,
+  replies: number,
 };
+
+// Entities
 
 export type Community = {
   id: string,

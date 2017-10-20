@@ -28,9 +28,7 @@ export { default as NewsFeedSettingsScreen } from './NewsFeedSettingsScreen';
 export {
   default as NotificationSettingsScreen,
 } from './NotificationSettingsScreen';
-export {
-  default as OrganisationMemberProfileScreen,
-} from './OrganisationMemberProfileScreen';
+export { default as MemberProfileScreen } from './MemberProfileScreen';
 export {
   default as OrganisationProfileScreen,
 } from './OrganisationProfileScreen';

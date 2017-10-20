@@ -41,21 +41,31 @@ export default class ProfileCard extends Component<P> {
           >
             {`${first_name} ${last_name}`}
           </Text>
-          <Text
-            size={14}
-            color="#4e5f67"
-            weight="500"
-            lineHeight={16}
-            style={styles.subtitle}
-          >
-            {role}
-          </Text>
-          <Link type="mail" value={email}>
-            <Text size={14} color="orange" weight="500" lineHeight={16}>
-              {email}
+          {role ? (
+            <Text
+              size={14}
+              color="#4e5f67"
+              weight="500"
+              lineHeight={16}
+              style={styles.subtitle}
+            >
+              {role}
             </Text>
-          </Link>
-          <View style={styles.links}>
+          ) : null}
+          {email ? (
+            <Link type="mail" value={email}>
+              <Text
+                size={14}
+                color="orange"
+                weight="500"
+                lineHeight={16}
+                style={styles.email}
+              >
+                {email}
+              </Text>
+            </Link>
+          ) : null}
+          {/* <View style={styles.links}>
             {email ? (
               <View style={styles.link}>
                 <Link type="mail" value={email}>
@@ -100,7 +110,7 @@ export default class ProfileCard extends Component<P> {
                 </Link>
               </View>
             ) : null}
-          </View>
+          </View> */}
         </View>
       </ShadowView>
     );
@@ -131,9 +141,11 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginTop: 3,
-    marginBottom: 10,
   },
   title: {
     marginTop: 15,
+  },
+  email: {
+    marginTop: 10,
   },
 });
