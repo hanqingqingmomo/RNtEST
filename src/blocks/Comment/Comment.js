@@ -25,6 +25,7 @@ import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { selectUser } from '../../redux/selectors';
 import { makeDeleteCommentReq } from '../../utils/requestFactory';
+import Replies from './Replies';
 
 // import CommentAttachment from './CommentAttachment';
 
@@ -257,15 +258,7 @@ export default class Comment extends React.Component<P, S> {
           </View>
 
           {!isReply && this.state.showReplies ? (
-            <View>
-              {data.replies.map(reply => (
-                <Comment
-                  key={reply.id}
-                  data={reply}
-                  onMorePress={(...args) => console.log('more', args)}
-                />
-              ))}
-            </View>
+            <Replies replies={data.replies} />
           ) : null}
         </View>
       </View>
