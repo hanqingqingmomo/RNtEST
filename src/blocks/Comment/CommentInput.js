@@ -98,13 +98,16 @@ export default class CommentInput extends Component<P, S> {
                 />
                 <TouchableItem
                   onPress={this.handleSubmit(fetch)}
-                  style={[
-                    styles.sendButton,
-                    disabled ? styles.disabled : undefined,
-                  ]}
+                  style={styles.sendButton}
                   disabled={disabled}
                 >
-                  <Text size={17} style={css('color', getColor('orange'))}>
+                  <Text
+                    size={17}
+                    style={[
+                      css('color', getColor('orange')),
+                      disabled ? styles.disabled : undefined,
+                    ]}
+                  >
                     Send
                   </Text>
                 </TouchableItem>
@@ -147,6 +150,7 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     marginTop: 4,
+    opacity: 1,
   },
   disabled: {
     opacity: 0.5,
