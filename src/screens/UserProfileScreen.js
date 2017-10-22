@@ -152,7 +152,7 @@ class UserProfileScreen extends React.Component<P> {
     );
   };
 
-  renderCommunityCell = (fetch: any, community: Object) => {
+  renderCommunityCell = (fetch: any, community: CommunitySimple) => {
     return (
       <Cell
         key={community.id}
@@ -311,7 +311,8 @@ class UserProfileScreen extends React.Component<P> {
                           header="your communities"
                           separatorTintColor={BG_COLOR}
                         >
-                          {(user.joined_communities || []).map(community =>
+                          {(user.joined_communities || []
+                          ).map((community: CommunitySimple) =>
                             this.renderCommunityCell(fetch, community)
                           )}
                         </Section>
