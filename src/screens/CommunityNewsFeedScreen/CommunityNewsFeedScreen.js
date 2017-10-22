@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   CenterView,
   CursorBasedFetech,
+  Text,
   View,
 } from '../../atoms';
 import { NewsFeedItem, PinnedPost } from '../../blocks';
@@ -45,12 +46,15 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, pinnedPost, loading, batch, requestNextBatch, fetch }) => {
-          return data === null ? (
-            <CenterView>
-              <ActivityIndicator />
-            </CenterView>
-          ) : (
-            <View style={{ height: '100%' }}>
+          if (loading) {
+            return (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            );
+          }
+          return (
+            <View style={{ flex: 1 }}>
               <NewsFeedConversation
                 onPress={() => {
                   this.props.navigation.navigate('PostEditorScreen', {
@@ -58,22 +62,23 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
                   });
                 }}
               />
-
-              <View style={styles.itemsContainer}>
-                <FlatList
-                  data={data}
-                  renderItem={this.renderItem}
-                  keyExtractor={this.keyExtractor}
-                  onEndReached={requestNextBatch}
-                  ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
-                />
-              </View>
-
-              {loading ? (
-                <CenterView style={{ height: 50, flexGrow: 0 }}>
-                  <ActivityIndicator />
-                </CenterView>
-              ) : null}
+              {data && data.length > 0 ? (
+                <View style={styles.itemsContainer}>
+                  <View style={styles.itemsContainer}>
+                    <FlatList
+                      data={data}
+                      renderItem={this.renderItem}
+                      keyExtractor={this.keyExtractor}
+                      onEndReached={requestNextBatch}
+                      ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
+                    />
+                  </View>
+                </View>
+              ) : (
+                <View style={styles.textContainer}>
+                  <Text style={styles.text}>There is no content.</Text>
+                </View>
+              )}
             </View>
           );
         }}
@@ -90,5 +95,13 @@ const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 10,
     paddingBottom: 10,
+  },
+  text: {
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });

@@ -8,8 +8,9 @@ import {
   CenterView,
   CursorBasedFetech,
   ShadowView,
-  View,
   Screen,
+  Text,
+  View,
 } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
 import FriendInvitationWidget from './FriendInvitationWidget';
@@ -52,39 +53,44 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, loading, batch, requestNextBatch, refetch }) => {
-          return data === null ? (
-            <CenterView>
-              <ActivityIndicator />
-            </CenterView>
-          ) : (
-            <Screen>
+          if (loading) {
+            return (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            );
+          }
+
+          return (
+            <Screen fill>
               <NewsFeedConversation
                 onPress={() =>
                   this.props.navigation.navigate('PostEditorScreen', {
                     onReturn: () => refetch(),
                   })}
               />
-              <View style={styles.itemsContainer}>
-                <FlatList
-                  ListHeaderComponent={
-                    <FriendInvitationWidget
-                      openModal={
-                        this.props.screenProps.openFriendsInitationModal
-                      }
-                    />
-                  }
-                  data={data}
-                  renderItem={({ item }) => this.renderItem({ item, refetch })}
-                  keyExtractor={this.keyExtractor}
-                  onEndReached={requestNextBatch}
-                />
-              </View>
-
-              {loading ? (
-                <CenterView style={{ height: 50, flexGrow: 0 }}>
-                  <ActivityIndicator />
-                </CenterView>
-              ) : null}
+              {data && data.length > 0 ? (
+                <View style={styles.itemsContainer}>
+                  <FlatList
+                    ListHeaderComponent={
+                      <FriendInvitationWidget
+                        openModal={
+                          this.props.screenProps.openFriendsInitationModal
+                        }
+                      />
+                    }
+                    data={data}
+                    renderItem={({ item }) =>
+                      this.renderItem({ item, refetch })}
+                    keyExtractor={this.keyExtractor}
+                    onEndReached={requestNextBatch}
+                  />
+                </View>
+              ) : (
+                <View style={styles.textContainer}>
+                  <Text style={styles.text}>There is no content.</Text>
+                </View>
+              )}
             </Screen>
           );
         }}
@@ -101,5 +107,13 @@ const styles = StyleSheet.create({
   itemsContainer: {
     paddingTop: 10,
     flex: 1,
+  },
+  text: {
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
