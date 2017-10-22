@@ -13,7 +13,6 @@ import {
   ActivityIndicator,
   AvatarPicker,
   CenterView,
-  DropdownAlert,
   Fetch,
   Form,
   FormField,
@@ -40,6 +39,7 @@ const { Table, Section, Cell } = TableView;
 
 type P = {
   navigation: Object,
+  screenProps: any,
   setUserProfile: Function,
   showActionSheetWithOptions: Function,
   user: User,
@@ -64,18 +64,6 @@ class UserProfileScreen extends React.Component<P> {
     headerLeft: <DismissModalButton onPress={screenProps.dismissModalRoute} />,
   });
 
-  dropdown = null;
-
-  get hasJoinedCommunities() {
-    return !!this.props.user.joined_communities.length;
-  }
-
-  onAlertClose = (data: AlertPayload) => {
-    if (data.type === 'success') {
-      // this.props.navigation.goBack();
-    }
-  };
-
   onAvatarChange = (
     setFieldValue: (string, any) => void,
     setFieldTouched: (string, boolean) => void
@@ -92,13 +80,6 @@ class UserProfileScreen extends React.Component<P> {
     );
 
     if (updateProfileRes.error) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
-          'error',
-          'Ooops',
-          (updateProfileRes.error.message: string)
-        );
-      }
     } else {
       this.props.setUserProfile(updateProfileRes.data);
     }
@@ -115,22 +96,8 @@ class UserProfileScreen extends React.Component<P> {
     );
 
     if (leaveCommunityRes.error) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
-          'error',
-          'Ooops',
-          (leaveCommunityRes.error.message: string)
-        );
-      }
-    }
-    if (this.dropdown && leaveCommunityRes.response.status < 300) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
-          'success',
-          'Successful attempt',
-          `You have left ${community.name}.`
-        );
-      }
+    } else {
+      fetch();
     }
   };
 
@@ -154,6 +121,7 @@ class UserProfileScreen extends React.Component<P> {
     placeholder,
     name,
     onChange,
+    editable,
   }: Object): React$Element<*> => {
     return (
       <Cell
@@ -167,7 +135,7 @@ class UserProfileScreen extends React.Component<P> {
               label=""
               name={name}
               baseColor="transparent"
-              editable={name !== 'email'}
+              editable={editable}
               inputContainerStyle={{
                 marginBottom: 0,
                 paddingTop: 5,
@@ -236,14 +204,18 @@ class UserProfileScreen extends React.Component<P> {
     }
   };
 
+  compareData(oldData: Object, newData: Object) {
+    return JSON.stringify(oldData) === JSON.stringify(newData);
+  }
+
   render() {
     const myProfileReq = makeReadProfileRq('me');
 
     return (
       <Fetch url={myProfileReq.url} options={myProfileReq.options}>
         {({ loading, data, error, fetch }) => {
-          if (loading === false) {
-            const user = error ? this.props.user : data;
+          if (loading === false && data) {
+            const user = data ? data : this.props.user;
 
             return (
               <Form
@@ -265,7 +237,10 @@ class UserProfileScreen extends React.Component<P> {
                       />
                     </BlackPortal>
                     <BlackPortal name={HEADER_RIGHT_ID}>
-                      {Object.keys(form.touched).length !== 0 ? (
+                      {!this.compareData(this.props.user, {
+                        ...this.props.user,
+                        ...form.values,
+                      }) ? (
                         <NavigationTextButton
                           title="Save"
                           onPress={form.handleSubmit}
@@ -297,6 +272,7 @@ class UserProfileScreen extends React.Component<P> {
                         {this.renderUserDetailCell({
                           placeholder: 'First name',
                           name: 'first_name',
+                          editable: true,
                           onChange: e =>
                             this.handleFieldChange(
                               form.setFieldValue,
@@ -308,6 +284,7 @@ class UserProfileScreen extends React.Component<P> {
                         {this.renderUserDetailCell({
                           placeholder: 'Last name',
                           name: 'last_name',
+                          editable: true,
                           onChange: e =>
                             this.handleFieldChange(
                               form.setFieldValue,
@@ -319,6 +296,7 @@ class UserProfileScreen extends React.Component<P> {
                         {this.renderUserDetailCell({
                           placeholder: 'Email',
                           name: 'email',
+                          editable: false,
                           onChange: e =>
                             this.handleFieldChange(
                               form.setFieldValue,
@@ -328,22 +306,18 @@ class UserProfileScreen extends React.Component<P> {
                             ),
                         })}
                       </Section>
-                      {this.hasJoinedCommunities ? (
+                      {user.joined_communities &&
+                      user.joined_communities.length ? (
                         <Section
                           header="your communities"
                           separatorTintColor={BG_COLOR}
                         >
-                          {user.joined_communities.map(community =>
+                          {(user.joined_communities || []).map(community =>
                             this.renderCommunityCell(fetch, community)
                           )}
                         </Section>
                       ) : null}
                     </Table>
-
-                    <DropdownAlert
-                      ref={ref => (this.dropdown = ref)}
-                      onClose={this.onAlertClose}
-                    />
                   </Screen>
                 )}
               />
