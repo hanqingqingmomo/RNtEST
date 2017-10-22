@@ -76,12 +76,13 @@ export default class CommunityCenterScreen extends Component<Props, State> {
 
   render() {
     const { community } = this.props;
+
     return (
       <View>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
           <CommunityHeader
             title={community.name}
-            communityImageURI={community.profile_photo}
+            profileImageURI={community.profile_photo}
             coverImageURI={community.cover_photo}
           />
         </Collapsible>
