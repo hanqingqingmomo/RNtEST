@@ -117,7 +117,7 @@ export default class CommunityListScreen extends Component<{}, State> {
                     style={styles.item}
                   >
                     <CommunityCard
-                      imageURI={community.profile_photo}
+                      imageURI={community.cover_photo}
                       title={community.name}
                       subtitle={`${community.members} members`}
                     />
