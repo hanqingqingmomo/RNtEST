@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, ShadowView } from '../../atoms';
+import { Text, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { type Post, type User } from '../../Types';
 
@@ -94,6 +94,7 @@ export default class NewsFeedItem extends Component<Props> {
       comments_count,
       likes_count,
       liked,
+      navigation,
     } = this.props;
 
     const shortedTitle = this.shortenString(text_content, 110);
@@ -102,32 +103,43 @@ export default class NewsFeedItem extends Component<Props> {
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader {...this.props} />
-
-          {(this.hasAttachment && this.attachment.type === 'link') ||
-          !this.hasAttachment ? (
-            <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-              {shortedTitle.string}
-              {shortedTitle.isShorted ? (
-                <Text>
-                  {`... `}
-                  <Text style={css('color', '#00B0FF')}>Continue reading</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('PostDetailScreen', {
+                postId: id,
+              });
+            }}
+          >
+            <View>
+              {(this.hasAttachment && this.attachment.type === 'link') ||
+              !this.hasAttachment ? (
+                <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+                  {shortedTitle.string}
+                  {shortedTitle.isShorted ? (
+                    <Text>
+                      {`... `}
+                      <Text style={css('color', '#00B0FF')}>
+                        Continue reading
+                      </Text>
+                    </Text>
+                  ) : null}
                 </Text>
               ) : null}
-            </Text>
-          ) : null}
 
-          {this.hasAttachment && this.attachment.type.includes('image') ? (
-            <NewsFeedItemImage {...this.attachment} title={text_content} />
-          ) : (
-            <NewsFeedItemAttachment {...this.attachment} />
-          )}
+              {this.hasAttachment && this.attachment.type.includes('image') ? (
+                <NewsFeedItemImage {...this.attachment} title={text_content} />
+              ) : (
+                <NewsFeedItemAttachment {...this.attachment} />
+              )}
 
-          {created_at ? (
-            <NewsFeedItemPostedTime
-              date={created_at}
-              style={styles.postedTime}
-            />
-          ) : null}
+              {created_at ? (
+                <NewsFeedItemPostedTime
+                  date={created_at}
+                  style={styles.postedTime}
+                />
+              ) : null}
+            </View>
+          </TouchableOpacity>
 
           {author ? (
             <NewsFeedItemAuthor
