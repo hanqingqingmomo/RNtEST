@@ -19,10 +19,6 @@ type Props = {
   navigateToPost: Object => void,
 };
 
-function ItemSeparatorComponent() {
-  return <View style={styles.itemSeparatorComponent} />;
-}
-
 export default class CommunityNewsFeedScreen extends Component<Props> {
   keyExtractor = (item: Post) => item.id.toString() + Math.random();
 
@@ -40,6 +36,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 
   render() {
     const { url, options } = makeReadCommunityFeedRq(this.props.communityId);
+
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, pinnedPost, loading, batch, requestNextBatch, fetch }) => {
@@ -64,7 +61,6 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
                 keyExtractor={this.keyExtractor}
                 onEndReached={requestNextBatch}
                 ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
-                ItemSeparatorComponent={ItemSeparatorComponent}
               />
 
               {loading ? (
@@ -86,9 +82,9 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     flex: 1,
-    paddingVertical: 10,
   },
   feedItemWrapper: {
     paddingHorizontal: 10,
+    paddingBottom: 10,
   },
 });
