@@ -17,6 +17,7 @@ import { type Post } from '../../Types';
 type Props = {
   communityId: string,
   navigateToPost: Object => void,
+  reloadCommunity: Function,
 };
 
 export default class CommunityNewsFeedScreen extends Component<Props> {
@@ -24,7 +25,11 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 
   renderItem = ({ item }: { item: Post }) => (
     <View style={styles.feedItemWrapper}>
-      <NewsFeedItem {...item} navigation={this.props.navigation} />
+      <NewsFeedItem
+        {...item}
+        navigation={this.props.navigation}
+        refetch={this.props.reloadCommunity}
+      />
     </View>
   );
 

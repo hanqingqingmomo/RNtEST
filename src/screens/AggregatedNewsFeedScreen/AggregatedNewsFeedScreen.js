@@ -33,10 +33,14 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     return item.id.toString() + Math.random();
   };
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item, refetch }: any): React$Element<*> => {
     return (
       <View style={styles.item}>
-        <NewsFeedItem {...item} navigation={this.props.navigation} />
+        <NewsFeedItem
+          {...item}
+          navigation={this.props.navigation}
+          refetch={refetch}
+        />
       </View>
     );
   };
@@ -47,6 +51,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, loading, batch, requestNextBatch, refetch }) => {
+          console.log(data);
           return data === null ? (
             <CenterView>
               <ActivityIndicator />
@@ -69,7 +74,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
                     />
                   }
                   data={data}
-                  renderItem={this.renderItem}
+                  renderItem={({ item }) => this.renderItem({ item, refetch })}
                   keyExtractor={this.keyExtractor}
                   onEndReached={requestNextBatch}
                 />

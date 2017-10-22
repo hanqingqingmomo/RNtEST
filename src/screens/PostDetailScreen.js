@@ -16,7 +16,8 @@ import { NewsFeedItem, CommentList, CommentInput } from '../blocks';
 import { makeReadPostWithCommentsRq } from '../utils/requestFactory';
 
 type P = {
-  navigation: {},
+  navigation: any,
+  realoadList: Function,
 };
 
 type S = {
@@ -59,11 +60,13 @@ export default class PostDetailScreen extends Component<P, S> {
       replyingTo: undefined,
     });
 
+    this.props.navigation.state.params.reloadList();
+
     fetch();
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, realoadList } = this.props;
     const { replyingTo } = this.state;
 
     const readPostWithCommentsRq = makeReadPostWithCommentsRq(

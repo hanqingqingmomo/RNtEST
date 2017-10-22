@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
-import { type Post, type User } from '../../Types';
+import { type Post, type User, type Attachment } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -18,6 +18,8 @@ import NewsFeedItemPostedTime from './NewsFeedItemPostedTime';
 
 type Props = Post & {
   navigation: Object,
+  refetch?: Function,
+  attachment?: Attachment,
 };
 
 export default class NewsFeedItem extends Component<Props> {
@@ -49,7 +51,7 @@ export default class NewsFeedItem extends Component<Props> {
   }
 
   getLinks = () => {
-    const { id, navigation } = this.props;
+    const { id, navigation, refetch } = this.props;
 
     const links = [
       // {
@@ -58,15 +60,14 @@ export default class NewsFeedItem extends Component<Props> {
       // },
     ];
 
-    if (navigation) {
-      links.push({
-        label: 'Comment',
-        onPress: () =>
-          navigation.navigate('PostDetailScreen', {
-            postId: id,
-          }),
-      });
-    }
+    links.push({
+      label: 'Comment',
+      onPress: () =>
+        navigation.navigate('PostDetailScreen', {
+          postId: id,
+          reloadList: refetch,
+        }),
+    });
 
     return links;
   };
@@ -95,6 +96,7 @@ export default class NewsFeedItem extends Component<Props> {
       likes_count,
       liked,
       navigation,
+      refetch,
     } = this.props;
 
     const shortedTitle = this.shortenString(text_content, 110);
@@ -102,7 +104,7 @@ export default class NewsFeedItem extends Component<Props> {
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
-          <NewsFeedItemHeader {...this.props} />
+          <NewsFeedItemHeader {...this.props} refetch={refetch} />
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('PostDetailScreen', {

@@ -30,6 +30,7 @@ type Props = {
   id: number | string,
   user?: User,
   navigation: any,
+  refetch: Function,
 };
 
 type State = {
@@ -122,7 +123,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   };
 
   deletePost = async () => {
-    const { id } = this.props;
+    const { id, refetch } = this.props;
     const deletePostReq = makeDeletePostReq(id);
 
     this.setState({ deleting: true });
@@ -130,6 +131,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
       this.setState({ deleting: false });
+      refetch();
     } catch (err) {}
   };
 

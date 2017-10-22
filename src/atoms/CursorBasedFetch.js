@@ -39,19 +39,18 @@ export default class CursorBaseFetch extends Component<{}, State> {
 
     this.setState(state => ({
       pinnedPost: pinnedPostIdx > -1 ? data[pinnedPostIdx] : state.pinnedPost,
-      data: data.splice(pinnedPostIdx + 1).concat(state.data || []),
+      data: data,
       nextCursor: meta.cursor,
       batch: state.batch + 1,
     }));
   };
 
   render() {
-    console.log(this.state.tmp_remove);
     const urlWithCursor = this.state.cursor
       ? `${this.props.url}?cursor=${this.state.cursor.next}&tmp-random=${this
           .state.tmp_remove}`
       : `${this.props.url}?tmp-random=${this.state.tmp_remove}`;
-    console.log(urlWithCursor);
+
     return (
       <Fetch
         {...this.props}

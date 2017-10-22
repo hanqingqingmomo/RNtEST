@@ -74,7 +74,11 @@ export default class CommunityCenterScreen extends Component<Props, State> {
             return !data ? (
               this.renderLoader()
             ) : data.joined ? (
-              <OpenProfile community={data} {...this.props} />
+              <OpenProfile
+                community={data}
+                reloadCommunity={fetch}
+                {...this.props}
+              />
             ) : (
               <ClosedProfile
                 community={data}
