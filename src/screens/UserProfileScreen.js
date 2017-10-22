@@ -96,7 +96,8 @@ class UserProfileScreen extends React.Component<P> {
 
     if (leaveCommunityRes.error) {
     } else {
-      fetch();
+      const { data } = await fetch();
+      this.props.setUserProfile(data);
     }
   };
 
@@ -166,7 +167,7 @@ class UserProfileScreen extends React.Component<P> {
           <Image
             style={{ borderRadius: 3, width: 28, height: 28 }}
             source={{
-              uri: community.profile_photo,
+              uri: community.cover_photo,
             }}
           />
         }
