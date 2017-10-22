@@ -129,6 +129,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
             color={getColor('green')}
             iconColor={getColor('white')}
             disabled
+            style={{ alignSelf: 'center' }}
           />
         ) : (
           <Button
@@ -175,7 +176,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
 
   sendInvitationMessage = (user: ContactProps) => {
     const phone = user.phoneNumbers[0].number;
-    const url = `sms:${phone}?body=fdfdsfdsfd`;
+    const url = `sms:${phone}?body=body`;
 
     Linking.canOpenURL(url)
       .then(supported => {
