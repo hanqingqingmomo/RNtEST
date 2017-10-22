@@ -24,7 +24,6 @@ import {
   Text,
   View,
 } from '../atoms';
-import { type AlertPayload } from '../atoms/DropdownAlert';
 import { getColor } from '../utils/color';
 import { makeLeaveCommunity } from '../utils/requestFactory';
 import { selectUser } from '../redux/selectors';
