@@ -51,7 +51,7 @@ export default class EventCard extends Component<P> {
       return 'Yesterday';
     }
 
-    const string = distanceInWordsToNow(date, {
+    const string = distanceInWordsToNow(new Date(date), {
       addSuffix: true,
     });
 

@@ -26,13 +26,7 @@ export default class NewsFeedItemAttachment extends Component<P> {
           />
         </View>
         {title ? (
-          <Text
-            size={14}
-            lineHeight={18}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={css('color', '#455A64')}
-          >
+          <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
             {title}
           </Text>
         ) : null}

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import distanceInWords from 'date-fns/distance_in_words';
+import { distanceInWordsToNow } from 'date-fns';
 import { Text } from './';
 
 type P = {
@@ -11,7 +11,7 @@ type P = {
 export default function TimeAgo({ date }: P) {
   return (
     <Text>
-      {distanceInWords(new Date(date), new Date(), {
+      {distanceInWordsToNow(new Date(date), {
         includeSeconds: true,
         addSuffix: true,
       })}

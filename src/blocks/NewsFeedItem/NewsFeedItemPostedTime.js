@@ -15,7 +15,7 @@ type P = {
 export default class NewsFeedItemHeader extends Component<P> {
   formatDate(date: Date) {
     const diffInMinutes = differenceInMinutes(new Date(), date);
-    const diff = distanceInWordsToNow(date);
+    const diff = distanceInWordsToNow(new Date(date));
 
     if (diffInMinutes <= 1) {
       return 'Shared just now by:';
