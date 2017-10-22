@@ -10,17 +10,20 @@ import { makeJoinCommunityReq } from '../../utils/requestFactory';
 import { selectUser } from '../../redux/selectors';
 import TabAbout from './TabAbout';
 import JoinSection from './JoinSection';
-import { type User } from '../../Types';
+import { type User, type CommunitySimple } from '../../Types';
 
 type Props = {
+  community: CommunitySimple,
+  navigateToMember: Function,
   navigation?: any,
-  user: User,
+  reloadCommunity: Function,
+  user?: User,
 };
 
 type State = {
-  screenIsReady: boolean,
   activeTab: string,
   joined: boolean,
+  screenIsReady: boolean,
 };
 
 const mapStateToProps = state => ({
@@ -52,7 +55,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
   };
 
   handleOnJoin = async (community: Object, fetch: any) => {
-    const { user, navigation } = this.props;
+    const { user, reloadCommunity } = this.props;
     const makeJoinCommunityReqReq = makeJoinCommunityReq(user.id, community.id);
     const makeJoinCommunityReqRes = await fetch(
       makeJoinCommunityReqReq.url,
@@ -61,33 +64,30 @@ export default class CommunityCenterScreen extends Component<Props, State> {
 
     if (makeJoinCommunityReqRes.error) {
       this.setState({ joined: false });
-    }
-
-    if (makeJoinCommunityReqRes.response.status < 300) {
+    } else {
       this.setState({ joined: true });
-      navigation.state.params.onMemershipStatusChange('joined');
-      setTimeout(() => navigation.goBack(), 1000);
+      setTimeout(() => reloadCommunity(), 1000);
     }
   };
 
   render() {
-    const { profile } = this.props;
+    const { community } = this.props;
     return (
       <View>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
           <CommunityHeader
-            title={profile.name}
-            profileImageURI={profile.profile_photo}
-            coverImageURI={profile.cover_photo}
+            title={community.name}
+            communityImageURI={community.profile_photo}
+            coverImageURI={community.cover_photo}
           />
         </Collapsible>
         <JoinSection
-          community={profile}
-          onJoin={() => this.handleOnJoin(profile, fetch)}
+          community={community}
+          onJoin={() => this.handleOnJoin(community, fetch)}
           joined={this.state.joined}
         />
         <TabAbout
-          community={profile}
+          community={community}
           navigateToMember={this.props.navigateToMember}
         />
       </View>

@@ -15,6 +15,7 @@ type Props = {
 
 type FetchData = {
   data?: Community,
+  fetch: Function,
 };
 
 type State = {
@@ -69,15 +70,16 @@ export default class CommunityCenterScreen extends Component<Props, State> {
     return (
       <Screen fill>
         <Fetch url={readCommunityReg.url} options={readCommunityReg.options}>
-          {({ data, pinnedData }: FetchData) => {
+          {({ data, pinnedData, fetch }: FetchData) => {
             return !data ? (
               this.renderLoader()
             ) : data.joined ? (
               <OpenProfile community={data} {...this.props} />
             ) : (
               <ClosedProfile
-                profile={data}
+                community={data}
                 navigateToMember={this.navigateToMember}
+                reloadCommunity={fetch}
               />
             );
           }}
