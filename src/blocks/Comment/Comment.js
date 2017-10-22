@@ -39,8 +39,8 @@ type P = {
   data: TComment,
   onMorePress: TComment => void,
   onReplyPress?: Function,
-  postId: number,
   user: User,
+  reloadPost: Function,
 };
 
 type S = {
@@ -108,22 +108,23 @@ export default class Comment extends React.Component<P, S> {
   onSettingPress = async (setting: Setting) => {
     switch (setting.key) {
       case 'delete':
-        this.deletePost();
+        this.deleteComment();
         break;
       default:
     }
   };
 
-  deletePost = async () => {
-    const { data, postId } = this.props;
+  deleteComment = async () => {
+    const { data } = this.props;
 
-    const deleteCommentReq = makeDeleteCommentReq(postId, data.id);
+    const deleteCommentReq = makeDeleteCommentReq(data.id);
 
     this.setState({ deleting: true });
 
     try {
       await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
       this.setState({ deleting: false });
+      this.props.reloadPost();
     } catch (err) {}
   };
 

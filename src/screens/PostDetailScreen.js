@@ -103,6 +103,7 @@ export default class PostDetailScreen extends Component<P, S> {
                     onReplyPress={this.onReplyPress}
                     onMorePress={this.onMorePress}
                     ListHeaderComponent={<NewsFeedItem {...data} />}
+                    reloadPost={fetch}
                   />
                   <CommentInput
                     postId={data.id}

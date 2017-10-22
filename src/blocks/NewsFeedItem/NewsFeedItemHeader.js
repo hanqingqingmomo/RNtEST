@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   tags: {
     marginHorizontal: -2,
-    flexGrow: 1,
+    flex: 1,
   },
   tag: {
     paddingHorizontal: 2,

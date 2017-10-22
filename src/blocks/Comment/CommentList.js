@@ -11,14 +11,15 @@ type P = {
   ListHeaderComponent?: any,
   onReplyPress: TComment => void,
   postId: number,
+  reloadPost: Function,
 };
 
 export default class CommentList extends Component<P> {
   renderItem = ({ item }: { item: TComment }) => (
     <Comment
       data={item}
-      postId={this.props.postId}
       onReplyPress={() => this.props.onReplyPress(item)}
+      reloadPost={this.props.reloadPost}
     />
   );
 

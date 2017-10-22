@@ -325,15 +325,9 @@ export const makeCreateCommentReq = (postId: string, body: *) =>
     },
   });
 
-export const makeDeleteCommentReq = (
-  postId: number | string,
-  commentId: number | string
-) =>
+export const makeDeleteCommentReq = (commentId: number | string) =>
   inject({
-    url: join(
-      Config.API_URL,
-      `/v1/content_objects/${postId}/comment/${commentId}`
-    ),
+    url: join(Config.API_URL, `/v1/content_objects/${commentId}`),
     options: {
       method: 'DELETE',
     },

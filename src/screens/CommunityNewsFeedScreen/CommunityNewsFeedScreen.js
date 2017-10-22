@@ -24,7 +24,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
   keyExtractor = (item: Post) => item.id.toString() + Math.random();
 
   renderItem = ({ item }: { item: Post }) => (
-    <View style={styles.feedItemWrapper}>
+    <View style={styles.item}>
       <NewsFeedItem
         {...item}
         navigation={this.props.navigation}
@@ -59,14 +59,15 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
                 }}
               />
 
-              <FlatList
-                style={styles.itemsContainer}
-                data={data}
-                renderItem={this.renderItem}
-                keyExtractor={this.keyExtractor}
-                onEndReached={requestNextBatch}
-                ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
-              />
+              <View style={styles.itemsContainer}>
+                <FlatList
+                  data={data}
+                  renderItem={this.renderItem}
+                  keyExtractor={this.keyExtractor}
+                  onEndReached={requestNextBatch}
+                  ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
+                />
+              </View>
 
               {loading ? (
                 <CenterView style={{ height: 50, flexGrow: 0 }}>
@@ -82,13 +83,11 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  itemSeparatorComponent: {
-    height: 10,
-  },
   itemsContainer: {
+    paddingTop: 10,
     flex: 1,
   },
-  feedItemWrapper: {
+  item: {
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
