@@ -183,7 +183,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: join(
       Config.API_URL,
-      `/v1/communities?membership_status=${joinedOnly ? 'joined' : ''}`
+      `/v1/communities?membership_status=${joinedOnly ? 'joined' : 'unjoined'}`
     ),
     options: {
       method: 'GET',
