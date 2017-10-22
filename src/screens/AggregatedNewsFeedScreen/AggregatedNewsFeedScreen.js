@@ -51,7 +51,6 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, loading, batch, requestNextBatch, refetch }) => {
-          console.log(data);
           return data === null ? (
             <CenterView>
               <ActivityIndicator />

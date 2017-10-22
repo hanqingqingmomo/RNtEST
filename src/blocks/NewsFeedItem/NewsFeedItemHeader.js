@@ -136,12 +136,14 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   };
 
   render() {
-    this.props.communities.splice(3, this.props.communities.length - 3);
+    let communities = [...this.props.communities];
+
+    communities = communities.splice(0, 3);
 
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {this.props.communities.map((item: CommunitySimple) => (
+          {communities.map((item: CommunitySimple) => (
             <View style={styles.tag} key={item.id}>
               <TouchableItem
                 onPress={() => this.onCommunityPress(item)}
