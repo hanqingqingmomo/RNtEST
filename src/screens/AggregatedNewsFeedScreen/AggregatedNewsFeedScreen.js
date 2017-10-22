@@ -59,19 +59,21 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
                     onReturn: () => refetch(),
                   })}
               />
-
-              <FlatList
-                style={styles.itemsContainer}
-                ListHeaderComponent={
-                  <FriendInvitationWidget
-                    openModal={this.props.screenProps.openFriendsInitationModal}
-                  />
-                }
-                data={data}
-                renderItem={this.renderItem}
-                keyExtractor={this.keyExtractor}
-                onEndReached={requestNextBatch}
-              />
+              <View style={styles.itemsContainer}>
+                <FlatList
+                  ListHeaderComponent={
+                    <FriendInvitationWidget
+                      openModal={
+                        this.props.screenProps.openFriendsInitationModal
+                      }
+                    />
+                  }
+                  data={data}
+                  renderItem={this.renderItem}
+                  keyExtractor={this.keyExtractor}
+                  onEndReached={requestNextBatch}
+                />
+              </View>
 
               {loading ? (
                 <CenterView style={{ height: 50, flexGrow: 0 }}>
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   itemsContainer: {
+    paddingTop: 10,
     flex: 1,
   },
 });
