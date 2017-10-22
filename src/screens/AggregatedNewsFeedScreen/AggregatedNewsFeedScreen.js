@@ -9,6 +9,7 @@ import {
   CursorBasedFetech,
   ShadowView,
   View,
+  Screen,
 } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
 import FriendInvitationWidget from './FriendInvitationWidget';
@@ -56,7 +57,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
               <ActivityIndicator />
             </CenterView>
           ) : (
-            <View style={{ flex: 1 }}>
+            <Screen>
               <NewsFeedConversation
                 onPress={() =>
                   this.props.navigation.navigate('PostEditorScreen', {
@@ -84,7 +85,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
                   <ActivityIndicator />
                 </CenterView>
               ) : null}
-            </View>
+            </Screen>
           );
         }}
       </CursorBasedFetech>
