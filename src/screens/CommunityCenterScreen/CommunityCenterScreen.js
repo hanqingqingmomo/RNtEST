@@ -80,6 +80,9 @@ export default class CommunityCenterScreen extends Component<Props, State> {
                 community={data}
                 navigateToMember={this.navigateToMember}
                 reloadCommunity={fetch}
+                reloadCommunityList={
+                  this.props.navigation.state.params.reloadCommunityList
+                }
               />
             );
           }}

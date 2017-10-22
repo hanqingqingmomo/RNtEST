@@ -92,7 +92,7 @@ export default class CommunityListScreen extends Component<{}, State> {
           url={readCommunitiesListRq.url}
           options={readCommunitiesListRq.options}
         >
-          {({ loading, error, data }) => (
+          {({ loading, error, data, fetch }) => (
             <ScrollView contentContainerStyle={styles.container}>
               {loading && (
                 <CenterView>
@@ -111,6 +111,7 @@ export default class CommunityListScreen extends Component<{}, State> {
                     onPress={() =>
                       navigation.navigate('CommunityCenterScreen', {
                         communityId: community.id,
+                        reloadCommunityList: fetch,
                       })}
                     key={community.id}
                     style={styles.item}

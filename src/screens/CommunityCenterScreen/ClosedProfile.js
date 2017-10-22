@@ -17,6 +17,7 @@ type Props = {
   navigateToMember: Function,
   navigation?: any,
   reloadCommunity: Function,
+  reloadCommunityList: Function,
   user?: User,
 };
 
@@ -55,7 +56,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
   };
 
   handleOnJoin = async (community: Object, fetch: any) => {
-    const { user, reloadCommunity } = this.props;
+    const { user, reloadCommunity, reloadCommunityList } = this.props;
     const makeJoinCommunityReqReq = makeJoinCommunityReq(user.id, community.id);
     const makeJoinCommunityReqRes = await fetch(
       makeJoinCommunityReqReq.url,
@@ -66,7 +67,10 @@ export default class CommunityCenterScreen extends Component<Props, State> {
       this.setState({ joined: false });
     } else {
       this.setState({ joined: true });
-      setTimeout(() => reloadCommunity(), 1000);
+      setTimeout(() => {
+        reloadCommunity();
+        reloadCommunityList();
+      }, 1000);
     }
   };
 
