@@ -4456,6 +4456,12 @@ react-native-keyboard-manager@^4.0.13-4:
   version "4.0.13-4"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-manager/-/react-native-keyboard-manager-4.0.13-4.tgz#00ec1ab0b1960737a85be614c3fe175c0581cdd8"
 
+react-native-lightbox@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-lightbox/-/react-native-lightbox-0.7.0.tgz#e52b4d7fcc141f59d7b23f0180de535e35b20ec9"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-material-textfield@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.10.0.tgz#ee4bd429ea921bde1243d4bf13fb5106e33a0c99"
