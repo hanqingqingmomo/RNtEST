@@ -18,6 +18,9 @@ const IMAGE_PICKER_OPTIONS = {
   chooseFromLibraryButtonTitle: 'Choose from Library',
   mediaType: 'photo',
   noData: true,
+  storageOptions: {
+    skipBackup: true,
+  },
 };
 
 export default class EditorToolbar extends React.Component<Props> {

@@ -23,6 +23,9 @@ const DEFAULT_OPTIONS = {
   mediaType: 'photo',
   noData: true,
   allowsEditing: true,
+  storageOptions: {
+    skipBackup: true,
+  },
 };
 
 export default class AvatarPicker extends Component<P> {
