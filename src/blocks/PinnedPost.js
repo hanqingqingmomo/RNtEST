@@ -34,7 +34,7 @@ export default function PinnedPost(props: Props) {
           cellContentView={
             <View style={styles.text}>
               <Text color="#455A64" size={14} lineHeight={18}>
-                {parseTextContent(props.data.text_content, 120)}
+                {parseTextContent(props.data.text_content, 100)}
               </Text>
             </View>
           }
