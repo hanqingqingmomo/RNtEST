@@ -3,10 +3,10 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, ShadowView, TouchableOpacity } from '../../atoms';
+import { Text, View, ShadowView } from '../../atoms';
 import { css } from '../../utils/style';
-import { parseTextContent } from '../../utils/text';
 import { type Post, type User, type Attachment } from '../../Types';
+import { parseTextContent } from '../../utils/text';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -23,7 +23,7 @@ type Props = Post & {
   attachment?: Attachment,
 };
 
-export default class NewsFeedItem extends Component<Props> {
+export default class NewsFeedItemDetail extends Component<Props> {
   get attachment(): Object {
     return this.props.attachment;
   }
@@ -77,7 +77,6 @@ export default class NewsFeedItem extends Component<Props> {
       comments_count,
       likes_count,
       liked,
-      navigation,
       refetch,
     } = this.props;
 
@@ -85,35 +84,30 @@ export default class NewsFeedItem extends Component<Props> {
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader {...this.props} refetch={refetch} />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('PostDetailScreen', {
-                postId: id,
-              });
-            }}
-          >
-            <View>
-              {(this.hasAttachment && this.attachment.type === 'link') ||
-              !this.hasAttachment ? (
-                <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-                  {parseTextContent(text_content, 120)}
-                </Text>
-              ) : null}
 
-              {this.hasAttachment && this.attachment.type.includes('image') ? (
-                <NewsFeedItemImage {...this.attachment} title={text_content} />
-              ) : (
-                <NewsFeedItemAttachment {...this.attachment} />
-              )}
+          {(this.hasAttachment && this.attachment.type === 'link') ||
+          !this.hasAttachment ? (
+            <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+              {text_content}
+            </Text>
+          ) : null}
 
-              {created_at ? (
-                <NewsFeedItemPostedTime
-                  date={created_at}
-                  style={styles.postedTime}
-                />
-              ) : null}
-            </View>
-          </TouchableOpacity>
+          {this.hasAttachment && this.attachment.type.includes('image') ? (
+            <NewsFeedItemImage
+              {...this.attachment}
+              title={text_content}
+              detail
+            />
+          ) : (
+            <NewsFeedItemAttachment {...this.attachment} />
+          )}
+
+          {created_at ? (
+            <NewsFeedItemPostedTime
+              date={created_at}
+              style={styles.postedTime}
+            />
+          ) : null}
 
           {author ? (
             <NewsFeedItemAuthor

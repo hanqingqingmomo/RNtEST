@@ -36,6 +36,7 @@
     "react-native-dropdownalert": "^3.1.2",
     "react-native-image-picker": "^0.26.7",
     "react-native-keyboard-manager": "^4.0.13-4",
+    "react-native-lightbox": "^0.7.0",
     "react-native-material-textfield": "^0.10.0",
     "react-native-modalbox": "^1.4.2",
     "react-native-payments": "^0.3.1",

@@ -295,11 +295,11 @@ const styles = StyleSheet.create({
   headerInfo: {
     flexGrow: 1,
     alignItems: 'flex-end',
+    paddingVertical: 5,
   },
   headerInfoReply: {
     flexGrow: 1,
     alignItems: 'flex-end',
-    marginBottom: 4,
   },
   container: {
     paddingTop: 12,

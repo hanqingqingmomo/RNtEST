@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Image, TableView, Text, View } from '../atoms';
 import { type Post } from '../Types';
+import { parseTextContent } from '../utils/text';
 
 type Props = { data: Post, onPress: (data: Post) => void };
 
@@ -23,6 +24,7 @@ export default function PinnedPost(props: Props) {
       <TableView.Section header="Pinned Items">
         <TableView.Cell
           cellStyle="Basic"
+          contentContainerStyle={{ paddingTop: 15, paddingBottom: 15 }}
           image={
             <AvatarOrAttachment
               attachment={props.data.attachment}
@@ -31,7 +33,9 @@ export default function PinnedPost(props: Props) {
           }
           cellContentView={
             <View style={styles.text}>
-              <Text>{props.data.text_content}</Text>
+              <Text color="#455A64" size={14} lineHeight={18}>
+                {parseTextContent(props.data.text_content, 120)}
+              </Text>
             </View>
           }
           onPress={() => props.onPress(props.data)}
@@ -43,7 +47,6 @@ export default function PinnedPost(props: Props) {
 
 const styles = StyleSheet.create({
   text: {
-    paddingVertical: 15,
     flex: 1,
   },
 });

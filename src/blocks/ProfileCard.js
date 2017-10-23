@@ -2,19 +2,22 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import Lightbox from 'react-native-lightbox';
 
-import { View, Text, Avatar, Icon, Link, ShadowView } from '../atoms';
+import {
+  View,
+  Text,
+  Avatar,
+  Icon,
+  Link,
+  ShadowView,
+  ImagePreview,
+} from '../atoms';
+import { type User } from '../Types';
 
 // TODO use type after merge
 type P = {
-  user: {
-    email: string,
-    first_name: string,
-    last_name: string,
-    phone: string,
-    profile_photo: string,
-    role: string,
-  },
+  user: User,
 };
 
 export default class ProfileCard extends Component<P> {
@@ -31,7 +34,14 @@ export default class ProfileCard extends Component<P> {
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
-          <Avatar imageURI={profile_photo} size={100} />
+          <Lightbox
+            underlayColor="white"
+            renderContent={() => <ImagePreview imageURI={profile_photo} />}
+          >
+            <View>
+              <Avatar imageURI={profile_photo} size={100} />
+            </View>
+          </Lightbox>
           <Text
             size={19}
             color="#455A64"
