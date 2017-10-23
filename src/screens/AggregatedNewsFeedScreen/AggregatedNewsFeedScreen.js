@@ -21,7 +21,7 @@ import { getColor } from '../../utils/color';
 function NavigatorHeader(props) {
   return (
     <ShadowView radius={0} style={{ paddingTop: 20, backgroundColor: 'white' }}>
-      <NewsFeedHeader openDrawer={props.screenProps.openDrawer} />
+      <NewsFeedHeader openDrawer={props.screenProps.openDrawer} />>
     </ShadowView>
   );
 }
@@ -58,8 +58,11 @@ function Footer(props) {
 }
 
 export default class AggregatedNewsFeedScreen extends Component<{}> {
-  static navigationOptions = {
-    header: NavigatorHeader,
+  static navigationOptions = ({ screenProps }) => {
+    return {
+      headerLeft: <NewsFeedHeader openDrawer={screenProps.openDrawer} />,
+      title: 'News Feed',
+    };
   };
 
   keyExtractor = item => {
