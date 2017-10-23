@@ -34,7 +34,7 @@ export default class PinnedPost extends Component<Props> {
       <Fetch url={readPinnedItemsReq.url} options={readPinnedItemsReq.options}>
         {({ loading, data, error, fetch }) => {
           if (loading === false) {
-            if (data) {
+            if (data && data.data.length > 0) {
               const firstPinnedItem = data.data[0];
 
               return (
