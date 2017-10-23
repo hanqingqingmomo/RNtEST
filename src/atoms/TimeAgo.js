@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { distanceInWordsToNow } from 'date-fns';
-import { Text } from './';
+
+import { Text } from './index';
 
 type P = {
   date: string,
