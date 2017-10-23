@@ -17,6 +17,7 @@ import { type Post } from '../../Types';
 
 type Props = {
   communityId: string,
+  navigation: any,
   navigateToPost: Object => void,
   reloadCommunity: Function,
 };
@@ -37,7 +38,15 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 
   renderPinnedPost(data: Post) {
     return data ? (
-      <PinnedPost data={data} onPress={() => console.log('aaa')} />
+      <PinnedPost
+        data={data}
+        onPress={data => {
+          this.props.navigation.navigate('PostDetailScreen', {
+            postId: data.id,
+            reloadList: this.props.reloadCommunity,
+          });
+        }}
+      />
     ) : null;
   }
 
