@@ -37,6 +37,8 @@ export default function CommunityHeader({
             lineHeight={24}
             size={20}
             weight="500"
+            numberOfLines={2}
+            ellipsizeMode="tail"
           >
             {title}
           </Text>
