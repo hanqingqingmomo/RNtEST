@@ -62,6 +62,7 @@ export default class EmailAuthenticationBlock extends Component<Props> {
                 name="email"
                 keyboardType="email-address"
                 autoCapitalize="none"
+                autoCorrect={false}
               />
               <FormField label="Password" name="password" secureTextEntry />
 
