@@ -23,11 +23,11 @@ const navigationItems: Array<NavigationItem> = [
     icon: 'user',
     routeName: 'UserProfileModal',
   },
-  {
-    name: 'Notifications',
-    icon: 'notification',
-    routeName: 'NotificationsSettingsModal',
-  },
+  // {
+  //   name: 'Notifications',
+  //   icon: 'notification',
+  //   routeName: 'NotificationsSettingsModal',
+  // },
   {
     name: 'Settings',
     icon: 'settings',
