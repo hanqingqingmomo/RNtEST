@@ -42,6 +42,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
           {...item}
           navigation={this.props.navigation}
           refetch={refetch}
+          onDelete={refetch}
         />
       </View>
     );

@@ -23,7 +23,7 @@ type State = {
   didRequestedUrlScraping: boolean,
 };
 
-export default class PostEditorScreen extends Component<Props, State> {
+export default class PostEditor extends Component<Props, State> {
   static navigationOptions = {
     title: 'Start New Conversation',
   };

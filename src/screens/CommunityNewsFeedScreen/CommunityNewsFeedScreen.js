@@ -30,6 +30,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
         {...item}
         navigation={this.props.navigation}
         refetch={this.props.reloadCommunity}
+        onDelete={this.props.reloadCommunity}
       />
     </View>
   );

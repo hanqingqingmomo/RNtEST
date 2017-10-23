@@ -19,7 +19,8 @@ import NewsFeedItemPostedTime from './NewsFeedItemPostedTime';
 
 type Props = Post & {
   navigation: Object,
-  refetch?: Function,
+  refetch: Function,
+  onDelete: Function,
   attachment?: Attachment,
   isDetail?: boolean,
 };
@@ -109,13 +110,14 @@ export default class NewsFeedItem extends Component<Props> {
       liked,
       navigation,
       refetch,
+      onDelete,
       isDetail,
     } = this.props;
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
-          <NewsFeedItemHeader {...this.props} refetch={refetch} />
+          <NewsFeedItemHeader {...this.props} onDelete={onDelete} />
 
           {isDetail ? (
             this.renderContent()

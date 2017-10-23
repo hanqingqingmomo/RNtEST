@@ -102,6 +102,7 @@ export default class PostDetailScreen extends Component<P, S> {
                       <NewsFeedItem
                         {...data}
                         navigation={this.props.navigation}
+                        onDelete={() => this.props.navigation.goBack()}
                         isDetail
                       />
                     }
