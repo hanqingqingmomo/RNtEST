@@ -34,7 +34,7 @@ export default class NewsFeedItem extends Component<Props> {
   }
 
   getLinks = () => {
-    const { id, navigation, refetch } = this.props;
+    const { id, navigation, refetch, isDetail } = this.props;
 
     const links = [
       // {
@@ -43,14 +43,16 @@ export default class NewsFeedItem extends Component<Props> {
       // },
     ];
 
-    links.push({
-      label: 'Comment',
-      onPress: () =>
-        navigation.navigate('PostDetailScreen', {
-          postId: id,
-          reloadList: refetch,
-        }),
-    });
+    if (!isDetail) {
+      links.push({
+        label: 'Comment',
+        onPress: () =>
+          navigation.navigate('PostDetailScreen', {
+            postId: id,
+            reloadList: refetch,
+          }),
+      });
+    }
 
     return links;
   };
