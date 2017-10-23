@@ -4,52 +4,82 @@ import React, { Component } from 'react';
 
 import { Fetch } from './index';
 
-type State = {
-  cursor: ?{
-    next: ?number,
-    limit: ?number,
-  },
-  nextCursor: ?{
-    next: ?number,
-    limit: ?number,
-  },
-  data: ?Array<any>,
-  pinnedPost: any,
-  batch: number,
+type Cursor = {
+  next: ?number,
+  limit: number,
 };
 
-export default class CursorBaseFetch extends Component<{}, State> {
+type FetchProps = {
+  loading: boolean,
+  data: *,
+};
+
+type Props = {
+  url: string,
+  children: ({
+    loading: boolean,
+    data: Array<*>,
+    refetch: () => void,
+    requestNext: () => void,
+    endReached: boolean,
+  }) => React$Node,
+};
+
+type State = {
+  cursor: Cursor,
+  data: ?Array<any>,
+  loading?: boolean,
+  nextCursor: Cursor,
+};
+
+const INITIAL_CURSOR = {
+  next: null,
+  limit: 25,
+};
+
+export default class CursorBaseFetch extends Component<Props, State> {
   state = {
-    tmp_remove: 1,
-    cursor: null,
-    nextCursor: null,
+    loading: undefined,
+    cursor: INITIAL_CURSOR,
+    nextCursor: INITIAL_CURSOR,
     data: null,
-    pinnedPost: null,
-    batch: 0,
   };
 
-  onChange = (fetchProps: *) => {
+  onChange = (fetchProps: FetchProps) => {
     this.setState({ loading: fetchProps.loading });
   };
 
   onDataChange = (fetchProps: *) => {
-    // TODO reevaluate later
-    const { data = [], meta } = fetchProps;
-    const pinnedPostIdx = data.findIndex(item => item.pinned);
-
+    // If we do not have cursor yet, we are starting from scratch
+    const startingData = this.state.cursor.next === null ? [] : this.state.data;
+    const { data, meta } = fetchProps;
     this.setState(state => ({
-      pinnedPost: pinnedPostIdx > -1 ? data[pinnedPostIdx] : state.pinnedPost,
-      data: data,
+      data: startingData.concat(data),
       nextCursor: meta.cursor,
-      batch: state.batch + 1,
+    }));
+  };
+
+  refetch = () => {
+    console.log('refetch');
+  };
+
+  refresh = () => {
+    this.setState({ cursor: INITIAL_CURSOR });
+  };
+
+  requestNext = () => {
+    this.setState(state => ({
+      cursor: state.nextCursor,
     }));
   };
 
   render() {
-    const urlWithCursor = this.state.cursor
-      ? `${this.props.url}?cursor=${this.state.cursor.next}&tmp-random=${this
-          .state.tmp_remove}`
-      : `${this.props.url}?tmp-random=${this.state.tmp_remove}`;
+    const { next, limit } = this.state.cursor;
+
+    const urlWithCursor =
+      next !== null
+        ? `${this.props.url}?next=${next}&limit=${limit}`
+        : `${this.props.url}?limit=${limit}`;
 
     return (
       <Fetch
@@ -59,19 +89,13 @@ export default class CursorBaseFetch extends Component<{}, State> {
         onChange={this.onChange}
       >
         {this.props.children({
-          tmpRandom: this.state.tmp_remove,
-          pinnedPost: this.state.pinnedPost,
           loading: this.state.loading,
+          firstLoad: this.state.loading === true && next === null,
           data: this.state.data,
-          batch: this.state.batch,
-          refetch: () => {
-            this.setState({ tmp_remove: Math.random() });
-          },
-          requestNextBatch: () => {
-            if (this.state.nextCursor.next) {
-              this.setState({ cursor: this.state.nextCursor });
-            }
-          },
+          refetch: this.refetch,
+          requestNext: this.requestNext,
+          refresh: this.refresh,
+          endReached: this.state.nextCursor.next === null,
         })}
       </Fetch>
     );

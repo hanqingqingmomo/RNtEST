@@ -1,20 +1,20 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 
 import {
   ActivityIndicator,
+  Button,
   CenterView,
   CursorBasedFetech,
-  Text,
   View,
 } from '../../atoms';
-import { PinnedPost } from '../../blocks';
-import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
+import { NewsFeedItem, PinnedPost } from '../../blocks';
 import NewsFeedConversation from './../AggregatedNewsFeedScreen/NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
 import { type Post } from '../../Types';
+import { getColor } from '../../utils/color';
 
 type Props = {
   communityId: string,
@@ -23,61 +23,106 @@ type Props = {
   reloadCommunity: Function,
 };
 
-export default class CommunityNewsFeedScreen extends Component<Props> {
-  renderPinnedPost(data: Post) {
-    return data ? (
-      <PinnedPost
-        data={data}
-        onSeeAll={() => {
-          this.props.navigation.navigate('PinnedPostsScreen', {
-            communityId: this.props.communityId,
-          });
-        }}
-        onPress={data => {
-          this.props.navigation.navigate('PostDetailScreen', {
-            postId: data.id,
-            reloadList: this.props.reloadCommunity,
-          });
-        }}
-      />
-    ) : null;
+function Footer(props) {
+  if (props.hidden === true) {
+    return null;
   }
+
+  return (
+    <View
+      style={{
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {props.refreshing ? (
+        <CenterView>
+          <ActivityIndicator />
+        </CenterView>
+      ) : (
+        <Button
+          title="Load more"
+          size="xs"
+          color={getColor('orange')}
+          textColor="white"
+          onPress={props.onPress}
+          disabled={props.moreAvailable === false}
+        />
+      )}
+    </View>
+  );
+}
+
+export default class CommunityNewsFeedScreen extends Component<Props> {
+  keyExtractor = (item: Post) => item.id.toString() + Math.random();
+
+  renderItem = ({ item }: { item: Post }) => (
+    <View style={styles.item}>
+      <NewsFeedItem
+        {...item}
+        navigation={this.props.navigation}
+        refetch={this.props.reloadCommunity}
+        onDelete={this.props.reloadCommunity}
+      />
+    </View>
+  );
 
   render() {
     const { url, options } = makeReadCommunityFeedRq(this.props.communityId);
 
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, pinnedPost, loading, batch, requestNextBatch, fetch }) => {
-          if (loading === false) {
-            return (
-              <View style={{ flex: 1 }}>
-                <NewsFeedConversation
-                  onPress={() => {
-                    this.props.navigation.navigate('PostEditorScreen');
-                  }}
-                />
-                {data && data.length > 0 ? (
-                  <NewsFeedList
-                    data={data}
-                    onEndReached={requestNextBatch}
-                    ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
-                    navigation={this.props.navigation}
+        {({
+          data,
+          loading,
+          requestNext,
+          refetch,
+          endReached,
+          refresh,
+          firstLoad,
+        }) => {
+          return (
+            <FlatList
+              data={data}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              eonEndReached={undefined}
+              refreshControl={
+                <RefreshControl refreshing={firstLoad} onRefresh={refresh} />
+              }
+              ListHeaderComponent={
+                <View style={{ marginBottom: 10 }}>
+                  <NewsFeedConversation
+                    onPress={() =>
+                      this.props.navigation.navigate('PostEditorScreen')}
                   />
-                ) : (
-                  <View style={styles.textContainer}>
-                    <Text style={styles.text}>There is no content.</Text>
-                  </View>
-                )}
-              </View>
-            );
-          } else {
-            return (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            );
-          }
+                  <PinnedPost
+                    communityId={this.props.communityId}
+                    onSeeAll={() => {
+                      this.props.navigation.navigate('PinnedPostsScreen', {
+                        communityId: this.props.communityId,
+                      });
+                    }}
+                    onPress={data => {
+                      this.props.navigation.navigate('PostDetailScreen', {
+                        postId: data.id,
+                        reloadList: this.props.reloadCommunity,
+                      });
+                    }}
+                  />
+                </View>
+              }
+              ListFooterComponent={
+                <Footer
+                  hidden={data === null}
+                  moreAvailable={endReached === false}
+                  refreshing={loading && firstLoad === false}
+                  onPress={requestNext}
+                />
+              }
+            />
+          );
         }}
       </CursorBasedFetech>
     );
@@ -85,6 +130,10 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  item: {
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
   text: {
     textAlign: 'center',
     fontWeight: '500',

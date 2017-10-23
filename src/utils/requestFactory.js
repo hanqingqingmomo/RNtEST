@@ -67,7 +67,13 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
         });
       }
     } else {
-      formData.append(key, payload[key]);
+      if (Array.isArray(payload[key])) {
+        payload[key].forEach(value => {
+          formData.append(key, value);
+        });
+      } else {
+        formData.append(key, payload[key]);
+      }
     }
   });
   return formData;

@@ -1,27 +1,22 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 
 import {
   ActivityIndicator,
+  Button,
   CenterView,
   CursorBasedFetech,
   ShadowView,
-  Screen,
-  Text,
   View,
 } from '../../atoms';
-import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
+import { NewsFeedItem } from '../../blocks';
 import FriendInvitationWidget from './FriendInvitationWidget';
 import NewsFeedHeader from './NewsFeedHeader';
 import NewsFeedConversation from './NewsFeedConversation';
 import { makeReadAggregatedFeedRq } from '../../utils/requestFactory';
-
-type Props = {
-  navigation: any,
-  screenProps: any,
-};
+import { getColor } from '../../utils/color';
 
 function NavigatorHeader(props) {
   return (
@@ -31,51 +26,102 @@ function NavigatorHeader(props) {
   );
 }
 
-export default class AggregatedNewsFeedScreen extends Component<Props> {
+function Footer(props) {
+  if (props.hidden === true) {
+    return null;
+  }
+
+  return (
+    <View
+      style={{
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {props.refreshing ? (
+        <CenterView>
+          <ActivityIndicator />
+        </CenterView>
+      ) : (
+        <Button
+          title="Load more"
+          size="xs"
+          color={getColor('orange')}
+          textColor="white"
+          onPress={props.onPress}
+          disabled={props.moreAvailable === false}
+        />
+      )}
+    </View>
+  );
+}
+
+export default class AggregatedNewsFeedScreen extends Component<{}> {
   static navigationOptions = {
     header: NavigatorHeader,
   };
 
+  keyExtractor = item => {
+    return item.id.toString() + Math.random();
+  };
+
+  renderItem = ({ item, refetch }: any): React$Element<*> => {
+    return (
+      <View style={styles.item}>
+        <NewsFeedItem
+          {...item}
+          navigation={this.props.navigation}
+          refetch={refetch}
+          onDelete={refetch}
+        />
+      </View>
+    );
+  };
+
   render() {
     const { url, options } = makeReadAggregatedFeedRq();
-
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, loading, batch, requestNextBatch, refetch }) => {
-          if (loading === false) {
-            return (
-              <Screen fill>
-                <NewsFeedConversation
-                  onPress={() =>
-                    this.props.navigation.navigate('PostEditorScreen')}
-                />
-                {data && data.length > 0 ? (
-                  <NewsFeedList
-                    data={data}
-                    navigation={this.props.navigation}
-                    onEndReached={requestNextBatch}
-                    ListHeaderComponent={
-                      <FriendInvitationWidget
-                        openModal={
-                          this.props.screenProps.openFriendsInitationModal
-                        }
-                      />
-                    }
+        {({
+          data,
+          loading,
+          requestNext,
+          refetch,
+          endReached,
+          refresh,
+          firstLoad,
+        }) => {
+          return (
+            <FlatList
+              data={data}
+              keyExtractor={this.keyExtractor}
+              renderItem={({ item }) => this.renderItem({ item, refetch })}
+              refreshControl={
+                <RefreshControl refreshing={firstLoad} onRefresh={refresh} />
+              }
+              ListHeaderComponent={
+                <View style={{ marginBottom: 10 }}>
+                  <NewsFeedConversation
+                    onPress={() =>
+                      this.props.navigation.navigate('PostEditorScreen')}
                   />
-                ) : (
-                  <View style={styles.textContainer}>
-                    <Text style={styles.text}>There is no content.</Text>
-                  </View>
-                )}
-              </Screen>
-            );
-          } else {
-            return (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            );
-          }
+                  <FriendInvitationWidget
+                    openModal={this.props.screenProps.openFriendsInitationModal}
+                  />
+                </View>
+              }
+              ListFooterComponent={
+                <Footer
+                  hidden={data === null}
+                  moreAvailable={endReached === false}
+                  refreshing={loading && firstLoad === false}
+                  onPress={requestNext}
+                />
+              }
+              eonEndReached={requestNext}
+            />
+          );
         }}
       </CursorBasedFetech>
     );
@@ -83,6 +129,10 @@ export default class AggregatedNewsFeedScreen extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  item: {
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
   text: {
     textAlign: 'center',
     fontWeight: '500',

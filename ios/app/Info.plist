@@ -36,13 +36,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>MPWR will only upload and share photos you choose.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This allows MPWR to let choose which friends to invite to download the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
-	<key>NSContactsUsageDescription</key>
-	<string></string>
+	<string>MPWR will only upload and share photos you choose.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>pba.ttf</string>
