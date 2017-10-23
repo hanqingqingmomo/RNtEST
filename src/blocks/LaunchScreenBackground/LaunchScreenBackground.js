@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, Text, View, Screen } from '../../atoms';
+import { Icon, Link, Text, View, Screen } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type P = {
@@ -20,7 +20,9 @@ export default class LaunchScreenBackground extends Component<P> {
         {this.props.children}
         <View style={styles.pbaLogo}>
           <Text style={styles.text}>Brought to you by</Text>
-          <Icon name="pba-logo" size={28} color={getColor('white')} />
+          <Link type="https" value="poweredbyaction.org">
+            <Icon name="pba-logo" size={28} color={getColor('white')} />
+          </Link>
         </View>
       </Screen>
     );

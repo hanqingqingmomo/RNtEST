@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, View, Text, TouchableHighlight } from '../../atoms';
+import { Icon, Link, View, Text, TouchableHighlight } from '../../atoms';
 import { getColor } from '../../utils/color';
 import DrawerHeader from './DrawerHeader';
 
@@ -57,7 +57,9 @@ const Drawer = (props: Props) => (
     ))}
     <View style={styles.pbaLogo}>
       <Text style={styles.pbaText}>Brought to you by</Text>
-      <Icon name="pba-logo" size={28} color={getColor('white')} />
+      <Link type="https" value="poweredbyaction.org">
+        <Icon name="pba-logo" size={28} color={getColor('white')} />
+      </Link>
     </View>
   </View>
 );

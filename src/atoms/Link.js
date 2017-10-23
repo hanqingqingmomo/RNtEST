@@ -6,14 +6,15 @@ import { Linking } from 'react-native';
 import { TouchableItem } from '../atoms';
 
 type P = {
-  type: 'mail' | 'phone',
+  type: 'https' | 'mail' | 'phone',
   value: string,
   children: React$Element<*>,
 };
 
 const PROTOCOL_MAP = {
-  phone: 'tel',
-  mail: 'mailto',
+  phone: 'tel:',
+  mail: 'mailto:',
+  https: 'https://',
 };
 
 export default class Link extends Component<P> {
@@ -28,7 +29,7 @@ export default class Link extends Component<P> {
   onPress = () => {
     const { type, value } = this.props;
 
-    this.openUrl(`${PROTOCOL_MAP[type]}:${value}`);
+    this.openUrl(`${PROTOCOL_MAP[type]}${value}`);
   };
 
   render() {
