@@ -176,7 +176,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
 
   sendInvitationMessage = (user: ContactProps) => {
     const phone = user.phoneNumbers[0].number;
-    const url = `sms:${phone}?body=body`;
+    const url = `sms:${phone}&body=You are invited to join the YWCA’s MPWR community! Click here to join us! https://poweredbyaction.org/invite`;
 
     Linking.canOpenURL(url)
       .then(supported => {
