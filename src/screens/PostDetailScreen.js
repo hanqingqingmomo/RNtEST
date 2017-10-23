@@ -98,9 +98,6 @@ export default class PostDetailScreen extends Component<P, S> {
                     postId={navigation.state.params.postId}
                     comments={data.replies}
                     onReplyPress={this.onReplyPress}
-<<<<<<< HEAD
-                    ListHeaderComponent={<NewsFeedItem {...data} />}
-=======
                     onMorePress={this.onMorePress}
                     ListHeaderComponent={
                       <NewsFeedItemDetail
@@ -108,7 +105,6 @@ export default class PostDetailScreen extends Component<P, S> {
                         navigation={this.props.navigation}
                       />
                     }
->>>>>>> f8968e968778561db30b789976dbb47dfdee0e6f
                     reloadPost={fetch}
                   />
                   <CommentInput
