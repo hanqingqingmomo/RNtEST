@@ -8,7 +8,7 @@ import { getColor } from '../utils/color';
 import {
   InvitationCodeScreen,
   PrivacyScreen,
-  TermsScreen,
+  TermsAndConditionsScreen,
   UserSettingsScreen,
   ChangePasswordScreen,
 } from '../screens';
@@ -33,8 +33,8 @@ export default StackNavigator({
       headerTitle: 'Settings',
     }),
   },
-  TermsScreen: {
-    screen: TermsScreen,
+  TermsAndConditionsScreen: {
+    screen: TermsAndConditionsScreen,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Terms and conditions',
     }),

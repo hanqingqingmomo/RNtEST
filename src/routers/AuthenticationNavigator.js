@@ -12,7 +12,7 @@ import {
   LandingScreen,
   PasswordResetScreen,
   PrivacyScreen,
-  TermsScreen,
+  TermsAndConditionsScreen,
 } from '../screens';
 
 export default StackNavigator(
@@ -54,8 +54,8 @@ export default StackNavigator(
         headerTitle: 'Password Reset',
       },
     },
-    TermsScreen: {
-      screen: TermsScreen,
+    TermsAndConditionsScreen: {
+      screen: TermsAndConditionsScreen,
       navigationOptions: {
         headerTitle: 'Terms and conditions',
       },

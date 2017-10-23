@@ -167,7 +167,9 @@ class EmailRegistrationScreen extends Component<{}> {
                     style={styles.specialText}
                     weight="bold"
                     onPress={() => {
-                      this.props.navigation.navigate('TermsScreen');
+                      this.props.navigation.navigate(
+                        'TermsAndConditionsScreen'
+                      );
                     }}
                   >
                     Terms

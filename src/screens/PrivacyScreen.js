@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import { View, Screen } from '../atoms';
+import { DeferExpensiveTasks, View, Screen } from '../atoms';
 import { HelpBlock } from '../blocks';
 
 const PRIVACY = [
@@ -130,11 +130,13 @@ const PRIVACY = [
 export default class PrivacyScreen extends Component<{}> {
   render() {
     return (
-      <Screen>
-        <View>
-          {PRIVACY.map((bag, idx) => <HelpBlock key={idx} {...bag} />)}
-        </View>
-      </Screen>
+      <DeferExpensiveTasks>
+        <Screen>
+          <View>
+            {PRIVACY.map((bag, idx) => <HelpBlock key={idx} {...bag} />)}
+          </View>
+        </Screen>
+      </DeferExpensiveTasks>
     );
   }
 }

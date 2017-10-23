@@ -1,8 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
+import { InteractionManager } from 'react-native';
 
-import { View, Screen } from '../atoms';
+import { DeferExpensiveTasks, View, Screen } from '../atoms';
 import { HelpBlock } from '../blocks';
 
 const TERMS = [
@@ -174,12 +175,30 @@ const TERMS = [
   },
 ];
 
-export default class HelpScreen extends Component<{}> {
+type State = {
+  ready: boolean,
+};
+
+export default class HelpScreen extends Component<{}, State> {
+  state = {
+    ready: false,
+  };
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ ready: true });
+    });
+  }
+
   render() {
     return (
-      <Screen>
-        <View>{TERMS.map((bag, idx) => <HelpBlock key={idx} {...bag} />)}</View>
-      </Screen>
+      <DeferExpensiveTasks>
+        <Screen>
+          <View>
+            {TERMS.map((bag, idx) => <HelpBlock key={idx} {...bag} />)}
+          </View>
+        </Screen>
+      </DeferExpensiveTasks>
     );
   }
 }

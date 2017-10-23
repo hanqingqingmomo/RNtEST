@@ -22,6 +22,7 @@ export { default as ContactGroupCell } from './ContactGroupCell';
 export { default as Count } from './Count';
 export { default as CursorBasedFetech } from './CursorBasedFetch';
 export { default as DateCard } from './DateCard';
+export { default as DeferExpensiveTasks } from './DeferExpensiveTasks';
 export { default as DropdownAlert } from './DropdownAlert';
 export { default as EventCard } from './EventCard';
 export { default as Fetch } from './Fetch';

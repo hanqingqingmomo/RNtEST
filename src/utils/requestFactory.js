@@ -7,14 +7,7 @@ import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { join } from '../utils/url';
 
-// const MOCK_API_URL = 'https://private-b42b8-ywca1.apiary-mock.com';
-
 let Store: any = null;
-
-// type Cursor = {
-//   next: ?number,
-//   limit?: number,
-// };
 
 export type Request = {
   url: string,

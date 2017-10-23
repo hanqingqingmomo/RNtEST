@@ -62,7 +62,7 @@ class UserProfileScreen extends Component<Props> {
           this.props.navigation.navigate('ChangePasswordScreen');
           break;
         case 'Terms and conditions':
-          this.props.navigation.navigate('TermsScreen');
+          this.props.navigation.navigate('TermsAndConditionsScreen');
           break;
         case 'Privacy Policy':
           this.props.navigation.navigate('PrivacyScreen');
