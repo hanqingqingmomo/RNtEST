@@ -40,3 +40,4 @@ export { default as UserSettingsScreen } from './UserSettingsScreen';
 export { default as PostEditorScreen } from './PostEditorScreen';
 export { default as TermsScreen } from './TermsScreen';
 export { default as PrivacyScreen } from './PrivacyScreen';
+export { default as PinnedPostsScreen } from './PinnedPostsScreen';

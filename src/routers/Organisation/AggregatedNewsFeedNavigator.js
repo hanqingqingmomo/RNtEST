@@ -5,6 +5,7 @@ import {
   AggregatedNewsFeedScreen,
   CommunityCenterScreen,
   MemberProfileScreen,
+  PinnedPostsScreen,
   PostDetailScreen,
   PostEditorScreen,
 } from '../../screens';
@@ -18,6 +19,9 @@ export default StackNavigator({
     navigationOptions: {
       title: 'Community',
     },
+  },
+  PinnedPostsScreen: {
+    screen: PinnedPostsScreen,
   },
   PostDetailScreen: {
     screen: PostDetailScreen,

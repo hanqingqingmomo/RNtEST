@@ -40,6 +40,11 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
     return data ? (
       <PinnedPost
         data={data}
+        onSeeAll={() => {
+          this.props.navigation.navigate('PinnedPostsScreen', {
+            communityId: this.props.communityId,
+          });
+        }}
         onPress={data => {
           this.props.navigation.navigate('PostDetailScreen', {
             postId: data.id,

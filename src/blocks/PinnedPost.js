@@ -7,9 +7,15 @@ import { Image, TableView, Text, View } from '../atoms';
 import { type Post } from '../Types';
 import { parseTextContent } from '../utils/text';
 
-type Props = { data: Post, onPress: (data: Post) => void };
+const { Table, Section, Cell, HeaderWithLink } = TableView;
 
-function AvatarOrAttachment(props: Post) {
+type Props = {
+  data: Post,
+  onPress: (data: Post) => void,
+  onSeeAll: Function,
+};
+
+function AvatarOrAttachment(props: Post): React$Element<*> {
   const uri =
     props.attachment && props.attachment.type.includes('image')
       ? props.attachment.url
@@ -20,9 +26,17 @@ function AvatarOrAttachment(props: Post) {
 
 export default function PinnedPost(props: Props) {
   return (
-    <TableView.Table>
-      <TableView.Section header="Pinned Items">
-        <TableView.Cell
+    <Table>
+      <Section
+        headerComponent={
+          <HeaderWithLink
+            title="Pinned Items"
+            link="See all"
+            onPress={props.onSeeAll}
+          />
+        }
+      >
+        <Cell
           cellStyle="Basic"
           contentContainerStyle={{ paddingTop: 15, paddingBottom: 15 }}
           image={
@@ -40,8 +54,8 @@ export default function PinnedPost(props: Props) {
           }
           onPress={() => props.onPress(props.data)}
         />
-      </TableView.Section>
-    </TableView.Table>
+      </Section>
+    </Table>
   );
 }
 
