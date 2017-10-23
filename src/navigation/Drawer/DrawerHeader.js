@@ -3,45 +3,38 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import {
-  Button,
-  Text,
-  View,
-  Icon,
-  CenterView,
-  TouchableOpacity,
-} from '../../atoms';
+import { Button, Image, TouchableOpacity, Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
-
-const communityTitle = 'YWCA';
 
 type Props = {
   onDonateButtonPress: () => void,
   onOrganisationTilePress: () => void,
+  data?: {
+    name: string,
+    profile_photo: string,
+  },
 };
 
 const DrawerHeader = ({
   onOrganisationTilePress,
   onDonateButtonPress,
+  data,
 }: Props) => (
   <View style={styles.container}>
-    <TouchableOpacity onPress={onOrganisationTilePress}>
-      <View style={styles.logoTile}>
-        <CenterView
-          style={{
-            width: 40,
-            height: 40,
-            backgroundColor: 'white',
-            borderRadius: 4,
-          }}
-        >
-          <Icon name="ywca" color="orange" size={32} />
-        </CenterView>
-        <Text color="white" size={15} style={styles.title} weight="600">
-          {communityTitle}
-        </Text>
-      </View>
-    </TouchableOpacity>
+    {data && (
+      <TouchableOpacity onPress={onOrganisationTilePress}>
+        <View style={styles.logoTile}>
+          <Image
+            source={{ uri: data.profile_photo }}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <Text color="white" size={15} style={styles.title} weight="600">
+            {data.name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    )}
     <Button
       color={getColor('orange')}
       onPress={onDonateButtonPress}
@@ -70,9 +63,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    borderRadius: 3,
-    width: 45,
-    height: 45,
+    borderRadius: 4,
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
   },
   title: {
     flexGrow: 1,
