@@ -158,6 +158,7 @@ export default class MainNavigator extends Component<{}, State> {
         <DrawerLayout
           ref={this.drawerRef}
           useNativeAnimations
+          // drawerLockMode="locked-closed"
           drawerWidth={Math.min(Dimensions.get('window').width - 50, 300)}
           drawerPosition={DrawerLayout.positions.Left}
           renderNavigationView={this.renderNavigationView}
