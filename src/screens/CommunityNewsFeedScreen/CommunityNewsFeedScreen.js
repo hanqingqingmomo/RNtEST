@@ -1,19 +1,20 @@
 // @flow
 
 import React, { Component } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 
 import {
   ActivityIndicator,
+  Button,
   CenterView,
   CursorBasedFetech,
-  Text,
   View,
 } from '../../atoms';
 import { NewsFeedItem, PinnedPost } from '../../blocks';
 import NewsFeedConversation from './../AggregatedNewsFeedScreen/NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
 import { type Post } from '../../Types';
+import { getColor } from '../../utils/color';
 
 type Props = {
   communityId: string,
@@ -21,6 +22,37 @@ type Props = {
   navigateToPost: Object => void,
   reloadCommunity: Function,
 };
+
+function Footer(props) {
+  if (props.hidden === true) {
+    return null;
+  }
+
+  return (
+    <View
+      style={{
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {props.refreshing ? (
+        <CenterView>
+          <ActivityIndicator />
+        </CenterView>
+      ) : (
+        <Button
+          title="Load more"
+          size="xs"
+          color={getColor('orange')}
+          textColor="white"
+          onPress={props.onPress}
+          disabled={props.moreAvailable === false}
+        />
+      )}
+    </View>
+  );
+}
 
 export default class CommunityNewsFeedScreen extends Component<Props> {
   keyExtractor = (item: Post) => item.id.toString() + Math.random();
@@ -55,39 +87,41 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, pinnedPost, loading, batch, requestNextBatch, fetch }) => {
-          if (loading) {
-            return (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            );
-          }
+        {({
+          data,
+          loading,
+          requestNext,
+          refetch,
+          endReached,
+          refresh,
+          firstLoad,
+        }) => {
           return (
-            <View style={{ flex: 1 }}>
-              <NewsFeedConversation
-                onPress={() => {
-                  this.props.navigation.navigate('PostEditorScreen');
-                }}
-              />
-              {data && data.length > 0 ? (
-                <View style={styles.itemsContainer}>
-                  <View style={styles.itemsContainer}>
-                    <FlatList
-                      data={data}
-                      renderItem={this.renderItem}
-                      keyExtractor={this.keyExtractor}
-                      onEndReached={requestNextBatch}
-                      ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
-                    />
-                  </View>
+            <FlatList
+              data={data}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              eonEndReached={undefined}
+              refreshControl={
+                <RefreshControl refreshing={firstLoad} onRefresh={refresh} />
+              }
+              ListHeaderComponent={
+                <View style={{ marginBottom: 10 }}>
+                  <NewsFeedConversation
+                    onPress={() =>
+                      this.props.navigation.navigate('PostEditorScreen')}
+                  />
                 </View>
-              ) : (
-                <View style={styles.textContainer}>
-                  <Text style={styles.text}>There is no content.</Text>
-                </View>
-              )}
-            </View>
+              }
+              ListFooterComponent={
+                <Footer
+                  hidden={data === null}
+                  moreAvailable={endReached === false}
+                  refreshing={loading && firstLoad === false}
+                  onPress={requestNext}
+                />
+              }
+            />
           );
         }}
       </CursorBasedFetech>

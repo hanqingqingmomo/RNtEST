@@ -1,15 +1,14 @@
 // @flow
 
 import React, { Component } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 
 import {
   ActivityIndicator,
+  Button,
   CenterView,
   CursorBasedFetech,
   ShadowView,
-  Screen,
-  Text,
   View,
 } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
@@ -17,12 +16,44 @@ import FriendInvitationWidget from './FriendInvitationWidget';
 import NewsFeedHeader from './NewsFeedHeader';
 import NewsFeedConversation from './NewsFeedConversation';
 import { makeReadAggregatedFeedRq } from '../../utils/requestFactory';
+import { getColor } from '../../utils/color';
 
 function NavigatorHeader(props) {
   return (
     <ShadowView radius={0} style={{ paddingTop: 20, backgroundColor: 'white' }}>
       <NewsFeedHeader openDrawer={props.screenProps.openDrawer} />
     </ShadowView>
+  );
+}
+
+function Footer(props) {
+  if (props.hidden === true) {
+    return null;
+  }
+
+  return (
+    <View
+      style={{
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {props.refreshing ? (
+        <CenterView>
+          <ActivityIndicator />
+        </CenterView>
+      ) : (
+        <Button
+          title="Load more"
+          size="xs"
+          color={getColor('orange')}
+          textColor="white"
+          onPress={props.onPress}
+          disabled={props.moreAvailable === false}
+        />
+      )}
+    </View>
   );
 }
 
@@ -50,47 +81,46 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
 
   render() {
     const { url, options } = makeReadAggregatedFeedRq();
-
     return (
       <CursorBasedFetech url={url} options={options}>
-        {({ data, loading, batch, requestNextBatch, refetch }) => {
-          if (loading) {
-            return (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            );
-          }
-
+        {({
+          data,
+          loading,
+          requestNext,
+          refetch,
+          endReached,
+          refresh,
+          firstLoad,
+        }) => {
           return (
-            <Screen fill>
-              <NewsFeedConversation
-                onPress={() =>
-                  this.props.navigation.navigate('PostEditorScreen')}
-              />
-              {data && data.length > 0 ? (
-                <View style={styles.itemsContainer}>
-                  <FlatList
-                    ListHeaderComponent={
-                      <FriendInvitationWidget
-                        openModal={
-                          this.props.screenProps.openFriendsInitationModal
-                        }
-                      />
-                    }
-                    data={data}
-                    renderItem={({ item }) =>
-                      this.renderItem({ item, refetch })}
-                    keyExtractor={this.keyExtractor}
-                    onEndReached={requestNextBatch}
+            <FlatList
+              data={data}
+              keyExtractor={this.keyExtractor}
+              renderItem={({ item }) => this.renderItem({ item, refetch })}
+              refreshControl={
+                <RefreshControl refreshing={firstLoad} onRefresh={refresh} />
+              }
+              ListHeaderComponent={
+                <View style={{ marginBottom: 10 }}>
+                  <NewsFeedConversation
+                    onPress={() =>
+                      this.props.navigation.navigate('PostEditorScreen')}
+                  />
+                  <FriendInvitationWidget
+                    openModal={this.props.screenProps.openFriendsInitationModal}
                   />
                 </View>
-              ) : (
-                <View style={styles.textContainer}>
-                  <Text style={styles.text}>There is no content.</Text>
-                </View>
-              )}
-            </Screen>
+              }
+              ListFooterComponent={
+                <Footer
+                  hidden={data === null}
+                  moreAvailable={endReached === false}
+                  refreshing={loading && firstLoad === false}
+                  onPress={requestNext}
+                />
+              }
+              eonEndReached={requestNext}
+            />
           );
         }}
       </CursorBasedFetech>
@@ -102,10 +132,6 @@ const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 10,
     paddingBottom: 10,
-  },
-  itemsContainer: {
-    paddingTop: 10,
-    flex: 1,
   },
   text: {
     textAlign: 'center',
