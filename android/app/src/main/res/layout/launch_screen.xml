@@ -6,7 +6,7 @@
     android:width="124dp"
     android:height="38dp"
     android:layout_gravity="center"
-    android:background="#FC612E"
+    android:background="#fd5a1e"
     android:src="@mipmap/launch_screen"
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"

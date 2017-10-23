@@ -11,6 +11,8 @@ import {
   InvitationCodeScreen,
   LandingScreen,
   PasswordResetScreen,
+  PrivacyScreen,
+  TermsScreen,
 } from '../screens';
 
 export default StackNavigator(
@@ -50,6 +52,18 @@ export default StackNavigator(
       screen: PasswordResetScreen,
       navigationOptions: {
         headerTitle: 'Password Reset',
+      },
+    },
+    TermsScreen: {
+      screen: TermsScreen,
+      navigationOptions: {
+        headerTitle: 'Terms and conditions',
+      },
+    },
+    PrivacyScreen: {
+      screen: PrivacyScreen,
+      navigationOptions: {
+        headerTitle: 'Privacy Policy',
       },
     },
   },

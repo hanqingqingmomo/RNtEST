@@ -266,6 +266,17 @@ export const makeReadCommunityFeedRq = (communityId: string | number) =>
     },
   });
 
+export const makeReadPinnedItemsRq = (communityId: string | number) =>
+  inject({
+    url: `${join(
+      Config.API_URL,
+      `/v1/content_objects/posts/${communityId}?pinned_only=true`
+    )}`,
+    options: {
+      method: 'GET',
+    },
+  });
+
 export const makeReadPostReq = (postId: string | number) =>
   inject({
     url: join(Config.API_URL, `/v1/content_objects/${postId}`),

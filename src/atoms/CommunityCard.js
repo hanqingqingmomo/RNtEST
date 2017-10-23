@@ -41,7 +41,7 @@ export default class CommunityCard extends Component<P> {
             />
             <View style={styles.textContainer}>
               <Text
-                style={css('color', '#FC612D')}
+                style={css('color', getColor('orange'))}
                 size={15}
                 weight="500"
                 lineHeight={18}

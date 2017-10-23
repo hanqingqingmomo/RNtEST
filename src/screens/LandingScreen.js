@@ -39,7 +39,4 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     paddingBottom: 48,
   },
-  marginBottom: {
-    marginBottom: 15,
-  },
 });

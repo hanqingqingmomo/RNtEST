@@ -1,32 +1,63 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { AsyncStorage, StyleSheet } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
 import { View, Icon, Button, Text } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
+const key = 'friendInvitationWidgetWasClosed';
+
 type State = {
   isCollapsed: boolean,
+  wasClosed: boolean,
 };
 
 export default class FriendInvitationWidget extends Component<{}, State> {
   state = {
     isCollapsed: false,
+    wasClosed: true,
+  };
+
+  async componentDidMount() {
+    const wasClosed = await AsyncStorage.getItem(key);
+
+    this.setState({
+      wasClosed,
+    });
+  }
+
+  onClosePress = () => {
+    this.setState({
+      isCollapsed: true,
+    });
+
+    AsyncStorage.setItem(key, '"true"');
+  };
+
+  onOpenPress = () => {
+    this.props.openModal();
+    this.onClosePress();
   };
 
   render() {
+    const { wasClosed, isCollapsed } = this.state;
+
+    if (wasClosed) {
+      return null;
+    }
+
     return (
-      <Collapsible collapsed={this.state.isCollapsed}>
+      <Collapsible collapsed={isCollapsed}>
         <View style={styles.inviteContainer}>
           <Button.Icon
             iconName="close-bold"
             iconColor={getColor('gray')}
             size="lg"
             style={styles.closeBtn}
-            onPress={() => this.setState({ isCollapsed: true })}
+            onPress={this.onClosePress}
           />
           <Icon
             name="invite-feed"
@@ -52,13 +83,14 @@ export default class FriendInvitationWidget extends Component<{}, State> {
             color={getColor('orange')}
             textColor={getColor('white')}
             size="lg"
-            onPress={this.props.openModal}
+            onPress={this.onOpenPress}
           />
         </View>
       </Collapsible>
     );
   }
 }
+
 const styles = StyleSheet.create({
   inviteContainer: {
     alignItems: 'center',

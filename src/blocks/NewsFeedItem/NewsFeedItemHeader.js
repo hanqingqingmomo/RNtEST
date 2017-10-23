@@ -14,6 +14,7 @@ import {
   TouchableItem,
   View,
 } from '../../atoms';
+import { getColor } from '../../utils/color';
 import type { IconName, CommunitySimple, User } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq } from '../../utils/requestFactory';
@@ -153,7 +154,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
                 <View style={{ backgroundColor: 'white' }}>
                   <Pill
                     title={item.name}
-                    color={item.disabled ? '#B0BEC5' : '#FC612D'}
+                    color={item.disabled ? '#B0BEC5' : getColor('orange')}
                   />
                 </View>
               </TouchableItem>

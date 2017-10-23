@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { ActivityIndicator } from '../atoms';
 import { LaunchScreenBackground } from '../blocks';
 
-export default class LandingScreen extends Component<{}> {
+export default class BootScreen extends Component<{}> {
   render() {
     return (
       <LaunchScreenBackground>
@@ -18,7 +18,7 @@ export default class LandingScreen extends Component<{}> {
 
 const styles = StyleSheet.create({
   activityIndicator: {
-    top: '50%',
-    marginTop: 128,
+    marginTop: 'auto',
+    paddingBottom: 60,
   },
 });

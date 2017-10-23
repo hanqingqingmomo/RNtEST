@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { BlackPortal, WhitePortal } from 'react-native-portal';
+import { getColor } from '../utils/color';
 
 import {
   ActivityIndicator,
@@ -49,7 +50,7 @@ function NavigatorHeader(props) {
       onPress={props.screenProps.openDrawer}
       style={{ marginLeft: 10 }}
     >
-      <Icon name="ywca" size={33} color="orange" />
+      <Icon name="menu-1" size={20} color={getColor('orange')} />
     </TouchableOpacity>
   );
 }

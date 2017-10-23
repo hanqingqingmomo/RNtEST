@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, Text, TouchableOpacity } from './index';
+import { getColor } from '../utils/color';
 
 type Item = {
   label: string,
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   },
   tabActive: {
     borderBottomWidth: 3,
-    borderBottomColor: '#FC612D',
+    borderBottomColor: getColor('orange'),
   },
   content: {
     flexGrow: 1,

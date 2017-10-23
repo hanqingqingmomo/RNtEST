@@ -23,8 +23,8 @@ export default class Section extends Component<Props> {
     return (
       <OriginalSection
         sectionTintColor="#F4F5F7"
-        {...bag}
         headerComponent={this.renderHeader(header)}
+        {...bag}
       />
     );
   }

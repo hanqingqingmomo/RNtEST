@@ -11,6 +11,7 @@ import {
   CenterView,
   TouchableOpacity,
 } from '../../atoms';
+import { getColor } from '../../utils/color';
 
 const communityTitle = 'YWCA';
 
@@ -42,7 +43,7 @@ const DrawerHeader = ({
       </View>
     </TouchableOpacity>
     <Button
-      color="#FC612D"
+      color={getColor('orange')}
       onPress={onDonateButtonPress}
       size="sm"
       textColor="white"

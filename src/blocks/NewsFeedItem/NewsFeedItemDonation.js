@@ -11,6 +11,7 @@ import {
   Text,
   View,
 } from '../../atoms';
+import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
 type DonorProps = {
@@ -66,7 +67,7 @@ export default class NewsFeedItemDonation extends Component<P> {
             <Button
               title="Donate"
               size="sm"
-              color="#FC612D"
+              color={getColor('orange')}
               textColor="white"
               onPress={this.props.onDonatePress}
             />

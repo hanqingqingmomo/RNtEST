@@ -4,6 +4,7 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import { NavigationIconButton } from '../atoms';
+import { getColor } from '../utils/color';
 import {
   InvitationCodeScreen,
   PrivacyScreen,
@@ -14,7 +15,11 @@ import {
 
 function DismissModalButton({ onPress, ...a }) {
   return (
-    <NavigationIconButton name="close" color="#fc612d" onPress={onPress} />
+    <NavigationIconButton
+      name="close"
+      color={getColor('orange')}
+      onPress={onPress}
+    />
   );
 }
 

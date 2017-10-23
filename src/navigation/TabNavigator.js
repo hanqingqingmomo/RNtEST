@@ -2,11 +2,12 @@
 
 import merge from 'lodash.merge';
 import { StyleSheet } from 'react-native';
-
 import {
   TabNavigator as ReactNavigationTabNavigator,
   TabBarTop,
 } from 'react-navigation';
+
+import { getColor } from '../utils/color';
 
 type ScreenProps = {
   screen: any,
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   indicatorStyle: {
     borderBottomWidth: 3,
-    borderColor: '#FC612D',
+    borderColor: getColor('orange'),
     borderStyle: 'solid',
   },
 });

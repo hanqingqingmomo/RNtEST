@@ -43,7 +43,7 @@ export default class EmailAuthenticationBlock extends Component<Props> {
             <Icon
               name="mpwr-logo"
               color="orange"
-              size={80}
+              size={64}
               style={styles.icon}
             />
 
@@ -82,7 +82,7 @@ export default class EmailAuthenticationBlock extends Component<Props> {
               color={getColor('orange')}
               textColor={getColor('white')}
               onPress={formProps.handleSubmit}
-              title={this.props.loading ? 'Signing In...' : 'Sign In'}
+              title={this.props.loading ? 'Logging In...' : 'Log In'}
             />
           </View>
         )}
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
     top: -20,
   },
   icon: {
-    marginTop: 20,
+    marginVertical: 20,
   },
 });

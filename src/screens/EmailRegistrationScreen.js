@@ -97,7 +97,7 @@ class EmailRegistrationScreen extends Component<{}> {
                 <Icon
                   color="orange"
                   name="mpwr-logo"
-                  size={80}
+                  size={64}
                   style={styles.icon}
                 />
 
@@ -166,7 +166,9 @@ class EmailRegistrationScreen extends Component<{}> {
                   <Text
                     style={styles.specialText}
                     weight="bold"
-                    onPress={() => {}}
+                    onPress={() => {
+                      this.props.navigation.navigate('TermsScreen');
+                    }}
                   >
                     Terms
                   </Text>
@@ -174,7 +176,9 @@ class EmailRegistrationScreen extends Component<{}> {
                   <Text
                     style={styles.specialText}
                     weight="bold"
-                    onPress={() => {}}
+                    onPress={() => {
+                      this.props.navigation.navigate('PrivacyScreen');
+                    }}
                   >
                     Privacy Policy
                   </Text>
@@ -214,7 +218,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   icon: {
-    alignSelf: 'flex-end',
-    marginTop: 20,
+    marginVertical: 20,
   },
 });

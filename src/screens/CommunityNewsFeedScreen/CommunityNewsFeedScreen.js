@@ -68,20 +68,6 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
     </View>
   );
 
-  renderPinnedPost(data: Post) {
-    return data ? (
-      <PinnedPost
-        data={data}
-        onPress={data => {
-          this.props.navigation.navigate('PostDetailScreen', {
-            postId: data.id,
-            reloadList: this.props.reloadCommunity,
-          });
-        }}
-      />
-    ) : null;
-  }
-
   render() {
     const { url, options } = makeReadCommunityFeedRq(this.props.communityId);
 
@@ -111,6 +97,20 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
                     onPress={() =>
                       this.props.navigation.navigate('PostEditorScreen')}
                   />
+                  <PinnedPost
+                    communityId={this.props.communityId}
+                    onSeeAll={() => {
+                      this.props.navigation.navigate('PinnedPostsScreen', {
+                        communityId: this.props.communityId,
+                      });
+                    }}
+                    onPress={data => {
+                      this.props.navigation.navigate('PostDetailScreen', {
+                        postId: data.id,
+                        reloadList: this.props.reloadCommunity,
+                      });
+                    }}
+                  />
                 </View>
               }
               ListFooterComponent={
@@ -130,10 +130,6 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  itemsContainer: {
-    paddingTop: 10,
-    flex: 1,
-  },
   item: {
     paddingHorizontal: 10,
     paddingBottom: 10,

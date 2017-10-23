@@ -76,6 +76,7 @@ export default class DonationAppealScreen extends Component<{}> {
             <Screen fill>
               <CommunityHeader
                 title="The Future is Female"
+                subtitle="Help us in creating a future where ALL women thrive. Make a donation today."
                 profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
                 coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
               />
