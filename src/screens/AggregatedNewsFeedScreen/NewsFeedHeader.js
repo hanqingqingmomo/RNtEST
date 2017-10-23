@@ -4,13 +4,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Icon, SearchBox, View, TouchableOpacity } from '../../atoms';
+import { getColor } from '../../utils/color';
 
 export default function NewsFeedHeader(props) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <TouchableOpacity onPress={props.openDrawer}>
-          <Icon name="ywca" size={33} color="orange" />
+          <Icon name="menu-1" size={20} color={getColor('orange')} />
         </TouchableOpacity>
       </View>
       <View style={styles.searchContainer}>
