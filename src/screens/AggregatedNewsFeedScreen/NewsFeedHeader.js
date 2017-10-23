@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Icon, SearchBox, View, TouchableOpacity } from '../../atoms';
+import { Icon, SearchBox, Text, View, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 export default function NewsFeedHeader(props) {
@@ -14,13 +14,16 @@ export default function NewsFeedHeader(props) {
           <Icon name="menu-1" size={20} color={getColor('orange')} />
         </TouchableOpacity>
       </View>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <SearchBox
           onChangeText={() => {}}
           placeholder={'Search...'}
           value={'Search...'}
         />
-      </View>
+      </View> */}
+      {/* <View style={styles.logoContainer}>
+        <Icon color="orange" name="mpwr-logo" size={44} />
+      </View> */}
     </View>
   );
 }
@@ -39,6 +42,11 @@ const styles = StyleSheet.create({
   },
 
   searchContainer: {
+    flex: 8,
+    marginRight: 10,
+  },
+
+  logoContainer: {
     flex: 8,
     marginRight: 10,
   },
