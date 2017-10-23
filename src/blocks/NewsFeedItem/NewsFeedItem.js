@@ -21,6 +21,7 @@ type Props = Post & {
   navigation: Object,
   refetch?: Function,
   attachment?: Attachment,
+  isDetail?: boolean,
 };
 
 export default class NewsFeedItem extends Component<Props> {
@@ -64,14 +65,41 @@ export default class NewsFeedItem extends Component<Props> {
     }
   };
 
+  renderContent() {
+    const { text_content, created_at, isDetail } = this.props;
+
+    return (
+      <View>
+        {(this.hasAttachment && this.attachment.type === 'link') ||
+        !this.hasAttachment ? (
+          <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+            {isDetail ? text_content : parseTextContent(text_content, 120)}
+          </Text>
+        ) : null}
+
+        {this.hasAttachment && this.attachment.type.includes('image') ? (
+          <NewsFeedItemImage
+            {...this.attachment}
+            title={text_content}
+            detail={isDetail}
+          />
+        ) : (
+          <NewsFeedItemAttachment {...this.attachment} />
+        )}
+
+        {created_at ? (
+          <NewsFeedItemPostedTime date={created_at} style={styles.postedTime} />
+        ) : null}
+      </View>
+    );
+  }
+
   render() {
     const {
       id,
-      created_at,
       donation,
       event,
       isNew,
-      text_content,
       author,
       replies,
       comments_count,
@@ -79,41 +107,28 @@ export default class NewsFeedItem extends Component<Props> {
       liked,
       navigation,
       refetch,
+      isDetail,
     } = this.props;
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
           <NewsFeedItemHeader {...this.props} refetch={refetch} />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('PostDetailScreen', {
-                postId: id,
-              });
-            }}
-          >
-            <View>
-              {(this.hasAttachment && this.attachment.type === 'link') ||
-              !this.hasAttachment ? (
-                <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-                  {parseTextContent(text_content, 120)}
-                </Text>
-              ) : null}
 
-              {this.hasAttachment && this.attachment.type.includes('image') ? (
-                <NewsFeedItemImage {...this.attachment} title={text_content} />
-              ) : (
-                <NewsFeedItemAttachment {...this.attachment} />
-              )}
-
-              {created_at ? (
-                <NewsFeedItemPostedTime
-                  date={created_at}
-                  style={styles.postedTime}
-                />
-              ) : null}
-            </View>
-          </TouchableOpacity>
+          {isDetail ? (
+            this.renderContent()
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('PostDetailScreen', {
+                  postId: id,
+                  reloadList: refetch,
+                });
+              }}
+            >
+              {this.renderContent()}
+            </TouchableOpacity>
+          )}
 
           {author ? (
             <NewsFeedItemAuthor

@@ -12,7 +12,7 @@ type P = {
   style?: Object | number,
 };
 
-export default class NewsFeedItemHeader extends Component<P> {
+export default class NewsFeedItemPostedTime extends Component<P> {
   formatDate(date: Date) {
     const diffInMinutes = differenceInMinutes(new Date(), date);
     const diff = distanceInWordsToNow(new Date(date));

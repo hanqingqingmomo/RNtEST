@@ -12,12 +12,11 @@ import {
   Text,
   View,
 } from '../atoms';
-import { NewsFeedItemDetail, CommentList, CommentInput } from '../blocks';
+import { NewsFeedItem, CommentList, CommentInput } from '../blocks';
 import { makeReadPostWithCommentsRq } from '../utils/requestFactory';
 
 type P = {
   navigation: any,
-  realoadList: Function,
 };
 
 type S = {
@@ -62,7 +61,7 @@ export default class PostDetailScreen extends Component<P, S> {
   };
 
   render() {
-    const { navigation, realoadList } = this.props;
+    const { navigation } = this.props;
     const { replyingTo } = this.state;
 
     const readPostWithCommentsRq = makeReadPostWithCommentsRq(
@@ -100,9 +99,10 @@ export default class PostDetailScreen extends Component<P, S> {
                     onReplyPress={this.onReplyPress}
                     onMorePress={this.onMorePress}
                     ListHeaderComponent={
-                      <NewsFeedItemDetail
+                      <NewsFeedItem
                         {...data}
                         navigation={this.props.navigation}
+                        isDetail
                       />
                     }
                     reloadPost={fetch}
