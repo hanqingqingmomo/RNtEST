@@ -31,7 +31,7 @@ const INITIAL_VALUES = {
   email: '',
   password: '',
   password_confirmation: '',
-  photo: null,
+  profile_photo: null,
 };
 
 const RULES = {
@@ -72,9 +72,9 @@ class EmailRegistrationScreen extends Component<{}> {
   };
 
   onAvatarChange = (setFieldValue: (string, any) => void) => (
-    photo: string
+    profile_photo: string
   ) => {
-    setFieldValue('photo', photo);
+    setFieldValue('profile_photo', profile_photo);
   };
 
   onPasswordChange = (setFieldValue: (name: string, value: string) => void) => (
@@ -111,7 +111,7 @@ class EmailRegistrationScreen extends Component<{}> {
 
                 <View style={styles.picker}>
                   <AvatarPicker
-                    imageURI={form.values.photo}
+                    imageURI={form.values.profile_photo}
                     onChange={this.onAvatarChange(form.setFieldValue)}
                   />
                 </View>

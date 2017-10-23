@@ -99,7 +99,7 @@ export const makeSignupRq = (body: *) =>
     url: join(Config.API_URL, '/v1/members/signup'),
     options: {
       method: 'POST',
-      body: makeFormData(body, ['photo']),
+      body: makeFormData(body, ['profile_photo']),
       headers: {
         'content-type': 'multipart/form-data',
       },
