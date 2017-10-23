@@ -7,12 +7,26 @@ import { HelpBlock } from '../blocks';
 
 const help = [
   {
-    title: 'Did someone insult you?',
-    text: <Text>Call us or visit our page </Text>,
+    title: 'How to sign in:',
+    text:
+      'https://poweredbyaction.zendesk.com/hc/en-us/articles/216805898-How-to-Access-PbA',
   },
   {
-    title: 'Having a bad day?',
-    text: <Text>Someone's day is worse</Text>,
+    title: 'Mobile Embedded Posting:',
+    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002308931',
+  },
+  {
+    title: 'Email Notifications:',
+    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/217509198',
+  },
+  {
+    title:
+      "Pinned posts (we're going to need a screenshot of mobile pinned post):",
+    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/219495368',
+  },
+  {
+    title: 'Donation:',
+    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002319692',
   },
 ];
 
