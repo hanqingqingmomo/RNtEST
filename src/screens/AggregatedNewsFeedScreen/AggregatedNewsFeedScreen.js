@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import {
   ActivityIndicator,
@@ -12,11 +12,16 @@ import {
   Text,
   View,
 } from '../../atoms';
-import { NewsFeedItem } from '../../blocks';
+import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
 import FriendInvitationWidget from './FriendInvitationWidget';
 import NewsFeedHeader from './NewsFeedHeader';
 import NewsFeedConversation from './NewsFeedConversation';
 import { makeReadAggregatedFeedRq } from '../../utils/requestFactory';
+
+type Props = {
+  navigation: any,
+  screenProps: any,
+};
 
 function NavigatorHeader(props) {
   return (
@@ -26,26 +31,9 @@ function NavigatorHeader(props) {
   );
 }
 
-export default class AggregatedNewsFeedScreen extends Component<{}> {
+export default class AggregatedNewsFeedScreen extends Component<Props> {
   static navigationOptions = {
     header: NavigatorHeader,
-  };
-
-  keyExtractor = item => {
-    return item.id.toString() + Math.random();
-  };
-
-  renderItem = ({ item, refetch }: any): React$Element<*> => {
-    return (
-      <View style={styles.item}>
-        <NewsFeedItem
-          {...item}
-          navigation={this.props.navigation}
-          refetch={refetch}
-          onDelete={refetch}
-        />
-      </View>
-    );
   };
 
   render() {
@@ -54,23 +42,18 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, loading, batch, requestNextBatch, refetch }) => {
-          if (loading) {
+          if (loading === false) {
             return (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            );
-          }
-
-          return (
-            <Screen fill>
-              <NewsFeedConversation
-                onPress={() =>
-                  this.props.navigation.navigate('PostEditorScreen')}
-              />
-              {data && data.length > 0 ? (
-                <View style={styles.itemsContainer}>
-                  <FlatList
+              <Screen fill>
+                <NewsFeedConversation
+                  onPress={() =>
+                    this.props.navigation.navigate('PostEditorScreen')}
+                />
+                {data && data.length > 0 ? (
+                  <NewsFeedList
+                    data={data}
+                    navigation={this.props.navigation}
+                    onEndReached={requestNextBatch}
                     ListHeaderComponent={
                       <FriendInvitationWidget
                         openModal={
@@ -78,20 +61,21 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
                         }
                       />
                     }
-                    data={data}
-                    renderItem={({ item }) =>
-                      this.renderItem({ item, refetch })}
-                    keyExtractor={this.keyExtractor}
-                    onEndReached={requestNextBatch}
                   />
-                </View>
-              ) : (
-                <View style={styles.textContainer}>
-                  <Text style={styles.text}>There is no content.</Text>
-                </View>
-              )}
-            </Screen>
-          );
+                ) : (
+                  <View style={styles.textContainer}>
+                    <Text style={styles.text}>There is no content.</Text>
+                  </View>
+                )}
+              </Screen>
+            );
+          } else {
+            return (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            );
+          }
         }}
       </CursorBasedFetech>
     );
@@ -99,14 +83,6 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
-  itemsContainer: {
-    paddingTop: 10,
-    flex: 1,
-  },
   text: {
     textAlign: 'center',
     fontWeight: '500',

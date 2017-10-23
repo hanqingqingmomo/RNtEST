@@ -15,17 +15,18 @@ type Props = {
 
 export default class NewsFeedList extends Component<Props> {
   render() {
-    console.log(this.props.navigation);
+    const { navigation, data, ...args } = this.props;
     return (
       <View style={styles.itemsContainer}>
         <FlatList
-          data={this.props.data}
+          data={data}
           keyExtractor={(item: CommunitySimple) => item.id}
           renderItem={({ item }) => (
             <View style={styles.item}>
-              <NewsFeedItem {...item} navigation={this.props.navigation} />
+              <NewsFeedItem {...item} navigation={navigation} />
             </View>
           )}
+          {...args}
         />
       </View>
     );
