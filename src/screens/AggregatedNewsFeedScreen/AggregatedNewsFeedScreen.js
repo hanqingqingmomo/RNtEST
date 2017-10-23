@@ -66,9 +66,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
             <Screen fill>
               <NewsFeedConversation
                 onPress={() =>
-                  this.props.navigation.navigate('PostEditorScreen', {
-                    onReturn: () => refetch(),
-                  })}
+                  this.props.navigation.navigate('PostEditorScreen')}
               />
               {data && data.length > 0 ? (
                 <View style={styles.itemsContainer}>

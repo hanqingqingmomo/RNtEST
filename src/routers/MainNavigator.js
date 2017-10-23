@@ -5,7 +5,7 @@ import { StatusBar, Dimensions } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
-import { View } from '../atoms';
+import { View, DropdownAlert } from '../atoms';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
 import DonationNavigator from './DonationNavigator';
 import HelpNavigator from './HelpNavigator';
@@ -16,6 +16,14 @@ import OrganisationProfileNavigator from './Organisation/OrganisationProfileNavi
 import PlaygroundNavigator from './playground';
 import UserProfileNavigator from './UserProfileNavigator';
 import UserSettingsNavigator from './UserSettingsNavigator';
+
+let ALERT = null;
+
+global.alertWithType = function(...args) {
+  if (ALERT) {
+    ALERT.alertWithType(...args);
+  }
+};
 
 const navigationItems: Array<NavigationItem> = [
   {
@@ -193,6 +201,7 @@ export default class MainNavigator extends Component<{}, State> {
         >
           {this.renderModalRoute()}
         </Modal>
+        <DropdownAlert ref={ref => (ALERT = ref)} />
       </View>
     );
   }

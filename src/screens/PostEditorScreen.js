@@ -6,7 +6,7 @@ import { WhitePortal, BlackPortal } from 'react-native-portal';
 
 import { selectUser } from '../redux/selectors';
 import type { User, LinkAttachment } from '../Types';
-import { Screen, NavigationTextButton, DropdownAlert, Fetch } from '../atoms';
+import { Screen, NavigationTextButton, Fetch } from '../atoms';
 import PostEditor from '../blocks/PostEditor/PostEditor';
 import { type AlertPayload } from '../atoms/DropdownAlert';
 import { makeCreatePostReq } from '../utils/requestFactory';
@@ -53,29 +53,20 @@ export default class PostEditorScreen extends Component<Props, State> {
     );
 
     const createPostRes = await fetch(createPostReq.url, createPostReq.options);
-    if (createPostRes.error) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
-          'error',
-          'Ooops',
-          (createPostRes.error.message: string)
-        );
-      }
-    } else if (this.dropdown) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
-          'success',
-          'Thanks!',
-          'Your post has been successfully created.'
-        );
-        this.props.navigation.state.params.onReturn();
-      }
-    }
-  };
 
-  onAlertClose = (data: AlertPayload) => {
-    if (data.type === 'success') {
+    if (createPostRes.error) {
+      global.alertWithType(
+        'error',
+        'Ooops',
+        (createPostRes.error.message: string)
+      );
+    } else {
       this.props.navigation.goBack();
+      global.alertWithType(
+        'success',
+        'Thanks!',
+        'Your post has been successfully created.'
+      );
     }
   };
 
@@ -123,11 +114,6 @@ export default class PostEditorScreen extends Component<Props, State> {
               communitiesSelection={this.state.communitiesSelection}
               onCommunitiesChange={this.onCommunitiesChange}
               onLinkScraped={this.onLinkScraped}
-            />
-
-            <DropdownAlert
-              ref={ref => (this.dropdown = ref)}
-              onClose={this.onAlertClose}
             />
           </Screen>
         )}

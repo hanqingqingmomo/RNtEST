@@ -67,9 +67,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
             <View style={{ flex: 1 }}>
               <NewsFeedConversation
                 onPress={() => {
-                  this.props.navigation.navigate('PostEditorScreen', {
-                    onReturn: () => fetch(),
-                  });
+                  this.props.navigation.navigate('PostEditorScreen');
                 }}
               />
               {data && data.length > 0 ? (
