@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { makeNewPasswordReq } from '../utils/requestFactory';
+import { makeChangePasswordReq } from '../utils/requestFactory';
 import {
   Button,
   DropdownAlert,
@@ -18,49 +18,58 @@ import { getColor } from '../utils/color';
 
 const INITIAL_VALUES = {
   password: '',
-  confirm_password: '',
+  confirmPassword: '',
 };
 
 type FormValues = typeof INITIAL_VALUES;
 
+type P = {
+  navigation: { goBack: Function },
+};
+
 const RULES = {
   password: 'required',
-  confirm_password: 'required',
+  confirmPassword: 'required',
 };
 
 const MESSAGES = {
-  password: 'Please enter password',
-  confirm_password: 'Please enter password',
+  password: 'Please enter new password',
+  confirmPassword: 'Please confirm your password',
 };
 
-export default class NewPasswordScreen extends Component<{}> {
-  dropdown = null;
+export default class ChangePasswordScreen extends Component<P> {
+  dropdownRef = null;
 
-  handleFormSubmit = fetch => async (values: FormValues) => {
-    if (values.password != values.confirm_password) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType('error', 'Ooops', 'Passwords must match');
+  handleFormSubmit = (fetch: Function) => async (values: FormValues) => {
+    if (values.password !== values.confirmPassword) {
+      if (this.dropdownRef) {
+        this.dropdownRef.alertWithType(
+          'error',
+          'Ooops',
+          'Passwords must match'
+        );
       }
       return;
     }
 
-    const newPasswordReq = makeNewPasswordReq(values.password);
-    const newPasswordRes = await fetch(
-      newPasswordReq.url,
-      newPasswordReq.options
+    const changePasswordReq = makeChangePasswordReq(values.password);
+
+    const changePasswordRes = await fetch(
+      changePasswordReq.url,
+      changePasswordReq.options
     );
 
-    if (newPasswordRes.error) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
+    if (changePasswordRes.error) {
+      if (this.dropdownRef) {
+        this.dropdownRef.alertWithType(
           'error',
           'Ooops',
-          (newPasswordRes.error.message: string)
+          changePasswordRes.error.message
         );
       }
-    } else if (this.dropdown) {
-      if (this.dropdown) {
-        this.dropdown.alertWithType(
+    } else if (this.dropdownRef) {
+      if (this.dropdownRef) {
+        this.dropdownRef.alertWithType(
           'success',
           'Success!',
           'Your password has been successfully changed.'
@@ -80,13 +89,13 @@ export default class NewPasswordScreen extends Component<{}> {
       <Screen fill>
         <View style={styles.container}>
           <Fetch manual>
-            {({ loading, data, error, fetch }) => (
+            {({ loading, fetch }: { loading: boolean, fetch: Function }) => (
               <Form
                 initialValues={INITIAL_VALUES}
                 rules={RULES}
                 messages={MESSAGES}
                 onSubmit={this.handleFormSubmit(fetch)}
-                render={formProps => (
+                render={(formProps: { handleSubmit: Function }) => (
                   <View flexDirection="column" style={styles.formContainer}>
                     <FormField
                       label="New Password"
@@ -95,7 +104,7 @@ export default class NewPasswordScreen extends Component<{}> {
                     />
                     <FormField
                       label="Confirm password"
-                      name="confirm_password"
+                      name="confirmPassword"
                       secureTextEntry
                     />
                     <Button
@@ -115,7 +124,7 @@ export default class NewPasswordScreen extends Component<{}> {
           </Fetch>
         </View>
         <DropdownAlert
-          ref={ref => (this.dropdown = ref)}
+          ref={ref => (this.dropdownRef = ref)}
           onClose={this.onAlertClose}
         />
       </Screen>

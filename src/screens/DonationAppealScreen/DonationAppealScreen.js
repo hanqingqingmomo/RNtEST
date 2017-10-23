@@ -75,7 +75,7 @@ export default class DonationAppealScreen extends Component<{}> {
           return (
             <Screen fill>
               <CommunityHeader
-                title="Child Care Assistance Program"
+                title="The Future is Female"
                 profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
                 coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
               />

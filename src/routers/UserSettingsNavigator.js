@@ -9,6 +9,7 @@ import {
   PrivacyScreen,
   TermsScreen,
   UserSettingsScreen,
+  ChangePasswordScreen,
 } from '../screens';
 
 function DismissModalButton({ onPress, ...a }) {
@@ -43,6 +44,12 @@ export default StackNavigator({
     screen: InvitationCodeScreen,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Invitation Code',
+    }),
+  },
+  ChangePasswordScreen: {
+    screen: ChangePasswordScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Change Password',
     }),
   },
 });
