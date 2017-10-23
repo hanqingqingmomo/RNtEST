@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import {
   ActivityIndicator,
@@ -10,7 +10,8 @@ import {
   Text,
   View,
 } from '../../atoms';
-import { NewsFeedItem, PinnedPost } from '../../blocks';
+import { PinnedPost } from '../../blocks';
+import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
 import NewsFeedConversation from './../AggregatedNewsFeedScreen/NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
 import { type Post } from '../../Types';
@@ -23,19 +24,6 @@ type Props = {
 };
 
 export default class CommunityNewsFeedScreen extends Component<Props> {
-  keyExtractor = (item: Post) => item.id.toString() + Math.random();
-
-  renderItem = ({ item }: { item: Post }) => (
-    <View style={styles.item}>
-      <NewsFeedItem
-        {...item}
-        navigation={this.props.navigation}
-        refetch={this.props.reloadCommunity}
-        onDelete={this.props.reloadCommunity}
-      />
-    </View>
-  );
-
   renderPinnedPost(data: Post) {
     return data ? (
       <PinnedPost
@@ -61,39 +49,35 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
     return (
       <CursorBasedFetech url={url} options={options}>
         {({ data, pinnedPost, loading, batch, requestNextBatch, fetch }) => {
-          if (loading) {
+          if (loading === false) {
+            return (
+              <View style={{ flex: 1 }}>
+                <NewsFeedConversation
+                  onPress={() => {
+                    this.props.navigation.navigate('PostEditorScreen');
+                  }}
+                />
+                {data && data.length > 0 ? (
+                  <NewsFeedList
+                    data={data}
+                    onEndReached={requestNextBatch}
+                    ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
+                    navigation={this.props.navigation}
+                  />
+                ) : (
+                  <View style={styles.textContainer}>
+                    <Text style={styles.text}>There is no content.</Text>
+                  </View>
+                )}
+              </View>
+            );
+          } else {
             return (
               <CenterView>
                 <ActivityIndicator />
               </CenterView>
             );
           }
-          return (
-            <View style={{ flex: 1 }}>
-              <NewsFeedConversation
-                onPress={() => {
-                  this.props.navigation.navigate('PostEditorScreen');
-                }}
-              />
-              {data && data.length > 0 ? (
-                <View style={styles.itemsContainer}>
-                  <View style={styles.itemsContainer}>
-                    <FlatList
-                      data={data}
-                      renderItem={this.renderItem}
-                      keyExtractor={this.keyExtractor}
-                      onEndReached={requestNextBatch}
-                      ListHeaderComponent={this.renderPinnedPost(pinnedPost)}
-                    />
-                  </View>
-                </View>
-              ) : (
-                <View style={styles.textContainer}>
-                  <Text style={styles.text}>There is no content.</Text>
-                </View>
-              )}
-            </View>
-          );
         }}
       </CursorBasedFetech>
     );
@@ -101,14 +85,6 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  itemsContainer: {
-    paddingTop: 10,
-    flex: 1,
-  },
-  item: {
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
   text: {
     textAlign: 'center',
     fontWeight: '500',
