@@ -49,6 +49,10 @@ class UserProfileScreen extends Component<{}> {
       switch (action.name) {
         case 'Use Invite Code':
           this.props.navigation.navigate('InvitationCodeScreen');
+          break;
+        case 'Change Password':
+          this.props.navigation.navigate('ChangePasswordScreen');
+          break;
         default:
           console.log(action.name);
       }

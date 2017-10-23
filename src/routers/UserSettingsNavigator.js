@@ -4,7 +4,11 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import { NavigationIconButton } from '../atoms';
-import { InvitationCodeScreen, UserSettingsScreen } from '../screens';
+import {
+  InvitationCodeScreen,
+  UserSettingsScreen,
+  ChangePasswordScreen,
+} from '../screens';
 
 function DismissModalButton({ onPress, ...a }) {
   return (
@@ -26,6 +30,12 @@ export default StackNavigator({
     screen: InvitationCodeScreen,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Invitation Code',
+    }),
+  },
+  ChangePasswordScreen: {
+    screen: ChangePasswordScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Change Password',
     }),
   },
 });
