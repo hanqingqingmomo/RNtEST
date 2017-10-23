@@ -31,10 +31,6 @@ export default class PostDetailScreen extends Component<P, S> {
 
   inputRef: ?any;
 
-  onMorePress = (comment: TComment) => {
-    console.log('more');
-  };
-
   onReplyPress = (comment: TComment) => {
     this.setState({ replyingTo: comment });
 
@@ -102,7 +98,6 @@ export default class PostDetailScreen extends Component<P, S> {
                     postId={navigation.state.params.postId}
                     comments={data.replies}
                     onReplyPress={this.onReplyPress}
-                    onMorePress={this.onMorePress}
                     ListHeaderComponent={<NewsFeedItem {...data} />}
                     reloadPost={fetch}
                   />
