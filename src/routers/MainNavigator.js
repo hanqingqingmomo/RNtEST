@@ -5,7 +5,7 @@ import { StatusBar, Dimensions } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
-import { View, DropdownAlert } from '../atoms';
+import { Fetch, View, DropdownAlert } from '../atoms';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
 import DonationNavigator from './DonationNavigator';
 import HelpNavigator from './HelpNavigator';
@@ -16,6 +16,7 @@ import OrganisationProfileNavigator from './Organisation/OrganisationProfileNavi
 import PlaygroundNavigator from './playground';
 import UserProfileNavigator from './UserProfileNavigator';
 import UserSettingsNavigator from './UserSettingsNavigator';
+import { makeReadOrganisationReq } from '../utils/requestFactory';
 
 let ALERT = null;
 
@@ -105,13 +106,23 @@ export default class MainNavigator extends Component<{}, State> {
   };
 
   renderNavigationView = () => {
+    const readOrganisationReq = makeReadOrganisationReq();
+
     return (
-      <DrawerView
-        navigationItems={navigationItems}
-        handleNavigationItemPress={this.openModalRoute}
-        handleDonationButtonPress={this.openDonationModal}
-        handleOrganisationTilePress={this.openOrganisationModal}
-      />
+      <Fetch
+        url={readOrganisationReq.url}
+        options={readOrganisationReq.options}
+      >
+        {({ data }) => (
+          <DrawerView
+            navigationItems={navigationItems}
+            handleNavigationItemPress={this.openModalRoute}
+            handleDonationButtonPress={this.openDonationModal}
+            handleOrganisationTilePress={this.openOrganisationModal}
+            data={data}
+          />
+        )}
+      </Fetch>
     );
   };
 
@@ -166,7 +177,6 @@ export default class MainNavigator extends Component<{}, State> {
         <DrawerLayout
           ref={this.drawerRef}
           useNativeAnimations
-          // drawerLockMode="locked-closed"
           drawerWidth={Math.min(Dimensions.get('window').width - 50, 300)}
           drawerPosition={DrawerLayout.positions.Left}
           renderNavigationView={this.renderNavigationView}

@@ -18,6 +18,10 @@ type Props = {
   handleNavigationItemPress: (navigationItem: NavigationItem) => void,
   handleDonationButtonPress: () => void,
   handleOrganisationTilePress: () => void,
+  data?: {
+    name: string,
+    profile_photo: string,
+  },
 };
 
 type NavigationItemProps = {
@@ -47,6 +51,7 @@ const Drawer = (props: Props) => (
     <DrawerHeader
       onDonateButtonPress={props.handleDonationButtonPress}
       onOrganisationTilePress={props.handleOrganisationTilePress}
+      data={props.data}
     />
     {props.navigationItems.map((item: NavigationItem) => (
       <DrawerItem
