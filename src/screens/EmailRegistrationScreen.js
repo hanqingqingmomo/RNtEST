@@ -166,7 +166,9 @@ class EmailRegistrationScreen extends Component<{}> {
                   <Text
                     style={styles.specialText}
                     weight="bold"
-                    onPress={() => {}}
+                    onPress={() => {
+                      this.props.navigation.navigate('TermsScreen');
+                    }}
                   >
                     Terms
                   </Text>
@@ -174,7 +176,9 @@ class EmailRegistrationScreen extends Component<{}> {
                   <Text
                     style={styles.specialText}
                     weight="bold"
-                    onPress={() => {}}
+                    onPress={() => {
+                      this.props.navigation.navigate('PrivacyScreen');
+                    }}
                   >
                     Privacy Policy
                   </Text>
