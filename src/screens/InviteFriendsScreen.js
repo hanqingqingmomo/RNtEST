@@ -163,7 +163,6 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     const { invitedUser } = this.state;
 
     try {
-      // await invitation(email);
       const email = user.emailAddresses[0].email;
       const request = makeInvitationRq(email);
       await global.fetch(request.url, request.options);
