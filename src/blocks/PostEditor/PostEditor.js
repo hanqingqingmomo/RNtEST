@@ -1,68 +1,64 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
 
-import { View, Text, Image } from '../../atoms';
-import { type CommunitySimple, type Attachment } from '../../Types';
+import { View } from '../../atoms';
+import { type CommunitySimple, type LinkAttachment } from '../../Types';
 import PostEditorContent from './PostEditorContent';
 import PosteEditorSearchBox from './PostEditorSearchBox';
+import ImagePicker from './ImagePicker';
+import AttachmentsPanel from './AttachmentsPanel';
 import { makeScrapeUrlReq } from '../../utils/requestFactory';
 
 type Props = {
-  attachment: ?Attachment,
-  onAttachmentChange: (attachment: ?Attachment) => void,
+  attachment: ?string,
   communities: Array<CommunitySimple>,
   communitiesSelection: Array<string>,
-  onCommunitiesChange: (selection: Array<string>) => void,
   content: string,
-  onContentChange: (content: string) => void,
+  link: ?LinkAttachment,
+  onAttachmentChange: (attachmentURI: ?string) => mixed,
+  onCommunitiesChange: (selection: Array<string>) => mixed,
+  onContentChange: (content: string) => mixed,
+  onLinkScraped: (link: ?LinkAttachment) => mixed,
 };
 
 type State = {
   didRequestedUrlScraping: boolean,
+  attachment: ?string,
 };
 
-export default class PostEditor extends Component<Props, State> {
-  static navigationOptions = {
-    title: 'Start New Conversation',
-  };
+const LINK_PATTERN = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 
+export default class PostEditorScreen extends Component<Props, State> {
   state = {
     didRequestedUrlScraping: false,
-  };
-
-  formData = {
     attachment: null,
-    communities: [],
-    text_content: '',
   };
 
-  onChangeText = async (text: string) => {
-    this.props.onContentChange(text);
+  componentDidUpdate(prevProps: Props) {
+    if (
+      prevProps.content !== this.props.content &&
+      this.state.didRequestedUrlScraping === false
+    ) {
+      this.scrapeUrl();
+    }
+  }
 
-    if (this.state.didRequestedUrlScraping === false) {
-      const matches = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.exec(
-        text
-      );
+  scrapeUrl = async () => {
+    const matches = LINK_PATTERN.exec(this.props.content);
 
-      if (matches && matches[0]) {
-        this.setState({ didRequestedUrlScraping: true });
+    if (matches && matches[0]) {
+      this.setState({ didRequestedUrlScraping: true });
+      const scrapeReq = makeScrapeUrlReq(matches[0]);
+      const scrapeRes = await global.fetch(scrapeReq.url, scrapeReq.options);
 
-        const scrapeUrlReq = makeScrapeUrlReq(matches[0]);
-        const attachmentRes = await global.fetch(
-          scrapeUrlReq.url,
-          scrapeUrlReq.options
-        );
-
-        const attachment = (await attachmentRes.json()).data;
-        this.props.onAttachmentChange({
-          type: 'link',
-          title: attachment.title,
-          description: attachment.description,
-          thumbnail_url: attachment.image,
-        });
-      }
+      const link = (await scrapeRes.json()).data;
+      this.props.onLinkScraped({
+        url: matches[0],
+        thumbnail_url: link.image,
+        title: link.title,
+        description: link.description,
+      });
     }
   };
 
@@ -71,72 +67,30 @@ export default class PostEditor extends Component<Props, State> {
   };
 
   render() {
-    const { attachment } = this.props;
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <PosteEditorSearchBox
           selection={this.props.communitiesSelection}
           communities={this.props.communities}
           selectCommunity={this.selectCommunity}
         />
+        <ImagePicker
+          image={this.props.attachment}
+          onImageSelected={this.props.onAttachmentChange}
+        />
+
         <PostEditorContent
           value={this.props.content}
-          onChangeText={this.onChangeText}
+          onChangeText={this.props.onContentChange}
         />
-        {attachment ? (
-          <View style={styles.attachmentBlock}>
-            <View style={styles.attachmentDismissButton}>
-              <Text
-                size={10}
-                color="linkBlue"
-                onPress={() => this.props.onAttachmentChange(null)}
-              >
-                REMOVE
-              </Text>
-            </View>
 
-            {attachment.title ? (
-              <Text weight="bold" style={styles.attachmentTextBlock}>
-                {attachment.title}
-              </Text>
-            ) : null}
-            {attachment.thumbnail_url ? (
-              <Image
-                source={{ uri: attachment.thumbnail_url }}
-                style={{ height: 100 }}
-              />
-            ) : null}
-            {attachment.description ? (
-              <Text size={13} color="gray" style={styles.attachmentTextBlock}>
-                {attachment.description}
-              </Text>
-            ) : null}
-          </View>
-        ) : null}
+        <AttachmentsPanel
+          attachment={this.props.attachment}
+          link={this.props.link}
+          onClearAttachment={() => this.props.onAttachmentChange(null)}
+          onClearLink={() => this.props.onLinkScraped(null)}
+        />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  attachmentBlock: {
-    margin: 10,
-    borderColor: '#E2E2E4',
-    borderWidth: StyleSheet.hairlineWidth,
-  },
-  attachmentTextBlock: {
-    padding: 10,
-  },
-  attachmentDismissButton: {
-    borderColor: '#E2E2E4',
-    borderWidth: 1,
-    position: 'absolute',
-    top: 7,
-    right: 5,
-    zIndex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 20,
-  },
-});

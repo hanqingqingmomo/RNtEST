@@ -20,6 +20,10 @@ type Action = {
   iconName: IconName,
 };
 
+type Props = {
+  navigation: any,
+};
+
 const SETTINGS = [
   /*{
     name: 'Sync Calendars',
@@ -30,7 +34,11 @@ const SETTINGS = [
     iconName: 'plus-bold',
   },*/
   {
-    name: 'Legal & Privacy',
+    name: 'Terms and conditions',
+    iconName: 'file-empty',
+  },
+  {
+    name: 'Privacy Policy',
     iconName: 'file-empty',
   },
   {
@@ -39,7 +47,7 @@ const SETTINGS = [
   },
 ];
 
-class UserProfileScreen extends Component<{}> {
+class UserProfileScreen extends Component<Props> {
   static navigationOptions = {
     title: 'Settings',
   };
@@ -52,6 +60,12 @@ class UserProfileScreen extends Component<{}> {
           break;
         case 'Change Password':
           this.props.navigation.navigate('ChangePasswordScreen');
+          break;
+        case 'Terms and conditions':
+          this.props.navigation.navigate('TermsScreen');
+          break;
+        case 'Privacy Policy':
+          this.props.navigation.navigate('PrivacyScreen');
           break;
         default:
           console.log(action.name);

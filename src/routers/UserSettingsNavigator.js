@@ -6,6 +6,8 @@ import { StackNavigator } from '../navigation';
 import { NavigationIconButton } from '../atoms';
 import {
   InvitationCodeScreen,
+  PrivacyScreen,
+  TermsScreen,
   UserSettingsScreen,
   ChangePasswordScreen,
 } from '../screens';
@@ -24,6 +26,18 @@ export default StackNavigator({
         <DismissModalButton onPress={screenProps.dismissModalRoute} />
       ),
       headerTitle: 'Settings',
+    }),
+  },
+  TermsScreen: {
+    screen: TermsScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Terms and conditions',
+    }),
+  },
+  PrivacyScreen: {
+    screen: PrivacyScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Privacy Policy',
     }),
   },
   InvitationCodeScreen: {
