@@ -8,16 +8,26 @@ import { css } from '../utils/style';
 
 type Props = {
   children?: React$Node,
-  style?: Style,
   containerStyle?: Style,
-  tintColor?: string,
   fill?: boolean,
+  keyboardShouldPersistTaps?: string,
+  style?: Style,
+  tintColor?: string,
 };
 
 export default function Screen(props: Props): React$Element<*> {
-  const { children, fill, style, containerStyle, tintColor } = props;
+  const {
+    children,
+    containerStyle,
+    fill,
+    keyboardShouldPersistTaps,
+    style,
+    tintColor,
+  } = props;
+
   return (
     <ScrollView
+      keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       alwaysBounceVertical={false}
       overScrollMode="auto"
       contentContainerStyle={[

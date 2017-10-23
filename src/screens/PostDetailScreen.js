@@ -83,6 +83,7 @@ export default class PostDetailScreen extends Component<P, S> {
             fill
             tintColor="white"
             containerStyle={styles.screenContainer}
+            keyboardShouldPersistTaps="always"
           >
             {loading && (
               <CenterView>
