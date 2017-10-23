@@ -14,7 +14,7 @@ function AvatarOrAttachment(props: Post) {
       ? props.attachment.url
       : props.author.profile_photo;
 
-  return <Image source={{ uri }} style={{ width: 28, height: 28 }} />;
+  return <Image source={{ uri }} style={{ width: 38, height: 38 }} />;
 }
 
 export default function PinnedPost(props: Props) {
