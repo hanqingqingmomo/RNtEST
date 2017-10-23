@@ -83,8 +83,8 @@ export default class DonationResult extends Component<P> {
                 For some reason we couldn't finalize your donation
               </Text>
             )}
-            <View style={styles.alignCenter}>
-              <Icon name="ywca" color="orange" size={80} />
+            <View style={[styles.logo, styles.alignCenter]}>
+              <Icon name="mpwr-logo" color="orange" size={60} />
             </View>
           </View>
         </View>
@@ -157,5 +157,8 @@ const styles = StyleSheet.create({
     paddingBottom: 48,
     paddingHorizontal: 42,
     overflow: 'hidden',
+  },
+  logo: {
+    marginTop: 30,
   },
 });
