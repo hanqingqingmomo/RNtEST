@@ -1,16 +1,18 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import Collapsible from 'react-native-collapsible';
 
-import { Image, TableView, Text, View } from '../atoms';
+import { Image, TableView, Text, View, Fetch } from '../atoms';
 import { type Post } from '../Types';
 import { parseTextContent } from '../utils/text';
+import { makeReadPinnedItemsRq } from '../utils/requestFactory';
 
 const { Table, Section, Cell, HeaderWithLink } = TableView;
 
 type Props = {
-  data: Post,
+  communityId: string,
   onPress: (data: Post) => void,
   onSeeAll: Function,
 };
@@ -24,39 +26,65 @@ function AvatarOrAttachment(props: Post): React$Element<*> {
   return <Image source={{ uri }} style={{ width: 38, height: 38 }} />;
 }
 
-export default function PinnedPost(props: Props) {
-  return (
-    <Table>
-      <Section
-        headerComponent={
-          <HeaderWithLink
-            title="Pinned Items"
-            link="See all"
-            onPress={props.onSeeAll}
-          />
-        }
-      >
-        <Cell
-          cellStyle="Basic"
-          contentContainerStyle={{ paddingTop: 15, paddingBottom: 15 }}
-          image={
-            <AvatarOrAttachment
-              attachment={props.data.attachment}
-              author={props.data.author}
-            />
+export default class PinnedPost extends Component<Props> {
+  render() {
+    const readPinnedItemsReq = makeReadPinnedItemsRq(this.props.communityId);
+
+    return (
+      <Fetch url={readPinnedItemsReq.url} options={readPinnedItemsReq.options}>
+        {({ loading, data, error, fetch }) => {
+          if (loading === false) {
+            if (data && data.data.length > 0) {
+              const firstPinnedItem = data.data[0];
+
+              return (
+                <Collapsible collapsed={!!!data.data.length}>
+                  <Table>
+                    <Section
+                      headerComponent={
+                        <HeaderWithLink
+                          title="Pinned Items"
+                          link={data.data.length > 1 ? 'See all' : ''}
+                          onPress={() => this.props.onSeeAll(data.data)}
+                        />
+                      }
+                    >
+                      <Cell
+                        cellStyle="Basic"
+                        contentContainerStyle={{
+                          paddingTop: 15,
+                          paddingBottom: 15,
+                        }}
+                        image={
+                          <AvatarOrAttachment
+                            attachment={firstPinnedItem.attachment}
+                            author={firstPinnedItem.author}
+                          />
+                        }
+                        cellContentView={
+                          <View style={styles.text}>
+                            <Text color="#455A64" size={14} lineHeight={18}>
+                              {parseTextContent(
+                                firstPinnedItem.text_content,
+                                100
+                              )}
+                            </Text>
+                          </View>
+                        }
+                        onPress={() => this.props.onPress(firstPinnedItem)}
+                      />
+                    </Section>
+                  </Table>
+                </Collapsible>
+              );
+            }
           }
-          cellContentView={
-            <View style={styles.text}>
-              <Text color="#455A64" size={14} lineHeight={18}>
-                {parseTextContent(props.data.text_content, 100)}
-              </Text>
-            </View>
-          }
-          onPress={() => props.onPress(props.data)}
-        />
-      </Section>
-    </Table>
-  );
+
+          return null;
+        }}
+      </Fetch>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
