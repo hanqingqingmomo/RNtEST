@@ -81,7 +81,7 @@ export default class PasswordResetScreen extends Component<{}> {
                   <Icon
                     color="orange"
                     name="mpwr-logo"
-                    size={80}
+                    size={64}
                     style={styles.icon}
                   />
                   <FormField
@@ -127,6 +127,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   icon: {
-    marginTop: 20,
+    marginVertical: 20,
   },
 });

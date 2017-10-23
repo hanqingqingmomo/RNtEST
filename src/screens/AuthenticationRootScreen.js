@@ -32,7 +32,7 @@ export default class AuthenticationRootScreen extends Component<{}> {
     return (
       <Screen fill>
         <View style={styles.container}>
-          <Icon color="orange" name="mpwr-logo" size={80} style={styles.icon} />
+          <Icon color="orange" name="mpwr-logo" size={64} style={styles.icon} />
 
           <View>
             <AuthenticationButton
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   icon: {
-    marginTop: 20,
+    marginVertical: 20,
   },
 });

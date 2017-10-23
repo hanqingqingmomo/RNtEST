@@ -97,7 +97,7 @@ class EmailRegistrationScreen extends Component<{}> {
                 <Icon
                   color="orange"
                   name="mpwr-logo"
-                  size={80}
+                  size={64}
                   style={styles.icon}
                 />
 
@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   icon: {
-    alignSelf: 'flex-end',
-    marginTop: 20,
+    marginVertical: 20,
   },
 });
