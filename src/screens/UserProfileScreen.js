@@ -51,7 +51,11 @@ const HEADER_LEFT_ID = 'UserProfile:HeaderLeft';
 
 function DismissModalButton({ onPress, ...a }) {
   return (
-    <NavigationIconButton name="close" color="#fc612d" onPress={onPress} />
+    <NavigationIconButton
+      name="close"
+      color={getColor('orange')}
+      onPress={onPress}
+    />
   );
 }
 

@@ -1,7 +1,7 @@
 // @flow
 
 export const colors = {
-  orange: '#fc612d',
+  orange: '#fd5a1e',
   white: '#ffffff',
   green: '#00e676',
   red: '#ff1744',
