@@ -37,7 +37,6 @@ type Setting = {
 
 type P = {
   data: TComment,
-  onMorePress: TComment => void,
   onReplyPress?: Function,
   user: User,
   reloadPost: Function,
@@ -259,7 +258,10 @@ export default class Comment extends React.Component<P, S> {
           </View>
 
           {!isReply && this.state.showReplies ? (
-            <Replies replies={data.replies} />
+            <Replies
+              replies={data.replies}
+              reloadPost={this.props.reloadPost}
+            />
           ) : null}
         </View>
       </View>

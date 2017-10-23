@@ -9,20 +9,17 @@ import { type Comment as TComment } from '../../Types';
 
 type P = {
   replies: Array<TComment>,
+  reloadPost: Function,
 };
 
 export default class Replies extends React.Component<P> {
   render() {
-    const { replies } = this.props;
+    const { replies, reloadPost } = this.props;
 
     return (
       <View>
         {replies.map(reply => (
-          <Comment
-            key={reply.id}
-            data={reply}
-            onMorePress={(...args) => console.log('more', args)}
-          />
+          <Comment key={reply.id} data={reply} reloadPost={reloadPost} />
         ))}
       </View>
     );

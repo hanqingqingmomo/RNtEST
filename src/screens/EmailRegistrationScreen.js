@@ -131,6 +131,7 @@ class EmailRegistrationScreen extends Component<{}> {
                   name="email"
                   keyboardType="email-address"
                   autoCapitalize="none"
+                  autoCorrect={false}
                 />
                 <FormField
                   label="Password"

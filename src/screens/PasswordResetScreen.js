@@ -89,6 +89,7 @@ export default class PasswordResetScreen extends Component<{}> {
                     name="email"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    autoCorrect={false}
                   />
                   <Button
                     block

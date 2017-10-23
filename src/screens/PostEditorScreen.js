@@ -97,7 +97,7 @@ export default class PostEditorScreen extends Component<Props, State> {
     return (
       <Fetch manual>
         {({ loading, data, error, fetch }: { loading: boolean }) => (
-          <Screen fill>
+          <Screen fill keyboardShouldPersistTaps="always">
             <BlackPortal name={HEADER_RIGHT_ID}>
               <NavigationTextButton
                 title="Post"
