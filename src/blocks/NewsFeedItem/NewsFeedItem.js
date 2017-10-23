@@ -3,8 +3,9 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, ShadowView, TouchableOpacity } from '../../atoms';
+import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
+import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
 import { type Post, type User, type Attachment } from '../../Types';
 
@@ -15,11 +16,11 @@ import NewsFeedItemEvent from './NewsFeedItemEvent';
 import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
-import NewsFeedItemPostedTime from './NewsFeedItemPostedTime';
 
 type Props = Post & {
   navigation: Object,
-  refetch?: Function,
+  refetch: Function,
+  onDelete: Function,
   attachment?: Attachment,
   isDetail?: boolean,
 };
@@ -34,7 +35,7 @@ export default class NewsFeedItem extends Component<Props> {
   }
 
   getLinks = () => {
-    const { id, navigation, refetch } = this.props;
+    const { id, navigation, refetch, isDetail } = this.props;
 
     const links = [
       // {
@@ -43,14 +44,16 @@ export default class NewsFeedItem extends Component<Props> {
       // },
     ];
 
-    links.push({
-      label: 'Comment',
-      onPress: () =>
-        navigation.navigate('PostDetailScreen', {
-          postId: id,
-          reloadList: refetch,
-        }),
-    });
+    if (!isDetail) {
+      links.push({
+        label: 'Comment',
+        onPress: () =>
+          navigation.navigate('PostDetailScreen', {
+            postId: id,
+            reloadList: refetch,
+          }),
+      });
+    }
 
     return links;
   };
@@ -87,9 +90,9 @@ export default class NewsFeedItem extends Component<Props> {
           <NewsFeedItemAttachment {...this.attachment} />
         )}
 
-        {created_at ? (
-          <NewsFeedItemPostedTime date={created_at} style={styles.postedTime} />
-        ) : null}
+        <Text style={styles.postedTime} size={11} weight="500" lineHeight={13}>
+          Shared <TimeAgo date={created_at} /> by:
+        </Text>
       </View>
     );
   }
@@ -107,13 +110,14 @@ export default class NewsFeedItem extends Component<Props> {
       liked,
       navigation,
       refetch,
+      onDelete,
       isDetail,
     } = this.props;
 
     return (
       <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
         <View style={styles.container}>
-          <NewsFeedItemHeader {...this.props} refetch={refetch} />
+          <NewsFeedItemHeader {...this.props} onDelete={onDelete} />
 
           {isDetail ? (
             this.renderContent()
@@ -175,5 +179,6 @@ const styles = StyleSheet.create({
   },
   postedTime: {
     marginTop: 12,
+    color: getColor('gray'),
   },
 });

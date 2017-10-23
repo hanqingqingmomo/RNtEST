@@ -2,31 +2,42 @@
 
 import React, { Component } from 'react';
 
-import { Link, View, Screen, Text } from '../atoms';
+import { View, Screen } from '../atoms';
 import { HelpBlock } from '../blocks';
 
 const help = [
   {
     title: 'How to sign in:',
-    text:
+    text: [
       'https://poweredbyaction.zendesk.com/hc/en-us/articles/216805898-How-to-Access-PbA',
+    ],
   },
   {
     title: 'Mobile Embedded Posting:',
-    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002308931',
+    text: [
+      'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002308931',
+    ],
   },
   {
     title: 'Email Notifications:',
-    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/217509198',
+    text: ['https://poweredbyaction.zendesk.com/hc/en-us/articles/217509198'],
   },
   {
     title:
       "Pinned posts (we're going to need a screenshot of mobile pinned post):",
-    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/219495368',
+    text: ['https://poweredbyaction.zendesk.com/hc/en-us/articles/219495368'],
   },
   {
     title: 'Donation:',
-    text: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002319692',
+    text: [
+      'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002319692',
+    ],
+  },
+  {
+    title: 'Cancel Payment:',
+    text: [
+      'To cancel or change your recurring donation to the YWCA Metropolitan Chicago, please email as at: support@poweredbyaction.org',
+    ],
   },
 ];
 

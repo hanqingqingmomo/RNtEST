@@ -31,11 +31,25 @@ export function parseTextContent(string: string, maxLength: ?number): any {
   words = words.map((word: string, idx: number) => {
     if (typeof word === 'string') {
       if (word.match(/^https?\:\//)) {
+        // detect url
         return (
           <Text
             key={idx}
             color={getColor('linkBlue')}
             onPress={() => Linking.openURL(word)}
+          >
+            {`${word} `}
+          </Text>
+        );
+      } else if (
+        word.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+      ) {
+        // detect email
+        return (
+          <Text
+            key={idx}
+            color={getColor('linkBlue')}
+            onPress={() => Linking.openURL('mailto:' + word)}
           >
             {`${word} `}
           </Text>
