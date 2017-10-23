@@ -6,7 +6,7 @@ import { Text, TouchableItem } from './index';
 
 type Props = {
   disabled?: boolean,
-  onPress: () => void,
+  onPress: () => mixed,
   textStyle?: Object,
   title: string,
 };

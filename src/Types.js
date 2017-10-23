@@ -17,6 +17,19 @@ export type ColorName = _ColorName;
 export type Style = number | boolean | Object | Array<?Style>;
 
 // ScreenProps: props are passed to every "screen" component
+export type LocalImage = {
+  fileName: string,
+  fileSize: number,
+  isVertical: boolean,
+  origURL: string,
+  timestamp: string,
+  uri: string,
+  width: number,
+  height: number,
+  error: Object,
+  didCancel: boolean,
+};
+
 export type ScreenProps<S> = {
   navigation: {
     navigate: Function,
@@ -24,10 +37,9 @@ export type ScreenProps<S> = {
   },
 };
 
-export type Attachment = {
-  type: 'image' | 'link',
-  thumbnail_url: ?string,
+export type LinkAttachment = {
   url: string,
+  thumbnail_url: ?string,
   title: ?string,
   description: ?string,
 };
@@ -68,7 +80,7 @@ export type Comment = $Exact<{
 export type Post = {
   id: string,
   text_content: string,
-  attachment: ?Attachment,
+  attachment: ?LinkAttachment,
   author: ?User,
   comments_count: number,
   communities: Array<{

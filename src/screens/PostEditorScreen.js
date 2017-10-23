@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 
 import { selectUser } from '../redux/selectors';
-import type { User, Attachment } from '../Types';
+import type { User, LinkAttachment } from '../Types';
 import { Screen, NavigationTextButton, DropdownAlert, Fetch } from '../atoms';
 import PostEditor from '../blocks/PostEditor/PostEditor';
 import { type AlertPayload } from '../atoms/DropdownAlert';
@@ -16,9 +16,10 @@ type Props = {
 };
 
 type State = {
-  attachment: ?Attachment,
+  attachment: ?string,
   content: string,
   communitiesSelection: Array<string>,
+  link: ?LinkAttachment,
 };
 
 const HEADER_RIGHT_ID = 'PostEditor:HeaderRight';
@@ -38,6 +39,7 @@ export default class PostEditorScreen extends Component<Props, State> {
     attachment: null,
     communitiesSelection: [],
     content: '',
+    link: null,
   };
 
   dropdown = null;
@@ -45,7 +47,9 @@ export default class PostEditorScreen extends Component<Props, State> {
   handleFormSubmit = (fetch: any) => async () => {
     const createPostReq = makeCreatePostReq(
       this.state.content,
-      this.state.communitiesSelection
+      this.state.communitiesSelection,
+      this.state.attachment,
+      this.state.link ? this.state.link.url : undefined
     );
 
     const createPostRes = await fetch(createPostReq.url, createPostReq.options);
@@ -75,11 +79,11 @@ export default class PostEditorScreen extends Component<Props, State> {
     }
   };
 
-  onContentChange = (content: string) => {
+  onContentChange = (content: ?string) => {
     this.setState({ content });
   };
 
-  onAttachmentChange = (attachment: ?Attachment) => {
+  onAttachmentChange = (attachment: ?string) => {
     this.setState({ attachment });
   };
 
@@ -87,9 +91,12 @@ export default class PostEditorScreen extends Component<Props, State> {
     this.setState({ communitiesSelection });
   };
 
+  onLinkScraped = (link: ?LinkAttachment) => {
+    this.setState({ link });
+  };
+
   get isAllowedToSubmit(): boolean {
     const { content, communitiesSelection } = this.state;
-
     return !!content && communitiesSelection.length > 0;
   }
 
@@ -97,7 +104,7 @@ export default class PostEditorScreen extends Component<Props, State> {
     return (
       <Fetch manual>
         {({ loading, data, error, fetch }: { loading: boolean }) => (
-          <Screen fill keyboardShouldPersistTaps="always">
+          <Screen fill>
             <BlackPortal name={HEADER_RIGHT_ID}>
               <NavigationTextButton
                 title="Post"
@@ -110,10 +117,12 @@ export default class PostEditorScreen extends Component<Props, State> {
               attachment={this.state.attachment}
               onAttachmentChange={this.onAttachmentChange}
               content={this.state.content}
+              link={this.state.link}
               onContentChange={this.onContentChange}
               communities={this.props.user.joined_communities}
               communitiesSelection={this.state.communitiesSelection}
               onCommunitiesChange={this.onCommunitiesChange}
+              onLinkScraped={this.onLinkScraped}
             />
 
             <DropdownAlert

@@ -278,13 +278,15 @@ export const makeReadPostWithCommentsRq = (postId: string | number) =>
 
 export const makeCreatePostReq = (
   text_content: string,
-  communities: Array<string>
+  communities: Array<string>,
+  attachment: ?string,
+  cached_url: ?string
 ) =>
   inject({
     url: join(Config.API_URL, '/v1/content_objects/'),
     options: {
       method: 'POST',
-      body: JSON.stringify({ text_content, communities }),
+      body: JSON.stringify({ text_content, communities, cached_url }),
     },
   });
 
@@ -304,17 +306,6 @@ export const makeScrapeUrlReq = (url: string) =>
       body: JSON.stringify({ url }),
     },
   });
-// export const makeCreatePostReq = (body: *) =>
-//   inject({
-//     url: join(Config.API_URL, '/v1/content_objects/'),
-//     options: {
-//       method: 'POST',
-//       body: makeFormData(body, ['attachment']),
-//       headers: {
-//         'content-type': 'multipart/form-data',
-//       },
-//     },
-//   });
 
 export const makeCreateCommentReq = (postId: string, body: *) =>
   inject({

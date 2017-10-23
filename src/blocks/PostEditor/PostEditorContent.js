@@ -28,10 +28,11 @@ export default class PostEditorContent extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
+    flex: 1,
   },
   input: {
-    minHeight: 300,
     lineHeight: 18,
+    height: '100%',
     fontSize: 14,
   },
 });
