@@ -16,7 +16,6 @@ import { type Request } from '../../utils/requestFactory';
 type Cursor = {
   next: ?number,
   limit: number,
-  ListHeaderComponent?: React$Node,
 };
 
 type FetchResponse = {
@@ -27,8 +26,12 @@ type FetchResponse = {
 
 type Props = {
   request: Request,
+<<<<<<< HEAD
   ListHeaderComponent: React$Node,
   navigation: any,
+=======
+  ListHeaderComponent?: React$Node,
+>>>>>>> c63b82f117e91703a645d14f1f273dcb9af8624b
 };
 
 type State = {
@@ -102,16 +105,26 @@ export default class NewsFeed extends Component<Props, State> {
 
   keyExtractor = (item: any) => item.id;
 
+  requestDelete = (item: *) => {
+    console.log('delete', item);
+  };
+
+  requestUpdate = (item: *) => {
+    console.log('update', item);
+  };
+
   renderItem = ({ item, refetch }: any): React$Element<*> => {
     return (
       <View style={styles.item}>
         <NewsFeedItem
-          isBeingUpdated={false /* TODO */}
+          isBeingDeleted={true}
+          isBeingUpdated={true}
           item={item}
           navigation={this.props.navigation}
           onDelete={refetch}
           refetch={refetch}
-          requestUpdate={() => {} /* TODO */}
+          requestDelete={this.requestDelete}
+          requestUpdate={this.requestUpdate}
         />
       </View>
     );
