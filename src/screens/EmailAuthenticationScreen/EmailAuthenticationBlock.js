@@ -64,7 +64,12 @@ export default class EmailAuthenticationBlock extends Component<Props> {
                 autoCapitalize="none"
                 autoCorrect={false}
               />
-              <FormField label="Password" name="password" secureTextEntry />
+              <FormField
+                autoCapitalize="none"
+                label="Password"
+                name="password"
+                secureTextEntry
+              />
 
               <Text
                 color="orange"

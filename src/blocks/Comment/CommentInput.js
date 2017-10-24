@@ -95,6 +95,7 @@ export default class CommentInput extends Component<P, S> {
                   ref={passRef}
                   style={styles.input}
                   value={text_content}
+                  underlineColorAndroid="transparent"
                 />
                 <TouchableItem
                   onPress={this.handleSubmit(fetch)}
