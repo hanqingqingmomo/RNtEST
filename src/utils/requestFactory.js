@@ -248,7 +248,7 @@ export const makeJoinCommunityReq = (
 /**
  * News feed requests
  */
-export const makeReadAggregatedFeedRq = () =>
+export const makeReadAggregatedFeedReq = () =>
   inject({
     url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
     options: {

@@ -22,6 +22,7 @@ function normalize(str, options) {
 
   return str;
 }
+
 export function join(...args) {
   let options = {};
 

@@ -12,6 +12,7 @@ export {
   default as LaunchScreenBackground,
 } from './LaunchScreenBackground/LaunchScreenBackground';
 export { default as Network } from './Network';
+export { default as NewsFeed } from './NewsFeed/NewsFeed';
 export { default as NewsFeedItem } from './NewsFeedItem/NewsFeedItem';
 export { default as PinnedPost } from './PinnedPost';
 export { default as ProfileCard } from './ProfileCard';
