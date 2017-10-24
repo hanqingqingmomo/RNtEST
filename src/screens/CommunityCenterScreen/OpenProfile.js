@@ -13,14 +13,13 @@ import { css } from '../../utils/style';
 type Props = {
   community: Community,
   navigation: any,
-  reloadCommunity: Function,
 };
 
 type State = {
   activeTab: string,
 };
 
-export default class CommunityCenterScreen extends Component<Props, State> {
+export default class OpenProfile extends Component<Props, State> {
   state = {
     activeTab: 'News',
   };
@@ -62,7 +61,6 @@ export default class CommunityCenterScreen extends Component<Props, State> {
                   navigation={this.props.navigation}
                   communityId={community.id}
                   navigateToPost={this.navigateToPost}
-                  reloadCommunity={this.props.reloadCommunity}
                 />
               ),
             },

@@ -55,8 +55,6 @@ export default class PostDetailScreen extends Component<P, S> {
       replyingTo: undefined,
     });
 
-    this.props.navigation.state.params.reloadList();
-
     fetch();
   };
 
@@ -109,17 +107,22 @@ export default class PostDetailScreen extends Component<P, S> {
                     onReplyPress={this.onReplyPress}
                     ListHeaderComponent={
                       <NewsFeedItem
-                        isBeingUpdated={false /* TODO */}
+                        isBeingDeleted={true /*TODO*/}
+                        isBeingUpdated={true /*TODO*/}
                         isDetail
                         item={data}
                         navigation={this.props.navigation}
-                        onDelete={() => {
-                          this.props.navigation.state.params.reloadList();
-                          this.props.navigation.goBack();
-                        }}
                         radius={0}
-                        refetch={() => {} /* TODO */}
-                        requestUpdate={() => {} /* TODO */}
+                        requestDelete={(item: Post) => {
+                          // TODO
+                          console.log('delete', item);
+
+                          // this.props.navigation.goBack();
+                        }}
+                        requestUpdate={(item: Post) => {
+                          // TODO
+                          console.log('update', item);
+                        }}
                       />
                     }
                     reloadPost={fetch}

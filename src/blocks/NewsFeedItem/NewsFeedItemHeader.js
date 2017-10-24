@@ -32,12 +32,13 @@ type Setting = {
 type P = {
   item: Post,
   navigation: Object,
-  onDelete: Function,
   user: User,
+  requestDelete: Function,
+  isBeingDeleted: boolean,
 };
 
 type S = {
-  updating: boolean,
+  isBeingReported: boolean,
 };
 
 const HIT_SLOP = {
@@ -71,7 +72,7 @@ const mapStateToProps = state => ({
 
 class NewsFeedItemHeader extends Component<P, S> {
   state = {
-    updating: false,
+    isBeingReported: false,
   };
 
   get settings(): Array<*> {
@@ -111,15 +112,13 @@ class NewsFeedItemHeader extends Component<P, S> {
   };
 
   deletePost = async () => {
-    const { item, onDelete } = this.props;
+    const { item, requestDelete } = this.props;
     const deletePostReq = makeDeletePostReq(item.id);
 
-    this.setState({ updating: true });
+    requestDelete(item);
 
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
-      this.setState({ updating: false });
-      onDelete();
     } catch (err) {}
   };
 
@@ -127,7 +126,7 @@ class NewsFeedItemHeader extends Component<P, S> {
     const { item } = this.props;
     const reportPostReq = makeReportPostReq(item.id);
 
-    this.setState({ updating: true });
+    this.setState({ isBeingReported: true });
 
     try {
       const reportResp = await global.fetch(
@@ -135,7 +134,7 @@ class NewsFeedItemHeader extends Component<P, S> {
         reportPostReq.options
       );
 
-      this.setState({ updating: false });
+      this.setState({ isBeingReported: false });
 
       const resp = await reportResp.json();
 
@@ -169,7 +168,8 @@ class NewsFeedItemHeader extends Component<P, S> {
   );
 
   render() {
-    const { item } = this.props;
+    const { item, isBeingDeleted } = this.props;
+    const { isBeingReported } = this.state;
 
     return (
       <View style={[styles.header, styles.row]}>
@@ -191,7 +191,7 @@ class NewsFeedItemHeader extends Component<P, S> {
             </View>
           ))}
         </View>
-        {this.state.updating ? (
+        {isBeingReported || isBeingDeleted ? (
           <CenterView>
             <ActivityIndicator />
           </CenterView>

@@ -18,19 +18,19 @@ import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
 type P = {
+  isBeingDeleted: boolean,
   isBeingUpdated: boolean,
   isDetail?: boolean,
   item: Post,
   navigation: Object,
-  onDelete: Function,
   radius?: number,
-  refetch: Function,
+  requestDelete: Function,
   requestUpdate: Function,
 };
 
 export default class NewsFeedItem extends Component<P> {
   getLinks = () => {
-    const { item, navigation, refetch, isDetail } = this.props;
+    const { item, navigation, isDetail } = this.props;
     const { id } = item;
 
     const links = [];
@@ -41,7 +41,6 @@ export default class NewsFeedItem extends Component<P> {
         onPress: () =>
           navigation.navigate('PostDetailScreen', {
             postId: id,
-            reloadList: refetch,
           }),
       });
     }
@@ -102,11 +101,11 @@ export default class NewsFeedItem extends Component<P> {
       item,
       isDetail,
       navigation,
-      onDelete,
       radius,
-      refetch,
+      requestDelete,
       requestUpdate,
       isBeingUpdated,
+      isBeingDeleted,
     } = this.props;
 
     const { author, donation, event, id, isNew } = item;
@@ -120,7 +119,8 @@ export default class NewsFeedItem extends Component<P> {
           <NewsFeedItemHeader
             item={item}
             navigation={navigation}
-            onDelete={onDelete}
+            isBeingDeleted={isBeingDeleted}
+            requestDelete={requestDelete}
           />
 
           {isDetail ? (
@@ -130,7 +130,6 @@ export default class NewsFeedItem extends Component<P> {
               onPress={() => {
                 navigation.navigate('PostDetailScreen', {
                   postId: id,
-                  reloadList: refetch,
                 });
               }}
             >

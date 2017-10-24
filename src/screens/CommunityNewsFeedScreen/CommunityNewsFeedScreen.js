@@ -11,7 +11,6 @@ type Props = {
   communityId: string,
   navigation: any,
   navigateToPost: Object => void,
-  reloadCommunity: Function,
 };
 
 export default class CommunityNewsFeedScreen extends Component<Props> {
@@ -41,7 +40,6 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
               onPress={data => {
                 this.props.navigation.navigate('PostDetailScreen', {
                   postId: data.id,
-                  reloadList: this.props.reloadCommunity,
                 });
               }}
             />

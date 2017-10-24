@@ -100,13 +100,15 @@ export default class NewsFeed extends Component<Props, State> {
     }));
   };
 
-  keyExtractor = (item: any) => item.id;
+  keyExtractor = (item: Post) => item.id;
 
-  requestDelete = (item: *) => {
+  requestDelete = (item: Post) => {
+    // TODO
     console.log('delete', item);
   };
 
-  requestUpdate = (item: *) => {
+  requestUpdate = (item: Post) => {
+    // TODO
     console.log('update', item);
   };
 
@@ -114,12 +116,10 @@ export default class NewsFeed extends Component<Props, State> {
     return (
       <View style={styles.item}>
         <NewsFeedItem
-          isBeingDeleted={true}
-          isBeingUpdated={true}
+          isBeingDeleted={true /*TODO*/}
+          isBeingUpdated={true /*TODO*/}
           item={item}
           navigation={this.props.navigation}
-          onDelete={refetch}
-          refetch={refetch}
           requestDelete={this.requestDelete}
           requestUpdate={this.requestUpdate}
         />

@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { FlatList, View } from '../../atoms';
 import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 
-import { type CommunitySimple } from '../../Types';
+import type { CommunitySimple, Post } from '../../Types';
 
 type P = {
   navigation: any,
@@ -24,12 +24,18 @@ export default class NewsFeedList extends Component<P> {
           renderItem={({ item }) => (
             <View style={styles.item}>
               <NewsFeedItem
-                isBeingUpdated={false /* TODO */}
+                isBeingDeleted={true /* TODO */}
+                isBeingUpdated={true /* TODO */}
                 item={item}
                 navigation={navigation}
-                onDelete={() => {} /* TODO */}
-                refetch={() => {} /* TODO */}
-                requestUpdate={() => {} /* TODO */}
+                requestDelete={(item: Post) => {
+                  // TODO
+                  console.log('delete', item);
+                }}
+                requestUpdate={(item: Post) => {
+                  // TODO
+                  console.log('update', item);
+                }}
               />
             </View>
           )}

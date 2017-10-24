@@ -18,7 +18,7 @@ type Props = {
   navigation?: any,
   reloadCommunity: Function,
   reloadCommunityList: Function,
-  user?: User,
+  user: User,
 };
 
 type State = {
@@ -31,8 +31,7 @@ const mapStateToProps = state => ({
   user: selectUser(state),
 });
 
-@connect(mapStateToProps)
-export default class CommunityCenterScreen extends Component<Props, State> {
+class ClosedProfile extends Component<Props, State> {
   state = {
     screenIsReady: false,
     activeTab: 'News',
@@ -99,3 +98,5 @@ export default class CommunityCenterScreen extends Component<Props, State> {
     );
   }
 }
+
+export default connect(mapStateToProps)(ClosedProfile);

@@ -12,7 +12,7 @@ type Props = {
   joined: boolean,
 };
 
-export default class NewsTab extends Component<Props> {
+export default class JoinSection extends Component<Props> {
   get isJoined(): boolean {
     return this.props.joined || this.props.community.joined;
   }
