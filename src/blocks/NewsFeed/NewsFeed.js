@@ -12,6 +12,7 @@ import { View } from '../../atoms';
 import { NewsFeedItem } from '../../blocks';
 import Footer from './Footer';
 import { type Request } from '../../utils/requestFactory';
+import { type Post } from '../../Types';
 
 type Cursor = {
   next: ?number,
@@ -26,12 +27,8 @@ type FetchResponse = {
 
 type Props = {
   request: Request,
-<<<<<<< HEAD
   ListHeaderComponent: React$Node,
   navigation: any,
-=======
-  ListHeaderComponent?: React$Node,
->>>>>>> c63b82f117e91703a645d14f1f273dcb9af8624b
 };
 
 type State = {
@@ -113,7 +110,7 @@ export default class NewsFeed extends Component<Props, State> {
     console.log('update', item);
   };
 
-  renderItem = ({ item, refetch }: any): React$Element<*> => {
+  renderItem = ({ item }: { item: Post }): React$Element<*> => {
     return (
       <View style={styles.item}>
         <NewsFeedItem
