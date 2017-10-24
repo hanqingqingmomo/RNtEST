@@ -16,8 +16,10 @@ type Props = {
 
 export default class CommunityNewsFeedScreen extends Component<Props> {
   render() {
+    // TODO do not pass navigation
     return (
       <NewsFeed
+        navigation={this.props.navigation}
         request={makeReadCommunityFeedRq(this.props.communityId)}
         ListHeaderComponent={
           <View>

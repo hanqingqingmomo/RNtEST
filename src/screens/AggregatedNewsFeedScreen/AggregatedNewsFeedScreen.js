@@ -18,8 +18,10 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
   };
 
   render(): React$Node {
+    // TODO do not pass navigation
     return (
       <NewsFeed
+        navigation={this.props.navigation}
         request={makeReadAggregatedFeedReq()}
         ListHeaderComponent={
           <View>
