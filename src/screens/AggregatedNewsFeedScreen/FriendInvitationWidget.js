@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 30,
     overflow: 'hidden',
+    backgroundColor: '#F4F5F7',
   },
   closeBtn: {
     position: 'absolute',
