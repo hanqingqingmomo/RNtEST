@@ -184,7 +184,8 @@ export default class Comment extends React.Component<P, S> {
       <View
         style={[
           styles.flexRow,
-          !isReply ? styles.container : styles.containerReply,
+          styles.container,
+          isReply ? styles.containerReply : undefined,
         ]}
       >
         <View style={styles.avatarWrapper}>
@@ -192,22 +193,19 @@ export default class Comment extends React.Component<P, S> {
         </View>
 
         <View
-          style={
-            !isReply ? styles.containerWrapper : styles.containerWrapperReply
-          }
+          style={[
+            styles.containerWrapper,
+            isReply ? styles.containerWrapperReply : undefined,
+          ]}
         >
           <View style={[styles.alignItemsCenter, styles.flexRow]}>
-            <View
-              style={[
-                !isReply ? styles.headerInfo : styles.headerInfoReply,
-                styles.flexRow,
-              ]}
-            >
+            <View style={[styles.headerInfo, styles.flexRow]}>
               <Text
                 size={13}
                 lineHeight={15}
                 weight="600"
-                style={[styles.authorName, css('color', '#455A64')]}
+                color="#455A64"
+                style={styles.authorName}
               >
                 {data.author.first_name} {data.author.last_name}
               </Text>
@@ -215,7 +213,7 @@ export default class Comment extends React.Component<P, S> {
                 size={11}
                 weight="500"
                 lineHeight={13}
-                style={css('color', getColor('gray'))}
+                color={getColor('gray')}
               >
                 <TimeAgo date={data.created_at} />
               </Text>
@@ -236,7 +234,7 @@ export default class Comment extends React.Component<P, S> {
             )}
           </View>
 
-          <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+          <Text size={14} lineHeight={18} color="#455A64">
             {data.text_content}
           </Text>
 
@@ -274,10 +272,8 @@ export default class Comment extends React.Component<P, S> {
                   onPress={onReplyPress}
                   size={13}
                   lineHeight={18}
-                  style={[
-                    styles.replyButton,
-                    css('color', getColor('linkBlue')),
-                  ]}
+                  color={getColor('linkBlue')}
+                  style={styles.replyButton}
                 >
                   Reply
                 </Text>
@@ -327,27 +323,26 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   containerWrapperReply: {
-    flex: 1,
-    paddingTop: 5,
+    borderBottomWidth: 0,
+    borderTopWidth: 1,
+    paddingBottom: 5,
+    paddingLeft: 0,
   },
   avatarWrapper: {
     paddingRight: 11,
+    paddingTop: 6,
   },
   headerInfo: {
     flexGrow: 1,
     alignItems: 'flex-end',
-    paddingVertical: 5,
-  },
-  headerInfoReply: {
-    flexGrow: 1,
-    alignItems: 'flex-end',
   },
   container: {
-    paddingTop: 12,
+    paddingTop: 5,
     paddingHorizontal: 15,
   },
   containerReply: {
-    paddingTop: 12,
+    marginTop: 7,
+    paddingHorizontal: 0,
   },
   likeWrapper: {
     paddingRight: 10,

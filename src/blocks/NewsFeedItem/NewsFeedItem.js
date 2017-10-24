@@ -18,10 +18,11 @@ import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
 type Props = Post & {
-  navigation: Object,
-  refetch: Function,
-  onDelete: Function,
   isDetail?: boolean,
+  navigation: Object,
+  onDelete: Function,
+  radius?: number,
+  refetch: Function,
 };
 
 export default class NewsFeedItem extends Component<Props> {
@@ -106,23 +107,27 @@ export default class NewsFeedItem extends Component<Props> {
 
   render() {
     const {
-      id,
+      author,
+      comments_count,
       donation,
       event,
-      isNew,
-      author,
-      replies,
-      comments_count,
-      likes_count,
-      liked,
-      navigation,
-      refetch,
-      onDelete,
+      id,
       isDetail,
+      isNew,
+      liked,
+      likes_count,
+      navigation,
+      onDelete,
+      radius,
+      refetch,
+      replies,
     } = this.props;
 
     return (
-      <ShadowView style={isNew ? styles.borderIsNew : undefined} radius={3}>
+      <ShadowView
+        style={isNew ? styles.borderIsNew : undefined}
+        radius={typeof radius !== 'undefined' ? radius : 3}
+      >
         <View style={styles.container}>
           <NewsFeedItemHeader {...this.props} onDelete={onDelete} />
 

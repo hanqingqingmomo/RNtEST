@@ -64,6 +64,8 @@ export default class PostDetailScreen extends Component<P, S> {
     const { navigation } = this.props;
     const { replyingTo } = this.state;
 
+    console.log(navigation.state.params.postId);
+
     const readPostWithCommentsRq = makeReadPostWithCommentsRq(
       navigation.state.params.postId
     );
@@ -107,6 +109,7 @@ export default class PostDetailScreen extends Component<P, S> {
                           this.props.navigation.goBack();
                         }}
                         isDetail
+                        radius={0}
                       />
                     }
                     reloadPost={fetch}

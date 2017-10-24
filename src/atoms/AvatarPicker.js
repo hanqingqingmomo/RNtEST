@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import { showImagePicker } from 'react-native-image-picker';
 
-import { Avatar, Icon, View, TouchableItem } from '../atoms';
+import { Avatar, Icon, View, TouchableItem, ShadowView } from '../atoms';
+import { css } from '../utils/style';
 
 const SIZE = 68;
 const OUTLINE_WIDTH = 2;
@@ -50,34 +51,28 @@ export default class AvatarPicker extends Component<P> {
       typeof outlineWidth !== 'undefined' ? outlineWidth : OUTLINE_WIDTH;
 
     return (
-      <TouchableItem
-        onPress={this.onPress}
-        style={{
-          width: s,
-          height: s,
-          borderRadius: s / 2,
-        }}
-      >
+      <TouchableItem onPress={this.onPress}>
         <View
           style={[
-            styles.circle,
-            styles.shadow,
+            css('width', s + 20),
+            css('height', s + 20),
+            css('backgroundColor', 'white'),
             styles.centerContent,
-            { borderRadius: s / 2 },
           ]}
         >
-          {!imageURI && <Icon name="plus" size={18} color="#B0BEC5" />}
-          {imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
+          <ShadowView radius={s / 2}>
+            <View>
+              {!imageURI && <Icon name="plus" size={18} color="#B0BEC5" />}
+              {imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
+            </View>
+          </ShadowView>
           {imageURI && (
-            <View
-              style={[
-                styles.editIconCircle,
-                styles.centerContent,
-                styles.shadow,
-              ]}
+            <ShadowView
+              radius={16}
+              style={[styles.editIconCircle, styles.centerContent]}
             >
               <Icon name="pen" size={16} color="#B0BEC5" />
-            </View>
+            </ShadowView>
           )}
         </View>
       </TouchableItem>
@@ -86,18 +81,6 @@ export default class AvatarPicker extends Component<P> {
 }
 
 const styles = StyleSheet.create({
-  circle: {
-    borderColor: 'white',
-    borderWidth: 2,
-    width: '100%',
-    height: '100%',
-  },
-  shadow: {
-    shadowOffset: { width: 0, height: 0 },
-    shadowColor: 'black',
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-  },
   centerContent: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -105,9 +88,9 @@ const styles = StyleSheet.create({
   editIconCircle: {
     position: 'absolute',
     top: 0,
-    right: -16,
+    right: 0,
     width: 32,
     height: 32,
-    borderRadius: 16,
+    backgroundColor: 'white',
   },
 });
