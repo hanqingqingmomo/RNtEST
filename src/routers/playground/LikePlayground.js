@@ -6,13 +6,13 @@ import { CenterView, Like, View } from '../../atoms';
 const LikePlayground = () => (
   <CenterView style={{ flexDirection: 'row' }}>
     <View style={{ paddingHorizontal: 5 }}>
-      <Like
+      {/* <Like
         count={10}
         liked
         objectId="aaa"
         requestUpdate={() => {}}
         isBeingUpdated={false}
-      />
+      /> */}
     </View>
   </CenterView>
 );

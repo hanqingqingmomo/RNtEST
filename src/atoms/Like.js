@@ -4,24 +4,28 @@ import React, { Component } from 'react';
 
 import { Fetch, TouchableItem, Count } from '../atoms';
 import { makeLikeRq } from '../utils/requestFactory';
+import type { Post, Comment } from '../Types';
 
 type P = {
   count: number,
   liked: boolean,
-  objectId: string,
+  item: Post | Comment,
   requestUpdate: Function,
+  updateSuccessful: Function,
   isBeingUpdated: boolean,
 };
 
 export default class Like extends Component<P> {
   onPress = (fetch: any): Function => async () => {
-    const { objectId, liked, requestUpdate } = this.props;
+    const { item, liked, requestUpdate, updateSuccessful } = this.props;
 
-    const likeRq = makeLikeRq(objectId, liked);
+    const likeRq = makeLikeRq(item.id, liked);
+
+    requestUpdate(item);
 
     await fetch(likeRq.url, likeRq.options);
 
-    requestUpdate();
+    updateSuccessful(item);
   };
 
   render() {

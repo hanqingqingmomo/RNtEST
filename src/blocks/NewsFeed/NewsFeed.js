@@ -37,6 +37,8 @@ type State = {
   data: ?Array<*>,
   error: ?Object,
   refreshingData: boolean,
+  isBeingDeleted: boolean,
+  isBeingUpdated: boolean,
 };
 
 async function doFetch(request, _cursor: Cursor): Promise<FetchResponse> {
@@ -72,6 +74,8 @@ export default class NewsFeed extends Component<Props, State> {
     data: null,
     error: null,
     refreshingData: false,
+    isBeingDeleted: false,
+    isBeingUpdated: false,
   };
 
   componentDidMount() {
@@ -103,25 +107,41 @@ export default class NewsFeed extends Component<Props, State> {
   keyExtractor = (item: Post) => item.id;
 
   requestDelete = (item: Post) => {
+    this.setState({ isBeingDeleted: true });
     // TODO
-    console.log('delete', item);
+    console.log('request delete', item);
+  };
+
+  deleteSuccessful = (item: Post) => {
+    this.setState({ isBeingDeleted: false });
+    // TODO
+    console.log('delete successful', item);
   };
 
   requestUpdate = (item: Post) => {
+    this.setState({ isBeingUpdated: true });
     // TODO
-    console.log('update', item);
+    console.log('request update', item);
+  };
+
+  updateSuccessful = (item: Post) => {
+    this.setState({ isBeingUpdated: false });
+    // TODO
+    console.log('update successful', item);
   };
 
   renderItem = ({ item }: { item: Post }): React$Element<*> => {
     return (
       <View style={styles.item}>
         <NewsFeedItem
-          isBeingDeleted={true /*TODO*/}
-          isBeingUpdated={true /*TODO*/}
+          isBeingDeleted={this.state.isBeingDeleted}
+          isBeingUpdated={this.state.isBeingUpdated}
           item={item}
           navigation={this.props.navigation}
           requestDelete={this.requestDelete}
           requestUpdate={this.requestUpdate}
+          deleteSuccessful={this.deleteSuccessful}
+          updateSuccessful={this.updateSuccessful}
         />
       </View>
     );

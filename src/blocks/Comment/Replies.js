@@ -9,17 +9,39 @@ import { type Comment as TComment } from '../../Types';
 
 type P = {
   replies: Array<TComment>,
-  reloadPost: Function,
+  requestDelete: Function,
+  deleteSuccessful: Function,
+  isBeingDeleted: boolean,
+  requestUpdate: Function,
+  updateSuccessful: Function,
+  isBeingUpdated: boolean,
 };
 
 export default class Replies extends React.Component<P> {
   render() {
-    const { replies, reloadPost } = this.props;
+    const {
+      replies,
+      requestDelete,
+      deleteSuccessful,
+      isBeingDeleted,
+      requestUpdate,
+      updateSuccessful,
+      isBeingUpdated,
+    } = this.props;
 
     return (
       <View>
         {replies.map(reply => (
-          <Comment key={reply.id} data={reply} reloadPost={reloadPost} />
+          <Comment
+            key={reply.id}
+            item={reply}
+            requestDelete={requestDelete}
+            deleteSuccessful={deleteSuccessful}
+            isBeingDeleted={isBeingDeleted}
+            requestUpdate={requestUpdate}
+            updateSuccessful={updateSuccessful}
+            isBeingUpdated={isBeingUpdated}
+          />
         ))}
       </View>
     );

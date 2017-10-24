@@ -21,11 +21,17 @@ type P = {
 
 type S = {
   replyingTo?: TComment,
+  refreshingData: boolean,
+  isBeingDeleted: boolean,
+  isBeingUpdated: boolean,
 };
 
 export default class PostDetailScreen extends Component<P, S> {
   state = {
     replyingTo: undefined,
+    refreshingData: false,
+    isBeingDeleted: false,
+    isBeingUpdated: false,
   };
 
   inputRef: ?any;
@@ -58,9 +64,33 @@ export default class PostDetailScreen extends Component<P, S> {
     fetch();
   };
 
+  requestDelete = (item: Post) => {
+    this.setState({ isBeingDeleted: true });
+    // TODO
+    console.log('request delete', item);
+  };
+
+  deleteSuccessful = (item: Post) => {
+    this.setState({ isBeingDeleted: false });
+    // TODO
+    console.log('delete successful', item);
+  };
+
+  requestUpdate = (item: Post) => {
+    this.setState({ isBeingUpdated: true });
+    // TODO
+    console.log('request update', item);
+  };
+
+  updateSuccessful = (item: Post) => {
+    this.setState({ isBeingUpdated: false });
+    // TODO
+    console.log('update successful', item);
+  };
+
   render() {
     const { navigation } = this.props;
-    const { replyingTo } = this.state;
+    const { replyingTo, isBeingDeleted, isBeingUpdated } = this.state;
 
     const readPostWithCommentsRq = makeReadPostWithCommentsRq(
       navigation.state.params.postId
@@ -105,27 +135,26 @@ export default class PostDetailScreen extends Component<P, S> {
                     postId={navigation.state.params.postId}
                     comments={data.replies}
                     onReplyPress={this.onReplyPress}
+                    isBeingDeleted={isBeingDeleted}
+                    isBeingUpdated={isBeingUpdated}
+                    requestDelete={this.requestDelete}
+                    requestUpdate={this.requestUpdate}
+                    deleteSuccessful={this.deleteSuccessful}
+                    updateSuccessful={this.updateSuccessful}
                     ListHeaderComponent={
                       <NewsFeedItem
-                        isBeingDeleted={true /*TODO*/}
-                        isBeingUpdated={true /*TODO*/}
+                        isBeingDeleted={isBeingDeleted}
+                        isBeingUpdated={isBeingUpdated}
                         isDetail
                         item={data}
                         navigation={this.props.navigation}
                         radius={0}
-                        requestDelete={(item: Post) => {
-                          // TODO
-                          console.log('delete', item);
-
-                          // this.props.navigation.goBack();
-                        }}
-                        requestUpdate={(item: Post) => {
-                          // TODO
-                          console.log('update', item);
-                        }}
+                        requestDelete={this.requestDelete}
+                        requestUpdate={this.requestUpdate}
+                        deleteSuccessful={this.deleteSuccessful}
+                        updateSuccessful={this.updateSuccessful}
                       />
                     }
-                    reloadPost={fetch}
                   />
                   <CommentInput
                     postId={data.id}

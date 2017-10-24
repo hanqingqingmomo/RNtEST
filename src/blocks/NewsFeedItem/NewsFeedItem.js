@@ -26,6 +26,8 @@ type P = {
   radius?: number,
   requestDelete: Function,
   requestUpdate: Function,
+  deleteSuccessful: Function,
+  updateSuccessful: Function,
 };
 
 export default class NewsFeedItem extends Component<P> {
@@ -104,6 +106,8 @@ export default class NewsFeedItem extends Component<P> {
       radius,
       requestDelete,
       requestUpdate,
+      updateSuccessful,
+      deleteSuccessful,
       isBeingUpdated,
       isBeingDeleted,
     } = this.props;
@@ -121,6 +125,7 @@ export default class NewsFeedItem extends Component<P> {
             navigation={navigation}
             isBeingDeleted={isBeingDeleted}
             requestDelete={requestDelete}
+            deleteSuccessful={deleteSuccessful}
           />
 
           {isDetail ? (
@@ -157,6 +162,7 @@ export default class NewsFeedItem extends Component<P> {
             item={item}
             links={this.getLinks()}
             requestUpdate={requestUpdate}
+            updateSuccessful={updateSuccessful}
             isBeingUpdated={isBeingUpdated}
           />
         </View>

@@ -14,6 +14,7 @@ type P = {
     onPress: Function,
   }>,
   requestUpdate: Function,
+  updateSuccessful: Function,
   isBeingUpdated: boolean,
 };
 
@@ -26,8 +27,14 @@ const HIT_SLOP = {
 
 export default class NewsFeedItemFooter extends Component<P> {
   render() {
-    const { item, links, requestUpdate, isBeingUpdated } = this.props;
-    const { id, likes_count, comments_count, liked } = item;
+    const {
+      item,
+      links,
+      requestUpdate,
+      updateSuccessful,
+      isBeingUpdated,
+    } = this.props;
+    const { likes_count, comments_count, liked } = item;
 
     return (
       <View style={[styles.footer, styles.row]}>
@@ -36,8 +43,9 @@ export default class NewsFeedItemFooter extends Component<P> {
             <Like
               count={likes_count}
               liked={liked}
-              objectId={id}
+              item={item}
               requestUpdate={requestUpdate}
+              updateSuccessful={updateSuccessful}
               isBeingUpdated={isBeingUpdated}
             />
           </View>

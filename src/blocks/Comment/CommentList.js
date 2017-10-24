@@ -11,17 +11,39 @@ type P = {
   ListHeaderComponent?: any,
   onReplyPress: TComment => void,
   postId: number,
-  reloadPost: Function,
+  requestDelete: Function,
+  deleteSuccessful: Function,
+  isBeingDeleted: boolean,
+  requestUpdate: Function,
+  updateSuccessful: Function,
+  isBeingUpdated: boolean,
 };
 
 export default class CommentList extends Component<P> {
-  renderItem = ({ item }: { item: TComment }) => (
-    <Comment
-      data={item}
-      onReplyPress={() => this.props.onReplyPress(item)}
-      reloadPost={this.props.reloadPost}
-    />
-  );
+  renderItem = ({ item }: { item: TComment }) => {
+    const {
+      onReplyPress,
+      requestDelete,
+      deleteSuccessful,
+      isBeingDeleted,
+      requestUpdate,
+      updateSuccessful,
+      isBeingUpdated,
+    } = this.props;
+
+    return (
+      <Comment
+        item={item}
+        onReplyPress={onReplyPress}
+        requestDelete={requestDelete}
+        deleteSuccessful={deleteSuccessful}
+        isBeingDeleted={isBeingDeleted}
+        requestUpdate={requestUpdate}
+        updateSuccessful={updateSuccessful}
+        isBeingUpdated={isBeingUpdated}
+      />
+    );
+  };
 
   keyExtractor = (comment: TComment) => comment.id.toString();
 

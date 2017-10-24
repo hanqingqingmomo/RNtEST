@@ -34,6 +34,7 @@ type P = {
   navigation: Object,
   user: User,
   requestDelete: Function,
+  deleteSuccessful: Function,
   isBeingDeleted: boolean,
 };
 
@@ -112,13 +113,15 @@ class NewsFeedItemHeader extends Component<P, S> {
   };
 
   deletePost = async () => {
-    const { item, requestDelete } = this.props;
+    const { item, requestDelete, deleteSuccessful } = this.props;
     const deletePostReq = makeDeletePostReq(item.id);
 
     requestDelete(item);
 
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
+
+      deleteSuccessful(item);
     } catch (err) {}
   };
 

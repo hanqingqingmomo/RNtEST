@@ -11,11 +11,28 @@ import type { CommunitySimple, Post } from '../../Types';
 type P = {
   navigation: any,
   data: Array<CommunitySimple>,
+  requestDelete: Function,
+  deleteSuccessful: Function,
+  isBeingDeleted: boolean,
+  requestUpdate: Function,
+  updateSuccessful: Function,
+  isBeingUpdated: boolean,
 };
 
 export default class NewsFeedList extends Component<P> {
   render() {
-    const { navigation, data, ...args } = this.props;
+    const {
+      navigation,
+      data,
+      isBeingDeleted,
+      isBeingUpdated,
+      requestDelete,
+      deleteSuccessful,
+      requestUpdate,
+      updateSuccessful,
+      ...args
+    } = this.props;
+
     return (
       <View style={styles.itemsContainer}>
         <FlatList
@@ -24,18 +41,14 @@ export default class NewsFeedList extends Component<P> {
           renderItem={({ item }) => (
             <View style={styles.item}>
               <NewsFeedItem
-                isBeingDeleted={true /* TODO */}
-                isBeingUpdated={true /* TODO */}
+                isBeingDeleted={isBeingDeleted}
+                isBeingUpdated={isBeingUpdated}
                 item={item}
                 navigation={navigation}
-                requestDelete={(item: Post) => {
-                  // TODO
-                  console.log('delete', item);
-                }}
-                requestUpdate={(item: Post) => {
-                  // TODO
-                  console.log('update', item);
-                }}
+                requestDelete={requestDelete}
+                deleteSuccessful={deleteSuccessful}
+                requestUpdate={requestUpdate}
+                updateSuccessful={updateSuccessful}
               />
             </View>
           )}

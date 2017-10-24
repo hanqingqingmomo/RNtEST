@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -37,17 +37,20 @@ type Setting = {
 };
 
 type P = {
-  data: TComment,
+  item: TComment,
   onReplyPress?: Function,
   user: User,
-  reloadPost: Function,
+  requestDelete: Function,
+  deleteSuccessful: Function,
+  isBeingDeleted: boolean,
   requestUpdate: Function,
+  updateSuccessful: Function,
   isBeingUpdated: boolean,
 };
 
 type S = {
   showReplies: boolean,
-  updating: boolean,
+  isBeingReported: boolean,
 };
 
 const AVATAR_SIZE = 25;
@@ -73,11 +76,10 @@ const mapStateToProps = state => ({
   user: selectUser(state),
 });
 
-@connect(mapStateToProps)
-export default class Comment extends React.Component<P, S> {
+class Comment extends Component<P, S> {
   state = {
     showReplies: false,
-    updating: false,
+    isBeingReported: false,
   };
 
   get settings(): Array<*> {
@@ -86,7 +88,7 @@ export default class Comment extends React.Component<P, S> {
         typeof setting.isVisible === 'undefined' ||
         setting.isVisible({
           user: this.props.user,
-          author: this.props.data.author,
+          author: this.props.item.author,
         })
     ).map((setting: Setting) => ({
       label: () => this.renderSettings(setting),
@@ -107,24 +109,23 @@ export default class Comment extends React.Component<P, S> {
   };
 
   deleteComment = async () => {
-    const { data } = this.props;
+    const { item, requestDelete, deleteSuccessful } = this.props;
 
-    const deleteCommentReq = makeDeleteCommentReq(data.id);
+    const deleteCommentReq = makeDeleteCommentReq(item.id);
 
-    this.setState({ updating: true });
+    requestDelete(item);
 
     try {
       await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
-      this.setState({ updating: false });
-      this.props.reloadPost();
+      deleteSuccessful(item);
     } catch (err) {}
   };
 
   reportComment = async () => {
-    const { data } = this.props;
-    const reportPostReq = makeReportPostReq(data.id);
+    const { item } = this.props;
+    const reportPostReq = makeReportPostReq(item.id);
 
-    this.setState({ updating: true });
+    this.setState({ isBeingReported: true });
 
     try {
       const reportResp = await global.fetch(
@@ -132,7 +133,7 @@ export default class Comment extends React.Component<P, S> {
         reportPostReq.options
       );
 
-      this.setState({ updating: false });
+      this.setState({ isBeingReported: false });
 
       const resp = await reportResp.json();
 
@@ -167,8 +168,19 @@ export default class Comment extends React.Component<P, S> {
   };
 
   render() {
-    const { data, onReplyPress, requestUpdate, isBeingUpdated } = this.props;
+    const {
+      item,
+      onReplyPress,
+      requestUpdate,
+      updateSuccessful,
+      isBeingUpdated,
+      requestDelete,
+      deleteSuccessful,
+      isBeingDeleted,
+    } = this.props;
     const isReply = !onReplyPress;
+
+    const { isBeingReported } = this.state;
 
     return (
       <View
@@ -179,7 +191,7 @@ export default class Comment extends React.Component<P, S> {
         ]}
       >
         <View style={styles.avatarWrapper}>
-          <Avatar imageURI={data.author.profile_photo} size={AVATAR_SIZE} />
+          <Avatar imageURI={item.author.profile_photo} size={AVATAR_SIZE} />
         </View>
 
         <View
@@ -197,7 +209,7 @@ export default class Comment extends React.Component<P, S> {
                 color="#455A64"
                 style={styles.authorName}
               >
-                {data.author.first_name} {data.author.last_name}
+                {item.author.first_name} {item.author.last_name}
               </Text>
               <Text
                 size={11}
@@ -205,10 +217,10 @@ export default class Comment extends React.Component<P, S> {
                 lineHeight={13}
                 color={getColor('gray')}
               >
-                <TimeAgo date={data.created_at} />
+                <TimeAgo date={item.created_at} />
               </Text>
             </View>
-            {this.state.updating ? (
+            {isBeingReported || isBeingDeleted ? (
               <CenterView>
                 <ActivityIndicator />
               </CenterView>
@@ -225,7 +237,7 @@ export default class Comment extends React.Component<P, S> {
           </View>
 
           <Text size={14} lineHeight={18} color="#455A64">
-            {data.text_content}
+            {item.text_content}
           </Text>
 
           <View
@@ -240,17 +252,18 @@ export default class Comment extends React.Component<P, S> {
             >
               <View style={styles.likeWrapper}>
                 <Like
-                  count={data.likes_count}
-                  liked={data.liked}
-                  objectId={data.id}
+                  count={item.likes_count}
+                  liked={item.liked}
+                  item={item}
                   requestUpdate={requestUpdate}
+                  updateSuccessful={updateSuccessful}
                   isBeingUpdated={isBeingUpdated}
                 />
               </View>
 
-              {!isReply && (
+              {onReplyPress && (
                 <Text
-                  onPress={onReplyPress}
+                  onPress={() => onReplyPress(item)}
                   size={13}
                   lineHeight={18}
                   color={getColor('linkBlue')}
@@ -261,24 +274,29 @@ export default class Comment extends React.Component<P, S> {
               )}
             </View>
 
-            {!isReply && data.comments_count ? (
+            {!isReply && item.comments_count ? (
               <Text
                 size={13}
                 lineHeight={18}
                 color="gray"
                 onPress={this.viewAllReplies}
               >
-                {data.comments_count === 1
+                {item.comments_count === 1
                   ? 'View 1 Reply'
-                  : `View All ${data.comments_count} Replies`}
+                  : `View All ${item.comments_count} Replies`}
               </Text>
             ) : null}
           </View>
 
           {!isReply && this.state.showReplies ? (
             <Replies
-              replies={data.replies}
-              reloadPost={this.props.reloadPost}
+              replies={item.replies}
+              requestDelete={requestDelete}
+              deleteSuccessful={deleteSuccessful}
+              isBeingDeleted={isBeingDeleted}
+              requestUpdate={requestUpdate}
+              updateSuccessful={updateSuccessful}
+              isBeingUpdated={isBeingUpdated}
             />
           ) : null}
         </View>
@@ -286,6 +304,8 @@ export default class Comment extends React.Component<P, S> {
     );
   }
 }
+
+export default connect(mapStateToProps)(Comment);
 
 const styles = StyleSheet.create({
   flexRow: {
