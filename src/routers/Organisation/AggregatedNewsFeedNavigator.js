@@ -39,9 +39,6 @@ export default StackNavigator(
     },
   },
   {
-    initialRouteName: 'PostDetailScreen',
-    initialRouteParams: {
-      postId: '7ea4b6880dfc',
-    },
+    initialRouteName: 'AggregatedNewsFeedScreen',
   }
 );
