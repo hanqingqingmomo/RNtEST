@@ -80,8 +80,12 @@ export type Comment = $Exact<{
 export type Post = {
   id: string,
   text_content: string,
-  attachment: ?LinkAttachment,
+  attachment: ?{
+    type: string,
+    url: string,
+  },
   author: ?User,
+  cached_url: ?LinkAttachment,
   comments_count: number,
   communities: Array<{
     id: string,

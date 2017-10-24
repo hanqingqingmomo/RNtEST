@@ -7,7 +7,7 @@ import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post, type User, type Attachment } from '../../Types';
+import { type Post, type User } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -21,7 +21,6 @@ type Props = Post & {
   navigation: Object,
   refetch: Function,
   onDelete: Function,
-  attachment?: Attachment,
   isDetail?: boolean,
 };
 
@@ -36,6 +35,8 @@ export default class NewsFeedItem extends Component<Props> {
 
   getLinks = () => {
     const { id, navigation, refetch, isDetail } = this.props;
+
+    console.log(this.props.attachment);
 
     const links = [
       // {
@@ -69,14 +70,14 @@ export default class NewsFeedItem extends Component<Props> {
   };
 
   renderContent() {
-    const { text_content, created_at, isDetail } = this.props;
+    const { text_content, created_at, isDetail, cached_url } = this.props;
 
     return (
       <View>
         {(this.hasAttachment && this.attachment.type === 'link') ||
         !this.hasAttachment ? (
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-            {isDetail ? text_content : parseTextContent(text_content, 120)}
+            {parseTextContent(text_content, 120)}
           </Text>
         ) : null}
 
@@ -86,9 +87,17 @@ export default class NewsFeedItem extends Component<Props> {
             title={text_content}
             detail={isDetail}
           />
-        ) : (
-          <NewsFeedItemAttachment {...this.attachment} />
-        )}
+        ) : null}
+
+        {cached_url ? (
+          isDetail ? (
+            <TouchableOpacity onPress={() => {}}>
+              <NewsFeedItemAttachment {...cached_url} />
+            </TouchableOpacity>
+          ) : (
+            <NewsFeedItemAttachment {...cached_url} />
+          )
+        ) : null}
 
         <Text style={styles.postedTime} size={11} weight="500" lineHeight={13}>
           Shared <TimeAgo date={created_at} /> by:
