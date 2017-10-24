@@ -27,10 +27,6 @@ type Props = {
 };
 
 export default class MembersTab extends Component<Props> {
-  static navigationOptions = ({ screenProps }) => ({
-    tabBarLabel: `Members (${screenProps.members})`,
-  });
-
   keyExtractor = item => item.id;
 
   renderItem = ({ item, separators }) => {
@@ -57,7 +53,7 @@ export default class MembersTab extends Component<Props> {
     );
     // TODO use flat list
     return (
-      <Screen fill tintColor="white">
+      <View style={{ flex: 1 }}>
         <Fetch
           url={readCommunityMembersRq.url}
           options={readCommunityMembersRq.options}
@@ -93,7 +89,7 @@ export default class MembersTab extends Component<Props> {
             return null;
           }}
         </Fetch>
-      </Screen>
+      </View>
     );
   }
 }
