@@ -16,7 +16,7 @@ const NewsFeedConversation = props => {
   const { user } = props;
 
   return (
-    <ShadowView style={styles.cellContainer}>
+    <ShadowView style={styles.cellContainer} radius={0}>
       <Cell
         {...props}
         title="Start a conversation..."

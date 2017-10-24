@@ -16,6 +16,7 @@ export default class PostEditorContent extends Component<Props> {
         <TextInput
           placeholder="Write content here..."
           placeholderTextColor="#B0BEC5"
+          underlineColorAndroid="transparent"
           style={styles.input}
           multiline={true}
           {...this.props}

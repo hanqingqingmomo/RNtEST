@@ -1,31 +1,30 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Linking } from 'react-native';
 
 import { Text, View, Icon, Image } from '../../atoms';
+import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
+import { type LinkAttachment } from '../../Types';
 
-type P = {
-  image_url?: string,
-  title?: string,
-  type: 'link',
-  url?: string,
-};
+type Props = LinkAttachment;
 
-export default class NewsFeedItemAttachment extends Component<P> {
+export default class NewsFeedItemAttachment extends Component<Props> {
   render() {
-    const { image_url, title, url } = this.props;
+    const { title, description, thumbnail_url, url } = this.props;
 
-    return image_url ? (
+    return (
       <View style={styles.container}>
-        <View style={styles.imageWrapper}>
-          <Image
-            source={{ uri: image_url }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </View>
+        {thumbnail_url ? (
+          <View style={styles.imageWrapper}>
+            <Image
+              source={{ uri: thumbnail_url }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+        ) : null}
         <View style={styles.decription}>
           <View style={styles.icon}>
             <Icon name="link" size={24} color="#B0BEC5" />
@@ -40,22 +39,25 @@ export default class NewsFeedItemAttachment extends Component<P> {
                 ellipsizeMode="tail"
                 style={css('color', '#38505A')}
               >
-                {title}
+                {description}
               </Text>
             ) : null}
-            <Text
-              size={14}
-              lineHeight={18}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={css('color', '#00B0FF')}
-            >
-              {url}
-            </Text>
+            {url ? (
+              <Text
+                size={14}
+                lineHeight={18}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                color={getColor('linkBlue')}
+                onPress={() => Linking.openURL(url)}
+              >
+                {url}
+              </Text>
+            ) : null}
           </View>
         </View>
       </View>
-    ) : null;
+    );
   }
 }
 

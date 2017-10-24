@@ -67,7 +67,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
               ),
             },
             {
-              label: 'Members',
+              label: `Members (${community.members})`,
               component: () => (
                 <TabMembers
                   community={community}

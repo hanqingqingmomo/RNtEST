@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     backgroundColor: 'white',
+    overflow: 'hidden',
   },
   title: {
     flexGrow: 1,

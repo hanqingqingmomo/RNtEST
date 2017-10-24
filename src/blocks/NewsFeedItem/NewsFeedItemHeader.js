@@ -17,12 +17,16 @@ import {
 import { getColor } from '../../utils/color';
 import type { IconName, CommunitySimple, User } from '../../Types';
 import { selectUser } from '../../redux/selectors';
-import { makeDeletePostReq } from '../../utils/requestFactory';
+import {
+  makeDeletePostReq,
+  makeReportPostReq,
+} from '../../utils/requestFactory';
 
 type Setting = {
   label: string,
   iconName: IconName,
-  key: 'pin' | 'delete' | 'share',
+  isVisible: Function,
+  key: 'pin' | 'delete' | 'share' | 'report',
 };
 
 type Props = {
@@ -35,7 +39,7 @@ type Props = {
 };
 
 type State = {
-  deleting: boolean,
+  updating: boolean,
 };
 
 const HIT_SLOP = {
@@ -60,8 +64,18 @@ const SETTINGS = [
     key: 'delete',
     label: 'Delete',
     iconName: 'delete',
+    isVisible: ({ user, author }) => isUserAuthorOfPost(user, author),
+  },
+  {
+    key: 'report',
+    label: 'Report',
+    iconName: 'report',
   },
 ];
+
+function isUserAuthorOfPost(user, author): boolean {
+  return author.id === user.id;
+}
 
 const mapStateToProps = state => ({
   user: selectUser(state),
@@ -70,20 +84,21 @@ const mapStateToProps = state => ({
 @connect(mapStateToProps)
 export default class NewsFeedItemHeader extends Component<Props, State> {
   state = {
-    deleting: false,
+    updating: false,
   };
 
   get settings(): Array<*> {
-    return SETTINGS.map((setting: Setting) => ({
+    return SETTINGS.filter(
+      (setting: Setting) =>
+        typeof setting.isVisible === 'undefined' ||
+        setting.isVisible({
+          user: this.props.user,
+          author: this.props.author,
+        })
+    ).map((setting: Setting) => ({
       label: () => this.renderSettings(setting),
       onPress: () => this.onSettingPress(setting),
     }));
-  }
-
-  get isUserAuthorOfPost(): boolean {
-    const { author, user } = this.props;
-
-    return author.id === user.id;
   }
 
   onCommunityPress = (community: CommunitySimple) => {
@@ -96,28 +111,13 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     }
   };
 
-  renderSettings = ({
-    label,
-    iconName,
-    ...args
-  }: Setting): React$Element<*> => {
-    return (
-      <PopoverItem
-        {...args}
-        contentView={label}
-        imageView={
-          <View style={{ padding: 6 }}>
-            <Icon name={iconName} color="#B0BEC5" size="md" />
-          </View>
-        }
-      />
-    );
-  };
-
   onSettingPress = async (setting: Setting) => {
     switch (setting.key) {
       case 'delete':
         this.deletePost();
+        break;
+      case 'report':
+        this.reportPost();
         break;
       default:
     }
@@ -127,14 +127,59 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     const { id, onDelete } = this.props;
     const deletePostReq = makeDeletePostReq(id);
 
-    this.setState({ deleting: true });
+    this.setState({ updating: true });
 
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
-      this.setState({ deleting: false });
+      this.setState({ updating: false });
       onDelete();
     } catch (err) {}
   };
+
+  reportPost = async () => {
+    const { id } = this.props;
+    const reportPostReq = makeReportPostReq(id);
+
+    this.setState({ updating: true });
+
+    try {
+      const reportResp = await global.fetch(
+        reportPostReq.url,
+        reportPostReq.options
+      );
+
+      this.setState({ updating: false });
+
+      const resp = await reportResp.json();
+
+      if (resp.error) {
+        global.alertWithType('error', 'Ooops', resp.error);
+      } else {
+        global.alertWithType(
+          'success',
+          'Thanks!',
+          'The post has been successfully reported.'
+        );
+      }
+    } catch (err) {}
+  };
+
+  renderSettings = ({
+    label,
+    iconName,
+    ...args
+  }: Setting): React$Element<*> => (
+    <PopoverItem
+      {...args}
+      contentView={label}
+      imageView={
+        <View style={{ padding: 6 }}>
+          <Icon name={iconName} color="#B0BEC5" size="md" />
+        </View>
+      }
+      key={iconName}
+    />
+  );
 
   render() {
     let communities = [...this.props.communities];
@@ -161,20 +206,16 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
             </View>
           ))}
         </View>
-        {this.isUserAuthorOfPost ? (
-          <View>
-            {this.state.deleting ? (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            ) : (
-              <Popover
-                labels={this.settings}
-                button={<Icon name="menu" color="#C6D3D8" size={20} />}
-              />
-            )}
-          </View>
-        ) : null}
+        {this.state.updating ? (
+          <CenterView>
+            <ActivityIndicator />
+          </CenterView>
+        ) : (
+          <Popover
+            labels={this.settings}
+            button={<Icon name="menu" color="#C6D3D8" size={20} />}
+          />
+        )}
       </View>
     );
   }

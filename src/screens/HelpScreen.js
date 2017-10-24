@@ -7,6 +7,10 @@ import { HelpBlock } from '../blocks';
 
 const help = [
   {
+    title: 'General inquiries:',
+    text: ['support@poweredbyaction.org'],
+  },
+  {
     title: 'How to sign in:',
     text: [
       'https://poweredbyaction.zendesk.com/hc/en-us/articles/216805898-How-to-Access-PbA',
@@ -23,8 +27,7 @@ const help = [
     text: ['https://poweredbyaction.zendesk.com/hc/en-us/articles/217509198'],
   },
   {
-    title:
-      "Pinned posts (we're going to need a screenshot of mobile pinned post):",
+    title: 'Pinned posts:',
     text: ['https://poweredbyaction.zendesk.com/hc/en-us/articles/219495368'],
   },
   {
@@ -36,7 +39,7 @@ const help = [
   {
     title: 'Cancel Payment:',
     text: [
-      'To cancel or change your recurring donation to the YWCA Metropolitan Chicago, please email as at: support@poweredbyaction.org',
+      'To cancel or change your recurring donation to the YWCA Metropolitan Chicago, please email us at: support@poweredbyaction.org',
     ],
   },
 ];

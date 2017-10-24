@@ -18,22 +18,18 @@ import { type User } from '../Types';
 // TODO use type after merge
 type P = {
   user: User,
+  settings?: React$Element<*>,
 };
 
 export default class ProfileCard extends Component<P> {
   render() {
-    const {
-      email,
-      first_name,
-      last_name,
-      phone,
-      profile_photo,
-      role,
-    } = this.props.user;
+    const { user, settings } = this.props;
+    const { email, first_name, last_name, phone, profile_photo, role } = user;
 
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
+          {settings ? <View style={styles.settings}>{settings}</View> : null}
           <Lightbox
             underlayColor="white"
             renderContent={() => <ImagePreview imageURI={profile_photo} />}
@@ -133,6 +129,11 @@ const styles = StyleSheet.create({
     paddingTop: 26,
     paddingBottom: 30,
     backgroundColor: 'white',
+  },
+  settings: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
   },
   links: {
     flexDirection: 'row',

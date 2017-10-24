@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, Platform } from 'react-native';
 
 import type { Comment as TComment } from '../../Types';
 import { Fetch, Text, TouchableItem, View, Icon } from '../../atoms';
@@ -19,14 +19,16 @@ type P = {
 
 type S = {
   text_content: string,
+  height: number,
 };
 
 export default class CommentInput extends Component<P, S> {
   state = {
     text_content: '',
+    height: 0,
   };
 
-  onChange = (text_content: string) => {
+  onChangeText = (text_content: string) => {
     this.setState({ text_content });
   };
 
@@ -89,12 +91,15 @@ export default class CommentInput extends Component<P, S> {
               <View style={styles.inputRow}>
                 <TextInput
                   multiline
-                  onChangeText={this.onChange}
+                  onChangeText={this.onChangeText}
+                  onContentSizeChange={e =>
+                    this.setState({ height: e.nativeEvent.contentSize.height })}
                   placeholder="Participate"
                   placeholderTextColor="#8fa3ad"
                   ref={passRef}
-                  style={styles.input}
+                  style={[styles.input, { height: this.state.height }]}
                   value={text_content}
+                  underlineColorAndroid="transparent"
                 />
                 <TouchableItem
                   onPress={this.handleSubmit(fetch)}
@@ -103,10 +108,8 @@ export default class CommentInput extends Component<P, S> {
                 >
                   <Text
                     size={17}
-                    style={[
-                      css('color', getColor('orange')),
-                      disabled ? styles.disabled : undefined,
-                    ]}
+                    color={getColor('orange')}
+                    style={disabled ? styles.disabled : undefined}
                   >
                     Send
                   </Text>
@@ -121,27 +124,35 @@ export default class CommentInput extends Component<P, S> {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    shadowOffset: { width: 0, height: -2 },
-    shadowColor: 'rgba(117,120,128,0.15)',
-    shadowOpacity: 1,
-    shadowRadius: 10,
-  },
+  container: Platform.select({
+    ios: {
+      shadowOffset: { width: 0, height: -2 },
+      shadowColor: 'rgba(117,120,128,0.15)',
+      shadowOpacity: 1,
+      shadowRadius: 10,
+    },
+    android: {
+      borderTopWidth: 1,
+      borderColor: 'rgba(117,120,128,0.15)',
+    },
+  }),
   inputRow: {
     flexDirection: 'row',
     paddingVertical: 6,
     paddingHorizontal: 15,
+    justifyContent: 'center',
   },
   input: {
-    flexGrow: 1,
+    flex: 1,
     marginRight: 15,
-    paddingVertical: 8,
+    paddingVertical: 6,
     paddingHorizontal: 13,
     fontSize: 14,
     lineHeight: 22,
-    backgroundColor: 'rgb(237,240,242)',
+    minHeight: 30,
+    backgroundColor: '#edf0f2',
     borderRadius: 16,
-    color: 'rgb(69,90,100)',
+    color: '#455a64',
   },
   targetedReplyWrapper: {
     backgroundColor: 'white',

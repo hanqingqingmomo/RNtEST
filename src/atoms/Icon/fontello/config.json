@@ -1313,6 +1313,20 @@
       "search": [
         "menu"
       ]
+    },
+    {
+      "uid": "0a0540bbaa5e9dba608ef9101c1edb6e",
+      "css": "report",
+      "code": 59418,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M487.5 16.3A487.5 487.5 0 1 0 975 503.7 487.5 487.5 0 0 0 487.5 16.3ZM550 200L539.8 600H435L425 200ZM487.5 809A65.5 65.5 0 1 1 555.3 743.5 66 66 0 0 1 487.5 809Z",
+        "width": 1000
+      },
+      "search": [
+        "report"
+      ]
     }
   ]
 }

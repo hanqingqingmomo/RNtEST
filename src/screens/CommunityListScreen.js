@@ -83,7 +83,7 @@ export default class CommunityListScreen extends Component<{}, State> {
           <View style={styles.segmentedControlContainer}>
             <SegmentedControl
               labels={['Joined', 'Explore']}
-              selectedLabel="Joined"
+              selectedLabel={this.state.membershipStatus}
               onChange={(membershipStatus: MembershipStatus) =>
                 this.setState({ membershipStatus })}
             />
