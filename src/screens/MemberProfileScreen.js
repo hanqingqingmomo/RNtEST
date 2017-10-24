@@ -7,7 +7,10 @@ import {
   ActivityIndicator,
   CenterView,
   Fetch,
+  Icon,
   Pill,
+  Popover,
+  PopoverItem,
   Screen,
   TableView,
   TouchableOpacity,
@@ -15,14 +18,29 @@ import {
 } from '../atoms';
 import { ProfileCard } from '../blocks';
 import { getColor } from '../utils/color';
-import { makeReadProfileRq } from '../utils/requestFactory';
-import type { User, CommunitySimple } from '../Types';
+import { makeReadProfileRq, makeReportUserReq } from '../utils/requestFactory';
+import type { IconName, User, CommunitySimple } from '../Types';
 
 const { Table, Section, Cell } = TableView;
+
+type Setting = {
+  label: string,
+  iconName: IconName,
+  isVisible: Function,
+  key: 'report',
+};
 
 type Props = {
   navigation: Object,
 };
+
+const SETTINGS = [
+  {
+    key: 'report',
+    label: 'Report',
+    iconName: 'report',
+  },
+];
 
 export default class MemberProfileScreen extends Component<Props> {
   static navigationOptions = ({ navigation }) => {
@@ -32,11 +50,72 @@ export default class MemberProfileScreen extends Component<Props> {
     };
   };
 
+  get settings(): Array<*> {
+    return SETTINGS.map((setting: Setting) => ({
+      label: () => this.renderSettings(setting),
+      onPress: () => this.onSettingPress(setting),
+    }));
+  }
+
+  onSettingPress = async (setting: Setting) => {
+    switch (setting.key) {
+      case 'report':
+        this.reportUser();
+        break;
+      default:
+    }
+  };
+
   handleCommunityPress = (community: CommunitySimple) => {
     this.props.navigation.navigate('CommunityCenterScreen', {
       communityId: community.id,
     });
   };
+
+  reportUser = async () => {
+    const {
+      id,
+      first_name,
+      last_name,
+    } = this.props.navigation.state.params.user;
+    const reportUserReq = makeReportUserReq(id);
+
+    try {
+      const reportResp = await global.fetch(
+        reportUserReq.url,
+        reportUserReq.options
+      );
+
+      const resp = await reportResp.json();
+
+      if (resp.error) {
+        global.alertWithType('error', 'Ooops', resp.error);
+      } else {
+        global.alertWithType(
+          'success',
+          'Thanks!',
+          `${first_name} ${last_name} has been successfully reported.`
+        );
+      }
+    } catch (err) {}
+  };
+
+  renderSettings = ({
+    label,
+    iconName,
+    ...args
+  }: Setting): React$Element<*> => (
+    <PopoverItem
+      {...args}
+      contentView={label}
+      imageView={
+        <View style={{ padding: 6 }}>
+          <Icon name={iconName} color="#B0BEC5" size="md" />
+        </View>
+      }
+      key={iconName}
+    />
+  );
 
   renderCommunities = (member: User) => {
     return (
@@ -67,7 +146,17 @@ export default class MemberProfileScreen extends Component<Props> {
               <Screen>
                 <Table>
                   <Section sectionPaddingTop={0}>
-                    <ProfileCard user={memeberData} />
+                    <ProfileCard
+                      user={memeberData}
+                      settings={
+                        <Popover
+                          labels={this.settings}
+                          button={
+                            <Icon name="menu" color="#C6D3D8" size={20} />
+                          }
+                        />
+                      }
+                    />
                   </Section>
                   <Section header="Communities">
                     <Cell

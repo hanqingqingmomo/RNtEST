@@ -24,7 +24,10 @@ import {
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { selectUser } from '../../redux/selectors';
-import { makeDeleteCommentReq } from '../../utils/requestFactory';
+import {
+  makeReportPostReq,
+  makeDeleteCommentReq,
+} from '../../utils/requestFactory';
 import Replies from './Replies';
 
 // import CommentAttachment from './CommentAttachment';
@@ -32,7 +35,8 @@ import Replies from './Replies';
 type Setting = {
   label: string,
   iconName: IconName,
-  key: 'pin' | 'delete' | 'share',
+  isVisible: Function,
+  key: 'pin' | 'delete' | 'share' | 'report',
 };
 
 type P = {
@@ -44,7 +48,7 @@ type P = {
 
 type S = {
   showReplies: boolean,
-  deleting: boolean,
+  updating: boolean,
 };
 
 const AVATAR_SIZE = 25;
@@ -63,8 +67,18 @@ const SETTINGS = [
     key: 'delete',
     label: 'Delete',
     iconName: 'delete',
+    isVisible: ({ user, author }) => isUserAuthorOfPost(user, author),
+  },
+  {
+    key: 'report',
+    label: 'Report',
+    iconName: 'report',
   },
 ];
+
+function isUserAuthorOfPost(user, author): boolean {
+  return author.id === user.id;
+}
 
 const mapStateToProps = state => ({
   user: selectUser(state),
@@ -74,21 +88,79 @@ const mapStateToProps = state => ({
 export default class Comment extends React.Component<P, S> {
   state = {
     showReplies: false,
-    deleting: false,
+    updating: false,
   };
 
-  get isUserAuthorOfPost(): boolean {
-    const { data, user } = this.props;
-
-    return data.author.id === user.id;
-  }
-
   get settings(): Array<*> {
-    return SETTINGS.map((setting: Setting) => ({
+    return SETTINGS.filter(
+      (setting: Setting) =>
+        typeof setting.isVisible === 'undefined' ||
+        setting.isVisible({
+          user: this.props.user,
+          author: this.props.data.author,
+        })
+    ).map((setting: Setting) => ({
       label: () => this.renderSettings(setting),
       onPress: () => this.onSettingPress(setting),
     }));
   }
+
+  onSettingPress = async (setting: Setting) => {
+    switch (setting.key) {
+      case 'delete':
+        this.deleteComment();
+        break;
+      case 'report':
+        this.reportComment();
+      default:
+    }
+  };
+
+  deleteComment = async () => {
+    const { data } = this.props;
+
+    const deleteCommentReq = makeDeleteCommentReq(data.id);
+
+    this.setState({ updating: true });
+
+    try {
+      await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
+      this.setState({ updating: false });
+      this.props.reloadPost();
+    } catch (err) {}
+  };
+
+  reportComment = async () => {
+    const { data } = this.props;
+    const reportPostReq = makeReportPostReq(data.id);
+
+    this.setState({ updating: true });
+
+    try {
+      const reportResp = await global.fetch(
+        reportPostReq.url,
+        reportPostReq.options
+      );
+
+      this.setState({ updating: false });
+
+      const resp = await reportResp.json();
+
+      if (resp.error) {
+        global.alertWithType('error', 'Ooops', resp.error);
+      } else {
+        global.alertWithType(
+          'success',
+          'Thanks!',
+          'The comment has been successfully reported.'
+        );
+      }
+    } catch (err) {}
+  };
+
+  viewAllReplies = () => {
+    this.setState({ showReplies: !this.state.showReplies });
+  };
 
   renderSettings = ({
     label,
@@ -102,35 +174,6 @@ export default class Comment extends React.Component<P, S> {
         imageView={<Icon name={iconName} color="#B0BEC5" size="md" />}
       />
     );
-  };
-
-  onSettingPress = async (setting: Setting) => {
-    switch (setting.key) {
-      case 'delete':
-        this.deleteComment();
-        break;
-      default:
-    }
-  };
-
-  deleteComment = async () => {
-    const { data } = this.props;
-
-    const deleteCommentReq = makeDeleteCommentReq(data.id);
-
-    this.setState({ deleting: true });
-
-    try {
-      await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
-      this.setState({ deleting: false });
-      this.props.reloadPost();
-    } catch (err) {}
-  };
-
-  onCommentPress = () => {};
-
-  viewAllReplies = () => {
-    this.setState({ showReplies: !this.state.showReplies });
   };
 
   render() {
@@ -177,22 +220,20 @@ export default class Comment extends React.Component<P, S> {
                 <TimeAgo date={data.created_at} />
               </Text>
             </View>
-            {this.isUserAuthorOfPost ? (
-              this.state.deleting ? (
-                <CenterView>
-                  <ActivityIndicator />
-                </CenterView>
-              ) : (
-                <Popover
-                  labels={this.settings}
-                  button={
-                    <View style={{ padding: 6 }}>
-                      <Icon name="menu" color="#CFD8DC" size={24} />
-                    </View>
-                  }
-                />
-              )
-            ) : null}
+            {this.state.updating ? (
+              <CenterView>
+                <ActivityIndicator />
+              </CenterView>
+            ) : (
+              <Popover
+                labels={this.settings}
+                button={
+                  <View style={{ padding: 6 }}>
+                    <Icon name="menu" color="#CFD8DC" size={24} />
+                  </View>
+                }
+              />
+            )}
           </View>
 
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>

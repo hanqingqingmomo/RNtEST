@@ -319,6 +319,24 @@ export const makeDeletePostReq = (postId: number | string) =>
     },
   });
 
+// TODO change endpoint
+export const makeReportPostReq = (postId: number | string) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${postId}/report`),
+    options: {
+      method: 'POST',
+    },
+  });
+
+// TODO change endpoint
+export const makeReportUserReq = (userId: number | string) =>
+  inject({
+    url: join(Config.API_URL, `/v1/content_objects/${userId}/report`),
+    options: {
+      method: 'POST',
+    },
+  });
+
 export const makeScrapeUrlReq = (url: string) =>
   inject({
     url: join(Config.API_URL, '/v1/content_objects/generate_thumbnail'),
