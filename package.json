@@ -48,7 +48,6 @@
     "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.13",
     "react-redux": "^5.0.5",
-    "react-test-renderer": "^16.0.0",
     "redux": "^3.7.2",
     "redux-persist": "5.0.0-rc.6",
     "redux-saga": "^0.15.5"
@@ -69,6 +68,7 @@
     "jest": "^21.2.1",
     "prettier": "^1.7.4",
     "react-native-payments-cli": "^0.2.0",
+    "react-test-renderer": "^16.0.0",
     "reactotron-react-native": "^1.12.3",
     "reactotron-redux": "^1.12.2",
     "reactotron-redux-saga": "^1.12.2"
