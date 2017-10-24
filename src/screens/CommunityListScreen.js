@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { BlackPortal, WhitePortal } from 'react-native-portal';
 import { getColor } from '../utils/color';
 
@@ -20,27 +20,6 @@ import {
   View,
 } from '../atoms';
 import { makeReadCommunitiesListRq } from '../utils/requestFactory';
-
-const styles = StyleSheet.create({
-  segmentedControlContainer: {
-    width: '100%',
-  },
-  container: {
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flexGrow: 1,
-  },
-
-  item: {
-    paddingTop: 1,
-    paddingBottom: 5,
-    paddingHorizontal: 5,
-    flexGrow: 1,
-    width: '50%',
-  },
-});
 
 const HEADER_VIEW_ID = 'HeaderView:CommListing';
 
@@ -131,3 +110,25 @@ export default class CommunityListScreen extends Component<{}, State> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  segmentedControlContainer: {
+    width: '100%',
+    paddingRight: Platform.OS === 'android' ? 15 : 0,
+  },
+  container: {
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexGrow: 1,
+  },
+
+  item: {
+    paddingTop: 1,
+    paddingBottom: 5,
+    paddingHorizontal: 5,
+    flexGrow: 1,
+    width: '50%',
+  },
+});
