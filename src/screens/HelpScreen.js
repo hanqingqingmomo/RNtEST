@@ -39,7 +39,7 @@ const help = [
   {
     title: 'Cancel Payment:',
     text: [
-      'To cancel or change your recurring donation to the YWCA Metropolitan Chicago, please email as at: support@poweredbyaction.org',
+      'To cancel or change your recurring donation to the YWCA Metropolitan Chicago, please email us at: support@poweredbyaction.org',
     ],
   },
 ];
