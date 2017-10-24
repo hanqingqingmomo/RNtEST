@@ -145,7 +145,6 @@ export default class NewsFeed extends Component<Props, State> {
 const styles = StyleSheet.create({
   ListHeaderComponent: {
     marginBottom: 10,
-    backgroundColor: 'pink',
   },
   item: {
     paddingHorizontal: 10,
