@@ -3,22 +3,13 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, Avatar, Button, TouchableItem } from '../../atoms';
+import { Text, View, Avatar, TouchableItem } from '../../atoms';
 import { css } from '../../utils/style';
-
-type UserProps = {
-  email: string,
-  first_name: string,
-  last_name: string,
-  profile_photo: string,
-  id: number,
-};
+import { type User } from '../../Types';
 
 type P = {
-  onReplayPress: () => void,
-  onUserPress: UserProps => void,
-  author: UserProps,
-  replies: number,
+  onUserPress: Function,
+  author: User,
 };
 
 const HIT_SLOP = {
@@ -29,17 +20,14 @@ const HIT_SLOP = {
 };
 
 export default class NewsFeedItemAuthor extends Component<P> {
-  onUserPress = () => {
-    this.props.onUserPress(this.props.author);
-  };
-
   render() {
-    const { first_name, last_name, profile_photo } = this.props.author;
+    const { author, onUserPress } = this.props;
+    const { first_name, last_name, profile_photo } = author;
 
     return (
       <View style={[styles.container, styles.row]}>
         <TouchableItem
-          onPress={this.onUserPress}
+          onPress={onUserPress}
           style={styles.user}
           hitSlop={HIT_SLOP}
         >
@@ -55,16 +43,6 @@ export default class NewsFeedItemAuthor extends Component<P> {
             </Text>
           </View>
         </TouchableItem>
-
-        {/* <View style={[styles.button, styles.row]}>
-          <Button
-            size="sm"
-            color="#00E676"
-            textColor="white"
-            title={`${this.props.replies || 0} Reply`}
-            onPress={this.props.onReplayPress}
-          />
-        </View> */}
       </View>
     );
   }
@@ -83,8 +61,5 @@ const styles = StyleSheet.create({
   },
   username: {
     marginLeft: 10,
-  },
-  button: {
-    marginVertical: 2,
   },
 });

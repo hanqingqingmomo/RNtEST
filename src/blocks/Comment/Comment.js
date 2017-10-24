@@ -22,7 +22,6 @@ import {
   View,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
-import { css } from '../../utils/style';
 import { selectUser } from '../../redux/selectors';
 import {
   makeReportPostReq,
@@ -30,13 +29,11 @@ import {
 } from '../../utils/requestFactory';
 import Replies from './Replies';
 
-// import CommentAttachment from './CommentAttachment';
-
 type Setting = {
   label: string,
   iconName: IconName,
   isVisible: Function,
-  key: 'pin' | 'delete' | 'share' | 'report',
+  key: 'delete' | 'report',
 };
 
 type P = {
@@ -44,6 +41,8 @@ type P = {
   onReplyPress?: Function,
   user: User,
   reloadPost: Function,
+  requestUpdate: Function,
+  isBeingUpdated: boolean,
 };
 
 type S = {
@@ -53,16 +52,6 @@ type S = {
 
 const AVATAR_SIZE = 25;
 const SETTINGS = [
-  // {
-  //   key: 'share',
-  //   label: 'Share',
-  //   iconName: 'share',
-  // },
-  // {
-  //   key: 'pin',
-  //   label: 'Pin',
-  //   iconName: 'pin',
-  // },
   {
     key: 'delete',
     label: 'Delete',
@@ -112,6 +101,7 @@ export default class Comment extends React.Component<P, S> {
         break;
       case 'report':
         this.reportComment();
+        break;
       default:
     }
   };
@@ -177,7 +167,7 @@ export default class Comment extends React.Component<P, S> {
   };
 
   render() {
-    const { data, onReplyPress } = this.props;
+    const { data, onReplyPress, requestUpdate, isBeingUpdated } = this.props;
     const isReply = !onReplyPress;
 
     return (
@@ -238,16 +228,6 @@ export default class Comment extends React.Component<P, S> {
             {data.text_content}
           </Text>
 
-          {/* TODO comment attachment
-            <CommentAttachment
-              imageURI="https://www.muprint.com/wp-content/uploads/2016/12/pdf-icon-png-pdf-zum-download-2.png"
-              title="Computer Hardware Desktops And Notebooks And Handhelds"
-              date={new Date()}
-              comments={8}
-              onCommentPress={this.onCommentPress}
-            />
-          */}
-
           <View
             style={[styles.footer, styles.flexRow, styles.alignItemsCenter]}
           >
@@ -262,8 +242,9 @@ export default class Comment extends React.Component<P, S> {
                 <Like
                   count={data.likes_count}
                   liked={data.liked}
-                  iconName="like"
                   objectId={data.id}
+                  requestUpdate={requestUpdate}
+                  isBeingUpdated={isBeingUpdated}
                 />
               </View>
 

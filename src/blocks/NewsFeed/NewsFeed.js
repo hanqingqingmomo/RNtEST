@@ -27,6 +27,8 @@ type FetchResponse = {
 
 type Props = {
   request: Request,
+  ListHeaderComponent: React$Node,
+  navigation: any,
 };
 
 type State = {
@@ -98,16 +100,18 @@ export default class NewsFeed extends Component<Props, State> {
     }));
   };
 
-  keyExtractor = item => item.id;
+  keyExtractor = (item: any) => item.id;
 
   renderItem = ({ item, refetch }: any): React$Element<*> => {
     return (
       <View style={styles.item}>
         <NewsFeedItem
-          {...item}
+          isBeingUpdated={false /* TODO */}
+          item={item}
           navigation={this.props.navigation}
-          refetch={refetch}
           onDelete={refetch}
+          refetch={refetch}
+          requestUpdate={() => {} /* TODO */}
         />
       </View>
     );

@@ -3,20 +3,18 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, View, TouchableItem, Like } from '../../atoms';
+import { Text, View, TouchableItem, Like, Count } from '../../atoms';
 import { css } from '../../utils/style';
-
-type LikeProps = 'like' | 'comment';
+import { type Post } from '../../Types';
 
 type P = {
-  postId: string,
-  likes_count: number,
-  liked: boolean,
-  comments_count: number,
+  item: Post,
   links: Array<{
     label: string,
     onPress: Function,
   }>,
+  requestUpdate: Function,
+  isBeingUpdated: boolean,
 };
 
 const HIT_SLOP = {
@@ -26,27 +24,29 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemFooter extends Component<P, *> {
+export default class NewsFeedItemFooter extends Component<P> {
   render() {
-    const { postId, likes_count, comments_count, liked } = this.props;
+    const { item, links, requestUpdate, isBeingUpdated } = this.props;
+    const { id, likes_count, comments_count, liked } = item;
 
     return (
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
           <View style={styles.likeWrapper}>
             <Like
-              iconName="like"
               count={likes_count}
               liked={liked}
-              objectId={postId}
+              objectId={id}
+              requestUpdate={requestUpdate}
+              isBeingUpdated={isBeingUpdated}
             />
           </View>
           <View style={styles.likeWrapper}>
-            <Like iconName="comment" count={comments_count} disableLink />
+            <Count iconName="comment" count={comments_count} />
           </View>
         </View>
         <View style={[styles.footerRight, styles.row]}>
-          {this.props.links.map((link, idx) => (
+          {links.map((link, idx) => (
             <View
               key={link.label}
               style={[styles.footerLink, idx ? styles.borderLeft : undefined]}

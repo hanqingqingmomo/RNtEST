@@ -53,6 +53,7 @@ export type CommunitySimple = {
   description: string,
   nonprofit_id: string,
   categories: Array<*>,
+  disabled: boolean,
 };
 
 export type User = {
@@ -87,13 +88,13 @@ export type Post = {
   author: ?User,
   cached_url: ?LinkAttachment,
   comments_count: number,
-  communities: Array<{
-    id: string,
-    name: string,
-  }>,
+  communities: Array<CommunitySimple>,
   created_at: string,
   likes_count: number,
   liked: boolean,
+  isNew: boolean,
+  donation: {}, // todo
+  event: {}, // todo
   replies: number,
 };
 
@@ -101,14 +102,7 @@ export type Post = {
 
 export type Community = CommunitySimple & {
   joined: boolean,
-  administrators: Array<{
-    id: number,
-    first_name: string,
-    last_name: string,
-    email: string,
-    profile_photo: string,
-    role: string,
-  }>,
+  administrators: Array<User>,
 };
 
 export type CommunityMember = {

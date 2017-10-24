@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import type { Comment as TComment } from '../Types';
+import type { Comment as TComment, Post } from '../Types';
 import {
   ActivityIndicator,
   CenterView,
@@ -64,8 +64,6 @@ export default class PostDetailScreen extends Component<P, S> {
     const { navigation } = this.props;
     const { replyingTo } = this.state;
 
-    console.log(navigation.state.params.postId);
-
     const readPostWithCommentsRq = makeReadPostWithCommentsRq(
       navigation.state.params.postId
     );
@@ -75,7 +73,17 @@ export default class PostDetailScreen extends Component<P, S> {
         url={readPostWithCommentsRq.url}
         options={readPostWithCommentsRq.options}
       >
-        {({ loading, error, data, fetch }) => (
+        {({
+          loading,
+          error,
+          data,
+          fetch,
+        }: {
+          loading: boolean,
+          error: { message: string },
+          data: Post,
+          fetch: Function,
+        }) => (
           <Screen
             fill
             tintColor="white"
@@ -99,17 +107,19 @@ export default class PostDetailScreen extends Component<P, S> {
                     postId={navigation.state.params.postId}
                     comments={data.replies}
                     onReplyPress={this.onReplyPress}
-                    onMorePress={this.onMorePress}
                     ListHeaderComponent={
                       <NewsFeedItem
-                        {...data}
+                        isBeingUpdated={false /* TODO */}
+                        isDetail
+                        item={data}
                         navigation={this.props.navigation}
                         onDelete={() => {
                           this.props.navigation.state.params.reloadList();
                           this.props.navigation.goBack();
                         }}
-                        isDetail
                         radius={0}
+                        refetch={() => {} /* TODO */}
+                        requestUpdate={() => {} /* TODO */}
                       />
                     }
                     reloadPost={fetch}

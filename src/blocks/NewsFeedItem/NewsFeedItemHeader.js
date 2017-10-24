@@ -15,7 +15,7 @@ import {
   View,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
-import type { IconName, CommunitySimple, User } from '../../Types';
+import type { IconName, CommunitySimple, User, Post } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import {
   makeDeletePostReq,
@@ -26,19 +26,17 @@ type Setting = {
   label: string,
   iconName: IconName,
   isVisible: Function,
-  key: 'pin' | 'delete' | 'share' | 'report',
+  key: 'delete' | 'report',
 };
 
-type Props = {
-  author: User,
-  communities: Array<CommunitySimple>,
-  id: number | string,
-  user?: User,
-  navigation: any,
+type P = {
+  item: Post,
+  navigation: Object,
   onDelete: Function,
+  user: User,
 };
 
-type State = {
+type S = {
   updating: boolean,
 };
 
@@ -50,16 +48,6 @@ const HIT_SLOP = {
 };
 
 const SETTINGS = [
-  // {
-  //   key: 'share',
-  //   label: 'Share',
-  //   iconName: 'share',
-  // },
-  // {
-  //   key: 'pin',
-  //   label: 'Pin',
-  //   iconName: 'pin',
-  // },
   {
     key: 'delete',
     label: 'Delete',
@@ -81,8 +69,7 @@ const mapStateToProps = state => ({
   user: selectUser(state),
 });
 
-@connect(mapStateToProps)
-export default class NewsFeedItemHeader extends Component<Props, State> {
+class NewsFeedItemHeader extends Component<P, S> {
   state = {
     updating: false,
   };
@@ -93,7 +80,7 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
         typeof setting.isVisible === 'undefined' ||
         setting.isVisible({
           user: this.props.user,
-          author: this.props.author,
+          author: this.props.item.author,
         })
     ).map((setting: Setting) => ({
       label: () => this.renderSettings(setting),
@@ -124,8 +111,8 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   };
 
   deletePost = async () => {
-    const { id, onDelete } = this.props;
-    const deletePostReq = makeDeletePostReq(id);
+    const { item, onDelete } = this.props;
+    const deletePostReq = makeDeletePostReq(item.id);
 
     this.setState({ updating: true });
 
@@ -137,8 +124,8 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   };
 
   reportPost = async () => {
-    const { id } = this.props;
-    const reportPostReq = makeReportPostReq(id);
+    const { item } = this.props;
+    const reportPostReq = makeReportPostReq(item.id);
 
     this.setState({ updating: true });
 
@@ -182,24 +169,22 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
   );
 
   render() {
-    let communities = [...this.props.communities];
-
-    communities = communities.splice(0, 3);
+    const { item } = this.props;
 
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {communities.map((item: CommunitySimple) => (
-            <View style={styles.tag} key={item.id}>
+          {item.communities.splice(0, 3).map((community: CommunitySimple) => (
+            <View style={styles.tag} key={community.id}>
               <TouchableItem
-                onPress={() => this.onCommunityPress(item)}
-                disabled={item.disabled}
+                onPress={() => this.onCommunityPress(community)}
+                disabled={community.disabled}
                 hitSlop={HIT_SLOP}
               >
                 <View style={{ backgroundColor: 'white' }}>
                   <Pill
-                    title={item.name}
-                    color={item.disabled ? '#B0BEC5' : getColor('orange')}
+                    title={community.name}
+                    color={community.disabled ? '#B0BEC5' : getColor('orange')}
                   />
                 </View>
               </TouchableItem>
@@ -220,6 +205,8 @@ export default class NewsFeedItemHeader extends Component<Props, State> {
     );
   }
 }
+
+export default connect(mapStateToProps)(NewsFeedItemHeader);
 
 const styles = StyleSheet.create({
   row: {

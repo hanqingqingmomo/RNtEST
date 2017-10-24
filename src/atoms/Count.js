@@ -9,18 +9,18 @@ import { css } from '../utils/style';
 import { type IconName } from '../Types';
 
 type P = {
-  pined?: boolean,
+  pinned?: boolean,
   count: number,
   iconName: IconName,
 };
 
-export default function Count({ count, iconName, pined }: P) {
+export default function Count({ count, iconName, pinned }: P) {
   return (
     <View style={styles.container}>
       <Icon
         name={iconName}
         size={18}
-        color={pined ? getColor('orange') : '#cfd8dc'}
+        color={pinned ? getColor('orange') : '#cfd8dc'}
         style={styles.icon}
       />
       <Text

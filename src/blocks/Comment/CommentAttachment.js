@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { isToday, format } from 'date-fns';
 
-import { View, Text, Image, Like } from '../../atoms/';
+import { View, Text, Image, Count } from '../../atoms/';
 import { css } from '../../utils/style';
 
 type Props = {
@@ -63,11 +63,7 @@ export default class CommentAttachment extends React.Component<
           </Text>
           {comments ? (
             <View style={styles.likeWrapper}>
-              <Like
-                iconName="comment"
-                count={comments}
-                onPress={this.onCommentPress}
-              />
+              <Count iconName="comment" count={comments} />
             </View>
           ) : null}
         </View>

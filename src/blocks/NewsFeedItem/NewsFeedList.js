@@ -8,12 +8,12 @@ import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 
 import { type CommunitySimple } from '../../Types';
 
-type Props = {
+type P = {
   navigation: any,
   data: Array<CommunitySimple>,
 };
 
-export default class NewsFeedList extends Component<Props> {
+export default class NewsFeedList extends Component<P> {
   render() {
     const { navigation, data, ...args } = this.props;
     return (
@@ -23,7 +23,14 @@ export default class NewsFeedList extends Component<Props> {
           keyExtractor={(item: CommunitySimple) => item.id}
           renderItem={({ item }) => (
             <View style={styles.item}>
-              <NewsFeedItem {...item} navigation={navigation} />
+              <NewsFeedItem
+                isBeingUpdated={false /* TODO */}
+                item={item}
+                navigation={navigation}
+                onDelete={() => {} /* TODO */}
+                refetch={() => {} /* TODO */}
+                requestUpdate={() => {} /* TODO */}
+              />
             </View>
           )}
           {...args}

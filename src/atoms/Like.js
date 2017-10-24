@@ -3,51 +3,38 @@
 import React, { Component } from 'react';
 
 import { Fetch, TouchableItem, Count } from '../atoms';
-import { makeLikeRq, makeReadPostReq } from '../utils/requestFactory';
+import { makeLikeRq } from '../utils/requestFactory';
 
 type P = {
   count: number,
   liked: boolean,
-  iconName: string,
   objectId: string,
-  disableLink: boolean,
+  requestUpdate: Function,
+  isBeingUpdated: boolean,
 };
 
 export default class Like extends Component<P> {
-  state = {
-    liked: this.props.liked,
-    count: this.props.count,
-  };
+  onPress = (fetch: any): Function => async () => {
+    const { objectId, liked, requestUpdate } = this.props;
 
-  onPress = (fetch: any) => async () => {
-    const { objectId } = this.props;
-    const likeRq = makeLikeRq(objectId, this.state.liked);
+    const likeRq = makeLikeRq(objectId, liked);
+
     await fetch(likeRq.url, likeRq.options);
 
-    const readPostReq = makeReadPostReq(objectId);
-    const { data } = await fetch(readPostReq.url, readPostReq.options);
-
-    this.setState({ liked: data.liked, count: data.likes_count });
+    requestUpdate();
   };
 
   render() {
-    const { iconName, count, disableLink } = this.props;
+    const { liked, count, isBeingUpdated } = this.props;
 
-    return disableLink ? (
-      <Count
-        iconName={iconName}
-        count={this.state.count}
-        pined={this.state.liked}
-      />
-    ) : (
+    return (
       <Fetch manual>
-        {({ loading, data, error, fetch }) => (
-          <TouchableItem onPress={this.onPress(fetch)}>
-            <Count
-              iconName={iconName}
-              count={this.state.count}
-              pined={this.state.liked}
-            />
+        {({ fetch }) => (
+          <TouchableItem
+            onPress={this.onPress(fetch)}
+            disabled={isBeingUpdated}
+          >
+            <Count iconName="like" count={count} pinned={liked} />
           </TouchableItem>
         )}
       </Fetch>

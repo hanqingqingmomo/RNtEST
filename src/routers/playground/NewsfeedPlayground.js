@@ -12,6 +12,7 @@ export default class NewsfeedPlayground extends Component<{}> {
   };
 
   render() {
+    return;
     return (
       <ScrollView style={styles.container}>
         <View style={styles.item}>

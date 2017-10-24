@@ -7,7 +7,7 @@ import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post, type User } from '../../Types';
+import { type Post } from '../../Types';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -17,32 +17,23 @@ import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
-type Props = Post & {
+type P = {
+  isBeingUpdated: boolean,
   isDetail?: boolean,
+  item: Post,
   navigation: Object,
   onDelete: Function,
   radius?: number,
   refetch: Function,
+  requestUpdate: Function,
 };
 
-export default class NewsFeedItem extends Component<Props> {
-  get attachment(): Object {
-    return this.props.attachment;
-  }
-
-  get hasAttachment(): boolean {
-    return !!this.attachment;
-  }
-
+export default class NewsFeedItem extends Component<P> {
   getLinks = () => {
-    const { id, navigation, refetch, isDetail } = this.props;
+    const { item, navigation, refetch, isDetail } = this.props;
+    const { id } = item;
 
-    const links = [
-      // {
-      //   label: 'Share',
-      //   onPress: () => console.log('Share press'),
-      // },
-    ];
+    const links = [];
 
     if (!isDetail) {
       links.push({
@@ -58,31 +49,32 @@ export default class NewsFeedItem extends Component<Props> {
     return links;
   };
 
-  handleUserPress = (user: User) => {
-    const { navigation } = this.props;
+  handleUserPress = () => {
+    const { navigation, item } = this.props;
 
     if (navigation) {
       navigation.navigate('MemberProfileScreen', {
-        user,
+        user: item.author,
       });
     }
   };
 
   renderContent() {
-    const { text_content, created_at, isDetail, cached_url } = this.props;
+    const { item, isDetail } = this.props;
+    const { text_content, created_at, cached_url } = item;
 
     return (
       <View>
-        {(this.hasAttachment && this.attachment.type === 'link') ||
-        !this.hasAttachment ? (
+        {(item.attachment && item.attachment.type === 'link') ||
+        !item.attachment ? (
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
             {parseTextContent(text_content, 120)}
           </Text>
         ) : null}
 
-        {this.hasAttachment && this.attachment.type.includes('image') ? (
+        {item.attachment && item.attachment.type.includes('image') ? (
           <NewsFeedItemImage
-            {...this.attachment}
+            {...item.attachment}
             title={text_content}
             detail={isDetail}
           />
@@ -107,21 +99,17 @@ export default class NewsFeedItem extends Component<Props> {
 
   render() {
     const {
-      author,
-      comments_count,
-      donation,
-      event,
-      id,
+      item,
       isDetail,
-      isNew,
-      liked,
-      likes_count,
       navigation,
       onDelete,
       radius,
       refetch,
-      replies,
+      requestUpdate,
+      isBeingUpdated,
     } = this.props;
+
+    const { author, donation, event, id, isNew } = item;
 
     return (
       <ShadowView
@@ -129,7 +117,11 @@ export default class NewsFeedItem extends Component<Props> {
         radius={typeof radius !== 'undefined' ? radius : 3}
       >
         <View style={styles.container}>
-          <NewsFeedItemHeader {...this.props} onDelete={onDelete} />
+          <NewsFeedItemHeader
+            item={item}
+            navigation={navigation}
+            onDelete={onDelete}
+          />
 
           {isDetail ? (
             this.renderContent()
@@ -148,9 +140,7 @@ export default class NewsFeedItem extends Component<Props> {
 
           {author ? (
             <NewsFeedItemAuthor
-              replies={replies}
               author={author}
-              onReplayPress={() => console.log('reply')}
               onUserPress={this.handleUserPress}
             />
           ) : null}
@@ -165,11 +155,10 @@ export default class NewsFeedItem extends Component<Props> {
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
           <NewsFeedItemFooter
-            postId={id}
-            likes_count={likes_count}
-            liked={liked}
-            comments_count={comments_count}
+            item={item}
             links={this.getLinks()}
+            requestUpdate={requestUpdate}
+            isBeingUpdated={isBeingUpdated}
           />
         </View>
       </ShadowView>
