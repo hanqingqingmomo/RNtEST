@@ -144,7 +144,12 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
       Config.API_URL,
       id === 'me' ? '/v1/members' : `/v1/members/${id}`
     ),
-    options: { method: 'GET' },
+    options: {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    },
   });
 
 export const makeUpdateProfileReq = (user: object) =>
