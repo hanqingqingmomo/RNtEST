@@ -36,8 +36,6 @@ export default class NewsFeedItem extends Component<Props> {
   getLinks = () => {
     const { id, navigation, refetch, isDetail } = this.props;
 
-    console.log(this.props.attachment);
-
     const links = [
       // {
       //   label: 'Share',
