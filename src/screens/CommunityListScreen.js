@@ -73,37 +73,39 @@ export default class CommunityListScreen extends Component<{}, State> {
           options={readCommunitiesListRq.options}
         >
           {({ loading, error, data, fetch }) => (
-            <ScrollView contentContainerStyle={styles.container}>
-              {loading && (
-                <CenterView>
-                  <ActivityIndicator />
-                </CenterView>
-              )}
-              {error && (
-                <CenterView>
-                  <Text>{error.message}</Text>
-                </CenterView>
-              )}
-              {!loading &&
-                data &&
-                data.data.map(community => (
-                  <TouchableItem
-                    onPress={() =>
-                      navigation.navigate('CommunityCenterScreen', {
-                        communityId: community.id,
-                        reloadCommunityList: fetch,
-                      })}
-                    key={community.id}
-                    style={styles.item}
-                  >
-                    <CommunityCard
-                      imageURI={community.cover_photo}
-                      title={community.name}
-                      subtitle={`${community.members} members`}
-                    />
-                  </TouchableItem>
-                ))}
-            </ScrollView>
+            <View style={{ minHeight: '100%' }}>
+              <ScrollView contentContainerStyle={styles.container}>
+                {loading === false ? (
+                  data ? (
+                    data.data.map(community => (
+                      <TouchableItem
+                        onPress={() =>
+                          navigation.navigate('CommunityCenterScreen', {
+                            communityId: community.id,
+                            reloadCommunityList: fetch,
+                          })}
+                        key={community.id}
+                        style={styles.item}
+                      >
+                        <CommunityCard
+                          imageURI={community.cover_photo}
+                          title={community.name}
+                          subtitle={`${community.members} members`}
+                        />
+                      </TouchableItem>
+                    ))
+                  ) : null
+                ) : error ? (
+                  <CenterView>
+                    <Text>{error.message}</Text>
+                  </CenterView>
+                ) : (
+                  <CenterView>
+                    <ActivityIndicator />
+                  </CenterView>
+                )}
+              </ScrollView>
+            </View>
           )}
         </Fetch>
       </Screen>
@@ -118,12 +120,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    flexGrow: 1,
   },
-
   item: {
     paddingTop: 1,
     paddingBottom: 5,
