@@ -13,6 +13,7 @@ import { css } from '../../utils/style';
 type Props = {
   community: Community,
   navigation: any,
+  reloadCommunity: Function,
 };
 
 type State = {
@@ -61,6 +62,7 @@ export default class OpenProfile extends Component<Props, State> {
                   navigation={this.props.navigation}
                   communityId={community.id}
                   navigateToPost={this.navigateToPost}
+                  reloadCommunity={this.props.reloadCommunity}
                 />
               ),
             },

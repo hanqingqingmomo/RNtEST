@@ -13,33 +13,39 @@ type P = {
 };
 
 type State = {
-  isBeingUpdated: boolean,
+  updating: boolean,
 };
 
 export default class Like extends Component<P, State> {
   state = {
-    isBeingUpdated: false,
+    updating: false,
+    liked: this.props.liked,
+    count: this.props.count,
   };
 
   onPress = (fetch: any): Function => async () => {
-    this.setState({ isBeingUpdated: true });
+    this.setState({ updating: true });
     const { item, liked } = this.props;
     const likeRq = makeLikeRq(item.id, liked);
     await fetch(likeRq.url, likeRq.options);
     const readPostReq = makeReadPostReq(item.id);
-    const readPostRes = await fetch(readPostReq.url, readPostReq.options);
-    this.props.emitAction('update', readPostRes.data);
-    this.setState({ isBeingUpdated: false });
+    const { data } = await fetch(readPostReq.url, readPostReq.options);
+    this.props.emitAction('update', data);
+    this.setState({
+      updating: false,
+      liked: data.liked,
+      count: data.likes_count,
+    });
   };
 
   render() {
-    const { liked, count } = this.props;
+    const { liked, count } = this.state;
     return (
       <Fetch manual>
         {({ fetch }) => (
           <TouchableItem
             onPress={this.onPress(fetch)}
-            disabled={this.state.isBeingUpdated}
+            disabled={this.state.updating}
           >
             <Count iconName="like" count={count} pinned={liked} />
           </TouchableItem>

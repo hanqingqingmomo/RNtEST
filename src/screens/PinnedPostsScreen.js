@@ -27,25 +27,25 @@ export default class PinnedPostsScreen extends Component<P, S> {
   };
 
   requestDelete = (item: Post) => {
-    this.setState({ isBeingDeleted: true });
+    // this.setState({ isBeingDeleted: true });
     // TODO
     console.log('request delete', item);
   };
 
   deleteSuccessful = (item: Post) => {
-    this.setState({ isBeingDeleted: false });
+    // this.setState({ isBeingDeleted: false });
     // TODO
     console.log('delete successful', item);
   };
 
   requestUpdate = (item: Post) => {
-    this.setState({ isBeingUpdated: true });
+    // this.setState({ isBeingUpdated: true });
     // TODO
     console.log('request update', item);
   };
 
   updateSuccessful = (item: Post) => {
-    this.setState({ isBeingUpdated: false });
+    // this.setState({ isBeingUpdated: false });
     // TODO
     console.log('update successful', item);
   };
