@@ -128,6 +128,10 @@ const PRIVACY = [
 ];
 
 export default class PrivacyScreen extends Component<{}> {
+  static navigationOptions = {
+    headerTitle: 'Privacy Policy',
+  };
+
   render() {
     return (
       <DeferExpensiveTasks>

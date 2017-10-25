@@ -180,6 +180,10 @@ type State = {
 };
 
 export default class HelpScreen extends Component<{}, State> {
+  static navigationOptions = {
+    headerTitle: 'Terms and conditions',
+  };
+
   state = {
     ready: false,
   };

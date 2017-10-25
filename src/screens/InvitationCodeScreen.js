@@ -17,6 +17,10 @@ const RULES = {
 };
 
 export default class InvitationCodeScreen extends Component<{}> {
+  static navigationOptions = {
+    headerTitle: 'Invitation Code',
+  };
+
   handleFormSubmit = (values: FormValues) => {
     alert(JSON.stringify(values));
   };

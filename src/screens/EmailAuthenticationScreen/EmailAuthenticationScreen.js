@@ -12,6 +12,10 @@ import FormBlock, { type FormValues } from './EmailAuthenticationBlock';
 import { makeSigninRq, makeReadProfileRq } from '../../utils/requestFactory';
 
 class EmailAuthenticationScreen extends Component<{}> {
+  static navigationOptions = {
+    headerTitle: 'Log In',
+  };
+
   navigateToPasswordResetScreen = () => {
     this.props.navigation.navigate('PasswordResetScreen');
   };

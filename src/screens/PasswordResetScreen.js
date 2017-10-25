@@ -32,6 +32,11 @@ const MESSAGES = {
 };
 
 export default class PasswordResetScreen extends Component<{}> {
+  static navigationOptions = {
+    headerTitle: 'Password Reset',
+  };
+
+  // TODO use global instance of dropdown
   dropdown = null;
 
   handleFormSubmit = fetch => async (values: FormValues) => {

@@ -51,6 +51,10 @@ const MESSAGES = {
 type FormValues = typeof INITIAL_VALUES;
 
 class EmailRegistrationScreen extends Component<{}> {
+  static navigationOptions = {
+    headerTitle: 'Sign Up',
+  };
+
   handleSubmit = fetch => async (values: FormValues) => {
     const signupReq = makeSignupRq(values);
     const signupRes = await fetch(signupReq.url, signupReq.options);
