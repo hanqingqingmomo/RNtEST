@@ -47,7 +47,7 @@ const PRIVACY = [
       'We use regular Malware Scanning.',
       'Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems, and are required to keep the information confidential. In addition, all sensitive/credit information you supply is encrypted via Secure Socket Layer (SSL) technology.',
       'We implement a variety of security measures when a user enters, submits, or accesses their information to maintain the safety of your personal information.',
-      'All transactions are processed through a gateway provider and are not stored or processed on our servers.',
+      'All transactions are processed and handled properly through the 3rd party providers Apple Pay and Braintree. Transaction data (credit, debit, and prepaid card information) are not stored or processed on our servers, and no transaction information that ties back to the user is collected.',
     ],
   },
   {
