@@ -14,6 +14,7 @@ import {
   type ItemActionHandler,
   type ItemActionEmitter,
 } from '../NewsFeedItem/NewsFeedItem';
+import { makeReadPostReq } from '../../utils/requestFactory';
 
 type Cursor = {
   next: ?number,
@@ -135,12 +136,16 @@ export default class NewsFeed extends Component<Props, State> {
     }));
   };
 
-  deleteItem = () => {
+  deleteItem = item => {
+    this.emitAction('delete', item);
     console.log('delete item');
   };
 
-  updateItem = () => {
-    console.log('update item');
+  updateItem = async item => {
+    const req = makeReadPostReq(item.id);
+    const res = await global.fetch(req.url, req.options);
+    const json = await res.json();
+    this.emitAction('update', json.data);
   };
 
   render() {

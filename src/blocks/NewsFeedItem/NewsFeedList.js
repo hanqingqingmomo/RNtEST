@@ -26,8 +26,8 @@ export default class NewsFeedList extends Component<Props> {
       <NewsFeedItem
         item={item}
         {...this.props.renderItemProps}
-        onDelete={this.props.deleteItem}
-        refetch={this.props.updateItem}
+        onDelete={() => this.props.deleteItem(item)}
+        refetch={() => this.props.updateItem(item)}
       />
     </View>
   );
