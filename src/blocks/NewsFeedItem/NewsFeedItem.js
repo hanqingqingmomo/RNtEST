@@ -17,17 +17,17 @@ import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
+export type ItemActionHandler = (
+  action: 'delete' | 'report' | 'update' | 'create',
+  item: Post
+) => mixed;
+
 type P = {
-  isBeingDeleted: boolean,
-  isBeingUpdated: boolean,
   isDetail?: boolean,
   item: Post,
   navigation: Object,
   radius?: number,
-  requestDelete: Function,
-  requestUpdate: Function,
-  deleteSuccessful: Function,
-  updateSuccessful: Function,
+  onItemAction: ItemActionHandler,
 };
 
 export default class NewsFeedItem extends Component<P> {
@@ -99,18 +99,7 @@ export default class NewsFeedItem extends Component<P> {
   }
 
   render() {
-    const {
-      item,
-      isDetail,
-      navigation,
-      radius,
-      requestDelete,
-      requestUpdate,
-      updateSuccessful,
-      deleteSuccessful,
-      isBeingUpdated,
-      isBeingDeleted,
-    } = this.props;
+    const { item, isDetail, navigation, radius } = this.props;
 
     const { author, donation, event, id, isNew } = item;
 
@@ -123,9 +112,7 @@ export default class NewsFeedItem extends Component<P> {
           <NewsFeedItemHeader
             item={item}
             navigation={navigation}
-            isBeingDeleted={isBeingDeleted}
-            requestDelete={requestDelete}
-            deleteSuccessful={deleteSuccessful}
+            onItemAction={this.props.onItemAction}
           />
 
           {isDetail ? (
@@ -158,13 +145,7 @@ export default class NewsFeedItem extends Component<P> {
 
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
-          <NewsFeedItemFooter
-            item={item}
-            links={this.getLinks()}
-            requestUpdate={requestUpdate}
-            updateSuccessful={updateSuccessful}
-            isBeingUpdated={isBeingUpdated}
-          />
+          <NewsFeedItemFooter item={item} links={this.getLinks()} />
         </View>
       </ShadowView>
     );

@@ -92,7 +92,7 @@ export type Post = {
   created_at: string,
   likes_count: number,
   liked: boolean,
-  isNew: boolean,
+  isNew: boolean, // Check whether we need this prop anymore
   donation: {}, // todo
   event: {}, // todo
   replies: number,

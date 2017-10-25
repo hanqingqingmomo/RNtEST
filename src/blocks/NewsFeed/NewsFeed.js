@@ -5,9 +5,11 @@ import { StyleSheet, RefreshControl, InteractionManager } from 'react-native';
 
 import { View } from '../../atoms';
 import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
-import Footer from './Footer';
+import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 import { type Request } from '../../utils/requestFactory';
+import Footer from './Footer';
 import { type Post } from '../../Types';
+import { type ItemActionHandler } from '../NewsFeedItem/NewsFeedItem';
 
 type Cursor = {
   next: ?number,
@@ -16,7 +18,7 @@ type Cursor = {
 
 type FetchResponse = {
   error: ?Object,
-  data: ?Array<*>,
+  data: ?Array<Post>,
   cursor: ?Cursor,
 };
 
@@ -32,8 +34,6 @@ type State = {
   data: ?Array<*>,
   error: ?Object,
   refreshingData: boolean,
-  isBeingDeleted: boolean,
-  isBeingUpdated: boolean,
 };
 
 async function doFetch(request, _cursor: Cursor): Promise<FetchResponse> {
@@ -64,18 +64,43 @@ export default class NewsFeed extends Component<Props, State> {
     appendingData: false,
     cursor: {
       next: null,
-      limit: 25,
+      limit: 2,
     },
     data: null,
     error: null,
     refreshingData: false,
-    isBeingDeleted: false,
-    isBeingUpdated: false,
   };
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(this.fetchFreshData);
   }
+
+  keyExtractor = (item: Post) => item.id;
+
+  onItemAction: ItemActionHandler = (action, item) => {
+    switch (action) {
+      case 'delete':
+        this.setState(state => ({
+          data: state.data.filter(i => i.id !== item.id),
+        }));
+        break;
+      case 'update':
+        this.setState(
+          state => ({
+            data: state.data.map(i => (i.id === item.id ? item : i)),
+          }),
+          () => {
+            console.log(this.state);
+          }
+        );
+        break;
+      case 'report':
+      case 'create':
+      default:
+        // noop
+        break;
+    }
+  };
 
   fetchFreshData = async () => {
     this.setState({ refreshingData: true });
@@ -99,44 +124,19 @@ export default class NewsFeed extends Component<Props, State> {
     }));
   };
 
-  keyExtractor = (item: Post) => item.id;
-
-  requestDelete = (item: Post) => {
-    this.setState({ isBeingDeleted: true });
-    // TODO
-    console.log('request delete', item);
-  };
-
-  deleteSuccessful = (item: Post) => {
-    this.setState({ isBeingDeleted: false });
-    // TODO
-    console.log('delete successful', item);
-  };
-
-  requestUpdate = (item: Post) => {
-    this.setState({ isBeingUpdated: true });
-    // TODO
-    console.log('request update', item);
-  };
-
-  updateSuccessful = (item: Post) => {
-    this.setState({ isBeingUpdated: false });
-    // TODO
-    console.log('update successful', item);
-  };
+  renderItem = ({ item }: { item: Post }) => (
+    <NewsFeedItem
+      item={item}
+      navigation={this.props.navigation}
+      onItemAction={this.onItemAction}
+    />
+  );
 
   render() {
-    const { isBeingDeleted, isBeingUpdated, data } = this.state;
     return (
       <NewsFeedList
-        data={data || []}
-        navigation={this.props.navigation}
-        isBeingDeleted={isBeingDeleted}
-        isBeingUpdated={isBeingUpdated}
-        requestDelete={this.requestDelete}
-        requestUpdate={this.requestUpdate}
-        deleteSuccessful={this.deleteSuccessful}
-        updateSuccessful={this.updateSuccessful}
+        data={this.state.data || []}
+        renderItem={this.renderItem}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshingData}

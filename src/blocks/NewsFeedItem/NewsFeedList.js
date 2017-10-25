@@ -4,55 +4,24 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { FlatList, View } from '../../atoms';
-import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 
 import type { CommunitySimple, Post } from '../../Types';
 
-type P = {
-  navigation: any,
-  data: Array<CommunitySimple>,
-  requestDelete: Function,
-  deleteSuccessful: Function,
-  isBeingDeleted: boolean,
-  requestUpdate: Function,
-  updateSuccessful: Function,
-  isBeingUpdated: boolean,
+type Props = {
+  data: Array<Post>,
+  renderItem: (props: { item: Post }) => React$Node,
 };
 
-export default class NewsFeedList extends Component<P> {
+export default class NewsFeedList extends Component<Props> {
   render() {
-    const {
-      navigation,
-      data,
-      isBeingDeleted,
-      isBeingUpdated,
-      requestDelete,
-      deleteSuccessful,
-      requestUpdate,
-      updateSuccessful,
-      ...args
-    } = this.props;
-
+    const { data, ...args } = this.props;
+    // TODO move keyExtractor to parent
     return (
       <View style={styles.itemsContainer}>
         <FlatList
           data={data}
           keyExtractor={(item: CommunitySimple) => item.id}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <NewsFeedItem
-                isBeingDeleted={isBeingDeleted}
-                isBeingUpdated={isBeingUpdated}
-                item={item}
-                navigation={navigation}
-                requestDelete={requestDelete}
-                deleteSuccessful={deleteSuccessful}
-                requestUpdate={requestUpdate}
-                updateSuccessful={updateSuccessful}
-              />
-            </View>
-          )}
           {...args}
         />
       </View>
