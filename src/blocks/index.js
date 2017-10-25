@@ -17,3 +17,4 @@ export { default as NewsFeedItem } from './NewsFeedItem/NewsFeedItem';
 export { default as PinnedPost } from './PinnedPost';
 export { default as ProfileCard } from './ProfileCard';
 export { default as SearchResult } from './SearchResult';
+export { default as SettingsPopup } from './SettingsPopup';
