@@ -56,12 +56,12 @@ export default class PostDetailScreen extends Component<P, S> {
     this.inputRef = ref;
   };
 
-  onSubmitSuccess = (fetch: any) => () => {
+  onSubmitSuccess = (fetch: any, data: Post) => () => {
     this.setState({
       replyingTo: undefined,
     });
 
-    this.props.navigation.state.params.reloadList();
+    this.props.navigation.state.params.reloadList(data);
 
     fetch();
   };
@@ -156,7 +156,7 @@ export default class PostDetailScreen extends Component<P, S> {
                         deleteSuccessful={this.deleteSuccessful}
                         updateSuccessful={this.updateSuccessful}
                         onDelete={() => {
-                          this.props.navigation.state.params.reloadList();
+                          this.props.navigation.state.params.reloadList(data);
                           this.props.navigation.goBack();
                         }}
                       />
@@ -167,7 +167,7 @@ export default class PostDetailScreen extends Component<P, S> {
                     postId={data.id}
                     replyingTo={replyingTo}
                     onReplyCancel={this.onReplyCancel}
-                    onSubmitSuccess={this.onSubmitSuccess(fetch)}
+                    onSubmitSuccess={this.onSubmitSuccess(fetch, data)}
                     passRef={this.passRef}
                     style={styles.commentInput}
                   />
