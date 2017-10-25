@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Screen } from '../atoms';
+import { Screen, View } from '../atoms';
 import { type Post } from '../Types';
 import NewsFeedList from '../blocks/NewsFeedItem/NewsFeedList';
 
@@ -54,17 +54,22 @@ export default class PinnedPostsScreen extends Component<P, S> {
     const { isBeingDeleted, isBeingUpdated } = this.state;
 
     return (
-      <Screen style={styles.container}>
-        <NewsFeedList
-          data={this.props.navigation.state.params.data}
-          navigation={this.props.navigation}
-          isBeingDeleted={isBeingDeleted}
-          isBeingUpdated={isBeingUpdated}
-          requestDelete={this.requestDelete}
-          requestUpdate={this.requestUpdate}
-          deleteSuccessful={this.deleteSuccessful}
-          updateSuccessful={this.updateSuccessful}
-        />
+      <Screen>
+        <View style={styles.container}>
+          <NewsFeedList
+            data={this.props.navigation.state.params.data}
+            renderItemProps={{
+              navigation: this.props.navigation,
+              // emitAction: this.emitAction,
+            }}
+            isBeingDeleted={isBeingDeleted}
+            isBeingUpdated={isBeingUpdated}
+            requestDelete={this.requestDelete}
+            requestUpdate={this.requestUpdate}
+            deleteSuccessful={this.deleteSuccessful}
+            updateSuccessful={this.updateSuccessful}
+          />
+        </View>
       </Screen>
     );
   }
@@ -73,5 +78,6 @@ export default class PinnedPostsScreen extends Component<P, S> {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
+    flex: 1,
   },
 });
