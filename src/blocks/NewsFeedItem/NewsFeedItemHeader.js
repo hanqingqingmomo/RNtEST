@@ -16,14 +16,14 @@ import { getColor } from '../../utils/color';
 import type { CommunitySimple, User, Post, PopupSetting } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq, makeReportReq } from '../../utils/requestFactory';
-import { type ItemActionHandler } from './NewsFeedItem';
+import { type ItemActionEmitter } from './NewsFeedItem';
 
 type P = {
   item: Post,
   // TODO remote navigation prop
   navigation: Object,
   user: User,
-  onItemAction: ItemActionHandler,
+  emitAction: ItemActionEmitter,
 };
 
 type S = {
@@ -65,22 +65,20 @@ class NewsFeedItemHeader extends Component<P, S> {
 
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
-      this.props.onItemAction('delete', item);
+      this.props.emitAction('delete', item);
     } catch (err) {}
   };
 
   reportPost = async () => {
+    this.setState({ isBeingReported: true });
+
     const { item } = this.props;
     const reportReq = makeReportReq({ postId: item.id });
 
-    this.setState({ isBeingReported: true });
-
     try {
       const reportResp = await global.fetch(reportReq.url, reportReq.options);
-
-      this.setState({ isBeingReported: false });
-
       const resp = await reportResp.json();
+      this.setState({ isBeingReported: false });
 
       if (resp.error) {
         global.alertWithType('error', 'Ooops', resp.error);

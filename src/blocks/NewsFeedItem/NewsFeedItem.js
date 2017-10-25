@@ -17,7 +17,12 @@ import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
-export type ItemActionHandler = (
+export type ItemActionHandler = ({
+  action: 'delete' | 'report' | 'update' | 'create',
+  item: Post,
+}) => mixed;
+
+export type ItemActionEmitter = (
   action: 'delete' | 'report' | 'update' | 'create',
   item: Post
 ) => mixed;
@@ -27,7 +32,7 @@ type P = {
   item: Post,
   navigation: Object,
   radius?: number,
-  onItemAction: ItemActionHandler,
+  emitAction: ItemActionEmitter,
 };
 
 export default class NewsFeedItem extends Component<P> {
@@ -112,7 +117,7 @@ export default class NewsFeedItem extends Component<P> {
           <NewsFeedItemHeader
             item={item}
             navigation={navigation}
-            onItemAction={this.props.onItemAction}
+            emitAction={this.props.emitAction}
           />
 
           {isDetail ? (
