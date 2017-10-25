@@ -23,21 +23,19 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
       <NewsFeed
         navigation={this.props.navigation}
         request={makeReadAggregatedFeedReq()}
-        ListHeaderComponent={
+        ListHeaderComponent={emitAction => (
           <View>
             <NewsFeedConversation
               onPress={() =>
                 this.props.navigation.navigate('PostEditorScreen', {
-                  onCreate: post => {
-                    console.log('on create');
-                  },
+                  emitAction,
                 })}
             />
             <FriendInvitationWidget
               openModal={this.props.screenProps.openFriendsInvitationModal}
             />
           </View>
-        }
+        )}
       />
     );
   }

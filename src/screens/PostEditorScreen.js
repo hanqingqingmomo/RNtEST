@@ -45,6 +45,7 @@ export default class PostEditorScreen extends Component<Props, State> {
   dropdown = null;
 
   handleFormSubmit = (fetch: any) => async () => {
+    const { emitAction } = this.props.navigation.state.params;
     const createPostReq = makeCreatePostReq(
       this.state.content,
       this.state.communitiesSelection,
@@ -61,6 +62,7 @@ export default class PostEditorScreen extends Component<Props, State> {
         (createPostRes.error.message: string)
       );
     } else {
+      emitAction('create', createPostRes.data);
       this.props.navigation.goBack();
       global.alertWithType(
         'success',

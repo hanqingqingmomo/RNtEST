@@ -20,14 +20,12 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
       <NewsFeed
         navigation={this.props.navigation}
         request={makeReadCommunityFeedRq(this.props.communityId)}
-        ListHeaderComponent={
+        ListHeaderComponent={emitAction => (
           <View>
             <NewsFeedConversation
               onPress={() =>
                 this.props.navigation.navigate('PostEditorScreen', {
-                  onCreate: post => {
-                    console.log('on create');
-                  },
+                  emitAction,
                 })}
             />
             <PinnedPost
@@ -44,7 +42,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
               }}
             />
           </View>
-        }
+        )}
       />
     );
   }
