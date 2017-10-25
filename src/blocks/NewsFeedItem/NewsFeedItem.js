@@ -33,6 +33,8 @@ type P = {
   navigation: Object,
   radius?: number,
   emitAction: ItemActionEmitter,
+  onDelete: Function,
+  refetch: Function,
 };
 
 export default class NewsFeedItem extends Component<P> {
@@ -48,6 +50,7 @@ export default class NewsFeedItem extends Component<P> {
         onPress: () =>
           navigation.navigate('PostDetailScreen', {
             postId: id,
+            reloadList: this.props.refetch,
           }),
       });
     }
@@ -118,6 +121,7 @@ export default class NewsFeedItem extends Component<P> {
             item={item}
             navigation={navigation}
             emitAction={this.props.emitAction}
+            onDelete={this.props.onDelete}
           />
 
           {isDetail ? (
@@ -128,6 +132,7 @@ export default class NewsFeedItem extends Component<P> {
                 navigation.navigate('PostDetailScreen', {
                   postId: id,
                   emitAction: this.props.emitAction,
+                  reloadList: this.props.refetch,
                 });
               }}
             >

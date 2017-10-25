@@ -56,34 +56,36 @@ export default class PostDetailScreen extends Component<P, S> {
     this.inputRef = ref;
   };
 
-  onSubmitSuccess = (fetch: any) => () => {
+  onSubmitSuccess = (fetch: any, data: Post) => () => {
     this.setState({
       replyingTo: undefined,
     });
+
+    this.props.navigation.state.params.reloadList(data);
 
     fetch();
   };
 
   requestDelete = (item: Post) => {
-    this.setState({ isBeingDeleted: true });
+    // this.setState({ isBeingDeleted: true });
     // TODO
     console.log('request delete', item);
   };
 
   deleteSuccessful = (item: Post) => {
-    this.setState({ isBeingDeleted: false });
+    // this.setState({ isBeingDeleted: false });
     // TODO
     console.log('delete successful', item);
   };
 
   requestUpdate = (item: Post) => {
-    this.setState({ isBeingUpdated: true });
+    // this.setState({ isBeingUpdated: true });
     // TODO
     console.log('request update', item);
   };
 
   updateSuccessful = (item: Post) => {
-    this.setState({ isBeingUpdated: false });
+    // this.setState({ isBeingUpdated: false });
     // TODO
     console.log('update successful', item);
   };
@@ -153,14 +155,19 @@ export default class PostDetailScreen extends Component<P, S> {
                         requestUpdate={this.requestUpdate}
                         deleteSuccessful={this.deleteSuccessful}
                         updateSuccessful={this.updateSuccessful}
+                        onDelete={() => {
+                          this.props.navigation.state.params.reloadList(data);
+                          this.props.navigation.goBack();
+                        }}
                       />
                     }
+                    reloadPost={fetch}
                   />
                   <CommentInput
                     postId={data.id}
                     replyingTo={replyingTo}
                     onReplyCancel={this.onReplyCancel}
-                    onSubmitSuccess={this.onSubmitSuccess(fetch)}
+                    onSubmitSuccess={this.onSubmitSuccess(fetch, data)}
                     passRef={this.passRef}
                     style={styles.commentInput}
                   />

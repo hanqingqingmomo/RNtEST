@@ -24,11 +24,11 @@ type P = {
   navigation: Object,
   user: User,
   emitAction: ItemActionEmitter,
+  onDelete: Function,
 };
 
 type S = {
-  isBeingDeleted: boolean,
-  isBeingReported: boolean,
+  updating: boolean,
 };
 
 const HIT_SLOP = {
@@ -44,8 +44,7 @@ const mapStateToProps = state => ({
 
 class NewsFeedItemHeader extends Component<P, S> {
   state = {
-    isBeingDeleted: false,
-    isBeingReported: false,
+    updating: false,
   };
 
   onCommunityPress = (community: CommunitySimple) => {
@@ -59,18 +58,22 @@ class NewsFeedItemHeader extends Component<P, S> {
   };
 
   deletePost = async () => {
-    this.setState({ isBeingDeleted: true });
     const { item } = this.props;
     const deletePostReq = makeDeletePostReq(item.id);
 
+    this.setState({ updating: true });
+
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
-      this.props.emitAction('delete', item);
+      // this.props.emitAction('delete', item);
+
+      this.setState({ updating: false });
+      this.props.onDelete();
     } catch (err) {}
   };
 
   reportPost = async () => {
-    this.setState({ isBeingReported: true });
+    this.setState({ updating: true });
 
     const { item } = this.props;
     const reportReq = makeReportReq({ postId: item.id });
@@ -78,7 +81,7 @@ class NewsFeedItemHeader extends Component<P, S> {
     try {
       const reportResp = await global.fetch(reportReq.url, reportReq.options);
       const resp = await reportResp.json();
-      this.setState({ isBeingReported: false });
+      this.setState({ updating: false });
 
       if (resp.error) {
         global.alertWithType('error', 'Ooops', resp.error);
@@ -116,7 +119,7 @@ class NewsFeedItemHeader extends Component<P, S> {
   }
 
   render() {
-    const { isBeingDeleted, isBeingReported } = this.state;
+    const { updating } = this.state;
     const communities = [...this.props.item.communities];
     return (
       <View style={[styles.header, styles.row]}>
@@ -139,10 +142,7 @@ class NewsFeedItemHeader extends Component<P, S> {
           ))}
         </View>
         <View>
-          <SettingsPopup
-            busy={isBeingReported || isBeingDeleted}
-            settings={this.getPopupSettings()}
-          />
+          <SettingsPopup busy={updating} settings={this.getPopupSettings()} />
         </View>
       </View>
     );

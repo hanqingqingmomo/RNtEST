@@ -33,11 +33,12 @@ type P = {
   requestUpdate: Function,
   updateSuccessful: Function,
   isBeingUpdated: boolean,
+  reloadPost: Function,
 };
 
 type S = {
   showReplies: boolean,
-  isBeingReported: boolean,
+  updating: boolean,
 };
 
 const AVATAR_SIZE = 25;
@@ -49,7 +50,7 @@ const mapStateToProps = state => ({
 class Comment extends Component<P, S> {
   state = {
     showReplies: false,
-    isBeingReported: false,
+    updating: false,
   };
 
   deleteComment = async () => {
@@ -57,11 +58,16 @@ class Comment extends Component<P, S> {
 
     const deleteCommentReq = makeDeleteCommentReq(item.id);
 
-    requestDelete(item);
+    // requestDelete(item);
+
+    this.setState({ updating: true });
 
     try {
       await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
-      deleteSuccessful(item);
+      this.setState({ updating: false });
+      this.props.reloadPost();
+
+      // deleteSuccessful(item);
     } catch (err) {}
   };
 
@@ -69,12 +75,12 @@ class Comment extends Component<P, S> {
     const { item } = this.props;
     const reportReq = makeReportReq({ commentId: item.id });
 
-    this.setState({ isBeingReported: true });
+    this.setState({ updating: true });
 
     try {
       const reportResp = await global.fetch(reportReq.url, reportReq.options);
 
-      this.setState({ isBeingReported: false });
+      this.setState({ updating: false });
 
       const resp = await reportResp.json();
 
@@ -130,7 +136,7 @@ class Comment extends Component<P, S> {
     } = this.props;
     const isReply = !onReplyPress;
 
-    const { isBeingReported } = this.state;
+    const { updating } = this.state;
 
     return (
       <View
@@ -170,7 +176,7 @@ class Comment extends Component<P, S> {
                 <TimeAgo date={item.created_at} />
               </Text>
             </View>
-            {isBeingReported || isBeingDeleted ? (
+            {updating /*|| isBeingDeleted*/ ? (
               <CenterView>
                 <ActivityIndicator />
               </CenterView>
@@ -240,6 +246,7 @@ class Comment extends Component<P, S> {
               requestUpdate={requestUpdate}
               updateSuccessful={updateSuccessful}
               isBeingUpdated={isBeingUpdated}
+              reloadPost={this.props.reloadPost}
             />
           ) : null}
         </View>

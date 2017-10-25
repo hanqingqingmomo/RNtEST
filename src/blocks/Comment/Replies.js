@@ -15,6 +15,7 @@ type P = {
   requestUpdate: Function,
   updateSuccessful: Function,
   isBeingUpdated: boolean,
+  reloadPost: Function,
 };
 
 export default class Replies extends React.Component<P> {
@@ -41,6 +42,7 @@ export default class Replies extends React.Component<P> {
             requestUpdate={requestUpdate}
             updateSuccessful={updateSuccessful}
             isBeingUpdated={isBeingUpdated}
+            reloadPost={this.props.reloadPost}
           />
         ))}
       </View>

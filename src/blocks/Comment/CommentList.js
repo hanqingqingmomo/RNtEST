@@ -17,6 +17,7 @@ type P = {
   requestUpdate: Function,
   updateSuccessful: Function,
   isBeingUpdated: boolean,
+  reloadPost: Function,
 };
 
 export default class CommentList extends Component<P> {
@@ -41,6 +42,7 @@ export default class CommentList extends Component<P> {
         requestUpdate={requestUpdate}
         updateSuccessful={updateSuccessful}
         isBeingUpdated={isBeingUpdated}
+        reloadPost={this.props.reloadPost}
       />
     );
   };
