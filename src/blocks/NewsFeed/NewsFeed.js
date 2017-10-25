@@ -135,9 +135,19 @@ export default class NewsFeed extends Component<Props, State> {
     }));
   };
 
+  deleteItem = () => {
+    console.log('delete item');
+  };
+
+  updateItem = () => {
+    console.log('update item');
+  };
+
   render() {
     return (
       <NewsFeedList
+        deleteItem={this.deleteItem}
+        updateItem={this.updateItem}
         data={this.state.data || []}
         renderItemProps={{
           navigation: this.props.navigation,

@@ -23,7 +23,12 @@ export default class NewsFeedList extends Component<Props> {
 
   renderItem = ({ item }: { item: Post }) => (
     <View style={{ paddingHorizontal: 10 }}>
-      <NewsFeedItem item={item} {...this.props.renderItemProps} />
+      <NewsFeedItem
+        item={item}
+        {...this.props.renderItemProps}
+        onDelete={this.props.deleteItem}
+        refetch={this.props.updateItem}
+      />
     </View>
   );
 
