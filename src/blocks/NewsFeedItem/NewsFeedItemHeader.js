@@ -117,34 +117,33 @@ class NewsFeedItemHeader extends Component<P, S> {
 
   render() {
     const { isBeingDeleted, isBeingReported } = this.state;
+    const communities = [...this.props.item.communities];
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {this.props.item.communities
-            .splice(0, 3)
-            .map((community: CommunitySimple) => (
-              <View style={styles.tag} key={community.id}>
-                <TouchableItem
-                  onPress={() => this.onCommunityPress(community)}
-                  disabled={community.disabled}
-                  hitSlop={HIT_SLOP}
-                >
-                  <View style={{ backgroundColor: 'white' }}>
-                    <Pill
-                      title={community.name}
-                      color={
-                        community.disabled ? '#B0BEC5' : getColor('orange')
-                      }
-                    />
-                  </View>
-                </TouchableItem>
-              </View>
-            ))}
+          {communities.splice(0, 3).map((community: CommunitySimple) => (
+            <View style={styles.tag} key={community.id}>
+              <TouchableItem
+                onPress={() => this.onCommunityPress(community)}
+                disabled={community.disabled}
+                hitSlop={HIT_SLOP}
+              >
+                <View style={{ backgroundColor: 'white' }}>
+                  <Pill
+                    title={community.name}
+                    color={community.disabled ? '#B0BEC5' : getColor('orange')}
+                  />
+                </View>
+              </TouchableItem>
+            </View>
+          ))}
         </View>
-        <SettingsPopup
-          busy={isBeingReported || isBeingDeleted}
-          settings={this.getPopupSettings()}
-        />
+        <View>
+          <SettingsPopup
+            busy={isBeingReported || isBeingDeleted}
+            settings={this.getPopupSettings()}
+          />
+        </View>
       </View>
     );
   }

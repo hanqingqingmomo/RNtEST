@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { FlatList, View } from '../../atoms';
+import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 
 import type { Post } from '../../Types';
 
@@ -20,15 +21,21 @@ export default class NewsFeedList extends Component<Props> {
   // TODO move keyExtractor to parent
   keyExtractor = (item: Post) => item.id;
 
+  renderItem = ({ item }: { item: Post }) => (
+    <View style={{ paddingHorizontal: 10 }}>
+      <NewsFeedItem item={item} {...this.props.renderItemProps} />
+    </View>
+  );
+
   render() {
-    const { data, renderItem, ...bag } = this.props;
+    const { data, renderItem, renderItemProps, ...bag } = this.props;
 
     return (
       <FlatList
         data={data}
+        renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         ItemSeparatorComponent={ItemSeparatorComponent}
-        renderItem={this.props.renderItem}
         {...bag}
       />
     );

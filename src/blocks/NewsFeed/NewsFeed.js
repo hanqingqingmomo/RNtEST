@@ -6,7 +6,7 @@ import mitt from 'mitt';
 
 import { View } from '../../atoms';
 import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
-import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
+
 import { type Request } from '../../utils/requestFactory';
 import Footer from './Footer';
 import { type Post } from '../../Types';
@@ -135,19 +135,14 @@ export default class NewsFeed extends Component<Props, State> {
     }));
   };
 
-  renderItem = ({ item }: { item: Post }) => (
-    <NewsFeedItem
-      item={item}
-      navigation={this.props.navigation}
-      emitAction={this.emitAction}
-    />
-  );
-
   render() {
     return (
       <NewsFeedList
         data={this.state.data || []}
-        renderItem={this.renderItem}
+        renderItemProps={{
+          navigation: this.props.navigation,
+          emitAction: this.emitAction,
+        }}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshingData}
