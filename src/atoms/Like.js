@@ -25,12 +25,13 @@ export default class Like extends Component<P, State> {
 
   onPress = (fetch: any): Function => async () => {
     this.setState({ updating: true });
-    const { item, liked } = this.props;
+    const { item } = this.props;
+    const { liked } = this.state;
     const likeRq = makeLikeRq(item.id, liked);
     await fetch(likeRq.url, likeRq.options);
     const readPostReq = makeReadPostReq(item.id);
     const { data } = await fetch(readPostReq.url, readPostReq.options);
-    this.props.emitAction('update', data);
+    // this.props.emitAction('update', data);
     this.setState({
       updating: false,
       liked: data.liked,
