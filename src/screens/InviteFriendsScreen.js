@@ -24,8 +24,10 @@ import {
   View,
 } from '../atoms';
 import { getColor } from '../utils/color';
-import { css } from '../utils/style';
-import { makeInvitationRq } from '../utils/requestFactory';
+import {
+  makeInvitationRq,
+  makeReadInvitationMessage,
+} from '../utils/requestFactory';
 
 type EmailAddressProps = {
   email: string,
@@ -65,6 +67,7 @@ type S = {
   invitedUser: Array<number>,
   permission: 'undefined' | 'denied' | 'authorized',
   searchValue: string,
+  smsMessage: string,
 };
 
 export default class InviteFriendsScreen extends React.Component<{}, S> {
@@ -73,6 +76,22 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     invitedUser: [],
     permission: 'undefined',
     searchValue: '',
+    smsMessage: '',
+  };
+
+  componentDidMount() {
+    this.fetchInvitationMessage();
+  }
+
+  fetchInvitationMessage = async () => {
+    const readPostReq = makeReadInvitationMessage();
+
+    const readPostRes = await global.fetch(
+      readPostReq.url,
+      readPostReq.options
+    );
+
+    this.setState({ smsMessage: JSON.parse(readPostRes._bodyText).data });
   };
 
   componentWillMount() {
@@ -107,17 +126,13 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     return (
       <View style={styles.row}>
         <View style={styles.textWrapper}>
-          <Text size={15} lineHeight={18} style={css('color', '#455A64')}>
+          <Text size={15} lineHeight={18} color="#455A64">
             {`${givenName}${middleName ? ` ${middleName}` : ''}${familyName
               ? ` ${familyName}`
               : ''}`}
           </Text>
           {emailAddresses.length ? (
-            <Text
-              size={15}
-              lineHeight={18}
-              style={css('color', getColor('gray'))}
-            >
+            <Text size={15} lineHeight={18} color={getColor('gray')}>
               {emailAddresses[0].email}
             </Text>
           ) : null}
@@ -175,7 +190,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
 
   sendInvitationMessage = (user: ContactProps) => {
     const phone = user.phoneNumbers[0].number;
-    const url = `sms:${phone}&body=You are invited to join the YWCA’s MPWR community! Click here to join us! https://poweredbyaction.org/invite`;
+    const url = `sms:${phone}&body=${this.state.smsMessage || ''}`;
 
     Linking.canOpenURL(url)
       .then(supported => {
@@ -227,11 +242,11 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
           <CenterView>
             <Icon
               name="sad-face"
-              color="#90A4AE"
+              color={getColor('gray')}
               size={100}
               style={{ paddingBottom: 25 }}
             />
-            <Text color="#90A4AE" size={16}>
+            <Text color={getColor('gray')} size={16}>
               Allow permission via system settings
             </Text>
           </CenterView>
