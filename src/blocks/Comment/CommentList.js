@@ -43,6 +43,7 @@ export default class CommentList extends Component<P> {
         updateSuccessful={updateSuccessful}
         isBeingUpdated={isBeingUpdated}
         reloadPost={this.props.reloadPost}
+        emitAction={this.props.emitAction}
       />
     );
   };

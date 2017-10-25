@@ -40,6 +40,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
                 this.props.navigation.navigate('PostDetailScreen', {
                   postId: data.id,
                   reloadList: this.props.reloadCommunity,
+                  emitAction,
                 });
               }}
             />

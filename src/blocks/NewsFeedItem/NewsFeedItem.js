@@ -51,6 +51,7 @@ export default class NewsFeedItem extends Component<P> {
           navigation.navigate('PostDetailScreen', {
             postId: id,
             reloadList: this.props.refetch,
+            emitAction: this.props.emitAction,
           }),
       });
     }

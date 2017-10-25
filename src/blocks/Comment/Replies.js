@@ -43,6 +43,7 @@ export default class Replies extends React.Component<P> {
             updateSuccessful={updateSuccessful}
             isBeingUpdated={isBeingUpdated}
             reloadPost={this.props.reloadPost}
+            emitAction={this.props.emitAction}
           />
         ))}
       </View>

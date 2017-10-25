@@ -159,9 +159,13 @@ export default class PostDetailScreen extends Component<P, S> {
                           this.props.navigation.state.params.reloadList(data);
                           this.props.navigation.goBack();
                         }}
+                        emitAction={
+                          this.props.navigation.state.params.emitAction
+                        }
                       />
                     }
                     reloadPost={fetch}
+                    emitAction={this.props.navigation.state.params.emitAction}
                   />
                   <CommentInput
                     postId={data.id}

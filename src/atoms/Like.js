@@ -31,7 +31,7 @@ export default class Like extends Component<P, State> {
     await fetch(likeRq.url, likeRq.options);
     const readPostReq = makeReadPostReq(item.id);
     const { data } = await fetch(readPostReq.url, readPostReq.options);
-    // this.props.emitAction('update', data);
+    this.props.emitAction && this.props.emitAction('update', data);
     this.setState({
       updating: false,
       liked: data.liked,

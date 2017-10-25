@@ -207,6 +207,7 @@ class Comment extends Component<P, S> {
                   requestUpdate={requestUpdate}
                   updateSuccessful={updateSuccessful}
                   isBeingUpdated={isBeingUpdated}
+                  emitAction={this.props.emitAction}
                 />
               </View>
 
@@ -247,6 +248,7 @@ class Comment extends Component<P, S> {
               updateSuccessful={updateSuccessful}
               isBeingUpdated={isBeingUpdated}
               reloadPost={this.props.reloadPost}
+              emitAction={this.props.emitAction}
             />
           ) : null}
         </View>
