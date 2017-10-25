@@ -102,7 +102,7 @@ export default class CommunityListScreen extends Component<Props, State> {
                       ))}
                     </ScrollView>
                   ) : (
-                    <NoContent />
+                    <NoContent iconName="sad-face" title="No Content" />
                   )
                 ) : error ? (
                   <CenterView>

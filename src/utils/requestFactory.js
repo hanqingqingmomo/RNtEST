@@ -367,7 +367,7 @@ export const makeDeleteCommentReq = (commentId: number | string) =>
   });
 
 /**
- * User Invitations
+ * Invitations
  */
 
 export const makeInvitationRq = (email: string) =>
@@ -378,6 +378,14 @@ export const makeInvitationRq = (email: string) =>
       body: JSON.stringify({
         member_invitations: email,
       }),
+    },
+  });
+
+export const makeReadInvitationMessage = () =>
+  inject({
+    url: join(Config.API_URL, `/v1/communities/invitation_message`),
+    options: {
+      method: 'GET',
     },
   });
 

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Animated, Keyboard, NetInfo, StyleSheet } from 'react-native';
 
-import { Text } from '../atoms';
+import { NoContent } from '../blocks';
 
 const INITIAL_OPACITY = 0;
 
@@ -11,17 +11,6 @@ type S = {
   animationFinished: boolean,
   isConnected: boolean,
 };
-
-const styles = StyleSheet.create({
-  fill: {
-    backgroundColor: 'black',
-    justifyContent: 'center',
-  },
-  text: {
-    alignSelf: 'center',
-    textAlign: 'center',
-  },
-});
 
 export default class Network extends Component<{}, S> {
   state = {
@@ -71,13 +60,14 @@ export default class Network extends Component<{}, S> {
         pointerEvents={isConnected ? 'none' : undefined}
         style={[
           StyleSheet.absoluteFillObject,
-          styles.fill,
-          { opacity: this.animOpacity },
+          { opacity: this.animOpacity, backgroundColor: 'white' },
         ]}
       >
-        <Text size={40} color="white" style={styles.text}>
-          Offline
-        </Text>
+        <NoContent
+          iconName="offline"
+          title="You are offline"
+          subtitle="Please connect to the Internet to use the app."
+        />
       </Animated.View>
     );
   }
