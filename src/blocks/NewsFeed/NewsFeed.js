@@ -64,7 +64,7 @@ export default class NewsFeed extends Component<Props, State> {
     appendingData: false,
     cursor: {
       next: null,
-      limit: 7,
+      limit: 25,
     },
     data: null,
     error: null,
