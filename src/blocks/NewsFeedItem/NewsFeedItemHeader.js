@@ -143,13 +143,10 @@ class NewsFeedItemHeader extends Component<P, S> {
               </View>
             ))}
         </View>
-        {isBeingReported || isBeingDeleted ? (
-          <CenterView>
-            <ActivityIndicator />
-          </CenterView>
-        ) : (
-          <SettingsPopup settings={this.getPopupSettings()} />
-        )}
+        <SettingsPopup
+          busy={isBeingReported || isBeingDeleted}
+          settings={this.getPopupSettings()}
+        />
       </View>
     );
   }

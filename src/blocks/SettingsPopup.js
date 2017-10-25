@@ -1,14 +1,22 @@
 // @flow
 import React from 'react';
 
-import { Icon, Popover, PopoverItem, View } from '../atoms';
+import {
+  Icon,
+  Popover,
+  PopoverItem,
+  View,
+  CenterView,
+  ActivityIndicator,
+} from '../atoms';
 import { type PopupSetting } from '../Types';
 
 type P = {
   settings: Array<PopupSetting>,
+  busy: ?boolean,
 };
 
-export default function SettingsPopup({ settings }: P) {
+export default function SettingsPopup({ settings, busy }: P) {
   return (
     <Popover
       labels={settings.map((setting: PopupSetting) => ({
@@ -23,8 +31,14 @@ export default function SettingsPopup({ settings }: P) {
         onPress: setting.onPress,
       }))}
       button={
-        <View style={{ padding: 6 }}>
-          <Icon name="menu" color="#CFD8DC" size={24} />
+        <View style={{ paddingHorizontal: 6 }}>
+          {busy ? (
+            <CenterView>
+              <ActivityIndicator />
+            </CenterView>
+          ) : (
+            <Icon name="menu" color="#CFD8DC" size={24} />
+          )}
         </View>
       }
     />
