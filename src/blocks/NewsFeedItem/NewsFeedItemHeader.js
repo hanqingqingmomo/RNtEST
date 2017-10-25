@@ -7,24 +7,15 @@ import { connect } from 'react-redux';
 import {
   ActivityIndicator,
   CenterView,
-  Icon,
   Pill,
-  Popover,
-  PopoverItem,
   TouchableItem,
   View,
 } from '../../atoms';
+import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
-import type { IconName, CommunitySimple, User, Post } from '../../Types';
+import type { CommunitySimple, User, Post, PopupSetting } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq, makeReportReq } from '../../utils/requestFactory';
-
-type Setting = {
-  label: string,
-  iconName: IconName,
-  isVisible: Function,
-  key: 'delete' | 'report',
-};
 
 type P = {
   item: Post,
@@ -46,24 +37,6 @@ const HIT_SLOP = {
   left: 2,
 };
 
-const SETTINGS = [
-  {
-    key: 'delete',
-    label: 'Delete',
-    iconName: 'delete',
-    isVisible: ({ user, author }) => isUserAuthorOfPost(user, author),
-  },
-  {
-    key: 'report',
-    label: 'Report',
-    iconName: 'report',
-  },
-];
-
-function isUserAuthorOfPost(user, author): boolean {
-  return author.id === user.id;
-}
-
 const mapStateToProps = state => ({
   user: selectUser(state),
 });
@@ -73,20 +46,6 @@ class NewsFeedItemHeader extends Component<P, S> {
     isBeingReported: false,
   };
 
-  get settings(): Array<*> {
-    return SETTINGS.filter(
-      (setting: Setting) =>
-        typeof setting.isVisible === 'undefined' ||
-        setting.isVisible({
-          user: this.props.user,
-          author: this.props.item.author,
-        })
-    ).map((setting: Setting) => ({
-      label: () => this.renderSettings(setting),
-      onPress: () => this.onSettingPress(setting),
-    }));
-  }
-
   onCommunityPress = (community: CommunitySimple) => {
     const { navigation } = this.props;
 
@@ -94,18 +53,6 @@ class NewsFeedItemHeader extends Component<P, S> {
       navigation.navigate('CommunityCenterScreen', {
         communityId: community.id,
       });
-    }
-  };
-
-  onSettingPress = async (setting: Setting) => {
-    switch (setting.key) {
-      case 'delete':
-        this.deletePost();
-        break;
-      case 'report':
-        this.reportPost();
-        break;
-      default:
     }
   };
 
@@ -147,22 +94,28 @@ class NewsFeedItemHeader extends Component<P, S> {
     } catch (err) {}
   };
 
-  renderSettings = ({
-    label,
-    iconName,
-    ...args
-  }: Setting): React$Element<*> => (
-    <PopoverItem
-      {...args}
-      contentView={label}
-      imageView={
-        <View style={{ padding: 6 }}>
-          <Icon name={iconName} color="#B0BEC5" size="md" />
-        </View>
-      }
-      key={iconName}
-    />
-  );
+  getPopupSettings() {
+    return [
+      {
+        iconName: 'delete',
+        label: 'Delete',
+        isHidden: ({ user, author }) => author.id !== user.id,
+        onPress: this.deletePost,
+      },
+      {
+        iconName: 'report',
+        label: 'Report',
+        onPress: this.reportPost,
+      },
+    ].filter(
+      (setting: PopupSetting) =>
+        !setting.isHidden ||
+        !setting.isHidden({
+          user: this.props.user,
+          author: this.props.item.author,
+        })
+    );
+  }
 
   render() {
     const { item, isBeingDeleted } = this.props;
@@ -193,10 +146,7 @@ class NewsFeedItemHeader extends Component<P, S> {
             <ActivityIndicator />
           </CenterView>
         ) : (
-          <Popover
-            labels={this.settings}
-            button={<Icon name="menu" color="#C6D3D8" size={20} />}
-          />
+          <SettingsPopup settings={this.getPopupSettings()} />
         )}
       </View>
     );

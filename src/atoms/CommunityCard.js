@@ -10,7 +10,7 @@ import { css } from '../utils/style';
 
 type P = {
   imageURI: string,
-  isNew: boolean,
+  isNew?: boolean,
   subtitle: string,
   title: string,
 };

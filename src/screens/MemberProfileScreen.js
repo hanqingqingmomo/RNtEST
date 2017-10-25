@@ -9,38 +9,21 @@ import {
   Fetch,
   Icon,
   Pill,
-  Popover,
-  PopoverItem,
   Screen,
   TableView,
   TouchableOpacity,
   View,
 } from '../atoms';
-import { ProfileCard } from '../blocks';
+import { ProfileCard, SettingsPopup } from '../blocks';
 import { getColor } from '../utils/color';
 import { makeReadProfileRq, makeReportReq } from '../utils/requestFactory';
-import type { IconName, User, CommunitySimple } from '../Types';
+import type { PopupSetting, User, CommunitySimple } from '../Types';
 
 const { Table, Section, Cell } = TableView;
-
-type Setting = {
-  label: string,
-  iconName: IconName,
-  isVisible: Function,
-  key: 'report',
-};
 
 type Props = {
   navigation: Object,
 };
-
-const SETTINGS = [
-  {
-    key: 'report',
-    label: 'Report',
-    iconName: 'report',
-  },
-];
 
 export default class MemberProfileScreen extends Component<Props> {
   static navigationOptions = ({ navigation }) => {
@@ -48,22 +31,6 @@ export default class MemberProfileScreen extends Component<Props> {
     return {
       title: `${first_name} ${last_name}`,
     };
-  };
-
-  get settings(): Array<*> {
-    return SETTINGS.map((setting: Setting) => ({
-      label: () => this.renderSettings(setting),
-      onPress: () => this.onSettingPress(setting),
-    }));
-  }
-
-  onSettingPress = async (setting: Setting) => {
-    switch (setting.key) {
-      case 'report':
-        this.reportUser();
-        break;
-      default:
-    }
   };
 
   handleCommunityPress = (community: CommunitySimple) => {
@@ -93,22 +60,15 @@ export default class MemberProfileScreen extends Component<Props> {
     } catch (err) {}
   };
 
-  renderSettings = ({
-    label,
-    iconName,
-    ...args
-  }: Setting): React$Element<*> => (
-    <PopoverItem
-      {...args}
-      contentView={label}
-      imageView={
-        <View style={{ padding: 6 }}>
-          <Icon name={iconName} color="#B0BEC5" size="md" />
-        </View>
-      }
-      key={iconName}
-    />
-  );
+  getPopupSettings() {
+    return [
+      {
+        iconName: 'report',
+        label: 'Report',
+        onPress: this.reportUser,
+      },
+    ];
+  }
 
   renderCommunities = (member: User) => {
     return (
@@ -142,12 +102,7 @@ export default class MemberProfileScreen extends Component<Props> {
                     <ProfileCard
                       user={memeberData}
                       settings={
-                        <Popover
-                          labels={this.settings}
-                          button={
-                            <Icon name="menu" color="#C6D3D8" size={20} />
-                          }
-                        />
+                        <SettingsPopup settings={this.getPopupSettings()} />
                       }
                     />
                   </Section>

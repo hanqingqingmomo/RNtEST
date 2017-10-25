@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Linking } from 'react-native';
 
 import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
@@ -83,7 +83,7 @@ export default class NewsFeedItem extends Component<P> {
 
         {cached_url ? (
           isDetail ? (
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => Linking.openURL(cached_url.url)}>
               <NewsFeedItemAttachment {...cached_url} />
             </TouchableOpacity>
           ) : (

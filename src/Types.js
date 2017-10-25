@@ -114,6 +114,13 @@ export type CommunityMember = {
   joined_communities: Array<Community>,
 };
 
+export type PopupSetting = {
+  iconName: IconName,
+  isHidden?: Function,
+  label: string,
+  onPress: Function,
+};
+
 // Redux
 export type Action<T, A> = {
   type: T,

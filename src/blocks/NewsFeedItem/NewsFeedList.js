@@ -5,26 +5,32 @@ import { StyleSheet } from 'react-native';
 
 import { FlatList, View } from '../../atoms';
 
-import type { CommunitySimple, Post } from '../../Types';
+import type { Post } from '../../Types';
 
 type Props = {
   data: Array<Post>,
   renderItem: (props: { item: Post }) => React$Node,
 };
 
+function ItemSeparatorComponent() {
+  return <View style={styles.separator} />;
+}
+
 export default class NewsFeedList extends Component<Props> {
+  // TODO move keyExtractor to parent
+  keyExtractor = (item: Post) => item.id;
+
   render() {
-    const { data, ...args } = this.props;
-    // TODO move keyExtractor to parent
+    const { data, renderItem, ...bag } = this.props;
+
     return (
-      <View style={styles.itemsContainer}>
-        <FlatList
-          data={data}
-          keyExtractor={(item: CommunitySimple) => item.id}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          {...args}
-        />
-      </View>
+      <FlatList
+        data={data}
+        keyExtractor={this.keyExtractor}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        renderItem={this.props.renderItem}
+        {...bag}
+      />
     );
   }
 }
@@ -32,9 +38,6 @@ export default class NewsFeedList extends Component<Props> {
 const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 10,
-  },
-  itemsContainer: {
-    flex: 1,
   },
   separator: {
     height: 10,

@@ -3,8 +3,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import { BlackPortal, WhitePortal } from 'react-native-portal';
-import { getColor } from '../utils/color';
 
+import { getColor } from '../utils/color';
+import { makeReadCommunitiesListRq } from '../utils/requestFactory';
 import {
   ActivityIndicator,
   CenterView,
@@ -19,7 +20,7 @@ import {
   TouchableOpacity,
   View,
 } from '../atoms';
-import { makeReadCommunitiesListRq } from '../utils/requestFactory';
+import { NoContent } from '../blocks';
 
 const HEADER_VIEW_ID = 'HeaderView:CommListing';
 
@@ -40,7 +41,11 @@ type State = {
   membershipStatus: MembershipStatus,
 };
 
-export default class CommunityListScreen extends Component<{}, State> {
+type Props = {
+  navigation: Object,
+};
+
+export default class CommunityListScreen extends Component<Props, State> {
   static navigationOptions = props => ({
     headerLeft: <NavigatorHeader {...props} />,
     headerTitle: <WhitePortal name={HEADER_VIEW_ID} />,
@@ -72,39 +77,45 @@ export default class CommunityListScreen extends Component<{}, State> {
           url={readCommunitiesListRq.url}
           options={readCommunitiesListRq.options}
         >
-          {({ loading, error, data, fetch }) => (
-            <ScrollView contentContainerStyle={styles.container}>
-              {loading && (
-                <CenterView>
-                  <ActivityIndicator />
-                </CenterView>
-              )}
-              {error && (
-                <CenterView>
-                  <Text>{error.message}</Text>
-                </CenterView>
-              )}
-              {!loading &&
-                data &&
-                data.data.map(community => (
-                  <TouchableItem
-                    onPress={() =>
-                      navigation.navigate('CommunityCenterScreen', {
-                        communityId: community.id,
-                        reloadCommunityList: fetch,
-                      })}
-                    key={community.id}
-                    style={styles.item}
-                  >
-                    <CommunityCard
-                      imageURI={community.cover_photo}
-                      title={community.name}
-                      subtitle={`${community.members} members`}
-                    />
-                  </TouchableItem>
-                ))}
-            </ScrollView>
-          )}
+          {({ loading, error, data, fetch }: Object) => {
+            return (
+              <View style={{ minHeight: '100%' }}>
+                {loading === false ? (
+                  data && data.data.length ? (
+                    <ScrollView contentContainerStyle={styles.container}>
+                      {data.data.map(community => (
+                        <TouchableItem
+                          onPress={() =>
+                            navigation.navigate('CommunityCenterScreen', {
+                              communityId: community.id,
+                              reloadCommunityList: fetch,
+                            })}
+                          key={community.id}
+                          style={styles.item}
+                        >
+                          <CommunityCard
+                            imageURI={community.cover_photo}
+                            title={community.name}
+                            subtitle={`${community.members} members`}
+                          />
+                        </TouchableItem>
+                      ))}
+                    </ScrollView>
+                  ) : (
+                    <NoContent />
+                  )
+                ) : error ? (
+                  <CenterView>
+                    <Text>{error.message}</Text>
+                  </CenterView>
+                ) : (
+                  <CenterView>
+                    <ActivityIndicator />
+                  </CenterView>
+                )}
+              </View>
+            );
+          }}
         </Fetch>
       </Screen>
     );
@@ -118,12 +129,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    flexGrow: 1,
   },
-
   item: {
     paddingTop: 1,
     paddingBottom: 5,

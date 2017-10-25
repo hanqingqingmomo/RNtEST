@@ -20,6 +20,8 @@ export default function Popover({ labels, button }: Props) {
       labelContainerStyle={styles.labelContainerStyle}
       tooltipContainerStyle={styles.tooltipContainerStyle}
       overlayStyle={styles.overlayStyle}
+      setBelow
+      delayLongPress={0}
     />
   );
 }
