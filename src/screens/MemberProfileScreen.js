@@ -18,7 +18,7 @@ import {
 } from '../atoms';
 import { ProfileCard } from '../blocks';
 import { getColor } from '../utils/color';
-import { makeReadProfileRq, makeReportUserReq } from '../utils/requestFactory';
+import { makeReadProfileRq, makeReportReq } from '../utils/requestFactory';
 import type { IconName, User, CommunitySimple } from '../Types';
 
 const { Table, Section, Cell } = TableView;
@@ -73,18 +73,11 @@ export default class MemberProfileScreen extends Component<Props> {
   };
 
   reportUser = async () => {
-    const {
-      id,
-      first_name,
-      last_name,
-    } = this.props.navigation.state.params.user;
-    const reportUserReq = makeReportUserReq(id);
+    const { id } = this.props.navigation.state.params.user;
+    const reportReq = makeReportReq({ userId: id });
 
     try {
-      const reportResp = await global.fetch(
-        reportUserReq.url,
-        reportUserReq.options
-      );
+      const reportResp = await global.fetch(reportReq.url, reportReq.options);
 
       const resp = await reportResp.json();
 
@@ -94,7 +87,7 @@ export default class MemberProfileScreen extends Component<Props> {
         global.alertWithType(
           'success',
           'Thanks!',
-          `${first_name} ${last_name} has been successfully reported.`
+          `Your report has been successfully received and will be reviewed by our support staff.`
         );
       }
     } catch (err) {}

@@ -7,8 +7,9 @@ const css = (cssProp: string, value: string | number): number => {
   return StyleSheet.create({ cachedStyle: { [cssProp]: value } }).cachedStyle;
 };
 
-const memoizedCss = memoize(css, (cssProp, value) => {
-  return `cssProp:${cssProp}, value: ${value}`;
-});
+const memoizedCss = memoize(
+  css,
+  (cssProp, value) => `cssProp:${cssProp}, value: ${value}`
+);
 
 export { memoizedCss as css };

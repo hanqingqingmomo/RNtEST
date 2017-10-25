@@ -1,15 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  RefreshControl,
-  InteractionManager,
-} from 'react-native';
+import { StyleSheet, RefreshControl, InteractionManager } from 'react-native';
 
 import { View } from '../../atoms';
-import { NewsFeedItem } from '../../blocks';
+import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
 import Footer from './Footer';
 import { type Request } from '../../utils/requestFactory';
 import { type Post } from '../../Types';
@@ -130,29 +125,18 @@ export default class NewsFeed extends Component<Props, State> {
     console.log('update successful', item);
   };
 
-  renderItem = ({ item }: { item: Post }): React$Element<*> => {
-    return (
-      <View style={styles.item}>
-        <NewsFeedItem
-          isBeingDeleted={this.state.isBeingDeleted}
-          isBeingUpdated={this.state.isBeingUpdated}
-          item={item}
-          navigation={this.props.navigation}
-          requestDelete={this.requestDelete}
-          requestUpdate={this.requestUpdate}
-          deleteSuccessful={this.deleteSuccessful}
-          updateSuccessful={this.updateSuccessful}
-        />
-      </View>
-    );
-  };
-
   render() {
+    const { isBeingDeleted, isBeingUpdated, data } = this.state;
     return (
-      <FlatList
-        data={this.state.data}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
+      <NewsFeedList
+        data={data || []}
+        navigation={this.props.navigation}
+        isBeingDeleted={isBeingDeleted}
+        isBeingUpdated={isBeingUpdated}
+        requestDelete={this.requestDelete}
+        requestUpdate={this.requestUpdate}
+        deleteSuccessful={this.deleteSuccessful}
+        updateSuccessful={this.updateSuccessful}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshingData}
@@ -165,11 +149,13 @@ export default class NewsFeed extends Component<Props, State> {
           </View>
         }
         ListFooterComponent={
-          <Footer
-            disabled={this.state.cursor.next === null}
-            loading={this.state.appendingData}
-            onRequestMoreData={this.fetchNextData}
-          />
+          <View style={styles.ListFooterComponent}>
+            <Footer
+              disabled={this.state.cursor.next === null}
+              loading={this.state.appendingData}
+              onRequestMoreData={this.fetchNextData}
+            />
+          </View>
         }
       />
     );
@@ -180,16 +166,7 @@ const styles = StyleSheet.create({
   ListHeaderComponent: {
     marginBottom: 10,
   },
-  item: {
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
-  text: {
-    textAlign: 'center',
-    fontWeight: '500',
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: 'center',
+  ListFooterComponent: {
+    marginTop: 10,
   },
 });

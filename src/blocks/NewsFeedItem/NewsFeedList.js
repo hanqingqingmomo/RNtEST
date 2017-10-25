@@ -38,6 +38,7 @@ export default class NewsFeedList extends Component<P> {
         <FlatList
           data={data}
           keyExtractor={(item: CommunitySimple) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <NewsFeedItem
@@ -61,11 +62,12 @@ export default class NewsFeedList extends Component<P> {
 
 const styles = StyleSheet.create({
   item: {
-    paddingBottom: 10,
     paddingHorizontal: 10,
   },
   itemsContainer: {
-    paddingTop: 10,
     flex: 1,
+  },
+  separator: {
+    height: 10,
   },
 });

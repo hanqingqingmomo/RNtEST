@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   CenterView,
   Fetch,
-  Screen,
   TableView,
   FlatList,
   Text,
@@ -18,7 +17,7 @@ import {
 import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
 import { type User } from '../../Types';
 
-const { Table, Section, Cell } = TableView;
+const { Cell } = TableView;
 const AVATAR_WIDTH = 28;
 
 type Props = {
@@ -29,20 +28,18 @@ type Props = {
 export default class MembersTab extends Component<Props> {
   keyExtractor = item => item.id;
 
-  renderItem = ({ item, separators }) => {
-    return (
-      <Cell
-        title={`${item.first_name} ${item.last_name}`}
-        titleTextColor="#455A64"
-        image={<Avatar imageURI={item.profile_photo} size={AVATAR_WIDTH} />}
-        cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
-        onPress={() => this.props.navigateToMember(item)}
-        disableImageResize
-        onHighlightRow={separators.highlight}
-        onUnHighlightRow={separators.unhighlight}
-      />
-    );
-  };
+  renderItem = ({ item, separators }) => (
+    <Cell
+      title={`${item.first_name} ${item.last_name}`}
+      titleTextColor="#455A64"
+      image={<Avatar imageURI={item.profile_photo} size={AVATAR_WIDTH} />}
+      cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
+      onPress={() => this.props.navigateToMember(item)}
+      disableImageResize
+      onHighlightRow={separators.highlight}
+      onUnHighlightRow={separators.unhighlight}
+    />
+  );
 
   render() {
     const readCommunityMembersRq = makeReadCommunityMembersRq(

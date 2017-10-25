@@ -59,7 +59,15 @@ export default class AvatarPicker extends Component<P> {
             styles.centerContent,
           ]}
         >
-          <ShadowView radius={s / 2}>
+          <ShadowView
+            radius={s / 2}
+            style={[
+              css('width', s),
+              css('height', s),
+              css('backgroundColor', 'white'),
+              styles.centerContent,
+            ]}
+          >
             <View>
               {!imageURI && <Icon name="plus" size={18} color="#B0BEC5" />}
               {imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}

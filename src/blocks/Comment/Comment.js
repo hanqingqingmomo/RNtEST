@@ -24,7 +24,7 @@ import {
 import { getColor } from '../../utils/color';
 import { selectUser } from '../../redux/selectors';
 import {
-  makeReportPostReq,
+  makeReportReq,
   makeDeleteCommentReq,
 } from '../../utils/requestFactory';
 import Replies from './Replies';
@@ -123,15 +123,12 @@ class Comment extends Component<P, S> {
 
   reportComment = async () => {
     const { item } = this.props;
-    const reportPostReq = makeReportPostReq(item.id);
+    const reportReq = makeReportReq({ commentId: item.id });
 
     this.setState({ isBeingReported: true });
 
     try {
-      const reportResp = await global.fetch(
-        reportPostReq.url,
-        reportPostReq.options
-      );
+      const reportResp = await global.fetch(reportReq.url, reportReq.options);
 
       this.setState({ isBeingReported: false });
 
@@ -143,7 +140,7 @@ class Comment extends Component<P, S> {
         global.alertWithType(
           'success',
           'Thanks!',
-          'The comment has been successfully reported.'
+          'Your report has been successfully received and will be reviewed by our support staff.'
         );
       }
     } catch (err) {}

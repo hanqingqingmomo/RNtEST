@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 
 import { Screen } from '../atoms';
 import { type Post } from '../Types';
@@ -53,7 +54,7 @@ export default class PinnedPostsScreen extends Component<P, S> {
     const { isBeingDeleted, isBeingUpdated } = this.state;
 
     return (
-      <Screen>
+      <Screen style={styles.container}>
         <NewsFeedList
           data={this.props.navigation.state.params.data}
           navigation={this.props.navigation}
@@ -68,3 +69,9 @@ export default class PinnedPostsScreen extends Component<P, S> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 10,
+  },
+});

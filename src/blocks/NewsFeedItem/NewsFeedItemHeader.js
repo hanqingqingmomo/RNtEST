@@ -17,10 +17,7 @@ import {
 import { getColor } from '../../utils/color';
 import type { IconName, CommunitySimple, User, Post } from '../../Types';
 import { selectUser } from '../../redux/selectors';
-import {
-  makeDeletePostReq,
-  makeReportPostReq,
-} from '../../utils/requestFactory';
+import { makeDeletePostReq, makeReportReq } from '../../utils/requestFactory';
 
 type Setting = {
   label: string,
@@ -127,15 +124,12 @@ class NewsFeedItemHeader extends Component<P, S> {
 
   reportPost = async () => {
     const { item } = this.props;
-    const reportPostReq = makeReportPostReq(item.id);
+    const reportReq = makeReportReq({ postId: item.id });
 
     this.setState({ isBeingReported: true });
 
     try {
-      const reportResp = await global.fetch(
-        reportPostReq.url,
-        reportPostReq.options
-      );
+      const reportResp = await global.fetch(reportReq.url, reportReq.options);
 
       this.setState({ isBeingReported: false });
 
@@ -147,7 +141,7 @@ class NewsFeedItemHeader extends Component<P, S> {
         global.alertWithType(
           'success',
           'Thanks!',
-          'The post has been successfully reported.'
+          'Your report has been successfully received and will be reviewed by our support staff.'
         );
       }
     } catch (err) {}

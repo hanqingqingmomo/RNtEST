@@ -319,21 +319,24 @@ export const makeDeletePostReq = (postId: number | string) =>
     },
   });
 
-// TODO change endpoint
-export const makeReportPostReq = (postId: number | string) =>
+export const makeReportReq = ({
+  userId,
+  postId,
+  commentId,
+}: {
+  userId?: string,
+  postId?: string,
+  commentId?: string,
+}) =>
   inject({
-    url: join(Config.API_URL, `/v1/content_objects/${postId}/report`),
+    url: join(Config.API_URL, '/v1/abuse_reports'),
     options: {
       method: 'POST',
-    },
-  });
-
-// TODO change endpoint
-export const makeReportUserReq = (userId: number | string) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${userId}/report`),
-    options: {
-      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        postId,
+        commentId,
+      }),
     },
   });
 
