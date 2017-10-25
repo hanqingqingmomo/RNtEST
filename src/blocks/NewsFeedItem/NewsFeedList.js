@@ -19,7 +19,40 @@ type P = {
   isBeingUpdated: boolean,
 };
 
+function ItemSeparatorComponent() {
+  return <View style={styles.separator} />;
+}
+
 export default class NewsFeedList extends Component<P> {
+  keyExtractor = (item: CommunitySimple) => item.id;
+
+  renderItem = ({ item }) => {
+    const {
+      navigation,
+      isBeingDeleted,
+      isBeingUpdated,
+      requestDelete,
+      deleteSuccessful,
+      requestUpdate,
+      updateSuccessful,
+    } = this.props;
+
+    return (
+      <View style={styles.item}>
+        <NewsFeedItem
+          isBeingDeleted={isBeingDeleted}
+          isBeingUpdated={isBeingUpdated}
+          item={item}
+          navigation={navigation}
+          requestDelete={requestDelete}
+          deleteSuccessful={deleteSuccessful}
+          requestUpdate={requestUpdate}
+          updateSuccessful={updateSuccessful}
+        />
+      </View>
+    );
+  };
+
   render() {
     const {
       navigation,
@@ -30,32 +63,17 @@ export default class NewsFeedList extends Component<P> {
       deleteSuccessful,
       requestUpdate,
       updateSuccessful,
-      ...args
+      ...bag
     } = this.props;
 
     return (
-      <View style={styles.itemsContainer}>
-        <FlatList
-          data={data}
-          keyExtractor={(item: CommunitySimple) => item.id}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <NewsFeedItem
-                isBeingDeleted={isBeingDeleted}
-                isBeingUpdated={isBeingUpdated}
-                item={item}
-                navigation={navigation}
-                requestDelete={requestDelete}
-                deleteSuccessful={deleteSuccessful}
-                requestUpdate={requestUpdate}
-                updateSuccessful={updateSuccessful}
-              />
-            </View>
-          )}
-          {...args}
-        />
-      </View>
+      <FlatList
+        data={data}
+        keyExtractor={this.keyExtractor}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        renderItem={this.renderItem}
+        {...bag}
+      />
     );
   }
 }
@@ -63,9 +81,6 @@ export default class NewsFeedList extends Component<P> {
 const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 10,
-  },
-  itemsContainer: {
-    flex: 1,
   },
   separator: {
     height: 10,
