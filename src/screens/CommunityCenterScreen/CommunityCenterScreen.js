@@ -46,7 +46,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
   };
 
   navigateToPost = (post: Object) => {
-    console.log(post);
+    // console.log(post);
     // this.props.navigation.navigate('CommunityMemberProfileScreen', { user });
   };
 

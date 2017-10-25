@@ -69,25 +69,25 @@ export default class PostDetailScreen extends Component<P, S> {
   requestDelete = (item: Post) => {
     // this.setState({ isBeingDeleted: true });
     // TODO
-    console.log('request delete', item);
+    // console.log('request delete', item);
   };
 
   deleteSuccessful = (item: Post) => {
     // this.setState({ isBeingDeleted: false });
     // TODO
-    console.log('delete successful', item);
+    // console.log('delete successful', item);
   };
 
   requestUpdate = (item: Post) => {
     // this.setState({ isBeingUpdated: true });
     // TODO
-    console.log('request update', item);
+    // console.log('request update', item);
   };
 
   updateSuccessful = (item: Post) => {
     // this.setState({ isBeingUpdated: false });
     // TODO
-    console.log('update successful', item);
+    // console.log('update successful', item);
   };
 
   render() {
@@ -156,7 +156,10 @@ export default class PostDetailScreen extends Component<P, S> {
                         deleteSuccessful={this.deleteSuccessful}
                         updateSuccessful={this.updateSuccessful}
                         onDelete={() => {
-                          this.props.navigation.state.params.reloadList(data);
+                          this.props.navigation.state.params.reloadList(
+                            data,
+                            true
+                          );
                           this.props.navigation.goBack();
                         }}
                         emitAction={

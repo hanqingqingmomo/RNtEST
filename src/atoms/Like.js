@@ -23,6 +23,13 @@ export default class Like extends Component<P, State> {
     count: this.props.count,
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      liked: nextProps.liked,
+      count: nextProps.count,
+    });
+  }
+
   onPress = (fetch: any): Function => async () => {
     this.setState({ updating: true });
     const { item } = this.props;

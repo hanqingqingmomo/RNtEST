@@ -143,14 +143,17 @@ export default class NewsFeed extends Component<Props, State> {
 
   deleteItem = item => {
     this.emitAction('delete', item);
-    console.log('delete item');
   };
 
-  updateItem = async item => {
+  updateItem = async (item, deleting) => {
+    if (deleting) {
+      this.deleteItem(item);
+      return;
+    }
     const req = makeReadPostReq(item.id);
     const res = await global.fetch(req.url, req.options);
     const json = await res.json();
-    this.emitAction('update', json.data);
+    this.emitAction('update', json);
   };
 
   render() {

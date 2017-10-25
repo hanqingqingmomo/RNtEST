@@ -68,7 +68,7 @@ class UserProfileScreen extends Component<Props> {
           this.props.navigation.navigate('PrivacyScreen');
           break;
         default:
-          console.log(action.name);
+        // console.log(action.name);
       }
     };
   }
