@@ -98,14 +98,18 @@ export default class NewsFeed extends Component<Props, State> {
   handleItemAction: ItemActionHandler = ({ action, item }) => {
     switch (action) {
       case 'delete':
-        this.setState(state => ({
-          data: state.data.filter(i => i.id !== item.id),
-        }));
+        if (item) {
+          this.setState(state => ({
+            data: state.data.filter(i => i.id !== item.id),
+          }));
+        }
         break;
       case 'update':
-        this.setState(state => ({
-          data: state.data.map(i => (i.id === item.id ? item : i)),
-        }));
+        if (item) {
+          this.setState(state => ({
+            data: state.data.map(i => (i.id === item.id ? item : i)),
+          }));
+        }
         break;
       case 'create':
         this.setState(state => ({
