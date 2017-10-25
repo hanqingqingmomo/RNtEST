@@ -141,7 +141,7 @@ class NewsFeedItemHeader extends Component<P, S> {
         global.alertWithType(
           'success',
           'Thanks!',
-          'Your report has been successfully received and will be reviewed'
+          'Your report has been successfully received and will be reviewed by our support staff.'
         );
       }
     } catch (err) {}
