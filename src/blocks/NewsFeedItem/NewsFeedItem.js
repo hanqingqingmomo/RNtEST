@@ -127,6 +127,7 @@ export default class NewsFeedItem extends Component<P> {
               onPress={() => {
                 navigation.navigate('PostDetailScreen', {
                   postId: id,
+                  emitAction: this.props.emitAction,
                 });
               }}
             >
@@ -150,7 +151,11 @@ export default class NewsFeedItem extends Component<P> {
 
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
-          <NewsFeedItemFooter item={item} links={this.getLinks()} />
+          <NewsFeedItemFooter
+            item={item}
+            links={this.getLinks()}
+            emitAction={this.props.emitAction}
+          />
         </View>
       </ShadowView>
     );

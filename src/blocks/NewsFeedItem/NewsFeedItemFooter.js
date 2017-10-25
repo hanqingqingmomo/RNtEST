@@ -31,7 +31,12 @@ export default class NewsFeedItemFooter extends Component<P> {
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
           <View style={styles.likeWrapper}>
-            <Like count={likes_count} liked={liked} item={item} />
+            <Like
+              count={likes_count}
+              liked={liked}
+              item={item}
+              emitAction={this.props.emitAction}
+            />
           </View>
           <View style={styles.likeWrapper}>
             <Count iconName="comment" count={comments_count} />
