@@ -134,7 +134,6 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   }
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={() => this.refs.searchInput.focus()}>
