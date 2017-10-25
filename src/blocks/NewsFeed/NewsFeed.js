@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, RefreshControl, InteractionManager } from 'react-native';
+import mitt from 'mitt';
 
 import { View } from '../../atoms';
 import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
@@ -9,7 +10,10 @@ import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 import { type Request } from '../../utils/requestFactory';
 import Footer from './Footer';
 import { type Post } from '../../Types';
-import { type ItemActionHandler } from '../NewsFeedItem/NewsFeedItem';
+import {
+  type ItemActionHandler,
+  type ItemActionEmitter,
+} from '../NewsFeedItem/NewsFeedItem';
 
 type Cursor = {
   next: ?number,
@@ -31,7 +35,7 @@ type Props = {
 type State = {
   appendingData: boolean,
   cursor: Cursor,
-  data: ?Array<*>,
+  data: ?Array<Post>,
   error: ?Object,
   refreshingData: boolean,
 };
@@ -60,6 +64,8 @@ async function doFetch(request, _cursor: Cursor): Promise<FetchResponse> {
 }
 
 export default class NewsFeed extends Component<Props, State> {
+  emitter = mitt();
+
   state = {
     appendingData: false,
     cursor: {
@@ -72,12 +78,18 @@ export default class NewsFeed extends Component<Props, State> {
   };
 
   componentDidMount() {
+    this.emitter.on('itemAction', this.handleItemAction);
+
     InteractionManager.runAfterInteractions(this.fetchFreshData);
   }
 
   keyExtractor = (item: Post) => item.id;
 
-  onItemAction: ItemActionHandler = (action, item) => {
+  emitAction: ItemActionEmitter = (action, item) => {
+    this.emitter.emit('itemAction', { action, item });
+  };
+
+  handleItemAction: ItemActionHandler = ({ action, item }) => {
     switch (action) {
       case 'delete':
         this.setState(state => ({
@@ -85,17 +97,16 @@ export default class NewsFeed extends Component<Props, State> {
         }));
         break;
       case 'update':
-        this.setState(
-          state => ({
-            data: state.data.map(i => (i.id === item.id ? item : i)),
-          }),
-          () => {
-            console.log(this.state);
-          }
-        );
+        this.setState(state => ({
+          data: state.data.map(i => (i.id === item.id ? item : i)),
+        }));
+        break;
+      case 'create':
+        this.setState(state => ({
+          data: [item].concat(state.data),
+        }));
         break;
       case 'report':
-      case 'create':
       default:
         // noop
         break;
@@ -128,7 +139,7 @@ export default class NewsFeed extends Component<Props, State> {
     <NewsFeedItem
       item={item}
       navigation={this.props.navigation}
-      onItemAction={this.onItemAction}
+      emitAction={this.emitAction}
     />
   );
 
