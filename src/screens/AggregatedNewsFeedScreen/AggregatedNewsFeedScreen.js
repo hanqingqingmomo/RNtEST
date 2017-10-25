@@ -34,7 +34,7 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
                 })}
             />
             <FriendInvitationWidget
-              openModal={this.props.screenProps.openFriendsInitationModal}
+              openModal={this.props.screenProps.openFriendsInvitationModal}
             />
           </View>
         }

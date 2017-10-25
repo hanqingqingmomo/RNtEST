@@ -21,18 +21,6 @@ export default TabNavigator(
         tabBarIcon: makeTabBarIcon('home'),
       }),
     },
-    // ConversationsTab: {
-    //   screen: () => <ScreenComponent>Conversations</ScreenComponent>,
-    //   navigationOptions: ({ navigation, screenProps }) => ({
-    //     tabBarIcon: makeTabBarIcon('conversation'),
-    //   }),
-    // },
-    // CalendarTab: {
-    //   screen: EventFeedNavigator,
-    //   navigationOptions: ({ navigation, screenProps }) => ({
-    //     tabBarIcon: makeTabBarIcon('calendar'),
-    //   }),
-    // },
     CommunitiesTab: {
       screen: CommunitiesNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({

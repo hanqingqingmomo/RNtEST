@@ -1,13 +1,11 @@
 // @flow
 
-import React from 'react';
-
 import { StackNavigator } from '../../navigation';
 import { MemberProfileScreen, OrganisationProfileScreen } from '../../screens';
 
 export default StackNavigator({
   OrganisationProfileScreen: {
-    screen: props => <OrganisationProfileScreen {...props} />,
+    screen: OrganisationProfileScreen,
     navigationOptions: {
       header: null,
     },

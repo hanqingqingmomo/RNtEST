@@ -56,7 +56,6 @@ export default class AvatarPicker extends Component<P> {
           style={[
             css('width', s + 20),
             css('height', s + 20),
-            css('backgroundColor', 'white'),
             styles.centerContent,
           ]}
         >
