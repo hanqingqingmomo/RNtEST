@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, RefreshControl, InteractionManager } from 'react-native';
 import mitt from 'mitt';
+import parse from 'url-parse';
+import qs from 'query-string';
 
 import { View } from '../../atoms';
 import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
@@ -42,9 +44,12 @@ type State = {
 };
 
 async function doFetch(request, _cursor: Cursor): Promise<FetchResponse> {
-  const url = `${request.url}?limit=${_cursor.limit}${_cursor.next
-    ? `&next=${_cursor.next}`
-    : ''}`;
+  const location = parse(request.url);
+  const query = qs.parse(location.query);
+  query.limit = _cursor.limit;
+  query.next = _cursor.next;
+
+  location.query = `?${qs.stringify(query)}`;
 
   const response = {
     error: null,
@@ -53,7 +58,7 @@ async function doFetch(request, _cursor: Cursor): Promise<FetchResponse> {
   };
 
   try {
-    const res = await global.fetch(url, request.options);
+    const res = await global.fetch(location.toString(), request.options);
     const json = await res.json();
     response.data = json.data;
     response.cursor = json.meta.cursor;
@@ -151,6 +156,7 @@ export default class NewsFeed extends Component<Props, State> {
   render() {
     return (
       <NewsFeedList
+        {...this.props}
         deleteItem={this.deleteItem}
         updateItem={this.updateItem}
         data={this.state.data || []}
@@ -165,9 +171,11 @@ export default class NewsFeed extends Component<Props, State> {
           />
         }
         ListHeaderComponent={
-          <View style={styles.ListHeaderComponent}>
-            {this.props.ListHeaderComponent(this.emitAction)}
-          </View>
+          this.props.ListHeaderComponent && (
+            <View style={styles.ListHeaderComponent}>
+              {this.props.ListHeaderComponent(this.emitAction)}
+            </View>
+          )
         }
         ListFooterComponent={
           <View style={styles.ListFooterComponent}>

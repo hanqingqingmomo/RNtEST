@@ -33,7 +33,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
               communityId={this.props.communityId}
               onSeeAll={data => {
                 this.props.navigation.navigate('PinnedPostsScreen', {
-                  data,
+                  communityId: this.props.communityId,
                 });
               }}
               onPress={data => {
