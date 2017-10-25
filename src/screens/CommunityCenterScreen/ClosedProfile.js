@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import { CommunityHeader, View } from '../../atoms';
 import { makeJoinCommunityReq } from '../../utils/requestFactory';
+import { setUserProfile } from '../../redux/ducks/application';
 import { selectUser } from '../../redux/selectors';
 import TabAbout from './TabAbout';
 import JoinSection from './JoinSection';
@@ -15,9 +16,10 @@ import { type User, type CommunitySimple } from '../../Types';
 type Props = {
   community: CommunitySimple,
   navigateToMember: Function,
-  navigation?: any,
+  navigation?: Object,
   reloadCommunity: Function,
   reloadCommunityList: Function,
+  setUserProfile: Function,
   user: User,
 };
 
@@ -65,10 +67,17 @@ class ClosedProfile extends Component<Props, State> {
     if (makeJoinCommunityReqRes.error) {
       this.setState({ joined: false });
     } else {
+      const { user } = this.props;
+      user.joined_communities.push(community);
       this.setState({ joined: true });
       setTimeout(() => {
-        reloadCommunity();
-        reloadCommunityList();
+        if (typeof reloadCommunity === 'function') {
+          reloadCommunity();
+        }
+        if (typeof reloadCommunityList === 'function') {
+          reloadCommunityList();
+        }
+        this.props.setUserProfile(user);
       }, 1000);
     }
   };
@@ -99,4 +108,4 @@ class ClosedProfile extends Component<Props, State> {
   }
 }
 
-export default connect(mapStateToProps)(ClosedProfile);
+export default connect(mapStateToProps, { setUserProfile })(ClosedProfile);
