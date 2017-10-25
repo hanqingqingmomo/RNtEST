@@ -16,17 +16,18 @@ import { getColor } from '../../utils/color';
 import type { CommunitySimple, User, Post, PopupSetting } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq, makeReportReq } from '../../utils/requestFactory';
+import { type ItemActionHandler } from './NewsFeedItem';
 
 type P = {
   item: Post,
+  // TODO remote navigation prop
   navigation: Object,
   user: User,
-  requestDelete: Function,
-  deleteSuccessful: Function,
-  isBeingDeleted: boolean,
+  onItemAction: ItemActionHandler,
 };
 
 type S = {
+  isBeingDeleted: boolean,
   isBeingReported: boolean,
 };
 
@@ -43,6 +44,7 @@ const mapStateToProps = state => ({
 
 class NewsFeedItemHeader extends Component<P, S> {
   state = {
+    isBeingDeleted: false,
     isBeingReported: false,
   };
 
@@ -57,15 +59,13 @@ class NewsFeedItemHeader extends Component<P, S> {
   };
 
   deletePost = async () => {
-    const { item, requestDelete, deleteSuccessful } = this.props;
+    this.setState({ isBeingDeleted: true });
+    const { item } = this.props;
     const deletePostReq = makeDeletePostReq(item.id);
-
-    requestDelete(item);
 
     try {
       await global.fetch(deletePostReq.url, deletePostReq.options);
-
-      deleteSuccessful(item);
+      this.props.onItemAction('delete', item);
     } catch (err) {}
   };
 
@@ -118,28 +118,30 @@ class NewsFeedItemHeader extends Component<P, S> {
   }
 
   render() {
-    const { item, isBeingDeleted } = this.props;
-    const { isBeingReported } = this.state;
-
+    const { isBeingDeleted, isBeingReported } = this.state;
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.tags, styles.row]}>
-          {item.communities.splice(0, 3).map((community: CommunitySimple) => (
-            <View style={styles.tag} key={community.id}>
-              <TouchableItem
-                onPress={() => this.onCommunityPress(community)}
-                disabled={community.disabled}
-                hitSlop={HIT_SLOP}
-              >
-                <View style={{ backgroundColor: 'white' }}>
-                  <Pill
-                    title={community.name}
-                    color={community.disabled ? '#B0BEC5' : getColor('orange')}
-                  />
-                </View>
-              </TouchableItem>
-            </View>
-          ))}
+          {this.props.item.communities
+            .splice(0, 3)
+            .map((community: CommunitySimple) => (
+              <View style={styles.tag} key={community.id}>
+                <TouchableItem
+                  onPress={() => this.onCommunityPress(community)}
+                  disabled={community.disabled}
+                  hitSlop={HIT_SLOP}
+                >
+                  <View style={{ backgroundColor: 'white' }}>
+                    <Pill
+                      title={community.name}
+                      color={
+                        community.disabled ? '#B0BEC5' : getColor('orange')
+                      }
+                    />
+                  </View>
+                </TouchableItem>
+              </View>
+            ))}
         </View>
         {isBeingReported || isBeingDeleted ? (
           <CenterView>
