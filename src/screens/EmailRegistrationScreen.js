@@ -56,7 +56,11 @@ type Props = {
   navigation: any,
 };
 
-class EmailRegistrationScreen extends Component<Props> {
+type State = {
+  errors: ?Array<string>,
+};
+
+class EmailRegistrationScreen extends Component<Props, State> {
   static navigationOptions = {
     headerTitle: 'Sign Up',
   };
