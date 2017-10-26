@@ -4509,6 +4509,10 @@ react-fetch-component@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-5.0.0.tgz#551f2d3e0ea26cbe79b909178a032ad35bc0a8ee"
 
+react-native-braintree-xplat@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-braintree-xplat/-/react-native-braintree-xplat-3.2.0.tgz#204bf945ea2a2fa95154a4202ad6f969860be01e"
+
 react-native-collapsible@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-0.9.0.tgz#207849faa15493820d19fa6a5e58f7c7b6c1b910"

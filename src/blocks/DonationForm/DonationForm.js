@@ -1,10 +1,12 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { NativeModules, Platform, StyleSheet } from 'react-native';
+import Braintree from 'react-native-braintree-xplat';
 
 import { View } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
 
@@ -14,11 +16,14 @@ export type Payment = {
 };
 
 type P = {
-  onInitiatePayment: (payment: Payment) => any,
+  onInitiatePayment: (payment: Payment) => mixed,
+  onPaymentNonceReceived: (nonce: string, payment: Payment) => mixed,
+  onFail: () => mixed,
 };
 
 type S = Payment & {
   amountTypedManualy: boolean,
+  disableCardButton: boolean,
 };
 
 const AMOUNTS = [25, 50, 100, 250];
@@ -39,6 +44,42 @@ export default class DonationForm extends Component<P, S> {
     interval: 'monthly',
     amount: 50,
     amountTypedManualy: false,
+    disableCardButton: false,
+  };
+
+  get paymentDetails(): Payment {
+    return {
+      amount: this.state.amount,
+      amountTypedManualy: this.state.amountTypedManualy,
+      interval: this.state.interval,
+    };
+  }
+
+  initiateCreditCardPayment = async () => {
+    this.setState({ disableCardButton: true });
+
+    const req = makeReadBTClientTokenReq();
+    const res = await global.fetch(req.url, req.options);
+    if (res.ok) {
+      const json = await res.json();
+      Braintree.setup(json.data.clientToken);
+
+      try {
+        const paymentNonce = await Braintree.showPaymentViewController({
+          callToActionText: 'Donate now',
+          tintColor: getColor('orange'),
+          barBgColor: '#F7F7F7',
+        });
+
+        this.props.onPaymentNonceReceived(paymentNonce, this.paymentDetails);
+      } catch (err) {
+        this.props.onFail();
+      }
+    } else {
+      this.props.onFail();
+    }
+
+    this.setState({ disableCardButton: false });
   };
 
   initiatePayment = () => {
@@ -107,18 +148,38 @@ export default class DonationForm extends Component<P, S> {
           </View>
         </View>
 
-        <DonationButton
-          title="Donate with"
-          icon="apple-pay"
-          size="md"
-          onPress={this.initiatePayment}
-          style={{
-            backgroundColor: getColor('black'),
-            borderColor: getColor('black'),
-          }}
-          textColor={{ color: getColor('white') }}
-          disabled={!this.state.amount}
-        />
+        <View>
+          {NativeModules.ReactNativePayments.canMakePayments ? (
+            <DonationButton
+              title="Donate with"
+              icon={Platform.select({
+                ios: 'apple-pay',
+                android: 'android-pay',
+              })}
+              size="md"
+              onPress={this.initiatePayment}
+              style={{
+                backgroundColor: getColor('black'),
+                borderColor: getColor('black'),
+              }}
+              textColor={{ color: getColor('white') }}
+              disabled={!this.state.amount}
+            />
+          ) : null}
+          <View style={style.buttonCreditCard}>
+            <DonationButton
+              title="Donate with Credit Card"
+              size="md"
+              onPress={this.initiateCreditCardPayment}
+              style={{
+                backgroundColor: 'transparent',
+                borderWidth: 0,
+              }}
+              textColor={{ color: getColor('orange') }}
+              disabled={this.state.disableCardButton || !this.state.amount}
+            />
+          </View>
+        </View>
       </View>
     );
   }
@@ -140,5 +201,9 @@ const style = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 4,
     paddingVertical: 7,
+  },
+
+  buttonCreditCard: {
+    marginTop: 10,
   },
 });

@@ -14,6 +14,23 @@ export default class DonationAppealScreen extends Component<{}> {
     title: 'Donation Form',
   };
 
+  onPaymentNonceReceived = (fetchProps: *) => async (
+    paymentToken: *,
+    payment: *
+  ) => {
+    const req = makeDonationRq({
+      ...payment,
+      payment_method_nonce: paymentToken,
+    });
+
+    const donationResponse = await fetchProps.fetch(req.url, req.options);
+    this.completePaymentCallback({ donationResponse, fetchProps, payment });
+  };
+
+  onPaymentFailed = () => {
+    //
+  };
+
   initiatePayment = (
     fetchProps: *,
     completePaymentCallback: Function
@@ -26,21 +43,15 @@ export default class DonationAppealScreen extends Component<{}> {
     try {
       const paymentResponse = await paymentRequest.show();
       const { paymentToken } = paymentResponse.details;
-      const { url, options }: Request = makeDonationRq({
+      const req = makeDonationRq({
         ...payment,
         payment_method_nonce: paymentToken,
       });
 
-      // TODO improve, inject API-KEY from withing request factory
-      const donationResponse = await fetchProps.fetch(url, {
-        ...fetchProps.request.options,
-        ...options,
-      });
-
+      const donationResponse = await fetchProps.fetch(req.url, req.options);
       paymentResponse.complete(
         donationResponse.response.ok ? 'success' : 'fail'
       );
-
       completePaymentCallback({ donationResponse, fetchProps, payment });
     } catch (err) {
       throw err;
@@ -82,6 +93,8 @@ export default class DonationAppealScreen extends Component<{}> {
                 coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
               />
               <DonationForm
+                onPaymentNonceReceived={this.onPaymentNonceReceived(fetchProps)}
+                onFail={this.onPaymentFailed}
                 onInitiatePayment={this.initiatePayment(
                   fetchProps,
                   this.completePaymentCallback

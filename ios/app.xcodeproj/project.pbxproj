@@ -6,6 +6,7 @@
 	objectVersion = 46;
 	objects = {
 /* Begin PBXBuildFile section */
+		007C576036054DFFAE735218 /* libRCTBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
@@ -253,6 +254,13 @@
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
 		};
+		771BA3551FA1F864002266CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DE4F06CC1D156AA8005F99CD;
+			remoteInfo = RCTBraintree;
+		};
 		772016A21F84FAD8003E0F20 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 608E8122102D43B083E65A1C /* SplashScreen.xcodeproj */;
@@ -422,6 +430,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		84696391DE9F4D9D91ABA05F /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
 		85563F6D7B98C8D235796234 /* libPods-appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBraintree.xcodeproj; path = "../node_modules/react-native-braintree-xplat/ios/RCTBraintree.xcodeproj"; sourceTree = "<group>"; };
 		89BCEB8BF3294F35B2B607DD /* libRNMobileCenter.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNMobileCenter.a; sourceTree = "<group>"; };
 		8DBD7D1C3364EFB88B1C85A7 /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		947291F5387043ADB5AF3EB8 /* RNMobileCenter.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNMobileCenter.xcodeproj; path = "../node_modules/mobile-center/ios/RNMobileCenter.xcodeproj"; sourceTree = "<group>"; };
@@ -439,6 +448,7 @@
 		DB20B757E607428EADA9E934 /* BraintreeCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeCore.framework; path = System/Library/Frameworks/BraintreeCore.framework; sourceTree = SDKROOT; };
 		DB7ED76349BD4221915F5C20 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		EFD4C1BCE89B46DFBB3212BB /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
+		FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBraintree.a; sourceTree = "<group>"; };
 		FF457C6A21D94B87A0F376BD /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		FFF9909A11DD4FF684D8BB9A /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = "../node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -483,6 +493,7 @@
 				C0C2D0DCA1A6EA9ABA718741 /* libPods-app.a in Frameworks */,
 				2D67D51519694B92949F0D7C /* libRNCrashes.a in Frameworks */,
 				6E5FCAB7CD714B5C9F1BA0C7 /* libRNAnalytics.a in Frameworks */,
+				007C576036054DFFAE735218 /* libRCTBraintree.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,8 +670,17 @@
 				89BCEB8BF3294F35B2B607DD /* libRNMobileCenter.a */,
 				62E1B6F5FC5D476A8F867644 /* libRNCrashes.a */,
 				A7AD341BF0FC4432B0F296CE /* libRNAnalytics.a */,
+				FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		771BA3521FA1F863002266CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				771BA3561FA1F864002266CD /* libRCTBraintree.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		7720169F1F84FAD8003E0F20 /* Products */ = {
@@ -777,6 +797,7 @@
 				947291F5387043ADB5AF3EB8 /* RNMobileCenter.xcodeproj */,
 				0BEC15E1C0E645B8BEE81BCA /* RNCrashes.xcodeproj */,
 				349E0B72CCB149188DFEA9B2 /* RNAnalytics.xcodeproj */,
+				8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -857,7 +878,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DEA5816551DD4B3E9A00C8D1 /* Frameworks */ = {
+		EC8F83FD4F934B9C9F59E579 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -1009,6 +1030,10 @@
 				{
 					ProductGroup = ADBDB9201DFEBF0600ED6528 /* Products */;
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
+				},
+				{
+					ProductGroup = 771BA3521FA1F863002266CD /* Products */;
+					ProjectRef = 8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */;
 				},
 				{
 					ProductGroup = 2D4458131F8BB30500B52494 /* Products */;
@@ -1278,6 +1303,13 @@
 			fileType = archive.ar;
 			path = libRCTAnimation.a;
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		771BA3561FA1F864002266CD /* libRCTBraintree.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTBraintree.a;
+			remoteRef = 771BA3551FA1F864002266CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		772016A31F84FAD8003E0F20 /* libSplashScreen.a */ = {
@@ -1763,12 +1795,14 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1805,12 +1839,14 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1854,6 +1890,7 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1898,6 +1935,7 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1943,11 +1981,13 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = "app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1993,11 +2033,13 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = "app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2040,6 +2082,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.app-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2066,6 +2109,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2145,6 +2189,7 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -2182,12 +2227,14 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2230,11 +2277,13 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = "app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2271,6 +2320,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

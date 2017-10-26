@@ -19,7 +19,7 @@ type P = {
   disabled?: boolean,
   icon?: string,
   isActive?: boolean,
-  onPress: () => void,
+  onPress: () => mixed,
   size: 'lg' | 'md' | 'sm',
   style?: Style,
   textColor?: {
