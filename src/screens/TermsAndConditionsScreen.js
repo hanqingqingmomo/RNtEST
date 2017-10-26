@@ -175,23 +175,13 @@ const TERMS = [
   },
 ];
 
-type State = {
-  ready: boolean,
-};
-
-export default class HelpScreen extends Component<{}, State> {
+export default class HelpScreen extends Component<{}> {
   static navigationOptions = {
     headerTitle: 'Terms and conditions',
   };
 
-  state = {
-    ready: false,
-  };
-
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ ready: true });
-    });
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {

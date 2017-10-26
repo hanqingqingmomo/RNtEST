@@ -4,6 +4,7 @@ import { StackNavigator } from '../../navigation';
 import {
   AggregatedNewsFeedScreen,
   CommunityCenterScreen,
+  HelpScreen,
   MemberProfileScreen,
   PinnedPostsScreen,
   PostDetailScreen,
@@ -36,6 +37,9 @@ export default StackNavigator(
     },
     UserProfileScreen: {
       screen: UserProfileScreen,
+    },
+    HelpScreen: {
+      screen: HelpScreen,
     },
   },
   {

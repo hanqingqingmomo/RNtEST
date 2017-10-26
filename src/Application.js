@@ -7,6 +7,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { selectUser } from './redux/selectors';
 import { AuthenticationNavigator, MainNavigator } from './routers';
 import { View } from './atoms';
+import { Network } from './blocks';
 import { type Store } from './Types';
 
 type Props = {
@@ -23,7 +24,9 @@ class Application extends React.PureComponent<Props> {
 
     return (
       <View flexGrow={1}>
-        {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
+        <Network>
+          {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
+        </Network>
       </View>
     );
   };

@@ -42,20 +42,37 @@ const RULES = {
 };
 
 const MESSAGES = {
-  email: 'Please enter valid email address',
-  first_name: 'Please enter First name',
-  last_name: 'Please enter Last name',
-  password: 'Please enter your password',
+  email: 'Enter valid email address',
+  first_name: 'Enter First name',
+  last_name: 'Enter Last name',
+  password: 'Enter your password',
 };
 
 type FormValues = typeof INITIAL_VALUES;
 
-class EmailRegistrationScreen extends Component<{}> {
+type Props = {
+  setUserAccessToken: Function,
+  setUserProfile: Function,
+  navigation: any,
+};
+
+type State = {
+  errors: ?Array<string>,
+};
+
+class EmailRegistrationScreen extends Component<Props, State> {
   static navigationOptions = {
     headerTitle: 'Sign Up',
   };
 
-  handleSubmit = fetch => async (values: FormValues) => {
+  state = {
+    errors: null,
+  };
+
+  handleSubmit = (fetch: Function) => async (
+    values: FormValues,
+    form: Object
+  ) => {
     const signupReq = makeSignupRq(values);
     const signupRes = await fetch(signupReq.url, signupReq.options);
 
@@ -72,6 +89,12 @@ class EmailRegistrationScreen extends Component<{}> {
       );
 
       this.props.setUserProfile(readProfileRes.data);
+    } else {
+      let errors = signupRes.error.message;
+
+      errors = Object.keys(errors).map((key: string) => errors[key].join('\n'));
+
+      this.setState({ errors });
     }
   };
 
@@ -90,7 +113,7 @@ class EmailRegistrationScreen extends Component<{}> {
   render() {
     return (
       <Fetch manual>
-        {({ loading, data, fetch, error }) => (
+        {({ loading, data, fetch }) => (
           <Form
             initialValues={INITIAL_VALUES}
             onSubmit={this.handleSubmit(fetch)}
@@ -144,9 +167,10 @@ class EmailRegistrationScreen extends Component<{}> {
                   onChangeText={this.onPasswordChange(form.setFieldValue)}
                 />
 
-                {loading === false && error ? (
+                {loading === false && this.state.errors ? (
                   <Text color={getColor('red')}>
-                    {'\n'}Registration failed. Check provided information.
+                    {'\n'}
+                    {this.state.errors.join('\n')}
                   </Text>
                 ) : null}
 

@@ -1,21 +1,22 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Linking, WebView } from 'react-native';
 
 import { View, Text } from '../atoms';
 import { getColor } from '../utils/color';
 import { parseTextContent } from '../utils/text';
 
 type Props = {
-  list: Array<string>,
+  list?: Array<string>,
   text: Array<
     | string
-    | {
+    | ?{
       list: Array<string>,
     }
   >,
-  title: string,
+  title: string | { label: string, link: string },
+  navigation?: any,
 };
 
 const renderDotList = (list: Array<string>): Array<React$Element<*>> => {
@@ -44,14 +45,27 @@ const renderText = (text: Array<string>): Array<React$Element<*>> => {
   });
 };
 
-export default function HelpBlock({ text, title, list }: Props) {
+export default function HelpBlock({ text, title, list, navigation }: Props) {
   return (
     <View style={[styles.helpWrapper]}>
-      {title ? (
+      {typeof title === 'string' ? (
         <Text color={getColor('orange')} size={18} lineHeight={20}>
           {title}
         </Text>
-      ) : null}
+      ) : (
+        <Text
+          color={getColor('orange')}
+          size={18}
+          lineHeight={20}
+          onPress={() => {
+            navigation.navigate('WebViewScreen', {
+              webURL: title.link,
+            });
+          }}
+        >
+          {title.label}
+        </Text>
+      )}
 
       {text ? renderText(text) : null}
     </View>

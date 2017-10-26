@@ -9,7 +9,7 @@ import { getColor } from '../utils/color';
 export function parseTextContent(string: string, maxLength: ?number): any {
   let words = (string || '').split(/\s/);
 
-  if (typeof string === 'string' && maxLength) {
+  if (typeof string === 'string' && maxLength !== null) {
     let length = 0;
 
     words = words.filter((word: string) => {
@@ -49,18 +49,18 @@ export function parseTextContent(string: string, maxLength: ?number): any {
           <Text
             key={idx}
             color={getColor('linkBlue')}
-            onPress={() => Linking.openURL('mailto:' + word)}
+            onPress={() => Linking.openURL(`mailto:${word}`)}
           >
             {`${word} `}
           </Text>
         );
       }
 
-      return <Text key={idx}>{`${word} `}</Text>;
+      return `${word} `;
     }
 
     return word;
   });
 
-  return words;
+  return <Text>{words}</Text>;
 }
