@@ -52,6 +52,9 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# Pods
+Pods
+
 # Environment settings
 .env
 .env.*

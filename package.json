@@ -10,7 +10,8 @@
     "format": "prettier --single-quote --trailing-comma es5 --write '{src,__{tests,mocks}__}/**/*.js'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "list-iphones": "instruments -s devices"
+    "list-iphones": "instruments -s devices",
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
@@ -25,6 +26,9 @@
     "lodash.memoize": "^4.1.2",
     "lodash.merge": "^4.6.0",
     "mitt": "^1.1.2",
+    "mobile-center": "^0.10.0",
+    "mobile-center-analytics": "^0.10.0",
+    "mobile-center-crashes": "^0.10.0",
     "query-string": "^5.0.0",
     "react": "16.0.0-beta.5",
     "react-addons-update": "^15.6.2",
