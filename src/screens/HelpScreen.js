@@ -11,30 +11,37 @@ const help = [
     text: ['support@poweredbyaction.org'],
   },
   {
-    title: 'How to sign in:',
-    text: [
-      'https://poweredbyaction.zendesk.com/hc/en-us/articles/216805898-How-to-Access-PbA',
-    ],
+    title: {
+      label: 'How to sign in:',
+      link:
+        'https://poweredbyaction.zendesk.com/hc/en-us/articles/216805898-How-to-Access-PbA',
+    },
   },
   {
-    title: 'Mobile Embedded Posting:',
-    text: [
-      'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002308931',
-    ],
+    title: {
+      label: 'Mobile Embedded Posting:',
+      link:
+        'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002308931',
+    },
   },
   {
-    title: 'Email Notifications:',
-    text: ['https://poweredbyaction.zendesk.com/hc/en-us/articles/217509198'],
+    title: {
+      label: 'Email Notifications:',
+      link: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/217509198',
+    },
   },
   {
-    title: 'Pinned posts:',
-    text: ['https://poweredbyaction.zendesk.com/hc/en-us/articles/219495368'],
+    title: {
+      label: 'Pinned posts:',
+      link: 'https://poweredbyaction.zendesk.com/hc/en-us/articles/219495368',
+    },
   },
   {
-    title: 'Donation:',
-    text: [
-      'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002319692',
-    ],
+    title: {
+      label: 'Donation:',
+      link:
+        'https://poweredbyaction.zendesk.com/hc/en-us/articles/115002319692',
+    },
   },
   {
     title: 'Cancel Payment:',
@@ -48,7 +55,11 @@ export default class HelpScreen extends Component<{}> {
   render() {
     return (
       <Screen>
-        <View>{help.map((bag, idx) => <HelpBlock key={idx} {...bag} />)}</View>
+        <View>
+          {help.map((bag, idx) => (
+            <HelpBlock key={idx} {...bag} navigation={this.props.navigation} />
+          ))}
+        </View>
       </Screen>
     );
   }

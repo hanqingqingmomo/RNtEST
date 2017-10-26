@@ -43,3 +43,4 @@ export { default as PinnedPostsScreen } from './PinnedPostsScreen';
 export {
   default as TermsAndConditionsScreen,
 } from './TermsAndConditionsScreen';
+export { default as WebViewScreen } from './WebViewScreen';

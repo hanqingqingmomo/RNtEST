@@ -4,11 +4,13 @@ import { StackNavigator } from '../../navigation';
 import {
   AggregatedNewsFeedScreen,
   CommunityCenterScreen,
+  HelpScreen,
   MemberProfileScreen,
   PinnedPostsScreen,
   PostDetailScreen,
   PostEditorScreen,
   UserProfileScreen,
+  WebViewScreen,
 } from '../../screens';
 
 export default StackNavigator(
@@ -36,6 +38,12 @@ export default StackNavigator(
     },
     UserProfileScreen: {
       screen: UserProfileScreen,
+    },
+    HelpScreen: {
+      screen: HelpScreen,
+    },
+    WebViewScreen: {
+      screen: WebViewScreen,
     },
   },
   {
