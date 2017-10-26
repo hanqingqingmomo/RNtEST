@@ -45,15 +45,16 @@ export type LinkAttachment = {
 };
 
 export type CommunitySimple = {
-  id: string,
-  name: string,
-  cover_photo: string,
-  profile_photo: string,
-  members: number,
-  description: string,
-  nonprofit_id: string,
+  auto_join: boolean,
   categories: Array<*>,
+  cover_photo: string,
+  description: string,
   disabled: boolean,
+  id: string,
+  members: number,
+  name: string,
+  nonprofit_id: string,
+  profile_photo: string,
 };
 
 export type User = {

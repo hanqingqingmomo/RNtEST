@@ -21,18 +21,13 @@ type State = {
 export default class PostEditorSearchBox extends Component<Props, State> {
   state = {
     searchValue: '',
-    selection: [],
     isCollapsed: true,
   };
 
   closeInterval = null;
 
-  componentDidMount() {
-    this.refs.searchInput.focus();
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.closeInterval);
+  get autoJoinCommnuties(): Array<CommunitySimple> {
+    return this.props.communities.filter(community => community.auto_join);
   }
 
   get isEmptySearchValue(): boolean {
@@ -48,6 +43,20 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     });
   }
 
+  componentDidMount() {
+    this.autoJoinCommnuties.forEach((community: CommunitySimple) => {
+      this.selectCommunity(community);
+    });
+
+    if (this.autoJoinCommnuties.length === 0) {
+      this.refs.searchInput.focus();
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.closeInterval);
+  }
+
   showList = () => {
     clearInterval(this.closeInterval);
     this.setState({ isCollapsed: false });
@@ -57,6 +66,7 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     clearInterval(this.closeInterval);
     this.closeInterval = setInterval(() => {
       this.setState({ isCollapsed: true });
+      clearInterval(this.closeInterval);
     }, 2000);
   };
 
@@ -85,18 +95,17 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   };
 
   removeLastComunity() {
-    const { selection } = this.state;
+    const { selection } = this.props;
     selection.splice(selection.length - 1, 1);
 
     this.props.selectCommunity(selection);
-
-    this.setState({ selection });
   }
 
   renderselection() {
     const communities = this.props.communities.filter(community =>
       this.props.selection.includes(community.id)
     );
+
     return (
       <View style={styles.pillContainer}>
         {communities.map(pill => (
@@ -184,11 +193,12 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   pillContainer: {
-    marginHorizontal: -1,
+    margin: -1,
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   pillItem: {
-    paddingHorizontal: 1,
+    padding: 1,
     paddingBottom: 10,
   },
   text: {
