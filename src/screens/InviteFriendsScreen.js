@@ -194,7 +194,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
 
     Linking.canOpenURL(url)
       .then(supported => {
-        if (!supported) {
+        if (__DEV__ && !supported) {
           console.log("Can't handle url: " + url);
         } else {
           return Linking.openURL(url);

@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
+import Config from 'react-native-config';
 import { connect } from 'react-redux';
 
 import { clearUserData } from '../redux/ducks/application';
@@ -25,14 +26,6 @@ type Props = {
 };
 
 const SETTINGS = [
-  /*{
-    name: 'Sync Calendars',
-    iconName: 'calendar',
-  },
-  {
-    name: 'Use Invite Code',
-    iconName: 'plus-bold',
-  },*/
   {
     name: 'Terms and conditions',
     iconName: 'file-empty',
@@ -105,6 +98,12 @@ class UserProfileScreen extends Component<Props> {
             <TableView.Cell
               title="Sign Out"
               titleTextColor={getColor('red')}
+              onPress={this.signOut}
+            />
+          </TableView.Section>
+          <TableView.Section header="Application version">
+            <TableView.Cell
+              title={`Version: ${Config.APP_DISPLAY_VERSION}, Build: ${Config.APP_DISPLAY_BUILD}`}
               onPress={this.signOut}
             />
           </TableView.Section>
