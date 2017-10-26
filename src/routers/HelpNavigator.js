@@ -5,7 +5,7 @@ import React from 'react';
 import { StackNavigator } from '../navigation';
 import { NavigationIconButton } from '../atoms';
 import { getColor } from '../utils/color';
-import { HelpScreen } from '../screens';
+import { HelpScreen, WebViewScreen } from '../screens';
 
 function DismissModalButton({ onPress, ...a }) {
   return (
@@ -26,5 +26,8 @@ export default StackNavigator({
       ),
       headerTitle: 'Help',
     }),
+  },
+  WebViewScreen: {
+    screen: WebViewScreen,
   },
 });

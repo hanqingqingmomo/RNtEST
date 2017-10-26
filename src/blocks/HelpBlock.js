@@ -8,15 +8,15 @@ import { getColor } from '../utils/color';
 import { parseTextContent } from '../utils/text';
 
 type Props = {
-  list: Array<string>,
+  list?: Array<string>,
   text: Array<
     | string
-    | {
+    | ?{
       list: Array<string>,
     }
   >,
   title: string | { label: string, link: string },
-  navigation: any,
+  navigation?: any,
 };
 
 const renderDotList = (list: Array<string>): Array<React$Element<*>> => {
@@ -57,10 +57,11 @@ export default function HelpBlock({ text, title, list, navigation }: Props) {
           color={getColor('orange')}
           size={18}
           lineHeight={20}
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('WebViewScreen', {
               webURL: title.link,
-            })}
+            });
+          }}
         >
           {title.label}
         </Text>
