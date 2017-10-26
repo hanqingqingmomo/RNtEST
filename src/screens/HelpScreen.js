@@ -65,6 +65,7 @@ export default class HelpScreen extends Component<{}> {
                 onPress={() =>
                   this.props.navigation.navigate('WebViewScreen', {
                     webURL: link.link,
+                    title: link.title,
                   })}
               />
             ))}
