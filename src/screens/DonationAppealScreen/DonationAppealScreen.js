@@ -54,9 +54,8 @@ export default class DonationAppealScreen extends Component<{}> {
       );
       completePaymentCallback({ donationResponse, fetchProps, payment });
     } catch (err) {
-      throw err;
-      if (err.message === 'AbortError') {
-        // TODO log payment failure message
+      if (err.message !== 'AbortError') {
+        throw err;
       }
     }
   };
