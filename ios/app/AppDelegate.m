@@ -25,7 +25,7 @@
 
   [RNCrashes registerWithCrashDelegate: [[RNCrashesDelegateAlwaysSend alloc] init]];  // Initialize Mobile Center crashes
 
-  [RNMobileCenter register];  // Initialize Mobile Center 
+  [RNMobileCenter register];  // Initialize Mobile Center
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 

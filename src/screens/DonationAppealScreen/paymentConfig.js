@@ -15,8 +15,7 @@ export const paymentMethods = [
       paymentMethodTokenizationParameters: {
         parameters: {
           gateway: 'braintree',
-          // TODO use correct tokenization key
-          'braintree:tokenizationKey': 'sandbox_xvv7b2kb_fdzd2z254vfb47cy',
+          'braintree:tokenizationKey': Config.BRAINTREE_TOKENIZATION_KEY,
         },
       },
     },
