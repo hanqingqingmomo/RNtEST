@@ -8,7 +8,7 @@ export const paymentMethods = [
   {
     supportedMethods: ['apple-pay'],
     data: {
-      merchantIdentifier: 'merchant.com.creatix.pba-donations',
+      merchantIdentifier: Config.APPLE_PAY_MERCHANT,
       supportedNetworks: ['visa', 'mastercard', 'amex'],
       countryCode: 'US',
       currencyCode: 'USD',

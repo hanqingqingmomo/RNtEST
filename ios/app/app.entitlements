@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
-		<string></string>
+		<string>merchant.com.pba.ywca</string>
 	</array>
 </dict>
 </plist>
