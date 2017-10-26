@@ -7,18 +7,18 @@ import { NoContent } from '../blocks';
 
 const INITIAL_OPACITY = 0;
 
-type S = {
-  animationFinished: boolean,
-  isConnected: boolean,
+type P = {
+  children: React$Node,
 };
 
-export default class Network extends Component<{}, S> {
-  state = {
-    animationFinished: true,
-    isConnected: true,
-  };
+type S = {
+  isConnected: ?boolean,
+};
 
-  animOpacity = new Animated.Value(INITIAL_OPACITY);
+export default class Network extends Component<P, S> {
+  state = {
+    isConnected: null,
+  };
 
   componentDidMount() {
     NetInfo.isConnected.addEventListener('connectionChange', this.getStatus);
@@ -31,15 +31,6 @@ export default class Network extends Component<{}, S> {
   componentWillUpdate(nextProps: any, nextState: S) {
     if (nextState.isConnected !== this.state.isConnected) {
       Keyboard.dismiss();
-
-      nextState.animationFinished = false;
-
-      Animated.timing(this.animOpacity, {
-        toValue: nextState.isConnected ? INITIAL_OPACITY : 1,
-        useNativeDriver: true,
-      }).start(() => {
-        this.setState({ animationFinished: true });
-      });
     }
   }
 
@@ -54,21 +45,16 @@ export default class Network extends Component<{}, S> {
   };
 
   render() {
-    const { animationFinished, isConnected } = this.state;
-    return isConnected && animationFinished ? null : (
-      <Animated.View
-        pointerEvents={isConnected ? 'none' : undefined}
-        style={[
-          StyleSheet.absoluteFillObject,
-          { opacity: this.animOpacity, backgroundColor: 'white' },
-        ]}
-      >
-        <NoContent
-          iconName="offline"
-          title="You are offline"
-          subtitle="Please connect to the Internet to use the app."
-        />
-      </Animated.View>
-    );
+    const { isConnected } = this.state;
+
+    return isConnected === true ? (
+      this.props.children
+    ) : isConnected === false ? (
+      <NoContent
+        iconName="offline"
+        title="You are offline"
+        subtitle="Please connect to the Internet to use the app."
+      />
+    ) : null;
   }
 }

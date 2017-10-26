@@ -24,8 +24,9 @@ class Application extends React.PureComponent<Props> {
 
     return (
       <View flexGrow={1}>
-        <Network />
-        {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
+        <Network>
+          {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
+        </Network>
       </View>
     );
   };
