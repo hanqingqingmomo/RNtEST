@@ -10,7 +10,6 @@ import {
   PostDetailScreen,
   PostEditorScreen,
   UserProfileScreen,
-  WebViewScreen,
 } from '../../screens';
 
 export default StackNavigator(
@@ -41,9 +40,6 @@ export default StackNavigator(
     },
     HelpScreen: {
       screen: HelpScreen,
-    },
-    WebViewScreen: {
-      screen: WebViewScreen,
     },
   },
   {
