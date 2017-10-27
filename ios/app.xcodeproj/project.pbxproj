@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		007C576036054DFFAE735218 /* libRCTBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -878,14 +879,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EC8F83FD4F934B9C9F59E579 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			path = /Users/andrej/code/pba-rn/node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -988,11 +981,11 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 6CRG684E37;
+						DevelopmentTeam = 66254ZMLDR;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1873,7 +1866,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 6CRG684E37;
+				DEVELOPMENT_TEAM = 66254ZMLDR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
@@ -1902,7 +1895,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app;
+				PRODUCT_BUNDLE_IDENTIFIER = org.poweredbyaction.ywca;
 				PRODUCT_NAME = app;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1918,7 +1911,7 @@
 				CODE_SIGN_ENTITLEMENTS = app/app.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6CRG684E37;
+				DEVELOPMENT_TEAM = 66254ZMLDR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
@@ -1947,7 +1940,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.creatix.enterprise.pba;
+				PRODUCT_BUNDLE_IDENTIFIER = org.poweredbyaction.ywca;
 				PRODUCT_NAME = app;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2173,7 +2166,7 @@
 				CODE_SIGN_ENTITLEMENTS = app/app.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6CRG684E37;
+				DEVELOPMENT_TEAM = 66254ZMLDR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
@@ -2201,7 +2194,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.creatix.enterprise.pba;
+				PRODUCT_BUNDLE_IDENTIFIER = org.poweredbyaction.ywca;
 				PRODUCT_NAME = app;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

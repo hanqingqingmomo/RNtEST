@@ -46,7 +46,7 @@
     "react-native-material-textfield": "^0.10.0",
     "react-native-modalbox": "^1.4.2",
     "react-native-payments": "^0.3.1",
-    "react-native-payments-addon-braintree": "^4.8.4-1",
+    "react-native-payments-addon-braintree": "../../react-native-payments/packages/react-native-payments-addon-braintree",
     "react-native-popover-tooltip": "^1.1.1",
     "react-native-portal": "^1.2.1",
     "react-native-splash-screen": "^3.0.1",

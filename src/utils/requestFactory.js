@@ -77,7 +77,7 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
  */
 export const makeReadBTClientTokenReq = () =>
   inject({
-    url: join(Config.API_URL, '/v1/braintree-client-token'),
+    url: join(Config.API_URL, '/v1/members/braintree-client-token'),
     options: {
       method: 'GET',
     },

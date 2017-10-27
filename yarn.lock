@@ -4576,9 +4576,8 @@ react-native-modalbox@^1.4.2:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
 
-react-native-payments-addon-braintree@^4.8.4-1:
+react-native-payments-addon-braintree@../../react-native-payments/packages/react-native-payments-addon-braintree:
   version "4.8.4-1"
-  resolved "https://registry.yarnpkg.com/react-native-payments-addon-braintree/-/react-native-payments-addon-braintree-4.8.4-1.tgz#4f5814c494f21aa0a58486f63ebb551668b20632"
 
 react-native-payments-cli@^0.2.0:
   version "0.2.0"

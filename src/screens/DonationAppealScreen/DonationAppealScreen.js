@@ -1,13 +1,14 @@
 // @flow
 
 import React, { Component } from 'react';
+import { PaymentRequest } from 'react-native-payments';
 
 import { CommunityHeader, Screen, Fetch } from '../../atoms';
 import DonationForm, {
   type Payment,
 } from '../../blocks/DonationForm/DonationForm';
 import { paymentMethods, paymentDetails } from './paymentConfig';
-import { makeDonationRq, type Request } from '../../utils/requestFactory';
+import { makeDonationRq } from '../../utils/requestFactory';
 
 export default class DonationAppealScreen extends Component<{}> {
   static navigationOptions = {
@@ -35,7 +36,7 @@ export default class DonationAppealScreen extends Component<{}> {
     fetchProps: *,
     completePaymentCallback: Function
   ) => async (payment: Payment) => {
-    const paymentRequest = new global.PaymentRequest(
+    const paymentRequest = new PaymentRequest(
       paymentMethods,
       paymentDetails(payment)
     );
@@ -47,6 +48,10 @@ export default class DonationAppealScreen extends Component<{}> {
         ...payment,
         payment_method_nonce: paymentToken,
       });
+
+      if (!paymentToken) {
+        throw new Error('Missing Braintree nonce');
+      }
 
       const donationResponse = await fetchProps.fetch(req.url, req.options);
       paymentResponse.complete(
