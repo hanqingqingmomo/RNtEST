@@ -149,7 +149,8 @@ export default class DonationForm extends Component<P, S> {
         </View>
 
         <View>
-          {NativeModules.ReactNativePayments.canMakePayments ? (
+          {Platform.OS === 'ios' &&
+          NativeModules.ReactNativePayments.canMakePayments ? (
             <DonationButton
               title="Donate with"
               icon={Platform.select({

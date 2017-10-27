@@ -66,22 +66,18 @@ export default class DonationAppealScreen extends Component<{}> {
   };
 
   completePaymentCallback = ({ donationResponse, fetchProps, payment }) => {
-    setTimeout(() => {
-      this.props.navigation.navigate('DonationResultScreen', {
-        amount: payment.amount,
-        recurrent: payment.interval !== 'one-time',
-        success: donationResponse.response.ok,
-        inviteFriends: () =>
-          this.props.screenProps.openModalRoute({
-            routeName: 'InviteFriendModal',
-          }),
-        repeatPayment: () => {
-          this.initiatePayment(fetchProps, this.completePaymentCallback)(
-            payment
-          );
-        },
-      });
-    }, 1350);
+    this.props.navigation.navigate('DonationResultScreen', {
+      amount: payment.amount,
+      recurrent: payment.interval !== 'one-time',
+      success: donationResponse.response.ok,
+      inviteFriends: () =>
+        this.props.screenProps.openModalRoute({
+          routeName: 'InviteFriendModal',
+        }),
+      repeatPayment: () => {
+        this.initiatePayment(fetchProps, this.completePaymentCallback)(payment);
+      },
+    });
   };
 
   render() {

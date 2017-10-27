@@ -31,6 +31,7 @@ export default TabNavigator(
   {
     initialRouteName: 'AggregatedNewsFeedTab',
     lazy: true,
+    swipeEnabled: false,
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {

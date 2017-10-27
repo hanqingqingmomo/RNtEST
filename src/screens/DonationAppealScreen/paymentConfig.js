@@ -20,21 +20,6 @@ export const paymentMethods = [
       },
     },
   },
-  {
-    supportedMethods: ['android-pay'],
-    data: {
-      supportedNetworks: ['visa', 'mastercard', 'amex'],
-      currencyCode: 'USD',
-      environment: Config.APP_ENV,
-      paymentMethodTokenizationParameters: {
-        // TODO android wallet
-        tokenizationType: 'NETWORK_TOKEN',
-        parameters: {
-          publicKey: 'your-pubic-key',
-        },
-      },
-    },
-  },
 ];
 
 export function paymentDetails(payment: Payment) {
@@ -49,6 +34,7 @@ export function paymentDetails(payment: Payment) {
   }[payment.interval];
 
   return {
+    id: 'ywca-donation',
     displayItems: [
       {
         label,

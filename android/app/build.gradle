@@ -75,7 +75,7 @@ import com.android.build.OutputFile
 project.ext.envConfigFiles = [
   dev: ".env.dev",
   beta: ".env.beta",
-  prod: ".env.prod",
+  production: ".env.prod",
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -158,7 +158,6 @@ dependencies {
     compile project(':mobile-center-analytics')
     compile project(':mobile-center-crashes')
     compile project(':mobile-center')
-    compile project(':react-native-payments')
     compile project(':react-native-braintree-xplat')
     compile project(':react-native-contacts')
     compile project(':react-native-splash-screen')
