@@ -2,12 +2,14 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Linking } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post } from '../../Types';
+import { type Post, type User } from '../../Types';
+import { selectUser } from '../../redux/selectors';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
@@ -35,9 +37,21 @@ type P = {
   emitAction: ItemActionEmitter,
   onDelete: Function,
   refetch: Function,
+  user: User,
 };
 
+const mapStateToProps = state => ({
+  user: selectUser(state),
+});
+
+@connect(mapStateToProps)
 export default class NewsFeedItem extends Component<P> {
+  get userIsAuthorOfPost(): boolean {
+    const { user, item } = this.props;
+
+    return user.id === item.author.id;
+  }
+
   getLinks = () => {
     const { item, navigation, isDetail } = this.props;
     const { id } = item;
@@ -110,11 +124,11 @@ export default class NewsFeedItem extends Component<P> {
   render() {
     const { item, isDetail, navigation, radius } = this.props;
 
-    const { author, donation, event, id, isNew } = item;
+    const { author, donation, event, id } = item;
 
     return (
       <ShadowView
-        style={isNew ? styles.borderIsNew : undefined}
+        style={this.userIsAuthorOfPost ? styles.borderIsNew : undefined}
         radius={typeof radius !== 'undefined' ? radius : 3}
       >
         <View style={styles.container}>
