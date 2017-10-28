@@ -11,6 +11,8 @@ import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
 
+const timeout = ms => new Promise(res => setTimeout(res, ms));
+
 export type Payment = {
   amount: number,
   interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
@@ -63,7 +65,13 @@ export default class DonationForm extends Component<P, S> {
     const res = await global.fetch(req.url, req.options);
     if (res.ok) {
       const json = await res.json();
-      Braintree.setup(json.data.clientToken);
+      await Braintree.setup(json.data.clientToken);
+
+      // TODO
+      // hack: https://github.com/kraffslol/react-native-braintree-xplat/issues/64
+      if (Platform.OS === 'android') {
+        await timeout(1500);
+      }
 
       try {
         const paymentNonce = await Braintree.showPaymentViewController({
