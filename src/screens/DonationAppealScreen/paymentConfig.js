@@ -25,19 +25,18 @@ export const paymentMethods = [
 export function paymentDetails(payment: Payment) {
   const value: string = payment.amount.toFixed(2);
   const currency = 'USD';
-  // TODO remove label from call sites as well
   const label = {
-    'one-time': 'One time donation payment',
-    monthly: 'Monthly donation payment',
-    quarterly: 'Quarterly donation payment',
-    annually: 'Annually donation payment',
+    'one-time': 'One time donation',
+    monthly: 'Monthly donation',
+    quarterly: 'Quarterly donation',
+    annually: 'Annually donation',
   }[payment.interval];
 
   return {
     id: 'ywca-donation',
     displayItems: [
       {
-        label: 'Donation',
+        label,
         amount: { currency, value },
       },
     ],

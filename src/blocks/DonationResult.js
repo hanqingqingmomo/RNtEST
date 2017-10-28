@@ -54,7 +54,7 @@ export default class DonationResult extends Component<P> {
             {success ? (
               <View style={styles.titleWrapper}>
                 <Title text="Your " />
-                <Title highlight text={recurrent ? 'recurrent' : 'one time'} />
+                <Title highlight text={recurrent ? 'recurring' : 'one time'} />
                 <Title text=" donation of " />
                 <Title highlight text={`$${amount}`} />
                 <Title text=" is successful!" />

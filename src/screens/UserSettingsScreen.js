@@ -104,7 +104,6 @@ class UserProfileScreen extends Component<Props> {
           <TableView.Section header="Application version">
             <TableView.Cell
               title={`Version: ${Config.APP_DISPLAY_VERSION}, Build: ${Config.APP_DISPLAY_BUILD}`}
-              onPress={this.signOut}
             />
           </TableView.Section>
         </TableView.Table>

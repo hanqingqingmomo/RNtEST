@@ -10,12 +10,13 @@ import { css } from '../../utils/style';
 import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
+import DonationCancelInfo from './DonationCancelInfo';
 
 const timeout = ms => new Promise(res => setTimeout(res, ms));
 
 export type Payment = {
   amount: number,
-  interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
+  interval: ChargeInterval,
 };
 
 type P = {
@@ -162,6 +163,7 @@ export default class DonationForm extends Component<P, S> {
               </View>
             ))}
           </View>
+          <DonationCancelInfo chargeInterval={this.state.interval} />
         </View>
 
         <View>
