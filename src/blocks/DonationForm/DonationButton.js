@@ -29,9 +29,9 @@ type P = {
 };
 
 const HEIGHT = {
-  sm: 40,
-  md: 48,
-  lg: 58,
+  sm: 35,
+  md: 43,
+  lg: 54,
 };
 
 export default class DonationButton extends Component<P> {

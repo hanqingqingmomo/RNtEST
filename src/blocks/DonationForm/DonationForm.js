@@ -4,8 +4,9 @@ import React, { Component } from 'react';
 import { NativeModules, Platform, StyleSheet } from 'react-native';
 import Braintree from 'react-native-braintree-xplat';
 
-import { View } from '../../atoms';
+import { View, Text } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
@@ -92,6 +93,13 @@ export default class DonationForm extends Component<P, S> {
   render() {
     return (
       <View style={style.container}>
+        <Text size={12} color="#90A4AE">
+          YWCA Metropolitan Chicago supports more than 200,000 women and
+          families in overcoming various challenges and finding personal and
+          economic empowerment. You can be partner in our mission of eliminating
+          racism and empowering women by making a contribution to power our
+          critical work.
+        </Text>
         <View>
           <View style={style.buttonContainer}>
             {AMOUNTS.map(amount => (
@@ -159,10 +167,13 @@ export default class DonationForm extends Component<P, S> {
               })}
               size="md"
               onPress={this.initiatePayment}
-              style={{
-                backgroundColor: getColor('black'),
-                borderColor: getColor('black'),
-              }}
+              style={[
+                {
+                  backgroundColor: getColor('black'),
+                  borderColor: getColor('black'),
+                },
+                css('height', 48),
+              ]}
               textColor={{ color: getColor('white') }}
               disabled={!this.state.amount}
             />

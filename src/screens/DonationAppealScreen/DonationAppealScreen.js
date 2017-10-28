@@ -1,8 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
+import { NativeModules } from 'react-native';
 import { PaymentRequest } from 'react-native-payments';
-
 import { CommunityHeader, Screen, Fetch } from '../../atoms';
 import DonationForm, {
   type Payment,
@@ -42,16 +42,12 @@ export default class DonationAppealScreen extends Component<{}> {
     );
 
     try {
-      const paymentResponse = await paymentRequest.show();
+      var paymentResponse = await paymentRequest.show();
       const { paymentToken } = paymentResponse.details;
       const req = makeDonationRq({
         ...payment,
         payment_method_nonce: paymentToken,
       });
-
-      if (!paymentToken) {
-        throw new Error('Missing Braintree nonce');
-      }
 
       const donationResponse = await fetchProps.fetch(req.url, req.options);
       paymentResponse.complete(
@@ -60,7 +56,7 @@ export default class DonationAppealScreen extends Component<{}> {
       completePaymentCallback({ donationResponse, fetchProps, payment });
     } catch (err) {
       if (err.message !== 'AbortError') {
-        throw err;
+        NativeModules.ReactNativePayments.complete('fail', () => {});
       }
     }
   };

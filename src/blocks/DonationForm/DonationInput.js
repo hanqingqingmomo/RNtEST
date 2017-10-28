@@ -47,15 +47,15 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   sm: {
-    height: 41,
+    height: 35,
     fontSize: 14,
   },
   md: {
-    height: 48,
+    height: 43,
     fontSize: 19,
   },
   lg: {
-    height: 57,
+    height: 52,
     fontSize: 18,
   },
 });
