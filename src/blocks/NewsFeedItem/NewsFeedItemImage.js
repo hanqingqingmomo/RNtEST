@@ -40,7 +40,7 @@ export default class NewsFeedItemAttachment extends Component<P> {
         )}
         {title ? (
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-            {detail ? title : parseTextContent(title, 120)}
+            {detail ? title : parseTextContent(title, detail ? null : 120)}
           </Text>
         ) : null}
       </View>

@@ -78,7 +78,7 @@ export default class NewsFeedItem extends Component<P> {
         {(item.attachment && item.attachment.type === 'link') ||
         !item.attachment ? (
           <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-            {parseTextContent(text_content, 120)}
+            {parseTextContent(text_content, isDetail ? null : 120)}
           </Text>
         ) : null}
 
