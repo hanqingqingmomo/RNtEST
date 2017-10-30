@@ -6,6 +6,7 @@ import {
   FlatList,
   InteractionManager,
   Linking,
+  Platform,
   StyleSheet,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
@@ -190,7 +191,11 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
 
   sendInvitationMessage = (user: ContactProps) => {
     const phone = user.phoneNumbers[0].number;
-    const url = `sms:${phone}&body=${this.state.smsMessage || ''}`;
+    const body = this.state.smsMessage || '';
+    const url = Platform.select({
+      ios: `sms:${phone}&body=${body}`,
+      android: `sms:${phone}?body=${body}`,
+    });
 
     Linking.canOpenURL(url)
       .then(supported => {
@@ -200,7 +205,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
           return Linking.openURL(url);
         }
       })
-      .catch(err => console.error('An error occurred', err));
+      .catch(err => alert('Could not sent SMS'));
   };
 
   onInvite(user: ContactProps) {
