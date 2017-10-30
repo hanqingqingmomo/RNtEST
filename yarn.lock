@@ -4576,7 +4576,7 @@ react-native-modalbox@^1.4.2:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
 
-react-native-payments-addon-braintree@../../react-native-payments/packages/react-native-payments-addon-braintree:
+react-native-payments-addon-braintree@./3rdparty/react-native-payments/packages/react-native-payments-addon-braintree:
   version "4.8.4-1"
 
 react-native-payments-cli@^0.2.0:
@@ -4590,9 +4590,8 @@ react-native-payments-cli@^0.2.0:
     meow "^3.7.0"
     xcode "^0.9.3"
 
-react-native-payments@^0.3.1:
+react-native-payments@./3rdparty/react-native-payments/packages/react-native-payments:
   version "0.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-payments/-/react-native-payments-0.3.1.tgz#377a0b49e8522a388aca23e67ceaa450ed53551a"
   dependencies:
     es6-error "^4.0.2"
     uuid "^3.1.0"
