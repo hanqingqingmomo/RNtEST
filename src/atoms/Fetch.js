@@ -24,9 +24,9 @@ export type RequestOptions = $Exact<{
 
 // TODO type 'data' and 'response'
 type RenderProp = {
-  data: {},
+  data: Object,
   error?: any,
-  loading: ?boolean,
+  loading?: boolean,
   request: {
     url: string,
     options?: RequestOptions,

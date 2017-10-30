@@ -10,7 +10,7 @@ type Props = {
   children?: React$Node,
   containerStyle?: Style,
   fill?: boolean,
-  keyboardShouldPersistTaps?: string,
+  keyboardShouldPersistTaps?: 'always' | 'never' | 'handled' | boolean,
   style?: Style,
   tintColor?: string,
 };
@@ -27,7 +27,7 @@ export default function Screen(props: Props): React$Element<*> {
 
   return (
     <ScrollView
-      keyboardShouldPersistTaps={keyboardShouldPersistTaps}
+      keyboardShouldPersistTaps={keyboardShouldPersistTaps || 'never'}
       alwaysBounceVertical={false}
       overScrollMode="auto"
       contentContainerStyle={[

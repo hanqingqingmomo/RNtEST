@@ -1,26 +1,26 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Linking, WebView } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { View, Text } from '../atoms';
 import { getColor } from '../utils/color';
 import { parseTextContent } from '../utils/text';
+import type { ScreenProps } from '../Types';
 
-type Props = {
+type Props = ScreenProps<any> & {
   list?: Array<string>,
-  text: Array<
+  text?: Array<
     | string
-    | ?{
+    | {
       list: Array<string>,
     }
   >,
   title: string | { label: string, link: string },
-  navigation?: any,
 };
 
-const renderDotList = (list: Array<string>): Array<React$Element<*>> => {
-  return list.map((string: string, idx: number) => {
+const renderDotList = (list: Array<string>): Array<React$Node> => {
+  return list.map((string: string, idx: number): React$Node => {
     return (
       <Text key={idx} style={{ marginBottom: 8 }} color={getColor('gray')}>
         &middot; {parseTextContent(string, null)}
@@ -29,8 +29,10 @@ const renderDotList = (list: Array<string>): Array<React$Element<*>> => {
   });
 };
 
-const renderText = (text: Array<string>): Array<React$Element<*>> => {
-  return text.map((item: string | Object, idx: number) => {
+const renderText = (text: Array<string>): Array<React$Node> => {
+  return text.map((item: string | Object, idx: number):
+    | React$Node
+    | Array<React$Node> => {
     if (typeof item === 'object') {
       if (item.list) {
         return renderDotList(item.list);

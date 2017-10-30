@@ -36,7 +36,7 @@ type P = {
   radius?: number,
   emitAction: ItemActionEmitter,
   onDelete: Function,
-  refetch: Function,
+  refetch?: Function,
   user: User,
 };
 

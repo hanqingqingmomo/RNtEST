@@ -86,7 +86,7 @@ export type Post = {
     type: string,
     url: string,
   },
-  author: ?User,
+  author: User,
   cached_url: ?LinkAttachment,
   comments_count: number,
   communities: Array<CommunitySimple>,

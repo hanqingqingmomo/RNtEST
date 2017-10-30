@@ -6,7 +6,7 @@ import { Text, TouchableItem } from './index';
 
 type Props = {
   disabled?: boolean,
-  onPress: () => mixed,
+  onPress: Function,
   textStyle?: Object,
   title: string,
 };
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function NavigationTextButton(props: Props) {
+export default function NavigationTextButton(props: Props): React$Node {
   return (
     <TouchableItem
       onPress={props.onPress}

@@ -4,13 +4,18 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text } from '../index';
+import { getColor } from '../../utils/color';
 
-export default class SectionLabel extends Component {
+type Props = {
+  title: string,
+};
+
+export default class SectionLabel extends Component<Props> {
   render() {
     return (
       <Text
         lineHeight={13}
-        color="#90A4AE"
+        color={getColor('gray')}
         size={12}
         weight="600"
         style={styles.container}

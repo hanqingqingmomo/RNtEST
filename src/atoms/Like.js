@@ -8,25 +8,28 @@ import type { Post, Comment } from '../Types';
 
 type P = {
   count: number,
-  liked: boolean,
   item: Post | Comment,
+  liked: boolean,
+  emitAction: Function,
 };
 
 type State = {
+  count: number,
+  liked: boolean,
   updating: boolean,
 };
 
 export default class Like extends Component<P, State> {
   state = {
-    updating: false,
-    liked: this.props.liked,
     count: this.props.count,
+    liked: this.props.liked,
+    updating: false,
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: P) {
     this.setState({
-      liked: nextProps.liked,
       count: nextProps.count,
+      liked: nextProps.liked,
     });
   }
 
@@ -48,6 +51,7 @@ export default class Like extends Component<P, State> {
 
   render() {
     const { liked, count } = this.state;
+
     return (
       <Fetch manual>
         {({ fetch }) => (

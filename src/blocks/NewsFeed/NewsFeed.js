@@ -31,7 +31,7 @@ type FetchResponse = {
 
 type Props = {
   request: Request,
-  ListHeaderComponent: ItemActionEmitter => React$Node,
+  ListHeaderComponent?: ItemActionEmitter => React$Node,
   navigation: any,
 };
 
@@ -100,20 +100,20 @@ export default class NewsFeed extends Component<Props, State> {
       case 'delete':
         if (item) {
           this.setState(state => ({
-            data: state.data.filter(i => i.id !== item.id),
+            data: (state.data || []).filter(i => i.id !== item.id),
           }));
         }
         break;
       case 'update':
         if (item) {
           this.setState(state => ({
-            data: state.data.map(i => (i.id === item.id ? item : i)),
+            data: (state.data || []).map(i => (i.id === item.id ? item : i)),
           }));
         }
         break;
       case 'create':
         this.setState(state => ({
-          data: [item, ...state.data],
+          data: [item, ...(state.data || [])],
         }));
         break;
       case 'report':
@@ -140,16 +140,16 @@ export default class NewsFeed extends Component<Props, State> {
     const res = await doFetch(this.props.request, this.state.cursor);
     this.setState(state => ({
       ...res,
-      data: (state.data || []).concat(res.data),
+      data: (state.data || []).concat(res.data || []),
       appendingData: false,
     }));
   };
 
-  deleteItem = item => {
+  deleteItem = (item: Post) => {
     this.emitAction('delete', item);
   };
 
-  updateItem = async (item, deleting) => {
+  updateItem = async (item: Post, deleting?: boolean) => {
     if (deleting) {
       this.deleteItem(item);
       return;

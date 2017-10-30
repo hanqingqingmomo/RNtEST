@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View as OriginalView, StyleSheet } from 'react-native';
+import { View as OriginalView } from 'react-native';
 
 import { type Style } from '../Types';
 import { css } from '../utils/style';
@@ -18,12 +18,11 @@ export default class View extends Component<Props> {
   }
 
   render() {
-    const { style, flexDirection, flexGrow, ...bag } = this.props;
+    const { style, flexDirection, ...bag } = this.props;
     return (
       <OriginalView
         {...bag}
         ref="root"
-        flexGrow={flexGrow}
         style={[flexDirectionStyle(flexDirection), style]}
       />
     );
