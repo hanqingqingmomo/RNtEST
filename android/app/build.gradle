@@ -75,7 +75,7 @@ import com.android.build.OutputFile
 project.ext.envConfigFiles = [
   dev: ".env.dev",
   beta: ".env.beta",
-  production: ".env.prod",
+  prod: ".env.prod",
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -111,8 +111,8 @@ android {
         resValue "string", "build_config_package", "com.app"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -125,8 +125,17 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+      release {
+        storeFile file('../keystores/release.keystore')
+        storePassword '{password}'
+        keyAlias 'release'
+        keyPassword '{password}'
+      }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
