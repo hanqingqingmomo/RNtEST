@@ -37,7 +37,7 @@ export default function SettingsPopup({ settings, busy }: P) {
               <ActivityIndicator />
             </CenterView>
           ) : (
-            <Icon name="menu" color="#CFD8DC" size={24} />
+            <Icon name="menu" color="#CFD8DC" size={20} />
           )}
         </View>
       }
