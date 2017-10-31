@@ -11,8 +11,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "list-iphones": "instruments -s devices",
-    "ios": "react-native run-ios",
-    "postinstall": "sh postinstall.sh"
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
