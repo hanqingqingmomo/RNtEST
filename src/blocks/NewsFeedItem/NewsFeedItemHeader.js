@@ -13,15 +13,19 @@ import {
 } from '../../atoms';
 import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
-import type { CommunitySimple, User, Post, PopupSetting } from '../../Types';
+import type {
+  CommunitySimple,
+  User,
+  Post,
+  PopupSetting,
+  ScreenProps,
+} from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq, makeReportReq } from '../../utils/requestFactory';
 import { type ItemActionEmitter } from './NewsFeedItem';
 
-type P = {
+type P = ScreenProps<*> & {
   item: Post,
-  // TODO remote navigation prop
-  navigation: Object,
   user: User,
   emitAction: ItemActionEmitter,
   onDelete: Function,
@@ -95,12 +99,12 @@ class NewsFeedItemHeader extends Component<P, S> {
     } catch (err) {}
   };
 
-  getPopupSettings() {
+  getPopupSettings(): Array<PopupSetting> {
     return [
       {
         iconName: 'delete',
         label: 'Delete',
-        isHidden: ({ user, author }) => author.id !== user.id,
+        isHidden: this.props.user.id !== this.props.item.author.id,
         onPress: this.deletePost,
       },
       {
@@ -108,14 +112,7 @@ class NewsFeedItemHeader extends Component<P, S> {
         label: 'Report',
         onPress: this.reportPost,
       },
-    ].filter(
-      (setting: PopupSetting) =>
-        !setting.isHidden ||
-        !setting.isHidden({
-          user: this.props.user,
-          author: this.props.item.author,
-        })
-    );
+    ].filter((setting: PopupSetting): boolean => !setting.isHidden);
   }
 
   render() {

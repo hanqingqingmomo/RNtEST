@@ -14,10 +14,17 @@ import {
 } from '../atoms';
 import { NewsFeedItem, CommentList, CommentInput } from '../blocks';
 import { makeReadPostWithCommentsRq } from '../utils/requestFactory';
+import type { ScreenProps, FetchProps } from '../Types';
 
-type P = {
-  navigation: any,
+type NavigationProps = {
+  params: {
+    emitAction: Function,
+    postId: string,
+    reloadList: Function,
+  },
 };
+
+type P = ScreenProps<NavigationProps>;
 
 type S = {
   replyingTo?: TComment,
@@ -103,17 +110,7 @@ export default class PostDetailScreen extends Component<P, S> {
         url={readPostWithCommentsRq.url}
         options={readPostWithCommentsRq.options}
       >
-        {({
-          loading,
-          error,
-          data,
-          fetch,
-        }: {
-          loading: boolean,
-          error: { message: string },
-          data: Post,
-          fetch: Function,
-        }) => (
+        {({ loading, error, data, fetch }: FetchProps<Post>) => (
           <Screen
             fill
             tintColor="white"

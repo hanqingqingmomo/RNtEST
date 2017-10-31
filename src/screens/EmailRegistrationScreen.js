@@ -18,6 +18,7 @@ import {
 } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
+import type { ScreenProps, FetchProps } from '../Types';
 import {
   makeSignupRq,
   makeSigninRq,
@@ -50,10 +51,9 @@ const MESSAGES = {
 
 type FormValues = typeof INITIAL_VALUES;
 
-type Props = {
+type Props = ScreenProps<*> & {
   setUserAccessToken: Function,
   setUserProfile: Function,
-  navigation: any,
 };
 
 type State = {
@@ -113,7 +113,7 @@ class EmailRegistrationScreen extends Component<Props, State> {
   render() {
     return (
       <Fetch manual>
-        {({ loading, data, fetch }) => (
+        {({ loading, fetch }: FetchProps<*>) => (
           <Form
             initialValues={INITIAL_VALUES}
             onSubmit={this.handleSubmit(fetch)}

@@ -6,8 +6,11 @@ import { StyleSheet } from 'react-native';
 import { Button, View } from '../atoms';
 import { LaunchScreenBackground } from '../blocks';
 import { getColor } from '../utils/color';
+import type { ScreenProps } from '../Types';
 
-export default class LandingScreen extends Component<{}> {
+type Props = ScreenProps<*>;
+
+export default class LandingScreen extends Component<Props> {
   navigate = (
     route: 'AuthenticationRootScreen' | 'InvitationCodeScreen'
   ) => () => {

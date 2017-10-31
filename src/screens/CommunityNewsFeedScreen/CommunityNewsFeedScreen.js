@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 
 import { View } from '../../atoms';
 import { NewsFeed, PinnedPost } from '../../blocks';
+import type { ScreenProps } from '../../Types';
 import NewsFeedConversation from './../AggregatedNewsFeedScreen/NewsFeedConversation';
 import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
 
-type Props = {
+type Props = ScreenProps<*> & {
   communityId: string,
-  navigation: any,
   navigateToPost: Object => void,
   reloadCommunity: Function,
 };

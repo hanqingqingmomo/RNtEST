@@ -4,10 +4,15 @@ import React, { Component } from 'react';
 
 import { NewsFeed } from '../blocks';
 import { makeReadPinnedItemsRq } from '../utils/requestFactory';
+import type { ScreenProps } from '../Types';
 
-type P = {
-  navigation: any,
+type NavigationProps = {
+  params: {
+    communityId: string,
+  },
 };
+
+type P = ScreenProps<NavigationProps>;
 
 type S = {
   isBeingDeleted: boolean,

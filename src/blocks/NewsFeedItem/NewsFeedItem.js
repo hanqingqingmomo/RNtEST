@@ -8,13 +8,11 @@ import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post, type User } from '../../Types';
+import { type Post, type User, type ScreenProps } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
-import NewsFeedItemDonation from './NewsFeedItemDonation';
-import NewsFeedItemEvent from './NewsFeedItemEvent';
 import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
@@ -29,10 +27,9 @@ export type ItemActionEmitter = (
   item: Post
 ) => mixed;
 
-type P = {
+type P = ScreenProps<*> & {
   isDetail?: boolean,
   item: Post,
-  navigation: Object,
   radius?: number,
   emitAction: ItemActionEmitter,
   onDelete: Function,
@@ -124,7 +121,7 @@ export default class NewsFeedItem extends Component<P> {
   render() {
     const { item, isDetail, navigation, radius } = this.props;
 
-    const { author, donation, event, id } = item;
+    const { author, id } = item;
 
     return (
       <ShadowView
@@ -162,14 +159,14 @@ export default class NewsFeedItem extends Component<P> {
             />
           ) : null}
 
-          {donation ? (
+          {/* {donation ? (
             <NewsFeedItemDonation
               {...donation}
               onDonatePress={() => console.log('donate')}
             />
-          ) : null}
+          ) : null} */}
 
-          {event ? <NewsFeedItemEvent {...event} /> : null}
+          {/* {event ? <NewsFeedItemEvent {...event} /> : null} */}
 
           <NewsFeedItemFooter
             item={item}

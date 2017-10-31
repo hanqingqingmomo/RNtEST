@@ -72,12 +72,14 @@ export default class EventFeed extends React.Component<P> {
     );
   };
 
+  keyExtractor = (data: ItemProps): string => data.date.toString();
+
   render() {
     return (
       <FlatList
         data={this.props.data}
         renderItem={this.renderItem}
-        keyExtractor={data => data.date}
+        keyExtractor={this.keyExtractor}
       />
     );
   }

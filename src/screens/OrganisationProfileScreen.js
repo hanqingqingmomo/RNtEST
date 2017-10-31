@@ -18,17 +18,23 @@ import {
 } from '../atoms';
 import { css } from '../utils/style';
 import { makeReadOrganisationReq } from '../utils/requestFactory';
+import type { Community, ScreenProps, FetchProps } from '../Types';
 
 type State = {
   screenIsReady: boolean,
 };
+
+type Props = ScreenProps<*> & {
+  screenProps: Object,
+};
+
 const { Table, Section, Cell } = TableView;
 
 function DismissModalButton({ onPress }) {
   return <NavigationIconButton name="close" color="white" onPress={onPress} />;
 }
 
-export default class OrganisationProfileScreen extends Component<{}, State> {
+export default class OrganisationProfileScreen extends Component<Props, State> {
   state = {
     screenIsReady: false,
   };
@@ -53,7 +59,7 @@ export default class OrganisationProfileScreen extends Component<{}, State> {
         url={readOrganisationReq.url}
         options={readOrganisationReq.options}
       >
-        {({ loading, data, error }) => {
+        {({ loading, data }: FetchProps<Community>) => {
           return loading === false ? (
             <Screen fill>
               <View style={styles.dismisalButton}>

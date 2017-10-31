@@ -24,7 +24,7 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     isCollapsed: true,
   };
 
-  closeInterval = null;
+  closeInterval: any = null;
 
   get autoJoinCommnuties(): Array<CommunitySimple> {
     return this.props.communities.filter(community => community.auto_join);
@@ -74,7 +74,7 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     this.setState({ searchValue });
   }
 
-  onSearchKeyPress = (e: SyntheticEvent<HTMLInputElement>) => {
+  onSearchKeyPress = (e: { nativeEvent: { key: string } }) => {
     if (
       e.nativeEvent.key.toLowerCase() === 'backspace' &&
       this.isEmptySearchValue

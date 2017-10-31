@@ -9,13 +9,21 @@ import { getColor } from '../utils/color';
 export function parseTextContent(string: string, maxLength: ?number): any {
   let words = (string || '').split(/\s/);
 
-  if (typeof string === 'string' && maxLength !== null) {
+  if (
+    typeof string === 'string' &&
+    maxLength !== null &&
+    maxLength !== undefined
+  ) {
     let length = 0;
 
-    words = words.filter((word: string) => {
+    words = words.filter((word: string): boolean => {
       length += word.length + 1;
 
-      return length < maxLength;
+      if (maxLength !== null && maxLength !== undefined) {
+        return length < maxLength;
+      }
+
+      return true;
     });
 
     if (string.length > maxLength) {
@@ -28,7 +36,7 @@ export function parseTextContent(string: string, maxLength: ?number): any {
     }
   }
 
-  words = words.map((word: string, idx: number) => {
+  words = words.map((word: string, idx: number): React$Node => {
     if (typeof word === 'string') {
       if (word.match(/^https?\:\//)) {
         // detect url

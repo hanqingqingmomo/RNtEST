@@ -4,27 +4,19 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
-import {
-  View,
-  Text,
-  Avatar,
-  Icon,
-  Link,
-  ShadowView,
-  ImagePreview,
-} from '../atoms';
+import { View, Text, Avatar, Link, ShadowView, ImagePreview } from '../atoms';
 import { type User } from '../Types';
 
 // TODO use type after merge
 type P = {
   user: User,
-  settings?: React$Element<*>,
+  settings?: React$Node,
 };
 
 export default class ProfileCard extends Component<P> {
   render() {
     const { user, settings } = this.props;
-    const { email, first_name, last_name, phone, profile_photo, role } = user;
+    const { email, first_name, last_name, profile_photo, role } = user;
 
     return (
       <ShadowView radius={0}>

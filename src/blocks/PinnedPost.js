@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
 import { Image, TableView, Text, View, Fetch } from '../atoms';
-import { type Post } from '../Types';
+import type { Post, FetchProps } from '../Types';
 import { parseTextContent } from '../utils/text';
 import { makeReadPinnedItemsRq } from '../utils/requestFactory';
 
@@ -32,7 +32,12 @@ export default class PinnedPost extends Component<Props> {
 
     return (
       <Fetch url={readPinnedItemsReq.url} options={readPinnedItemsReq.options}>
-        {({ loading, data, error, fetch }) => {
+        {({
+          loading,
+          data,
+          error,
+          fetch,
+        }: FetchProps<{ data: Array<Post> }>) => {
           if (loading === false) {
             if (data && data.data.length > 0) {
               const firstPinnedItem = data.data[0];
@@ -55,12 +60,7 @@ export default class PinnedPost extends Component<Props> {
                           paddingTop: 15,
                           paddingBottom: 15,
                         }}
-                        image={
-                          <AvatarOrAttachment
-                            attachment={firstPinnedItem.attachment}
-                            author={firstPinnedItem.author}
-                          />
-                        }
+                        image={<AvatarOrAttachment {...firstPinnedItem} />}
                         cellContentView={
                           <View style={styles.text}>
                             <Text color="#455A64" size={14} lineHeight={18}>

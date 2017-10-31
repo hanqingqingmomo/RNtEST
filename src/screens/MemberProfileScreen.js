@@ -17,16 +17,26 @@ import {
 import { ProfileCard, SettingsPopup } from '../blocks';
 import { getColor } from '../utils/color';
 import { makeReadProfileRq, makeReportReq } from '../utils/requestFactory';
-import type { PopupSetting, User, CommunitySimple } from '../Types';
+import type {
+  User,
+  CommunitySimple,
+  ScreenProps,
+  FetchProps,
+  PopupSetting,
+} from '../Types';
 
 const { Table, Section, Cell } = TableView;
 
-type Props = {
-  navigation: Object,
+type NavigationProps = {
+  params: {
+    user: User,
+  },
 };
 
+type Props = ScreenProps<NavigationProps>;
+
 export default class MemberProfileScreen extends Component<Props> {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }: Props): { title: string } => {
     const { first_name, last_name } = navigation.state.params.user;
     return {
       title: `${first_name} ${last_name}`,
@@ -60,14 +70,14 @@ export default class MemberProfileScreen extends Component<Props> {
     } catch (err) {}
   };
 
-  getPopupSettings() {
+  getPopupSettings(): Array<PopupSetting> {
     return [
       {
         iconName: 'report',
         label: 'Report',
         onPress: this.reportUser,
       },
-    ];
+    ].filter((setting: PopupSetting): boolean => !setting.isHidden);
   }
 
   renderCommunities = (member: User) => {
@@ -91,7 +101,7 @@ export default class MemberProfileScreen extends Component<Props> {
 
     return (
       <Fetch url={memberProfileReq.url} options={memberProfileReq.options}>
-        {({ loading, data, error, fetch }) => {
+        {({ loading, data }: FetchProps<{ data: User }>) => {
           if (loading === false) {
             const memeberData = data.data;
 

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 import { Fetch, TouchableItem, Count } from '../atoms';
 import { makeLikeRq, makeReadPostReq } from '../utils/requestFactory';
-import type { Post, Comment } from '../Types';
+import type { Post, Comment, FetchProps } from '../Types';
 
 type P = {
   count: number,
@@ -54,7 +54,7 @@ export default class Like extends Component<P, State> {
 
     return (
       <Fetch manual>
-        {({ fetch }) => (
+        {({ fetch }: FetchProps<*>) => (
           <TouchableItem
             onPress={this.onPress(fetch)}
             disabled={this.state.updating}

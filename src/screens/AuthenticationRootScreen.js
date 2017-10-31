@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Icon, View, Button, Screen, Text } from '../atoms';
 import { getColor } from '../utils/color';
+import type { ScreenProps } from '../Types';
 
 type Route =
   | 'FacebookAuthenticationScreen'
@@ -13,11 +14,13 @@ type Route =
   | 'EmailAuthenticationScreen'
   | 'EmailRegistrationScreen';
 
+type Props = ScreenProps<*>;
+
 function AuthenticationButton(props) {
   return <Button block {...props} size="lg" style={styles.button} />;
 }
 
-export default class AuthenticationRootScreen extends Component<{}> {
+export default class AuthenticationRootScreen extends Component<Props> {
   navigate = (route: Route) => () => {
     switch (route) {
       case 'EmailAuthenticationScreen':

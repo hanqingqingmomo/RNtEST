@@ -10,7 +10,7 @@ import { css } from '../../utils/style';
 import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
-import DonationCancelInfo from './DonationCancelInfo';
+import DonationCancelInfo, { type ChargeInterval } from './DonationCancelInfo';
 
 const timeout = ms => new Promise(res => setTimeout(res, ms));
 

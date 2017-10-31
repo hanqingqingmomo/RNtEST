@@ -4,23 +4,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Icon, TouchableItem } from './index';
-import { type IconName } from '../Types';
+import type { IconName, ColorName } from '../Types';
 
 type Props = {
+  color: ColorName | string,
   disabled?: boolean,
   name: IconName,
   onPress: () => void,
 };
-
-const styles = StyleSheet.create({
-  touchableItem: {
-    margin: 10,
-  },
-
-  disabled: {
-    opacity: 0.5,
-  },
-});
 
 export default function NavigationTextButton(props: Props) {
   return (
@@ -38,3 +29,13 @@ export default function NavigationTextButton(props: Props) {
     </TouchableItem>
   );
 }
+
+const styles = StyleSheet.create({
+  touchableItem: {
+    margin: 10,
+  },
+
+  disabled: {
+    opacity: 0.5,
+  },
+});

@@ -15,7 +15,7 @@ import {
   View,
 } from '../../atoms';
 import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
-import { type User } from '../../Types';
+import type { User, FetchProps } from '../../Types';
 
 const { Cell } = TableView;
 const AVATAR_WIDTH = 28;
@@ -53,7 +53,7 @@ export default class MembersTab extends Component<Props> {
           url={readCommunityMembersRq.url}
           options={readCommunityMembersRq.options}
         >
-          {({ loading, error, data }) => {
+          {({ loading, error, data }: FetchProps<{ data: Array<User> }>) => {
             if (loading) {
               return (
                 <CenterView>

@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react';
 
+import type { ScreenProps } from '../../Types';
 import CommunityNewsFeedScreen from '../CommunityNewsFeedScreen/CommunityNewsFeedScreen';
 
-type Props = {
+type Props = ScreenProps<*> & {
   communityId: string,
   navigateToPost: Object => void,
   reloadCommunity: Function,

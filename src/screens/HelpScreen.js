@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import { Linking } from 'react-native';
 
 import { Screen, TableView, Icon, Text } from '../atoms';
+import type { ScreenProps } from '../Types';
+
+type Props = ScreenProps<*>;
 
 const LINKS = [
   {
@@ -29,7 +32,7 @@ const LINKS = [
   },
 ];
 
-export default class HelpScreen extends Component<{}> {
+export default class HelpScreen extends Component<Props> {
   render() {
     return (
       <Screen>

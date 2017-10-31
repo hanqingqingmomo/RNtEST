@@ -5,10 +5,16 @@ import { StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 
 import { Text, View, Image, ShadowView } from '../../atoms';
-import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 
-export default class NewsFeedItemEvent extends Component<{}> {
+type Props = {
+  endDate: Date,
+  imageURI: string,
+  startDate: Date,
+  title: string,
+};
+
+export default class NewsFeedItemEvent extends Component<Props> {
   render() {
     const { title, imageURI, startDate, endDate } = this.props;
 
@@ -23,7 +29,7 @@ export default class NewsFeedItemEvent extends Component<{}> {
               size={20}
               lineHeight={20}
               weight="bold"
-              style={css('color', getColor('gray'))}
+              color={getColor('gray')}
             >
               {format(startDate, 'DD')}
             </Text>
@@ -31,7 +37,7 @@ export default class NewsFeedItemEvent extends Component<{}> {
               size={11}
               lineHeight={11}
               weight="600"
-              style={css('color', getColor('gray'))}
+              color={getColor('gray')}
             >
               {format(startDate, 'MMM')}
             </Text>
@@ -43,15 +49,12 @@ export default class NewsFeedItemEvent extends Component<{}> {
               weight="600"
               numberOfLines={2}
               ellipsizeMode="tail"
-              style={[styles.title, css('color', '#455A64')]}
+              color="#455A64"
+              style={styles.title}
             >
               {title}
             </Text>
-            <Text
-              size={13}
-              lineHeight={18}
-              style={css('color', getColor('gray'))}
-            >
+            <Text size={13} lineHeight={18} color={getColor('gray')}>
               {`${format(startDate, 'HH:MM A')} - ${format(
                 endDate,
                 'HH:MM A'

@@ -20,14 +20,13 @@ import {
 const ANDROID_VERSION_LOLLIPOP = 21;
 
 type Props = {
-  onPress: () => void,
-  delayPressIn?: number,
-  borderless: boolean,
-  pressColor: string,
-  useForeground?: boolean,
   activeOpacity?: number,
-  children?: React$Element<*>,
+  borderless: boolean,
+  delayPressIn?: number,
+  children?: React$Node,
+  pressColor: string,
   style?: any,
+  useForeground?: boolean,
 };
 
 export default class TouchableItem extends Component<Props> {

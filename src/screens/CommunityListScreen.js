@@ -21,6 +21,7 @@ import {
   View,
 } from '../atoms';
 import { NoContent } from '../blocks';
+import type { Community, ScreenProps, FetchProps } from '../Types';
 
 const HEADER_VIEW_ID = 'HeaderView:CommListing';
 
@@ -41,9 +42,7 @@ type State = {
   membershipStatus: MembershipStatus,
 };
 
-type Props = {
-  navigation: Object,
-};
+type Props = ScreenProps<*>;
 
 export default class CommunityListScreen extends Component<Props, State> {
   static navigationOptions = props => ({
@@ -77,45 +76,48 @@ export default class CommunityListScreen extends Component<Props, State> {
           url={readCommunitiesListRq.url}
           options={readCommunitiesListRq.options}
         >
-          {({ loading, error, data, fetch }: Object) => {
-            return (
-              <View style={{ minHeight: '100%' }}>
-                {loading === false ? (
-                  data && data.data.length ? (
-                    <ScrollView contentContainerStyle={styles.container}>
-                      {data.data.map(community => (
-                        <TouchableItem
-                          onPress={() =>
-                            navigation.navigate('CommunityCenterScreen', {
-                              communityId: community.id,
-                              reloadCommunityList: fetch,
-                            })}
-                          key={community.id}
-                          style={styles.item}
-                        >
-                          <CommunityCard
-                            imageURI={community.cover_photo}
-                            title={community.name}
-                            subtitle={`${community.members} members`}
-                          />
-                        </TouchableItem>
-                      ))}
-                    </ScrollView>
-                  ) : (
-                    <NoContent iconName="sad-face" title="No Content" />
-                  )
-                ) : error ? (
-                  <CenterView>
-                    <Text>{error.message}</Text>
-                  </CenterView>
+          {({
+            loading,
+            error,
+            data,
+            fetch,
+          }: FetchProps<{ data: Array<Community> }>) => (
+            <View style={{ minHeight: '100%' }}>
+              {loading === false ? (
+                data && data.data.length ? (
+                  <ScrollView contentContainerStyle={styles.container}>
+                    {data.data.map(community => (
+                      <TouchableItem
+                        onPress={() =>
+                          navigation.navigate('CommunityCenterScreen', {
+                            communityId: community.id,
+                            reloadCommunityList: fetch,
+                          })}
+                        key={community.id}
+                        style={styles.item}
+                      >
+                        <CommunityCard
+                          imageURI={community.cover_photo}
+                          title={community.name}
+                          subtitle={`${community.members} members`}
+                        />
+                      </TouchableItem>
+                    ))}
+                  </ScrollView>
                 ) : (
-                  <CenterView>
-                    <ActivityIndicator />
-                  </CenterView>
-                )}
-              </View>
-            );
-          }}
+                  <NoContent iconName="sad-face" title="No Content" />
+                )
+              ) : error ? (
+                <CenterView>
+                  <Text>{error.message}</Text>
+                </CenterView>
+              ) : (
+                <CenterView>
+                  <ActivityIndicator />
+                </CenterView>
+              )}
+            </View>
+          )}
         </Fetch>
       </Screen>
     );

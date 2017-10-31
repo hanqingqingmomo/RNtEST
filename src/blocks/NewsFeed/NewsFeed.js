@@ -11,7 +11,7 @@ import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
 
 import { type Request } from '../../utils/requestFactory';
 import Footer from './Footer';
-import { type Post } from '../../Types';
+import type { Post, ScreenProps } from '../../Types';
 import {
   type ItemActionHandler,
   type ItemActionEmitter,
@@ -29,10 +29,9 @@ type FetchResponse = {
   cursor: ?Cursor,
 };
 
-type Props = {
+type Props = ScreenProps<*> & {
   request: Request,
   ListHeaderComponent?: ItemActionEmitter => React$Node,
-  navigation: any,
 };
 
 type State = {
@@ -149,11 +148,12 @@ export default class NewsFeed extends Component<Props, State> {
     this.emitAction('delete', item);
   };
 
-  updateItem = async (item: Post, deleting?: boolean) => {
+  updateItem = async (item: Post, deleting: boolean) => {
     if (deleting) {
       this.deleteItem(item);
       return;
     }
+
     const req = makeReadPostReq(item.id);
     const res = await global.fetch(req.url, req.options);
     const json = await res.json();

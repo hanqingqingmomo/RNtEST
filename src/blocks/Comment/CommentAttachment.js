@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { isToday, format } from 'date-fns';
 
@@ -15,11 +15,7 @@ type Props = {
   onCommentPress: Props => void,
 };
 
-export default class CommentAttachment extends React.Component<
-  void,
-  Props,
-  void
-> {
+export default class CommentAttachment extends Component<Props> {
   formatDate(date: Date) {
     const day = isToday(date)
       ? 'Today'

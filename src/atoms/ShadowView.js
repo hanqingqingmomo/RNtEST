@@ -8,7 +8,7 @@ import { View } from './index';
 
 type P = {
   style?: Style,
-  children?: React$Element<*>,
+  children?: React$Node,
   radius?: number,
 };
 

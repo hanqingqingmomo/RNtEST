@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
+
 import { Text, TouchableItem } from './index';
 
 type Props = {
@@ -10,22 +11,6 @@ type Props = {
   textStyle?: Object,
   title: string,
 };
-
-const styles = StyleSheet.create({
-  touchableItem: {
-    marginHorizontal: 10,
-  },
-  text: {
-    fontFamily: Platform.select({
-      ios: 'AvenirNext-Regular',
-      android: 'Roboto',
-    }),
-    fontWeight: '400',
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-});
 
 export default function NavigationTextButton(props: Props): React$Node {
   return (
@@ -48,3 +33,19 @@ export default function NavigationTextButton(props: Props): React$Node {
     </TouchableItem>
   );
 }
+
+const styles = StyleSheet.create({
+  touchableItem: {
+    marginHorizontal: 10,
+  },
+  text: {
+    fontFamily: Platform.select({
+      ios: 'AvenirNext-Regular',
+      android: 'Roboto',
+    }),
+    fontWeight: '400',
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+});

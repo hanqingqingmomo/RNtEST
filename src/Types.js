@@ -32,9 +32,17 @@ export type LocalImage = {
 
 export type ScreenProps<S> = {
   navigation: {
+    goBack: Function,
     navigate: Function,
     state: S,
   },
+};
+
+export type FetchProps<D> = {
+  data: D,
+  error?: Object,
+  fetch: Function,
+  loading: ?boolean,
 };
 
 export type LinkAttachment = {
@@ -58,7 +66,7 @@ export type CommunitySimple = {
 };
 
 export type User = {
-  id: number,
+  id: string,
   first_name: string,
   last_name: string,
   email: string,
@@ -93,10 +101,9 @@ export type Post = {
   created_at: string,
   likes_count: number,
   liked: boolean,
-  isNew: boolean, // Check whether we need this prop anymore
   donation: {}, // todo
   event: {}, // todo
-  replies: number,
+  replies: Array<Comment>,
 };
 
 // Entities
@@ -107,7 +114,7 @@ export type Community = CommunitySimple & {
 };
 
 export type CommunityMember = {
-  id: number,
+  id: string,
   first_name: string,
   last_name: string,
   profile_photo: string,
@@ -117,7 +124,7 @@ export type CommunityMember = {
 
 export type PopupSetting = {
   iconName: IconName,
-  isHidden?: Function,
+  isHidden?: boolean,
   label: string,
   onPress: Function,
 };

@@ -4,7 +4,6 @@ import React from 'react';
 
 import { View, Screen } from '../atoms';
 import { EventFeed } from '../blocks';
-import { EventFeedHeader } from './index';
 
 const ATTENDING_STATUS = {
   GOING: 'GOING',

@@ -13,6 +13,7 @@ type P = {
     label: string,
     onPress: Function,
   }>,
+  emitAction: Function,
 };
 
 const HIT_SLOP = {
@@ -52,9 +53,8 @@ export default class NewsFeedItemFooter extends Component<P> {
                 <Text
                   size={13}
                   lineHeight={18}
-                  style={
-                    ({ backgroundColor: 'white' }, css('color', '#00B0FF'))
-                  }
+                  color="#00B0FF"
+                  style={{ backgroundColor: 'white' }}
                 >
                   {link.label}
                 </Text>
