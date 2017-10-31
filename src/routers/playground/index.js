@@ -8,6 +8,7 @@ import { getColor } from '../../utils/color';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
+  EventCenterScreen,
   InviteFriendsScreen,
   LandingScreen,
   UserProfileScreen,
@@ -93,6 +94,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="Event Card"
       screen="EventCardPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Event Screen"
+      screen="EventCenterScreen"
       navigation={navigation}
     />
     <Link
@@ -212,6 +218,9 @@ export default StackNavigator(
     },
     EventFeedPlayground: {
       screen: EventFeedPlayground,
+    },
+    EventCenterScreen: {
+      screen: EventCenterScreen,
     },
     EmailRegistrationScreen: {
       screen: EmailRegistrationScreen,

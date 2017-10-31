@@ -24,6 +24,7 @@ export { default as DateCard } from './DateCard';
 export { default as DeferExpensiveTasks } from './DeferExpensiveTasks';
 export { default as DropdownAlert } from './DropdownAlert';
 export { default as EventCard } from './EventCard';
+export { default as EventHeader } from './EventHeader';
 export { default as Fetch } from './Fetch';
 export { default as FetchProvider } from './FetchProvider';
 export { default as Form } from './Form';

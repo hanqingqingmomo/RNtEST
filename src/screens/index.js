@@ -12,6 +12,9 @@ export {
   default as CommunityCenterScreen,
 } from './CommunityCenterScreen/CommunityCenterScreen';
 export {
+  default as EventCenterScreen,
+} from './EventCenterScreen/EventCenterScreen';
+export {
   default as DonationAppealScreen,
 } from './DonationAppealScreen/DonationAppealScreen';
 export { default as DonationResultScreen } from './DonationResultScreen';
