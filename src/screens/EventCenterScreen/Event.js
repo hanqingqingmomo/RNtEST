@@ -40,7 +40,7 @@ export default class Event extends Component<Props, State> {
             title="Annual Meeting Reception"
             subtitle="1 day ago, 3:00 AM-5:00 PM, Chicago"
             coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
-            actual={true}
+            isClosed={false}
           />
         </Collapsible>
         <Tabs

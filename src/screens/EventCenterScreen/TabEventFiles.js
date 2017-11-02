@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import { CenterView, Text, View } from '../../atoms';
+import { CenterView, Text } from '../../atoms';
 import { type User } from '../../Types';
 
 export default class TabEventFiles extends Component<Props> {
@@ -11,6 +11,10 @@ export default class TabEventFiles extends Component<Props> {
   };
 
   render() {
-    return <Text size={500}>Nothing to see here.</Text>;
+    return (
+      <CenterView>
+        <Text size={16}>Nothing to see here.</Text>
+      </CenterView>
+    );
   }
 }

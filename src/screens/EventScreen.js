@@ -72,7 +72,7 @@ const mocks = [
 type CommentType = 'Top comments' | 'Newest first';
 
 type State = {
-  membershipStatus: CommentType,
+  commentType: CommentType,
 };
 
 export default class EventScreen extends React.Component {
@@ -85,7 +85,7 @@ export default class EventScreen extends React.Component {
     return (
       <Screen>
         <Text size={14} lineHeight={18} style={styles.text}>
-          {parseTextContent(text, 100)}
+          {parseTextContent(text, 80)}
         </Text>
         <ContactGroup users={mocks} />
         <View style={styles.segmented}>
@@ -107,13 +107,12 @@ const styles = StyleSheet.create({
   text: {
     color: '#455A64',
     paddingHorizontal: 15,
-    paddingTop: 5,
-    paddingBottom: 15,
+    marginVertical: 10,
   },
   segmented: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
+    height: 65,
   },
   segmentedWrapper: {
     width: 260,

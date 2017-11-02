@@ -7,8 +7,8 @@ import { Button, Image, ImageBackground, Pill, Text, View } from './index';
 import { getColor } from '../utils/color';
 
 type Props = {
-  actual: boolean,
   coverImageURI: string,
+  isClosed: boolean,
   subtitle?: string,
   title: string,
   pillTitle: string,
@@ -16,8 +16,8 @@ type Props = {
 };
 
 export default function EventHeader({
-  actual,
   coverImageURI,
+  isClosed,
   onPress,
   pillTitle,
   subtitle,
@@ -50,7 +50,7 @@ export default function EventHeader({
             <Pill color={getColor('white')} title={pillTitle} />
           </View>
         </View>
-        {actual === true ? null : (
+        {isClosed === true ? null : (
           <View style={styles.buttonWrapper}>
             <Button.Icon
               color={getColor('white')}
