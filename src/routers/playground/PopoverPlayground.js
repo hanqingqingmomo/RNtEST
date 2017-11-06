@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import { StyleSheet, Dimensions, Switch } from 'react-native';

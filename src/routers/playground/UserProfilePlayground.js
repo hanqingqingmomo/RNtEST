@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react';
 
 import { ScrollView, TableView, Text, Icon } from '../../atoms';
