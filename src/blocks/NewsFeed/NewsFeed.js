@@ -24,9 +24,9 @@ type Cursor = {
 };
 
 type FetchResponse = {
-  error: ?Object,
+  cursor: Cursor,
   data: ?Array<Post>,
-  cursor: ?Cursor,
+  error: ?Object,
 };
 
 type Props = ScreenProps<*> & {

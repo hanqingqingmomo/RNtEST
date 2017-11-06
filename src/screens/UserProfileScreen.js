@@ -355,12 +355,12 @@ Provider.navigationOptions = ({ screenProps }) => ({
   headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
 });
 
-export default (connect(
-  (state: Store) => ({
+export default connect(
+  (state: Store): { user: ?User } => ({
     user: selectUser(state),
   }),
   { setUserProfile }
-): Connector<{}, Props>)(Provider);
+)(Provider);
 
 const styles = StyleSheet.create({
   container: {

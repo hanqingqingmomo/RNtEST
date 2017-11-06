@@ -4,7 +4,12 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import type { Comment as TComment, User, PopupSetting } from '../../Types';
+import type {
+  Comment as TComment,
+  PopupSetting,
+  Store,
+  User,
+} from '../../Types';
 import { Avatar, Like, Text, TimeAgo, View } from '../../atoms';
 import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
@@ -26,7 +31,7 @@ type P = {
   requestDelete: Function,
   requestUpdate: Function,
   updateSuccessful: Function,
-  user: User,
+  user: ?User,
 };
 
 type S = {
@@ -35,10 +40,6 @@ type S = {
 };
 
 const AVATAR_SIZE = 25;
-
-const mapStateToProps = state => ({
-  user: selectUser(state),
-});
 
 class Comment extends Component<P, S> {
   state = {
@@ -98,7 +99,9 @@ class Comment extends Component<P, S> {
       {
         iconName: 'delete',
         label: 'Delete',
-        isHidden: this.props.item.author.id !== this.props.user.id,
+        isHidden:
+          this.props.item.author.id !==
+          (this.props.user ? this.props.user.id : ''),
         onPress: this.deleteComment,
       },
       {
@@ -237,6 +240,10 @@ class Comment extends Component<P, S> {
     );
   }
 }
+
+const mapStateToProps = (state: Store): { user: ?User } => ({
+  user: selectUser(state),
+});
 
 export default connect(mapStateToProps)(Comment);
 

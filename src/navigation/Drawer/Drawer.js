@@ -8,8 +8,8 @@ import { getColor } from '../../utils/color';
 import DrawerHeader from './DrawerHeader';
 
 export type NavigationItem = {
+  icon: string,
   name?: string,
-  icon?: string,
   routeName: string,
 };
 

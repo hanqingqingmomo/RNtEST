@@ -15,20 +15,21 @@ import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
 import type {
   CommunitySimple,
-  User,
-  Post,
   PopupSetting,
+  Post,
   ScreenProps,
+  Store,
+  User,
 } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { makeDeletePostReq, makeReportReq } from '../../utils/requestFactory';
 import { type ItemActionEmitter } from './NewsFeedItem';
 
 type P = ScreenProps<*> & {
-  item: Post,
-  user: User,
   emitAction: ItemActionEmitter,
+  item: Post,
   onDelete: Function,
+  user: ?User,
 };
 
 type S = {
@@ -41,10 +42,6 @@ const HIT_SLOP = {
   bottom: 2,
   left: 2,
 };
-
-const mapStateToProps = state => ({
-  user: selectUser(state),
-});
 
 class NewsFeedItemHeader extends Component<P, S> {
   state = {
@@ -104,7 +101,9 @@ class NewsFeedItemHeader extends Component<P, S> {
       {
         iconName: 'delete',
         label: 'Delete',
-        isHidden: this.props.user.id !== this.props.item.author.id,
+        isHidden:
+          this.props.item.author.id !==
+          (this.props.user ? this.props.user.id : ''),
         onPress: this.deletePost,
       },
       {
@@ -145,6 +144,10 @@ class NewsFeedItemHeader extends Component<P, S> {
     );
   }
 }
+
+const mapStateToProps = (state: Store): { user: ?User } => ({
+  user: selectUser(state),
+});
 
 export default connect(mapStateToProps)(NewsFeedItemHeader);
 

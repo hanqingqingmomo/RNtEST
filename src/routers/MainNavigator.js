@@ -139,6 +139,10 @@ export default class MainNavigator extends Component<{}, State> {
       },
     };
 
+    if (typeof modalRoute === 'undefined') {
+      return null;
+    }
+
     switch (modalRoute.routeName) {
       case 'DonationModal':
         const _props = {
@@ -195,6 +199,7 @@ export default class MainNavigator extends Component<{}, State> {
               openFriendsInvitationModal: () => {
                 this.openModalRoute({
                   routeName: 'InviteFriendModal',
+                  icon: '',
                 });
               },
               openDrawer: () => {

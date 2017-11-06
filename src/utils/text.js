@@ -6,7 +6,10 @@ import { Linking } from 'react-native';
 import { Text } from '../atoms';
 import { getColor } from '../utils/color';
 
-export function parseTextContent(string: string, maxLength: ?number): any {
+export function parseTextContent(
+  string: string,
+  maxLength: ?number
+): React$Node {
   let words = (string || '').split(/\s/);
 
   if (
@@ -36,7 +39,7 @@ export function parseTextContent(string: string, maxLength: ?number): any {
     }
   }
 
-  words = words.map((word: string, idx: number): React$Node => {
+  words = words.map((word: string, idx: number): React$Node | string => {
     if (typeof word === 'string') {
       if (word.match(/^https?\:\//)) {
         // detect url

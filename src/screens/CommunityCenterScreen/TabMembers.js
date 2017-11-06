@@ -25,10 +25,15 @@ type Props = {
   navigateToMember: (user: User) => void,
 };
 
-export default class MembersTab extends Component<Props> {
-  keyExtractor = item => item.id;
+type ItemProps = {
+  item: User,
+  separators: Object,
+};
 
-  renderItem = ({ item, separators }) => (
+export default class MembersTab extends Component<Props> {
+  keyExtractor = (item: User): string => item.id;
+
+  renderItem = ({ item, separators }: ItemProps): any => (
     <Cell
       title={`${item.first_name} ${item.last_name}`}
       titleTextColor="#455A64"
@@ -54,7 +59,7 @@ export default class MembersTab extends Component<Props> {
           options={readCommunityMembersRq.options}
         >
           {({ loading, error, data }: FetchProps<{ data: Array<User> }>) => {
-            if (loading) {
+            if (loading === true || loading === null) {
               return (
                 <CenterView>
                   <ActivityIndicator />

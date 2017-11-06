@@ -8,7 +8,12 @@ import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post, type User, type ScreenProps } from '../../Types';
+import {
+  type Post,
+  type ScreenProps,
+  type Store,
+  type User,
+} from '../../Types';
 import { selectUser } from '../../redux/selectors';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
@@ -28,25 +33,20 @@ export type ItemActionEmitter = (
 ) => mixed;
 
 type P = ScreenProps<*> & {
+  emitAction: ItemActionEmitter,
   isDetail?: boolean,
   item: Post,
-  radius?: number,
-  emitAction: ItemActionEmitter,
   onDelete: Function,
+  radius?: number,
   refetch?: Function,
-  user: User,
+  user: ?User,
 };
 
-const mapStateToProps = state => ({
-  user: selectUser(state),
-});
-
-@connect(mapStateToProps)
-export default class NewsFeedItem extends Component<P> {
+class NewsFeedItem extends Component<P> {
   get userIsAuthorOfPost(): boolean {
     const { user, item } = this.props;
 
-    return user.id === item.author.id;
+    return item.author.id === (user ? user.id : '');
   }
 
   getLinks = () => {
@@ -178,6 +178,12 @@ export default class NewsFeedItem extends Component<P> {
     );
   }
 }
+
+const mapStateToProps = (state: Store): { user: ?User } => ({
+  user: selectUser(state),
+});
+
+export default connect(mapStateToProps)(NewsFeedItem);
 
 const styles = StyleSheet.create({
   container: {
