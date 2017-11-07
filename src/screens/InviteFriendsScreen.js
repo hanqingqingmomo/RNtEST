@@ -136,29 +136,37 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
               : ''}`}
           </Text>
           {emailAddresses.length ? (
-            <Text size={15} lineHeight={18} color={getColor('gray')}>
+            <Text
+              size={15}
+              lineHeight={18}
+              color={getColor('gray')}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
               {emailAddresses[0].email}
             </Text>
           ) : null}
         </View>
-        {invitedUser.includes(user.recordID) ? (
-          <Button.Icon
-            iconName="check"
-            size="sm"
-            color={getColor('green')}
-            iconColor={getColor('white')}
-            disabled
-            style={{ alignSelf: 'center' }}
-          />
-        ) : (
-          <Button
-            title="Send"
-            size="sm"
-            color={getColor('orange')}
-            textColor="white"
-            onPress={this.onInvite(user)}
-          />
-        )}
+        <View style={styles.buttons}>
+          {invitedUser.includes(user.recordID) ? (
+            <Button.Icon
+              iconName="check"
+              size="sm"
+              color={getColor('green')}
+              iconColor={getColor('white')}
+              disabled
+              style={{ alignSelf: 'center' }}
+            />
+          ) : (
+            <Button
+              title="Send"
+              size="sm"
+              color={getColor('orange')}
+              textColor="white"
+              onPress={this.onInvite(user)}
+            />
+          )}
+        </View>
       </View>
     );
   }
@@ -312,10 +320,14 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  buttons: {
     flex: 1,
   },
   textWrapper: {
-    flexGrow: 1,
+    flex: 3,
     paddingHorizontal: 7,
   },
 });

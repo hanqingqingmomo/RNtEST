@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, TextInput, Platform } from 'react-native';
 
 import type { Comment as TComment, FetchProps } from '../../Types';
-import { Fetch, Text, TouchableItem, View, Icon } from '../../atoms';
+import { Button, Fetch, Text, TouchableItem, View, Icon } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { makeCreateCommentReq } from '../../utils/requestFactory';
@@ -89,6 +89,30 @@ export default class CommentInput extends Component<P, S> {
                 </View>
               )}
               <View style={styles.inputRow}>
+                <Button.Icon
+                  iconColor="orange"
+                  iconName="plus-full"
+                  onPress={() => {}}
+                  size="md"
+                />
+                <Button.Icon
+                  iconColor="gray"
+                  iconName="attachment"
+                  onPress={() => {}}
+                  size="md"
+                />
+                <Button.Icon
+                  iconColor="gray"
+                  iconName="pen"
+                  onPress={() => {}}
+                  size="md"
+                />
+                <Button.Icon
+                  iconColor="gray"
+                  iconName="photo-camera"
+                  onPress={() => {}}
+                  size="md"
+                />
                 <TextInput
                   multiline
                   onChangeText={this.onChangeText}
@@ -137,14 +161,16 @@ const styles = StyleSheet.create({
     },
   }),
   inputRow: {
+    alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 6,
+    height: 45,
     paddingHorizontal: 15,
     justifyContent: 'center',
   },
   input: {
     flex: 1,
     marginRight: 15,
+    marginLeft: 10,
     paddingVertical: 6,
     paddingHorizontal: 13,
     fontSize: 14,
@@ -160,7 +186,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   sendButton: {
-    marginTop: 4,
     opacity: 1,
   },
   disabled: {
