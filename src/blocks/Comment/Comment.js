@@ -166,7 +166,6 @@ class Comment extends Component<P, S> {
               </Text>
             </View>
             <SettingsPopup settings={this.getPopupSettings()} busy={updating} />
-            }
           </View>
 
           <Text size={14} lineHeight={18} color="#455A64">
