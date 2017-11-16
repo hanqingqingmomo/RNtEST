@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		AD1980401F210B7E0070AFE8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD19803F1F210B7E0070AFE8 /* main.m */; };
 		AD1980431F210B7E0070AFE8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1980421F210B7E0070AFE8 /* AppDelegate.m */; };
@@ -26,6 +25,7 @@
 		AD19804A1F210B7E0070AFE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD19804D1F210B7E0070AFE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD19804F1F210B7E0070AFE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D455A72F80740EEAC43FDBC /* OAuthManager.xcodeproj */ = {isa = PBXFileReference; name = "OAuthManager.xcodeproj"; path = "../../../../../node_modules/react-native-oauth/ios/OAuthManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +44,7 @@
 			children = (
 				AD19803D1F210B7E0070AFE8 /* RNPCLIProject */,
 				AD19803C1F210B7E0070AFE8 /* Products */,
+				3A16EFC85A2B4C148254DFD7 /* Libraries */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +80,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3A16EFC85A2B4C148254DFD7 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1D455A72F80740EEAC43FDBC /* OAuthManager.xcodeproj */,
+			);
+			name = Libraries;
+			path = "";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,7 +115,7 @@
 		AD1980331F210B7E0070AFE8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 830;
 				ORGANIZATIONNAME = "Naoufal Kadhom";
 				TargetAttributes = {
 					AD19803A1F210B7E0070AFE8 = {

@@ -2739,7 +2739,7 @@ interpret@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
 
-invariant@^2.0.0, invariant@^2.2.0:
+invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -4576,6 +4576,13 @@ react-native-modalbox@^1.4.2:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
 
+react-native-oauth@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-oauth/-/react-native-oauth-2.2.0.tgz#8aa7fad344b22cd29f24a4c3385244684dbcbe9e"
+  dependencies:
+    invariant "^2.2.1"
+    valib "^2.0.0"
+
 react-native-payments-addon-braintree@./3rdparty/react-native-payments/packages/react-native-payments-addon-braintree:
   version "4.8.4-1"
 
@@ -5770,6 +5777,10 @@ uuid@^2.0.1:
 uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
+
+valib@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/valib/-/valib-2.0.0.tgz#e0d455b10e17ae605c0f33971adac73564ee18a7"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
