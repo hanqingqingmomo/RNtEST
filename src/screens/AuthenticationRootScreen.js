@@ -49,6 +49,7 @@ export default class AuthenticationRootScreen extends Component<Props> {
       },
     };
 
+    manager.deauthorize('twitter');
     this.authenticateSocialMediaAccount(manager, configuration, 'twitter');
   };
 

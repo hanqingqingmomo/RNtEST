@@ -9,7 +9,7 @@ target 'app' do
   pod 'MobileCenter/Analytics', '~> 0.13.0'
   pod 'MobileCenter/Crashes', '~> 0.13.0'
   pod 'RNMobileCenterShared', '~> 0.10.0'
-
+  pod 'DCTAuth', :git => 'https://github.com/danielctull/DCTAuth.git'
   
 
   target 'appTests' do
