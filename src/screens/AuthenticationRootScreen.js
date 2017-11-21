@@ -32,60 +32,78 @@ export default class AuthenticationRootScreen extends Component<Props> {
     }
   };
 
-  authenticateSocialMediaAccount = (manager, configuration, media) => {
+  authenticateSocialMediaAccount = (provider: string, configuration: any) => {
+    const authorize = () =>
+      manager
+        .authorize(provider)
+        .then(resp => console.log(`(${provider}) new authorization: `, resp))
+        .catch(err => console.log(err));
+
+    const manager = new OAuthManager('pba-app');
     manager.configure(configuration);
+    console.log(`PROVIDER: ${provider}`);
     manager
-      .authorize(media)
-      .then(resp => console.log(resp))
+      .savedAccounts()
+      .then(savedAccounts => {
+        console.log(`already authorized against: `, savedAccounts);
+        const isAuthorizedAgainstProvider =
+          savedAccounts.accounts.filter(
+            account => account.provider === provider
+          ).length > 0;
+        if (isAuthorizedAgainstProvider) {
+          console.log('going to deauthorize');
+          manager
+            .deauthorize(provider)
+            .then(deauthorized => {
+              console.log(`after deauthorization: `, deauthorized);
+              console.log('going to authorize');
+              authorize();
+            })
+            .catch(err => console.log(err));
+        } else {
+          authorize();
+        }
+      })
       .catch(err => console.log(err));
   };
 
-  handleTwitterAuthentication = () => {
-    const manager = new OAuthManager('pba-app');
-    const configuration = {
+  handleTwitterAuthentication = () =>
+    this.authenticateSocialMediaAccount('twitter', {
       twitter: {
         consumer_key: 't1vrxymxsalQ84PgD3ew6JZyb',
         consumer_secret: '0T9Lv4hDR2zrJoxqUMD9QGf2pcKSQ8BqFGUHEbk3dRb6bbB2tB',
       },
-    };
+    });
 
-    manager.deauthorize('twitter');
-    this.authenticateSocialMediaAccount(manager, configuration, 'twitter');
-  };
-
-  handleLinkedInAuthentication = () => {
-    const manager = new OAuthManager('pba-test');
-    const configuration = {
-      linkedin: {
-        client_id: '86a6a0objfvxcg',
-        client_secret: 'MMfzum1GG6s7C6GE',
-      },
-    };
-
-    manager.addProvider({
-      linkedin: {
-        auth_version: '2.0',
-        authorize_url: 'https://www.linkedin.com/oauth/v2/authorization',
-        access_token_url: 'https://www.linkedin.com/oauth/v2/accessToken',
-        api_url: 'https://api.linkedin.com/',
-        callback_url: ({ app_name }) => `${app_name}://oauth`,
+  handleFacebookAuthentication = () =>
+    this.authenticateSocialMediaAccount('facebook', {
+      facebook: {
+        client_id: '1252416728196036',
+        client_secret: '9b18fcac2a4fa9d37aa10907dbfc9d51',
       },
     });
 
-    this.authenticateSocialMediaAccount(manager, configuration, 'linkedin');
-  };
+  // handleLinkedInAuthentication = () => {
+  //   const manager = new OAuthManager('pba-test');
+  //   const configuration = {
+  //     linkedin: {
+  //       client_id: '86a6a0objfvxcg',
+  //       client_secret: 'MMfzum1GG6s7C6GE',
+  //     },
+  //   };
 
-  handleFacebookAuthentication = () => {
-    const manager = new OAuthManager('pba-test');
-    const configuration = {
-      facebook: {
-        client_id: '882238591940046',
-        client_secret: 'a22a0fc8ac0d3a18bc173a68339f610f',
-      },
-    };
+  //   manager.addProvider({
+  //     linkedin: {
+  //       auth_version: '2.0',
+  //       authorize_url: 'https://www.linkedin.com/oauth/v2/authorization',
+  //       access_token_url: 'https://www.linkedin.com/oauth/v2/accessToken',
+  //       api_url: 'https://api.linkedin.com/',
+  //       callback_url: ({ app_name }) => `${app_name}://oauth`,
+  //     },
+  //   });
 
-    this.authenticateSocialMediaAccount(manager, configuration, 'facebook');
-  };
+  //   this.authenticateSocialMediaAccount(manager, configuration, 'linkedin');
+  // };
 
   render() {
     return (
@@ -101,12 +119,12 @@ export default class AuthenticationRootScreen extends Component<Props> {
               title="Continue with Facebook"
             />
 
-            <AuthenticationButton
+            {/* <AuthenticationButton
               color={getColor('linkedinBlue')}
               textColor={getColor('white')}
               onPress={this.handleLinkedInAuthentication}
               title="Continue with LinkedIn"
-            />
+            /> */}
 
             <AuthenticationButton
               color={getColor('twitterBlue')}
