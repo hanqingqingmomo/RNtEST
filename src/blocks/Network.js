@@ -21,7 +21,7 @@ export default class Network extends Component<P, S> {
 
   componentDidMount() {
     NetInfo.isConnected.addEventListener('connectionChange', this.getStatus);
-    setTimeout(this.getStatus, 250);
+    setTimeout(this.getStatus);
   }
 
   componentWillUnmount() {
@@ -47,14 +47,14 @@ export default class Network extends Component<P, S> {
       return <BootScreen />;
     }
 
-    return isConnected === true ? (
+    return isConnected ? (
       this.props.children
-    ) : isConnected === false ? (
+    ) : (
       <NoContent
         iconName="offline"
         title="You are offline"
         subtitle="Please connect to the Internet to use the app."
       />
-    ) : null;
+    );
   }
 }
