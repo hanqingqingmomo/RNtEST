@@ -32,10 +32,14 @@ export default class AuthenticationRootScreen extends Component<Props> {
     }
   };
 
-  authenticateSocialMediaAccount = (provider: string, configuration: any) => {
+  authenticateSocialMediaAccount = (
+    provider: string,
+    configuration: any,
+    scopes?: string
+  ) => {
     const authorize = () =>
       manager
-        .authorize(provider)
+        .authorize(provider, scopes ? { scopes } : undefined)
         .then(resp => console.log(`(${provider}) new authorization: `, resp))
         .catch(err => console.log(err));
 
@@ -76,12 +80,16 @@ export default class AuthenticationRootScreen extends Component<Props> {
     });
 
   handleFacebookAuthentication = () =>
-    this.authenticateSocialMediaAccount('facebook', {
-      facebook: {
-        client_id: '1252416728196036',
-        client_secret: '9b18fcac2a4fa9d37aa10907dbfc9d51',
+    this.authenticateSocialMediaAccount(
+      'facebook',
+      {
+        facebook: {
+          client_id: '1252416728196036',
+          client_secret: '9b18fcac2a4fa9d37aa10907dbfc9d51',
+        },
       },
-    });
+      'public_profile'
+    );
 
   // handleLinkedInAuthentication = () => {
   //   const manager = new OAuthManager('pba-test');
