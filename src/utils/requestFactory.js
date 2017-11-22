@@ -2,7 +2,6 @@
 
 import Config from 'react-native-config';
 import update from 'immutability-helper';
-import axios from 'axios';
 import { create } from 'apisauce';
 
 import { selectAccessToken } from '../redux/selectors';
@@ -64,22 +63,6 @@ function inject(request: Request): Request {
   return update(request, {
     options: { headers: { $set: headers } },
   });
-}
-
-function wrapInAxiosRequest(config: {
-  url: string,
-  options: Object,
-}): { url: string, options: Object, exec: () => Promise<*> } {
-  return {
-    url: config.url,
-    options: config.options,
-    exec: async () => {
-      return await axios.request({
-        url: config.url,
-        ...config.options,
-      });
-    },
-  };
 }
 
 /**
