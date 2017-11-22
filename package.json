@@ -48,7 +48,6 @@
       "./3rdparty/react-native-payments/packages/react-native-payments",
     "react-native-payments-addon-braintree":
       "./3rdparty/react-native-payments/packages/react-native-payments-addon-braintree",
-    "react-native-popover-tooltip": "^1.1.1",
     "react-native-portal": "^1.2.1",
     "react-native-splash-screen": "^3.0.1",
     "react-native-tableview-simple": "^0.16.13",

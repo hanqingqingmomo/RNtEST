@@ -12,6 +12,7 @@ export default function SettingsPopup({ settings }: P) {
   return (
     <Popover
       labels={settings.map((setting: PopupSetting) => ({
+        key: setting.key,
         label: () => (
           <PopoverItem
             contentView={setting.label}
