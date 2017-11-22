@@ -3,14 +3,20 @@
 import React, { Component } from 'react';
 import { NativeModules } from 'react-native';
 import { PaymentRequest } from 'react-native-payments';
+
 import { CommunityHeader, Screen, Fetch } from '../../atoms';
 import DonationForm, {
   type Payment,
 } from '../../blocks/DonationForm/DonationForm';
 import { paymentMethods, paymentDetails } from './paymentConfig';
 import { makeDonationRq } from '../../utils/requestFactory';
+import type { ScreenProps, FetchProps } from '../../Types';
 
-export default class DonationAppealScreen extends Component<{}> {
+type Props = ScreenProps<*> & {
+  screenProps: Object,
+};
+
+export default class DonationAppealScreen extends Component<Props> {
   static navigationOptions = {
     title: 'Donation Form',
   };
@@ -61,7 +67,11 @@ export default class DonationAppealScreen extends Component<{}> {
     }
   };
 
-  completePaymentCallback = ({ donationResponse, fetchProps, payment }) => {
+  completePaymentCallback = ({
+    donationResponse,
+    fetchProps,
+    payment,
+  }: Object) => {
     this.props.navigation.navigate('DonationResultScreen', {
       amount: payment.amount,
       recurrent: payment.interval !== 'one-time',
@@ -79,26 +89,24 @@ export default class DonationAppealScreen extends Component<{}> {
   render() {
     return (
       <Fetch manual>
-        {fetchProps => {
-          return (
-            <Screen fill>
-              <CommunityHeader
-                title="The Future is Female"
-                subtitle="Help us in creating a future where ALL women thrive. Make a donation today."
-                profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
-                coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
-              />
-              <DonationForm
-                onPaymentNonceReceived={this.onPaymentNonceReceived(fetchProps)}
-                onFail={this.onPaymentFailed}
-                onInitiatePayment={this.initiatePayment(
-                  fetchProps,
-                  this.completePaymentCallback
-                )}
-              />
-            </Screen>
-          );
-        }}
+        {(fetchProps: FetchProps<*>) => (
+          <Screen fill>
+            <CommunityHeader
+              title="The Future is Female"
+              subtitle="Help us in creating a future where ALL women thrive. Make a donation today."
+              profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
+              coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
+            />
+            <DonationForm
+              onPaymentNonceReceived={this.onPaymentNonceReceived(fetchProps)}
+              onFail={this.onPaymentFailed}
+              onInitiatePayment={this.initiatePayment(
+                fetchProps,
+                this.completePaymentCallback
+              )}
+            />
+          </Screen>
+        )}
       </Fetch>
     );
   }

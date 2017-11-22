@@ -8,7 +8,7 @@ import { getColor } from '../utils/color';
 
 type Item = {
   label: string,
-  component: () => React$Element<*>,
+  component: () => React$Node,
 };
 
 type Props = {
@@ -36,7 +36,9 @@ export default class Tabs extends Component<Props> {
               onPress={this.onPress(item)}
               style={[
                 styles.tab,
-                activeItem.label === item.label ? styles.tabActive : undefined,
+                activeItem && activeItem.label === item.label
+                  ? styles.tabActive
+                  : undefined,
               ]}
             >
               <Text color="gray" size={14}>

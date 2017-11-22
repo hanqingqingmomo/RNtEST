@@ -5,18 +5,18 @@ import { InteractionManager } from 'react-native';
 
 import { ActivityIndicator, CenterView, Fetch, Screen } from '../../atoms';
 import { makeReadCommunityReq } from '../../utils/requestFactory';
-import type { User, Community } from '../../Types';
+import type { User, Community, ScreenProps, FetchProps } from '../../Types';
 import ClosedProfile from './ClosedProfile';
 import OpenProfile from './OpenProfile';
 
-type Props = {
-  navigation: any,
+type NavigationState = {
+  params: {
+    communityId: string,
+    reloadCommunityList: Function,
+  },
 };
 
-type FetchData = {
-  data?: Community,
-  fetch: Function,
-};
+type Props = ScreenProps<NavigationState>;
 
 type State = {
   screenIsReady: boolean,
@@ -70,7 +70,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
     return (
       <Screen fill>
         <Fetch url={readCommunityReg.url} options={readCommunityReg.options}>
-          {({ data, pinnedData, fetch }: FetchData) => {
+          {({ data, fetch }: FetchProps<Community>) => {
             return !data ? (
               this.renderLoader()
             ) : data.joined ? (

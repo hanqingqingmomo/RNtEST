@@ -3,25 +3,23 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Button, Icon, Text, TouchableItem, View } from '../atoms';
+import { Button, Icon, Text, View } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 
-const HIT_SLOP = {
-  top: 6,
-  right: 6,
-  bottom: 6,
-  left: 6,
-};
-
 type P = {
   actions: Object,
-  amount: boolean,
+  amount: number,
   recurrent: boolean,
   success: boolean,
 };
 
-const Title = ({ highlight, text }) => (
+type TitleProps = {
+  highlight?: boolean,
+  text: string,
+};
+
+const Title = ({ highlight, text }: TitleProps): React$Node => (
   <Text
     lineHeight={22}
     size={21}

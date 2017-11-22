@@ -10,7 +10,9 @@ import type { Post } from '../../Types';
 
 type Props = {
   data: Array<Post>,
-  renderItem: (props: { item: Post }) => React$Node,
+  deleteItem: (item: Post) => void,
+  renderItemProps: Object,
+  updateItem: (item: Post, deleting: boolean) => {},
 };
 
 function ItemSeparatorComponent() {
@@ -19,7 +21,7 @@ function ItemSeparatorComponent() {
 
 export default class NewsFeedList extends Component<Props> {
   // TODO move keyExtractor to parent
-  keyExtractor = (item: Post) => item.id;
+  keyExtractor = (item: Post): string => item.id;
 
   renderItem = ({ item }: { item: Post }) => (
     <View style={{ paddingHorizontal: 10 }}>
@@ -27,13 +29,14 @@ export default class NewsFeedList extends Component<Props> {
         item={item}
         {...this.props.renderItemProps}
         onDelete={() => this.props.deleteItem(item)}
-        refetch={(_, deleting) => this.props.updateItem(item, deleting)}
+        refetch={(_: any, deleting: boolean) =>
+          this.props.updateItem(item, deleting)}
       />
     </View>
   );
 
   render() {
-    const { data, renderItem, renderItemProps, ...bag } = this.props;
+    const { data, renderItemProps, ...bag } = this.props;
 
     return (
       <FlatList

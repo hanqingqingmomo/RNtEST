@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Fetch from 'react-fetch-component';
 
+import type { FetchProps } from '../Types';
+
 export type RequestOptions = $Exact<{
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD',
   url?: false | string,
@@ -20,10 +22,7 @@ export type RequestOptions = $Exact<{
 }>;
 
 // TODO type 'data' and 'response'
-type RenderProp = {
-  data: Object,
-  error?: any,
-  loading?: boolean,
+type RenderProp = FetchProps<*> & {
   request: {
     url: string,
     options?: RequestOptions,

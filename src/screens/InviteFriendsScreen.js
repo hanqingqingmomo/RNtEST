@@ -29,6 +29,7 @@ import {
   makeInvitationRq,
   makeReadInvitationMessage,
 } from '../utils/requestFactory';
+import type { FetchProps } from '../Types';
 
 type EmailAddressProps = {
   email: string,
@@ -71,7 +72,9 @@ type S = {
   smsMessage: string,
 };
 
-export default class InviteFriendsScreen extends React.Component<{}, S> {
+type P = {};
+
+export default class InviteFriendsScreen extends React.Component<P, S> {
   state = {
     contacts: [],
     invitedUser: [],
@@ -103,7 +106,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: P, prevState: S) {
     if (
       prevState.permission !== this.state.permission &&
       this.state.permission === 'authorized'
@@ -121,7 +124,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     }
   }
 
-  cellContentView(user: ContactProps): React$Element<*> {
+  cellContentView(user: ContactProps): React$Node {
     const { emailAddresses, familyName, givenName, middleName } = user;
     const { invitedUser } = this.state;
     return (
@@ -160,18 +163,18 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
     );
   }
 
-  cellImageView(user: ContactProps): React$Element<*> {
+  cellImageView(user: ContactProps): React$Node {
     if (user.hasThumbnail) {
-      return <Avatar size={28} imageURI={user.imageURI} />;
+      return <Avatar size={28} imageURI={user.thumbnailPath} />;
     }
     return <Icon name="user" size="md" color={getColor('gray')} />;
   }
 
-  hasUserEmail(user: ContactProps) {
+  hasUserEmail(user: ContactProps): boolean {
     return !!user.emailAddresses.length;
   }
 
-  hasUserPhone(user: ContactProps) {
+  hasUserPhone(user: ContactProps): boolean {
     return !!user.phoneNumbers.length;
   }
 
@@ -208,7 +211,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
       .catch(err => alert('Could not sent SMS'));
   };
 
-  onInvite(user: ContactProps) {
+  onInvite(user: ContactProps): Function {
     return () => {
       if (this.hasUserEmail(user)) {
         this.sendInvitationEmail(user);
@@ -259,7 +262,7 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
       case 'authorized':
         return (
           <Fetch manual>
-            {invitation => (
+            {(invitation: FetchProps<*>) => (
               <Screen tintColor="white">
                 <View style={styles.searchBox}>
                   <SearchBox
@@ -273,8 +276,9 @@ export default class InviteFriendsScreen extends React.Component<{}, S> {
                   <TableView.Section sectionTintColor="white">
                     <FlatList
                       data={this.users}
-                      keyExtractor={item => item.recordID}
-                      renderItem={({ item }) => (
+                      keyExtractor={(item: ContactProps) =>
+                        item.recordID.toString()}
+                      renderItem={({ item }: { item: ContactProps }) => (
                         <TableView.Cell
                           cellContentView={this.cellContentView(item)}
                           image={this.cellImageView(item)}

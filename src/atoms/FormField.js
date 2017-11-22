@@ -24,10 +24,10 @@ type FormikFieldProps = {
 };
 
 type FormFieldProps = TextInputProps & {
-  name: string,
-  label: string,
-  onChangeText?: (value: string) => void,
   component?: React$Node,
+  label?: string,
+  name: string,
+  onChangeText?: (value: string) => void,
 };
 
 class FormFieldInner extends Component<FormikFieldProps> {

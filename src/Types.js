@@ -17,11 +17,32 @@ export type ColorName = _ColorName;
 export type Style = number | boolean | Object | Array<?Style>;
 
 // ScreenProps: props are passed to every "screen" component
+export type LocalImage = {
+  fileName: string,
+  fileSize: number,
+  isVertical: boolean,
+  origURL: string,
+  timestamp: string,
+  uri: string,
+  width: number,
+  height: number,
+  error: Object,
+  didCancel: boolean,
+};
+
 export type ScreenProps<S> = {
   navigation: {
+    goBack: Function,
     navigate: Function,
     state: S,
   },
+};
+
+export type FetchProps<D> = {
+  data: D,
+  error?: Object,
+  fetch: Function,
+  loading: ?boolean,
 };
 
 export type LinkAttachment = {
@@ -45,7 +66,7 @@ export type CommunitySimple = {
 };
 
 export type User = {
-  id: number,
+  id: string,
   first_name: string,
   last_name: string,
   email: string,
@@ -56,18 +77,10 @@ export type User = {
 
 export type Comment = $Exact<{
   id: string,
-  type: 'comment',
-  parentId: ?string,
   text_content: string,
   created_at: string,
   attachment: {} | null,
-  author: {
-    id: string,
-    first_name: string,
-    last_name: string,
-    email: string,
-    profile_photo: string,
-  },
+  author: User,
   comments_count: number,
   likes_count: number,
   liked: boolean,
@@ -81,13 +94,7 @@ export type Post = {
     type: string,
     url: string,
   },
-  author: {
-    id: string,
-    first_name: string,
-    last_name: string,
-    email: string,
-    profile_photo: string,
-  },
+  author: User,
   cached_url: ?LinkAttachment,
   comments_count: number,
   communities: Array<CommunitySimple>,
@@ -107,7 +114,7 @@ export type Community = CommunitySimple & {
 };
 
 export type CommunityMember = {
-  id: number,
+  id: string,
   first_name: string,
   last_name: string,
   profile_photo: string,
@@ -116,9 +123,8 @@ export type CommunityMember = {
 };
 
 export type PopupSetting = {
-  key: string,
   iconName: IconName,
-  isHidden?: (*) => boolean,
+  isHidden?: boolean,
   label: string,
   onPress: Function,
 };
@@ -135,21 +141,3 @@ export type ActionP<T, P> = Action<T, { payload: P }>;
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
 
 export type Store = $ObjMap<Reducers, $ExtractFunctionReturn>;
-
-export type RequestStatus = {
-  loading: boolean,
-  error: mixed,
-};
-
-// Timeline
-export type Cursor = {
-  next: ?number,
-  limit: number,
-};
-
-export type TimelineState = {
-  content: Array<Object>,
-  next: ?number,
-  loading: boolean,
-  refreshing: boolean,
-};

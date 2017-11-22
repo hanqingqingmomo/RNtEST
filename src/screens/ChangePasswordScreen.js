@@ -15,6 +15,7 @@ import {
 } from '../atoms';
 import { type AlertPayload } from '../atoms/DropdownAlert';
 import { getColor } from '../utils/color';
+import type { ScreenProps, FetchProps } from '../Types';
 
 const INITIAL_VALUES = {
   password: '',
@@ -23,9 +24,7 @@ const INITIAL_VALUES = {
 
 type FormValues = typeof INITIAL_VALUES;
 
-type P = {
-  navigation: { goBack: Function },
-};
+type P = ScreenProps<*>;
 
 const RULES = {
   password: 'required',
@@ -89,7 +88,7 @@ export default class ChangePasswordScreen extends Component<P> {
       <Screen fill>
         <View style={styles.container}>
           <Fetch manual>
-            {({ loading, fetch }: { loading: boolean, fetch: Function }) => (
+            {({ loading, fetch }: FetchProps<*>) => (
               <Form
                 initialValues={INITIAL_VALUES}
                 rules={RULES}

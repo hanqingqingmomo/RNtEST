@@ -16,8 +16,11 @@ import {
 } from '../atoms';
 import { type AlertPayload } from '../atoms/DropdownAlert';
 import { getColor } from '../utils/color';
+import type { ScreenProps, FetchProps } from '../Types';
 
 type FormValues = typeof INITIAL_VALUES;
+
+type Props = ScreenProps<*>;
 
 const INITIAL_VALUES = {
   email: '',
@@ -31,15 +34,15 @@ const MESSAGES = {
   email: 'Please enter valid email address',
 };
 
-export default class PasswordResetScreen extends Component<{}> {
+export default class PasswordResetScreen extends Component<Props> {
   static navigationOptions = {
     headerTitle: 'Password Reset',
   };
 
   // TODO use global instance of dropdown
-  dropdown = null;
+  dropdown: any = null;
 
-  handleFormSubmit = fetch => async (values: FormValues) => {
+  handleFormSubmit = (fetch: Function) => async (values: FormValues) => {
     const passwordResetReq = makePasswordResetReq(values.email);
     const passwordResetRes = await fetch(
       passwordResetReq.url,
@@ -75,7 +78,7 @@ export default class PasswordResetScreen extends Component<{}> {
     return (
       <Screen fill>
         <Fetch manual>
-          {({ loading, data, error, fetch }) => (
+          {({ loading, fetch }: FetchProps<*>) => (
             <Form
               initialValues={INITIAL_VALUES}
               rules={RULES}

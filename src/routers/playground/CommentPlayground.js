@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 
 import type { Comment as TComment } from '../../Types';

@@ -7,13 +7,21 @@ import { Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
-export default function SectionHeader({ headerLeft, headerRight }) {
+type Props = {
+  headerLeft: string,
+  headerRight: string,
+};
+
+export default function SectionHeader({
+  headerLeft,
+  headerRight,
+}: Props): React$Node {
   return (
     <View
       style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}
     >
       <Text
-        color="#90A4AE"
+        color={getColor('gray')}
         style={[
           styles.headerContainer,
           styles.headerText,

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 });
 
 type ViewPropTypes = {
-  label: string,
+  label?: string,
   title?: string,
 };
 

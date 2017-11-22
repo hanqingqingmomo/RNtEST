@@ -6,16 +6,17 @@ import { StyleSheet } from 'react-native';
 import { View, Text } from '../atoms';
 import { getColor } from '../utils/color';
 import { parseTextContent } from '../utils/text';
-import type { ScreenProps } from '../Types';
 
-type Props = ScreenProps<any> & {
+type TextProps = Array<
+  | string
+  | {
+    list: Array<string>,
+  }
+>;
+
+type Props = {
   list?: Array<string>,
-  text?: Array<
-    | string
-    | {
-      list: Array<string>,
-    }
-  >,
+  text?: TextProps,
   title: string | { label: string, link: string },
 };
 
@@ -29,7 +30,7 @@ const renderDotList = (list: Array<string>): Array<React$Node> => {
   });
 };
 
-const renderText = (text: Array<string>): Array<React$Node> => {
+const renderText = (text: TextProps): Array<React$Node> => {
   return text.map((item: string | Object, idx: number):
     | React$Node
     | Array<React$Node> => {
@@ -47,7 +48,7 @@ const renderText = (text: Array<string>): Array<React$Node> => {
   });
 };
 
-export default function HelpBlock({ text, title, list, navigation }: Props) {
+export default function HelpBlock({ text, title, list }: Props) {
   return (
     <View style={[styles.helpWrapper]}>
       {typeof title === 'string' ? (
@@ -55,16 +56,7 @@ export default function HelpBlock({ text, title, list, navigation }: Props) {
           {title}
         </Text>
       ) : (
-        <Text
-          color={getColor('orange')}
-          size={18}
-          lineHeight={20}
-          onPress={() => {
-            navigation.navigate('WebViewScreen', {
-              webURL: title.link,
-            });
-          }}
-        >
+        <Text color={getColor('orange')} size={18} lineHeight={20}>
           {title.label}
         </Text>
       )}
