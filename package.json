@@ -80,7 +80,10 @@
     "reactotron-redux-saga": "^1.12.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "/3rdparty/"
+    ]
   },
   "eslintConfig": {
     "sourceType": "module",
