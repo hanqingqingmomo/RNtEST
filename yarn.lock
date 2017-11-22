@@ -4866,9 +4866,9 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-redux-persist@5.0.0-rc.6:
-  version "5.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.0.0-rc.6.tgz#1207c707fa2d32d18f8e22c1845ba1aeb1d719f9"
+redux-persist@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.2.2.tgz#bf932164008e275d9e1fec38909a94168761e818"
 
 redux-saga@^0.15.3, redux-saga@^0.15.5:
   version "0.15.6"
