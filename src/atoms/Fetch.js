@@ -2,10 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Config from 'react-native-config';
 import Fetch from 'react-fetch-component';
-
-import { join } from '../utils/url';
 
 export type RequestOptions = $Exact<{
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD',

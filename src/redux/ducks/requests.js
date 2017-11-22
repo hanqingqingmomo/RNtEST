@@ -4,10 +4,6 @@ import update from 'immutability-helper';
 
 import type { Action, ActionP, ActionT } from '../../Types';
 
-export const REQUEST_IDS = {
-  VERIFY_CREDENTIALS_REMOTELY: 'VERIFY_CREDENTIALS_REMOTELY',
-};
-
 //
 // Typedefs
 //
@@ -16,9 +12,9 @@ type InternalAxiosRequest = Object;
 
 type InternalAxiosConfig = Object;
 
-export type RequestID = $Keys<typeof REQUEST_IDS>;
+type RequestID = string;
 
-export type RequestError = {
+type RequestError = {
   httpError: boolean,
   config: InternalAxiosConfig,
   request: InternalAxiosRequest,
@@ -32,16 +28,10 @@ export type RequestError = {
   },
 };
 
-export type RequestProps = {
-  clearRequest: RequestID => ClearRequestAction,
-  requestIsRunning: boolean,
-  requestError: ?RequestError,
-};
-
 type State = {
-  running: Array<RequestID>,
-  errors: {
-    [string]: ?RequestError,
+  [id: string]: {
+    loading: boolean,
+    error: ?mixed,
   },
 };
 
@@ -55,9 +45,9 @@ type RequestStartedAction = ActionP<
 type RequestEndedAction = Action<
   'request/END',
   {
-    error: ?RequestError,
     payload: {
       id: RequestID,
+      error: ?RequestError,
     },
   }
 >;
@@ -80,16 +70,15 @@ export function startRequest(requestId: RequestID): RequestStartedAction {
     payload: {
       id: requestId,
     },
-    error: null,
   };
 }
 
 export function endRequest(requestId: RequestID): RequestEndedAction {
   return {
     type: 'request/END',
-    error: null,
     payload: {
       id: requestId,
+      error: null,
     },
   };
 }
@@ -100,9 +89,9 @@ export function endRequestWithError(
 ): RequestEndedAction {
   return {
     type: 'request/END',
-    error: requestError,
     payload: {
       id: requestId,
+      error: requestError,
     },
   };
 }
@@ -126,45 +115,38 @@ export function clearAllRequests(): ClearAllRequestsAction {
 // Reducer
 //
 
-const INITIAL_STATE: State = {
-  running: [],
-  errors: {},
-};
+const INITIAL_STATE: State = {};
 
 export default function(
   state: State = INITIAL_STATE,
-  action: RequestStartedAction | RequestEndedAction
+  action:
+    | ClearAllRequestsAction
+    | ClearRequestAction
+    | RequestEndedAction
+    | RequestStartedAction
 ): State {
   switch (action.type) {
     case 'request/START':
       return update(state, {
-        errors: {
-          $unset: [action.payload.id],
-        },
-        running: {
-          $push: [action.payload.id],
-        },
+        [action.payload.id]: { $set: { loading: true, error: null } },
       });
 
     case 'request/END':
-      return {
-        errors: update(state.errors, {
-          [action.payload.id]: { $set: action.error },
-        }),
-        running: state.running.filter(id => id !== action.payload.id),
-      };
+      return update(state, {
+        [action.payload.id]: {
+          $set: { loading: false, error: action.payload.error },
+        },
+      });
 
     case 'request/CLEAR':
-      return {
-        errors: update(state.errors, { $unset: [action.payload.id] }),
-        running: state.running.filter(id => id !== action.payload.id),
-      };
+      return update(state, {
+        [action.payload.id]: {
+          $set: undefined,
+        },
+      });
 
     case 'request/CLEAR_ALL':
-      return {
-        errors: {},
-        running: [],
-      };
+      return {};
 
     default:
       return state;

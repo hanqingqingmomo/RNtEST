@@ -1,4 +1,4 @@
-// flow-typed signature: 75c8917c540f98d4e9647691da3583a3
+// flow-typed signature: 5922ac8e6593d7ce3bc2553ce2ab69a1
 // flow-typed version: <<STUB>>/react-native-tableview-simple_v^0.16.13/flow_v0.53.0
 
 /**
@@ -22,22 +22,6 @@ declare module 'react-native-tableview-simple' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module 'react-native-tableview-simple/components/Cell' {
-  declare module.exports: any;
-}
-
-declare module 'react-native-tableview-simple/components/Section' {
-  declare module.exports: any;
-}
-
-declare module 'react-native-tableview-simple/components/Separator' {
-  declare module.exports: any;
-}
-
-declare module 'react-native-tableview-simple/components/TableView' {
-  declare module.exports: any;
-}
-
 declare module 'react-native-tableview-simple/components/__tests__/Cell-Basic.test' {
   declare module.exports: any;
 }
@@ -54,19 +38,23 @@ declare module 'react-native-tableview-simple/components/__tests__/Cell-Subtitle
   declare module.exports: any;
 }
 
+declare module 'react-native-tableview-simple/components/Cell' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-tableview-simple/components/Section' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-tableview-simple/components/Separator' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-tableview-simple/components/TableView' {
+  declare module.exports: any;
+}
+
 // Filename aliases
-declare module 'react-native-tableview-simple/components/Cell.js' {
-  declare module.exports: $Exports<'react-native-tableview-simple/components/Cell'>;
-}
-declare module 'react-native-tableview-simple/components/Section.js' {
-  declare module.exports: $Exports<'react-native-tableview-simple/components/Section'>;
-}
-declare module 'react-native-tableview-simple/components/Separator.js' {
-  declare module.exports: $Exports<'react-native-tableview-simple/components/Separator'>;
-}
-declare module 'react-native-tableview-simple/components/TableView.js' {
-  declare module.exports: $Exports<'react-native-tableview-simple/components/TableView'>;
-}
 declare module 'react-native-tableview-simple/components/__tests__/Cell-Basic.test.js' {
   declare module.exports: $Exports<'react-native-tableview-simple/components/__tests__/Cell-Basic.test'>;
 }
@@ -78,6 +66,18 @@ declare module 'react-native-tableview-simple/components/__tests__/Cell-RightDet
 }
 declare module 'react-native-tableview-simple/components/__tests__/Cell-Subtitle.js' {
   declare module.exports: $Exports<'react-native-tableview-simple/components/__tests__/Cell-Subtitle'>;
+}
+declare module 'react-native-tableview-simple/components/Cell.js' {
+  declare module.exports: $Exports<'react-native-tableview-simple/components/Cell'>;
+}
+declare module 'react-native-tableview-simple/components/Section.js' {
+  declare module.exports: $Exports<'react-native-tableview-simple/components/Section'>;
+}
+declare module 'react-native-tableview-simple/components/Separator.js' {
+  declare module.exports: $Exports<'react-native-tableview-simple/components/Separator'>;
+}
+declare module 'react-native-tableview-simple/components/TableView.js' {
+  declare module.exports: $Exports<'react-native-tableview-simple/components/TableView'>;
 }
 declare module 'react-native-tableview-simple/index' {
   declare module.exports: $Exports<'react-native-tableview-simple'>;

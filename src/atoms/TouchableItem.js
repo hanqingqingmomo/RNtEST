@@ -20,7 +20,7 @@ import {
 const ANDROID_VERSION_LOLLIPOP = 21;
 
 type Props = {
-  onPress: () => void,
+  onPress: () => mixed,
   delayPressIn?: number,
   borderless: boolean,
   pressColor: string,

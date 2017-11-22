@@ -19,22 +19,11 @@ import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
-export type ItemActionHandler = ({
-  action: 'delete' | 'report' | 'update' | 'create',
-  item: Post,
-}) => mixed;
-
-export type ItemActionEmitter = (
-  action: 'delete' | 'report' | 'update' | 'create',
-  item: Post
-) => mixed;
-
 type P = {
   isDetail?: boolean,
   item: Post,
   navigation: Object,
   radius?: number,
-  emitAction: ItemActionEmitter,
   onDelete: Function,
   refetch?: Function,
   user: User,
@@ -52,28 +41,7 @@ export default class NewsFeedItem extends Component<P> {
     return user.id === item.author.id;
   }
 
-  getLinks = () => {
-    const { item, navigation, isDetail } = this.props;
-    const { id } = item;
-
-    const links = [];
-
-    if (!isDetail) {
-      links.push({
-        label: 'Comment',
-        onPress: () =>
-          navigation.navigate('PostDetailScreen', {
-            postId: id,
-            reloadList: this.props.refetch,
-            emitAction: this.props.emitAction,
-          }),
-      });
-    }
-
-    return links;
-  };
-
-  handleUserPress = () => {
+  navigateToMemberProfileScreen = () => {
     const { navigation, item } = this.props;
 
     if (navigation) {
@@ -123,19 +91,17 @@ export default class NewsFeedItem extends Component<P> {
 
   render() {
     const { item, isDetail, navigation, radius } = this.props;
-
     const { author, donation, event, id } = item;
-
+    // TODO move green border logic outside of this component
     return (
       <ShadowView
-        style={this.userIsAuthorOfPost ? styles.borderIsNew : undefined}
-        radius={typeof radius !== 'undefined' ? radius : 3}
+        style={this.userIsAuthorOfPost ? styles.borderGreen : undefined}
+        radius={radius || 3}
       >
         <View style={styles.container}>
           <NewsFeedItemHeader
             item={item}
             navigation={navigation}
-            emitAction={this.props.emitAction}
             onDelete={this.props.onDelete}
           />
 
@@ -146,8 +112,6 @@ export default class NewsFeedItem extends Component<P> {
               onPress={() => {
                 navigation.navigate('PostDetailScreen', {
                   postId: id,
-                  emitAction: this.props.emitAction,
-                  reloadList: this.props.refetch,
                 });
               }}
             >
@@ -157,8 +121,9 @@ export default class NewsFeedItem extends Component<P> {
 
           {author ? (
             <NewsFeedItemAuthor
+              detailView={this.props.isDetail}
               author={author}
-              onUserPress={this.handleUserPress}
+              onPress={this.navigateToMemberProfileScreen}
             />
           ) : null}
 
@@ -173,8 +138,8 @@ export default class NewsFeedItem extends Component<P> {
 
           <NewsFeedItemFooter
             item={item}
-            links={this.getLinks()}
-            emitAction={this.props.emitAction}
+            navigate={this.props.navigation.navigate}
+            detailView={this.props.isDetail}
           />
         </View>
       </ShadowView>
@@ -188,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 15,
   },
-  borderIsNew: {
+  borderGreen: {
     borderColor: 'rgba(0,230,118,0.7)',
     borderRadius: 3,
     borderStyle: 'solid',

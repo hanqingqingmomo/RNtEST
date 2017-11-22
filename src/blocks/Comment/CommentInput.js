@@ -2,126 +2,117 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Platform } from 'react-native';
+import { connect } from 'react-redux';
 
-import type { Comment as TComment } from '../../Types';
-import { Fetch, Text, TouchableItem, View, Icon } from '../../atoms';
+import { Text, TouchableItem, View, Icon } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
-import { makeCreateCommentReq } from '../../utils/requestFactory';
+import { selectRequest } from '../../redux/selectors';
+import { createComment } from '../../redux/ducks/contentObject';
+import { type Comment } from '../../Types';
 
-type P = {
-  postId: string,
-  replyingTo?: TComment,
+type Props = {
+  target: { id: string, type: 'post' } | Comment,
   onReplyCancel: Function,
-  onSubmitSuccess: Function,
   passRef: Function,
 };
 
-type S = {
-  text_content: string,
+type State = {
   height: number,
+  text_content: string,
 };
 
-export default class CommentInput extends Component<P, S> {
+class CommentInput extends Component<Props, State> {
   state = {
-    text_content: '',
     height: 0,
+    text_content: '',
   };
+
+  get busy(): boolean {
+    return this.props.request && this.props.request.loading ? true : false;
+  }
+
+  get disabled(): boolean {
+    return this.busy || this.state.text_content === '';
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.request &&
+      this.props.request &&
+      prevProps.request.loading === true &&
+      this.props.request.loading === false
+    ) {
+      this.setState({ text_content: null });
+      this.props.onReplyCancel();
+    }
+  }
 
   onChangeText = (text_content: string) => {
     this.setState({ text_content });
   };
 
-  handleSubmit = (fetch: any) => async () => {
-    const { postId, replyingTo, onSubmitSuccess } = this.props;
-
-    const createCommentReq = makeCreateCommentReq(
-      replyingTo ? replyingTo.id : postId,
-      {
-        text_content: this.state.text_content,
-      }
-    );
-
-    const createCommentRes = await fetch(
-      createCommentReq.url,
-      createCommentReq.options
-    );
-
-    if (!createCommentRes.error) {
-      onSubmitSuccess();
-    }
+  handleSubmit = () => {
+    this.props.createComment(this.props.target.id, this.state.text_content);
   };
 
-  get isAllowedToSubmit(): boolean {
-    return !!this.state.text_content;
-  }
-
   render() {
-    const { replyingTo, onReplyCancel, passRef } = this.props;
+    const { target, onReplyCancel, passRef } = this.props;
     const { text_content } = this.state;
-
     return (
-      <Fetch manual>
-        {({ loading, data, error, fetch }) => {
-          const disabled = !this.isAllowedToSubmit || !!loading;
+      <View style={styles.container}>
+        {target.type === 'comment' ? (
+          <View style={styles.targetedReplyWrapper}>
+            <Text size={12} style={css('color', '#8fa3ad')}>
+              Replying to {target.author.first_name} {target.author.last_name}{' '}
+              <Icon
+                name="close"
+                size={12}
+                color={getColor('red')}
+                onPress={onReplyCancel}
+              />
+            </Text>
+          </View>
+        ) : null}
 
-          return (
-            <View style={styles.container}>
-              {!!replyingTo && (
-                <View style={styles.targetedReplyWrapper}>
-                  <Text size={12} style={css('color', '#8fa3ad')}>
-                    Replying to {replyingTo.author.first_name}{' '}
-                    {replyingTo.author.last_name}{' '}
-                    <Icon
-                      name="close"
-                      size={12}
-                      color={getColor('red')}
-                      onPress={onReplyCancel}
-                    />
-                  </Text>
-                </View>
-              )}
-              {!!error && (
-                <View style={styles.targetedReplyWrapper}>
-                  <Text size={12} style={css('color', '#ff1744')}>
-                    {error.message}
-                  </Text>
-                </View>
-              )}
-              <View style={styles.inputRow}>
-                <TextInput
-                  multiline
-                  onChangeText={this.onChangeText}
-                  onContentSizeChange={e =>
-                    this.setState({ height: e.nativeEvent.contentSize.height })}
-                  placeholder="Participate"
-                  placeholderTextColor="#8fa3ad"
-                  ref={passRef}
-                  style={[styles.input, { height: this.state.height }]}
-                  value={text_content}
-                  underlineColorAndroid="transparent"
-                />
-                <TouchableItem
-                  onPress={this.handleSubmit(fetch)}
-                  style={styles.sendButton}
-                  disabled={disabled}
-                >
-                  <Text
-                    size={17}
-                    color={getColor('orange')}
-                    style={disabled ? styles.disabled : undefined}
-                  >
-                    Send
-                  </Text>
-                </TouchableItem>
-              </View>
-            </View>
-          );
-        }}
-      </Fetch>
+        <View style={styles.inputRow}>
+          <TextInput
+            multiline
+            onChangeText={this.onChangeText}
+            onContentSizeChange={e =>
+              this.setState({ height: e.nativeEvent.contentSize.height })}
+            placeholder="Participate"
+            placeholderTextColor="#8fa3ad"
+            ref={passRef}
+            style={[styles.input, { height: this.state.height }]}
+            value={text_content}
+            underlineColorAndroid="transparent"
+          />
+          <TouchableItem
+            onPress={this.handleSubmit}
+            style={styles.sendButton}
+            disabled={this.disabled}
+          >
+            <Text
+              size={17}
+              color={getColor('orange')}
+              style={this.disabled ? styles.disabled : undefined}
+            >
+              {this.busy ? 'Sending' : 'Send'}
+            </Text>
+          </TouchableItem>
+        </View>
+      </View>
     );
   }
 }
+
+export default connect(
+  state => ({
+    request: selectRequest('req:content-object:create', state),
+  }),
+  { createComment }
+)(CommentInput);
 
 const styles = StyleSheet.create({
   container: Platform.select({

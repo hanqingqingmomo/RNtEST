@@ -3,29 +3,25 @@
 import React, { Component } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
-import { type Style } from '../Types';
-import { View } from './index';
+import View, { type Props } from './View';
+import { css } from '../utils/style';
 
-type P = {
-  style?: Style,
-  children?: React$Element<*>,
+type P = Props & {
   radius?: number,
 };
 
-export default class Shadow extends Component<P> {
+export default class ShadowView extends Component<P> {
   render() {
-    const { radius } = this.props;
-
+    const { radius, style, ...props } = this.props;
     return (
       <View
+        {...props}
         style={[
+          css('borderRadius', radius === undefined ? 0 : radius),
           styles.shadowByPlatform,
-          typeof radius !== 'undefined' ? { borderRadius: radius } : undefined,
-          this.props.style,
+          style,
         ]}
-      >
-        {this.props.children}
-      </View>
+      />
     );
   }
 }

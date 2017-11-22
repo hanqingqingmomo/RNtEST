@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 
 import { View } from '../../atoms';
 import { NewsFeed, PinnedPost } from '../../blocks';
-import NewsFeedConversation from './../AggregatedNewsFeedScreen/NewsFeedConversation';
-import { makeReadCommunityFeedRq } from '../../utils/requestFactory';
+import StartConversationButton from './../AggregatedNewsFeedScreen/StartConversationButton';
 
 type Props = {
   communityId: string,
@@ -19,33 +18,29 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
     // TODO do not pass navigation
     return (
       <NewsFeed
+        id={this.props.communityId}
+        path={`content_objects/posts/${this.props.communityId}`}
         navigation={this.props.navigation}
-        request={makeReadCommunityFeedRq(this.props.communityId)}
-        ListHeaderComponent={emitAction => (
+        ListHeaderComponent={
           <View>
-            <NewsFeedConversation
-              onPress={() =>
-                this.props.navigation.navigate('PostEditorScreen', {
-                  emitAction,
-                })}
+            <StartConversationButton
+              navigateToEditorScreen={() =>
+                this.props.navigation.navigate('PostEditorScreen')}
             />
             <PinnedPost
               communityId={this.props.communityId}
+              onPress={data =>
+                this.props.navigation.navigate('PostDetailScreen', {
+                  postId: data.id,
+                })}
               onSeeAll={data => {
                 this.props.navigation.navigate('PinnedPostsScreen', {
                   communityId: this.props.communityId,
                 });
               }}
-              onPress={data => {
-                this.props.navigation.navigate('PostDetailScreen', {
-                  postId: data.id,
-                  reloadList: this.props.reloadCommunity,
-                  emitAction,
-                });
-              }}
             />
           </View>
-        )}
+        }
       />
     );
   }

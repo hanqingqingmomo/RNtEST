@@ -17,19 +17,6 @@ export type ColorName = _ColorName;
 export type Style = number | boolean | Object | Array<?Style>;
 
 // ScreenProps: props are passed to every "screen" component
-export type LocalImage = {
-  fileName: string,
-  fileSize: number,
-  isVertical: boolean,
-  origURL: string,
-  timestamp: string,
-  uri: string,
-  width: number,
-  height: number,
-  error: Object,
-  didCancel: boolean,
-};
-
 export type ScreenProps<S> = {
   navigation: {
     navigate: Function,
@@ -69,10 +56,18 @@ export type User = {
 
 export type Comment = $Exact<{
   id: string,
+  type: 'comment',
+  parentId: ?string,
   text_content: string,
   created_at: string,
   attachment: {} | null,
-  author: User,
+  author: {
+    id: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    profile_photo: string,
+  },
   comments_count: number,
   likes_count: number,
   liked: boolean,
@@ -86,17 +81,22 @@ export type Post = {
     type: string,
     url: string,
   },
-  author: User,
+  author: {
+    id: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    profile_photo: string,
+  },
   cached_url: ?LinkAttachment,
   comments_count: number,
   communities: Array<CommunitySimple>,
   created_at: string,
   likes_count: number,
   liked: boolean,
-  isNew: boolean, // Check whether we need this prop anymore
   donation: {}, // todo
   event: {}, // todo
-  replies: number,
+  replies: Array<Comment>,
 };
 
 // Entities
@@ -116,8 +116,9 @@ export type CommunityMember = {
 };
 
 export type PopupSetting = {
+  key: string,
   iconName: IconName,
-  isHidden?: Function,
+  isHidden?: (*) => boolean,
   label: string,
   onPress: Function,
 };
@@ -134,3 +135,21 @@ export type ActionP<T, P> = Action<T, { payload: P }>;
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
 
 export type Store = $ObjMap<Reducers, $ExtractFunctionReturn>;
+
+export type RequestStatus = {
+  loading: boolean,
+  error: mixed,
+};
+
+// Timeline
+export type Cursor = {
+  next: ?number,
+  limit: number,
+};
+
+export type TimelineState = {
+  content: Array<Object>,
+  next: ?number,
+  loading: boolean,
+  refreshing: boolean,
+};

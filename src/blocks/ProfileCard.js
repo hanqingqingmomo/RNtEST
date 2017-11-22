@@ -4,15 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
-import {
-  View,
-  Text,
-  Avatar,
-  Icon,
-  Link,
-  ShadowView,
-  ImagePreview,
-} from '../atoms';
+import { View, Text, Avatar, Link, ShadowView, ImagePreview } from '../atoms';
 import { type User } from '../Types';
 
 // TODO use type after merge

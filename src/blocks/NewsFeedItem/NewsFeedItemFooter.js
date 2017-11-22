@@ -2,17 +2,23 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-import { Text, View, TouchableItem, Like, Count } from '../../atoms';
+import { contentLike } from '../../redux/ducks/contentObject';
+import { Text, View, TouchableItem, Count } from '../../atoms';
 import { css } from '../../utils/style';
 import { type Post } from '../../Types';
 
-type P = {
+type Action = {
+  label: string,
+  onPress: Function,
+};
+
+type Props = {
+  detailView: boolean,
   item: Post,
-  links: Array<{
-    label: string,
-    onPress: Function,
-  }>,
+  like: Post => mixed,
+  navigate: (routeName: string, params?: Object) => mixed,
 };
 
 const HIT_SLOP = {
@@ -22,33 +28,55 @@ const HIT_SLOP = {
   left: 2,
 };
 
-export default class NewsFeedItemFooter extends Component<P> {
+class NewsFeedItemFooter extends Component<Props> {
+  get actions(): Array<Action> {
+    const { item, navigate, detailView } = this.props;
+    const { id: postId } = item;
+
+    const links = [];
+
+    if (!detailView) {
+      links.push({
+        label: 'Comment',
+        onPress: () => navigate('PostDetailScreen', { postId }),
+      });
+    }
+
+    return links;
+  }
+
   render() {
-    const { item, links } = this.props;
-    const { likes_count, comments_count, liked } = item;
+    const { likes_count, comments_count, liked } = this.props.item;
 
     return (
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
-          <View style={styles.likeWrapper}>
-            <Like
-              count={likes_count}
-              liked={liked}
-              item={item}
-              emitAction={this.props.emitAction}
-            />
-          </View>
+          <TouchableItem
+            style={styles.likeWrapper}
+            onPress={() => {
+              this.props.contentLike(this.props.item);
+            }}
+          >
+            <Count iconName="like" count={likes_count} pinned={liked} />
+          </TouchableItem>
+
           <View style={styles.likeWrapper}>
             <Count iconName="comment" count={comments_count} />
           </View>
         </View>
         <View style={[styles.footerRight, styles.row]}>
-          {links.map((link, idx) => (
-            <View
-              key={link.label}
-              style={[styles.footerLink, idx ? styles.borderLeft : undefined]}
+          {this.actions.map((action, idx) => (
+            <TouchableItem
+              key={action.label}
+              onPress={action.onPress}
+              hitSlop={HIT_SLOP}
             >
-              <TouchableItem onPress={link.onPress} hitSlop={HIT_SLOP}>
+              <View
+                style={[
+                  styles.footerLink,
+                  idx > 0 ? styles.borderLeft : undefined,
+                ]}
+              >
                 <Text
                   size={13}
                   lineHeight={18}
@@ -56,16 +84,18 @@ export default class NewsFeedItemFooter extends Component<P> {
                     ({ backgroundColor: 'white' }, css('color', '#00B0FF'))
                   }
                 >
-                  {link.label}
+                  {action.label}
                 </Text>
-              </TouchableItem>
-            </View>
+              </View>
+            </TouchableItem>
           ))}
         </View>
       </View>
     );
   }
 }
+
+export default connect(null, { contentLike })(NewsFeedItemFooter);
 
 const styles = StyleSheet.create({
   borderLeft: {
