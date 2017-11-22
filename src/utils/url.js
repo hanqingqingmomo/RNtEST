@@ -1,9 +1,7 @@
-function startsWith(str, searchString) {
-  return str.substr(0, searchString.length) === searchString;
-}
+// @flow
 
-function normalize(str, options) {
-  if (startsWith(str, 'file://')) {
+function normalize(str: string) {
+  if (str.startsWith('file://')) {
     // make sure file protocol has max three slashes
     str = str.replace(/(\/{0,3})\/*/g, '$1');
   } else {
@@ -23,15 +21,22 @@ function normalize(str, options) {
   return str;
 }
 
-export function join(...args) {
-  let options = {};
+export function build({
+  base = '',
+  path,
+  query = {},
+}: {
+  base: string,
+  path: string,
+  query: Object,
+}) {
+  const q = Object.keys(query)
+    .filter(param => query[param] !== null && query[param] !== undefined)
+    .map(param => `${param}=${query[param]}`)
+    .join('&');
 
-  if (typeof arguments[0] === 'object') {
-    // new syntax with array and options
-    args = arguments[0];
-    options = arguments[1] || {};
-  }
+  const url = normalize(`${base}/${path}${q !== '' ? `?${q}` : ''}`);
 
-  const joined = [].slice.call(args, 0).join('/');
-  return normalize(joined, options);
+  console.log(url);
+  return url;
 }

@@ -1,39 +1,39 @@
 import React from 'react';
-import PopoverTooltip from 'react-native-popover-tooltip';
-import { StyleSheet, Dimensions, Switch } from 'react-native';
+import { Switch } from 'react-native';
 
-import { View, Text, Icon, Popover, PopoverItem } from '../../atoms';
-import { getColor } from '../../utils/color';
-
-const Item = () => (
-  <PopoverItem
-    accessoryView={
-      <Switch onValueChange={() => {}} value={true} style={{ height: 45 }} />
-    }
-    contentView="Press"
-    imageView={<Icon name="search" color="#B0BEC5" size={22} />}
-  />
-);
-
-const Item2 = () => (
-  <PopoverItem
-    contentView="Press"
-    imageView={<Icon name="search" color="#B0BEC5" size={22} />}
-  />
-);
+import { View, Icon, Popover, PopoverItem } from '../../atoms';
 
 const items = [
   {
-    label: Item,
+    key: 'abc',
+    label: () => (
+      <PopoverItem
+        accessoryView={
+          <Switch
+            onValueChange={() => {}}
+            value={true}
+            style={{ height: 45 }}
+          />
+        }
+        contentView="Press"
+        imageView={<Icon name="search" color="#B0BEC5" size={22} />}
+      />
+    ),
     onPress: () => {},
   },
   {
-    label: Item2,
+    key: 'def',
+    label: () => (
+      <PopoverItem
+        contentView="Press"
+        imageView={<Icon name="search" color="#B0BEC5" size={22} />}
+      />
+    ),
     onPress: () => {},
   },
 ];
 
-export default class PopoverPlayground extends React.Component {
+export default class PopoverPlayground extends React.Component<{}> {
   static navigationOptions = { headerTitle: 'Popover' };
 
   render() {

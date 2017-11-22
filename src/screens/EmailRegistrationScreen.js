@@ -90,12 +90,9 @@ class EmailRegistrationScreen extends Component<Props, State> {
 
       this.props.setUserProfile(readProfileRes.data);
     } else {
-      const defaultErrors: { [key: string]: Array<string> } =
-        signupRes.error.message;
+      let errors = signupRes.error.message;
 
-      const errors: Array<string> = Object.keys(
-        defaultErrors
-      ).map((key: string) => defaultErrors[key].join('\n'));
+      errors = Object.keys(errors).map((key: string) => errors[key].join('\n'));
 
       this.setState({ errors });
     }

@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import PopoverTooltip from 'react-native-popover-tooltip';
 import { Dimensions } from 'react-native';
 
+import PopoverTooltip from './react-native-popover-tooltip';
 import { getColor } from '../utils/color';
 
 type Props = {

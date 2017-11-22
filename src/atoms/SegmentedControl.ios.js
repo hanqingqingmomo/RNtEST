@@ -7,7 +7,7 @@ import { getColor } from '../utils/color';
 
 type Props = {
   labels: Array<string>,
-  onChange: Function,
+  onChange: string => void,
   selectedLabel: string,
 };
 

@@ -123,6 +123,7 @@ export type CommunityMember = {
 };
 
 export type PopupSetting = {
+  key: string,
   iconName: IconName,
   isHidden?: boolean,
   label: string,

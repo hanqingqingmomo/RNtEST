@@ -7,7 +7,7 @@ import validator from '../services/validation/validator';
 
 type Props = {
   initialValues: {
-    [string]: ?string,
+    [string]: string,
   },
   rules?: {
     [string]: string,

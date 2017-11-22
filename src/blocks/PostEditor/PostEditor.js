@@ -10,6 +10,7 @@ import ImagePicker from './ImagePicker';
 import AttachmentsPanel from './AttachmentsPanel';
 import { makeScrapeUrlReq } from '../../utils/requestFactory';
 
+// TODO merge state change callbacks into single callback
 type Props = {
   attachment: ?string,
   communities: Array<CommunitySimple>,
