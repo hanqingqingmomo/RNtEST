@@ -6,6 +6,7 @@ import update from 'react-addons-update';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { join } from '../utils/url';
+import type { User } from '../Types';
 
 let Store: any = null;
 
@@ -163,7 +164,7 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     },
   });
 
-export const makeUpdateProfileReq = (user: object) =>
+export const makeUpdateProfileReq = (user: User) =>
   inject({
     url: join(Config.API_URL, '/v1/members/profile_settings'),
     options: {

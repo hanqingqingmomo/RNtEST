@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Platform } from 'react-native';
 
-import type { Comment as TComment } from '../../Types';
+import type { Comment as TComment, FetchProps } from '../../Types';
 import { Fetch, Text, TouchableItem, View, Icon } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
@@ -62,7 +62,7 @@ export default class CommentInput extends Component<P, S> {
 
     return (
       <Fetch manual>
-        {({ loading, data, error, fetch }) => {
+        {({ loading, error, fetch }: FetchProps<*>) => {
           const disabled = !this.isAllowedToSubmit || !!loading;
 
           return (

@@ -20,7 +20,7 @@ const DEFAULTS = screens => ({
   }),
 });
 
-export default function StackNavigator(screens, options) {
+export default function StackNavigator(screens: Object, options?: Object) {
   return ReactNavigationStackNavigator(
     screens,
     merge(DEFAULTS(screens), options)

@@ -1,4 +1,3 @@
-// @flow
 import { sizeMap, getRealSize } from './Utils';
 
 describe('Icon Component Utils', () => {

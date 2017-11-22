@@ -4,12 +4,17 @@ import React, { Component } from 'react';
 
 import { View } from '../../atoms';
 import { NewsFeed } from '../../blocks';
+import type { ScreenProps } from '../../Types';
 import FriendInvitationWidget from './FriendInvitationWidget';
 import NewsFeedHeader from './NewsFeedHeader';
 import NewsFeedConversation from './NewsFeedConversation';
 import { makeReadAggregatedFeedReq } from '../../utils/requestFactory';
 
-export default class AggregatedNewsFeedScreen extends Component<{}> {
+type Props = ScreenProps<*> & {
+  screenProps: Object,
+};
+
+export default class AggregatedNewsFeedScreen extends Component<Props> {
   static navigationOptions = ({ screenProps }) => {
     return {
       headerLeft: <NewsFeedHeader openDrawer={screenProps.openDrawer} />,

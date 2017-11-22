@@ -2,10 +2,23 @@
 
 import React, { Component } from 'react';
 
+import type { ScreenProps } from '../Types';
 import { Screen } from '../atoms';
 import { DonationResult } from '../blocks';
 
-export default class DonationResultScreen extends Component<{}> {
+type NavigationProps = {
+  params: {
+    amount: any,
+    inviteFriends: Function,
+    recurrent: any,
+    repeatPayment: Function,
+    success: boolean,
+  },
+};
+
+type Props = ScreenProps<NavigationProps>;
+
+export default class DonationResultScreen extends Component<Props> {
   static navigationOptions = {
     title: 'Donation Result',
   };

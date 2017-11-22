@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StatusBar, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
@@ -17,6 +17,7 @@ import PlaygroundNavigator from './playground';
 import UserProfileNavigator from './UserProfileNavigator';
 import UserSettingsNavigator from './UserSettingsNavigator';
 import { makeReadOrganisationReq } from '../utils/requestFactory';
+import type { Community, FetchProps } from '../Types';
 
 let ALERT = null;
 
@@ -73,7 +74,7 @@ export default class MainNavigator extends Component<{}, State> {
 
   _drawerRef = null;
 
-  drawerRef = ref => {
+  drawerRef = (ref: any) => {
     this._drawerRef = ref;
   };
 
@@ -113,7 +114,7 @@ export default class MainNavigator extends Component<{}, State> {
         url={readOrganisationReq.url}
         options={readOrganisationReq.options}
       >
-        {({ data }) => (
+        {({ data }: FetchProps<Community>) => (
           <DrawerView
             navigationItems={navigationItems}
             handleNavigationItemPress={this.openModalRoute}
@@ -137,6 +138,10 @@ export default class MainNavigator extends Component<{}, State> {
         dismissModalRoute: this.closeModalRoute,
       },
     };
+
+    if (typeof modalRoute === 'undefined') {
+      return null;
+    }
 
     switch (modalRoute.routeName) {
       case 'DonationModal':
@@ -194,6 +199,7 @@ export default class MainNavigator extends Component<{}, State> {
               openFriendsInvitationModal: () => {
                 this.openModalRoute({
                   routeName: 'InviteFriendModal',
+                  icon: '',
                 });
               },
               openDrawer: () => {

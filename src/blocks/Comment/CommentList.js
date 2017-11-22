@@ -8,16 +8,17 @@ import { Comment } from '../../blocks';
 
 type P = {
   comments: Array<TComment>,
+  deleteSuccessful: Function,
+  emitAction: Function,
+  isBeingDeleted: boolean,
+  isBeingUpdated: boolean,
   ListHeaderComponent?: any,
   onReplyPress: TComment => void,
-  postId: number,
+  postId: string,
+  reloadPost: Function,
   requestDelete: Function,
-  deleteSuccessful: Function,
-  isBeingDeleted: boolean,
   requestUpdate: Function,
   updateSuccessful: Function,
-  isBeingUpdated: boolean,
-  reloadPost: Function,
 };
 
 export default class CommentList extends Component<P> {

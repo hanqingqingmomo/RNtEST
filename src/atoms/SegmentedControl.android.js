@@ -12,7 +12,7 @@ const CONTROL_HEIGHT = 30;
 
 type Props = {
   labels: Array<string>,
-  onChange: string => void,
+  onChange: Function,
   selectedLabel: string,
 };
 

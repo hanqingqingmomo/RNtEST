@@ -7,12 +7,11 @@ import { CommunityHeader, Tabs, View } from '../../atoms';
 import TabNewsFeed from './TabNewsFeed';
 import TabMembers from './TabMembers';
 import TabAbout from './TabAbout';
-import type { Community, User } from '../../Types';
+import type { Community, User, ScreenProps } from '../../Types';
 import { css } from '../../utils/style';
 
-type Props = {
+type Props = ScreenProps<*> & {
   community: Community,
-  navigation: any,
   reloadCommunity: Function,
 };
 

@@ -10,8 +10,14 @@ import {
 } from '../../redux/ducks/application';
 import FormBlock, { type FormValues } from './EmailAuthenticationBlock';
 import { makeSigninRq, makeReadProfileRq } from '../../utils/requestFactory';
+import type { ScreenProps, FetchProps } from '../../Types';
 
-class EmailAuthenticationScreen extends Component<{}> {
+type Props = ScreenProps<*> & {
+  setUserAccessToken: Function,
+  setUserProfile: Function,
+};
+
+class EmailAuthenticationScreen extends Component<Props> {
   static navigationOptions = {
     headerTitle: 'Log In',
   };
@@ -47,10 +53,10 @@ class EmailAuthenticationScreen extends Component<{}> {
     return (
       <Screen fill>
         <Fetch manual>
-          {({ loading, fetch, error }) => (
+          {({ loading, fetch, error }: FetchProps<*>) => (
             <FormBlock
-              loading={loading}
-              error={loading === false && error}
+              loading={!!loading}
+              error={loading === false && !!error}
               handleAuthenticationRequest={this.handleAuthenticationRequest(
                 fetch
               )}

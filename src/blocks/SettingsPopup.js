@@ -13,7 +13,7 @@ import { type PopupSetting } from '../Types';
 
 type P = {
   settings: Array<PopupSetting>,
-  busy: ?boolean,
+  busy?: boolean,
 };
 
 export default function SettingsPopup({ settings, busy }: P) {

@@ -5,13 +5,18 @@ import { connect } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 
 import { selectUser } from '../redux/selectors';
-import type { User, LinkAttachment } from '../Types';
+import type { User, LinkAttachment, ScreenProps, FetchProps } from '../Types';
 import { Screen, NavigationTextButton, Fetch } from '../atoms';
 import PostEditor from '../blocks/PostEditor/PostEditor';
-import { type AlertPayload } from '../atoms/DropdownAlert';
 import { makeCreatePostReq } from '../utils/requestFactory';
 
-type Props = {
+type NavigationState = {
+  params: {
+    emitAction: Function,
+  },
+};
+
+type Props = ScreenProps<NavigationState> & {
   user: User,
 };
 
@@ -72,7 +77,7 @@ export default class PostEditorScreen extends Component<Props, State> {
     }
   };
 
-  onContentChange = (content: ?string) => {
+  onContentChange = (content: string) => {
     this.setState({ content });
   };
 
@@ -96,12 +101,12 @@ export default class PostEditorScreen extends Component<Props, State> {
   render() {
     return (
       <Fetch manual>
-        {({ loading, data, error, fetch }: { loading: boolean }) => (
+        {({ loading, fetch }: FetchProps<*>) => (
           <Screen fill>
             <BlackPortal name={HEADER_RIGHT_ID}>
               <NavigationTextButton
                 title="Post"
-                disabled={!this.isAllowedToSubmit || loading}
+                disabled={!this.isAllowedToSubmit || !!loading}
                 onPress={this.handleFormSubmit(fetch)}
               />
             </BlackPortal>

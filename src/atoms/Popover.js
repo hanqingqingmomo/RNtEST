@@ -21,7 +21,7 @@ export default function Popover({ labels, button }: Props) {
       tooltipContainerStyle={styles.tooltipContainerStyle}
       overlayStyle={styles.overlayStyle}
       setBelow
-      delayLongPress={0}
+      delayLongPress={25}
     />
   );
 }

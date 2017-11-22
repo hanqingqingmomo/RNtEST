@@ -4,16 +4,13 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import type { Comment as TComment, User, PopupSetting } from '../../Types';
-import {
-  ActivityIndicator,
-  Avatar,
-  CenterView,
-  Like,
-  Text,
-  TimeAgo,
-  View,
-} from '../../atoms';
+import type {
+  Comment as TComment,
+  PopupSetting,
+  Store,
+  User,
+} from '../../Types';
+import { Avatar, Like, Text, TimeAgo, View } from '../../atoms';
 import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
 import { selectUser } from '../../redux/selectors';
@@ -24,16 +21,17 @@ import {
 import Replies from './Replies';
 
 type P = {
+  deleteSuccessful: Function,
+  emitAction: Function,
+  isBeingDeleted: boolean,
+  isBeingUpdated: boolean,
   item: TComment,
   onReplyPress?: Function,
-  user: User,
+  reloadPost: Function,
   requestDelete: Function,
-  deleteSuccessful: Function,
-  isBeingDeleted: boolean,
   requestUpdate: Function,
   updateSuccessful: Function,
-  isBeingUpdated: boolean,
-  reloadPost: Function,
+  user: ?User,
 };
 
 type S = {
@@ -42,10 +40,6 @@ type S = {
 };
 
 const AVATAR_SIZE = 25;
-
-const mapStateToProps = state => ({
-  user: selectUser(state),
-});
 
 class Comment extends Component<P, S> {
   state = {
@@ -100,12 +94,14 @@ class Comment extends Component<P, S> {
     this.setState({ showReplies: !this.state.showReplies });
   };
 
-  getPopupSettings() {
+  getPopupSettings(): Array<PopupSetting> {
     return [
       {
         iconName: 'delete',
         label: 'Delete',
-        isHidden: ({ user, author }) => author.id !== user.id,
+        isHidden:
+          this.props.item.author.id !==
+          (this.props.user ? this.props.user.id : ''),
         onPress: this.deleteComment,
       },
       {
@@ -113,14 +109,7 @@ class Comment extends Component<P, S> {
         label: 'Report',
         onPress: this.reportComment,
       },
-    ].filter(
-      (setting: PopupSetting) =>
-        !setting.isHidden ||
-        !setting.isHidden({
-          user: this.props.user,
-          author: this.props.item.author,
-        })
-    );
+    ].filter((setting: PopupSetting): boolean => !setting.isHidden);
   }
 
   render() {
@@ -176,13 +165,7 @@ class Comment extends Component<P, S> {
                 <TimeAgo date={item.created_at} />
               </Text>
             </View>
-            {updating /*|| isBeingDeleted*/ ? (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            ) : (
-              <SettingsPopup settings={this.getPopupSettings()} />
-            )}
+            <SettingsPopup settings={this.getPopupSettings()} busy={updating} />
           </View>
 
           <Text size={14} lineHeight={18} color="#455A64">
@@ -256,6 +239,10 @@ class Comment extends Component<P, S> {
     );
   }
 }
+
+const mapStateToProps = (state: Store): { user: ?User } => ({
+  user: selectUser(state),
+});
 
 export default connect(mapStateToProps)(Comment);
 

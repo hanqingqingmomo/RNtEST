@@ -8,12 +8,14 @@ import { connect } from 'react-redux';
 import { clearUserData } from '../redux/ducks/application';
 import { TableView, Screen, Icon } from '../atoms';
 import { getColor } from '../utils/color';
-import type { IconName } from '../Types';
+import type { IconName, ScreenProps } from '../Types';
 
 type ActionName =
   | 'Sync Calendars'
   | 'Use Invite Code'
-  | 'Legal & Privacy'
+  | 'Change Password'
+  | 'Terms and conditions'
+  | 'Privacy Policy'
   | 'Change Password';
 
 type Action = {
@@ -21,8 +23,8 @@ type Action = {
   iconName: IconName,
 };
 
-type Props = {
-  navigation: any,
+type Props = ScreenProps<*> & {
+  clearUserData: Function,
 };
 
 const SETTINGS = [
@@ -45,7 +47,7 @@ class UserProfileScreen extends Component<Props> {
     title: 'Settings',
   };
 
-  navigateToScreen(action: Action): Function {
+  navigateToScreen(action: Action) {
     return () => {
       switch (action.name) {
         case 'Use Invite Code':
@@ -61,7 +63,6 @@ class UserProfileScreen extends Component<Props> {
           this.props.navigation.navigate('PrivacyScreen');
           break;
         default:
-        // console.log(action.name);
       }
     };
   }
@@ -81,7 +82,7 @@ class UserProfileScreen extends Component<Props> {
       <Screen>
         <TableView.Table>
           <TableView.Section>
-            {SETTINGS.map(setting => (
+            {SETTINGS.map((setting: Action) => (
               <TableView.Cell
                 cellStyle="Basic"
                 key={setting.name}

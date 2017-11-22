@@ -1,10 +1,7 @@
-// @flow
-
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
 
 import { DonationForm, DonationAppealModalBox } from '../../blocks';
-import { CommunityHeader, ScrollView, Screen } from '../../atoms';
+import { CommunityHeader, Screen } from '../../atoms';
 
 type Props = {};
 
@@ -22,7 +19,9 @@ export default class DonationFormPlayground extends Component<Props> {
           coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
         />
         <DonationForm
-          onPaymentConfirmed={payment => Alert.alert(JSON.stringify(payment))}
+          onPaymentNonceReceived={() => {}}
+          onFail={() => {}}
+          onInitiatePayment={() => {}}
         />
         <DonationAppealModalBox forceOpen onConfirm={() => {}} />
       </Screen>

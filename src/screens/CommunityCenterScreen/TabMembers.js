@@ -15,7 +15,7 @@ import {
   View,
 } from '../../atoms';
 import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
-import { type User } from '../../Types';
+import type { User, FetchProps } from '../../Types';
 
 const { Cell } = TableView;
 const AVATAR_WIDTH = 28;
@@ -25,10 +25,15 @@ type Props = {
   navigateToMember: (user: User) => void,
 };
 
-export default class MembersTab extends Component<Props> {
-  keyExtractor = item => item.id;
+type ItemProps = {
+  item: User,
+  separators: Object,
+};
 
-  renderItem = ({ item, separators }) => (
+export default class MembersTab extends Component<Props> {
+  keyExtractor = (item: User): string => item.id;
+
+  renderItem = ({ item, separators }: ItemProps): any => (
     <Cell
       title={`${item.first_name} ${item.last_name}`}
       titleTextColor="#455A64"
@@ -53,8 +58,8 @@ export default class MembersTab extends Component<Props> {
           url={readCommunityMembersRq.url}
           options={readCommunityMembersRq.options}
         >
-          {({ loading, error, data }) => {
-            if (loading) {
+          {({ loading, error, data }: FetchProps<{ data: Array<User> }>) => {
+            if (loading === true || loading === null) {
               return (
                 <CenterView>
                   <ActivityIndicator />

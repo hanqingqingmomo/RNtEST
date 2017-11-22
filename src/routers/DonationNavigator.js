@@ -7,7 +7,12 @@ import { DonationAppealScreen, DonationResultScreen } from '../screens';
 import { NavigationIconButton } from '../atoms';
 import { getColor } from '../utils/color';
 
-function DismissModalButton({ onPress, ...a }) {
+function DismissModalButton({
+  onPress,
+  ...a
+}: {
+  onPress: Function,
+}): React$Node {
   return (
     <NavigationIconButton
       name="close"

@@ -15,18 +15,12 @@ export type Props = {
   style?: Style,
 };
 
-const styles = StyleSheet.create({
-  fontFamily: {
-    fontFamily: Platform.select({ ios: 'System', android: 'Roboto' }),
-  },
-});
-
 export default class Text extends Component<Props> {
   setNativeProps(nativeProps: any) {
     this.refs['root'].setNativeProps(nativeProps);
   }
 
-  render(): React$Element<*> {
+  render() {
     const { size, color, weight, lineHeight, style, ...bag } = this.props;
     return (
       <ReactNativeText
@@ -44,3 +38,9 @@ export default class Text extends Component<Props> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  fontFamily: {
+    fontFamily: Platform.select({ ios: 'System', android: 'Roboto' }),
+  },
+});

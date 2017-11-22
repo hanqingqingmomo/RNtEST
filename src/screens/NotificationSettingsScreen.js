@@ -1,13 +1,16 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, Switch } from 'react-native';
+import { Switch } from 'react-native';
 
 import { TableView, Screen } from '../atoms';
+import type { ScreenProps } from '../Types';
 
 const { Table, Section, Cell } = TableView;
 
-export default class NotificationSettingsScreen extends React.Component<{}> {
+type Props = ScreenProps<*>;
+
+export default class NotificationSettingsScreen extends React.Component<Props> {
   static navigationOptions = {
     title: 'Notifications',
   };
@@ -38,7 +41,7 @@ export default class NotificationSettingsScreen extends React.Component<{}> {
               }
             />
             <Cell
-              title={'Events ' + '&' + ' Webinars'}
+              title={'Events & Webinars'}
               cellAccessoryView={
                 <Switch value={true} onValueChanged={() => {}} />
               }
@@ -58,7 +61,7 @@ export default class NotificationSettingsScreen extends React.Component<{}> {
               }
             />
             <Cell
-              title={'Events ' + '&' + ' Webinars'}
+              title={'Events & Webinars'}
               cellAccessoryView={
                 <Switch value={true} onValueChanged={() => {}} />
               }
@@ -69,5 +72,3 @@ export default class NotificationSettingsScreen extends React.Component<{}> {
     );
   }
 }
-
-const styles = StyleSheet.create({});

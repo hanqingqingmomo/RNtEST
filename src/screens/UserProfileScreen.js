@@ -28,7 +28,13 @@ import { getColor } from '../utils/color';
 import { makeLeaveCommunity } from '../utils/requestFactory';
 import { selectUser } from '../redux/selectors';
 import { setUserProfile } from '../redux/ducks/application';
-import type { Store, User, CommunitySimple } from '../Types';
+import type {
+  CommunitySimple,
+  FetchProps,
+  ScreenProps,
+  Store,
+  User,
+} from '../Types';
 import {
   makeUpdateProfileReq,
   makeReadProfileRq,
@@ -36,8 +42,7 @@ import {
 
 const { Table, Section, Cell } = TableView;
 
-type P = {
-  navigation: Object,
+type P = ScreenProps<*> & {
   screenProps: any,
   setUserProfile: Function,
   showActionSheetWithOptions: Function,
@@ -183,11 +188,11 @@ class UserProfileScreen extends React.Component<P> {
   handleFieldChange = (
     setFieldValue: (string, boolean) => void,
     setFieldTouched: (string, boolean) => void,
-    fieldName: string,
-    fieldValue: string
+    event: Object
   ) => {
-    setFieldTouched(fieldName, true);
-    setFieldValue(fieldName, fieldValue);
+    const { name, value } = event.target;
+    setFieldTouched(name, true);
+    setFieldValue(name, value);
   };
 
   handleClose = (isTouched: boolean) => {
@@ -217,7 +222,7 @@ class UserProfileScreen extends React.Component<P> {
 
     return (
       <Fetch url={myProfileReq.url} options={myProfileReq.options}>
-        {({ loading, data, error, fetch }) => {
+        {({ loading, data, fetch }: FetchProps<User>) => {
           if (loading === false && data) {
             const user = data ? data : this.props.user;
 
@@ -281,8 +286,7 @@ class UserProfileScreen extends React.Component<P> {
                             this.handleFieldChange(
                               form.setFieldValue,
                               form.setFieldTouched,
-                              'first_name',
-                              e.target.value
+                              e
                             ),
                         })}
                         {this.renderUserDetailCell({
@@ -293,8 +297,7 @@ class UserProfileScreen extends React.Component<P> {
                             this.handleFieldChange(
                               form.setFieldValue,
                               form.setFieldTouched,
-                              'last_name',
-                              e.target.value
+                              e
                             ),
                         })}
                         {this.renderUserDetailCell({
@@ -305,8 +308,7 @@ class UserProfileScreen extends React.Component<P> {
                             this.handleFieldChange(
                               form.setFieldValue,
                               form.setFieldTouched,
-                              'email',
-                              e.target.value
+                              e
                             ),
                         })}
                       </Section>
@@ -353,12 +355,12 @@ Provider.navigationOptions = ({ screenProps }) => ({
   headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
 });
 
-export default (connect(
-  (state: Store) => ({
+export default connect(
+  (state: Store): { user: ?User } => ({
     user: selectUser(state),
   }),
   { setUserProfile }
-): Connector<{}, Props>)(Provider);
+)(Provider);
 
 const styles = StyleSheet.create({
   container: {

@@ -11,12 +11,11 @@ import { setUserProfile } from '../../redux/ducks/application';
 import { selectUser } from '../../redux/selectors';
 import TabAbout from './TabAbout';
 import JoinSection from './JoinSection';
-import { type User, type CommunitySimple } from '../../Types';
+import { type User, type CommunitySimple, type ScreenProps } from '../../Types';
 
-type Props = {
+type Props = ScreenProps<*> & {
   community: CommunitySimple,
   navigateToMember: Function,
-  navigation?: Object,
   reloadCommunity: Function,
   reloadCommunityList: Function,
   setUserProfile: Function,

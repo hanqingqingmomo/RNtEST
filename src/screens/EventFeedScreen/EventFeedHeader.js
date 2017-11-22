@@ -12,7 +12,7 @@ import {
 } from '../../atoms';
 import { getColor } from '../../utils/color';
 
-export default function EventFeedHeader(props) {
+export default function EventFeedHeader() {
   return (
     <ShadowView style={styles.container}>
       <View style={styles.iconLeftContainer}>

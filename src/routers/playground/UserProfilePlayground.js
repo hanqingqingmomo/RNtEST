@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react';
 
 import { ScrollView, TableView, Text, Icon } from '../../atoms';
@@ -8,12 +6,13 @@ import { ProfileCard } from '../../blocks';
 const { Table, Section, Cell } = TableView;
 
 const data = {
-  imageURI:
+  id: 'ddfgdf',
+  profile_photo:
     'https://www.thedealersden.com/uploads/cache/img_A_117518_89f3552911d13156e3164f3e11351a6f-500x500.jpg',
-  username: 'Carla Anthony',
-  position: 'Academy Leader',
+  first_name: 'Carla',
+  last_name: 'Anthony',
   email: 'carla.anthony@ywca.com',
-  phone: '0918053935',
+  joined_communities: [],
 };
 
 export default class UserProfilePlayground extends Component<{}> {
