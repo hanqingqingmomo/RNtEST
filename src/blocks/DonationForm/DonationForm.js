@@ -45,7 +45,7 @@ function printMoney(amount: number): string {
 
 export default class DonationForm extends Component<P, S> {
   state = {
-    interval: 'monthly',
+    interval: 'one-time',
     amount: 50,
     amountTypedManualy: false,
     disableCardButton: false,

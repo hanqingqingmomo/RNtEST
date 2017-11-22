@@ -16,6 +16,7 @@
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
     "apisauce": "^0.14.1",
+    "card-validator": "^4.1.1",
     "color": "^2.0.0",
     "date-fns": "^1.28.5",
     "flux-standard-action": "^1.2.0",
