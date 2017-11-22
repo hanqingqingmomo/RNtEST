@@ -53,6 +53,7 @@ export default connect(mapStateToProps)(StartConversationButton);
 
 const styles = StyleSheet.create({
   cellContainer: {
+    flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#E2E2E4',
     backgroundColor: 'white',

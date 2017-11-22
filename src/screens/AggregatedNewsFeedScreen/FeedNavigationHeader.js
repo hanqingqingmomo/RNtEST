@@ -6,11 +6,7 @@ import { StyleSheet } from 'react-native';
 import { Icon, SearchBox, Text, View, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
 
-type Props = {
-  openDrawer: Function,
-};
-
-export default function NewsFeedHeader(props: Props) {
+export default function NewsFeedHeader(props) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>

@@ -6,23 +6,12 @@ import { connect } from 'react-redux';
 import Collapsible from 'react-native-collapsible';
 import plural from 'plural-parens';
 
-<<<<<<< HEAD
 import type { Comment as TComment, User, PopupSetting } from '../../Types';
 import { Avatar, Text, TimeAgo, View, TouchableItem, Count } from '../../atoms';
-=======
-import type {
-  Comment as TComment,
-  PopupSetting,
-  Store,
-  User,
-} from '../../Types';
-import { Avatar, Like, Text, TimeAgo, View } from '../../atoms';
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
 import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
 import { selectUser } from '../../redux/selectors';
 import {
-<<<<<<< HEAD
   contentDestroy,
   contentLike,
   contentReport,
@@ -35,25 +24,6 @@ type Props = {
   level: number,
   onRequestReply?: TComment => mixed,
   viewer: User,
-=======
-  makeReportReq,
-  makeDeleteCommentReq,
-} from '../../utils/requestFactory';
-import Replies from './Replies';
-
-type P = {
-  deleteSuccessful: Function,
-  emitAction: Function,
-  isBeingDeleted: boolean,
-  isBeingUpdated: boolean,
-  item: TComment,
-  onReplyPress?: Function,
-  reloadPost: Function,
-  requestDelete: Function,
-  requestUpdate: Function,
-  updateSuccessful: Function,
-  user: ?User,
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
 };
 
 type State = {
@@ -62,7 +32,6 @@ type State = {
 
 const AVATAR_SIZE = 25;
 
-<<<<<<< HEAD
 const mapStateToProps = state => ({
   viewer: selectUser(state),
 });
@@ -70,9 +39,6 @@ const mapStateToProps = state => ({
 const mapDispatch = { contentLike, contentDestroy, contentReport };
 
 class Comment extends Component<Props, State> {
-=======
-class Comment extends Component<P, S> {
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
   state = {
     showReplies: false,
   };
@@ -81,21 +47,14 @@ class Comment extends Component<P, S> {
     this.setState({ showReplies: !this.state.showReplies });
   };
 
-  getPopupSettings(): Array<PopupSetting> {
+  getPopupSettings() {
     return [
       {
         key: 'delete',
         iconName: 'delete',
         label: 'Delete',
-<<<<<<< HEAD
         isHidden: ({ viewer, author }) => author.id !== viewer.id,
         onPress: () => this.props.contentDestroy(this.props.item),
-=======
-        isHidden:
-          this.props.item.author.id !==
-          (this.props.user ? this.props.user.id : ''),
-        onPress: this.deleteComment,
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
       },
       {
         key: 'report',
@@ -103,7 +62,6 @@ class Comment extends Component<P, S> {
         label: 'Report',
         onPress: () => this.props.contentReport(this.props.item),
       },
-<<<<<<< HEAD
     ].filter(
       (setting: PopupSetting) =>
         !setting.isHidden ||
@@ -112,9 +70,6 @@ class Comment extends Component<P, S> {
           viewer: this.props.viewer,
         })
     );
-=======
-    ].filter((setting: PopupSetting): boolean => !setting.isHidden);
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
   }
 
   render() {
@@ -145,11 +100,7 @@ class Comment extends Component<P, S> {
                 color="gray"
               />
             </View>
-<<<<<<< HEAD
             <SettingsPopup settings={this.getPopupSettings()} />
-=======
-            <SettingsPopup settings={this.getPopupSettings()} busy={updating} />
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
           </View>
 
           <Text size={14} lineHeight={18} color="#455A64">
@@ -228,15 +179,7 @@ class Comment extends Component<P, S> {
   }
 }
 
-<<<<<<< HEAD
 export default connect(mapStateToProps, mapDispatch)(Comment);
-=======
-const mapStateToProps = (state: Store): { user: ?User } => ({
-  user: selectUser(state),
-});
-
-export default connect(mapStateToProps)(Comment);
->>>>>>> 18ce2aa8ab31c7e35cfef4c19e1bbfe33eec406b
 
 const styles = StyleSheet.create({
   flexRow: {

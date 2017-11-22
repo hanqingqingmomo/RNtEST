@@ -6,9 +6,7 @@ import { StyleSheet } from 'react-native';
 import { ActivityIndicator } from '../atoms';
 import { LaunchScreenBackground } from '../blocks';
 
-type Props = {};
-
-export default class BootScreen extends Component<Props> {
+export default class BootScreen extends Component<{}> {
   render() {
     return (
       <LaunchScreenBackground>
