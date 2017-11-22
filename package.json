@@ -44,10 +44,8 @@
     "react-native-lightbox": "^0.7.0",
     "react-native-material-textfield": "^0.10.0",
     "react-native-modalbox": "^1.4.2",
-    "react-native-payments":
-      "./3rdparty/react-native-payments/packages/react-native-payments",
-    "react-native-payments-addon-braintree":
-      "./3rdparty/react-native-payments/packages/react-native-payments-addon-braintree",
+    "react-native-payments": "./3rdparty/react-native-payments/packages/react-native-payments",
+    "react-native-payments-addon-braintree": "./3rdparty/react-native-payments/packages/react-native-payments-addon-braintree",
     "react-native-portal": "^1.2.1",
     "react-native-splash-screen": "^3.0.1",
     "react-native-tableview-simple": "^0.16.13",
