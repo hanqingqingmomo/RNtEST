@@ -1,4 +1,4 @@
-// flow-typed signature: e19d7490cc49c7c9a0d1cdb740dce1ed
+// flow-typed signature: 0428eeb6d2ff375c1bab3e07e8bed6d1
 // flow-typed version: <<STUB>>/eslint-plugin-jsx-a11y_v5.0.1/flow_v0.53.0
 
 /**
@@ -22,6 +22,10 @@ declare module 'eslint-plugin-jsx-a11y' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'eslint-plugin-jsx-a11y/__mocks__/genInteractives' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-jsx-a11y/__mocks__/IdentifierMock' {
   declare module.exports: any;
 }
@@ -35,10 +39,6 @@ declare module 'eslint-plugin-jsx-a11y/__mocks__/JSXElementMock' {
 }
 
 declare module 'eslint-plugin-jsx-a11y/__mocks__/JSXExpressionContainerMock' {
-  declare module.exports: any;
-}
-
-declare module 'eslint-plugin-jsx-a11y/__mocks__/genInteractives' {
   declare module.exports: any;
 }
 
@@ -931,6 +931,9 @@ declare module 'eslint-plugin-jsx-a11y/src/util/schemas' {
 }
 
 // Filename aliases
+declare module 'eslint-plugin-jsx-a11y/__mocks__/genInteractives.js' {
+  declare module.exports: $Exports<'eslint-plugin-jsx-a11y/__mocks__/genInteractives'>;
+}
 declare module 'eslint-plugin-jsx-a11y/__mocks__/IdentifierMock.js' {
   declare module.exports: $Exports<'eslint-plugin-jsx-a11y/__mocks__/IdentifierMock'>;
 }
@@ -942,9 +945,6 @@ declare module 'eslint-plugin-jsx-a11y/__mocks__/JSXElementMock.js' {
 }
 declare module 'eslint-plugin-jsx-a11y/__mocks__/JSXExpressionContainerMock.js' {
   declare module.exports: $Exports<'eslint-plugin-jsx-a11y/__mocks__/JSXExpressionContainerMock'>;
-}
-declare module 'eslint-plugin-jsx-a11y/__mocks__/genInteractives.js' {
-  declare module.exports: $Exports<'eslint-plugin-jsx-a11y/__mocks__/genInteractives'>;
 }
 declare module 'eslint-plugin-jsx-a11y/__tests__/__util__/parserOptionsMapper.js' {
   declare module.exports: $Exports<'eslint-plugin-jsx-a11y/__tests__/__util__/parserOptionsMapper'>;

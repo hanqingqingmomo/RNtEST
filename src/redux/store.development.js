@@ -2,14 +2,15 @@
 
 import { applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/es/storage';
+import { type Persistor } from 'redux-persist/es/types';
 import createSagaMiddleware from 'redux-saga';
 import Reactotron from 'reactotron-react-native';
 
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
-export function initStore(): Store {
+export function initStore(): { store: Store, persistor: Persistor } {
   const sagaMiddleware = createSagaMiddleware({
     sagaMonitor: Reactotron.createSagaMonitor(),
   });
@@ -29,9 +30,9 @@ export function initStore(): Store {
     compose(applyMiddleware(sagaMiddleware))
   );
 
-  persistStore(store);
+  const persistor: Persistor = persistStore(store);
 
   sagaMiddleware.run(rootSaga);
 
-  return store;
+  return { store, persistor };
 }

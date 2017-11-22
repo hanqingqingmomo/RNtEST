@@ -3,63 +3,53 @@
 import React, { Component } from 'react';
 
 import type { Comment as TComment } from '../../Types';
-import { FlatList } from '../../atoms';
+import { FlatList, View } from '../../atoms';
 import { Comment } from '../../blocks';
+import { css } from '../../utils/style';
 
-type P = {
-  comments: Array<TComment>,
-  deleteSuccessful: Function,
-  emitAction: Function,
-  isBeingDeleted: boolean,
-  isBeingUpdated: boolean,
-  ListHeaderComponent?: any,
-  onReplyPress: TComment => void,
-  postId: string,
-  reloadPost: Function,
-  requestDelete: Function,
-  requestUpdate: Function,
-  updateSuccessful: Function,
+export type Props = {
+  level: number,
+  // ListFooterComponent: ?(React$ComponentType<any> | React$Element<any>),
+  // ListHeaderComponent: ?(React$ComponentType<any> | React$Element<any>),
+  onRequestReply: TComment => mixed,
+  replies: Array<TComment>,
 };
 
-export default class CommentList extends Component<P> {
-  renderItem = ({ item }: { item: TComment }) => {
-    const {
-      onReplyPress,
-      requestDelete,
-      deleteSuccessful,
-      isBeingDeleted,
-      requestUpdate,
-      updateSuccessful,
-      isBeingUpdated,
-    } = this.props;
+function Separator(props: { level: number }) {
+  return (
+    <View
+      style={[
+        // css('backgroundColor', '#EDEFF2'),
+        css('height', 30),
+        // css('marginVertical', 10),
+        css('marginLeft', props.level === 0 ? 50 : 35),
+        css('marginRight', props.level === 0 ? 15 : 0),
+      ]}
+    />
+  );
+}
 
-    return (
+export default class CommentList extends Component<Props> {
+  keyExtractor = (comment: TComment) => comment.id;
+
+  renderItem = ({ item, ...rest }: { item: TComment }) => (
+    <View style={css('paddingHorizontal', this.props.level === 0 ? 15 : 0)}>
       <Comment
+        level={this.props.level}
         item={item}
-        onReplyPress={onReplyPress}
-        requestDelete={requestDelete}
-        deleteSuccessful={deleteSuccessful}
-        isBeingDeleted={isBeingDeleted}
-        requestUpdate={requestUpdate}
-        updateSuccessful={updateSuccessful}
-        isBeingUpdated={isBeingUpdated}
-        reloadPost={this.props.reloadPost}
-        emitAction={this.props.emitAction}
+        onRequestReply={this.props.onRequestReply}
       />
-    );
-  };
-
-  keyExtractor = (comment: TComment) => comment.id.toString();
+    </View>
+  );
 
   render() {
-    const { comments, ListHeaderComponent } = this.props;
-
     return (
       <FlatList
-        data={comments}
+        scrollEnabled={false}
+        data={this.props.replies}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
-        ListHeaderComponent={ListHeaderComponent}
+        ItemSeparatorComponent={() => <Separator level={this.props.level} />}
       />
     );
   }

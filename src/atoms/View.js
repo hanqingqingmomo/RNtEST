@@ -6,7 +6,7 @@ import { View as OriginalView } from 'react-native';
 import { type Style } from '../Types';
 import { css } from '../utils/style';
 
-type Props = {
+export type Props = {
   style?: Style,
   flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse',
 };
@@ -37,6 +37,6 @@ function flexDirectionStyle(value): ?number {
       return css('flexDirection', value);
 
     default:
-      return undefined;
+      return css('flexDirection', 'column');
   }
 }

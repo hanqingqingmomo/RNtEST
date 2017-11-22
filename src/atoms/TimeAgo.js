@@ -3,15 +3,17 @@
 import React from 'react';
 import { distanceInWordsToNow } from 'date-fns';
 
-import { Text } from './index';
+import Text, { type Props } from './Text';
 
 type P = {
+  ...Props,
   date: string,
 };
 
-export default function TimeAgo({ date }: P) {
+export default function TimeAgo(props: P) {
+  const { date, ...textProps } = props;
   return (
-    <Text>
+    <Text {...textProps}>
       {distanceInWordsToNow(new Date(date), {
         includeSeconds: true,
         addSuffix: true,

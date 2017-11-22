@@ -3,145 +3,84 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import Collapsible from 'react-native-collapsible';
+import plural from 'plural-parens';
 
 import type { Comment as TComment, User, PopupSetting } from '../../Types';
-import { Avatar, Like, Text, TimeAgo, View } from '../../atoms';
+import { Avatar, Text, TimeAgo, View, TouchableItem, Count } from '../../atoms';
 import { SettingsPopup } from '../../blocks';
 import { getColor } from '../../utils/color';
 import { selectUser } from '../../redux/selectors';
 import {
-  makeReportReq,
-  makeDeleteCommentReq,
-} from '../../utils/requestFactory';
-import Replies from './Replies';
+  contentDestroy,
+  contentLike,
+  contentReport,
+} from '../../redux/ducks/contentObject';
+import { css } from '../../utils/style';
+import CommentList from './CommentList';
 
-type P = {
-  deleteSuccessful: Function,
-  emitAction: Function,
-  isBeingDeleted: boolean,
-  isBeingUpdated: boolean,
+type Props = {
   item: TComment,
-  onReplyPress?: Function,
-  reloadPost: Function,
-  requestDelete: Function,
-  requestUpdate: Function,
-  updateSuccessful: Function,
-  user: User,
+  level: number,
+  onRequestReply?: TComment => mixed,
+  viewer: User,
 };
 
-type S = {
+type State = {
   showReplies: boolean,
-  updating: boolean,
 };
 
 const AVATAR_SIZE = 25;
 
 const mapStateToProps = state => ({
-  user: selectUser(state),
+  viewer: selectUser(state),
 });
 
-class Comment extends Component<P, S> {
+const mapDispatch = { contentLike, contentDestroy, contentReport };
+
+class Comment extends Component<Props, State> {
   state = {
     showReplies: false,
-    updating: false,
   };
 
-  deleteComment = async () => {
-    const { item, requestDelete, deleteSuccessful } = this.props;
-
-    const deleteCommentReq = makeDeleteCommentReq(item.id);
-
-    // requestDelete(item);
-
-    this.setState({ updating: true });
-
-    try {
-      await global.fetch(deleteCommentReq.url, deleteCommentReq.options);
-      this.setState({ updating: false });
-      this.props.reloadPost();
-
-      // deleteSuccessful(item);
-    } catch (err) {}
-  };
-
-  reportComment = async () => {
-    const { item } = this.props;
-    const reportReq = makeReportReq({ commentId: item.id });
-
-    this.setState({ updating: true });
-
-    try {
-      const reportResp = await global.fetch(reportReq.url, reportReq.options);
-
-      this.setState({ updating: false });
-
-      const resp = await reportResp.json();
-
-      if (resp.error) {
-        global.alertWithType('error', 'Ooops', resp.error);
-      } else {
-        global.alertWithType(
-          'success',
-          'Thanks!',
-          'Your report has been successfully received and will be reviewed by our support staff.'
-        );
-      }
-    } catch (err) {}
-  };
-
-  viewAllReplies = () => {
+  toggleShowAllReplies = () => {
     this.setState({ showReplies: !this.state.showReplies });
   };
 
-  getPopupSettings(): Array<PopupSetting> {
+  getPopupSettings() {
     return [
       {
+        key: 'delete',
         iconName: 'delete',
         label: 'Delete',
-        isHidden: this.props.item.author.id !== this.props.user.id,
-        onPress: this.deleteComment,
+        isHidden: ({ viewer, author }) => author.id !== viewer.id,
+        onPress: () => this.props.contentDestroy(this.props.item),
       },
       {
+        key: 'report',
         iconName: 'report',
         label: 'Report',
-        onPress: this.reportComment,
+        onPress: () => this.props.contentReport(this.props.item),
       },
-    ].filter((setting: PopupSetting): boolean => !setting.isHidden);
+    ].filter(
+      (setting: PopupSetting) =>
+        !setting.isHidden ||
+        !setting.isHidden({
+          author: this.props.item.author,
+          viewer: this.props.viewer,
+        })
+    );
   }
 
   render() {
-    const {
-      item,
-      onReplyPress,
-      requestUpdate,
-      updateSuccessful,
-      isBeingUpdated,
-      requestDelete,
-      deleteSuccessful,
-      isBeingDeleted,
-    } = this.props;
-    const isReply = !onReplyPress;
-
-    const { updating } = this.state;
+    const { item, onRequestReply } = this.props;
 
     return (
-      <View
-        style={[
-          styles.flexRow,
-          styles.container,
-          isReply ? styles.containerReply : undefined,
-        ]}
-      >
+      <View style={styles.flexRow}>
         <View style={styles.avatarWrapper}>
           <Avatar imageURI={item.author.profile_photo} size={AVATAR_SIZE} />
         </View>
-
-        <View
-          style={[
-            styles.containerWrapper,
-            isReply ? styles.containerWrapperReply : undefined,
-          ]}
-        >
+        <View style={[styles.contentWrapper]}>
           <View style={[styles.alignItemsCenter, styles.flexRow]}>
             <View style={[styles.headerInfo, styles.flexRow]}>
               <Text
@@ -153,17 +92,15 @@ class Comment extends Component<P, S> {
               >
                 {item.author.first_name} {item.author.last_name}
               </Text>
-              <Text
+
+              <TimeAgo
+                date={item.created_at}
                 size={11}
                 weight="500"
-                lineHeight={13}
-                color={getColor('gray')}
-              >
-                <TimeAgo date={item.created_at} />
-              </Text>
+                color="gray"
+              />
             </View>
-            <SettingsPopup settings={this.getPopupSettings()} busy={updating} />
-            }
+            <SettingsPopup settings={this.getPopupSettings()} />
           </View>
 
           <Text size={14} lineHeight={18} color="#455A64">
@@ -180,21 +117,20 @@ class Comment extends Component<P, S> {
                 styles.alignItemsCenter,
               ]}
             >
-              <View style={styles.likeWrapper}>
-                <Like
+              <TouchableItem
+                style={styles.likeWrapper}
+                onPress={() => this.props.contentLike(this.props.item)}
+              >
+                <Count
+                  iconName="like"
                   count={item.likes_count}
-                  liked={item.liked}
-                  item={item}
-                  requestUpdate={requestUpdate}
-                  updateSuccessful={updateSuccessful}
-                  isBeingUpdated={isBeingUpdated}
-                  emitAction={this.props.emitAction}
+                  pinned={item.liked}
                 />
-              </View>
+              </TouchableItem>
 
-              {onReplyPress && (
+              {onRequestReply && (
                 <Text
-                  onPress={() => onReplyPress(item)}
+                  onPress={() => onRequestReply(item)}
                   size={13}
                   lineHeight={18}
                   color={getColor('linkBlue')}
@@ -205,40 +141,45 @@ class Comment extends Component<P, S> {
               )}
             </View>
 
-            {!isReply && item.comments_count ? (
+            {item.replies.length > 0 ? (
               <Text
                 size={13}
                 lineHeight={18}
                 color="gray"
-                onPress={this.viewAllReplies}
+                onPress={this.toggleShowAllReplies}
               >
-                {item.comments_count === 1
-                  ? 'View 1 Reply'
-                  : `View All ${item.comments_count} Replies`}
+                {this.state.showReplies
+                  ? plural(
+                      `Hide ${item.replies.length} reply(s)`,
+                      item.replies.length
+                    )
+                  : plural(
+                      `Show ${item.replies.length} reply(s)`,
+                      item.replies.length
+                    )}
               </Text>
             ) : null}
           </View>
 
-          {!isReply && this.state.showReplies ? (
-            <Replies
-              replies={item.replies}
-              requestDelete={requestDelete}
-              deleteSuccessful={deleteSuccessful}
-              isBeingDeleted={isBeingDeleted}
-              requestUpdate={requestUpdate}
-              updateSuccessful={updateSuccessful}
-              isBeingUpdated={isBeingUpdated}
-              reloadPost={this.props.reloadPost}
-              emitAction={this.props.emitAction}
-            />
-          ) : null}
+          <Collapsible
+            collapsed={
+              item.replies.length === 0 || this.state.showReplies === false
+            }
+          >
+            <View style={css('paddingTop', 30)}>
+              <CommentList
+                level={this.props.level + 1}
+                replies={item.replies}
+              />
+            </View>
+          </Collapsible>
         </View>
       </View>
     );
   }
 }
 
-export default connect(mapStateToProps)(Comment);
+export default connect(mapStateToProps, mapDispatch)(Comment);
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -250,33 +191,16 @@ const styles = StyleSheet.create({
   authorName: {
     marginRight: 10,
   },
-  containerWrapper: {
-    borderBottomWidth: 1,
-    borderColor: '#EDEFF2',
+  contentWrapper: {
     flex: 1,
-    paddingBottom: 12,
-  },
-  containerWrapperReply: {
-    borderBottomWidth: 0,
-    borderTopWidth: 1,
-    paddingBottom: 5,
-    paddingLeft: 0,
   },
   avatarWrapper: {
-    paddingRight: 11,
+    paddingRight: 10,
     paddingTop: 6,
   },
   headerInfo: {
     flexGrow: 1,
     alignItems: 'flex-end',
-  },
-  container: {
-    paddingTop: 5,
-    paddingHorizontal: 15,
-  },
-  containerReply: {
-    marginTop: 7,
-    paddingHorizontal: 0,
   },
   likeWrapper: {
     paddingRight: 10,

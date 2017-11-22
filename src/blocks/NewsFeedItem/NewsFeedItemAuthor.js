@@ -8,7 +8,7 @@ import { css } from '../../utils/style';
 import { type User } from '../../Types';
 
 type P = {
-  onUserPress: Function,
+  onPress: Function,
   author: User,
 };
 

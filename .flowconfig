@@ -5,7 +5,6 @@
 
 .*/node_modules/eslint-plugin-jsx-a11y/.*
 .*/node_modules/react-navigation/.*
-.*/node_modules/mitt/src.*
 .*/node_modules/redux-persist/.*
 .*/node_modules/react-native-tab-view/.*
 .*/node_modules/react-native-payments/.*

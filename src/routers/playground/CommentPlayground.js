@@ -38,7 +38,7 @@ export default function CommentPlayground() {
       renderItem={({ item }: { item: TComment }) => (
         <Comment
           data={item}
-          onReplyPress={(...args) => console.log('reply', args)}
+          onRequestReply={(...args) => console.log('reply', args)}
           onMorePress={(...args) => console.log('more', args)}
         />
       )}

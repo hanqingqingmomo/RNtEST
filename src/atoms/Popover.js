@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import PopoverTooltip from 'react-native-popover-tooltip';
 import { Dimensions } from 'react-native';
 
+import PopoverTooltip from './react-native-popover-tooltip';
 import { getColor } from '../utils/color';
 
 type Props = {
@@ -21,7 +21,7 @@ export default function Popover({ labels, button }: Props) {
       tooltipContainerStyle={styles.tooltipContainerStyle}
       overlayStyle={styles.overlayStyle}
       setBelow
-      delayLongPress={0}
+      delayLongPress={25}
     />
   );
 }

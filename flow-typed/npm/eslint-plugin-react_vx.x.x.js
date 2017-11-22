@@ -1,4 +1,4 @@
-// flow-typed signature: e8a8e24f78f6b789ffa3272015101092
+// flow-typed signature: c40611f72d4fa941c0c4608412273d55
 // flow-typed version: <<STUB>>/eslint-plugin-react_v7.0.1/flow_v0.53.0
 
 /**
@@ -258,11 +258,11 @@ declare module 'eslint-plugin-react/lib/rules/void-dom-elements-no-children' {
   declare module.exports: any;
 }
 
-declare module 'eslint-plugin-react/lib/util/Components' {
+declare module 'eslint-plugin-react/lib/util/annotations' {
   declare module.exports: any;
 }
 
-declare module 'eslint-plugin-react/lib/util/annotations' {
+declare module 'eslint-plugin-react/lib/util/Components' {
   declare module.exports: any;
 }
 
@@ -470,11 +470,11 @@ declare module 'eslint-plugin-react/lib/rules/style-prop-object.js' {
 declare module 'eslint-plugin-react/lib/rules/void-dom-elements-no-children.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/void-dom-elements-no-children'>;
 }
-declare module 'eslint-plugin-react/lib/util/Components.js' {
-  declare module.exports: $Exports<'eslint-plugin-react/lib/util/Components'>;
-}
 declare module 'eslint-plugin-react/lib/util/annotations.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/annotations'>;
+}
+declare module 'eslint-plugin-react/lib/util/Components.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/Components'>;
 }
 declare module 'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket'>;
