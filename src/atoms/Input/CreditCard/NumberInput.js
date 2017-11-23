@@ -64,12 +64,11 @@ export class NumberInput extends React.Component<Props> {
           </View>
           <View style={{ flex: 1 }}>
             <BaseInput
-              autoFocus
               passRef={this.props.passRef}
               onFocus={this.props.onFocus}
               onBlur={this.props.onBlur}
               value={
-                this.props.active === false && isValid
+                this.props.active === false
                   ? last4(this.props.value)
                   : this.props.value
               }

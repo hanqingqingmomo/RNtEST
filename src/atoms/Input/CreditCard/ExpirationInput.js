@@ -47,10 +47,12 @@ export class ExpirationInput extends React.Component<Props> {
     const { isPotentiallyValid }: ValidationState = valid.expirationDate(
       this.props.value
     );
+
     const opacity = this._animToggle.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 1],
     });
+
     const width = this._animToggle.interpolate({
       inputRange: [0, 1],
       outputRange: ['10%', '100%'],

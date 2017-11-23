@@ -22,10 +22,6 @@ function validate(name, value) {
 /**
  * Number, CVC, Expiration input
  */
-// type InputProps = {
-//   value: string,
-//   onChange: string => mixed,
-// };
 
 /**
  * Public component
@@ -106,7 +102,10 @@ export class CreditCardInput extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <NumberInput
-          active={focused === 'number' || focused === null}
+          active={
+            focused === 'number' ||
+            (focused === null && values.expiration === '' && values.cvc === '')
+          }
           onBlur={this.onBlur('number')}
           onChange={this.onChangeText('number')}
           onFocus={this.onFocus('number')}
@@ -115,7 +114,7 @@ export class CreditCardInput extends React.Component<Props, State> {
         />
 
         <ExpirationInput
-          active={['cvc', 'expiration'].includes(focused)}
+          active={values.expiration !== '' || 'expiration' === focused}
           passRef={this.ref('expiration')}
           onFocus={this.onFocus('expiration')}
           onBlur={this.onBlur('expiration')}
@@ -124,7 +123,7 @@ export class CreditCardInput extends React.Component<Props, State> {
         />
 
         <CVCInput
-          active={['cvc'].includes(focused)}
+          active={values.cvc !== '' || 'cvc' === focused}
           onBlur={this.onBlur('cvc')}
           onChange={this.onChangeText('cvc')}
           onFocus={this.onFocus('cvc')}
@@ -143,9 +142,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderColor: '#e7e7e7',
-    borderRadius: 4,
-    borderWidth: StyleSheet.hairlineWidth,
-    padding: 10,
+    // borderRadius: 4,
+    // borderWidth: StyleSheet.hairlineWidth,
+    // padding: 10,
     overflow: 'hidden',
   },
 });
