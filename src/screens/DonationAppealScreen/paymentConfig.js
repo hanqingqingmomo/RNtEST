@@ -2,7 +2,9 @@
 
 import Config from 'react-native-config';
 
-import { type Payment } from '../../blocks/DonationForm/DonationForm';
+import { type Payment } from '../../blocks/Donation/DonationForm';
+
+export const paymentOptions = {};
 
 export const paymentMethods = [
   {

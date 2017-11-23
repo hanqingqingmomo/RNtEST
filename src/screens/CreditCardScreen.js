@@ -19,12 +19,14 @@ import { CreditCardInput } from 'CreditCardInput';
 import { getColor } from '../utils/color';
 
 const INITIAL_VALUES = {
-  first_name: '',
-  last_name: '',
-  email: '',
-  password: '',
-  password_confirmation: '',
-  profile_photo: null,
+  first_name: 'Andrej',
+  last_name: 'Badin',
+  street: 'Krastna cesticka',
+  apt: '#50',
+  city: 'Bratiska',
+  zip: '666 66',
+  country: 'SK',
+  state: '',
 };
 
 const RULES = {
@@ -76,20 +78,10 @@ export default class CreditCardScreen extends Component<Props, State> {
   state = {
     errors: null,
     creditCard: {
-      number: '4111111111111111',
+      number: '411111111111111',
       expiration: '11/20',
       cvc: '111',
       isValid: true,
-    },
-    payer: {
-      first_name: 'Andrej',
-      last_name: 'Badin',
-      street: 'Krastna cesticka',
-      apt: '#50',
-      city: 'Bratiska',
-      zip: '666 66',
-      country: '',
-      state: '',
     },
   };
 
@@ -98,8 +90,11 @@ export default class CreditCardScreen extends Component<Props, State> {
   };
 
   handleSubmit = async (values: FormValues, form: Object) => {
-    // console.log(form);
-    console.log('aaa');
+    const data = {
+      payer: values,
+      card: this.state.creditCard,
+    };
+    console.log(data);
     // const signupReq = makeSignupRq(values);
     // const signupRes = await fetch(signupReq.url, signupReq.options);
 
@@ -128,7 +123,7 @@ export default class CreditCardScreen extends Component<Props, State> {
   render() {
     return (
       <Form
-        initialValues={this.state.payer}
+        initialValues={INITIAL_VALUES}
         validateOnChange
         onSubmit={this.handleSubmit}
         messages={MESSAGES}

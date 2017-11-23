@@ -4,11 +4,14 @@ import React, { Component } from 'react';
 import { NativeModules } from 'react-native';
 import { PaymentRequest } from 'react-native-payments';
 
-import { CommunityHeader, Screen, Fetch } from '../../atoms';
-import DonationForm, {
-  type Payment,
-} from '../../blocks/DonationForm/DonationForm';
-import { paymentMethods, paymentDetails } from './paymentConfig';
+import { Screen, Fetch, Text } from '../../atoms';
+import Form, { type Payment } from '../../blocks/Donation/DonationForm';
+import Header from '../../blocks/Donation/DonationHeader';
+import {
+  paymentMethods,
+  paymentDetails,
+  paymentOptions,
+} from './paymentConfig';
 import { makeDonationRq } from '../../utils/requestFactory';
 import type { ScreenProps, FetchProps } from '../../Types';
 
@@ -44,7 +47,8 @@ export default class DonationAppealScreen extends Component<Props> {
   ) => async (payment: Payment) => {
     const paymentRequest = new PaymentRequest(
       paymentMethods,
-      paymentDetails(payment)
+      paymentDetails(payment),
+      paymentOptions
     );
 
     try {
@@ -91,13 +95,8 @@ export default class DonationAppealScreen extends Component<Props> {
       <Fetch manual>
         {(fetchProps: FetchProps<*>) => (
           <Screen fill>
-            <CommunityHeader
-              title="The Future is Female"
-              subtitle="Help us in creating a future where ALL women thrive. Make a donation today."
-              profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
-              coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
-            />
-            <DonationForm
+            <Header />
+            <Form
               onPaymentNonceReceived={this.onPaymentNonceReceived(fetchProps)}
               onFail={this.onPaymentFailed}
               onInitiatePayment={this.initiatePayment(

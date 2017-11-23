@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { NativeModules, Platform, StyleSheet } from 'react-native';
 import Braintree from 'react-native-braintree-xplat';
 
-import { View, Text } from '../../atoms';
+import { View } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
@@ -102,13 +102,6 @@ export default class DonationForm extends Component<P, S> {
   render() {
     return (
       <View style={style.container}>
-        <Text size={12} color="#90A4AE">
-          YWCA Metropolitan Chicago supports more than 200,000 women and
-          families in overcoming various challenges and finding personal and
-          economic empowerment. You can be partner in our mission of eliminating
-          racism and empowering women by making a contribution to power our
-          critical work.
-        </Text>
         <View>
           <View style={style.buttonContainer}>
             {AMOUNTS.map(amount => (
