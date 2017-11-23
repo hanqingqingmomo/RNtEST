@@ -18,6 +18,8 @@ type Props = {
   validate?: ({
     [string]: string,
   }) => boolean | Promise<*>,
+  validateOnBlur?: boolean,
+  validateOnChange?: boolean,
 };
 
 type ErrorProps = {
