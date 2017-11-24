@@ -5,8 +5,9 @@ import { StyleSheet } from 'react-native';
 
 import { Image, ImageBackground, Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 
-const TITLE = 'The Future is Female';
+const TITLE = 'Help us strengthen Chicago by empowering women and families';
 const SUBTITLE =
   'Help us in creating a future where ALL women thrive. Make a donation today.';
 
@@ -22,10 +23,10 @@ class Description extends React.Component<
 
   render() {
     return (
-      <View>
+      <View style={css('paddingBottom', 15)}>
         <Text
           size={12}
-          color="#90A4AE"
+          color={getColor('white')}
           numberOfLines={this.state.collapsed ? 2 : undefined}
         >
           YWCA Metropolitan Chicago supports more than 200,000 women and
@@ -35,10 +36,12 @@ class Description extends React.Component<
           critical work.
         </Text>
         <Text
+          color={getColor('white')}
           onPress={() =>
             this.setState(state => ({ collapsed: !state.collapsed }))}
+          style={css('textDecorationLine', 'underline')}
         >
-          Show more
+          {this.state.collapsed ? 'Show more' : 'Show less'}
         </Text>
       </View>
     );
@@ -75,15 +78,6 @@ export default function DonationHeader() {
           >
             {TITLE}
           </Text>
-          <Text
-            color={getColor('white')}
-            ellipsizeMode="tail"
-            lineHeight={18}
-            numberOfLines={2}
-            size={15}
-          >
-            {SUBTITLE}
-          </Text>
         </View>
       </View>
       <Description />
@@ -93,9 +87,10 @@ export default function DonationHeader() {
 
 const styles = StyleSheet.create({
   coverContainer: {
+    paddingTop: 100,
     width: '100%',
-    height: 185,
     justifyContent: 'flex-end',
+    paddingHorizontal: 15,
   },
   dimm: {
     backgroundColor: '#161D21',
@@ -108,20 +103,17 @@ const styles = StyleSheet.create({
     width: 58,
   },
   profileWrapper: {
-    alignItems: 'center',
     backgroundColor: 'transparent',
-    flexDirection: 'row',
-    height: 92,
-    paddingLeft: 15,
+    flexDirection: 'column',
+    height: 115,
   },
   title: {
     color: getColor('white'),
     fontSize: 20,
     lineHeight: 24,
-    width: '60%',
   },
   titleWrapper: {
+    paddingTop: 10,
     flex: 1,
-    paddingHorizontal: 12,
   },
 });
