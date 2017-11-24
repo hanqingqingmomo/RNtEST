@@ -1,49 +1,34 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import type { Comment as TComment, Post } from '../Types';
-import {
-  ActivityIndicator,
-  CenterView,
-  Fetch,
-  Screen,
-  Text,
-  View,
-} from '../atoms';
+import { View, ScrollView } from '../atoms';
 import { NewsFeedItem, CommentList, CommentInput } from '../blocks';
-import { makeReadPostWithCommentsRq } from '../utils/requestFactory';
-import type { ScreenProps, FetchProps } from '../Types';
+import { selectPost } from '../redux/selectors';
 
-type NavigationProps = {
-  params: {
-    emitAction: Function,
-    postId: string,
-    reloadList: Function,
-  },
+import { css } from '../utils/style';
+
+type P = {
+  navigation: any,
+  post: Post,
 };
 
 type P = ScreenProps<NavigationProps>;
 
 type S = {
   replyingTo?: TComment,
-  refreshingData: boolean,
-  isBeingDeleted: boolean,
-  isBeingUpdated: boolean,
 };
 
-export default class PostDetailScreen extends Component<P, S> {
+class PostDetailScreen extends Component<P, S> {
   state = {
     replyingTo: undefined,
-    refreshingData: false,
-    isBeingDeleted: false,
-    isBeingUpdated: false,
   };
 
   inputRef: ?any;
 
-  onReplyPress = (comment: TComment) => {
+  focusReplyInput = (comment: TComment) => {
     this.setState({ replyingTo: comment });
 
     if (this.inputRef) {
@@ -63,135 +48,43 @@ export default class PostDetailScreen extends Component<P, S> {
     this.inputRef = ref;
   };
 
-  onSubmitSuccess = (fetch: any, data: Post) => () => {
-    this.setState({
-      replyingTo: undefined,
-    });
-
-    this.props.navigation.state.params.reloadList(data);
-
-    fetch();
-  };
-
-  requestDelete = (item: Post) => {
-    // this.setState({ isBeingDeleted: true });
-    // TODO
-    // console.log('request delete', item);
-  };
-
-  deleteSuccessful = (item: Post) => {
-    // this.setState({ isBeingDeleted: false });
-    // TODO
-    // console.log('delete successful', item);
-  };
-
-  requestUpdate = (item: Post) => {
-    // this.setState({ isBeingUpdated: true });
-    // TODO
-    // console.log('request update', item);
-  };
-
-  updateSuccessful = (item: Post) => {
-    // this.setState({ isBeingUpdated: false });
-    // TODO
-    // console.log('update successful', item);
-  };
-
   render() {
-    const { navigation } = this.props;
-    const { replyingTo, isBeingDeleted, isBeingUpdated } = this.state;
-
-    const readPostWithCommentsRq = makeReadPostWithCommentsRq(
-      navigation.state.params.postId
-    );
-
+    const { post } = this.props;
+    const { replyingTo } = this.state;
+    // TODO do not pass navigation
     return (
-      <Fetch
-        url={readPostWithCommentsRq.url}
-        options={readPostWithCommentsRq.options}
-      >
-        {({ loading, error, data, fetch }: FetchProps<Post>) => (
-          <Screen
-            fill
-            tintColor="white"
-            containerStyle={styles.screenContainer}
-            keyboardShouldPersistTaps="always"
-          >
-            {loading && (
-              <CenterView>
-                <ActivityIndicator />
-              </CenterView>
-            )}
-            {error && (
-              <CenterView>
-                <Text>{error.message}</Text>
-              </CenterView>
-            )}
-            {!loading &&
-              data && (
-                <View style={styles.container}>
-                  <CommentList
-                    postId={navigation.state.params.postId}
-                    comments={data.replies}
-                    onReplyPress={this.onReplyPress}
-                    isBeingDeleted={isBeingDeleted}
-                    isBeingUpdated={isBeingUpdated}
-                    requestDelete={this.requestDelete}
-                    requestUpdate={this.requestUpdate}
-                    deleteSuccessful={this.deleteSuccessful}
-                    updateSuccessful={this.updateSuccessful}
-                    ListHeaderComponent={
-                      <NewsFeedItem
-                        isBeingDeleted={isBeingDeleted}
-                        isBeingUpdated={isBeingUpdated}
-                        isDetail
-                        item={data}
-                        navigation={this.props.navigation}
-                        radius={0}
-                        requestDelete={this.requestDelete}
-                        requestUpdate={this.requestUpdate}
-                        deleteSuccessful={this.deleteSuccessful}
-                        updateSuccessful={this.updateSuccessful}
-                        onDelete={() => {
-                          this.props.navigation.state.params.reloadList(
-                            data,
-                            true
-                          );
-                          this.props.navigation.goBack();
-                        }}
-                        emitAction={
-                          this.props.navigation.state.params.emitAction
-                        }
-                      />
-                    }
-                    reloadPost={fetch}
-                    emitAction={this.props.navigation.state.params.emitAction}
-                  />
-                  <CommentInput
-                    postId={data.id}
-                    replyingTo={replyingTo}
-                    onReplyCancel={this.onReplyCancel}
-                    onSubmitSuccess={this.onSubmitSuccess(fetch, data)}
-                    passRef={this.passRef}
-                    style={styles.commentInput}
-                  />
-                </View>
-              )}
-          </Screen>
-        )}
-      </Fetch>
+      <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
+        <ScrollView>
+          <NewsFeedItem
+            isDetail
+            item={post}
+            navigation={this.props.navigation}
+            onDelete={() => {
+              this.props.navigation.goBack();
+            }}
+          />
+          <View style={css('paddingVertical', 20)}>
+            <CommentList
+              level={0}
+              replies={this.props.post.replies}
+              onRequestReply={this.focusReplyInput}
+            />
+          </View>
+        </ScrollView>
+        <CommentInput
+          target={replyingTo || post}
+          postId={post.id}
+          replyingTo={replyingTo}
+          onReplyCancel={this.onReplyCancel}
+          passRef={this.passRef}
+        />
+      </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  screenContainer: {
-    height: 100,
-  },
-  container: {
-    flex: 1,
-  },
-  commentInput: {
-    height: 100,
-  },
+const mapState = (state, props) => ({
+  post: selectPost(props.navigation.state.params.postId, state),
 });
+
+export default connect(mapState)(PostDetailScreen);

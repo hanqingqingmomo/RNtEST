@@ -1,13 +1,10 @@
 // @flow
 
-import { REHYDRATE } from 'redux-persist/lib/constants';
-
 //
 // Typedefs
 //
 
 type State = {
-  ready: boolean,
   userAccessToken: ?string,
   userProfile: ?Object,
 };
@@ -59,32 +56,15 @@ export function clearUserData(): ClearUserDataAction {
 //
 
 const INITIAL_STATE: State = {
-  ready: false,
   userAccessToken: null,
   userProfile: null,
 };
 
 export default function(
   state: State = INITIAL_STATE,
-  action:
-    | { type: typeof REHYDRATE }
-    | SetUserAccessTokenAction
-    | SetUserProfileAction
-    | ClearUserDataAction
+  action: SetUserAccessTokenAction | SetUserProfileAction | ClearUserDataAction
 ): State {
   switch (action.type) {
-    case REHYDRATE:
-      return action.payload
-        ? {
-            ...state,
-            ...action.payload.application,
-            ready: true,
-          }
-        : {
-            ...state,
-            ready: true,
-          };
-
     case 'application/SET_USER_ACCESS_TOKEN':
       return {
         ...state,
@@ -94,7 +74,6 @@ export default function(
     case 'application/CLEAR_USER_DATA':
       return {
         ...INITIAL_STATE,
-        ready: true,
       };
 
     default:

@@ -1,5 +1,5 @@
-// flow-typed signature: f0d96df48e9abc14bcc1405ba2a47dde
-// flow-typed version: 83053e4020/react-redux_v5.x.x/flow_>=v0.53.x
+// flow-typed signature: 4e93c65cedbfbf7f1ab3fe4e800943d3
+// flow-typed version: 9092387fd2/react-redux_v5.x.x/flow_>=v0.53.x <=v0.53.x
 
 // flow-typed signature: 8db7b853f57c51094bf0ab8b2650fd9c
 // flow-typed version: ab8db5f14d/react-redux_v5.x.x/flow_>=v0.30.x

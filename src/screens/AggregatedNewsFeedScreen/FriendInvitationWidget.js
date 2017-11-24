@@ -15,27 +15,19 @@ type State = {
   wasClosed: boolean,
 };
 
-type Props = {
-  openModal: Function,
-};
-
-export default class FriendInvitationWidget extends Component<Props, State> {
+export default class FriendInvitationWidget extends Component<{}, State> {
   state = {
     isCollapsed: false,
     wasClosed: true,
   };
 
-  componentDidMount() {
-    this.fetch();
-  }
-
-  fetch = async () => {
+  async componentDidMount() {
     const wasClosed = await AsyncStorage.getItem(key);
 
     this.setState({
       wasClosed,
     });
-  };
+  }
 
   onClosePress = () => {
     this.setState({

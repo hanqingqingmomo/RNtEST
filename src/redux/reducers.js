@@ -2,11 +2,21 @@
 
 import { combineReducers } from 'redux';
 
+import { reducer as timeline } from './ducks/timelines';
 import application from './ducks/application';
+import entities from './ducks/entities';
 import requests from './ducks/requests';
 import user from './ducks/user';
 
-const reducers = { application, requests, user };
+// import './ducks/contentObject';
+
+const reducers = {
+  application,
+  entities,
+  requests,
+  user,
+  timeline,
+};
 
 export type Reducers = typeof reducers;
 

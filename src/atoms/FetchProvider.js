@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { selectAccessToken } from '../redux/selectors';
@@ -12,7 +12,7 @@ type Props = {
   children: React$Node,
 };
 
-export default class FetchProvider extends Component<Props> {
+export default class FetchProvider extends React.Component<Props> {
   static childContextTypes = {
     getFetchConfig: PropTypes.func,
   };

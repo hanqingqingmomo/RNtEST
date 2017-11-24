@@ -1,11 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Animated, Keyboard, NetInfo, StyleSheet } from 'react-native';
+import { Keyboard, NetInfo } from 'react-native';
 
 import { NoContent } from '../blocks';
-
-const INITIAL_OPACITY = 0;
+import { BootScreen } from '../screens';
 
 type P = {
   children: React$Node,
@@ -22,6 +21,7 @@ export default class Network extends Component<P, S> {
 
   componentDidMount() {
     NetInfo.isConnected.addEventListener('connectionChange', this.getStatus);
+    setTimeout(this.getStatus, 100);
   }
 
   componentWillUnmount() {
@@ -34,10 +34,6 @@ export default class Network extends Component<P, S> {
     }
   }
 
-  toggle = () => {
-    this.setState({ isConnected: !this.state.isConnected });
-  };
-
   getStatus = async () => {
     this.setState({
       isConnected: await NetInfo.isConnected.fetch(),
@@ -47,14 +43,19 @@ export default class Network extends Component<P, S> {
   render() {
     const { isConnected } = this.state;
 
-    return isConnected === true ? (
+    if (isConnected === null) {
+      return <BootScreen />;
+    }
+
+    return isConnected ? (
       this.props.children
-    ) : isConnected === false ? (
+    ) : (
       <NoContent
         iconName="offline"
         title="You are offline"
         subtitle="Please connect to the Internet to use the app."
+        refresh={this.getStatus}
       />
-    ) : null;
+    );
   }
 }

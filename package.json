@@ -11,28 +11,25 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "list-iphones": "instruments -s devices",
-    "ios": "react-native run-ios",
-    "postinstall": "sh postinstall.sh"
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
-    "axios": "^0.16.2",
+    "apisauce": "^0.14.1",
     "color": "^2.0.0",
     "date-fns": "^1.28.5",
     "flux-standard-action": "^1.2.0",
     "formik": "^0.9.4",
-    "hoist-non-react-statics": "^2.2.1",
     "immutability-helper": "^2.4.0",
     "indicative": "https://github.com/Andreyco/indicative#764ed4838b82f0efb7c19b4960db3aad7fd95441",
     "lodash.memoize": "^4.1.2",
     "lodash.merge": "^4.6.0",
-    "mitt": "^1.1.2",
     "mobile-center": "^0.10.0",
     "mobile-center-analytics": "^0.10.0",
     "mobile-center-crashes": "^0.10.0",
-    "query-string": "^5.0.0",
+    "normalizr": "^3.2.4",
+    "plural-parens": "^1.0.0",
     "react": "16.0.0-beta.5",
-    "react-addons-update": "^15.6.2",
     "react-fetch-component": "^5.0.0",
     "react-native": "0.49.3",
     "react-native-braintree-xplat": "https://github.com/kraffslol/react-native-braintree-xplat#343bd3c8553bb418c0a36deac240dc56e2209a6b",
@@ -58,9 +55,8 @@
     "react-navigation": "^1.0.0-beta.13",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
-    "redux-persist": "5.0.0-rc.6",
-    "redux-saga": "^0.15.5",
-    "url-parse": "^1.1.9"
+    "redux-persist": "^5.2.2",
+    "redux-saga": "^0.15.5"
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
@@ -84,7 +80,10 @@
     "reactotron-redux-saga": "^1.12.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "/3rdparty/"
+    ]
   },
   "eslintConfig": {
     "sourceType": "module",

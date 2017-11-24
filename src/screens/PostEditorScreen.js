@@ -4,19 +4,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 
-import { selectUser } from '../redux/selectors';
-import type { User, LinkAttachment, ScreenProps, FetchProps } from '../Types';
-import { Screen, NavigationTextButton, Fetch } from '../atoms';
+import { selectUser, selectRequest } from '../redux/selectors';
+import type { User, LinkAttachment } from '../Types';
+import { Screen, NavigationTextButton } from '../atoms';
 import PostEditor from '../blocks/PostEditor/PostEditor';
-import { makeCreatePostReq } from '../utils/requestFactory';
+import { createPost } from '../redux/ducks/contentObject';
 
-type NavigationState = {
-  params: {
-    emitAction: Function,
-  },
-};
-
-type Props = ScreenProps<NavigationState> & {
+type Props = {
   user: User,
 };
 
@@ -31,10 +25,10 @@ const HEADER_RIGHT_ID = 'PostEditor:HeaderRight';
 
 const mapStateToProps = state => ({
   user: selectUser(state),
+  request: selectRequest('req:content-object:create', state),
 });
 
-@connect(mapStateToProps)
-export default class PostEditorScreen extends Component<Props, State> {
+class PostEditorScreen extends Component<Props, State> {
   static navigationOptions = {
     title: 'Start New Conversation',
     headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
@@ -47,34 +41,37 @@ export default class PostEditorScreen extends Component<Props, State> {
     link: null,
   };
 
-  dropdown = null;
+  get busy(): boolean {
+    return this.props.request && this.props.request.loading ? true : false;
+  }
 
-  handleFormSubmit = (fetch: any) => async () => {
-    const { emitAction } = this.props.navigation.state.params;
-    const createPostReq = makeCreatePostReq(
-      this.state.content,
-      this.state.communitiesSelection,
-      this.state.attachment,
-      this.state.link ? this.state.link.url : undefined
+  get disabled(): boolean {
+    return (
+      this.busy ||
+      this.state.content === '' ||
+      this.state.communitiesSelection.length === 0
     );
+  }
 
-    const createPostRes = await fetch(createPostReq.url, createPostReq.options);
-
-    if (createPostRes.error) {
-      global.alertWithType(
-        'error',
-        'Ooops',
-        (createPostRes.error.message: string)
-      );
-    } else {
-      emitAction('create', createPostRes.data);
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.request &&
+      this.props.request &&
+      prevProps.request.loading === true &&
+      this.props.request.loading === false
+    ) {
       this.props.navigation.goBack();
-      global.alertWithType(
-        'success',
-        'Thanks!',
-        'Your post has been successfully created.'
-      );
     }
+  }
+
+  handleFormSubmit = async () => {
+    // TODO make sure, state copies content object shape
+    this.props.createPost({
+      text_content: this.state.content || undefined,
+      communities: this.state.communitiesSelection,
+      attachment: this.state.attachment || undefined,
+      cached_url: this.state.link ? this.state.link.url : undefined,
+    });
   };
 
   onContentChange = (content: string) => {
@@ -93,38 +90,31 @@ export default class PostEditorScreen extends Component<Props, State> {
     this.setState({ link });
   };
 
-  get isAllowedToSubmit(): boolean {
-    const { content, communitiesSelection } = this.state;
-    return !!content && communitiesSelection.length > 0;
-  }
-
   render() {
     return (
-      <Fetch manual>
-        {({ loading, fetch }: FetchProps<*>) => (
-          <Screen fill>
-            <BlackPortal name={HEADER_RIGHT_ID}>
-              <NavigationTextButton
-                title="Post"
-                disabled={!this.isAllowedToSubmit || !!loading}
-                onPress={this.handleFormSubmit(fetch)}
-              />
-            </BlackPortal>
+      <Screen fill>
+        <BlackPortal name={HEADER_RIGHT_ID}>
+          <NavigationTextButton
+            title={this.busy ? 'Sending' : 'Send'}
+            disabled={this.disabled}
+            onPress={this.handleFormSubmit}
+          />
+        </BlackPortal>
 
-            <PostEditor
-              attachment={this.state.attachment}
-              onAttachmentChange={this.onAttachmentChange}
-              content={this.state.content}
-              link={this.state.link}
-              onContentChange={this.onContentChange}
-              communities={this.props.user.joined_communities}
-              communitiesSelection={this.state.communitiesSelection}
-              onCommunitiesChange={this.onCommunitiesChange}
-              onLinkScraped={this.onLinkScraped}
-            />
-          </Screen>
-        )}
-      </Fetch>
+        <PostEditor
+          attachment={this.state.attachment}
+          onAttachmentChange={this.onAttachmentChange}
+          content={this.state.content}
+          link={this.state.link}
+          onContentChange={this.onContentChange}
+          communities={this.props.user.joined_communities}
+          communitiesSelection={this.state.communitiesSelection}
+          onCommunitiesChange={this.onCommunitiesChange}
+          onLinkScraped={this.onLinkScraped}
+        />
+      </Screen>
     );
   }
 }
+
+export default connect(mapStateToProps, { createPost })(PostEditorScreen);

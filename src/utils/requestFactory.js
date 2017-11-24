@@ -1,12 +1,13 @@
 // @flow
 
 import Config from 'react-native-config';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
+import { create } from 'apisauce';
 
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
-import { join } from '../utils/url';
-import type { User } from '../Types';
+import { build } from '../utils/url';
+import type { Cursor } from '../Types';
 
 let Store: any = null;
 
@@ -14,6 +15,25 @@ export type Request = {
   url: string,
   options: RequestOptions,
 };
+
+// define the api
+const api = create({
+  baseURL: Config.API_URL,
+  headers: { Accept: 'application/json' },
+});
+
+api.addRequestTransform(request => {
+  if (request.headers['API-KEY'] === undefined) {
+    request.headers['API-KEY'] = selectAccessToken(Store.getState());
+  }
+});
+
+function buildUrl(options) {
+  return build({
+    base: Config.API_URL,
+    ...options,
+  });
+}
 
 /**
  * Initialise Factory function
@@ -78,7 +98,9 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
  */
 export const makeReadBTClientTokenReq = () =>
   inject({
-    url: join(Config.API_URL, '/v1/members/braintree-client-token'),
+    url: buildUrl({
+      path: '/v1/members/braintree-client-token',
+    }),
     options: {
       method: 'GET',
     },
@@ -92,7 +114,7 @@ export const makeSigninRq = (credentials: {
   password: string,
 }) =>
   inject({
-    url: join(Config.API_URL, '/v1/members/login'),
+    url: buildUrl({ path: '/v1/members/login' }),
     options: {
       method: 'POST',
       body: JSON.stringify(credentials),
@@ -101,19 +123,17 @@ export const makeSigninRq = (credentials: {
 
 export const makeSignupRq = (body: *) =>
   inject({
-    url: join(Config.API_URL, '/v1/members/signup'),
+    url: buildUrl({ path: '/v1/members/signup' }),
     options: {
       method: 'POST',
       body: makeFormData(body, ['profile_photo']),
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
+      headers: { 'Content-Type': 'multipart/form-data' },
     },
   });
 
 export const makePasswordResetReq = (email: string) =>
   inject({
-    url: join(Config.API_URL, '/v1/members/reset_password'),
+    url: buildUrl({ path: '/v1/members/reset_password' }),
     options: {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -122,7 +142,7 @@ export const makePasswordResetReq = (email: string) =>
 
 export const makeChangePasswordReq = (password: string) =>
   inject({
-    url: join(Config.API_URL, 'v1/members/profile_settings'),
+    url: buildUrl({ path: 'v1/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: JSON.stringify({ password }),
@@ -140,7 +160,7 @@ type DonationPayload = {
 
 export const makeDonationRq = (donationPayload: DonationPayload) =>
   inject({
-    url: join(Config.API_URL, '/v1/donations'),
+    url: buildUrl({ path: '/v1/donations' }),
     options: {
       method: 'POST',
       body: JSON.stringify(donationPayload),
@@ -152,10 +172,9 @@ export const makeDonationRq = (donationPayload: DonationPayload) =>
  */
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
-    url: join(
-      Config.API_URL,
-      id === 'me' ? '/v1/members' : `/v1/members/${id}`
-    ),
+    url: buildUrl({
+      path: id === 'me' ? '/v1/members' : `/v1/members/${id}`,
+    }),
     options: {
       method: 'GET',
       headers: {
@@ -164,15 +183,13 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     },
   });
 
-export const makeUpdateProfileReq = (user: User) =>
+export const makeUpdateProfileReq = (user: Object) =>
   inject({
-    url: join(Config.API_URL, '/v1/members/profile_settings'),
+    url: buildUrl({ path: '/v1/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: makeFormData(user, ['profile_photo']),
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
+      headers: { 'Content-Type': 'multipart/form-data' },
     },
   });
 
@@ -182,13 +199,13 @@ export const makeUpdateProfileReq = (user: User) =>
 
 export const makeReadOrganisationReq = () =>
   inject({
-    url: join(Config.API_URL, 'v1/communities/81bad81ca2be'),
+    url: buildUrl({ path: 'v1/communities/81bad81ca2be' }),
     options: { method: 'GET' },
   });
 
 export const makeReadCommunityReq = (id: string) =>
   inject({
-    url: join(Config.API_URL, `v1/communities/${id}`),
+    url: buildUrl({ path: `v1/communities/${id}` }),
     options: { method: 'GET' },
   });
 
@@ -197,10 +214,11 @@ export const makeReadCommunityReq = (id: string) =>
  */
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
-    url: join(
-      Config.API_URL,
-      `/v1/communities?membership_status=${joinedOnly ? 'joined' : 'unjoined'}`
-    ),
+    url: buildUrl({
+      path: `/v1/communities?membership_status=${joinedOnly
+        ? 'joined'
+        : 'unjoined'}`,
+    }),
     options: {
       method: 'GET',
     },
@@ -208,7 +226,9 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
 
 export const makeReadCommunityDetailRq = (communityId: string | number) =>
   inject({
-    url: join(Config.API_URL, `/v1/communities/${communityId}`),
+    url: buildUrl({
+      path: `/v1/communities/${communityId}`,
+    }),
     options: {
       method: 'GET',
     },
@@ -219,10 +239,9 @@ export const makeReadCommunityMembersRq = (
   limit: number
 ) =>
   inject({
-    url: join(
-      Config.API_URL,
-      `/v1/communities/${communityId}/members?limit=${limit}`
-    ),
+    url: buildUrl({
+      path: `/v1/communities/${communityId}/members?limit=${limit}`,
+    }),
     options: {
       method: 'GET',
     },
@@ -233,10 +252,9 @@ export const makeLeaveCommunity = (
   communityId: string | number
 ) =>
   inject({
-    url: join(
-      Config.API_URL,
-      `/v1/communities/${memberId}/${communityId}/membership`
-    ),
+    url: buildUrl({
+      path: `/v1/communities/${memberId}/${communityId}/membership`,
+    }),
     options: {
       method: 'DELETE',
     },
@@ -248,135 +266,81 @@ export const makeJoinCommunityReq = (
   communityId: string | number
 ) =>
   inject({
-    url: join(
-      Config.API_URL,
-      `/v1/communities/${memberId}/${communityId}/membership`
-    ),
+    url: buildUrl({
+      path: `/v1/communities/${memberId}/${communityId}/membership`,
+    }),
     options: {
       method: 'POST',
     },
   });
 
 /**
+ * Content Object
+ */
+
+export const readContentObjectReq = (id: string) =>
+  api.get(`/v1/content_objects/${id}`);
+
+type ContentObject = { id: string };
+
+export const likeContentObjectReq = (object: ContentObject) =>
+  api.post(`/v1/content_objects/${object.id}/like`);
+
+export const unlikeContentObjectReq = (object: ContentObject) =>
+  api.delete(`/v1/content_objects/${object.id}/like`);
+
+export const destroyContentObjectReq = (object: ContentObject) =>
+  api.delete(`/v1/content_objects/${object.id}`);
+
+/**
  * News feed requests
  */
-export const makeReadAggregatedFeedReq = () =>
-  inject({
-    url: `${join(Config.API_URL, '/v1/content_objects/feed')}`,
-    options: {
-      method: 'GET',
-    },
-  });
-
-export const makeReadCommunityFeedRq = (communityId: string | number) =>
-  inject({
-    url: `${join(Config.API_URL, `/v1/content_objects/posts/${communityId}`)}`,
-    options: {
-      method: 'GET',
-    },
-  });
+export const requestWithCursor = (path: string, cursor: Cursor) =>
+  api.get(
+    `${buildUrl({
+      path: `v1/${path}`,
+      query: {
+        limit: cursor.limit,
+        next: cursor.next,
+      },
+    })}`
+  );
 
 export const makeReadPinnedItemsRq = (communityId: string | number) =>
   inject({
-    url: `${join(
-      Config.API_URL,
-      `/v1/content_objects/posts/${communityId}?pinned_only=true`
-    )}`,
+    url: `${buildUrl({
+      path: `/v1/content_objects/posts/${communityId}?pinned_only=true`,
+    })}`,
     options: {
       method: 'GET',
     },
   });
 
-export const makeReadPostReq = (postId: string | number) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${postId}`),
-    options: {
-      method: 'GET',
-    },
-  });
-
-export const makeReadPostWithCommentsRq = (postId: string | number) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${postId}/comments`),
-    options: {
-      method: 'GET',
-    },
-  });
-
-export const makeCreatePostReq = (
+export const createPostReq = (object: {
   text_content: string,
   communities: Array<string>,
-  attachment: ?string,
-  cached_url: ?string
-) =>
-  inject({
-    url: join(Config.API_URL, '/v1/content_objects/'),
-    options: {
-      method: 'POST',
-      body: makeFormData(
-        { text_content, communities, cached_url, attachment },
-        ['attachment']
-      ),
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    },
-  });
+  attachment?: ?string,
+  cached_url?: ?string,
+}) => api.post('/v1/content_objects/', makeFormData(object, ['attachment']));
 
-export const makeDeletePostReq = (postId: number | string) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${postId}`),
-    options: {
-      method: 'DELETE',
-    },
-  });
-
-export const makeReportReq = ({
-  userId,
-  postId,
-  commentId,
-}: {
-  userId?: string,
-  postId?: string,
-  commentId?: string,
-}) =>
-  inject({
-    url: join(Config.API_URL, '/v1/abuse_reports'),
-    options: {
-      method: 'POST',
-      body: JSON.stringify({
-        userId,
-        postId,
-        commentId,
-      }),
-    },
-  });
+export const reportReq = (object: {
+  id: string,
+  type: 'comment' | 'post' | 'user',
+}) => api.post('/v1/abuse_reports', { [`${object.type}Id`]: object.id });
 
 export const makeScrapeUrlReq = (url: string) =>
   inject({
-    url: join(Config.API_URL, '/v1/content_objects/generate_thumbnail'),
+    url: buildUrl({
+      path: '/v1/content_objects/generate_thumbnail',
+    }),
     options: {
       method: 'POST',
       body: JSON.stringify({ url }),
     },
   });
 
-export const makeCreateCommentReq = (postId: string, body: *) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${postId}/comment`),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(body),
-    },
-  });
-
-export const makeDeleteCommentReq = (commentId: number | string) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${commentId}`),
-    options: {
-      method: 'DELETE',
-    },
-  });
+export const createCommentReq = (objectId: string, text_content: string) =>
+  api.post(`/v1/content_objects/${objectId}/comment`, { text_content });
 
 /**
  * Invitations
@@ -384,7 +348,9 @@ export const makeDeleteCommentReq = (commentId: number | string) =>
 
 export const makeInvitationRq = (email: string) =>
   inject({
-    url: join(Config.API_URL, '/v1/club_invitations/480b7b2ed0a1'),
+    url: buildUrl({
+      path: '/v1/club_invitations/480b7b2ed0a1',
+    }),
     options: {
       method: 'PUT',
       body: JSON.stringify({
@@ -395,20 +361,10 @@ export const makeInvitationRq = (email: string) =>
 
 export const makeReadInvitationMessage = () =>
   inject({
-    url: join(Config.API_URL, `/v1/communities/invitation_message`),
+    url: buildUrl({
+      path: `/v1/communities/invitation_message`,
+    }),
     options: {
       method: 'GET',
-    },
-  });
-
-/**
- * Like
- */
-
-export const makeLikeRq = (objectId: string, unlike?: boolean) =>
-  inject({
-    url: join(Config.API_URL, `/v1/content_objects/${objectId}/like`),
-    options: {
-      method: unlike ? 'DELETE' : 'POST',
     },
   });
