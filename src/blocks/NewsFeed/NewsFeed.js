@@ -1,24 +1,47 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, RefreshControl, InteractionManager } from 'react-native';
+import {
+  StyleSheet,
+  RefreshControl,
+  InteractionManager,
+  FlatList,
+} from 'react-native';
 import { connect } from 'react-redux';
 
 import { View } from '../../atoms';
-import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
-import type { Post, TimelineState } from '../../Types';
-import { loadTimeline } from '../../redux/ducks/timelines';
+import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
+import { loadTimeline, type Timeline } from '../../redux/ducks/timelines';
 import { selectTimeline } from '../../redux/selectors';
+import { css } from '../../utils/style';
+import type { CommunitySimple, Post } from '../../Types';
 
 import Footer from './Footer';
 
+/**
+ * Separator
+ */
+function ItemSeparatorComponent() {
+  return <View style={styles.Separator} />;
+}
+
+/**
+ * Main component
+ */
+// type ListProps = {
+//   data: Array<Post>,
+//   deleteItem: (item: Post) => void,
+//   updateItem: (item: Post, deleting: boolean) => {},
+// };
+
 type Props = {
   id: string,
-  path: string,
   limit: number,
   ListHeaderComponent?: React$Node,
-  navigation: any,
-  timeline: TimelineState,
+  navigateToCommunity: CommunitySimple => mixed,
+  navigateToDetail: Post => mixed,
+  path: string,
+  timeline: Timeline,
 };
 
 class NewsFeed extends Component<Props> {
@@ -30,7 +53,7 @@ class NewsFeed extends Component<Props> {
     InteractionManager.runAfterInteractions(this.fetchFreshData);
   }
 
-  keyExtractor = (item: Post) => item.id;
+  keyExtractor = (item: Post): string => item.id;
 
   loadTimeline(mergeMode) {
     this.props.loadTimeline({
@@ -49,15 +72,25 @@ class NewsFeed extends Component<Props> {
     this.loadTimeline('append');
   };
 
+  renderItem = ({ item }: { item: Post }) => (
+    <View style={css('paddingHorizontal', 10)}>
+      <NewsFeedItem
+        item={item}
+        onDelete={() => this.props.deleteItem(item)}
+        navigateToCommunity={this.props.navigateToCommunity}
+      />
+    </View>
+  );
+
   render() {
     const { timeline } = this.props;
+
     return (
-      <NewsFeedList
-        {...this.props}
+      <FlatList
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
         data={timeline.content}
-        renderItemProps={{
-          navigation: this.props.navigation,
-        }}
+        ItemSeparatorComponent={ItemSeparatorComponent}
         refreshControl={
           <RefreshControl
             refreshing={timeline.refreshing}
@@ -91,6 +124,9 @@ const styles = StyleSheet.create({
   },
   ListFooterComponent: {
     marginTop: 10,
+  },
+  Separator: {
+    height: 10,
   },
 });
 

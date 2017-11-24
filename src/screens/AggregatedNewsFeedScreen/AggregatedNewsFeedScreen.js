@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { NavigationActions } from 'react-navigation';
 
 import { View } from '../../atoms';
 import { NewsFeed } from '../../blocks';
@@ -14,13 +15,29 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     title: 'News Feed',
   });
 
+  navigateToCommunity = (community: *) => {
+    const action = NavigationActions.navigate({
+      routeName: 'CommunitiesTab',
+      action: NavigationActions.navigate({
+        routeName: 'CommunityCenterScreen',
+        params: { communityId: community.id },
+      }),
+    });
+
+    this.props.navigation.dispatch(action);
+  };
+
+  navigateToDetail = (detail: *) => {
+    console.log('detail', detail);
+  };
+
   render(): React$Node {
-    // TODO do not pass navigation
     return (
       <NewsFeed
         id="content_objects/feed"
         path="content_objects/feed"
-        navigation={this.props.navigation}
+        navigateToCommunity={this.navigateToCommunity}
+        navigateToDetail={this.navigateToDetail}
         ListHeaderComponent={
           <View>
             <StartConversationButton

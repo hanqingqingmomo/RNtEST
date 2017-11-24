@@ -11,15 +11,12 @@ import type { CommunitySimple, User, Post, PopupSetting } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { contentReport, contentDestroy } from '../../redux/ducks/contentObject';
 
-type ConnectedProps = {
-  viewer: User,
-};
-
 type Props = {
   item: Post,
-  // TODO remote navigation prop
+  navigateToCommunity: (community: CommunitySimple) => mixed,
   navigation: Object,
   onDelete: Function,
+  viewer: User,
 };
 
 const mapState = state => ({
@@ -28,10 +25,7 @@ const mapState = state => ({
 
 const mapDispatch = { contentDestroy, contentReport };
 
-const connector: Connector<Props, Props & ConnectedProps> = connect(
-  mapState,
-  mapDispatch
-);
+const connector: Connector<Props, Props> = connect(mapState, mapDispatch);
 
 const HIT_SLOP = {
   top: 2,
@@ -41,16 +35,6 @@ const HIT_SLOP = {
 };
 
 class NewsFeedItemHeader extends Component<Props> {
-  navigateToCommunityRoot = (community: CommunitySimple) => {
-    const { navigation } = this.props;
-
-    if (navigation) {
-      navigation.navigate('CommunityCenterScreen', {
-        communityId: community.id,
-      });
-    }
-  };
-
   get popupActions() {
     return [
       {
@@ -85,7 +69,7 @@ class NewsFeedItemHeader extends Component<Props> {
             .map((community: CommunitySimple) => (
               <View style={styles.tag} key={community.id}>
                 <TouchableItem
-                  onPress={() => this.navigateToCommunityRoot(community)}
+                  onPress={() => this.props.navigateToCommunity(community)}
                   hitSlop={HIT_SLOP}
                 >
                   <View style={{ backgroundColor: 'white' }}>

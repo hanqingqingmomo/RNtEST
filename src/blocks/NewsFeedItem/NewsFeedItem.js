@@ -8,7 +8,7 @@ import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post, type User } from '../../Types';
+import type { Post, User, CommunitySimple } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
@@ -25,8 +25,9 @@ type P = {
   navigation: Object,
   radius?: number,
   onDelete: Function,
-  refetch?: Function,
   user: User,
+  navigateToCommunity: (commu: CommunitySimple) => mixed,
+  navigateToDetail: () => mixed,
 };
 
 const mapStateToProps = state => ({
@@ -101,7 +102,7 @@ export default class NewsFeedItem extends Component<P> {
         <View style={styles.container}>
           <NewsFeedItemHeader
             item={item}
-            navigation={navigation}
+            navigateToCommunity={this.props.navigateToCommunity}
             onDelete={this.props.onDelete}
           />
 
@@ -136,11 +137,11 @@ export default class NewsFeedItem extends Component<P> {
 
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
-          <NewsFeedItemFooter
+          {/* <NewsFeedItemFooter
             item={item}
             navigate={this.props.navigation.navigate}
             detailView={this.props.isDetail}
-          />
+          /> */}
         </View>
       </ShadowView>
     );

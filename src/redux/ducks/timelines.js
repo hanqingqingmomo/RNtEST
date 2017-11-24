@@ -14,17 +14,17 @@ const TIMELINE_UNSET_CONTENT = 'timeline/unset-content';
 // Typedefs
 //
 
-type TimelineState = typeof INITIAL_SUBSTATE;
+export type Timeline = typeof INITIAL_SUBSTATE;
 
 type PartialTimelineState = {
-  content?: $PropertyType<TimelineState, 'content'>,
-  next?: $PropertyType<TimelineState, 'content'>,
-  loading?: $PropertyType<TimelineState, 'loading'>,
-  refreshing?: $PropertyType<TimelineState, 'refreshing'>,
+  content?: $PropertyType<Timeline, 'content'>,
+  next?: $PropertyType<Timeline, 'content'>,
+  loading?: $PropertyType<Timeline, 'loading'>,
+  refreshing?: $PropertyType<Timeline, 'refreshing'>,
 };
 
 type State = {
-  [string]: TimelineState,
+  [string]: Timeline,
 };
 
 type TimelineSetContentAction = {
@@ -32,7 +32,7 @@ type TimelineSetContentAction = {
   payload: {
     id: string,
     mergeMode: 'replace' | 'append' | 'prepend',
-    result: $PropertyType<TimelineState, 'content'>,
+    result: $PropertyType<Timeline, 'content'>,
   },
 };
 
@@ -113,7 +113,7 @@ export function setTimelineState(
 
 const INITIAL_STATE: State = {};
 
-const INITIAL_SUBSTATE: TimelineState = {
+const INITIAL_SUBSTATE: Timeline = {
   content: [],
   loading: false,
   next: null,

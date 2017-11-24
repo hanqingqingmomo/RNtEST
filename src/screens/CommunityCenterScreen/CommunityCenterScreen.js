@@ -30,12 +30,10 @@ export default class CommunityCenterScreen extends Component<Props, State> {
   };
 
   componentWillMount() {
-    InteractionManager.runAfterInteractions(this.initDataFetch);
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ screenIsReady: true });
+    });
   }
-
-  initDataFetch = () => {
-    this.setState({ screenIsReady: true });
-  };
 
   changeActiveTab = (activeTab: string) => {
     this.setState({ activeTab });
