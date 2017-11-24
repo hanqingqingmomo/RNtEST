@@ -8,6 +8,7 @@ import LinkedInModal from 'react-native-linkedin';
 import { Icon, View, Button, Screen, Text } from '../atoms';
 import { getColor } from '../utils/color';
 import type { ScreenProps } from '../Types';
+import { css } from '../utils/style';
 
 type Route =
   | 'FacebookAuthenticationScreen'
@@ -18,8 +19,10 @@ type Route =
 
 type Props = ScreenProps<*>;
 
-function AuthenticationButton(props) {
-  return <Button block {...props} size="lg" style={styles.button} />;
+function AuthenticationButton(props, otherStyles) {
+  return (
+    <Button block {...props} size="lg" style={[styles.button, otherStyles]} />
+  );
 }
 
 export default class AuthenticationRootScreen extends Component<Props> {
@@ -45,18 +48,8 @@ export default class AuthenticationRootScreen extends Component<Props> {
         .catch(err => console.log(err));
 
     const manager = new OAuthManager('pba-app');
-    manager.addProvider({
-      linkedin: {
-        auth_version: '2.0',
-        authorize_url: 'https://www.linkedin.com/oauth/v2/authorization',
-        access_token_url: 'https://www.linkedin.com/oauth/v2/accessToken',
-        api_url: 'https://api.linkedin.com/',
-        callback_url: ({ app_name }) => `http://www.sme.sk`,
-      },
-    });
 
     manager.configure(configuration);
-    console.log(`PROVIDER: ${provider}`);
     manager
       .savedAccounts()
       .then(savedAccounts => {
@@ -102,14 +95,6 @@ export default class AuthenticationRootScreen extends Component<Props> {
       'public_profile'
     );
 
-  handleLinkedInAuthentication = () =>
-    this.authenticateSocialMediaAccount('linkedin', {
-      linkedin: {
-        client_id: '78inys69jtxa3d',
-        client_secret: 'HBztjlroz9LLztpP',
-      },
-    });
-
   render() {
     return (
       <Screen fill>
@@ -123,24 +108,28 @@ export default class AuthenticationRootScreen extends Component<Props> {
               onPress={this.handleFacebookAuthentication}
               title="Continue with Facebook"
             />
-            <AuthenticationButton
-              color={getColor('linkedinBlue')}
-              textColor={getColor('white')}
-              onPress={this.handleLinkedInAuthentication}
-              title="Continue with LinkedIn"
+            <LinkedInModal
+              renderButton={() =>
+                AuthenticationButton(
+                  {
+                    color: getColor('linkedinBlue'),
+                    textColor: getColor('white'),
+                    title: 'Continue with LinkedIn',
+                    onPress: undefined,
+                    noWrap: false,
+                    disabled: true,
+                  },
+                  styles.buttonForcedOpacity
+                )}
+              clientID="78inys69jtxa3d"
+              clientSecret="HBztjlroz9LLztpP"
+              redirectUri="https://www.linkedin.com/developer/apps?abcd"
+              onSuccess={token => console.log('onSuccess: ', token)}
+              onError={token => console.log('onError: ', token)}
+              onClose={token => console.log('onClose: ', token)}
+              onOpen={token => console.log('onOpen: ', token)}
+              onSignIn={token => console.log('onSignIn: ', token)}
             />
-            <View style={styles.linkedinContainer}>
-              <LinkedInModal
-                clientID="78inys69jtxa3d"
-                clientSecret="HBztjlroz9LLztpP"
-                redirectUri="https://www.linkedin.com/developer/apps?abcd"
-                onSuccess={token => console.log('onSuccess: ', token)}
-                onError={token => console.log('onError: ', token)}
-                onClose={token => console.log('onClose: ', token)}
-                onOpen={token => console.log('onOpen: ', token)}
-                onSignIn={token => console.log('onSignIn: ', token)}
-              />
-            </View>
             <AuthenticationButton
               color={getColor('twitterBlue')}
               textColor={getColor('white')}
@@ -174,6 +163,9 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 15,
   },
+  buttonForcedOpacity: {
+    opacity: 1,
+  },
   container: {
     width: 275,
     flexGrow: 1,
@@ -187,13 +179,5 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginVertical: 20,
-  },
-  linkedinContainer: {
-    flex: 1,
-    marginTop: 20,
-    paddingVertical: 20,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
