@@ -133,7 +133,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link
       title="Notification Settings"
-      screen="NotificationSettingsPlayground"
+      screen="NotificationSettingsScreen"
       navigation={navigation}
     />
     <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
@@ -237,7 +237,7 @@ export default StackNavigator(
     NewsFeedSettingsPlayground: {
       screen: NewsFeedSettingsScreen,
     },
-    NotificationSettingsPlayground: {
+    NotificationSettingsScreen: {
       screen: NotificationSettingsScreen,
     },
     PopoverPlayground: {

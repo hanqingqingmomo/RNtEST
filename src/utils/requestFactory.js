@@ -368,3 +368,25 @@ export const makeReadInvitationMessage = () =>
       method: 'GET',
     },
   });
+
+/**
+ * Notification Settings
+ */
+export const makeReadNotificationSettings = () =>
+  inject({
+    url: buildUrl({
+      path: `/v2/settings/notifications`,
+    }),
+    options: {
+      method: 'GET',
+    },
+  });
+
+export const makeChangeNotificationSettings = setting =>
+  inject({
+    url: buildUrl({ path: '/v2/settings/notifications' }),
+    options: {
+      method: 'PUT',
+      body: JSON.stringify(setting),
+    },
+  });
