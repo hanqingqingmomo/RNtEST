@@ -35,9 +35,6 @@ export default StackNavigator({
   },
   TermsAndConditionsScreen: {
     screen: TermsAndConditionsScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: 'Terms and conditions',
-    }),
   },
   PrivacyScreen: {
     screen: PrivacyScreen,

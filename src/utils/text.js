@@ -6,6 +6,7 @@ import { Linking } from 'react-native';
 import { Text } from '../atoms';
 import { getColor } from '../utils/color';
 
+// TODO maxLength by malo byt undefined, ak ho nezadam
 export function parseTextContent(string: string, maxLength: ?number): any {
   let words = (string || '').split(/\s/);
 

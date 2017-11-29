@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {
-  ActivityIndicator,
   FlatList,
   InteractionManager,
   Linking,
@@ -23,50 +22,41 @@ import {
   TableView,
   Text,
   View,
+  ActivityIndicator,
 } from '../atoms';
 import { getColor } from '../utils/color';
 import {
-  makeInvitationRq,
-  makeReadInvitationMessage,
+  inviteFriendReq,
+  getInvitationSmsContent,
 } from '../utils/requestFactory';
 import type { FetchProps } from '../Types';
 
-type EmailAddressProps = {
+type EmailDetail = {
   email: string,
   label: string,
 };
 
-type PhoneProps = {
+type PhoneDetail = {
   label: string,
   number: string,
 };
 
-type PostalAddressProps = {
-  city: string,
-  country: string,
-  label: string,
-  postCode: string,
-  region: string,
-  state: string,
-  street: string,
-};
-
-type ContactProps = {
-  emailAddresses: Array<EmailAddressProps>,
+type Contact = {
+  emailAddresses: Array<EmailDetail>,
+  phoneNumbers: Array<PhoneDetail>,
   familyName: string,
   givenName: string,
   hasThumbnail: boolean,
   jobTitle: string,
   middleName: string,
-  phoneNumbers: Array<PhoneProps>,
-  postalAddresses: Array<PostalAddressProps>,
-  recordID: number,
+  recordID: string,
   thumbnailPath: string,
 };
 
 type S = {
-  contacts: Array<ContactProps>,
-  invitedUser: Array<number>,
+  contacts: Array<Contact>,
+  sentInvitations: Array<string>,
+  pendingInvitations: Object,
   permission: 'undefined' | 'denied' | 'authorized',
   searchValue: string,
   smsMessage: string,
@@ -77,7 +67,8 @@ type P = {};
 export default class InviteFriendsScreen extends React.Component<P, S> {
   state = {
     contacts: [],
-    invitedUser: [],
+    sentInvitations: [],
+    pendingInvitations: {},
     permission: 'undefined',
     searchValue: '',
     smsMessage: '',
@@ -86,17 +77,6 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
   componentDidMount() {
     this.fetchInvitationMessage();
   }
-
-  fetchInvitationMessage = async () => {
-    const readPostReq = makeReadInvitationMessage();
-
-    const readPostRes = await global.fetch(
-      readPostReq.url,
-      readPostReq.options
-    );
-
-    this.setState({ smsMessage: JSON.parse(readPostRes._bodyText).data });
-  };
 
   componentWillMount() {
     InteractionManager.runAfterInteractions(() => {
@@ -124,9 +104,31 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
     }
   }
 
-  cellContentView(user: ContactProps): React$Node {
-    const { emailAddresses, familyName, givenName, middleName } = user;
-    const { invitedUser } = this.state;
+  fetchInvitationMessage = async () => {
+    const response = await getInvitationSmsContent();
+    if (response.ok) {
+      this.setState({ smsMessage: response.data.data });
+    }
+  };
+
+  /**
+   * Returns Text node with first email or phone number of the user
+   */
+  contactTextElement = (user: Contact) => {
+    const email = user.emailAddresses.find(row => row.email);
+    const phone = user.phoneNumbers.find(row => row.number);
+    const text = email ? email.email : phone ? phone.number : null;
+    return email || phone ? (
+      <Text size={15} lineHeight={18} color={getColor('gray')}>
+        {text}
+      </Text>
+    ) : null;
+  };
+
+  cellContentView(user: Contact): React$Node {
+    const { familyName, givenName, middleName } = user;
+    const { sentInvitations, pendingInvitations } = this.state;
+
     return (
       <View style={styles.row}>
         <View style={styles.textWrapper}>
@@ -135,13 +137,11 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
               ? ` ${familyName}`
               : ''}`}
           </Text>
-          {emailAddresses.length ? (
-            <Text size={15} lineHeight={18} color={getColor('gray')}>
-              {emailAddresses[0].email}
-            </Text>
-          ) : null}
+          {this.contactTextElement(user)}
         </View>
-        {invitedUser.includes(user.recordID) ? (
+        {pendingInvitations[user.recordID] ? (
+          <ActivityIndicator />
+        ) : sentInvitations.includes(user.recordID) ? (
           <Button.Icon
             iconName="check"
             size="sm"
@@ -163,36 +163,44 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
     );
   }
 
-  cellImageView(user: ContactProps): React$Node {
+  cellImageView(user: Contact): React$Node {
     if (user.hasThumbnail) {
       return <Avatar size={28} imageURI={user.thumbnailPath} />;
     }
     return <Icon name="user" size="md" color={getColor('gray')} />;
   }
 
-  hasUserEmail(user: ContactProps): boolean {
+  hasUserEmail(user: Contact): boolean {
     return !!user.emailAddresses.length;
   }
 
-  hasUserPhone(user: ContactProps): boolean {
+  hasUserPhone(user: Contact): boolean {
     return !!user.phoneNumbers.length;
   }
 
-  sendInvitationEmail = async (user: ContactProps) => {
-    const { invitedUser } = this.state;
-
+  sendInvitationEmail = async (user: Contact) => {
     try {
+      this.setState(state => ({
+        pendingInvitations: {
+          ...state.pendingInvitations,
+          [user.recordID]: true,
+        },
+      }));
+
       const email = user.emailAddresses[0].email;
-      const request = makeInvitationRq(email);
-      await global.fetch(request.url, request.options);
+      await inviteFriendReq(email);
 
-      invitedUser.push(user.recordID);
-
-      this.setState({ invitedUser });
+      this.setState(state => ({
+        sentInvitations: state.sentInvitations.concat(user.recordID),
+        pendingInvitations: {
+          ...state.pendingInvitations,
+          [user.recordID]: false,
+        },
+      }));
     } catch (err) {}
   };
 
-  sendInvitationMessage = (user: ContactProps) => {
+  sendInvitationMessage = (user: Contact) => {
     const phone = user.phoneNumbers[0].number;
     const body = this.state.smsMessage || '';
     const url = Platform.select({
@@ -211,7 +219,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
       .catch(err => alert('Could not sent SMS'));
   };
 
-  onInvite(user: ContactProps): Function {
+  onInvite(user: Contact): Function {
     return () => {
       if (this.hasUserEmail(user)) {
         this.sendInvitationEmail(user);
@@ -221,7 +229,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
     };
   }
 
-  get users(): Array<ContactProps> {
+  get users(): Array<Contact> {
     const { searchValue, contacts } = this.state;
 
     const filtered = contacts.filter(
@@ -276,9 +284,8 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
                   <TableView.Section sectionTintColor="white">
                     <FlatList
                       data={this.users}
-                      keyExtractor={(item: ContactProps) =>
-                        item.recordID.toString()}
-                      renderItem={({ item }: { item: ContactProps }) => (
+                      keyExtractor={(item: Contact) => item.recordID.toString()}
+                      renderItem={({ item }: { item: Contact }) => (
                         <TableView.Cell
                           cellContentView={this.cellContentView(item)}
                           image={this.cellImageView(item)}

@@ -346,25 +346,8 @@ export const createCommentReq = (objectId: string, text_content: string) =>
  * Invitations
  */
 
-export const makeInvitationRq = (email: string) =>
-  inject({
-    url: buildUrl({
-      path: '/v1/club_invitations/480b7b2ed0a1',
-    }),
-    options: {
-      method: 'PUT',
-      body: JSON.stringify({
-        member_invitations: email,
-      }),
-    },
-  });
+export const inviteFriendReq = (email: string) =>
+  api.put('/v2/club_invitations/480b7b2ed0a1', { member_invitations: email });
 
-export const makeReadInvitationMessage = () =>
-  inject({
-    url: buildUrl({
-      path: `/v1/communities/invitation_message`,
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const getInvitationSmsContent = () =>
+  api.get(`/v1/communities/invitation_message`);

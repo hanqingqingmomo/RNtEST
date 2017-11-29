@@ -5,13 +5,15 @@ import { StyleSheet } from 'react-native';
 
 import { View, Text } from './index';
 import { type ColorName } from '../Types';
+import { css } from '../utils/style';
 
 type Props = {
   color?: ColorName | string,
   title: string,
+  truncate?: boolean,
 };
 
-export default function Pill({ color, title }: Props) {
+export default function Pill({ color, title, truncate }: Props) {
   return (
     <View style={[styles.view, { borderColor: color }]}>
       <Text
@@ -21,7 +23,7 @@ export default function Pill({ color, title }: Props) {
         lineHeight={13}
         ellipsizeMode="tail"
         numberOfLines={1}
-        style={{ maxWidth: 70 }}
+        style={css('maxWidth', truncate ? 70 : undefined)}
       >
         {title}
       </Text>

@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
 import { Text, View, Image, ImagePreview } from '../../atoms';
@@ -9,40 +9,41 @@ import { css } from '../../utils/style';
 import { parseTextContent } from '../../utils/text';
 
 type P = {
-  detail?: boolean,
+  isDetail?: boolean,
   title?: string,
   type: string,
   url: string,
+  onPress: () => any,
 };
 
 export default class NewsFeedItemAttachment extends Component<P> {
-  renderImage(url: string): React$Element<*> {
+  renderImage({ url }: P): React$Node {
     return (
-      <View style={styles.imageWrapper}>
-        <Image source={{ uri: url }} style={styles.image} resizeMode="cover" />
-      </View>
+      <Lightbox
+        underlayColor="white"
+        renderContent={() => <ImagePreview imageURI={this.props.url} />}
+      >
+        <View style={styles.imageWrapper}>
+          <Image source={{ url }} style={styles.image} resizeMode="cover" />
+        </View>
+      </Lightbox>
     );
   }
-  render() {
-    const { url, title, detail } = this.props;
+  renderTextContent({ title, isDetail }: P): React$Node {
+    return title ? (
+      <TouchableOpacity onPress={this.props.onPress}>
+        <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+          {parseTextContent(title, isDetail ? null : 120)}
+        </Text>
+      </TouchableOpacity>
+    ) : null;
+  }
 
+  render() {
     return (
       <View style={styles.container}>
-        {detail ? (
-          <Lightbox
-            underlayColor="white"
-            renderContent={() => <ImagePreview imageURI={url} />}
-          >
-            {this.renderImage(url)}
-          </Lightbox>
-        ) : (
-          this.renderImage(url)
-        )}
-        {title ? (
-          <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-            {parseTextContent(title, detail ? null : 120)}
-          </Text>
-        ) : null}
+        {this.renderImage(this.props)}
+        {this.renderTextContent(this.props)}
       </View>
     );
   }

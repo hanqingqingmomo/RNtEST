@@ -36,7 +36,9 @@ class PostEditorScreen extends Component<Props, State> {
 
   state = {
     attachment: null,
-    communitiesSelection: [],
+    communitiesSelection: this.props.navigation.state.params
+      ? [this.props.navigation.state.params.preselectedCommunityId]
+      : [],
     content: '',
     link: null,
   };
