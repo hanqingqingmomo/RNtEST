@@ -24,8 +24,6 @@ type P = {
   item: Post,
   navigation: Object,
   radius?: number,
-  onDelete: Function,
-  refetch?: Function,
   user: User,
 };
 
@@ -110,11 +108,7 @@ export default class NewsFeedItem extends Component<P> {
         radius={radius || 3}
       >
         <View style={styles.container}>
-          <NewsFeedItemHeader
-            item={item}
-            navigation={navigation}
-            onDelete={this.props.onDelete}
-          />
+          <NewsFeedItemHeader item={item} navigation={navigation} />
 
           {this.renderContent(this.props)}
 

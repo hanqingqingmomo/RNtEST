@@ -10,9 +10,8 @@ import type { Post } from '../../Types';
 
 type Props = {
   data: Array<Post>,
-  deleteItem: (item: Post) => void,
+  // TODO remove renderItemProps
   renderItemProps: Object,
-  updateItem: (item: Post, deleting: boolean) => {},
 };
 
 function ItemSeparatorComponent() {
@@ -25,13 +24,7 @@ export default class NewsFeedList extends Component<Props> {
 
   renderItem = ({ item }: { item: Post }) => (
     <View style={{ paddingHorizontal: 10 }}>
-      <NewsFeedItem
-        item={item}
-        {...this.props.renderItemProps}
-        onDelete={() => this.props.deleteItem(item)}
-        refetch={(_: any, deleting: boolean) =>
-          this.props.updateItem(item, deleting)}
-      />
+      <NewsFeedItem item={item} {...this.props.renderItemProps} />
     </View>
   );
 

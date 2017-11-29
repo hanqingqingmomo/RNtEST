@@ -52,7 +52,7 @@ export default class DonationForm extends Component<P, S> {
 
   onFailure = (err: Error) => {
     if (__DEV__) {
-      console.log('failure:', err);
+      console.log('failure:', err.message, err);
     }
   };
 

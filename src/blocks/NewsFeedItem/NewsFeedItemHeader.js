@@ -19,7 +19,6 @@ type Props = {
   item: Post,
   // TODO remote navigation prop
   navigation: Object,
-  onDelete: Function,
 };
 
 const mapState = state => ({
