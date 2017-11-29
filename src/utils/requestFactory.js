@@ -96,15 +96,8 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
 /**
  * Get Braintree client token
  */
-export const makeReadBTClientTokenReq = () =>
-  inject({
-    url: buildUrl({
-      path: '/v1/members/braintree-client-token',
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const readBraintreeClientTokenReq = () =>
+  api.get('/v1/members/braintree-client-token');
 
 /**
  * Authentication requests
@@ -152,20 +145,15 @@ export const makeChangePasswordReq = (password: string) =>
 /**
  * Donations
  */
-type DonationPayload = {
-  payment_method_nonce: string,
-  amount: number,
-  interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
-};
 
-export const makeDonationRq = (donationPayload: DonationPayload) =>
-  inject({
-    url: buildUrl({ path: '/v1/donations' }),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(donationPayload),
-    },
-  });
+export const donationReq = (donationPayload: {
+  donation: {
+    payment_method_nonce: string,
+    amount: number,
+    interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
+  },
+  payer: Object,
+}) => api.post('/v2/donations', donationPayload);
 
 /**
  * Profile

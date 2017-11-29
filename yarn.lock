@@ -1117,6 +1117,12 @@ camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
+card-validator@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/card-validator/-/card-validator-4.1.1.tgz#f0683e0f5dbd29c02cfb1a1b665cdba430622faa"
+  dependencies:
+    credit-card-type "^6.0.0"
+
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
@@ -1434,6 +1440,10 @@ create-react-class@^15.6.0:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+credit-card-type@^6.0.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/credit-card-type/-/credit-card-type-6.1.0.tgz#f1acd3d47cf8202a66b60a9c90cbf9738d57ef40"
 
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
@@ -2204,6 +2214,12 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
+flat@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/flat/-/flat-4.0.0.tgz#3abc7f3b588e64ce77dc42fd59aa35806622fea8"
+  dependencies:
+    is-buffer "~1.1.5"
+
 flow-bin@^0.53.0:
   version "0.53.1"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.53.1.tgz#9b22b63a23c99763ae533ebbab07f88c88c97d84"
@@ -2252,9 +2268,9 @@ form-data@~2.1.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-formik@^0.9.4:
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-0.9.4.tgz#e284620539c54d7d052c1950230b1e44c5acc6a4"
+formik@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-0.10.4.tgz#39747caa57b0f72f127b44b87e8a36f75f19926f"
   dependencies:
     lodash.isequal "4.5.0"
     prop-types "^15.5.10"
@@ -2769,6 +2785,10 @@ is-binary-path@^1.0.0:
 is-buffer@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.5.tgz#1f3b26ef613b214b88cbca23cc6c01d87961eecc"
+
+is-buffer@~1.1.5:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
 
 is-builtin-module@^1.0.0:
   version "1.0.0"
@@ -4503,9 +4523,9 @@ react-fetch-component@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-5.0.0.tgz#551f2d3e0ea26cbe79b909178a032ad35bc0a8ee"
 
-"react-native-braintree-xplat@https://github.com/kraffslol/react-native-braintree-xplat#343bd3c8553bb418c0a36deac240dc56e2209a6b":
-  version "3.2.0"
-  resolved "https://github.com/kraffslol/react-native-braintree-xplat#343bd3c8553bb418c0a36deac240dc56e2209a6b"
+"react-native-braintree-xplat@https://github.com/creatixpublic/react-native-braintree-xplat.git":
+  version "3.4.0"
+  resolved "https://github.com/creatixpublic/react-native-braintree-xplat.git#8b4d3eb2904c0d780a60a6b0ccfc3ccc8b55329d"
 
 react-native-collapsible@^0.9.0:
   version "0.9.0"

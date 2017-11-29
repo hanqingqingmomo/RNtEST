@@ -7,7 +7,6 @@ import { TabBarBottom, TabNavigator } from 'react-navigation';
 import { Icon } from '../../atoms';
 import AggregatedNewsFeedNavigator from './AggregatedNewsFeedNavigator';
 import CommunitiesNavigator from './CommunitiesNavigator';
-// import EventFeedNavigator from './EventFeedNavigator';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 

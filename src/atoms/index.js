@@ -40,6 +40,7 @@ export { default as Popover } from './Popover';
 export { default as PopoverItem } from './PopoverItem';
 export { default as Screen } from './Screen';
 export { default as SearchBox } from './SearchBox';
+export { Picker } from './Picker/Picker';
 export { default as SegmentedControl } from './SegmentedControl';
 export { default as ShadowView } from './ShadowView';
 export { default as Spacer } from './Spacer';

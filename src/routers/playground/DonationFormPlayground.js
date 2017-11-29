@@ -18,11 +18,7 @@ export default class DonationFormPlayground extends Component<Props> {
           profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
           coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
         />
-        <DonationForm
-          onPaymentNonceReceived={() => {}}
-          onFail={() => {}}
-          onInitiatePayment={() => {}}
-        />
+        <DonationForm onSuccess={() => {}} onFail={() => {}} />
         <DonationAppealModalBox forceOpen onConfirm={() => {}} />
       </Screen>
     );

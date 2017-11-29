@@ -2,30 +2,21 @@
 
 import React, { Component } from 'react';
 import { NativeModules, Platform, StyleSheet } from 'react-native';
-import Braintree from 'react-native-braintree-xplat';
 
-import { View, Text } from '../../atoms';
-import { getColor } from '../../utils/color';
-import { css } from '../../utils/style';
-import { makeReadBTClientTokenReq } from '../../utils/requestFactory';
+import { View } from '../../atoms';
 import DonationButton from './DonationButton';
 import DonationInput from './DonationInput';
-import DonationCancelInfo, { type ChargeInterval } from './DonationCancelInfo';
-
-const timeout = ms => new Promise(res => setTimeout(res, ms));
-
-export type Payment = {
-  amount: number,
-  interval: ChargeInterval,
-};
+import DonationCancelInfo from './DonationCancelInfo';
+import { CreditCardDonationButton } from './CreditCardDonation';
+import { ApplePayDonationButton } from './ApplePayDonation';
+import type { Donation, PaymentMethodResponse } from './donationHelpers';
 
 type P = {
-  onInitiatePayment: (payment: Payment) => mixed,
-  onPaymentNonceReceived: (nonce: string, payment: Payment) => mixed,
-  onFail: () => mixed,
+  onSuccess: PaymentMethodResponse => mixed,
+  onFailure: () => mixed,
 };
 
-type S = Payment & {
+type S = Donation & {
   amountTypedManualy: boolean,
   disableCardButton: boolean,
 };
@@ -45,13 +36,13 @@ function printMoney(amount: number): string {
 
 export default class DonationForm extends Component<P, S> {
   state = {
-    interval: 'monthly',
+    interval: 'one-time',
     amount: 50,
     amountTypedManualy: false,
     disableCardButton: false,
   };
 
-  get paymentDetails(): Payment {
+  get paymentDetails(): Donation {
     return {
       amount: this.state.amount,
       amountTypedManualy: this.state.amountTypedManualy,
@@ -59,56 +50,15 @@ export default class DonationForm extends Component<P, S> {
     };
   }
 
-  initiateCreditCardPayment = async () => {
-    this.setState({ disableCardButton: true });
-
-    const req = makeReadBTClientTokenReq();
-    const res = await global.fetch(req.url, req.options);
-    if (res.ok) {
-      const json = await res.json();
-      await Braintree.setup(json.data.clientToken);
-
-      // TODO
-      // hack: https://github.com/kraffslol/react-native-braintree-xplat/issues/64
-      if (Platform.OS === 'android') {
-        await timeout(1500);
-      }
-
-      try {
-        const paymentNonce = await Braintree.showPaymentViewController({
-          callToActionText: 'Donate now',
-          tintColor: getColor('orange'),
-          barBgColor: '#F7F7F7',
-        });
-
-        this.props.onPaymentNonceReceived(paymentNonce, this.paymentDetails);
-      } catch (err) {
-        this.props.onFail();
-      }
-    } else {
-      this.props.onFail();
+  onFailure = (err: Error) => {
+    if (__DEV__) {
+      console.log('failure:', err);
     }
-
-    this.setState({ disableCardButton: false });
-  };
-
-  initiatePayment = () => {
-    this.props.onInitiatePayment({
-      amount: this.state.amount,
-      interval: this.state.interval,
-    });
   };
 
   render() {
     return (
       <View style={style.container}>
-        <Text size={12} color="#90A4AE">
-          YWCA Metropolitan Chicago supports more than 200,000 women and
-          families in overcoming various challenges and finding personal and
-          economic empowerment. You can be partner in our mission of eliminating
-          racism and empowering women by making a contribution to power our
-          critical work.
-        </Text>
         <View>
           <View style={style.buttonContainer}>
             {AMOUNTS.map(amount => (
@@ -169,36 +119,25 @@ export default class DonationForm extends Component<P, S> {
         <View>
           {Platform.OS === 'ios' &&
           NativeModules.ReactNativePayments.canMakePayments ? (
-            <DonationButton
-              title="Donate with"
-              icon={Platform.select({
-                ios: 'apple-pay',
-                android: 'android-pay',
-              })}
-              size="md"
-              onPress={this.initiatePayment}
-              style={[
-                {
-                  backgroundColor: getColor('black'),
-                  borderColor: getColor('black'),
-                },
-                css('height', 48),
-              ]}
-              textColor={{ color: getColor('white') }}
+            <ApplePayDonationButton
               disabled={!this.state.amount}
+              donation={{
+                amount: this.state.amount,
+                interval: this.state.interval,
+              }}
+              onSuccess={this.props.onSuccess}
+              onFailure={this.onFailure}
             />
           ) : null}
           <View style={style.buttonCreditCard}>
-            <DonationButton
-              title="Donate with Credit Card"
-              size="md"
-              onPress={this.initiateCreditCardPayment}
-              style={{
-                backgroundColor: 'transparent',
-                borderWidth: 0,
+            <CreditCardDonationButton
+              disabled={!this.state.amount}
+              donation={{
+                amount: this.state.amount,
+                interval: this.state.interval,
               }}
-              textColor={{ color: getColor('orange') }}
-              disabled={this.state.disableCardButton || !this.state.amount}
+              onSuccess={this.props.onSuccess}
+              onFailure={this.onFailure}
             />
           </View>
         </View>
