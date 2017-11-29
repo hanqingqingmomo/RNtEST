@@ -50,8 +50,10 @@ export default class DonationForm extends Component<P, S> {
     };
   }
 
-  onFailure = err => {
-    console.log('failure:', err);
+  onFailure = (err: Error) => {
+    if (__DEV__) {
+      console.log('failure:', err);
+    }
   };
 
   render() {

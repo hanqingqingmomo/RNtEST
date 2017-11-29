@@ -29,13 +29,8 @@ export class ApplePayDonationButton extends React.Component<Props> {
       const response = await execApplePayPayment(this.props.donation);
       this.props.onSuccess(response);
     } catch (err) {
-      console.log(err);
-      this.props.onFailure();
+      this.props.onFailure(err);
     }
-  };
-
-  onSuccess = (payload: *) => {
-    // this.props.onSuccess(payload);
   };
 
   render(): React$Node {

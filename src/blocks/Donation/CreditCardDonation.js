@@ -71,7 +71,7 @@ const MESSAGES = {};
 
 export class CreditCardDonationButton extends React.Component<Props, State> {
   state = {
-    active: true,
+    active: false,
     busy: false,
   };
 
@@ -178,7 +178,7 @@ export class CreditCardDonationButton extends React.Component<Props, State> {
 
         <CountrySelector label="Select Country" name="payer.country" />
 
-        {formik.values.country === 'US' ? (
+        {formik.values['payer.country'] === 'US' ? (
           <USStateSelector label="Select State" name="payer.state" />
         ) : null}
       </View>
