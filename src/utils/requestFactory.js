@@ -283,16 +283,10 @@ export const destroyContentObjectReq = (object: ContentObject) =>
 /**
  * News feed requests
  */
-export const requestWithCursor = (path: string, cursor: Cursor) =>
-  api.get(
-    `${buildUrl({
-      path: `v1/${path}`,
-      query: {
-        limit: cursor.limit,
-        next: cursor.next,
-      },
-    })}`
-  );
+export const requestWithCursor = (
+  path: string,
+  cursor: { limit?: ?number, next?: ?number }
+) => api.get(`v2/${path}`, cursor);
 
 export const makeReadPinnedItemsRq = (communityId: string | number) =>
   inject({
