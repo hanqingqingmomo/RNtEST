@@ -35,7 +35,12 @@ export default class NoContent extends Component<Props> {
         ) : null}
 
         {subtitle ? (
-          <Text size={14} color={getColor('gray')} lineHeight={22}>
+          <Text
+            size={14}
+            color={getColor('gray')}
+            lineHeight={22}
+            style={styles.subtitle}
+          >
             {subtitle}
           </Text>
         ) : null}
@@ -54,5 +59,8 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 40,
     marginBottom: 14,
+  },
+  subtitle: {
+    textAlign: 'center',
   },
 });
