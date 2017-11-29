@@ -372,7 +372,7 @@ export const makeReadInvitationMessage = () =>
 /**
  * Notification Settings
  */
-export const makeReadNotificationSettings = () =>
+export const makeReadNotificationsSettings = () =>
   inject({
     url: buildUrl({
       path: `/v2/settings/notifications`,
@@ -382,11 +382,5 @@ export const makeReadNotificationSettings = () =>
     },
   });
 
-export const makeChangeNotificationSettings = setting =>
-  inject({
-    url: buildUrl({ path: '/v2/settings/notifications' }),
-    options: {
-      method: 'PUT',
-      body: JSON.stringify(setting),
-    },
-  });
+export const updateNotificationsSettings = settings =>
+  api.put('/v2/settings/notifications', settings);

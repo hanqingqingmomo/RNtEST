@@ -3,6 +3,8 @@
 import React from 'react';
 import { Switch } from 'react-native';
 
+import debounce from 'lodash.debounce';
+
 import {
   Fetch,
   Text,
@@ -14,8 +16,8 @@ import {
 import { NoContent } from '../blocks';
 import type { ScreenProps } from '../Types';
 import {
-  makeReadNotificationSettings,
-  makeChangeNotificationSettings,
+  makeReadNotificationsSettings,
+  updateNotificationsSettings,
 } from '../utils/requestFactory';
 
 const { Table, Section, Cell } = TableView;
@@ -26,6 +28,10 @@ export default class NotificationSettingsScreen extends React.Component<Props> {
   static navigationOptions = {
     title: 'Notifications',
   };
+  debouncedServerSync = debounce(async () => {
+    const response = await updateNotificationsSettings(this.state);
+    this.setState(response.data);
+  }, 2000);
 
   onDataFetched = data => {
     this.setState(data);
@@ -34,23 +40,12 @@ export default class NotificationSettingsScreen extends React.Component<Props> {
   handleSwitchValueChanged = (fetch: Function, settingValue: string) => async (
     value: boolean
   ) => {
-    let setting = {};
-    setting[settingValue] = value;
-
-    const changeNotificationSettingsReq = makeChangeNotificationSettings(
-      setting
-    );
-
-    const changeNotificationSettingsRes = await fetch(
-      changeNotificationSettingsReq.url,
-      changeNotificationSettingsReq.options
-    );
-
-    this.setState(changeNotificationSettingsRes.data);
+    this.setState({ [settingValue]: value });
+    this.debouncedServerSync();
   };
 
   render() {
-    const readNotificationSettingssRq = makeReadNotificationSettings();
+    const readNotificationSettingssRq = makeReadNotificationsSettings();
 
     return (
       <Screen fill>
@@ -60,13 +55,7 @@ export default class NotificationSettingsScreen extends React.Component<Props> {
           options={readNotificationSettingssRq.options}
         >
           {({ loading, error, data, fetch }: FetchProps<{ data: Object }>) => {
-            if (loading) {
-              return (
-                <CenterView>
-                  <ActivityIndicator />
-                </CenterView>
-              );
-            } else if (data) {
+            if (data) {
               return (
                 <Table>
                   <Section header="Newsfeed">
@@ -156,6 +145,12 @@ export default class NotificationSettingsScreen extends React.Component<Props> {
                     />
                   </Section>
                 </Table>
+              );
+            } else if (loading) {
+              return (
+                <CenterView>
+                  <ActivityIndicator />
+                </CenterView>
               );
             } else if (error) {
               return (
