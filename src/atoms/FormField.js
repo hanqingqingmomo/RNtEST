@@ -46,12 +46,16 @@ class FormFieldInner extends Component<FormikFieldProps> {
   };
 
   render() {
-    const { errors } = this.props.form;
+    const { errors, touched } = this.props.form;
 
     return (
       <TextInput
         {...this.props}
-        error={errors[this.props.field.name]}
+        error={
+          touched[this.props.field.name]
+            ? errors[this.props.field.name]
+            : undefined
+        }
         value={this.props.field.value}
         onChangeText={this.onChangeText}
       />
