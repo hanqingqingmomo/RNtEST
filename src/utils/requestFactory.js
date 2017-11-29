@@ -372,15 +372,8 @@ export const makeReadInvitationMessage = () =>
 /**
  * Notification Settings
  */
-export const makeReadNotificationsSettings = () =>
-  inject({
-    url: buildUrl({
-      path: `/v2/settings/notifications`,
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const readNotificationsSettings = () =>
+  api.get(`/v2/settings/notifications`);
 
-export const updateNotificationsSettings = (settings: NotificationSettings) =>
+export const updateNotificationsSettings = (settings?: NotificationSettings) =>
   api.put('/v2/settings/notifications', settings);
