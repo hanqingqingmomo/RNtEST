@@ -19,6 +19,7 @@
     "card-validator": "^4.1.1",
     "color": "^2.0.0",
     "date-fns": "^1.28.5",
+    "flat": "^4.0.0",
     "flux-standard-action": "^1.2.0",
     "formik": "^0.10.4",
     "immutability-helper": "^2.4.0",

@@ -1,18 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
-import { NativeModules } from 'react-native';
-import { PaymentRequest } from 'react-native-payments';
 
-import { Screen, Fetch, Text } from '../../atoms';
-import Form, { type Payment } from '../../blocks/Donation/DonationForm';
+import { Screen, Fetch } from '../../atoms';
+import Form from '../../blocks/Donation/DonationForm';
 import Header from '../../blocks/Donation/DonationHeader';
-import {
-  paymentMethods,
-  paymentDetails,
-  paymentOptions,
-} from './paymentConfig';
-import { makeDonationRq } from '../../utils/requestFactory';
+import { donationReq } from '../../utils/requestFactory';
 import type { ScreenProps, FetchProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
@@ -24,69 +17,30 @@ export default class DonationAppealScreen extends Component<Props> {
     title: 'Donation Form',
   };
 
-  onPaymentNonceReceived = (fetchProps: *) => async (
-    paymentToken: *,
-    payment: *
-  ) => {
-    const req = makeDonationRq({
-      ...payment,
-      payment_method_nonce: paymentToken,
+  onSuccess = async (payload: *) => {
+    const response = await donationReq({
+      donation: payload.donation,
+      payer: payload.payer,
     });
-
-    const donationResponse = await fetchProps.fetch(req.url, req.options);
-    this.completePaymentCallback({ donationResponse, fetchProps, payment });
+    payload.complete(response.ok ? 'success' : 'fail');
+    this.completePaymentCallback(response.ok, payload);
   };
 
   onPaymentFailed = () => {
     //
   };
 
-  initiatePayment = (
-    fetchProps: *,
-    completePaymentCallback: Function
-  ) => async (payment: Payment) => {
-    const paymentRequest = new PaymentRequest(
-      paymentMethods,
-      paymentDetails(payment),
-      paymentOptions
-    );
-
-    try {
-      var paymentResponse = await paymentRequest.show();
-      const { paymentToken } = paymentResponse.details;
-      const req = makeDonationRq({
-        ...payment,
-        payment_method_nonce: paymentToken,
-      });
-
-      const donationResponse = await fetchProps.fetch(req.url, req.options);
-      paymentResponse.complete(
-        donationResponse.response.ok ? 'success' : 'fail'
-      );
-      completePaymentCallback({ donationResponse, fetchProps, payment });
-    } catch (err) {
-      if (err.message !== 'AbortError') {
-        NativeModules.ReactNativePayments.complete('fail', () => {});
-      }
-    }
-  };
-
-  completePaymentCallback = ({
-    donationResponse,
-    fetchProps,
-    payment,
-  }: Object) => {
+  completePaymentCallback = (success: boolean, payload: *) => {
     this.props.navigation.navigate('DonationResultScreen', {
-      amount: payment.amount,
-      recurrent: payment.interval !== 'one-time',
-      success: donationResponse.response.ok,
+      amount: payload.donation.amount,
+      recurrent: payload.donation.interval !== 'one-time',
+      success,
       inviteFriends: () =>
         this.props.screenProps.openModalRoute({
           routeName: 'InviteFriendModal',
         }),
-      repeatPayment: () => {
-        this.initiatePayment(fetchProps, this.completePaymentCallback)(payment);
-      },
+      repeatPayment:
+        payload.method === 'credit-card' ? () => this.onSuccess(payload) : null,
     });
   };
 
@@ -96,14 +50,7 @@ export default class DonationAppealScreen extends Component<Props> {
         {(fetchProps: FetchProps<*>) => (
           <Screen fill>
             <Header />
-            <Form
-              onPaymentNonceReceived={this.onPaymentNonceReceived(fetchProps)}
-              onFail={this.onPaymentFailed}
-              onInitiatePayment={this.initiatePayment(
-                fetchProps,
-                this.completePaymentCallback
-              )}
-            />
+            <Form onSuccess={this.onSuccess} onFailure={this.onPaymentFailed} />
           </Screen>
         )}
       </Fetch>

@@ -1,12 +1,27 @@
 // @flow
 
 import React from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Platform } from 'react-native';
 import valid from 'card-validator';
 
-import { BaseInput } from './BaseInput';
-import { Label } from './Label';
+import { FormField, TextInput, View } from '../../index';
 import { CardLogo, type CardType } from './CardLogo';
+
+function maskValue(value: string, gaps: Array<number>): string {
+  if (gaps.length === 0) {
+    return value;
+  }
+
+  function take(str: string, start: number, end: number) {
+    const x = str.substring(start, end);
+    return x;
+  }
+
+  return [0, ...gaps]
+    .map((start, isx, arr) => take(value, start, arr[isx + 1] || Infinity))
+    .join(' ')
+    .trim();
+}
 
 type ValidationState = {
   card: ?{
@@ -24,73 +39,57 @@ type ValidationState = {
 };
 
 type Props = {
-  onBlur: Function,
-  onChange: string => mixed,
-  onFocus: Function,
-  value: string,
+  name: string,
+  label: string,
+  size: number,
 };
 
-function last4(string: string): string {
-  return string.substr(string.length - 4, 4);
-}
-
 export class NumberInput extends React.Component<Props> {
-  _animToggle = new Animated.Value(this.props.active ? 1 : 0);
-
-  componentWillReceiveProps(nextProps: Props) {
-    this.animateToggle(nextProps.active ? 1 : 0);
-  }
-
-  animateToggle(toValue: number) {
-    Animated.timing(this._animToggle, { toValue, duration: 350 }).start();
-  }
+  onChangeText = (formik: *) => (value: string) => {
+    const sanitizedValue = value.trim().replace(/\s/g, '');
+    formik.form.setFieldValue(formik.field.name, sanitizedValue);
+    formik.form.setFieldTouched(formik.field.name);
+  };
 
   render(): React$Node {
-    const { card, isPotentiallyValid, isValid }: ValidationState = valid.number(
-      this.props.value
-    );
-
-    const width = this._animToggle.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['33%', '100%'],
-    });
-
+    const { name, label } = this.props;
     return (
-      <Animated.View style={{ width }}>
-        <Label>Card number</Label>
-        <View style={styles.row}>
-          <View style={styles.logo}>
-            <CardLogo type={card === null ? null : card.type} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <BaseInput
-              passRef={this.props.passRef}
-              onFocus={this.props.onFocus}
-              onBlur={this.props.onBlur}
-              value={
-                this.props.active === false
-                  ? last4(this.props.value)
-                  : this.props.value
-              }
-              onChange={this.props.onChange}
-              isValid={isPotentiallyValid}
-              style={{ paddingLeft: 40 }}
-            />
-          </View>
-        </View>
-      </Animated.View>
+      <FormField
+        name={name}
+        render={formik => {
+          const valueRaw = formik.field.value || '';
+          const validation: ValidationState = valid.number(valueRaw);
+          return (
+            <View flexDirection="row" style={{ alignItems: 'flex-start' }}>
+              <View style={{ top: 31, marginRight: 10 }}>
+                <CardLogo
+                  type={validation.card ? validation.card.type : null}
+                />
+              </View>
+              <View flex={1}>
+                <TextInput
+                  label={label}
+                  error={
+                    validation.isPotentiallyValid
+                      ? ''
+                      : 'Card number is not valid'
+                  }
+                  onChangeText={this.onChangeText(formik)}
+                  value={maskValue(
+                    valueRaw,
+                    validation.card ? validation.card.gaps : []
+                  )}
+                  maxLength={this.props.size}
+                  keyboardType={Platform.select({
+                    ios: 'number-pad',
+                    android: 'numeric',
+                  })}
+                />
+              </View>
+            </View>
+          );
+        }}
+      />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-  },
-  logo: {
-    position: 'absolute',
-    left: 0,
-    bottom: 5,
-    zIndex: 1,
-  },
-});

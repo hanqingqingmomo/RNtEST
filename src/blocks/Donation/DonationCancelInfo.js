@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import Collapsible from 'react-native-collapsible';
 
 import { Text, View } from '../../atoms';
-
-export type ChargeInterval = 'one-time' | 'monthly' | 'quarterly' | 'annually';
+import { type ChargeInterval } from './donationHelpers';
 
 function chargeIntervalToMonths(chargeInterval: ChargeInterval): string {
   return {

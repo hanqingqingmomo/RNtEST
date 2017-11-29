@@ -7,10 +7,6 @@ import { Image, ImageBackground, Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
-const TITLE = 'Help us strengthen Chicago by empowering women and families';
-const SUBTITLE =
-  'Help us in creating a future where ALL women thrive. Make a donation today.';
-
 class Description extends React.Component<
   {},
   {
@@ -27,6 +23,7 @@ class Description extends React.Component<
         <Text
           size={12}
           color={getColor('white')}
+          style={[css('backgroundColor', 'transparent'), css('paddingTop', 10)]}
           numberOfLines={this.state.collapsed ? 2 : undefined}
         >
           YWCA Metropolitan Chicago supports more than 200,000 women and
@@ -39,7 +36,10 @@ class Description extends React.Component<
           color={getColor('white')}
           onPress={() =>
             this.setState(state => ({ collapsed: !state.collapsed }))}
-          style={css('textDecorationLine', 'underline')}
+          style={[
+            css('textDecorationLine', 'underline'),
+            css('backgroundColor', 'transparent'),
+          ]}
         >
           {this.state.collapsed ? 'Show more' : 'Show less'}
         </Text>
@@ -76,7 +76,7 @@ export default function DonationHeader() {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {TITLE}
+            Help us strengthen Chicago by empowering women and families
           </Text>
         </View>
       </View>
@@ -87,7 +87,7 @@ export default function DonationHeader() {
 
 const styles = StyleSheet.create({
   coverContainer: {
-    paddingTop: 100,
+    paddingTop: 50,
     width: '100%',
     justifyContent: 'flex-end',
     paddingHorizontal: 15,
