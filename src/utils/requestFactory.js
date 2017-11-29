@@ -311,10 +311,8 @@ export const createPostReq = (object: {
   cached_url?: ?string,
 }) => api.post('/v1/content_objects/', makeFormData(object, ['attachment']));
 
-export const reportReq = (object: {
-  id: string,
-  type: 'comment' | 'post' | 'user',
-}) => api.post('/v1/abuse_reports', { [`${object.type}Id`]: object.id });
+export const reportReq = (object: { id: string }) =>
+  api.post('/v2/abuse_reports', { objectId: object.id });
 
 export const makeScrapeUrlReq = (url: string) =>
   inject({
