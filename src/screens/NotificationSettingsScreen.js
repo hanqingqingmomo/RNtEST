@@ -14,7 +14,7 @@ import {
   CenterView,
 } from '../atoms';
 import { NoContent } from '../blocks';
-import type { ScreenProps } from '../Types';
+import type { ScreenProps, NotificationSettings, FetchProps } from '../Types';
 import {
   makeReadNotificationsSettings,
   updateNotificationsSettings,
@@ -22,20 +22,20 @@ import {
 
 const { Table, Section, Cell } = TableView;
 
-type Props = ScreenProps<*>;
-
-export default class NotificationSettingsScreen extends React.Component<Props> {
+export default class NotificationSettingsScreen extends React.Component<
+  ScreenProps<*>,
+  NotificationSettings
+> {
   static navigationOptions = {
     title: 'Notifications',
   };
+
   debouncedServerSync = debounce(async () => {
     const response = await updateNotificationsSettings(this.state);
     this.setState(response.data);
   }, 2000);
 
-  onDataFetched = data => {
-    this.setState(data);
-  };
+  onDataFetched = (data: NotificationSettings) => this.setState(data);
 
   handleSwitchValueChanged = (fetch: Function, settingValue: string) => async (
     value: boolean

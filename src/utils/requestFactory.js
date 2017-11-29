@@ -7,7 +7,7 @@ import { create } from 'apisauce';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { Cursor } from '../Types';
+import type { Cursor, NotificationSettings } from '../Types';
 
 let Store: any = null;
 
@@ -382,5 +382,5 @@ export const makeReadNotificationsSettings = () =>
     },
   });
 
-export const updateNotificationsSettings = settings =>
+export const updateNotificationsSettings = (settings: NotificationSettings) =>
   api.put('/v2/settings/notifications', settings);
