@@ -40,18 +40,18 @@ const timeout = ms => new Promise(res => setTimeout(res, ms));
 
 const INITIAL_VALUES = flatten({
   card: {
-    number: '4242424242424242',
-    expiration: '12/18',
-    cvv: '200',
+    number: '',
+    expiration: '',
+    cvv: '',
   },
   payer: {
-    first_name: 'Andrej',
-    last_name: 'Badin',
-    street: 'Krastna cesticka',
-    apt: '#50',
-    city: 'Bratiska',
-    zip: '666 66',
-    country: 'SK',
+    first_name: '',
+    last_name: '',
+    street: '',
+    apt: '',
+    city: '',
+    zip: '',
+    country: '',
     state: '',
   },
 });
@@ -102,11 +102,9 @@ export class CreditCardDonationButton extends React.Component<Props, State> {
         const paymentNonce: string = await Braintree.getCardNonce({
           number: card.number,
           cvv: card.cvv,
-          expiration_date: card.expiration,
-          billing_address: {
-            postal_code: payer.zip,
-            street_address: payer.street,
-          },
+          expirationDate: card.expiration,
+          postalCode: payer.zip,
+          streetAddress: payer.street,
         });
 
         this.props.onSuccess({
@@ -125,6 +123,7 @@ export class CreditCardDonationButton extends React.Component<Props, State> {
         this.setState({ active: false });
       }
     } else {
+      // TODO display dropdown alert
       this.props.onFailure(response.data);
     }
 
@@ -197,7 +196,11 @@ export class CreditCardDonationButton extends React.Component<Props, State> {
           style={[css('backgroundColor', 'transparent'), css('borderWidth', 0)]}
           textColor={{ color: getColor('orange') }}
         />
-        <Modal visible={this.state.active} animationType="slide">
+        <Modal
+          visible={this.state.active}
+          animationType="slide"
+          onRequestClose={this.cancelPayment}
+        >
           <Form
             initialValues={INITIAL_VALUES}
             initialIsValid={true}

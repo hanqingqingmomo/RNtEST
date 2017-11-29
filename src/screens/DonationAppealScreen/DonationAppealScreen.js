@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 
-import { Screen, Fetch } from '../../atoms';
+import { Screen } from '../../atoms';
 import Form from '../../blocks/Donation/DonationForm';
 import Header from '../../blocks/Donation/DonationHeader';
 import { donationReq } from '../../utils/requestFactory';
-import type { ScreenProps, FetchProps } from '../../Types';
+import type { ScreenProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
   screenProps: Object,
@@ -46,14 +46,10 @@ export default class DonationAppealScreen extends Component<Props> {
 
   render() {
     return (
-      <Fetch manual>
-        {(fetchProps: FetchProps<*>) => (
-          <Screen fill>
-            <Header />
-            <Form onSuccess={this.onSuccess} onFailure={this.onPaymentFailed} />
-          </Screen>
-        )}
-      </Fetch>
+      <Screen fill>
+        <Header />
+        <Form onSuccess={this.onSuccess} onFailure={this.onPaymentFailed} />
+      </Screen>
     );
   }
 }
