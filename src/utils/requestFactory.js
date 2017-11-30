@@ -28,8 +28,8 @@ export type Response<D> = {
   status: number,
 };
 
-type P = Promise;
-type RS = R;
+type P<T> = Promise<T>;
+type RS<D> = Response<D>;
 
 export type Request = {
   url: string,
