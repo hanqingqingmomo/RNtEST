@@ -8,9 +8,6 @@ import EventScreen from '../EventScreen';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
-const text =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt utlabore et dolore magna aliqua.';
-
 const LiveEventButton = () => (
   <View style={styles.join}>
     <View style={styles.joinButton}>
@@ -29,7 +26,7 @@ const LiveEventButton = () => (
 const FutureEventButtons = () => (
   <View style={styles.going}>
     <Text>Are you going?</Text>
-    <View style={styles.alignment}>
+    <View style={styles.buttonsWrapper}>
       <Button.Icon
         color={getColor('gray')}
         iconColor={getColor('gray')}
@@ -48,30 +45,29 @@ const FutureEventButtons = () => (
   </View>
 );
 
-export default class TabEventNewsFeed extends Component<Props> {
+export default class TabEventAbout extends Component<Props> {
   static navigationOptions = {
-    tabBarLabel: 'News',
+    tabBarLabel: 'About',
   };
 
   render() {
-    const isLiveEvent = false;
-    const isFutureEvent = true;
+    const { event } = this.props;
 
     return (
       <View>
-        {isLiveEvent ? (
+        {event.status === 'live' ? (
           <LiveEventButton />
-        ) : isFutureEvent ? (
+        ) : event.status === 'future' ? (
           <FutureEventButtons />
         ) : null}
-        <EventScreen text={text} />
+        <EventScreen text={event.description} />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  alignment: {
+  buttonsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
   },

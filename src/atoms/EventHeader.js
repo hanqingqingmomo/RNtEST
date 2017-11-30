@@ -17,9 +17,9 @@ type Props = {
 
 export default function EventHeader({
   coverImageURI,
-  isClosed,
   onPress,
   pillTitle,
+  status,
   subtitle,
   title,
 }: Props) {
@@ -50,7 +50,7 @@ export default function EventHeader({
             <Pill color={getColor('white')} title={pillTitle} />
           </View>
         </View>
-        {isClosed === true ? null : (
+        {status != 'past' ? null : (
           <View style={styles.buttonWrapper}>
             <Button.Icon
               color={getColor('white')}
