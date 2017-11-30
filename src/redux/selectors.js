@@ -27,6 +27,14 @@ export function selectUser(state: Store): ?User {
   return state.application.userProfile;
 }
 
+export function selectIsLoggedIn(state: Store): boolean {
+  return state.application.userAccessToken !== null;
+}
+
+export function selectPushToken(state: Store): ?string {
+  return state.application.pushToken;
+}
+
 //
 // Get timeline data
 //

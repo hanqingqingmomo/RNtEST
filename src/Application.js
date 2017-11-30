@@ -21,7 +21,6 @@ class Application extends React.PureComponent<Props> {
 
   render = () => {
     const { authenticated } = this.props;
-
     return (
       <View flexGrow={1}>
         <Network>

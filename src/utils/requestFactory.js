@@ -1,6 +1,8 @@
 // @flow
 
+import { Platform } from 'react-native';
 import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import update from 'immutability-helper';
 import { create } from 'apisauce';
 
@@ -31,6 +33,8 @@ export type Response<D> = {
 type P<T> = Promise<T>;
 type RS<D> = Response<D>;
 
+type PR<T> = Promise<Response<T>>;
+
 export type Request = {
   url: string,
   options: RequestOptions,
@@ -43,6 +47,8 @@ const api = create({
 });
 
 api.addRequestTransform(request => {
+  request.headers['x-http-device'] = DeviceInfo.getUniqueID();
+  request.headers['x-http-platform'] = Platform.OS.toLowerCase();
   if (request.headers['API-KEY'] === undefined) {
     request.headers['API-KEY'] = selectAccessToken(Store.getState());
   }
@@ -122,27 +128,15 @@ export const readBraintreeClientTokenReq = () =>
 /**
  * Authentication requests
  */
-export const makeSigninRq = (credentials: {
+export function RQSignIn(data: {
   email: string,
   password: string,
-}) =>
-  inject({
-    url: buildUrl({ path: '/v1/members/login' }),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    },
-  });
+}): PR<{ mobile_token: string }> {
+  return api.post('/v2/members/login', data);
+}
 
-export const makeSignupRq = (body: *) =>
-  inject({
-    url: buildUrl({ path: '/v1/members/signup' }),
-    options: {
-      method: 'POST',
-      body: makeFormData(body, ['profile_photo']),
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
-  });
+export const RQSignUp = (body: *) =>
+  api.post('/v2/members/signup', makeFormData(body, ['profile_photo']));
 
 export const makePasswordResetReq = (email: string) =>
   inject({
@@ -178,6 +172,7 @@ export const donationReq = (donationPayload: {
 /**
  * Profile
  */
+// TODO remove makeReadProfileRq
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
     url: buildUrl({
@@ -190,6 +185,9 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
       },
     },
   });
+
+export const RQReadProfile = (id: 'me' | string | number) =>
+  api.get(id === 'me' ? '/v1/members' : `/v1/members/${id}`);
 
 export const makeUpdateProfileReq = (user: Object) =>
   inject({
@@ -343,7 +341,7 @@ export const createCommentReq = (objectId: string, text_content: string) =>
   api.post(`/v1/content_objects/${objectId}/comment`, { text_content });
 
 /**
- * Invitations
+ * Friend Invitations
  */
 
 export const inviteFriendReq = (email: string) =>
@@ -353,14 +351,23 @@ export const getInvitationSmsContent = () =>
   api.get(`/v1/communities/invitation_message`);
 
 /**
- * Notification Settings
+ * Profile Notification Settings
  */
-export function readNotificationsSettings(): P<RS<NotificationSettings>> {
+export function readNotificationsSettings(): PR<NotificationSettings> {
   return api.get(`/v2/settings/notifications`);
 }
 
 export function updateNotificationsSettings(
   data: NotificationSettings
-): P<RS<NotificationSettings>> {
+): PR<NotificationSettings> {
   return api.put(`/v2/settings/notifications`, data);
 }
+
+/**
+ * Push Notifications
+ */
+export const RQEnablePushNotifications = (token: string) =>
+  api.post('/v2/push-notifications/register', { token });
+
+export const RQDisablePushNotifications = (token: string) =>
+  api.delete('/v2/push-notifications/register');

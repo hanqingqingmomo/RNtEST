@@ -15,9 +15,9 @@ export type FormValues = typeof INITIAL_VALUES;
 
 type Props = {
   error: boolean,
-  loading: boolean,
-  handleAuthenticationRequest: (values: FormValues) => *,
-  handlePasswordScreenRequest: () => void,
+  disabled: boolean,
+  onSubmit: (values: FormValues) => *,
+  requestNavigationToScreen: (routeName: string, routeParams?: Object) => void,
 };
 
 const RULES = {
@@ -37,7 +37,7 @@ export default class EmailAuthenticationBlock extends Component<Props> {
         initialValues={INITIAL_VALUES}
         rules={RULES}
         messages={MESSAGES}
-        onSubmit={this.props.handleAuthenticationRequest}
+        onSubmit={this.props.onSubmit}
         render={formProps => (
           <View style={styles.container}>
             <Icon
@@ -74,7 +74,8 @@ export default class EmailAuthenticationBlock extends Component<Props> {
               <Text
                 color="orange"
                 size={16}
-                onPress={this.props.handlePasswordScreenRequest}
+                onPress={() =>
+                  this.props.requestNavigationToScreen('PasswordResetScreen')}
                 style={styles.forgotPasswordText}
               >
                 Forgot password?
@@ -83,11 +84,11 @@ export default class EmailAuthenticationBlock extends Component<Props> {
             <Button
               block
               size="lg"
-              disabled={this.props.loading}
+              disabled={this.props.disabled}
               color={getColor('orange')}
               textColor={getColor('white')}
               onPress={formProps.handleSubmit}
-              title={this.props.loading ? 'Logging In...' : 'Log In'}
+              title={this.props.disabled ? 'Logging In...' : 'Log In'}
             />
           </View>
         )}

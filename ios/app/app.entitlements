@@ -7,5 +7,7 @@
 		<string>merchant.com.pba.ywca</string>
 		<string>merchant.com.pba.dev</string>
 	</array>
+	<key>aps-environment</key>
+	<string>development</string>
 </dict>
 </plist>

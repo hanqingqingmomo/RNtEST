@@ -1,10 +1,12 @@
 // @flow
 
+export const APP_SET_USER_DATA = 'application/SET_USER_DATA';
+
 //
 // Typedefs
 //
-
 type State = {
+  pushToken: ?string,
   userAccessToken: ?string,
   userProfile: ?Object,
 };
@@ -12,69 +14,50 @@ type State = {
 //
 // Actions
 //
-
-type SetUserAccessTokenAction = {
-  type: 'application/SET_USER_ACCESS_TOKEN',
-  payload: {
-    userAccessToken: string,
-  },
+export type UserSetDataAction = {
+  type: typeof APP_SET_USER_DATA,
+  payload: $Shape<State>,
 };
 
-type SetUserProfileAction = {
-  type: 'application/SET_USER_ACCESS_TOKEN',
-  payload: {
-    userProfile: Object,
-  },
-};
-
-type ClearUserDataAction = {
-  type: 'application/CLEAR_USER_DATA',
-};
-
-export function setUserAccessToken(
-  userAccessToken: string
-): SetUserAccessTokenAction {
+function setUserData(payload: $Shape<State>): UserSetDataAction {
   return {
-    type: 'application/SET_USER_ACCESS_TOKEN',
-    payload: { userAccessToken },
+    type: APP_SET_USER_DATA,
+    payload,
   };
 }
 
-export function setUserProfile(userProfile: Object): SetUserProfileAction {
-  return {
-    type: 'application/SET_USER_ACCESS_TOKEN',
-    payload: { userProfile },
-  };
+export function setPushToken(pushToken: string): UserSetDataAction {
+  return setUserData({ pushToken });
 }
 
-export function clearUserData(): ClearUserDataAction {
-  return { type: 'application/CLEAR_USER_DATA' };
+export function setUserAccessToken(userAccessToken: string): UserSetDataAction {
+  return setUserData({ userAccessToken });
+}
+
+export function setUserProfile(userProfile: Object): UserSetDataAction {
+  return setUserData({ userProfile });
+}
+
+export function clearUserData(): UserSetDataAction {
+  return setUserData(INITIAL_STATE);
 }
 
 //
 // Reducer
 //
-
 const INITIAL_STATE: State = {
+  pushToken: null,
   userAccessToken: null,
   userProfile: null,
 };
 
 export default function(
   state: State = INITIAL_STATE,
-  action: SetUserAccessTokenAction | SetUserProfileAction | ClearUserDataAction
+  action: UserSetDataAction
 ): State {
   switch (action.type) {
-    case 'application/SET_USER_ACCESS_TOKEN':
-      return {
-        ...state,
-        ...action.payload,
-      };
-
-    case 'application/CLEAR_USER_DATA':
-      return {
-        ...INITIAL_STATE,
-      };
+    case APP_SET_USER_DATA:
+      return { ...state, ...action.payload };
 
     default:
       return state;
