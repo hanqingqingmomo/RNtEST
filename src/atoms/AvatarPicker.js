@@ -52,9 +52,7 @@ export default class AvatarPicker extends Component<P> {
 
     return (
       <TouchableItem onPress={this.onPress}>
-        <View
-          style={[css('width', s), css('height', s + 20), styles.centerContent]}
-        >
+        <View style={[css('width', s), css('height', s), styles.centerContent]}>
           <ShadowView
             radius={s / 2}
             style={[
