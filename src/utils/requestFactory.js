@@ -11,6 +11,26 @@ import type { Cursor, NotificationSettings } from '../Types';
 
 let Store: any = null;
 
+export type Response<D> = {
+  config: Object,
+  data: D,
+  duration: number,
+  headers: Object,
+  ok: boolean,
+  problem:
+    | null
+    | 'CLIENT_ERROR'
+    | 'SERVER_ERROR'
+    | 'TIMEOUT_ERROR'
+    | 'CONNECTION_ERROR'
+    | 'NETWORK_ERROR'
+    | 'CANCEL_ERROR',
+  status: number,
+};
+
+type P = Promise;
+type RS = R;
+
 export type Request = {
   url: string,
   options: RequestOptions,
@@ -372,8 +392,12 @@ export const makeReadInvitationMessage = () =>
 /**
  * Notification Settings
  */
-export const readNotificationsSettings = () =>
-  api.get(`/v2/settings/notifications`);
+export function readNotificationsSettings(): P<RS<NotificationSettings>> {
+  return api.get(`/v2/settings/notifications`);
+}
 
-export const updateNotificationsSettings = (settings?: NotificationSettings) =>
-  api.put('/v2/settings/notifications', settings);
+export function updateNotificationsSettings(
+  data: NotificationSettings
+): P<RS<NotificationSettings>> {
+  return api.put(`/v2/settings/notifications`, data);
+}

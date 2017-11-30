@@ -2,196 +2,169 @@
 
 import React from 'react';
 import { Switch } from 'react-native';
-
 import debounce from 'lodash.debounce';
 
 import {
-  Text,
-  TableView,
-  Screen,
   ActivityIndicator,
   CenterView,
+  ScrollView,
+  TableView,
+  Text,
 } from '../atoms';
-import { NoContent } from '../blocks';
 import type { ScreenProps, NotificationSettings } from '../Types';
 import {
   readNotificationsSettings,
   updateNotificationsSettings,
+  type Response,
 } from '../utils/requestFactory';
 
 const { Table, Section, Cell } = TableView;
 
-type FetchState = 'InitialLoading' | 'Error' | 'Success';
+type Option = { action: 'toggle' | 'push', key: string, label: string };
+
+type Props = ScreenProps<*>;
 
 type State = {
-  fetchState: FetchState,
-  notificationSettings?: NotificationSettings,
-  errorMessage?: string,
+  settings: $Shape<NotificationSettings>,
+  response: ?Response<NotificationSettings>,
+};
+
+const CELLS = {
+  pushNotifications: [
+    {
+      action: 'toggle',
+      key: 'push_private_messages',
+      label: 'Private Messages',
+    },
+    {
+      action: 'toggle',
+      key: 'push_community_invitations',
+      label: 'Invitation to Join Community',
+    },
+    {
+      action: 'toggle',
+      key: 'push_video_calls',
+      label: 'Events & Webinars',
+    },
+  ],
+  emailNotifications: [
+    {
+      action: 'toggle',
+      key: 'email_private_messages',
+      label: 'Private Messages',
+    },
+    {
+      action: 'toggle',
+      key: 'email_community_invitations',
+      label: 'Invitation to Join Community',
+    },
+    {
+      action: 'toggle',
+      key: 'email_video_calls',
+      label: 'Events & Webinars',
+    },
+  ],
+  newsFeed: [
+    {
+      action: 'push',
+      key: 'NewsFeedSettingsScreen',
+      label: 'Prioritize What to See First',
+    },
+  ],
 };
 
 export default class NotificationSettingsScreen extends React.Component<
-  ScreenProps<*>,
+  Props,
   State
 > {
   state: State = {
-    fetchState: 'InitialLoading',
+    settings: {},
+    response: null,
   };
+
+  mounted: boolean = true;
 
   static navigationOptions = {
     title: 'Notifications',
   };
 
-  handleResponse = (response: any) => {
-    if (response.ok) {
-      this.setState({
-        fetchState: 'Success',
-        notificationSettings: response.data,
-      });
-    } else {
-      this.setState({
-        fetchState: 'Error',
-        errorMessage: response.data.error,
-      });
-      console.log('Error while requesting data', response);
-    }
-  };
-
-  componentDidMount = async () =>
-    this.handleResponse(await readNotificationsSettings());
-
-  debouncedServerSync = debounce(
-    async () =>
-      this.handleResponse(
-        await updateNotificationsSettings(this.state.notificationSettings)
-      ),
-    2000
-  );
-
-  handleSwitchValueChanged = (settingName: string) => async (
-    value: boolean
-  ) => {
-    console.log('setting name, value', settingName, value);
-    this.setState({
-      notificationSettings: {
-        ...this.state.notificationSettings,
-        [settingName]: value,
-      },
-    });
-    this.debouncedServerSync();
-  };
-
-  initialLoading = () => this.state.fetchState === 'InitialLoading';
-  loadingError = () => this.state.fetchState === 'Error';
-  success = () => this.state.fetchState === 'Success';
-
-  renderInternals() {
-    if (this.success() && this.state.notificationSettings) {
-      const {
-        push_private_messages,
-        push_community_invitations,
-        push_video_calls,
-        email_private_messages,
-        email_community_invitations,
-        email_video_calls,
-      } = this.state.notificationSettings;
-      return (
-        <Table>
-          <Section header="Newsfeed">
-            <Cell
-              title="Prioritize What to See First"
-              accessory="DisclosureIndicator"
-              onPress={() =>
-                this.props.navigation.navigate('NewsFeedSettingsScreen')}
-            />
-          </Section>
-          <Section header="Push notifications">
-            <Cell
-              title="Private Messages"
-              cellAccessoryView={
-                <Switch
-                  value={push_private_messages}
-                  onValueChange={this.handleSwitchValueChanged(
-                    'push_private_messages'
-                  )}
-                />
-              }
-            />
-            <Cell
-              title="Invitation to Join Community"
-              cellAccessoryView={
-                <Switch
-                  value={push_community_invitations}
-                  onValueChange={this.handleSwitchValueChanged(
-                    'push_community_invitations'
-                  )}
-                />
-              }
-            />
-            <Cell
-              title={'Events & Webinars'}
-              cellAccessoryView={
-                <Switch
-                  value={push_video_calls}
-                  onValueChange={this.handleSwitchValueChanged(
-                    'push_video_calls'
-                  )}
-                />
-              }
-            />
-          </Section>
-          <Section header="Email updates">
-            <Cell
-              title="Private Messages"
-              cellAccessoryView={
-                <Switch
-                  value={email_private_messages}
-                  onValueChange={this.handleSwitchValueChanged(
-                    'email_private_messages'
-                  )}
-                />
-              }
-            />
-            <Cell
-              title="Invitation to Join Community"
-              cellAccessoryView={
-                <Switch
-                  value={email_community_invitations}
-                  onValueChange={this.handleSwitchValueChanged(
-                    'email_community_invitations'
-                  )}
-                />
-              }
-            />
-            <Cell
-              title={'Events & Webinars'}
-              cellAccessoryView={
-                <Switch
-                  value={email_video_calls}
-                  onValueChange={this.handleSwitchValueChanged(
-                    'email_video_calls'
-                  )}
-                />
-              }
-            />
-          </Section>
-        </Table>
-      );
-    } else if (this.initialLoading()) {
-      return (
-        <CenterView>
-          <ActivityIndicator />
-        </CenterView>
-      );
-    } else if (this.loadingError()) {
-      return (
-        <CenterView>
-          <Text>{this.state.errorMessage}</Text>
-        </CenterView>
-      );
-    } else {
-      return <NoContent iconName="sad-face" title="No Content" />;
-    }
+  componentDidMount() {
+    this.handleRequest(readNotificationsSettings());
   }
 
-  render = () => <Screen fill>{this.renderInternals()}</Screen>;
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  debouncedServerSync = debounce(async () => {
+    this.handleRequest(updateNotificationsSettings(this.state.settings));
+  }, 2000);
+
+  handleRequest = async (request: *) => {
+    const response = await updateNotificationsSettings(this.state.settings);
+    if (this.mounted) {
+      console.log('sate');
+      this.setState({ response, settings: response.ok ? response.data : {} });
+    }
+  };
+
+  handleSwitchValueChanged = (name: string) => async (value: boolean) => {
+    this.setState(
+      state => ({
+        settings: {
+          ...state.settings,
+          [name]: value,
+        },
+      }),
+      this.debouncedServerSync
+    );
+  };
+
+  renderSection = (header: string, cells: Array<Option>): React$Node => {
+    return (
+      <Section header="Push notifications">
+        {cells.map(({ action, key, label }) => (
+          <Cell
+            key={key}
+            title={label}
+            accessory={action === 'push' ? 'DisclosureIndicator' : undefined}
+            cellAccessoryView={
+              action === 'toggle' ? (
+                <Switch
+                  value={this.state.settings[key]}
+                  onValueChange={this.handleSwitchValueChanged(key)}
+                />
+              ) : null
+            }
+            onPress={
+              action === 'push'
+                ? () => this.props.navigation.navigate(key)
+                : undefined
+            }
+          />
+        ))}
+      </Section>
+    );
+  };
+
+  render() {
+    const { response } = this.state;
+    return !response ? (
+      <CenterView>
+        <ActivityIndicator />
+      </CenterView>
+    ) : response.ok ? (
+      <ScrollView alwaysBounceVertical={false}>
+        <Table>
+          {this.renderSection('Newsfeed', CELLS.newsFeed)}
+          {this.renderSection('Push notifications', CELLS.pushNotifications)}
+          {this.renderSection('Push Email updates"', CELLS.emailNotifications)}
+        </Table>
+      </ScrollView>
+    ) : (
+      <CenterView>
+        <Text>{response.problem}</Text>
+      </CenterView>
+    );
+  }
 }
