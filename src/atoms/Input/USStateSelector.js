@@ -22,7 +22,6 @@ export class USStateSelector extends React.Component<Props> {
         label={this.props.label}
         render={formik => {
           const state = DATA.find(row => row.code === formik.field.value);
-          console.log(formik.form.touched);
           return (
             <Picker
               title={this.props.label}

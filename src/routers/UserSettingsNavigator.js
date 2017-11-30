@@ -4,7 +4,6 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import { NavigationIconButton } from '../atoms';
-import { getColor } from '../utils/color';
 import {
   InvitationCodeScreen,
   PrivacyScreen,
