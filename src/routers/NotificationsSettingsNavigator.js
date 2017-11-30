@@ -7,7 +7,7 @@ import { NavigationIconButton } from '../atoms';
 import { NotificationSettingsScreen, NewsFeedSettingsScreen } from '../screens';
 import { getColor } from '../utils/color';
 
-function DismissModalButton({ onPress, ...a }) {
+function DismissModalButton({ onPress }) {
   return (
     <NavigationIconButton
       name="close"
@@ -24,13 +24,9 @@ export default StackNavigator({
       headerLeft: (
         <DismissModalButton onPress={screenProps.dismissModalRoute} />
       ),
-      headerTitle: 'Notifications',
     }),
   },
   NewsFeedSettingsScreen: {
     screen: NewsFeedSettingsScreen,
-    navigationOptions: {
-      headerTitle: 'Prioritize',
-    },
   },
 });

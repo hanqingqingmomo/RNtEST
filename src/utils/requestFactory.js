@@ -7,9 +7,29 @@ import { create } from 'apisauce';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { Cursor } from '../Types';
+import type { NotificationSettings } from '../Types';
 
 let Store: any = null;
+
+export type Response<D> = {
+  config: Object,
+  data: D,
+  duration: number,
+  headers: Object,
+  ok: boolean,
+  problem:
+    | null
+    | 'CLIENT_ERROR'
+    | 'SERVER_ERROR'
+    | 'TIMEOUT_ERROR'
+    | 'CONNECTION_ERROR'
+    | 'NETWORK_ERROR'
+    | 'CANCEL_ERROR',
+  status: number,
+};
+
+type P = Promise;
+type RS = R;
 
 export type Request = {
   url: string,
@@ -331,3 +351,16 @@ export const inviteFriendReq = (email: string) =>
 
 export const getInvitationSmsContent = () =>
   api.get(`/v1/communities/invitation_message`);
+
+/**
+ * Notification Settings
+ */
+export function readNotificationsSettings(): P<RS<NotificationSettings>> {
+  return api.get(`/v2/settings/notifications`);
+}
+
+export function updateNotificationsSettings(
+  data: NotificationSettings
+): P<RS<NotificationSettings>> {
+  return api.put(`/v2/settings/notifications`, data);
+}

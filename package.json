@@ -24,6 +24,7 @@
     "formik": "^0.10.4",
     "immutability-helper": "^2.4.0",
     "indicative": "https://github.com/Andreyco/indicative#764ed4838b82f0efb7c19b4960db3aad7fd95441",
+    "lodash.debounce": "^4.0.8",
     "lodash.memoize": "^4.1.2",
     "lodash.merge": "^4.6.0",
     "mobile-center": "^0.10.0",
