@@ -13,14 +13,8 @@ import {
   ChangePasswordScreen,
 } from '../screens';
 
-function DismissModalButton({ onPress, ...a }) {
-  return (
-    <NavigationIconButton
-      name="close"
-      color={getColor('orange')}
-      onPress={onPress}
-    />
-  );
+function DismissModalButton({ onPress }) {
+  return <NavigationIconButton name="close" color="orange" onPress={onPress} />;
 }
 
 export default StackNavigator({
@@ -30,7 +24,6 @@ export default StackNavigator({
       headerLeft: (
         <DismissModalButton onPress={screenProps.dismissModalRoute} />
       ),
-      headerTitle: 'Settings',
     }),
   },
   TermsAndConditionsScreen: {
@@ -38,20 +31,11 @@ export default StackNavigator({
   },
   PrivacyScreen: {
     screen: PrivacyScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: 'Privacy Policy',
-    }),
   },
   InvitationCodeScreen: {
     screen: InvitationCodeScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: 'Invitation Code',
-    }),
   },
   ChangePasswordScreen: {
     screen: ChangePasswordScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: 'Change Password',
-    }),
   },
 });

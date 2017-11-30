@@ -4,7 +4,6 @@ import React from 'react';
 
 import { StackNavigator } from '../../navigation';
 import { ScrollView, Text, NavigationIconButton } from '../../atoms';
-import { getColor } from '../../utils/color';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -176,7 +175,7 @@ export default StackNavigator(
           headerLeft: (
             <NavigationIconButton
               name="close"
-              color={getColor('orange')}
+              color="orange"
               onPress={screenProps.dismissModalRoute}
             />
           ),

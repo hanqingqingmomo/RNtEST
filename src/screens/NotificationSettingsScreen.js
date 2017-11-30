@@ -103,7 +103,6 @@ export default class NotificationSettingsScreen extends React.Component<
   handleRequest = async (request: *) => {
     const response = await updateNotificationsSettings(this.state.settings);
     if (this.mounted) {
-      console.log('sate');
       this.setState({ response, settings: response.ok ? response.data : {} });
     }
   };

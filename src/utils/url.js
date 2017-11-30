@@ -37,6 +37,9 @@ export function build({
 
   const url = normalize(`${base}/${path}${q !== '' ? `?${q}` : ''}`);
 
-  console.log(url);
+  if (__DEV__) {
+    console.log(url);
+  }
+
   return url;
 }

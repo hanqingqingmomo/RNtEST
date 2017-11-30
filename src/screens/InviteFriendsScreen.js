@@ -65,6 +65,10 @@ type S = {
 type P = {};
 
 export default class InviteFriendsScreen extends React.Component<P, S> {
+  static navigationOptions = {
+    title: 'Invite friends',
+  };
+
   state = {
     contacts: [],
     sentInvitations: [],

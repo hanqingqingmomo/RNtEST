@@ -14,7 +14,7 @@ type Props = ScreenProps<*> & {
 
 export default class DonationAppealScreen extends Component<Props> {
   static navigationOptions = {
-    title: 'Donation Form',
+    title: 'Donate',
   };
 
   onSuccess = async (payload: *) => {

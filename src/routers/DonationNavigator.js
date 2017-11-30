@@ -10,6 +10,7 @@ function DismissModalButton({ onPress }: { onPress: Function }): React$Node {
   return <NavigationIconButton name="close" color="orange" onPress={onPress} />;
 }
 
+// TODO make factory which will inject "close" button into initial route and returns news stack
 export default StackNavigator({
   DonationAppealScreen: {
     screen: DonationAppealScreen,

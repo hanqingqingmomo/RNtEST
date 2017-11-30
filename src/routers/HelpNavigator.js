@@ -4,17 +4,10 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import { NavigationIconButton } from '../atoms';
-import { getColor } from '../utils/color';
 import { HelpScreen, WebViewScreen } from '../screens';
 
-function DismissModalButton({ onPress, ...a }) {
-  return (
-    <NavigationIconButton
-      name="close"
-      color={getColor('orange')}
-      onPress={onPress}
-    />
-  );
+function DismissModalButton({ onPress }) {
+  return <NavigationIconButton name="close" color="orange" onPress={onPress} />;
 }
 
 export default StackNavigator({
