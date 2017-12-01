@@ -18,7 +18,7 @@ type State = {
   activeTab: string,
 };
 
-export default class Event extends Component<Props, State> {
+export default class EventDetail extends Component<Props, State> {
   state = {
     activeTab: 'About',
   };
@@ -36,7 +36,7 @@ export default class Event extends Component<Props, State> {
           pillTitle={event.community}
           title={event.title}
           subtitle={event.subtitle}
-          coverImageURI={event.coverImageURI}
+          coverImageURI={event.cover_photo}
           status={event.status}
         />
         <Tabs
@@ -48,7 +48,7 @@ export default class Event extends Component<Props, State> {
               component: () => <TabEventAbout event={event} />,
             },
             {
-              label: `Participants (${event.participants})`,
+              label: `Participants (${event.participants_count})`,
               component: () => <TabEventParticipants event={event} />,
             },
             {

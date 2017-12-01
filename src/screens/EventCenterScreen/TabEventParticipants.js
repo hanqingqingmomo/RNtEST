@@ -17,33 +17,6 @@ import { type User } from '../../Types';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
-const mocks = [
-  {
-    first_name: 'Member',
-    last_name: '1',
-    profile_photo:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-    id: 0,
-    status: 'going',
-  },
-  {
-    first_name: 'Member',
-    last_name: '2',
-    profile_photo:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-    id: 1,
-    status: 'pending',
-  },
-  {
-    first_name: 'Member',
-    last_name: '3',
-    profile_photo:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-    id: 2,
-    status: 'notgoing',
-  },
-];
-
 const attendanceDescription = [
   { icon: 'check', text: ' Going' },
   { icon: 'question-mark', text: ' Pending' },
@@ -91,6 +64,7 @@ export default class TabEventMembers extends Component<Props> {
             radius={16}
             style={[
               styles.iconAccessory,
+              styles.centerView,
               css(
                 'backgroundColor',
                 attendanceStatus[item.status].backgroundColor
@@ -115,7 +89,7 @@ export default class TabEventMembers extends Component<Props> {
   renderAttendance() {
     return attendanceDescription.map(item => (
       <View key={item.icon} style={styles.attendanceWrapper}>
-        <View style={styles.iconWrapper}>
+        <View style={[styles.iconWrapper, styles.centerView]}>
           <Icon name={item.icon} size="sm" color="white" />
         </View>
         <Text style={styles.attendanceText}>{56 + item.text}</Text>
@@ -124,6 +98,8 @@ export default class TabEventMembers extends Component<Props> {
   }
 
   render() {
+    const { event } = this.props;
+
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.attendanceContainer}>
@@ -132,7 +108,7 @@ export default class TabEventMembers extends Component<Props> {
         <View style={css('height', 5)} />
         <View>
           <FlatList
-            data={mocks}
+            data={event.participants}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
             ItemSeparatorComponent={({ highlighted }) => (
@@ -163,19 +139,19 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  iconAccessory: {
+  centerView: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  iconAccessory: {
     position: 'absolute',
     bottom: -3,
     right: -5,
     width: 20,
     height: 20,
-    backgroundColor: 'white',
+    borderColor: 'white',
   },
   iconWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
     height: ICON_WIDTH,
     width: ICON_WIDTH,
     borderRadius: ICON_WIDTH / 2,

@@ -107,12 +107,12 @@ const styles = StyleSheet.create({
   text: {
     color: '#455A64',
     paddingHorizontal: 15,
-    marginVertical: 10,
+    paddingVertical: 15,
   },
   segmented: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 65,
+    height: 50,
   },
   segmentedWrapper: {
     width: 260,
