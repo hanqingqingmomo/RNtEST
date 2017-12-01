@@ -346,11 +346,11 @@ export const createCommentReq = (objectId: string, text_content: string) =>
  * Invitations
  */
 
-export const inviteFriendReq = (email: string) =>
+export const RQinviteFriend = (email: string) =>
   api.put('/v2/club_invitations/480b7b2ed0a1', { member_invitations: email });
 
-export const getInvitationSmsContent = () =>
-  api.get(`/v1/communities/invitation_message`);
+export const RQGetInvitationSmsContent = () =>
+  api.get(`/v2/communities/invitation_message`);
 
 /**
  * Notification Settings

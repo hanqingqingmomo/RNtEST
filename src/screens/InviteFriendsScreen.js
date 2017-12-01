@@ -15,7 +15,6 @@ import {
   Avatar,
   Button,
   CenterView,
-  Fetch,
   Icon,
   Screen,
   SearchBox,
@@ -26,10 +25,9 @@ import {
 } from '../atoms';
 import { getColor } from '../utils/color';
 import {
-  inviteFriendReq,
-  getInvitationSmsContent,
+  RQinviteFriend,
+  RQGetInvitationSmsContent,
 } from '../utils/requestFactory';
-import type { FetchProps } from '../Types';
 
 type EmailDetail = {
   email: string,
@@ -109,11 +107,13 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
   }
 
   fetchInvitationMessage = async () => {
-    const response = await getInvitationSmsContent();
+    const response = await RQGetInvitationSmsContent();
     if (response.ok) {
       this.setState({ smsMessage: response.data.data });
     }
   };
+
+  keyExtractor = (item: Contact) => item.recordID.toString();
 
   /**
    * Returns Text node with first email or phone number of the user
@@ -123,7 +123,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
     const phone = user.phoneNumbers.find(row => row.number);
     const text = email ? email.email : phone ? phone.number : null;
     return email || phone ? (
-      <Text size={15} lineHeight={18} color={getColor('gray')}>
+      <Text size={15} lineHeight={18} color="gray">
         {text}
       </Text>
     ) : null;
@@ -192,7 +192,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
       }));
 
       const email = user.emailAddresses[0].email;
-      await inviteFriendReq(email);
+      await RQinviteFriend(email);
 
       this.setState(state => ({
         sentInvitations: state.sentInvitations.concat(user.recordID),
@@ -204,7 +204,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
     } catch (err) {}
   };
 
-  sendInvitationMessage = (user: Contact) => {
+  openMessagesApp = (user: Contact) => {
     const phone = user.phoneNumbers[0].number;
     const body = this.state.smsMessage || '';
     const url = Platform.select({
@@ -228,7 +228,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
       if (this.hasUserEmail(user)) {
         this.sendInvitationEmail(user);
       } else if (this.hasUserPhone(user)) {
-        this.sendInvitationMessage(user);
+        this.openMessagesApp(user);
       }
     };
   }
@@ -247,6 +247,14 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
 
     return filtered || contacts;
   }
+
+  renderContactRow = ({ item }: { item: Contact }) => (
+    <TableView.Cell
+      cellContentView={this.cellContentView(item)}
+      image={this.cellImageView(item)}
+      contentContainerStyle={styles.cell}
+    />
+  );
 
   render() {
     switch (this.state.permission) {
@@ -271,40 +279,27 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
             </Text>
           </CenterView>
         );
+
       case 'authorized':
         return (
-          <Fetch manual>
-            {(invitation: FetchProps<*>) => (
-              <Screen tintColor="white">
-                <View style={styles.searchBox}>
-                  <SearchBox
-                    placeholder="Search..."
-                    value={this.state.searchValue}
-                    onChangeText={(searchValue: string) =>
-                      this.setState({ searchValue })}
-                  />
-                </View>
-                <TableView.Table>
-                  <TableView.Section sectionTintColor="white">
-                    <FlatList
-                      data={this.users}
-                      keyExtractor={(item: Contact) => item.recordID.toString()}
-                      renderItem={({ item }: { item: Contact }) => (
-                        <TableView.Cell
-                          cellContentView={this.cellContentView(item)}
-                          image={this.cellImageView(item)}
-                          contentContainerStyle={styles.cell}
-                        />
-                      )}
-                      ItemSeparatorComponent={({ highlighted }) => (
-                        <Separator isHidden={highlighted} />
-                      )}
-                    />
-                  </TableView.Section>
-                </TableView.Table>
-              </Screen>
-            )}
-          </Fetch>
+          <Screen tintColor="white" scrollEnabled={false}>
+            <View style={styles.searchBox}>
+              <SearchBox
+                placeholder="Search..."
+                value={this.state.searchValue}
+                onChangeText={(searchValue: string) =>
+                  this.setState({ searchValue })}
+              />
+            </View>
+
+            <FlatList
+              contentContainerStyle={{ height: '100%' }}
+              data={this.users}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderContactRow}
+              ItemSeparatorComponent={Separator}
+            />
+          </Screen>
         );
       default:
         return null;
@@ -314,19 +309,19 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
 
 const styles = StyleSheet.create({
   searchBox: {
-    paddingHorizontal: 15,
-    paddingTop: 15,
-    backgroundColor: 'white',
+    padding: 7,
+    borderBottomColor: '#E3E3E5',
+    borderBottomWidth: 1,
   },
   cell: {
     paddingVertical: 9,
   },
   row: {
-    flexDirection: 'row',
     flex: 1,
+    flexDirection: 'row',
   },
   textWrapper: {
-    flexGrow: 1,
+    flex: 1,
     paddingHorizontal: 7,
   },
 });
