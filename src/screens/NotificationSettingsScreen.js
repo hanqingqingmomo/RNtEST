@@ -64,13 +64,13 @@ const CELLS = {
       label: 'Events & Webinars',
     },
   ],
-  newsFeed: [
-    {
-      action: 'push',
-      key: 'NewsFeedSettingsScreen',
-      label: 'Prioritize What to See First',
-    },
-  ],
+  // newsFeed: [
+  //   {
+  //     action: 'push',
+  //     key: 'NewsFeedSettingsScreen',
+  //     label: 'Prioritize What to See First',
+  //   },
+  // ],
 };
 
 export default class NotificationSettingsScreen extends React.Component<
@@ -121,7 +121,7 @@ export default class NotificationSettingsScreen extends React.Component<
 
   renderSection = (header: string, cells: Array<Option>): React$Node => {
     return (
-      <Section header="Push notifications">
+      <Section header={header}>
         {cells.map(({ action, key, label }) => (
           <Cell
             key={key}
@@ -155,9 +155,9 @@ export default class NotificationSettingsScreen extends React.Component<
     ) : response.ok ? (
       <ScrollView alwaysBounceVertical={false}>
         <Table>
-          {this.renderSection('Newsfeed', CELLS.newsFeed)}
+          {/* {this.renderSection('Newsfeed', CELLS.newsFeed)} */}
           {this.renderSection('Push notifications', CELLS.pushNotifications)}
-          {this.renderSection('Push Email updates"', CELLS.emailNotifications)}
+          {this.renderSection('Push Email updates', CELLS.emailNotifications)}
         </Table>
       </ScrollView>
     ) : (
