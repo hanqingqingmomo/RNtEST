@@ -177,7 +177,7 @@ const TERMS = [
 
 export default class HelpScreen extends Component<{}> {
   static navigationOptions = {
-    headerTitle: 'Terms and conditions',
+    headerTitle: 'Terms and Conditions',
   };
 
   shouldComponentUpdate() {

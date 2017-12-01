@@ -60,7 +60,11 @@ class MemberProfileScreen extends Component<Props> {
         {(member.joined_communities || []).map(pill => (
           <View key={pill.id} style={styles.pillItem}>
             <TouchableOpacity onPress={() => this.handleCommunityPress(pill)}>
-              <Pill title={pill.name} color={getColor('orange')} />
+              <Pill
+                title={pill.name}
+                color={getColor('orange')}
+                truncate={member.joined_communities.length > 1}
+              />
             </TouchableOpacity>
           </View>
         ))}

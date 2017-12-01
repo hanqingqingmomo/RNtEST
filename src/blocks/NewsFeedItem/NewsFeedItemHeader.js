@@ -15,7 +15,6 @@ type Props = {
   item: Post,
   navigateToCommunity: (community: CommunitySimple) => mixed,
   navigation: Object,
-  onDelete: Function,
   viewer: User,
 };
 

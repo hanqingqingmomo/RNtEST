@@ -28,7 +28,7 @@ export default class SectionLabel extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8,
+    marginHorizontal: 15,
     marginBottom: 8,
   },
 });

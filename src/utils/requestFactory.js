@@ -7,9 +7,29 @@ import { create } from 'apisauce';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { Cursor } from '../Types';
+import type { NotificationSettings } from '../Types';
 
 let Store: any = null;
+
+export type Response<D> = {
+  config: Object,
+  data: D,
+  duration: number,
+  headers: Object,
+  ok: boolean,
+  problem:
+    | null
+    | 'CLIENT_ERROR'
+    | 'SERVER_ERROR'
+    | 'TIMEOUT_ERROR'
+    | 'CONNECTION_ERROR'
+    | 'NETWORK_ERROR'
+    | 'CANCEL_ERROR',
+  status: number,
+};
+
+type P<T> = Promise<T>;
+type RS<D> = Response<D>;
 
 export type Request = {
   url: string,
@@ -96,15 +116,8 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
 /**
  * Get Braintree client token
  */
-export const makeReadBTClientTokenReq = () =>
-  inject({
-    url: buildUrl({
-      path: '/v1/members/braintree-client-token',
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const readBraintreeClientTokenReq = () =>
+  api.get('/v1/members/braintree-client-token');
 
 /**
  * Authentication requests
@@ -152,20 +165,15 @@ export const makeChangePasswordReq = (password: string) =>
 /**
  * Donations
  */
-type DonationPayload = {
-  payment_method_nonce: string,
-  amount: number,
-  interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
-};
 
-export const makeDonationRq = (donationPayload: DonationPayload) =>
-  inject({
-    url: buildUrl({ path: '/v1/donations' }),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(donationPayload),
-    },
-  });
+export const donationReq = (donationPayload: {
+  donation: {
+    payment_method_nonce: string,
+    amount: number,
+    interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
+  },
+  payer: Object,
+}) => api.post('/v2/donations', donationPayload);
 
 /**
  * Profile
@@ -295,16 +303,10 @@ export const destroyContentObjectReq = (object: ContentObject) =>
 /**
  * News feed requests
  */
-export const requestWithCursor = (path: string, cursor: Cursor) =>
-  api.get(
-    `${buildUrl({
-      path: `v1/${path}`,
-      query: {
-        limit: cursor.limit,
-        next: cursor.next,
-      },
-    })}`
-  );
+export const requestWithCursor = (
+  path: string,
+  cursor: { limit?: ?number, next?: ?number }
+) => api.get(`v2/${path}`, cursor);
 
 export const makeReadPinnedItemsRq = (communityId: string | number) =>
   inject({
@@ -323,10 +325,8 @@ export const createPostReq = (object: {
   cached_url?: ?string,
 }) => api.post('/v1/content_objects/', makeFormData(object, ['attachment']));
 
-export const reportReq = (object: {
-  id: string,
-  type: 'comment' | 'post' | 'user',
-}) => api.post('/v1/abuse_reports', { [`${object.type}Id`]: object.id });
+export const reportReq = (object: { id: string }) =>
+  api.post('/v2/abuse_reports', { objectId: object.id });
 
 export const makeScrapeUrlReq = (url: string) =>
   inject({
@@ -346,25 +346,21 @@ export const createCommentReq = (objectId: string, text_content: string) =>
  * Invitations
  */
 
-export const makeInvitationRq = (email: string) =>
-  inject({
-    url: buildUrl({
-      path: '/v1/club_invitations/480b7b2ed0a1',
-    }),
-    options: {
-      method: 'PUT',
-      body: JSON.stringify({
-        member_invitations: email,
-      }),
-    },
-  });
+export const RQinviteFriend = (email: string) =>
+  api.put('/v2/club_invitations/480b7b2ed0a1', { member_invitations: email });
 
-export const makeReadInvitationMessage = () =>
-  inject({
-    url: buildUrl({
-      path: `/v1/communities/invitation_message`,
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const RQGetInvitationSmsContent = () =>
+  api.get(`/v2/communities/invitation_message`);
+
+/**
+ * Notification Settings
+ */
+export function readNotificationsSettings(): P<RS<NotificationSettings>> {
+  return api.get(`/v2/settings/notifications`);
+}
+
+export function updateNotificationsSettings(
+  data: NotificationSettings
+): P<RS<NotificationSettings>> {
+  return api.put(`/v2/settings/notifications`, data);
+}

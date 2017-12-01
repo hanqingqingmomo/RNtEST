@@ -20,11 +20,10 @@ import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
 type P = {
-  isDetail?: boolean,
+  isDetail: boolean,
   item: Post,
   navigation: Object,
   radius?: number,
-  onDelete: Function,
   user: User,
   navigateToCommunity: (commu: CommunitySimple) => mixed,
   navigateToDetail: () => mixed,
@@ -36,6 +35,10 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 export default class NewsFeedItem extends Component<P> {
+  static defaultProps = {
+    isDetail: false,
+  };
+
   get userIsAuthorOfPost(): boolean {
     const { user, item } = this.props;
 
@@ -52,24 +55,31 @@ export default class NewsFeedItem extends Component<P> {
     }
   };
 
-  renderContent() {
-    const { item, isDetail } = this.props;
-    const { text_content, created_at, cached_url } = item;
+  navigateToPostDetail = () => {
+    this.props.navigation.navigate('PostDetailScreen', {
+      postId: this.props.item.id,
+    });
+  };
 
+  renderContent({ item, isDetail }: P) {
+    const { text_content, created_at, cached_url } = item;
     return (
       <View>
         {(item.attachment && item.attachment.type === 'link') ||
         !item.attachment ? (
-          <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-            {parseTextContent(text_content, isDetail ? null : 120)}
-          </Text>
+          <TouchableOpacity onPress={this.navigateToPostDetail}>
+            <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+              {parseTextContent(text_content, isDetail ? null : 120)}
+            </Text>
+          </TouchableOpacity>
         ) : null}
 
         {item.attachment && item.attachment.type.includes('image') ? (
           <NewsFeedItemImage
             {...item.attachment}
             title={text_content}
-            detail={isDetail}
+            isDetail={isDetail}
+            onPress={this.navigateToPostDetail}
           />
         ) : null}
 
@@ -92,7 +102,7 @@ export default class NewsFeedItem extends Component<P> {
 
   render() {
     const { item, isDetail, navigation, radius } = this.props;
-    const { author, donation, event, id } = item;
+    const { author, donation, event } = item;
     // TODO move green border logic outside of this component
     return (
       <ShadowView
@@ -100,31 +110,15 @@ export default class NewsFeedItem extends Component<P> {
         radius={radius || 3}
       >
         <View style={styles.container}>
-          <NewsFeedItemHeader
-            item={item}
-            navigateToCommunity={this.props.navigateToCommunity}
-            onDelete={this.props.onDelete}
-          />
+          <NewsFeedItemHeader item={item} navigation={navigation} />
 
-          {isDetail ? (
-            this.renderContent()
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('PostDetailScreen', {
-                  postId: id,
-                });
-              }}
-            >
-              {this.renderContent()}
-            </TouchableOpacity>
-          )}
+          {this.renderContent(this.props)}
 
           {author ? (
             <NewsFeedItemAuthor
               detailView={this.props.isDetail}
               author={author}
-              onPress={this.navigateToMemberProfileScreen}
+              onUserPress={this.navigateToMemberProfileScreen}
             />
           ) : null}
 
@@ -139,9 +133,9 @@ export default class NewsFeedItem extends Component<P> {
 
           {/* <NewsFeedItemFooter
             item={item}
-            navigate={this.props.navigation.navigate}
-            detailView={this.props.isDetail}
-          /> */}
+            isDetail={isDetail}
+            navigateToPostDetail={this.navigateToPostDetail}
+          />*/}
         </View>
       </ShadowView>
     );

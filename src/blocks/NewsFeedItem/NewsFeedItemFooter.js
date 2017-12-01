@@ -15,10 +15,10 @@ type Action = {
 };
 
 type Props = {
-  detailView: boolean,
   item: Post,
   like: Post => mixed,
-  navigate: (routeName: string, params?: Object) => mixed,
+  isDetail: boolean,
+  navigateToPostDetail: () => any,
 };
 
 const HIT_SLOP = {
@@ -30,15 +30,14 @@ const HIT_SLOP = {
 
 class NewsFeedItemFooter extends Component<Props> {
   get actions(): Array<Action> {
-    const { item, navigate, detailView } = this.props;
-    const { id: postId } = item;
+    const { isDetail } = this.props;
 
     const links = [];
 
-    if (!detailView) {
+    if (!isDetail) {
       links.push({
         label: 'Comment',
-        onPress: () => navigate('PostDetailScreen', { postId }),
+        onPress: this.props.navigateToPostDetail,
       });
     }
 
@@ -46,6 +45,7 @@ class NewsFeedItemFooter extends Component<Props> {
   }
 
   render() {
+    const { isDetail } = this.props;
     const { likes_count, comments_count, liked } = this.props.item;
 
     return (
@@ -59,10 +59,13 @@ class NewsFeedItemFooter extends Component<Props> {
           >
             <Count iconName="like" count={likes_count} pinned={liked} />
           </TouchableItem>
-
-          <View style={styles.likeWrapper}>
+          <TouchableItem
+            disabled={isDetail}
+            onPress={this.props.navigateToPostDetail}
+            style={styles.likeWrapper}
+          >
             <Count iconName="comment" count={comments_count} />
-          </View>
+          </TouchableItem>
         </View>
         <View style={[styles.footerRight, styles.row]}>
           {this.actions.map((action, idx) => (

@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'pba';
-  src: url('../font/pba.eot?78639617');
-  src: url('../font/pba.eot?78639617#iefix') format('embedded-opentype'),
-       url('../font/pba.woff2?78639617') format('woff2'),
-       url('../font/pba.woff?78639617') format('woff'),
-       url('../font/pba.ttf?78639617') format('truetype'),
-       url('../font/pba.svg?78639617#pba') format('svg');
+  src: url('../font/pba.eot?50649011');
+  src: url('../font/pba.eot?50649011#iefix') format('embedded-opentype'),
+       url('../font/pba.woff2?50649011') format('woff2'),
+       url('../font/pba.woff?50649011') format('woff'),
+       url('../font/pba.ttf?50649011') format('truetype'),
+       url('../font/pba.svg?50649011#pba') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'pba';
-    src: url('../font/pba.svg?78639617#pba') format('svg');
+    src: url('../font/pba.svg?50649011#pba') format('svg');
   }
 }
 */
@@ -83,6 +83,7 @@
 .icon-menu-1:before { content: '\e819'; } /* '' */
 .icon-report:before { content: '\e81a'; } /* '' */
 .icon-offline:before { content: '\e81b'; } /* '' */
+.icon-community:before { content: '\e81c'; } /* '' */
 .icon-add-file:before { content: '\e828'; } /* '' */
 .icon-arrow-left:before { content: '\e82b'; } /* '' */
 .icon-arrow-open-bottom-thin:before { content: '\e82c'; } /* '' */

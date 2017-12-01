@@ -105,7 +105,13 @@ export default class CommunityListScreen extends Component<Props, State> {
                     ))}
                   </ScrollView>
                 ) : (
-                  <NoContent iconName="sad-face" title="No Content" />
+                  <NoContent
+                    iconName="community"
+                    title="No Communities Yet"
+                    subtitle={
+                      'Check back later and join the\n communities you wish!'
+                    }
+                  />
                 )
               ) : error ? (
                 <CenterView>

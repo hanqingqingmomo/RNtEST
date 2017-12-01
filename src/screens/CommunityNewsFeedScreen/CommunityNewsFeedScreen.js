@@ -25,7 +25,9 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
           <View>
             <StartConversationButton
               navigateToEditorScreen={() =>
-                this.props.navigation.navigate('PostEditorScreen')}
+                this.props.navigation.navigate('PostEditorScreen', {
+                  preselectedCommunityId: this.props.communityId,
+                })}
             />
             <PinnedPost
               communityId={this.props.communityId}
@@ -33,7 +35,7 @@ export default class CommunityNewsFeedScreen extends Component<Props> {
                 this.props.navigation.navigate('PostDetailScreen', {
                   postId: data.id,
                 })}
-              onSeeAll={data => {
+              onSeeAll={() => {
                 this.props.navigation.navigate('PinnedPostsScreen', {
                   communityId: this.props.communityId,
                 });

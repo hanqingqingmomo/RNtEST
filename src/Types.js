@@ -142,3 +142,12 @@ export type ActionP<T, P> = Action<T, { payload: P }>;
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
 
 export type Store = $ObjMap<Reducers, $ExtractFunctionReturn>;
+
+export type NotificationSettings = {
+  push_private_messages: boolean,
+  push_community_invitations: boolean,
+  push_video_calls: boolean,
+  email_private_messages: boolean,
+  email_community_invitations: boolean,
+  email_video_calls: boolean,
+};

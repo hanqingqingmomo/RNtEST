@@ -4,7 +4,6 @@ export { default as Comment } from './Comment/Comment';
 export { default as CommentInput } from './Comment/CommentInput';
 export { default as CommentList } from './Comment/CommentList';
 export { default as DonationAppealModalBox } from './DonationAppealModalBox';
-export { default as DonationForm } from './DonationForm/DonationForm';
 export { default as DonationResult } from './DonationResult';
 export { default as EventFeed } from './EventFeed';
 export { default as HelpBlock } from './HelpBlock';

@@ -4,7 +4,6 @@ import React from 'react';
 
 import { StackNavigator } from '../../navigation';
 import { ScrollView, Text, NavigationIconButton } from '../../atoms';
-import { getColor } from '../../utils/color';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -133,7 +132,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link
       title="Notification Settings"
-      screen="NotificationSettingsPlayground"
+      screen="NotificationSettingsScreen"
       navigation={navigation}
     />
     <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
@@ -176,7 +175,7 @@ export default StackNavigator(
           headerLeft: (
             <NavigationIconButton
               name="close"
-              color={getColor('orange')}
+              color="orange"
               onPress={screenProps.dismissModalRoute}
             />
           ),
@@ -237,7 +236,7 @@ export default StackNavigator(
     NewsFeedSettingsPlayground: {
       screen: NewsFeedSettingsScreen,
     },
-    NotificationSettingsPlayground: {
+    NotificationSettingsScreen: {
       screen: NotificationSettingsScreen,
     },
     PopoverPlayground: {
