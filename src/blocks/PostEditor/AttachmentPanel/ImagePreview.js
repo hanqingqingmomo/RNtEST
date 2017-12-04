@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native';
 
 import { View, Image } from '../../../atoms';
 
-// TODO use proper type
 type Props = {
   image: string,
 };

@@ -12,8 +12,7 @@ type Props = {
   navigation: any,
 };
 
-// TODO rename to CommunityFeedScreen
-export default class CommunityNewsFeedScreen extends Component<Props> {
+export default class CommunityFeedScreen extends Component<Props> {
   navigateToCommunity = (community: Community | CommunitySimple) => {
     this.props.navigation.navigate('CommunityTab:CommunityScreen', {
       communityId: community.id,

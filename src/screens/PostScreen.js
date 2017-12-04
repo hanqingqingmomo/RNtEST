@@ -19,7 +19,7 @@ type State = {
   replyingTo?: TComment,
 };
 
-class PostDetailScreen extends Component<Props, State> {
+class PostScreen extends Component<Props, State> {
   state = {
     replyingTo: undefined,
   };
@@ -95,4 +95,4 @@ const mapState = (state, props) => ({
   post: selectPost(props.navigation.state.params.postId, state),
 });
 
-export default connect(mapState)(PostDetailScreen);
+export default connect(mapState)(PostScreen);

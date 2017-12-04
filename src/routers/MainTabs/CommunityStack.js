@@ -3,11 +3,11 @@
 import { StackNavigator } from '../../navigation';
 import {
   CommunityListScreen,
-  CommunityCenterScreen,
-  PinnedPostsScreen,
-  PostDetailScreen,
-  PostEditorScreen,
+  CommunityScreen,
   MemberProfileScreen,
+  PinnedFeedScreen,
+  PostEditorScreen,
+  PostScreen,
 } from '../../screens';
 
 export default StackNavigator(
@@ -15,17 +15,14 @@ export default StackNavigator(
     'CommunityTab:Listing': {
       screen: CommunityListScreen,
     },
-    // TODO pick better name for this screen
     'CommunityTab:CommunityScreen': {
-      screen: CommunityCenterScreen,
+      screen: CommunityScreen,
     },
     'CommunityTab:PinnedFeedScreen': {
-      // TODO PinnedPostsScreen => PinnedFeedScreen
-      screen: PinnedPostsScreen,
+      screen: PinnedFeedScreen,
     },
     'CommunityTab:PostScreen': {
-      // TODO PostDetailScreen => PostScreen
-      screen: PostDetailScreen,
+      screen: PostScreen,
     },
     'CommunityTab:PostEditorScreen': {
       screen: PostEditorScreen,

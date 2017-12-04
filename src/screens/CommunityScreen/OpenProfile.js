@@ -3,12 +3,11 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-native-collapsible';
 
-import { CommunityHeader, Tabs, View, Screen } from '../../atoms';
+import { CommunityHeader, Tabs, Screen } from '../../atoms';
 import TabMembers from './TabMembers';
 import TabAbout from './TabAbout';
-import CommunityNewsFeedScreen from '../CommunityNewsFeedScreen';
+import CommunityFeedScreen from '../CommunityFeedScreen';
 import type { Community, User, ScreenProps } from '../../Types';
-import { css } from '../../utils/style';
 
 type Props = ScreenProps<*> & {
   community: Community,
@@ -50,7 +49,7 @@ export default class OpenProfile extends Component<Props, State> {
             {
               label: 'News',
               component: () => (
-                <CommunityNewsFeedScreen
+                <CommunityFeedScreen
                   navigation={this.props.navigation}
                   communityId={community.id}
                 />

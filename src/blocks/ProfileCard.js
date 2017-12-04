@@ -7,7 +7,6 @@ import Lightbox from 'react-native-lightbox';
 import { View, Text, Avatar, Link, ShadowView, ImagePreview } from '../atoms';
 import { type User } from '../Types';
 
-// TODO use type after merge
 type P = {
   user: User,
   actionsView?: React$Node,

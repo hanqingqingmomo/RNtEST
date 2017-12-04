@@ -4,7 +4,7 @@ import { StackNavigator } from '../../navigation';
 import {
   AggregatedNewsFeedScreen,
   MemberProfileScreen,
-  PostDetailScreen,
+  PostScreen,
   PostEditorScreen,
 } from '../../screens';
 
@@ -14,7 +14,7 @@ export default StackNavigator(
       screen: AggregatedNewsFeedScreen,
     },
     'GlobalFeedTab:PostScreen': {
-      screen: PostDetailScreen,
+      screen: PostScreen,
     },
     'GlobalFeedTab:PostEditorScreen': {
       screen: PostEditorScreen,

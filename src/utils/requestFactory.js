@@ -7,7 +7,7 @@ import { create } from 'apisauce';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { NotificationSettings } from '../Types';
+import type { Community, NotificationSettings } from '../Types';
 
 let Store: any = null;
 
@@ -211,8 +211,9 @@ export const makeReadOrganisationReq = () =>
     options: { method: 'GET' },
   });
 
-// TODO update to support typings after merge
-export const RQReadCommunity = (id: string) => api.get(`/v2/communities/${id}`);
+export function RQReadCommunity(id: string): P<RS<Community>> {
+  return api.get(`/v2/communities/${id}`);
+}
 
 /**
  * Communities

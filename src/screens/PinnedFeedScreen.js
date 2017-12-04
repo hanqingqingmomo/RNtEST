@@ -10,8 +10,7 @@ type Props = {
   navigation: any,
 };
 
-// TODO rename to PinnedFeedScreen
-export default class PinnedPostsScreen extends Component<Props> {
+export default class PinnedFeedScreen extends Component<Props> {
   static navigationOptions = {
     title: 'Pinned Posts',
   };
