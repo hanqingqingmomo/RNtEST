@@ -12,7 +12,7 @@ type Props = {
   onPress: Function,
 };
 
-export default class HeaderWithLink extends Component<Props> {
+export default class SectionLabelWithLink extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>

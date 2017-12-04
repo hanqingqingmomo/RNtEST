@@ -1,6 +1,7 @@
 // @flow
 
-import { schema, normalize as norm } from 'normalizr';
+import { schema, normalize as norm, denormalize as denorm } from 'normalizr';
+export const denormalize = denorm;
 
 export type Entity = {
   id: string,
@@ -40,6 +41,16 @@ export const PostSchema = new schema.Entity('sharedEntity', {
 });
 
 export function normalize(payload: Entity | Array<Entity>): NormalizedPayload {
+  const empty = { entities: {}, result: [] };
+
+  if (!payload) {
+    return empty;
+  }
+
+  if (Array.isArray(payload) && payload.length === 0) {
+    return empty;
+  }
+
   const schema = {
     user: AuthorSchema,
     post: PostSchema,

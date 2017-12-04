@@ -3,16 +3,17 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-native-collapsible';
 
-import { CommunityHeader, Tabs, View } from '../../atoms';
-import TabNewsFeed from './TabNewsFeed';
+import { CommunityHeader, Tabs, Screen } from '../../atoms';
 import TabMembers from './TabMembers';
 import TabAbout from './TabAbout';
+import CommunityFeedScreen from '../CommunityFeedScreen';
 import type { Community, User, ScreenProps } from '../../Types';
-import { css } from '../../utils/style';
 
 type Props = ScreenProps<*> & {
   community: Community,
-  reloadCommunity: Function,
+  // TODO proper type
+  navigation: Object,
+  navigateToMember(User): any,
 };
 
 type State = {
@@ -28,20 +29,11 @@ export default class OpenProfile extends Component<Props, State> {
     this.setState({ activeTab });
   };
 
-  navigateToMember = (user: User) => {
-    this.props.navigation.navigate('CommunityMemberProfileScreen', { user });
-  };
-
-  navigateToPost = (post: Object) => {
-    // console.log(post);
-    // this.props.navigation.navigate('CommunityMemberProfileScreen', { user });
-  };
-
   render() {
     const { community } = this.props;
 
     return (
-      <View style={css('flexGrow', 1)}>
+      <Screen fill>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
           <CommunityHeader
             title={community.name}
@@ -57,11 +49,9 @@ export default class OpenProfile extends Component<Props, State> {
             {
               label: 'News',
               component: () => (
-                <TabNewsFeed
+                <CommunityFeedScreen
                   navigation={this.props.navigation}
                   communityId={community.id}
-                  navigateToPost={this.navigateToPost}
-                  reloadCommunity={this.props.reloadCommunity}
                 />
               ),
             },
@@ -70,7 +60,7 @@ export default class OpenProfile extends Component<Props, State> {
               component: () => (
                 <TabMembers
                   community={community}
-                  navigateToMember={this.navigateToMember}
+                  navigateToMember={this.props.navigateToMember}
                 />
               ),
             },
@@ -79,13 +69,13 @@ export default class OpenProfile extends Component<Props, State> {
               component: () => (
                 <TabAbout
                   community={community}
-                  navigateToMember={this.navigateToMember}
+                  navigateToMember={this.props.navigateToMember}
                 />
               ),
             },
           ]}
         />
-      </View>
+      </Screen>
     );
   }
 }

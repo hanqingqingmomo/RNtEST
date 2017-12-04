@@ -1,8 +1,7 @@
 // @flow
 
-import { denormalize } from 'normalizr';
-
-import { PostSchema } from './schemas';
+import { PostSchema, denormalize } from './schemas';
+// TODO fix those missing types
 import type { User, Store, RequestStatus, TimelineState } from '../Types';
 
 //

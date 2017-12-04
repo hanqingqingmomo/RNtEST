@@ -8,31 +8,29 @@ import { Text, TimeAgo, View, ShadowView, TouchableOpacity } from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import { parseTextContent } from '../../utils/text';
-import { type Post, type User } from '../../Types';
+import type { Post, User, CommunitySimple } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 
 import NewsFeedItemAttachment from './NewsFeedItemAttachment';
 import NewsFeedItemAuthor from './NewsFeedItemAuthor';
-import NewsFeedItemDonation from './NewsFeedItemDonation';
 import NewsFeedItemEvent from './NewsFeedItemEvent';
 import NewsFeedItemFooter from './NewsFeedItemFooter';
 import NewsFeedItemHeader from './NewsFeedItemHeader';
 import NewsFeedItemImage from './NewsFeedItemImage';
 
-type P = {
+type Props = {
   isDetail: boolean,
   item: Post,
-  navigation: Object,
+  // TODO: move this login up radius
   radius?: number,
   user: User,
+  // TODO better types for these methods. Some of them are not passed on detail screen
+  navigateToCommunity(community: CommunitySimple): mixed,
+  navigateToPostDetail(): mixed,
+  navigateToMemberProfile(): mixed,
 };
 
-const mapStateToProps = state => ({
-  user: selectUser(state),
-});
-
-@connect(mapStateToProps)
-export default class NewsFeedItem extends Component<P> {
+class NewsFeedItem extends Component<Props> {
   static defaultProps = {
     isDetail: false,
   };
@@ -43,29 +41,16 @@ export default class NewsFeedItem extends Component<P> {
     return user.id === item.author.id;
   }
 
-  navigateToMemberProfileScreen = () => {
-    const { navigation, item } = this.props;
-
-    if (navigation) {
-      navigation.navigate('MemberProfileScreen', {
-        user: item.author,
-      });
-    }
-  };
-
-  navigateToPostDetail = () => {
-    this.props.navigation.navigate('PostDetailScreen', {
-      postId: this.props.item.id,
-    });
-  };
-
-  renderContent({ item, isDetail }: P) {
+  renderContent({ item, isDetail }: Props) {
     const { text_content, created_at, cached_url } = item;
     return (
       <View>
         {(item.attachment && item.attachment.type === 'link') ||
         !item.attachment ? (
-          <TouchableOpacity onPress={this.navigateToPostDetail}>
+          <TouchableOpacity
+            onPress={this.props.navigateToPostDetail}
+            disabled={this.props.isDetail}
+          >
             <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
               {parseTextContent(text_content, isDetail ? null : 120)}
             </Text>
@@ -77,7 +62,7 @@ export default class NewsFeedItem extends Component<P> {
             {...item.attachment}
             title={text_content}
             isDetail={isDetail}
-            onPress={this.navigateToPostDetail}
+            onPress={this.props.navigateToPostDetail}
           />
         ) : null}
 
@@ -99,8 +84,8 @@ export default class NewsFeedItem extends Component<P> {
   }
 
   render() {
-    const { item, isDetail, navigation, radius } = this.props;
-    const { author, donation, event } = item;
+    const { item, isDetail, radius } = this.props;
+    const { author, event } = item;
     // TODO move green border logic outside of this component
     return (
       <ShadowView
@@ -108,31 +93,38 @@ export default class NewsFeedItem extends Component<P> {
         radius={radius || 3}
       >
         <View style={styles.container}>
-          <NewsFeedItemHeader item={item} navigation={navigation} />
+          <NewsFeedItemHeader
+            item={item}
+            navigateToCommunity={this.props.navigateToCommunity}
+          />
 
           {this.renderContent(this.props)}
 
           {author ? (
-            <NewsFeedItemAuthor
-              detailView={this.props.isDetail}
-              author={author}
-              onUserPress={this.navigateToMemberProfileScreen}
-            />
+            <View style={styles.authorAvatar}>
+              <NewsFeedItemAuthor
+                detailView={this.props.isDetail}
+                author={author}
+                onPress={this.props.navigateToMemberProfile}
+              />
+            </View>
           ) : null}
 
+          {/*
+          TODO: onhold for now
           {donation ? (
             <NewsFeedItemDonation
               {...donation}
               onDonatePress={() => console.log('donate')}
             />
-          ) : null}
+          ) : null} */}
 
           {event ? <NewsFeedItemEvent {...event} /> : null}
 
           <NewsFeedItemFooter
             item={item}
             isDetail={isDetail}
-            navigateToPostDetail={this.navigateToPostDetail}
+            navigateToPostDetail={this.props.navigateToPostDetail}
           />
         </View>
       </ShadowView>
@@ -140,11 +132,21 @@ export default class NewsFeedItem extends Component<P> {
   }
 }
 
+const mapState = state => ({
+  user: selectUser(state),
+});
+
+export default connect(mapState)(NewsFeedItem);
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 3,
     paddingHorizontal: 15,
+  },
+  authorAvatar: {
+    paddingVertical: 10,
+    flexDirection: 'row',
   },
   borderGreen: {
     borderColor: 'rgba(0,230,118,0.7)',

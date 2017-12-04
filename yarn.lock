@@ -2613,9 +2613,13 @@ iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-iconv-lite@^0.4.17, iconv-lite@~0.4.13:
+iconv-lite@^0.4.17:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.18.tgz#23d8656b16aae6742ac29732ea8f0336a4789cf2"
+
+iconv-lite@~0.4.13:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
 ignore-by-default@^1.0.0:
   version "1.0.1"
@@ -3924,7 +3928,14 @@ nested-error-stacks@^1.0.0:
   dependencies:
     inherits "~2.0.1"
 
-node-fetch@^1.0.1, node-fetch@^1.3.3:
+node-fetch@^1.0.1:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
+  dependencies:
+    encoding "^0.1.11"
+    is-stream "^1.0.1"
+
+node-fetch@^1.3.3:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.1.tgz#899cb3d0a3c92f952c47f1b876f4c8aeabd400d5"
   dependencies:
@@ -4625,11 +4636,11 @@ react-native-splash-screen@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.0.1.tgz#178b29b7d848e6ee5a41fbb9c1299eb2b5aaa600"
 
-react-native-tab-view@^0.0.69:
-  version "0.0.69"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.69.tgz#f52d4354a98a382f10eb5fcf61db5216c91dc7e7"
+react-native-tab-view@^0.0.70:
+  version "0.0.70"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.70.tgz#1dd2ded32acd0cb6bfef38d26e53675db733b37b"
   dependencies:
-    prop-types "^15.5.8"
+    prop-types "^15.5.10"
 
 react-native-tableview-simple@^0.16.13:
   version "0.16.13"
@@ -4701,9 +4712,9 @@ react-native@0.49.3:
     xmldoc "^0.4.0"
     yargs "^6.4.0"
 
-react-navigation@^1.0.0-beta.13:
-  version "1.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.0-beta.13.tgz#77521f7080e5755906a3483a28baedbbc66f763c"
+react-navigation@^1.0.0-beta.21:
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.0-beta.21.tgz#086c504ba84c966ef8db898baef6fa14ff45a06f"
   dependencies:
     babel-plugin-transform-define "^1.3.0"
     clamp "^1.0.1"
@@ -4711,7 +4722,7 @@ react-navigation@^1.0.0-beta.13:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.10"
     react-native-drawer-layout-polyfill "^1.3.2"
-    react-native-tab-view "^0.0.69"
+    react-native-tab-view "^0.0.70"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -5684,8 +5695,8 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
 ua-parser-js@^0.7.9:
-  version "0.7.14"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.14.tgz#110d53fa4c3f326c121292bbeac904d2e03387ca"
+  version "0.7.17"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.17.tgz#e9ec5f9498b9ec910e7ae3ac626a805c4d09ecac"
 
 uglify-js@2.7.5, uglify-js@^2.6:
   version "2.7.5"
@@ -5837,7 +5848,11 @@ whatwg-encoding@^1.0.1:
   dependencies:
     iconv-lite "0.4.13"
 
-whatwg-fetch@>=0.10.0, whatwg-fetch@^1.0.0:
+whatwg-fetch@>=0.10.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+
+whatwg-fetch@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-1.1.1.tgz#ac3c9d39f320c6dce5339969d054ef43dd333319"
 

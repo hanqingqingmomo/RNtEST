@@ -89,7 +89,7 @@ export default class CommunityListScreen extends Component<Props, State> {
                     {data.data.map(community => (
                       <TouchableItem
                         onPress={() =>
-                          navigation.navigate('CommunityCenterScreen', {
+                          navigation.navigate('CommunityTab:CommunityScreen', {
                             communityId: community.id,
                             reloadCommunityList: fetch,
                           })}

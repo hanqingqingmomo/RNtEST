@@ -9,12 +9,12 @@ import type { Post, FetchProps } from '../Types';
 import { parseTextContent } from '../utils/text';
 import { makeReadPinnedItemsRq } from '../utils/requestFactory';
 
-const { Table, Section, Cell, HeaderWithLink } = TableView;
+const { Table, Section, Cell, SectionLabelWithLink } = TableView;
 
 type Props = {
   communityId: string,
   onPress: (data: Post) => void,
-  onSeeAll: Function,
+  navigateToPinnedFeed: Function,
 };
 
 function AvatarOrAttachment(props: Post): React$Element<*> {
@@ -47,10 +47,11 @@ export default class PinnedPost extends Component<Props> {
                   <Table>
                     <Section
                       headerComponent={
-                        <HeaderWithLink
+                        <SectionLabelWithLink
                           title="Pinned Items"
                           link={data.data.length > 1 ? 'See all' : ''}
-                          onPress={() => this.props.onSeeAll(data.data)}
+                          onPress={() =>
+                            this.props.navigateToPinnedFeed(data.data)}
                         />
                       }
                     >

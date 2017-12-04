@@ -5,39 +5,36 @@ import { Separator } from 'react-native-tableview-simple';
 
 import {
   ActivityIndicator,
+  Avatar,
   CenterView,
   Fetch,
-  TableView,
   FlatList,
-  Text,
   Icon,
-  Avatar,
-  View,
+  Screen,
+  TableView,
+  Text,
 } from '../../atoms';
 import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
-import type { User, FetchProps } from '../../Types';
+import type { User, FetchProps, Community } from '../../Types';
 
-const { Cell } = TableView;
 const AVATAR_WIDTH = 28;
 
 type Props = {
-  community: Object,
-  navigateToMember: (user: User) => void,
+  community: Community,
+  navigateToMember(User): mixed,
 };
 
 export default class MembersTab extends Component<Props> {
-  keyExtractor = item => item.id;
+  keyExtractor = (item: User) => item.id;
 
-  renderItem = ({ item, separators }) => (
-    <Cell
+  renderItem = ({ item }: { item: User }) => (
+    <TableView.Cell
       title={`${item.first_name} ${item.last_name}`}
       titleTextColor="#455A64"
       image={<Avatar imageURI={item.profile_photo} size={AVATAR_WIDTH} />}
       cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
       onPress={() => this.props.navigateToMember(item)}
       disableImageResize
-      onHighlightRow={separators.highlight}
-      onUnHighlightRow={separators.unhighlight}
     />
   );
 
@@ -46,9 +43,9 @@ export default class MembersTab extends Component<Props> {
       this.props.community.id,
       9999 // TODO pagination
     );
-    // TODO use flat list
+
     return (
-      <View style={{ flex: 1 }}>
+      <Screen scrollEnabled={false}>
         <Fetch
           url={readCommunityMembersRq.url}
           options={readCommunityMembersRq.options}
@@ -74,9 +71,7 @@ export default class MembersTab extends Component<Props> {
                   data={data.data}
                   keyExtractor={this.keyExtractor}
                   renderItem={this.renderItem}
-                  ItemSeparatorComponent={({ highlighted }) => (
-                    <Separator isHidden={highlighted} />
-                  )}
+                  ItemSeparatorComponent={Separator}
                 />
               );
             }
@@ -84,7 +79,7 @@ export default class MembersTab extends Component<Props> {
             return null;
           }}
         </Fetch>
-      </View>
+      </Screen>
     );
   }
 }

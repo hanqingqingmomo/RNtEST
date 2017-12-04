@@ -1,25 +1,84 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, StatusBar, StyleSheet, View } from 'react-native';
+import { TabBarBottom, TabNavigator } from 'react-navigation';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
-import { Fetch, View, DropdownAlert } from '../atoms';
+import { Icon, Fetch, DropdownAlert } from '../atoms';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
-import DonationNavigator from './DonationNavigator';
-import HelpNavigator from './HelpNavigator';
-import InviteFriendsNavigator from './InviteFriendsNavigator';
-import NotificationsSettingsNavigator from './NotificationsSettingsNavigator';
-import MainOrganisationNavigator from './Organisation/MainOrganisationNavigator';
-import OrganisationProfileNavigator from './Organisation/OrganisationProfileNavigator';
-import PlaygroundNavigator from './playground';
-import UserProfileNavigator from './UserProfileNavigator';
-import UserSettingsNavigator from './UserSettingsNavigator';
+import DonationStack from './DonationStack';
+import HelpStack from './HelpStack';
+import InvitationsStack from './InvitationsStack';
+import NotificationSettingsStack from './NotificationSettingsStack';
+import OrganisationStack from './MainTabs/OrganisationStack';
+import PlaygroundStack from './playground';
+import UserProfileStack from './UserProfileStack';
+import UserSettingsStack from './UserSettingsStack';
 import { makeReadOrganisationReq } from '../utils/requestFactory';
+import { getColor } from '../utils/color';
+import { css } from '../utils/style';
 import type { Community, FetchProps } from '../Types';
+// Screens
+import GlobalFeedStack from './MainTabs/GlobalFeedStack';
+import CommunityStack from './MainTabs/CommunityStack';
 
 let ALERT = null;
+
+const styles = StyleSheet.create({
+  tabBarIcon: {
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
+    flex: 1,
+    width: 50,
+    paddingTop: 10,
+    alignItems: 'center',
+  },
+});
+
+const makeTabBarIcon = name => ({ focused, tintColor }) => (
+  <View
+    style={[
+      styles.tabBarIcon,
+      focused ? css('borderBottomColor', tintColor) : undefined,
+    ]}
+  >
+    <Icon name={name} size={24} color={tintColor} />
+  </View>
+);
+
+/**
+ * Navigator
+ */
+const Navigator = TabNavigator(
+  {
+    GlobalFeedTab: {
+      screen: GlobalFeedStack,
+      navigationOptions: ({ navigation, screenProps }) => ({
+        tabBarIcon: makeTabBarIcon('home'),
+      }),
+    },
+    CommunityTab: {
+      screen: CommunityStack,
+      navigationOptions: ({ navigation, screenProps }) => ({
+        tabBarIcon: makeTabBarIcon('communities'),
+      }),
+    },
+  },
+  {
+    initialRouteName: 'GlobalFeedTab',
+    lazy: true,
+    swipeEnabled: false,
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      showLabel: false,
+      activeTintColor: getColor('orange'),
+      inactiveTintColor: '#CFD8DC',
+    },
+  }
+);
 
 global.alertWithType = function(...args) {
   if (ALERT) {
@@ -129,7 +188,7 @@ export default class MainNavigator extends Component<{}, State> {
 
   renderModalRoute = () => {
     const modalRoute = this.state.modalRoute;
-    if (modalRoute === null) {
+    if (!modalRoute) {
       return null;
     }
 
@@ -147,21 +206,21 @@ export default class MainNavigator extends Component<{}, State> {
             openModalRoute: this.openModalRoute,
           },
         };
-        return <DonationNavigator {..._props} />;
+        return <DonationStack {..._props} />;
       case 'UserProfileModal':
-        return <UserProfileNavigator {...props} />;
+        return <UserProfileStack {...props} />;
       case 'UserSettingsModal':
-        return <UserSettingsNavigator {...props} />;
+        return <UserSettingsStack {...props} />;
       case 'NotificationsSettingsModal':
-        return <NotificationsSettingsNavigator {...props} />;
+        return <NotificationSettingsStack {...props} />;
       case 'InviteFriendModal':
-        return <InviteFriendsNavigator {...props} />;
+        return <InvitationsStack {...props} />;
       case 'PlaygroundModal':
-        return <PlaygroundNavigator {...props} />;
+        return <PlaygroundStack {...props} />;
       case 'HelpModal':
-        return <HelpNavigator {...props} />;
+        return <HelpStack {...props} />;
       case 'OrganisationProfileModal':
-        return <OrganisationProfileNavigator {...props} />;
+        return <OrganisationStack {...props} />;
       default:
         if (__DEV__) {
           console.warn(
@@ -190,7 +249,7 @@ export default class MainNavigator extends Component<{}, State> {
             // StatusBar.setBarStyle('dark-content');
           }}
         >
-          <MainOrganisationNavigator
+          <Navigator
             screenProps={{
               openFriendsInvitationModal: () => {
                 this.openModalRoute({

@@ -7,7 +7,7 @@ import { create } from 'apisauce';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { NotificationSettings } from '../Types';
+import type { Community, NotificationSettings } from '../Types';
 
 let Store: any = null;
 
@@ -211,11 +211,9 @@ export const makeReadOrganisationReq = () =>
     options: { method: 'GET' },
   });
 
-export const makeReadCommunityReq = (id: string) =>
-  inject({
-    url: buildUrl({ path: `v1/communities/${id}` }),
-    options: { method: 'GET' },
-  });
+export function RQReadCommunity(id: string): P<RS<Community>> {
+  return api.get(`/v2/communities/${id}`);
+}
 
 /**
  * Communities

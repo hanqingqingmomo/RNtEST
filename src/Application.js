@@ -5,7 +5,7 @@ import { connect, type Connector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
 import { selectUser } from './redux/selectors';
-import { AuthenticationNavigator, MainNavigator } from './routers';
+import { AuthenticationStack, MainNavigator } from './routers';
 import { View } from './atoms';
 import { Network } from './blocks';
 import { type Store } from './Types';
@@ -25,7 +25,7 @@ class Application extends React.PureComponent<Props> {
     return (
       <View flexGrow={1}>
         <Network>
-          {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
+          {authenticated ? <MainNavigator /> : <AuthenticationStack />}
         </Network>
       </View>
     );

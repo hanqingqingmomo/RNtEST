@@ -11,11 +11,11 @@ import { setUserProfile } from '../../redux/ducks/application';
 import { selectUser } from '../../redux/selectors';
 import TabAbout from './TabAbout';
 import JoinSection from './JoinSection';
-import { type User, type CommunitySimple, type ScreenProps } from '../../Types';
+import type { User, CommunitySimple, ScreenProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
   community: CommunitySimple,
-  navigateToMember: Function,
+  navigateToMember(User): mixed,
   reloadCommunity: Function,
   reloadCommunityList: Function,
   setUserProfile: Function,
@@ -49,10 +49,6 @@ class ClosedProfile extends Component<Props, State> {
 
   changeActiveTab = (activeTab: string) => {
     this.setState({ activeTab });
-  };
-
-  navigateToMember = (user: User) => {
-    this.props.navigation.navigate('CommunityMemberProfileScreen', { user });
   };
 
   handleOnJoin = async (community: Object, fetch: any) => {

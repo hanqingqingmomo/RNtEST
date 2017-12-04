@@ -3,30 +3,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import type { Comment as TComment, Post } from '../Types';
+import type { Comment as TComment, Post, CommunitySimple } from '../Types';
 import { View, ScrollView } from '../atoms';
 import { NewsFeedItem, CommentList, CommentInput } from '../blocks';
 import { selectPost } from '../redux/selectors';
 
 import { css } from '../utils/style';
 
-type P = {
-  navigation: any,
+type Props = {
+  navigation: *,
   post: Post,
 };
 
-type P = ScreenProps<NavigationProps>;
-
-type S = {
+type State = {
   replyingTo?: TComment,
 };
 
-class PostDetailScreen extends Component<P, S> {
+class PostScreen extends Component<Props, State> {
   state = {
     replyingTo: undefined,
   };
 
   inputRef: ?any;
+
+  navigateToCommunity = (community: CommunitySimple) => {
+    this.props.navigation.navigate('CommunityTab:CommunityScreen', {
+      communityId: community.id,
+    });
+  };
+
+  navigateToMemberProfile = () => {
+    // TODO somehow, component should now what timeline it is displayed in
+    this.props.navigation.navigate('GlobalFeedTab:MemberProfileScreen', {
+      user: this.props.post.author,
+    });
+  };
 
   focusReplyInput = (comment: TComment) => {
     this.setState({ replyingTo: comment });
@@ -51,17 +62,14 @@ class PostDetailScreen extends Component<P, S> {
   render() {
     const { post } = this.props;
     const { replyingTo } = this.state;
-    // TODO do not pass navigation
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
         <ScrollView>
           <NewsFeedItem
             isDetail
             item={post}
-            navigation={this.props.navigation}
-            onDelete={() => {
-              this.props.navigation.goBack();
-            }}
+            navigateToCommunity={this.navigateToCommunity}
+            navigateToMemberProfile={this.navigateToMemberProfile}
           />
           <View style={css('paddingVertical', 20)}>
             <CommentList
@@ -87,4 +95,4 @@ const mapState = (state, props) => ({
   post: selectPost(props.navigation.state.params.postId, state),
 });
 
-export default connect(mapState)(PostDetailScreen);
+export default connect(mapState)(PostScreen);

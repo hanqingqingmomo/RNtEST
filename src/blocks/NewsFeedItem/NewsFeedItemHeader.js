@@ -5,20 +5,20 @@ import { StyleSheet } from 'react-native';
 import { connect, type Connector } from 'react-redux';
 
 import { Pill, TouchableItem, View } from '../../atoms';
-import { SettingsPopup } from '../../blocks';
-// TODO move PopupSetting declaration into component
-import type { CommunitySimple, User, Post, PopupSetting } from '../../Types';
+import { PopupActions } from '../../blocks';
+import type { CommunitySimple, User, Post, PopupAction } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { contentReport, contentDestroy } from '../../redux/ducks/contentObject';
 
-type ConnectedProps = {
+type Props = {
+  item: Post,
+  navigateToCommunity(community: CommunitySimple): mixed,
   viewer: User,
 };
 
-type Props = {
-  item: Post,
-  // TODO remote navigation prop
-  navigation: Object,
+type ActionCollection = {
+  visible?: Props => boolean,
+  action: PopupAction,
 };
 
 const mapState = state => ({
@@ -27,10 +27,7 @@ const mapState = state => ({
 
 const mapDispatch = { contentDestroy, contentReport };
 
-const connector: Connector<Props, Props & ConnectedProps> = connect(
-  mapState,
-  mapDispatch
-);
+const connector: Connector<Props, Props> = connect(mapState, mapDispatch);
 
 const HIT_SLOP = {
   top: 2,
@@ -40,62 +37,49 @@ const HIT_SLOP = {
 };
 
 class NewsFeedItemHeader extends Component<Props> {
-  navigateToCommunityRoot = (community: CommunitySimple) => {
-    const { navigation } = this.props;
-
-    if (navigation) {
-      navigation.navigate('CommunityCenterScreen', {
-        communityId: community.id,
-      });
-    }
-  };
-
-  get popupActions() {
-    return [
+  get actions(): Array<PopupAction> {
+    const collection: Array<ActionCollection> = [
       {
-        key: 'delete',
-        iconName: 'delete',
-        label: 'Delete',
-        isHidden: ({ viewer, author }) => author.id !== viewer.id,
-        onPress: () => this.props.contentDestroy(this.props.item),
+        visible: props => props.item.author.id === props.viewer.id,
+        action: {
+          key: 'delete',
+          iconName: 'delete',
+          label: 'Delete',
+          onPress: () => this.props.contentDestroy(this.props.item),
+        },
       },
       {
-        key: 'report',
-        iconName: 'report',
-        label: 'Report',
-        onPress: () => this.props.contentReport(this.props.item),
+        action: {
+          key: 'report',
+          iconName: 'report',
+          label: 'Report',
+          onPress: () => this.props.contentReport(this.props.item),
+        },
       },
-    ].filter(
-      (setting: PopupSetting) =>
-        !setting.isHidden ||
-        !setting.isHidden({
-          viewer: this.props.viewer,
-          author: this.props.item.author,
-        })
-    );
+    ];
+    return collection
+      .filter(({ visible }) => (visible ? visible(this.props) : true))
+      .map(({ action }) => action);
   }
 
   render() {
     return (
-      <View style={[styles.header, styles.row]}>
-        <View style={[styles.tags, styles.row]}>
+      <View style={styles.container}>
+        <View style={styles.pillsWrapper}>
           {this.props.item.communities
             .slice(0, 3)
             .map((community: CommunitySimple) => (
-              <View style={styles.tag} key={community.id}>
-                <TouchableItem
-                  onPress={() => this.navigateToCommunityRoot(community)}
-                  hitSlop={HIT_SLOP}
-                >
-                  <View style={{ backgroundColor: 'white' }}>
-                    <Pill title={community.name} color={'orange'} />
-                  </View>
-                </TouchableItem>
-              </View>
+              <TouchableItem
+                key={community.id}
+                onPress={() => this.props.navigateToCommunity(community)}
+                hitSlop={HIT_SLOP}
+                style={styles.pill}
+              >
+                <Pill title={community.name} color={'orange'} />
+              </TouchableItem>
             ))}
         </View>
-
-        <SettingsPopup settings={this.popupActions} />
+        <PopupActions actions={this.actions} />
       </View>
     );
   }
@@ -104,17 +88,15 @@ class NewsFeedItemHeader extends Component<Props> {
 export default connector(NewsFeedItemHeader);
 
 const styles = StyleSheet.create({
-  row: {
+  container: {
     flexDirection: 'row',
+    marginVertical: 15,
   },
-  header: {
-    paddingVertical: 15,
-  },
-  tags: {
-    marginHorizontal: -2,
+  pillsWrapper: {
+    flexDirection: 'row',
     flex: 1,
   },
-  tag: {
-    paddingHorizontal: 2,
+  pill: {
+    marginRight: 2,
   },
 });
