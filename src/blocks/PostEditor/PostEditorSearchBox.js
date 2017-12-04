@@ -6,7 +6,6 @@ import { StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { View, Text, Pill, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { type CommunitySimple } from '../../Types';
-import type { Community } from '../../Types';
 
 type Props = {
   selection: Array<string>,
