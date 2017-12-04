@@ -8,6 +8,7 @@ import { NewsFeed } from '../../blocks';
 import FriendInvitationWidget from './FriendInvitationWidget';
 import FeedNavigationHeader from './FeedNavigationHeader';
 import StartConversationButton from './StartConversationButton';
+import type { Post, User } from '../../Types';
 
 export default class AggregatedNewsFeedScreen extends Component<{}> {
   static navigationOptions = ({ screenProps }) => ({
@@ -17,9 +18,9 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
 
   navigateToCommunity = (community: *) => {
     const action = NavigationActions.navigate({
-      routeName: 'CommunitiesTab',
+      routeName: 'CommunityTab',
       action: NavigationActions.navigate({
-        routeName: 'CommunityCenterScreen',
+        routeName: 'CommunityTab:CommunityScreen',
         params: { communityId: community.id },
       }),
     });
@@ -27,8 +28,16 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
     this.props.navigation.dispatch(action);
   };
 
-  navigateToDetail = (detail: *) => {
-    console.log('detail', detail);
+  navigateToPostDetail = (post: Post) => {
+    this.props.navigation.navigate('GlobalFeedTab:PostScreen', {
+      postId: post.id,
+    });
+  };
+
+  navigateToMemberProfile = (user: User) => {
+    this.props.navigation.navigate('GlobalFeedTab:MemberProfileScreen', {
+      user,
+    });
   };
 
   render(): React$Node {
@@ -37,12 +46,15 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
         id="content_objects/feed"
         path="content_objects/feed"
         navigateToCommunity={this.navigateToCommunity}
-        navigateToDetail={this.navigateToDetail}
+        navigateToPostDetail={this.navigateToPostDetail}
+        navigateToMemberProfile={this.navigateToMemberProfile}
         ListHeaderComponent={
           <View>
             <StartConversationButton
               navigateToEditorScreen={() =>
-                this.props.navigation.navigate('PostEditorScreen')}
+                this.props.navigation.navigate(
+                  'GlobalFeedTab:PostEditorScreen'
+                )}
             />
             <FriendInvitationWidget
               openModal={this.props.screenProps.openFriendsInvitationModal}

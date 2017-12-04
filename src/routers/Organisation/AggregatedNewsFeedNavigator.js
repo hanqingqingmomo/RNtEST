@@ -6,28 +6,24 @@ import {
   MemberProfileScreen,
   PostDetailScreen,
   PostEditorScreen,
-  UserProfileScreen,
 } from '../../screens';
 
 export default StackNavigator(
   {
-    AggregatedNewsFeedScreen: {
+    'GlobalFeedTab:FeedScreen': {
       screen: AggregatedNewsFeedScreen,
     },
-    PostDetailScreen: {
+    'GlobalFeedTab:PostScreen': {
       screen: PostDetailScreen,
     },
-    PostEditorScreen: {
+    'GlobalFeedTab:PostEditorScreen': {
       screen: PostEditorScreen,
     },
-    MemberProfileScreen: {
+    'GlobalFeedTab:MemberProfileScreen': {
       screen: MemberProfileScreen,
-    },
-    UserProfileScreen: {
-      screen: UserProfileScreen,
     },
   },
   {
-    initialRouteName: 'AggregatedNewsFeedScreen',
+    initialRouteName: `GlobalFeedTab:FeedScreen`,
   }
 );

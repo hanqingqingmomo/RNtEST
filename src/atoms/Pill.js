@@ -6,16 +6,17 @@ import { StyleSheet } from 'react-native';
 import { View, Text } from './index';
 import { type ColorName } from '../Types';
 import { css } from '../utils/style';
+import { getColor } from '../utils/color';
 
 type Props = {
-  color?: ColorName | string,
+  color: ColorName | string,
   title: string,
   truncate?: boolean,
 };
 
 export default function Pill({ color, title, truncate }: Props) {
   return (
-    <View style={[styles.view, { borderColor: color }]}>
+    <View style={[styles.view, css('borderColor', getColor(color))]}>
       <Text
         color={color}
         size={11}
@@ -23,7 +24,7 @@ export default function Pill({ color, title, truncate }: Props) {
         lineHeight={13}
         ellipsizeMode="tail"
         numberOfLines={1}
-        style={css('maxWidth', truncate ? 70 : undefined)}
+        style={[styles.text, css('maxWidth', truncate ? 70 : 'auto')]}
       >
         {title}
       </Text>
@@ -41,5 +42,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     paddingHorizontal: 10,
+  },
+  text: {
+    backgroundColor: 'transparent',
   },
 });

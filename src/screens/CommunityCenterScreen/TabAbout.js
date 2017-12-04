@@ -16,7 +16,7 @@ const { Table, Section, Cell } = TableView;
 
 type Props = {
   community: Object,
-  navigateToMember: (user: User) => void,
+  navigateToMember(User): mixed,
 };
 
 export default class TabAbout extends Component<Props> {

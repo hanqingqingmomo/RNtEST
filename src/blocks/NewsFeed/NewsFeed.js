@@ -14,8 +14,7 @@ import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 import { loadTimeline, type Timeline } from '../../redux/ducks/timelines';
 import { selectTimeline } from '../../redux/selectors';
 import { css } from '../../utils/style';
-import type { CommunitySimple, Post } from '../../Types';
-
+import type { CommunitySimple, Post, User } from '../../Types';
 import Footer from './Footer';
 
 /**
@@ -28,18 +27,14 @@ function ItemSeparatorComponent() {
 /**
  * Main component
  */
-// type ListProps = {
-//   data: Array<Post>,
-//   deleteItem: (item: Post) => void,
-//   updateItem: (item: Post, deleting: boolean) => {},
-// };
 
 type Props = {
   id: string,
   limit: number,
   ListHeaderComponent?: React$Node,
   navigateToCommunity: CommunitySimple => mixed,
-  navigateToDetail: Post => mixed,
+  navigateToPostDetail(Post): mixed,
+  navigateToMemberProfile(User): mixed,
   path: string,
   timeline: Timeline,
 };
@@ -76,8 +71,10 @@ class NewsFeed extends Component<Props> {
     <View style={css('paddingHorizontal', 10)}>
       <NewsFeedItem
         item={item}
-        onDelete={() => this.props.deleteItem(item)}
         navigateToCommunity={this.props.navigateToCommunity}
+        navigateToPostDetail={() => this.props.navigateToPostDetail(item)}
+        navigateToMemberProfile={() =>
+          this.props.navigateToMemberProfile(item.author)}
       />
     </View>
   );
@@ -98,11 +95,11 @@ class NewsFeed extends Component<Props> {
           />
         }
         ListHeaderComponent={
-          this.props.ListHeaderComponent && (
+          this.props.ListHeaderComponent !== undefined ? (
             <View style={styles.ListHeaderComponent}>
               {this.props.ListHeaderComponent}
             </View>
-          )
+          ) : null
         }
         ListFooterComponent={
           <View style={styles.ListFooterComponent}>

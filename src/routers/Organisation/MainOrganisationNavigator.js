@@ -23,13 +23,13 @@ const makeTabBarIcon = name => ({ focused, tintColor }) => (
 
 export default TabNavigator(
   {
-    AggregatedNewsFeedTab: {
+    GlobalFeedTab: {
       screen: AggregatedNewsFeedNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('home'),
       }),
     },
-    CommunitiesTab: {
+    CommunityTab: {
       screen: CommunitiesNavigator,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('communities'),
@@ -37,7 +37,7 @@ export default TabNavigator(
     },
   },
   {
-    initialRouteName: 'AggregatedNewsFeedTab',
+    initialRouteName: 'GlobalFeedTab',
     lazy: true,
     swipeEnabled: false,
     tabBarComponent: TabBarBottom,

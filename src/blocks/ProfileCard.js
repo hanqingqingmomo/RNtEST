@@ -10,18 +10,20 @@ import { type User } from '../Types';
 // TODO use type after merge
 type P = {
   user: User,
-  settings?: React$Node,
+  actionsView?: React$Node,
 };
 
 export default class ProfileCard extends Component<P> {
   render() {
-    const { user, settings } = this.props;
+    const { user, actionsView } = this.props;
     const { email, first_name, last_name, profile_photo, role } = user;
 
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
-          {settings ? <View style={styles.settings}>{settings}</View> : null}
+          {actionsView ? (
+            <View style={styles.settings}>{actionsView}</View>
+          ) : null}
           <Lightbox
             underlayColor="white"
             renderContent={() => <ImagePreview imageURI={profile_photo} />}

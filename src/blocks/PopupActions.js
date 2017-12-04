@@ -2,26 +2,26 @@
 import React from 'react';
 
 import { Icon, Popover, PopoverItem, View } from '../atoms';
-import { type PopupSetting } from '../Types';
+import type { PopupAction } from '../Types';
 
-type P = {
-  settings: Array<PopupSetting>,
+type Props = {
+  actions: Array<PopupAction>,
 };
 
-export default function SettingsPopup({ settings }: P) {
+export default function PopupActions({ actions }: Props) {
   return (
     <Popover
-      labels={settings.map((setting: PopupSetting) => ({
-        key: setting.key,
+      labels={actions.map((action: PopupAction) => ({
+        key: action.key,
         label: () => (
           <PopoverItem
-            contentView={setting.label}
+            contentView={action.label}
             imageView={
-              <Icon name={setting.iconName} color="#B0BEC5" size="md" />
+              <Icon name={action.iconName} color="#B0BEC5" size="md" />
             }
           />
         ),
-        onPress: setting.onPress,
+        onPress: action.onPress,
       }))}
       button={
         <View style={{ paddingHorizontal: 6 }}>

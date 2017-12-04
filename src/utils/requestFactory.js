@@ -211,11 +211,8 @@ export const makeReadOrganisationReq = () =>
     options: { method: 'GET' },
   });
 
-export const makeReadCommunityReq = (id: string) =>
-  inject({
-    url: buildUrl({ path: `v1/communities/${id}` }),
-    options: { method: 'GET' },
-  });
+// TODO update to support typings after merge
+export const RQReadCommunity = (id: string) => api.get(`/v2/communities/${id}`);
 
 /**
  * Communities

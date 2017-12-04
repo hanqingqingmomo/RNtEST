@@ -122,13 +122,12 @@ export type CommunityMember = {
   joined_communities: Array<Community>,
 };
 
-export type PopupSetting = {
+export type PopupAction = $Exact<{
   key: string,
   iconName: IconName,
-  isHidden?: boolean,
   label: string,
   onPress: Function,
-};
+}>;
 
 // Redux
 export type Action<T, A> = {
