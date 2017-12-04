@@ -126,7 +126,7 @@ type State = {
   modalRoute: ?NavigationItem,
 };
 
-export default class MainNavigator extends Component<{}, State> {
+export default class MainTabs extends Component<{}, State> {
   state = {
     modalRoute: null,
   };
@@ -156,13 +156,13 @@ export default class MainNavigator extends Component<{}, State> {
   openModalRoute = (item: NavigationItem) => {
     this.setState({ modalRoute: item });
     // TODO bring back
-    // StatusBar.setBarStyle('dark-content');
+    StatusBar.setBarStyle('dark-content');
   };
 
   closeModalRoute = () => {
     this.setState({ modalRoute: null });
     // TODO bring back
-    // StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle('light-content');
   };
 
   renderNavigationView = () => {
@@ -242,11 +242,11 @@ export default class MainNavigator extends Component<{}, State> {
           renderNavigationView={this.renderNavigationView}
           onDrawerOpen={() => {
             // TODO bring back
-            // StatusBar.setBarStyle('light-content');
+            StatusBar.setBarStyle('light-content');
           }}
           onDrawerClose={() => {
             // TODO bring back
-            // StatusBar.setBarStyle('dark-content');
+            StatusBar.setBarStyle('dark-content');
           }}
         >
           <Navigator
