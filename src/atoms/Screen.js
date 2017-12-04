@@ -49,7 +49,7 @@ export default class Screen extends React.Component<Props> {
       <C
         {...passProps}
         style={[
-          { flexGrow: 1 },
+          { flex: 1 },
           tintColor ? css('backgroundColor', tintColor) : undefined,
           style,
         ]}
