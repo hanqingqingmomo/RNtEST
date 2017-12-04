@@ -4552,9 +4552,9 @@ react-fetch-component@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-5.0.0.tgz#551f2d3e0ea26cbe79b909178a032ad35bc0a8ee"
 
-"react-native-braintree-xplat@https://github.com/creatixpublic/react-native-braintree-xplat.git":
-  version "3.4.0"
-  resolved "https://github.com/creatixpublic/react-native-braintree-xplat.git#8b4d3eb2904c0d780a60a6b0ccfc3ccc8b55329d"
+react-native-braintree-xplat@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-braintree-xplat/-/react-native-braintree-xplat-4.0.0.tgz#4222b4892138628dd39033902f0741b404d51f48"
 
 react-native-collapsible@^0.9.0:
   version "0.9.0"
