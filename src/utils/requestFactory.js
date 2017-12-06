@@ -117,7 +117,7 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
  * Get Braintree client token
  */
 export const readBraintreeClientTokenReq = () =>
-  api.get('/v1/members/braintree-client-token');
+  api.get('/v2/members/braintree-client-token');
 
 /**
  * Authentication requests
@@ -127,7 +127,7 @@ export const makeSigninRq = (credentials: {
   password: string,
 }) =>
   inject({
-    url: buildUrl({ path: '/v1/members/login' }),
+    url: buildUrl({ path: '/v2/members/login' }),
     options: {
       method: 'POST',
       body: JSON.stringify(credentials),
@@ -136,7 +136,7 @@ export const makeSigninRq = (credentials: {
 
 export const makeSignupRq = (body: *) =>
   inject({
-    url: buildUrl({ path: '/v1/members/signup' }),
+    url: buildUrl({ path: '/v2/members/signup' }),
     options: {
       method: 'POST',
       body: makeFormData(body, ['profile_photo']),
@@ -146,7 +146,7 @@ export const makeSignupRq = (body: *) =>
 
 export const makePasswordResetReq = (email: string) =>
   inject({
-    url: buildUrl({ path: '/v1/members/reset_password' }),
+    url: buildUrl({ path: '/v2/members/reset_password' }),
     options: {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -155,7 +155,7 @@ export const makePasswordResetReq = (email: string) =>
 
 export const makeChangePasswordReq = (password: string) =>
   inject({
-    url: buildUrl({ path: 'v1/members/profile_settings' }),
+    url: buildUrl({ path: '/v2/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: JSON.stringify({ password }),
@@ -181,7 +181,7 @@ export const donationReq = (donationPayload: {
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
     url: buildUrl({
-      path: id === 'me' ? '/v1/members' : `/v1/members/${id}`,
+      path: id === 'me' ? '/v2/members' : `/v2/members/${id}`,
     }),
     options: {
       method: 'GET',
@@ -193,7 +193,7 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
 
 export const makeUpdateProfileReq = (user: Object) =>
   inject({
-    url: buildUrl({ path: '/v1/members/profile_settings' }),
+    url: buildUrl({ path: '/v2/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: makeFormData(user, ['profile_photo']),
@@ -207,7 +207,7 @@ export const makeUpdateProfileReq = (user: Object) =>
 
 export const makeReadOrganisationReq = () =>
   inject({
-    url: buildUrl({ path: 'v1/communities/81bad81ca2be' }),
+    url: buildUrl({ path: '/v2/communities/81bad81ca2be' }),
     options: { method: 'GET' },
   });
 
@@ -221,7 +221,7 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities?membership_status=${joinedOnly
+      path: `/v2/communities?membership_status=${joinedOnly
         ? 'joined'
         : 'unjoined'}`,
     }),
@@ -233,7 +233,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
 export const makeReadCommunityDetailRq = (communityId: string | number) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities/${communityId}`,
+      path: `/v2/communities/${communityId}`,
     }),
     options: {
       method: 'GET',
@@ -246,7 +246,7 @@ export const makeReadCommunityMembersRq = (
 ) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities/${communityId}/members?limit=${limit}`,
+      path: `/v2/communities/${communityId}/members?limit=${limit}`,
     }),
     options: {
       method: 'GET',
@@ -259,7 +259,7 @@ export const makeLeaveCommunity = (
 ) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities/${memberId}/${communityId}/membership`,
+      path: `/v2/communities/${memberId}/${communityId}/membership`,
     }),
     options: {
       method: 'DELETE',
@@ -273,7 +273,7 @@ export const makeJoinCommunityReq = (
 ) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities/${memberId}/${communityId}/membership`,
+      path: `/v2/communities/${memberId}/${communityId}/membership`,
     }),
     options: {
       method: 'POST',
@@ -285,18 +285,18 @@ export const makeJoinCommunityReq = (
  */
 
 export const readContentObjectReq = (id: string) =>
-  api.get(`/v1/content_objects/${id}`);
+  api.get(`/v2/content_objects/${id}`);
 
 type ContentObject = { id: string };
 
 export const likeContentObjectReq = (object: ContentObject) =>
-  api.post(`/v1/content_objects/${object.id}/like`);
+  api.post(`/v2/content_objects/${object.id}/like`);
 
 export const unlikeContentObjectReq = (object: ContentObject) =>
-  api.delete(`/v1/content_objects/${object.id}/like`);
+  api.delete(`/v2/content_objects/${object.id}/like`);
 
 export const destroyContentObjectReq = (object: ContentObject) =>
-  api.delete(`/v1/content_objects/${object.id}`);
+  api.delete(`/v2/content_objects/${object.id}`);
 
 /**
  * News feed requests
@@ -304,12 +304,12 @@ export const destroyContentObjectReq = (object: ContentObject) =>
 export const requestWithCursor = (
   path: string,
   cursor: { limit?: ?number, next?: ?number }
-) => api.get(`v2/${path}`, cursor);
+) => api.get(`/v2/${path}`, cursor);
 
 export const makeReadPinnedItemsRq = (communityId: string | number) =>
   inject({
     url: `${buildUrl({
-      path: `/v1/content_objects/posts/${communityId}?pinned_only=true`,
+      path: `/v2/content_objects/posts/${communityId}?pinned_only=true`,
     })}`,
     options: {
       method: 'GET',
@@ -321,7 +321,7 @@ export const createPostReq = (object: {
   communities: Array<string>,
   attachment?: ?string,
   cached_url?: ?string,
-}) => api.post('/v1/content_objects/', makeFormData(object, ['attachment']));
+}) => api.post('/v2/content_objects/', makeFormData(object, ['attachment']));
 
 export const reportReq = (object: { id: string }) =>
   api.post('/v2/abuse_reports', { objectId: object.id });
@@ -329,7 +329,7 @@ export const reportReq = (object: { id: string }) =>
 export const makeScrapeUrlReq = (url: string) =>
   inject({
     url: buildUrl({
-      path: '/v1/content_objects/generate_thumbnail',
+      path: '/v2/content_objects/generate_thumbnail',
     }),
     options: {
       method: 'POST',
@@ -338,7 +338,7 @@ export const makeScrapeUrlReq = (url: string) =>
   });
 
 export const createCommentReq = (objectId: string, text_content: string) =>
-  api.post(`/v1/content_objects/${objectId}/comment`, { text_content });
+  api.post(`/v2/content_objects/${objectId}/comment`, { text_content });
 
 /**
  * Invitations
