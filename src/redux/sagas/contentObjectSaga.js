@@ -12,13 +12,13 @@ import {
 import update from 'immutability-helper';
 
 import {
-  createCommentReq,
-  createPostReq,
-  readContentObjectReq,
   destroyContentObjectReq,
   likeContentObjectReq,
-  unlikeContentObjectReq,
+  readContentObjectReq,
   reportReq,
+  RQCreateComment,
+  RQCreatePost,
+  unlikeContentObjectReq,
 } from '../../utils/requestFactory';
 import {
   CONTENT_CREATE_COMMENT,
@@ -57,10 +57,10 @@ const createContentSaga = function* createContentSaga(
   const { data, ok } = yield (async function() {
     switch (action.type) {
       case CONTENT_CREATE_POST:
-        return createPostReq(action.payload.object);
+        return RQCreatePost(action.payload.object);
       case CONTENT_CREATE_COMMENT:
         const { parentId, content } = action.payload;
-        return createCommentReq(parentId, content);
+        return RQCreateComment(parentId, content);
       default:
         break;
     }

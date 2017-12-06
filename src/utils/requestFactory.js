@@ -7,7 +7,7 @@ import { create } from 'apisauce';
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { Community, NotificationSettings } from '../Types';
+import type { Community, NotificationSettings, User } from '../Types';
 
 let Store: any = null;
 
@@ -134,15 +134,8 @@ export const makeSigninRq = (credentials: {
     },
   });
 
-export const makeSignupRq = (body: *) =>
-  inject({
-    url: buildUrl({ path: '/v2/members/signup' }),
-    options: {
-      method: 'POST',
-      body: makeFormData(body, ['profile_photo']),
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
-  });
+export const RQSignup = (body: *) =>
+  api.post('/v2/members/signup', makeFormData(body, ['profile_photo']));
 
 export const makePasswordResetReq = (email: string) =>
   inject({
@@ -191,15 +184,14 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     },
   });
 
-export const makeUpdateProfileReq = (user: Object) =>
-  inject({
-    url: buildUrl({ path: '/v2/members/profile_settings' }),
-    options: {
-      method: 'PUT',
-      body: makeFormData(user, ['profile_photo']),
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
-  });
+export const RQReadProfile = (id: 'me' | string): P<RS<User>> =>
+  api.get(id === 'me' ? '/v2/members' : `/v2/members/${id}`);
+
+export const RQUpdateProfile = (user: Object) => {
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  const data = makeFormData(user, ['profile_photo']);
+  return api.put('/v2/members/profile_settings', data, { headers });
+};
 
 /**
  * Organisation
@@ -253,32 +245,17 @@ export const makeReadCommunityMembersRq = (
     },
   });
 
-export const makeLeaveCommunity = (
+// TODO change request to [DELETE] /communities/{communityId}/membership
+export const RQLeaveCommunity = (
   memberId: string | number,
   communityId: string | number
-) =>
-  inject({
-    url: buildUrl({
-      path: `/v2/communities/${memberId}/${communityId}/membership`,
-    }),
-    options: {
-      method: 'DELETE',
-    },
-  });
+) => api.delete(`/v2/communities/${memberId}/${communityId}/membership`);
 
 // TODO: inject authenticated profile ID, even better update URL
-export const makeJoinCommunityReq = (
+export const RQJoinCommunity = (
   memberId: string | number,
   communityId: string | number
-) =>
-  inject({
-    url: buildUrl({
-      path: `/v2/communities/${memberId}/${communityId}/membership`,
-    }),
-    options: {
-      method: 'POST',
-    },
-  });
+) => api.post(`/v2/communities/${memberId}/${communityId}/membership`);
 
 /**
  * Content Object
@@ -316,12 +293,16 @@ export const makeReadPinnedItemsRq = (communityId: string | number) =>
     },
   });
 
-export const createPostReq = (object: {
+export const RQCreatePost = (object: {
   text_content: string,
   communities: Array<string>,
   attachment?: ?string,
   cached_url?: ?string,
-}) => api.post('/v2/content_objects/', makeFormData(object, ['attachment']));
+}) => {
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  const data = makeFormData(object, ['attachment']);
+  return api.post('/v2/content_objects/', data, { headers });
+};
 
 export const reportReq = (object: { id: string }) =>
   api.post('/v2/abuse_reports', { objectId: object.id });
@@ -337,7 +318,7 @@ export const makeScrapeUrlReq = (url: string) =>
     },
   });
 
-export const createCommentReq = (objectId: string, text_content: string) =>
+export const RQCreateComment = (objectId: string, text_content: string) =>
   api.post(`/v2/content_objects/${objectId}/comment`, { text_content });
 
 /**

@@ -6,7 +6,7 @@ import Collapsible from 'react-native-collapsible';
 import { connect } from 'react-redux';
 
 import { CommunityHeader, View } from '../../atoms';
-import { makeJoinCommunityReq } from '../../utils/requestFactory';
+import { RQJoinCommunity } from '../../utils/requestFactory';
 import { setUserProfile } from '../../redux/ducks/application';
 import { selectUser } from '../../redux/selectors';
 import TabAbout from './TabAbout';
@@ -53,16 +53,11 @@ class ClosedProfile extends Component<Props, State> {
 
   handleOnJoin = async (community: Object, fetch: any) => {
     const { user, reloadCommunity, reloadCommunityList } = this.props;
-    const makeJoinCommunityReqReq = makeJoinCommunityReq(user.id, community.id);
-    const makeJoinCommunityReqRes = await fetch(
-      makeJoinCommunityReqReq.url,
-      makeJoinCommunityReqReq.options
-    );
-
-    if (makeJoinCommunityReqRes.error) {
+    const response = await RQJoinCommunity(user.id, community.id);
+    if (!response.ok) {
       this.setState({ joined: false });
     } else {
-      const { user } = this.props;
+      const user = { ...this.props.user };
       user.joined_communities.push(community);
       this.setState({ joined: true });
       setTimeout(() => {

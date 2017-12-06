@@ -4,16 +4,12 @@ import React from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import { connect, type Connector } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
+import { connectActionSheet } from '@expo/react-native-action-sheet';
 
-import {
-  ActionSheetProvider,
-  connectActionSheet,
-} from '@expo/react-native-action-sheet';
 import {
   ActivityIndicator,
   AvatarPicker,
   CenterView,
-  Fetch,
   Form,
   FormField,
   Image,
@@ -21,36 +17,34 @@ import {
   NavigationTextButton,
   Screen,
   TableView,
-  Text,
   View,
 } from '../atoms';
 import { getColor } from '../utils/color';
-import { makeLeaveCommunity } from '../utils/requestFactory';
 import { selectUser } from '../redux/selectors';
 import { setUserProfile } from '../redux/ducks/application';
-import type {
-  CommunitySimple,
-  FetchProps,
-  ScreenProps,
-  Store,
-  User,
-} from '../Types';
+import type { CommunitySimple, ScreenProps, Store, User } from '../Types';
 import {
-  makeUpdateProfileReq,
-  makeReadProfileRq,
+  RQLeaveCommunity,
+  RQReadProfile,
+  RQUpdateProfile,
 } from '../utils/requestFactory';
 
 const { Table, Section, Cell } = TableView;
 
-type P = ScreenProps<*> & {
+type Props = ScreenProps<*> & {
   screenProps: any,
   setUserProfile: Function,
   showActionSheetWithOptions: Function,
   user: User,
 };
 
-const BG_COLOR = '#ECEFF1';
+type State = {
+  busy: boolean,
+  initFetchDone: boolean,
+  leavingCommunity: ?CommunitySimple,
+};
 
+const BG_COLOR = '#ECEFF1';
 const HEADER_RIGHT_ID = 'UserProfile:HeaderRight';
 const HEADER_LEFT_ID = 'UserProfile:HeaderLeft';
 
@@ -60,9 +54,24 @@ function DismissModalButton({ onPress }) {
   );
 }
 
-// TODO rewrite profile update so that screen don't blink
 @connectActionSheet
-class UserProfileScreen extends React.Component<P> {
+class UserProfileScreen extends React.Component<Props, State> {
+  static navigationOptions = {
+    headerTitle: 'Your Profile',
+    headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
+    headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
+  };
+
+  state = {
+    busy: false,
+    initFetchDone: false,
+    leavingCommunity: null,
+  };
+
+  componentWillMount() {
+    this.loadProfile();
+  }
+
   onAvatarChange = (
     setFieldValue: (string, any) => void,
     setFieldTouched: (string, boolean) => void
@@ -71,46 +80,37 @@ class UserProfileScreen extends React.Component<P> {
     setFieldTouched('profile_photo', true);
   };
 
-  handleSubmit = (fetch: any) => async (user: User) => {
-    const updateProfileReq = makeUpdateProfileReq(user);
-    const updateProfileRes = await fetch(
-      updateProfileReq.url,
-      updateProfileReq.options
-    );
-
-    if (updateProfileRes.error) {
-    } else {
-      this.props.setUserProfile(updateProfileRes.data);
+  handleSubmit = async (values: User) => {
+    const nextValues = { ...values };
+    if (nextValues.profile_photo.startsWith('http')) {
+      delete nextValues.profile_photo;
     }
+    this.setState({ busy: true });
+    await RQUpdateProfile(nextValues);
+    await this.loadProfile();
+    this.setState({ busy: false });
   };
 
-  leaveCommunity = async (fetch: any, community: CommunitySimple) => {
-    const leaveCommunityReg = makeLeaveCommunity(
-      this.props.user.id,
-      community.id
-    );
-    const leaveCommunityRes = await fetch(
-      leaveCommunityReg.url,
-      leaveCommunityReg.options
-    );
-
-    if (leaveCommunityRes.error) {
-    } else {
-      const { data } = await fetch();
-      this.props.setUserProfile(data);
-    }
+  loadProfile = async () => {
+    const response = await RQReadProfile('me');
+    this.setState({ initFetchDone: true });
+    this.props.setUserProfile(response.data);
   };
 
-  onLeaveCommunity(fetch: any, community: CommunitySimple) {
+  onLeaveCommunity(community: CommunitySimple) {
     return () => {
       this.props.showActionSheetWithOptions(
         {
           options: ['Leave Community', 'Cancel'],
           cancelButtonIndex: 1,
+          destructiveButtonIndex: 0,
         },
-        buttonIndex => {
+        async buttonIndex => {
           if (buttonIndex === 0) {
-            this.leaveCommunity(fetch, community);
+            this.setState({ leavingCommunity: community });
+            await RQLeaveCommunity(this.props.user.id, community.id);
+            await this.loadProfile();
+            this.setState({ leavingCommunity: null });
           }
         }
       );
@@ -120,9 +120,8 @@ class UserProfileScreen extends React.Component<P> {
   renderUserDetailCell = ({
     placeholder,
     name,
-    onChange,
     editable,
-  }: Object): React$Element<*> => {
+  }: Object): React$Node => {
     return (
       <Cell
         cellStyle="RightDetail"
@@ -145,45 +144,11 @@ class UserProfileScreen extends React.Component<P> {
               labelTextStyle={{
                 transform: [{ translateY: -5 }],
               }}
-              onChange={onChange}
             />
           </View>
         }
       />
     );
-  };
-
-  renderCommunityCell = (fetch: any, community: CommunitySimple) => {
-    return (
-      <Cell
-        key={community.id}
-        cellStyle="Basic"
-        title={
-          <Text size={15} lineHeight={18} color="#455A64">
-            {community.name}
-          </Text>
-        }
-        image={
-          <Image
-            style={{ borderRadius: 3, width: 28, height: 28 }}
-            source={{
-              uri: community.cover_photo,
-            }}
-          />
-        }
-        onPress={this.onLeaveCommunity(fetch, community)}
-      />
-    );
-  };
-
-  handleFieldChange = (
-    setFieldValue: (string, boolean) => void,
-    setFieldTouched: (string, boolean) => void,
-    event: Object
-  ) => {
-    const { name, value } = event.target;
-    setFieldTouched(name, true);
-    setFieldValue(name, value);
   };
 
   handleClose = (isTouched: boolean) => {
@@ -208,143 +173,117 @@ class UserProfileScreen extends React.Component<P> {
     return JSON.stringify(oldData) === JSON.stringify(newData);
   }
 
-  render() {
-    const myProfileReq = makeReadProfileRq('me');
+  renderJoinedCommunities() {
+    const { user } = this.props;
 
     return (
-      <Fetch url={myProfileReq.url} options={myProfileReq.options}>
-        {({ loading, data, fetch }: FetchProps<User>) => {
-          if (loading === false && data) {
-            const user = data ? data : this.props.user;
-
-            return (
-              <Form
-                onSubmit={this.handleSubmit(fetch)}
-                initialValues={{
-                  first_name: user.first_name,
-                  last_name: user.last_name,
-                  email: user.email,
-                  profile_photo: user.profile_photo,
-                }}
-                render={form => (
-                  <Screen>
-                    <BlackPortal name={HEADER_LEFT_ID}>
-                      <DismissModalButton
-                        onPress={() =>
-                          this.handleClose(
-                            Object.keys(form.touched).length > 0
-                          )}
-                      />
-                    </BlackPortal>
-                    <BlackPortal name={HEADER_RIGHT_ID}>
-                      {!this.compareData(this.props.user, {
-                        ...this.props.user,
-                        ...form.values,
-                      }) ? (
-                        <NavigationTextButton
-                          title="Save"
-                          onPress={form.handleSubmit}
-                        />
-                      ) : null}
-                    </BlackPortal>
-                    <Table>
-                      <Section sectionPaddingTop={0}>
-                        <Cell
-                          cellContentView={
-                            <CenterView style={styles.avatarPickerCell}>
-                              <AvatarPicker
-                                imageURI={form.values.profile_photo}
-                                onChange={this.onAvatarChange(
-                                  form.setFieldValue,
-                                  form.setFieldTouched
-                                )}
-                                outline={3}
-                                size={82}
-                              />
-                            </CenterView>
-                          }
-                        />
-                      </Section>
-                      <Section
-                        header="personal details"
-                        separatorTintColor={BG_COLOR}
-                      >
-                        {this.renderUserDetailCell({
-                          placeholder: 'First name',
-                          name: 'first_name',
-                          editable: true,
-                          onChange: e =>
-                            this.handleFieldChange(
-                              form.setFieldValue,
-                              form.setFieldTouched,
-                              e
-                            ),
-                        })}
-                        {this.renderUserDetailCell({
-                          placeholder: 'Last name',
-                          name: 'last_name',
-                          editable: true,
-                          onChange: e =>
-                            this.handleFieldChange(
-                              form.setFieldValue,
-                              form.setFieldTouched,
-                              e
-                            ),
-                        })}
-                        {this.renderUserDetailCell({
-                          placeholder: 'Email',
-                          name: 'email',
-                          editable: false,
-                          onChange: e =>
-                            this.handleFieldChange(
-                              form.setFieldValue,
-                              form.setFieldTouched,
-                              e
-                            ),
-                        })}
-                      </Section>
-                      {user.joined_communities &&
-                      user.joined_communities.length ? (
-                        <Section
-                          header="your communities"
-                          separatorTintColor={BG_COLOR}
-                        >
-                          {(user.joined_communities || []
-                          ).map((community: CommunitySimple) =>
-                            this.renderCommunityCell(fetch, community)
-                          )}
-                        </Section>
-                      ) : null}
-                    </Table>
-                  </Screen>
-                )}
-              />
-            );
-          }
-
-          return (
-            <CenterView>
-              <ActivityIndicator />
-            </CenterView>
-          );
-        }}
-      </Fetch>
+      <Section header="your communities" separatorTintColor={BG_COLOR}>
+        {this.state.initFetchDone === false ? (
+          <Cell cellContentView={<ActivityIndicator />} />
+        ) : user.joined_communities.length === 0 ? (
+          <Cell title="You're not following any community yet" />
+        ) : (
+          user.joined_communities.map((community: CommunitySimple) => (
+            <Cell
+              key={community.id}
+              cellStyle="Basic"
+              title={community.name}
+              image={
+                <Image
+                  style={{ borderRadius: 3, width: 28, height: 28 }}
+                  source={{
+                    uri: community.cover_photo,
+                  }}
+                />
+              }
+              cellAccessoryView={
+                this.state.leavingCommunity &&
+                this.state.leavingCommunity.id === community.id ? (
+                  <ActivityIndicator />
+                ) : null
+              }
+              onPress={this.onLeaveCommunity(community)}
+            />
+          ))
+        )}
+      </Section>
     );
   }
-}
 
-class Provider extends React.Component<P> {
-  static navigationOptions = {
-    headerTitle: 'Your Profilee',
-    headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
-    headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
-  };
-
-  render(): React$Node {
+  render() {
+    const { user } = this.props;
     return (
-      <ActionSheetProvider>
-        <UserProfileScreen {...this.props} />
-      </ActionSheetProvider>
+      <Form
+        onSubmit={this.handleSubmit}
+        enableReinitialize
+        initialValues={{
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          profile_photo: user.profile_photo,
+        }}
+        render={form => (
+          <Screen fill>
+            <BlackPortal name={HEADER_LEFT_ID}>
+              <DismissModalButton
+                onPress={() =>
+                  this.handleClose(Object.keys(form.touched).length > 0)}
+              />
+            </BlackPortal>
+            <BlackPortal name={HEADER_RIGHT_ID}>
+              <NavigationTextButton
+                title={this.state.busy ? 'Saving' : 'Save'}
+                onPress={form.submitForm}
+                disabled={
+                  this.state.busy ||
+                  this.compareData(this.props.user, {
+                    ...this.props.user,
+                    ...form.values,
+                  })
+                }
+              />
+            </BlackPortal>
+
+            <Table>
+              <Section sectionPaddingTop={0}>
+                <Cell
+                  cellContentView={
+                    <CenterView style={styles.avatarPickerCell}>
+                      <AvatarPicker
+                        imageURI={form.values.profile_photo}
+                        onChange={this.onAvatarChange(
+                          form.setFieldValue,
+                          form.setFieldTouched
+                        )}
+                        outline={3}
+                        size={82}
+                      />
+                    </CenterView>
+                  }
+                />
+              </Section>
+              <Section header="personal details" separatorTintColor={BG_COLOR}>
+                {this.renderUserDetailCell({
+                  placeholder: 'First name',
+                  name: 'first_name',
+                  editable: true,
+                })}
+                {this.renderUserDetailCell({
+                  placeholder: 'Last name',
+                  name: 'last_name',
+                  editable: true,
+                })}
+                {this.renderUserDetailCell({
+                  placeholder: 'Email',
+                  name: 'email',
+                  editable: false,
+                })}
+              </Section>
+              {this.renderJoinedCommunities()}
+            </Table>
+          </Screen>
+        )}
+      />
     );
   }
 }
@@ -354,18 +293,10 @@ export default (connect(
     user: selectUser(state),
   }),
   { setUserProfile }
-): Connector<{}, P>)(Provider);
+): Connector<{}, Props>)(UserProfileScreen);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: BG_COLOR,
-  },
   avatarPickerCell: {
     padding: 20,
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

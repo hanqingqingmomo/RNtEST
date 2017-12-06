@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect, type Connector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 import { selectUser } from './redux/selectors';
 import { AuthenticationStack, MainTabs } from './routers';
@@ -23,11 +24,13 @@ class Application extends React.PureComponent<Props> {
     const { authenticated } = this.props;
 
     return (
-      <View flexGrow={1}>
-        <Network>
-          {authenticated ? <MainTabs /> : <AuthenticationStack />}
-        </Network>
-      </View>
+      <ActionSheetProvider>
+        <View flexGrow={1}>
+          <Network>
+            {authenticated ? <MainTabs /> : <AuthenticationStack />}
+          </Network>
+        </View>
+      </ActionSheetProvider>
     );
   };
 }
