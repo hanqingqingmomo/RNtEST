@@ -6,15 +6,18 @@ import { StyleSheet } from 'react-native';
 import { View, Image } from '../../../atoms';
 
 type Props = {
-  image: string,
+  imageURI: string,
 };
 
 export default class LinkPreview extends React.Component<Props> {
   render() {
-    const { image } = this.props;
     return (
       <View style={styles.container}>
-        <Image source={{ uri: image }} style={styles.image} />
+        <Image
+          source={{ uri: this.props.imageURI }}
+          resizeMode="contain"
+          style={styles.image}
+        />
       </View>
     );
   }

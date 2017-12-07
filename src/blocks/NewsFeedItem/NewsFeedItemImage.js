@@ -21,7 +21,9 @@ export default class NewsFeedItemAttachment extends Component<P> {
     return (
       <Lightbox
         underlayColor="white"
-        renderContent={() => <ImagePreview imageURI={this.props.url} />}
+        renderContent={() => (
+          <ImagePreview resizeMode="contain" imageURI={this.props.url} />
+        )}
       >
         <View style={styles.imageWrapper}>
           <Image source={{ url }} style={styles.image} resizeMode="cover" />

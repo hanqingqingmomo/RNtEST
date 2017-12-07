@@ -25,7 +25,9 @@ export default class ProfileCard extends Component<P> {
           ) : null}
           <Lightbox
             underlayColor="white"
-            renderContent={() => <ImagePreview imageURI={profile_photo} />}
+            renderContent={() => (
+              <ImagePreview resizeMode="contain" imageURI={profile_photo} />
+            )}
           >
             <View>
               <Avatar imageURI={profile_photo} size={100} />
