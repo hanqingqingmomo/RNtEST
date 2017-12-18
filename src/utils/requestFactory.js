@@ -1,13 +1,15 @@
 // @flow
 
+import { Platform } from 'react-native';
 import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import update from 'immutability-helper';
 import { create } from 'apisauce';
 
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { Community, NotificationSettings, User } from '../Types';
+import type { Community, NotificationSettings } from '../Types';
 
 let Store: any = null;
 
@@ -31,6 +33,8 @@ export type Response<D> = {
 type P<T> = Promise<T>;
 type RS<D> = Response<D>;
 
+type PR<T> = Promise<Response<T>>;
+
 export type Request = {
   url: string,
   options: RequestOptions,
@@ -43,6 +47,8 @@ const api = create({
 });
 
 api.addRequestTransform(request => {
+  request.headers['x-http-device'] = DeviceInfo.getUniqueID();
+  request.headers['x-http-platform'] = Platform.OS.toLowerCase();
   if (request.headers['API-KEY'] === undefined) {
     request.headers['API-KEY'] = selectAccessToken(Store.getState());
   }
@@ -122,19 +128,14 @@ export const readBraintreeClientTokenReq = () =>
 /**
  * Authentication requests
  */
-export const makeSigninRq = (credentials: {
+export function RQSignIn(data: {
   email: string,
   password: string,
-}) =>
-  inject({
-    url: buildUrl({ path: '/v2/members/login' }),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    },
-  });
+}): PR<{ mobile_token: string }> {
+  return api.post('/v2/members/login', data);
+}
 
-export const RQSignup = (body: *) =>
+export const RQSignUp = (body: *) =>
   api.post('/v2/members/signup', makeFormData(body, ['profile_photo']));
 
 export const makePasswordResetReq = (email: string) =>
@@ -171,6 +172,7 @@ export const donationReq = (donationPayload: {
 /**
  * Profile
  */
+// TODO remove makeReadProfileRq
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
     url: buildUrl({
@@ -184,14 +186,18 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     },
   });
 
-export const RQReadProfile = (id: 'me' | string): P<RS<User>> =>
+export const RQReadProfile = (id: 'me' | string | number) =>
   api.get(id === 'me' ? '/v2/members' : `/v2/members/${id}`);
 
-export const RQUpdateProfile = (user: Object) => {
-  const headers = { 'Content-Type': 'multipart/form-data' };
-  const data = makeFormData(user, ['profile_photo']);
-  return api.put('/v2/members/profile_settings', data, { headers });
-};
+export const makeUpdateProfileReq = (user: Object) =>
+  inject({
+    url: buildUrl({ path: '/v2/members/profile_settings' }),
+    options: {
+      method: 'PUT',
+      body: makeFormData(user, ['profile_photo']),
+      headers: { 'Content-Type': 'multipart/form-data' },
+    },
+  });
 
 /**
  * Organisation
@@ -322,7 +328,7 @@ export const RQCreateComment = (objectId: string, text_content: string) =>
   api.post(`/v2/content_objects/${objectId}/comment`, { text_content });
 
 /**
- * Invitations
+ * Friend Invitations
  */
 
 export const RQinviteFriend = (email: string) =>
@@ -332,14 +338,23 @@ export const RQGetInvitationSmsContent = () =>
   api.get(`/v2/communities/invitation_message`);
 
 /**
- * Notification Settings
+ * Profile Notification Settings
  */
-export function readNotificationsSettings(): P<RS<NotificationSettings>> {
+export function readNotificationsSettings(): PR<NotificationSettings> {
   return api.get(`/v2/settings/notifications`);
 }
 
 export function updateNotificationsSettings(
   data: NotificationSettings
-): P<RS<NotificationSettings>> {
+): PR<NotificationSettings> {
   return api.put(`/v2/settings/notifications`, data);
 }
+
+/**
+ * Push Notifications
+ */
+export const RQEnablePushNotifications = (token: string) =>
+  api.post('/v2/push-notifications/register', { token });
+
+export const RQDisablePushNotifications = (token: string) =>
+  api.delete('/v2/push-notifications/register');

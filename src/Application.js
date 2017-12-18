@@ -22,7 +22,6 @@ class Application extends React.PureComponent<Props> {
 
   render = () => {
     const { authenticated } = this.props;
-
     return (
       <ActionSheetProvider>
         <View flexGrow={1}>

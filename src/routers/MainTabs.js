@@ -271,7 +271,23 @@ export default class MainTabs extends Component<{}, State> {
         >
           {this.renderModalRoute()}
         </Modal>
-        <DropdownAlert ref={ref => (ALERT = ref)} />
+        <DropdownAlert
+          ref={ref => (ALERT = ref)}
+          styles={{
+            success: {
+              icon: null,
+            },
+            pushNotification: {
+              icon: null,
+              backgroundColor: 'pink',
+            },
+          }}
+          containerStyle={{
+            backgroundColor: '#F0F3F9',
+            borderBottomColor: '#ddd',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
       </View>
     );
   }

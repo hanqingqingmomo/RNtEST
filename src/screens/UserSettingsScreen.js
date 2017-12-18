@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
 
 import { clearUserData } from '../redux/ducks/application';
@@ -103,9 +103,7 @@ class UserProfileScreen extends Component<Props> {
             />
           </TableView.Section>
           <TableView.Section header="Application version">
-            <TableView.Cell
-              title={`Version: ${Config.APP_DISPLAY_VERSION}, Build: ${Config.APP_DISPLAY_BUILD}`}
-            />
+            <TableView.Cell title={DeviceInfo.getReadableVersion()} />
           </TableView.Section>
         </TableView.Table>
       </Screen>
