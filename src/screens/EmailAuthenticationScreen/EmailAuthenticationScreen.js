@@ -32,7 +32,7 @@ class EmailAuthenticationScreen extends Component<Props, State> {
     error: false,
   };
 
-  mounted: boolean = false;
+  mounted: boolean = true;
 
   componentWillUnmount() {
     this.mounted = false;
@@ -44,7 +44,7 @@ class EmailAuthenticationScreen extends Component<Props, State> {
     }
   };
 
-  attemptSignIn = fetch => async (credentials: FormValues) => {
+  attemptSignIn = async (credentials: FormValues) => {
     this.updateState({ busy: true });
     const signinResponse = await RQSignIn(credentials);
     if (signinResponse.ok) {
@@ -68,7 +68,7 @@ class EmailAuthenticationScreen extends Component<Props, State> {
         <FormBlock
           disabled={this.state.busy}
           error={this.state.error}
-          onSubmit={this.attemptSignIn(fetch)}
+          onSubmit={this.attemptSignIn}
           requestNavigationToScreen={(
             routeName: string,
             routeParams?: Object

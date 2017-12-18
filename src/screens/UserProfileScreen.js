@@ -335,7 +335,7 @@ class UserProfileScreen extends React.Component<P> {
 
 class Provider extends React.Component<P> {
   static navigationOptions = {
-    headerTitle: 'Your Profilee',
+    headerTitle: 'Your Profile',
     headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
     headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
   };

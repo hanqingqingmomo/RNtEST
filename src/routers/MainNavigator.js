@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
 
@@ -212,7 +212,23 @@ export default class MainNavigator extends Component<{}, State> {
         >
           {this.renderModalRoute()}
         </Modal>
-        <DropdownAlert ref={ref => (ALERT = ref)} />
+        <DropdownAlert
+          ref={ref => (ALERT = ref)}
+          styles={{
+            success: {
+              icon: null,
+            },
+            pushNotification: {
+              icon: null,
+              backgroundColor: 'pink',
+            },
+          }}
+          containerStyle={{
+            backgroundColor: '#F0F3F9',
+            borderBottomColor: '#ddd',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
       </View>
     );
   }

@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Button, Form, FormField, Icon, Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 
 const INITIAL_VALUES = {
   email: '',
@@ -16,7 +17,7 @@ export type FormValues = typeof INITIAL_VALUES;
 type Props = {
   error: boolean,
   disabled: boolean,
-  onSubmit: (values: FormValues) => *,
+  onSubmit: (values: FormValues) => mixed,
   requestNavigationToScreen: (routeName: string, routeParams?: Object) => void,
 };
 
@@ -48,14 +49,15 @@ export default class EmailAuthenticationBlock extends Component<Props> {
             />
 
             <View style={styles.formWrapper}>
-              {this.props.error ? (
-                <Text
-                  color={getColor('red')}
-                  style={styles.authenticationErrorText}
-                >
-                  Authentication failed. Invalid email and/or password.
-                </Text>
-              ) : null}
+              <Text
+                color={getColor('red')}
+                style={[
+                  styles.authenticationErrorText,
+                  css('opacity', this.props.error ? 1 : 0),
+                ]}
+              >
+                Authentication failed. Invalid email and/or password.
+              </Text>
 
               <FormField
                 label="E-mail Address"
@@ -112,8 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 38,
   },
   authenticationErrorText: {
-    position: 'absolute',
-    top: -20,
+    paddingVertical: 20,
   },
   icon: {
     marginVertical: 20,

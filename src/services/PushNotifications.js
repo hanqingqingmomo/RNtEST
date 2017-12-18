@@ -1,19 +1,19 @@
 // @flow
 
 import PN from 'react-native-push-notification';
+import Config from 'react-native-config';
+
+import type { NotificationAndroid, NotificationIOS } from '../Types';
 
 type RegistrationResponse = {
   token: string,
   os: 'ios' | 'android',
 };
 
-// { token: '09c71e3bf5ec4030cdbb6c4cc55d6652c3038663c5ab5cc821fde1e7b91fd907',
-// os: 'ios' }
-
 export default class PushNotificationsHandler {
   static register(): Promise<{ token: string }> {
     return new Promise((resolve, reject) => {
-      const rejectTimeout = setTimeout(resolve, 2000000, { token: '' });
+      const rejectTimeout = setTimeout(resolve, 20000, { token: '' });
 
       PN.configure({
         onRegister(response: RegistrationResponse) {
@@ -21,36 +21,45 @@ export default class PushNotificationsHandler {
           resolve(response);
         },
 
-        onNotification(notification) {
-          alert('received notification');
-          console.log(notification);
-          // // Android Notification does not contain "data" property.
-          // const data = notification.data || { remote: true };
-          // if (notification.foreground && data.remote) {
-          //   // Handle nofitication manually if remote notification is received when app is in foreground.
-          //   options.openLocalNotification(notification);
-          // }
+        onNotification(
+          pushNotification: NotificationAndroid | NotificationIOS
+        ) {
+          let message = '';
+          let title = '';
+
+          switch (typeof pushNotification['notification']) {
+            case 'undefined':
+              message = pushNotification.message;
+              break;
+
+            case 'object':
+              message = pushNotification.notification.body;
+              title = pushNotification.notification.title;
+              break;
+
+            default:
+              break;
+          }
+
+          if (pushNotification.foreground) {
+            global.alertWithType(
+              'custom',
+              title || Config.BUNDLE_DISPLAY_NAME,
+              message
+            );
+          }
         },
 
-        // ANDROID ONLY: (optional) GCM Sender ID.
-        senderID: '{SENDER ID}',
+        senderID: Config.FCM_SENDER_ID,
 
-        // IOS ONLY (optional): default: all - Permissions to register.
         permissions: {
           alert: true,
           badge: true,
           sound: true,
         },
 
-        // Should the initial notification be popped automatically
-        // default: true
-        popInitialNotification: false,
+        popInitialNotification: true,
 
-        /**
-        * (optional) default: true
-        * - Specified if permissions (ios) and token (android and ios) will requested or not,
-        * - if not, you must call PushNotificationsHandler.requestPermissions() later
-        */
         requestPermissions: true,
       });
     });
