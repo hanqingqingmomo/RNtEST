@@ -284,7 +284,7 @@ export const destroyContentObjectReq = (object: ContentObject) =>
 /**
  * News feed requests
  */
-export const requestWithCursor = (
+export const RQWithCursor = (
   path: string,
   cursor: { limit?: ?number, next?: ?number }
 ) => api.get(`/v2/${path}`, cursor);

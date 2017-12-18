@@ -14,6 +14,7 @@ import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
 import { loadTimeline, type Timeline } from '../../redux/ducks/timelines';
 import { selectTimeline } from '../../redux/selectors';
 import { css } from '../../utils/style';
+import { getColor } from '../../utils/color';
 import type { CommunitySimple, Post, User } from '../../Types';
 import Footer from './Footer';
 
@@ -92,6 +93,7 @@ class NewsFeed extends Component<Props> {
           <RefreshControl
             refreshing={timeline.refreshing}
             onRefresh={this.fetchFreshData}
+            colors={[getColor('orange')]}
           />
         }
         ListHeaderComponent={

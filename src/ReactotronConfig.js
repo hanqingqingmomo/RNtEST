@@ -12,7 +12,7 @@ import { reactotronRedux } from 'reactotron-redux';
 import sagaPlugin from 'reactotron-redux-saga';
 
 if (__DEV__) {
-  Reactotron.configure({ name: Config.APP_ID })
+  Reactotron.configure({ name: Config.BUNDLE_IDENTIFIER })
     .use(reactotronRedux())
     .use(sagaPlugin())
     .use(trackGlobalErrors())
