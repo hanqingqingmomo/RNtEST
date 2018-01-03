@@ -138,6 +138,9 @@ export function RQSignIn(data: {
 export const RQSignUp = (body: *) =>
   api.post('/v2/members/signup', makeFormData(body, ['profile_photo']));
 
+export const RQSocialSignIn = (body: *) =>
+  api.post('/v2/members/social-login', makeFormData(body));
+
 export const makePasswordResetReq = (email: string) =>
   inject({
     url: buildUrl({ path: '/v2/members/reset_password' }),
