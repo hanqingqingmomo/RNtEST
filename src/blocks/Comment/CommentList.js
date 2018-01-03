@@ -9,8 +9,6 @@ import { css } from '../../utils/style';
 
 export type Props = {
   level: number,
-  // ListFooterComponent: ?(React$ComponentType<any> | React$Element<any>),
-  // ListHeaderComponent: ?(React$ComponentType<any> | React$Element<any>),
   onRequestReply: TComment => mixed,
   replies: Array<TComment>,
 };

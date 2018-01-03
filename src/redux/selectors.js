@@ -1,8 +1,7 @@
 // @flow
 
-import { denormalize } from 'normalizr';
-
-import { PostSchema } from './schemas';
+import { PostSchema, denormalize } from './schemas';
+// TODO fix those missing types
 import type { User, Store, RequestStatus, TimelineState } from '../Types';
 
 //
@@ -25,6 +24,14 @@ export function selectAccessToken(state: Store): ?string {
 
 export function selectUser(state: Store): ?User {
   return state.application.userProfile;
+}
+
+export function selectIsLoggedIn(state: Store): boolean {
+  return state.application.userAccessToken !== null;
+}
+
+export function selectPushToken(state: Store): ?string {
+  return state.application.pushToken;
 }
 
 //

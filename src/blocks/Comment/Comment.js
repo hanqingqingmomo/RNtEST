@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import Collapsible from 'react-native-collapsible';
 import plural from 'plural-parens';
 
-import type { Comment as TComment, User, PopupSetting } from '../../Types';
+import type { Comment as TComment, User, PopupAction } from '../../Types';
 import { Avatar, Text, TimeAgo, View, TouchableItem, Count } from '../../atoms';
-import { SettingsPopup } from '../../blocks';
+import { PopupActions } from '../../blocks';
 import { getColor } from '../../utils/color';
 import { selectUser } from '../../redux/selectors';
 import {
@@ -30,6 +30,11 @@ type State = {
   showReplies: boolean,
 };
 
+type ActionCollection = {
+  visible?: Props => boolean,
+  action: PopupAction,
+};
+
 const AVATAR_SIZE = 25;
 
 const mapStateToProps = state => ({
@@ -47,29 +52,29 @@ class Comment extends Component<Props, State> {
     this.setState({ showReplies: !this.state.showReplies });
   };
 
-  getPopupSettings() {
-    return [
+  get actions(): Array<PopupAction> {
+    const collection: Array<ActionCollection> = [
       {
-        key: 'delete',
-        iconName: 'delete',
-        label: 'Delete',
-        isHidden: ({ viewer, author }) => author.id !== viewer.id,
-        onPress: () => this.props.contentDestroy(this.props.item),
+        visible: props => props.item.author.id === props.viewer.id,
+        action: {
+          key: 'delete',
+          iconName: 'delete',
+          label: 'Delete',
+          onPress: () => this.props.contentDestroy(this.props.item),
+        },
       },
       {
-        key: 'report',
-        iconName: 'report',
-        label: 'Report',
-        onPress: () => this.props.contentReport(this.props.item),
+        action: {
+          key: 'report',
+          iconName: 'report',
+          label: 'Report',
+          onPress: () => this.props.contentReport(this.props.item),
+        },
       },
-    ].filter(
-      (setting: PopupSetting) =>
-        !setting.isHidden ||
-        !setting.isHidden({
-          author: this.props.item.author,
-          viewer: this.props.viewer,
-        })
-    );
+    ];
+    return collection
+      .filter(({ visible }) => (visible ? visible(this.props) : true))
+      .map(({ action }) => action);
   }
 
   render() {
@@ -100,7 +105,7 @@ class Comment extends Component<Props, State> {
                 color="gray"
               />
             </View>
-            <SettingsPopup settings={this.getPopupSettings()} />
+            <PopupActions actions={this.actions} />
           </View>
 
           <Text size={14} lineHeight={18} color="#455A64">

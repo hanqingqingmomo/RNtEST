@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
 
 import { clearUserData } from '../redux/ducks/application';
@@ -14,7 +14,7 @@ type ActionName =
   | 'Sync Calendars'
   | 'Use Invite Code'
   | 'Change Password'
-  | 'Terms and conditions'
+  | 'Terms and Conditions'
   | 'Privacy Policy'
   | 'Change Password';
 
@@ -27,9 +27,9 @@ type Props = ScreenProps<*> & {
   clearUserData: Function,
 };
 
-const SETTINGS = [
+const SETTINGS: Array<{ name: ActionName, iconName: IconName }> = [
   {
-    name: 'Terms and conditions',
+    name: 'Terms and Conditions',
     iconName: 'file-empty',
   },
   {
@@ -56,7 +56,7 @@ class UserProfileScreen extends Component<Props> {
         case 'Change Password':
           this.props.navigation.navigate('ChangePasswordScreen');
           break;
-        case 'Terms and conditions':
+        case 'Terms and Conditions':
           this.props.navigation.navigate('TermsAndConditionsScreen');
           break;
         case 'Privacy Policy':
@@ -68,10 +68,10 @@ class UserProfileScreen extends Component<Props> {
   }
 
   signOut = () => {
-    Alert.alert('Log out', 'Are you sure you want to log out?', [
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       { text: 'Cancel', style: 'cancel' },
       {
-        text: 'Logout',
+        text: 'Sign Out',
         onPress: this.props.clearUserData,
       },
     ]);
@@ -103,9 +103,7 @@ class UserProfileScreen extends Component<Props> {
             />
           </TableView.Section>
           <TableView.Section header="Application version">
-            <TableView.Cell
-              title={`Version: ${Config.APP_DISPLAY_VERSION}, Build: ${Config.APP_DISPLAY_BUILD}`}
-            />
+            <TableView.Cell title={DeviceInfo.getReadableVersion()} />
           </TableView.Section>
         </TableView.Table>
       </Screen>

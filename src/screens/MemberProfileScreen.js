@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from '../atoms';
-import { ProfileCard, SettingsPopup } from '../blocks';
+import { ProfileCard, PopupActions } from '../blocks';
 import { getColor } from '../utils/color';
 import { contentReport } from '../redux/ducks/contentObject';
 import { makeReadProfileRq } from '../utils/requestFactory';
@@ -36,7 +36,7 @@ class MemberProfileScreen extends Component<Props> {
   };
 
   handleCommunityPress = (community: CommunitySimple) => {
-    this.props.navigation.navigate('CommunityCenterScreen', {
+    this.props.navigation.navigate('CommunityTab:CommunityScreen', {
       communityId: community.id,
     });
   };
@@ -60,7 +60,11 @@ class MemberProfileScreen extends Component<Props> {
         {(member.joined_communities || []).map(pill => (
           <View key={pill.id} style={styles.pillItem}>
             <TouchableOpacity onPress={() => this.handleCommunityPress(pill)}>
-              <Pill title={pill.name} color={getColor('orange')} />
+              <Pill
+                title={pill.name}
+                color={getColor('orange')}
+                truncate={member.joined_communities.length > 1}
+              />
             </TouchableOpacity>
           </View>
         ))}
@@ -85,8 +89,8 @@ class MemberProfileScreen extends Component<Props> {
                   <Section sectionPaddingTop={0}>
                     <ProfileCard
                       user={memeberData}
-                      settings={
-                        <SettingsPopup settings={this.getPopupSettings()} />
+                      actionsView={
+                        <PopupActions actions={this.getPopupSettings()} />
                       }
                     />
                   </Section>

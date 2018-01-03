@@ -54,24 +54,15 @@ const BG_COLOR = '#ECEFF1';
 const HEADER_RIGHT_ID = 'UserProfile:HeaderRight';
 const HEADER_LEFT_ID = 'UserProfile:HeaderLeft';
 
-function DismissModalButton({ onPress, ...a }) {
+function DismissModalButton({ onPress }) {
   return (
-    <NavigationIconButton
-      name="close"
-      color={getColor('orange')}
-      onPress={onPress}
-    />
+    <NavigationIconButton name="close" color={'orange'} onPress={onPress} />
   );
 }
 
+// TODO rewrite profile update so that screen don't blink
 @connectActionSheet
 class UserProfileScreen extends React.Component<P> {
-  static navigationOptions = ({ screenProps }) => ({
-    headerTitle: 'Your Profile',
-    headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
-    headerLeft: <DismissModalButton onPress={screenProps.dismissModalRoute} />,
-  });
-
   onAvatarChange = (
     setFieldValue: (string, any) => void,
     setFieldTouched: (string, boolean) => void
@@ -341,26 +332,29 @@ class UserProfileScreen extends React.Component<P> {
     );
   }
 }
-const Provider = (props: Object) => {
-  return (
-    <ActionSheetProvider>
-      <UserProfileScreen {...props} />
-    </ActionSheetProvider>
-  );
-};
 
-Provider.navigationOptions = ({ screenProps }) => ({
-  headerTitle: 'Your Profile',
-  headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
-  headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
-});
+class Provider extends React.Component<P> {
+  static navigationOptions = {
+    headerTitle: 'Your Profile',
+    headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
+    headerLeft: <WhitePortal name={HEADER_LEFT_ID} />,
+  };
+
+  render(): React$Node {
+    return (
+      <ActionSheetProvider>
+        <UserProfileScreen {...this.props} />
+      </ActionSheetProvider>
+    );
+  }
+}
 
 export default (connect(
   (state: Store) => ({
     user: selectUser(state),
   }),
   { setUserProfile }
-): Connector<{}, Props>)(Provider);
+): Connector<{}, P>)(Provider);
 
 const styles = StyleSheet.create({
   container: {

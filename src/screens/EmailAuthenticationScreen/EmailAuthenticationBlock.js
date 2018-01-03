@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { Button, Form, FormField, Icon, Text, View } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 
 const INITIAL_VALUES = {
   email: '',
@@ -15,9 +16,9 @@ export type FormValues = typeof INITIAL_VALUES;
 
 type Props = {
   error: boolean,
-  loading: boolean,
-  handleAuthenticationRequest: (values: FormValues) => *,
-  handlePasswordScreenRequest: () => void,
+  disabled: boolean,
+  onSubmit: (values: FormValues) => mixed,
+  requestNavigationToScreen: (routeName: string, routeParams?: Object) => void,
 };
 
 const RULES = {
@@ -37,7 +38,7 @@ export default class EmailAuthenticationBlock extends Component<Props> {
         initialValues={INITIAL_VALUES}
         rules={RULES}
         messages={MESSAGES}
-        onSubmit={this.props.handleAuthenticationRequest}
+        onSubmit={this.props.onSubmit}
         render={formProps => (
           <View style={styles.container}>
             <Icon
@@ -48,14 +49,15 @@ export default class EmailAuthenticationBlock extends Component<Props> {
             />
 
             <View style={styles.formWrapper}>
-              {this.props.error ? (
-                <Text
-                  color={getColor('red')}
-                  style={styles.authenticationErrorText}
-                >
-                  Authentication failed. Invalid email and/or password.
-                </Text>
-              ) : null}
+              <Text
+                color={getColor('red')}
+                style={[
+                  styles.authenticationErrorText,
+                  css('opacity', this.props.error ? 1 : 0),
+                ]}
+              >
+                Authentication failed. Invalid email and/or password.
+              </Text>
 
               <FormField
                 label="E-mail Address"
@@ -74,7 +76,8 @@ export default class EmailAuthenticationBlock extends Component<Props> {
               <Text
                 color="orange"
                 size={16}
-                onPress={this.props.handlePasswordScreenRequest}
+                onPress={() =>
+                  this.props.requestNavigationToScreen('PasswordResetScreen')}
                 style={styles.forgotPasswordText}
               >
                 Forgot password?
@@ -83,11 +86,11 @@ export default class EmailAuthenticationBlock extends Component<Props> {
             <Button
               block
               size="lg"
-              disabled={this.props.loading}
+              disabled={this.props.disabled}
               color={getColor('orange')}
               textColor={getColor('white')}
               onPress={formProps.handleSubmit}
-              title={this.props.loading ? 'Logging In...' : 'Log In'}
+              title={this.props.disabled ? 'Logging In...' : 'Log In'}
             />
           </View>
         )}
@@ -111,8 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 38,
   },
   authenticationErrorText: {
-    position: 'absolute',
-    top: -20,
+    paddingVertical: 20,
   },
   icon: {
     marginVertical: 20,

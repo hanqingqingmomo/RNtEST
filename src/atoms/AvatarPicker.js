@@ -52,13 +52,7 @@ export default class AvatarPicker extends Component<P> {
 
     return (
       <TouchableItem onPress={this.onPress}>
-        <View
-          style={[
-            css('width', s + 20),
-            css('height', s + 20),
-            styles.centerContent,
-          ]}
-        >
+        <View style={[css('width', s), css('height', s), styles.centerContent]}>
           <ShadowView
             radius={s / 2}
             style={[
@@ -69,7 +63,7 @@ export default class AvatarPicker extends Component<P> {
             ]}
           >
             <View>
-              {!imageURI && <Icon name="plus" size={18} color="#B0BEC5" />}
+              {!imageURI && <Icon name="plus" size={18} color="orange" />}
               {imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
             </View>
           </ShadowView>

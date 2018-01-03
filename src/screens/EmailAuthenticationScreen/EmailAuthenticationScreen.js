@@ -3,67 +3,77 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Fetch, Screen } from '../../atoms';
+import { Screen } from '../../atoms';
 import {
   setUserAccessToken,
   setUserProfile,
 } from '../../redux/ducks/application';
 import FormBlock, { type FormValues } from './EmailAuthenticationBlock';
-import { makeSigninRq, makeReadProfileRq } from '../../utils/requestFactory';
-import type { ScreenProps, FetchProps } from '../../Types';
+import { RQSignIn, RQReadProfile } from '../../utils/requestFactory';
+import type { ScreenProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
   setUserAccessToken: Function,
   setUserProfile: Function,
 };
 
-class EmailAuthenticationScreen extends Component<Props> {
+type State = {
+  busy: boolean,
+  error: boolean,
+};
+
+class EmailAuthenticationScreen extends Component<Props, State> {
   static navigationOptions = {
     headerTitle: 'Log In',
   };
 
-  navigateToPasswordResetScreen = () => {
-    this.props.navigation.navigate('PasswordResetScreen');
+  state = {
+    busy: false,
+    error: false,
   };
 
-  handleAuthenticationRequest = fetch => async (values: FormValues) => {
-    const { email, password } = values;
+  mounted: boolean = true;
 
-    const signinReq = makeSigninRq({ email, password });
-    const signinRes = await fetch(signinReq.url, signinReq.options);
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
-    if (signinRes.response.ok) {
-      this.props.setUserAccessToken(signinRes.data.mobile_token);
-
-      // TODO reinject, subscribe to store update
-      const readProfileReq = makeReadProfileRq('me');
-      const { data: userProfile } = await fetch(readProfileReq.url, {
-        ...readProfileReq.options,
-        headers: {
-          ...readProfileReq.options.headers,
-          'API-KEY': signinRes.data.mobile_token,
-        },
-      });
-
-      this.props.setUserProfile(userProfile);
+  updateState = (nextState: $Shape<State>) => {
+    if (this.mounted) {
+      this.setState(nextState);
     }
+  };
+
+  attemptSignIn = async (credentials: FormValues) => {
+    this.updateState({ busy: true });
+    const signinResponse = await RQSignIn(credentials);
+    if (signinResponse.ok) {
+      this.updateState({ error: false });
+      this.props.setUserAccessToken(signinResponse.data.mobile_token);
+      const profileResponse = await RQReadProfile('me');
+      if (profileResponse.ok) {
+        this.props.setUserProfile(profileResponse.data);
+      } else {
+        this.updateState({ error: true });
+      }
+    } else {
+      this.updateState({ error: true });
+    }
+    this.updateState({ busy: false });
   };
 
   render() {
     return (
-      <Screen fill>
-        <Fetch manual>
-          {({ loading, fetch, error }: FetchProps<*>) => (
-            <FormBlock
-              loading={!!loading}
-              error={loading === false && !!error}
-              handleAuthenticationRequest={this.handleAuthenticationRequest(
-                fetch
-              )}
-              handlePasswordScreenRequest={this.navigateToPasswordResetScreen}
-            />
-          )}
-        </Fetch>
+      <Screen>
+        <FormBlock
+          disabled={this.state.busy}
+          error={this.state.error}
+          onSubmit={this.attemptSignIn}
+          requestNavigationToScreen={(
+            routeName: string,
+            routeParams?: Object
+          ) => this.props.navigation.navigate(routeName, routeParams)}
+        />
       </Screen>
     );
   }

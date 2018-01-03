@@ -1,46 +1,59 @@
 // @flow
 
-export {
-  default as AggregatedNewsFeedScreen,
-} from './AggregatedNewsFeedScreen/AggregatedNewsFeedScreen';
-export {
-  default as AuthenticationRootScreen,
-} from './AuthenticationRootScreen';
-export { default as BootScreen } from './BootScreen';
-export { default as CommunityListScreen } from './CommunityListScreen';
-export {
-  default as CommunityCenterScreen,
-} from './CommunityCenterScreen/CommunityCenterScreen';
-export {
-  default as DonationAppealScreen,
-} from './DonationAppealScreen/DonationAppealScreen';
-export { default as DonationResultScreen } from './DonationResultScreen';
-export {
-  default as EmailAuthenticationScreen,
-} from './EmailAuthenticationScreen/EmailAuthenticationScreen';
-export { default as EmailRegistrationScreen } from './EmailRegistrationScreen';
-export { default as EventFeedScreen } from './EventFeedScreen';
-export { default as HelpScreen } from './HelpScreen';
-export { default as InvitationCodeScreen } from './InvitationCodeScreen';
-export { default as InviteFriendsScreen } from './InviteFriendsScreen';
-export { default as LandingScreen } from './LandingScreen';
-export { default as ChangePasswordScreen } from './ChangePasswordScreen';
-export { default as NewsFeedSettingsScreen } from './NewsFeedSettingsScreen';
-export {
-  default as NotificationSettingsScreen,
-} from './NotificationSettingsScreen';
-export { default as MemberProfileScreen } from './MemberProfileScreen';
-export {
-  default as OrganisationProfileScreen,
-} from './OrganisationProfileScreen';
-export { default as PostDetailScreen } from './PostDetailScreen';
-export { default as PasswordResetScreen } from './PasswordResetScreen';
-export { default as UserProfileScreen } from './UserProfileScreen';
-export { default as UserSettingsScreen } from './UserSettingsScreen';
-export { default as PostEditorScreen } from './PostEditorScreen';
-export { default as PrivacyScreen } from './PrivacyScreen';
-export { default as PinnedPostsScreen } from './PinnedPostsScreen';
-export {
-  default as TermsAndConditionsScreen,
-} from './TermsAndConditionsScreen';
-export { default as WebViewScreen } from './WebViewScreen';
+import AggregatedNewsFeedScreen from './AggregatedNewsFeedScreen/AggregatedNewsFeedScreen';
+import AuthenticationRootScreen from './AuthenticationRootScreen';
+import BootScreen from './BootScreen';
+import ChangePasswordScreen from './ChangePasswordScreen';
+import CommunityListScreen from './CommunityListScreen';
+import CommunityScreen from './CommunityScreen/CommunityScreen';
+import DonationAppealScreen from './DonationAppealScreen/DonationAppealScreen';
+import DonationResultScreen from './DonationResultScreen';
+import EmailAuthenticationScreen from './EmailAuthenticationScreen/EmailAuthenticationScreen';
+import EmailRegistrationScreen from './EmailRegistrationScreen';
+import EventFeedScreen from './EventFeedScreen';
+import HelpScreen from './HelpScreen';
+import InvitationCodeScreen from './InvitationCodeScreen';
+import InviteFriendsScreen from './InviteFriendsScreen';
+import LandingScreen from './LandingScreen';
+import MemberProfileScreen from './MemberProfileScreen';
+import NewsFeedSettingsScreen from './NewsFeedSettingsScreen';
+import NotificationSettingsScreen from './NotificationSettingsScreen';
+import OrganisationProfileScreen from './OrganisationProfileScreen';
+import PasswordResetScreen from './PasswordResetScreen';
+import PinnedFeedScreen from './PinnedFeedScreen';
+import PostEditorScreen from './PostEditorScreen';
+import PostScreen from './PostScreen';
+import PrivacyScreen from './PrivacyScreen';
+import TermsAndConditionsScreen from './TermsAndConditionsScreen';
+import UserProfileScreen from './UserProfileScreen';
+import UserSettingsScreen from './UserSettingsScreen';
+import WebViewScreen from './WebViewScreen';
+
+export { AggregatedNewsFeedScreen };
+export { AuthenticationRootScreen };
+export { BootScreen };
+export { ChangePasswordScreen };
+export { CommunityListScreen };
+export { CommunityScreen };
+export { DonationAppealScreen };
+export { DonationResultScreen };
+export { EmailAuthenticationScreen };
+export { EmailRegistrationScreen };
+export { EventFeedScreen };
+export { HelpScreen };
+export { InvitationCodeScreen };
+export { InviteFriendsScreen };
+export { LandingScreen };
+export { MemberProfileScreen };
+export { NewsFeedSettingsScreen };
+export { NotificationSettingsScreen };
+export { OrganisationProfileScreen };
+export { PasswordResetScreen };
+export { PinnedFeedScreen };
+export { PostEditorScreen };
+export { PostScreen };
+export { PrivacyScreen };
+export { TermsAndConditionsScreen };
+export { UserProfileScreen };
+export { UserSettingsScreen };
+export { WebViewScreen };

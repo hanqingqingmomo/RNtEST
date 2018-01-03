@@ -11,7 +11,7 @@ type NavigationProps = {
     amount: any,
     inviteFriends: Function,
     recurrent: any,
-    repeatPayment: Function,
+    repeatPayment: ?Function,
     success: boolean,
   },
 };
@@ -33,7 +33,9 @@ export default class DonationResultScreen extends Component<Props> {
 
   tryAgain = () => {
     this.props.navigation.goBack();
-    this.props.navigation.state.params.repeatPayment();
+    if (this.props.navigation.state.params.repeatPayment) {
+      this.props.navigation.state.params.repeatPayment();
+    }
   };
 
   render() {
@@ -42,7 +44,9 @@ export default class DonationResultScreen extends Component<Props> {
     const actions = {
       inviteFriends: this.inviteFriends,
       doItLater: this.doItLater,
-      tryAgain: this.tryAgain,
+      tryAgain: this.props.navigation.state.params.repeatPayment
+        ? this.tryAgain
+        : null,
     };
 
     return (

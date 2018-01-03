@@ -26,7 +26,8 @@ export default class PostEditorSearchBox extends Component<Props, State> {
 
   closeInterval: any = null;
 
-  get autoJoinCommnuties(): Array<CommunitySimple> {
+  // TODO move level up
+  get autoJoinCommunities(): Array<CommunitySimple> {
     return this.props.communities.filter(community => community.auto_join);
   }
 
@@ -44,11 +45,16 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.autoJoinCommnuties.forEach((community: CommunitySimple) => {
-      this.selectCommunity(community);
-    });
+    if (!(this.props.selection || []).length) {
+      this.autoJoinCommunities.forEach((community: CommunitySimple) => {
+        this.selectCommunity(community);
+      });
+    }
 
-    if (this.autoJoinCommnuties.length === 0) {
+    if (
+      this.autoJoinCommunities.length === 0 &&
+      !(this.props.selection || []).length
+    ) {
       this.refs.searchInput.focus();
     }
   }
@@ -110,7 +116,11 @@ export default class PostEditorSearchBox extends Component<Props, State> {
       <View style={styles.pillContainer}>
         {communities.map(pill => (
           <View key={pill.id} style={styles.pillItem}>
-            <Pill title={pill.name} color={getColor('orange')} />
+            <Pill
+              title={pill.name}
+              color={getColor('orange')}
+              truncate={communities.length > 1}
+            />
           </View>
         ))}
       </View>
