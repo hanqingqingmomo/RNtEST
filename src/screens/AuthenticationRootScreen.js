@@ -6,13 +6,21 @@ import { connect } from 'react-redux';
 import OAuthManager from 'react-native-oauth';
 import LinkedInModal from 'react-native-linkedin';
 
-import { Icon, View, Button, Screen, Text } from '../atoms';
+import {
+  ActivityIndicator,
+  Button,
+  CenterView,
+  Icon,
+  Screen,
+  Text,
+  View,
+} from '../atoms';
 import { getColor } from '../utils/color';
 import { RQSocialSignIn, RQReadProfile } from '../utils/requestFactory';
 import type { ScreenProps } from '../Types';
 import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
 
-type Provider = 'twitter' | 'facebook';
+type Provider = 'twitter' | 'facebook' | 'linkedin';
 
 type Config = {
   facebook: {
@@ -23,12 +31,16 @@ type Config = {
     consumer_key: string,
     consumer_secret: string,
   },
+  linkedin: {
+    clientID: string,
+    clientSecret: string,
+  },
 };
 
 type Status = string | 'ok';
 
-type Response = {
-  provider?: Provider,
+type OAuthResponse = {
+  provider: Provider, // for saved accounts
   response: {
     authorized: boolean,
     credentials: {
@@ -47,12 +59,12 @@ type Response = {
   status: Status,
 };
 
-type Route =
-  | 'FacebookAuthenticationScreen'
-  | 'LinkedinAuthenticationScreen'
-  | 'TwitterAuthenticationScreen'
-  | 'EmailAuthenticationScreen'
-  | 'EmailRegistrationScreen';
+type LinkedInResponse = {
+  access_token: string,
+  expires_in: number,
+};
+
+type Route = 'EmailAuthenticationScreen' | 'EmailRegistrationScreen';
 
 type Props = ScreenProps<*> & {
   setUserAccessToken: Function,
@@ -61,7 +73,6 @@ type Props = ScreenProps<*> & {
 
 type State = {
   busy: boolean,
-  errors: Array<string>,
 };
 
 const config: Config = {
@@ -73,9 +84,13 @@ const config: Config = {
     consumer_key: 't1vrxymxsalQ84PgD3ew6JZyb',
     consumer_secret: '0T9Lv4hDR2zrJoxqUMD9QGf2pcKSQ8BqFGUHEbk3dRb6bbB2tB',
   },
+  linkedin: {
+    clientID: '78inys69jtxa3d',
+    clientSecret: 'HBztjlroz9LLztpP',
+  },
 };
 
-function AuthenticationButton(props, otherStyles) {
+function AuthenticationButton(props, otherStyles): React$Node {
   return (
     <Button block {...props} size="lg" style={[styles.button, otherStyles]} />
   );
@@ -84,8 +99,17 @@ function AuthenticationButton(props, otherStyles) {
 class AuthenticationRootScreen extends Component<Props, State> {
   state = {
     busy: false,
-    errors: [],
   };
+
+  manager: any = null;
+
+  componentWillMount() {
+    this.manager = new OAuthManager('pba-app');
+    this.manager.configure({
+      facebook: config.facebook,
+      twitter: config.twitter,
+    });
+  }
 
   navigate = (route: Route) => () => {
     switch (route) {
@@ -97,80 +121,90 @@ class AuthenticationRootScreen extends Component<Props, State> {
     }
   };
 
-  authenticate = async (provider: Provider, resp: Response) => {
-    if (resp.status === 'ok') {
+  login = async (provider: Provider, access_token: string) => {
+    this.setState({ busy: true });
+
+    const signinResponse = await RQSocialSignIn({ provider, access_token });
+
+    if (signinResponse.ok) {
+      this.props.setUserAccessToken(signinResponse.data.mobile_token);
+      const profileResponse = await RQReadProfile('me');
+      this.props.setUserProfile(profileResponse.data);
+    } else {
+      // TODO doplnit vypisovanie error message ked bude endpoint opraveny a bude vracat spravny error message
+
+      this.setState({ busy: false });
+    }
+  };
+
+  // only for facebook and twitter
+  authenticate = (provider: Provider, resp: OAuthResponse) => {
+    if (resp.status === 'ok' && ['facebook', 'twitter'].includes(provider)) {
       const { credentials } = resp.response;
       const access_token = credentials.accessToken || credentials.access_token;
 
-      const signinResponse = await RQSocialSignIn({ provider, access_token });
-
-      console.log(access_token);
-
-      if (signinResponse.ok) {
-        this.props.setUserAccessToken(signinResponse.data.mobile_token);
-        const profileResponse = await RQReadProfile('me');
-        this.props.setUserProfile(profileResponse.data);
+      if (!!access_token) {
+        this.login(provider, access_token);
       } else {
-        this.setState(state => ({
-          errors: state.errors.concat(
-            'Authentication failed. Invalid access token.'
-          ),
-        }));
+        alert('Missing access token');
       }
     }
   };
 
+  authorize = (provider: Provider, scopes?: string) => {
+    this.manager
+      .authorize(provider, scopes ? { scopes } : undefined)
+      .then((resp: OAuthResponse) => {
+        console.log(resp);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`${provider} resp: `, resp);
+        }
+
+        this.authenticate(provider, resp);
+      })
+      .catch((err: any) => {
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`${provider} error: `, err);
+        }
+      });
+  };
+
   authenticateSocialMediaAccount = (provider: Provider, scopes?: string) => {
-    const manager = new OAuthManager('pba-app');
-
-    const authorize = () =>
-      manager
-        .authorize(provider, scopes ? { scopes } : undefined)
-        .then(async (resp: Response) => {
-          console.log('resp', resp);
-          this.authenticate(provider, resp);
-        })
-        .catch(err => console.log(err));
-
-    manager.configure(config);
-
-    manager
+    this.manager
       .savedAccounts()
-      .then((savedAccounts: { accounts: Array<Response> }) => {
-        console.log('already authorized against: ', savedAccounts);
+      .then((resp: { accounts: Array<OAuthResponse> }) => {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('already authorized against: ', resp);
+        }
 
-        const account = savedAccounts.accounts.find(
-          account => account.provider === provider
+        const account = resp.accounts.find(
+          (account: OAuthResponse): boolean => account.provider === provider
         );
 
         if (!!account) {
-          console.log('relogin');
+          if (process.env.NODE_ENV === 'development') {
+            console.log('relogin');
+          }
 
           this.authenticate(provider, account);
-
-          // manager
-          //   .deauthorize(provider)
-          //   .then((deauthorized: { status: Status }) => {
-          //     console.log('after deauthorization: ', deauthorized);
-
-          //     if (deauthorized.status === 'ok') {
-          //       console.log('going to authorize');
-          //       authorize();
-          //     }
-          //   })
-          //   .catch(err => console.log(err));
         } else {
-          authorize();
+          this.authorize(provider, scopes);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err: any) => {
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`${provider} error: `, err);
+        }
+      });
   };
 
-  handleTwitterAuthentication = () =>
+  handleTwitterAuthentication = () => {
     this.authenticateSocialMediaAccount('twitter');
+  };
 
-  handleFacebookAuthentication = () =>
-    this.authenticateSocialMediaAccount('facebook', 'public_profile');
+  handleFacebookAuthentication = () => {
+    this.authenticateSocialMediaAccount('facebook', 'email,public_profile');
+  };
 
   render() {
     return (
@@ -178,58 +212,64 @@ class AuthenticationRootScreen extends Component<Props, State> {
         <View style={styles.container}>
           <Icon color="orange" name="mpwr-logo" size={64} style={styles.icon} />
 
-          <View>
-            <AuthenticationButton
-              color={getColor('facebookBlue')}
-              textColor={getColor('white')}
-              onPress={this.handleFacebookAuthentication}
-              title="Continue with Facebook"
-            />
-            <LinkedInModal
-              renderButton={() =>
-                AuthenticationButton(
-                  {
-                    color: getColor('linkedinBlue'),
-                    textColor: getColor('white'),
-                    title: 'Continue with LinkedIn',
-                    onPress: undefined,
-                    noWrap: false,
-                    disabled: true,
-                  },
-                  styles.buttonForcedOpacity
+          {this.state.busy ? (
+            <CenterView>
+              <ActivityIndicator />
+            </CenterView>
+          ) : (
+            <View>
+              <AuthenticationButton
+                color={getColor('facebookBlue')}
+                textColor={getColor('white')}
+                onPress={this.handleFacebookAuthentication}
+                title="Continue with Facebook"
+              />
+              <LinkedInModal
+                {...config.linkedin}
+                renderButton={() => (
+                  <AuthenticationButton
+                    color={getColor('linkedinBlue')}
+                    textColor={getColor('white')}
+                    title={'Continue with LinkedIn'}
+                    noWrap={false}
+                    disabled={true}
+                    otherStyles={styles.buttonForcedOpacity}
+                  />
                 )}
-              clientID="78inys69jtxa3d"
-              clientSecret="HBztjlroz9LLztpP"
-              redirectUri="https://www.linkedin.com/developer/apps?abcd"
-              onSuccess={token => console.log('onSuccess: ', token)}
-              onError={token => console.log('onError: ', token)}
-              onClose={token => console.log('onClose: ', token)}
-              onOpen={token => console.log('onOpen: ', token)}
-              onSignIn={token => console.log('onSignIn: ', token)}
-            />
-            <AuthenticationButton
-              color={getColor('twitterBlue')}
-              textColor={getColor('white')}
-              onPress={this.handleTwitterAuthentication}
-              title="Continue with Twitter"
-            />
-            <AuthenticationButton
-              outline
-              color={getColor('orange')}
-              textColor={getColor('orange')}
-              onPress={this.navigate('EmailRegistrationScreen')}
-              title="Sign Up"
-            />
-            <Text size={15} color="#455A64" style={styles.footerText}>
-              {'Already have an account? '}
-              <Text
-                color="orange"
-                onPress={this.navigate('EmailAuthenticationScreen')}
-              >
-                Log In
+                redirectUri="https://www.linkedin.com/developer/apps?abcd"
+                onSuccess={(resp: LinkedInResponse) => {
+                  this.login('linkedin', resp.access_token);
+                }}
+                onError={(err: any) => {
+                  if (process.env.NODE_ENV === 'developemnt') {
+                    console.log('LinkedIn error: ', err);
+                  }
+                }}
+              />
+              <AuthenticationButton
+                color={getColor('twitterBlue')}
+                textColor={getColor('white')}
+                onPress={this.handleTwitterAuthentication}
+                title="Continue with Twitter"
+              />
+              <AuthenticationButton
+                outline
+                color={getColor('orange')}
+                textColor={getColor('orange')}
+                onPress={this.navigate('EmailRegistrationScreen')}
+                title="Sign Up"
+              />
+              <Text size={15} color="#455A64" style={styles.footerText}>
+                {'Already have an account? '}
+                <Text
+                  color="orange"
+                  onPress={this.navigate('EmailAuthenticationScreen')}
+                >
+                  Log In
+                </Text>
               </Text>
-            </Text>
-          </View>
+            </View>
+          )}
         </View>
       </Screen>
     );
