@@ -123,7 +123,7 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
  * Get Braintree client token
  */
 export const readBraintreeClientTokenReq = () =>
-  api.get('/v2/members/braintree-client-token');
+  api.get('/members/braintree-client-token');
 
 /**
  * Authentication requests
@@ -132,15 +132,15 @@ export function RQSignIn(data: {
   email: string,
   password: string,
 }): PR<{ mobile_token: string }> {
-  return api.post('/v2/members/login', data);
+  return api.post('/members/login', data);
 }
 
 export const RQSignUp = (body: *) =>
-  api.post('/v2/members/signup', makeFormData(body, ['profile_photo']));
+  api.post('/members/signup', makeFormData(body, ['profile_photo']));
 
 export const makePasswordResetReq = (email: string) =>
   inject({
-    url: buildUrl({ path: '/v2/members/reset_password' }),
+    url: buildUrl({ path: '/members/reset_password' }),
     options: {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -149,7 +149,7 @@ export const makePasswordResetReq = (email: string) =>
 
 export const makeChangePasswordReq = (password: string) =>
   inject({
-    url: buildUrl({ path: '/v2/members/profile_settings' }),
+    url: buildUrl({ path: '/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: JSON.stringify({ password }),
@@ -167,7 +167,7 @@ export const donationReq = (donationPayload: {
     interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
   },
   payer: Object,
-}) => api.post('/v2/donations', donationPayload);
+}) => api.post('/donations', donationPayload);
 
 /**
  * Profile
@@ -176,7 +176,7 @@ export const donationReq = (donationPayload: {
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
     url: buildUrl({
-      path: id === 'me' ? '/v2/members' : `/v2/members/${id}`,
+      path: id === 'me' ? '/members' : `/members/${id}`,
     }),
     options: {
       method: 'GET',
@@ -187,11 +187,11 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
   });
 
 export const RQReadProfile = (id: 'me' | string | number) =>
-  api.get(id === 'me' ? '/v2/members' : `/v2/members/${id}`);
+  api.get(id === 'me' ? '/members' : `/members/${id}`);
 
 export const makeUpdateProfileReq = (user: Object) =>
   inject({
-    url: buildUrl({ path: '/v2/members/profile_settings' }),
+    url: buildUrl({ path: '/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: makeFormData(user, ['profile_photo']),
@@ -205,12 +205,12 @@ export const makeUpdateProfileReq = (user: Object) =>
 
 export const makeReadOrganisationReq = () =>
   inject({
-    url: buildUrl({ path: '/v2/communities/81bad81ca2be' }),
+    url: buildUrl({ path: '/communities/81bad81ca2be' }),
     options: { method: 'GET' },
   });
 
 export function RQReadCommunity(id: string): P<RS<Community>> {
-  return api.get(`/v2/communities/${id}`);
+  return api.get(`/communities/${id}`);
 }
 
 /**
@@ -219,7 +219,7 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/v2/communities?membership_status=${joinedOnly
+      path: `/communities?membership_status=${joinedOnly
         ? 'joined'
         : 'unjoined'}`,
     }),
@@ -231,7 +231,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
 export const makeReadCommunityDetailRq = (communityId: string | number) =>
   inject({
     url: buildUrl({
-      path: `/v2/communities/${communityId}`,
+      path: `/communities/${communityId}`,
     }),
     options: {
       method: 'GET',
@@ -244,7 +244,7 @@ export const makeReadCommunityMembersRq = (
 ) =>
   inject({
     url: buildUrl({
-      path: `/v2/communities/${communityId}/members?limit=${limit}`,
+      path: `/communities/${communityId}/members?limit=${limit}`,
     }),
     options: {
       method: 'GET',
@@ -255,31 +255,31 @@ export const makeReadCommunityMembersRq = (
 export const RQLeaveCommunity = (
   memberId: string | number,
   communityId: string | number
-) => api.delete(`/v2/communities/${memberId}/${communityId}/membership`);
+) => api.delete(`/communities/${memberId}/${communityId}/membership`);
 
 // TODO: inject authenticated profile ID, even better update URL
 export const RQJoinCommunity = (
   memberId: string | number,
   communityId: string | number
-) => api.post(`/v2/communities/${memberId}/${communityId}/membership`);
+) => api.post(`/communities/${memberId}/${communityId}/membership`);
 
 /**
  * Content Object
  */
 
 export const readContentObjectReq = (id: string) =>
-  api.get(`/v2/content_objects/${id}`);
+  api.get(`/content_objects/${id}`);
 
 type ContentObject = { id: string };
 
 export const likeContentObjectReq = (object: ContentObject) =>
-  api.post(`/v2/content_objects/${object.id}/like`);
+  api.post(`/content_objects/${object.id}/like`);
 
 export const unlikeContentObjectReq = (object: ContentObject) =>
-  api.delete(`/v2/content_objects/${object.id}/like`);
+  api.delete(`/content_objects/${object.id}/like`);
 
 export const destroyContentObjectReq = (object: ContentObject) =>
-  api.delete(`/v2/content_objects/${object.id}`);
+  api.delete(`/content_objects/${object.id}`);
 
 /**
  * News feed requests
@@ -287,12 +287,12 @@ export const destroyContentObjectReq = (object: ContentObject) =>
 export const RQWithCursor = (
   path: string,
   cursor: { limit?: ?number, next?: ?number }
-) => api.get(`/v2/${path}`, cursor);
+) => api.get(`/${path}`, cursor);
 
 export const makeReadPinnedItemsRq = (communityId: string | number) =>
   inject({
     url: `${buildUrl({
-      path: `/v2/content_objects/posts/${communityId}?pinned_only=true`,
+      path: `/content_objects/posts/${communityId}?pinned_only=true`,
     })}`,
     options: {
       method: 'GET',
@@ -307,16 +307,16 @@ export const RQCreatePost = (object: {
 }) => {
   const headers = { 'Content-Type': 'multipart/form-data' };
   const data = makeFormData(object, ['attachment']);
-  return api.post('/v2/content_objects/', data, { headers });
+  return api.post('/content_objects/', data, { headers });
 };
 
 export const reportReq = (object: { id: string }) =>
-  api.post('/v2/abuse_reports', { objectId: object.id });
+  api.post('/abuse_reports', { objectId: object.id });
 
 export const makeScrapeUrlReq = (url: string) =>
   inject({
     url: buildUrl({
-      path: '/v2/content_objects/generate_thumbnail',
+      path: '/content_objects/generate_thumbnail',
     }),
     options: {
       method: 'POST',
@@ -325,36 +325,36 @@ export const makeScrapeUrlReq = (url: string) =>
   });
 
 export const RQCreateComment = (objectId: string, text_content: string) =>
-  api.post(`/v2/content_objects/${objectId}/comment`, { text_content });
+  api.post(`/content_objects/${objectId}/comment`, { text_content });
 
 /**
  * Friend Invitations
  */
 
 export const RQinviteFriend = (email: string) =>
-  api.put('/v2/club_invitations/480b7b2ed0a1', { member_invitations: email });
+  api.put('/club_invitations/480b7b2ed0a1', { member_invitations: email });
 
 export const RQGetInvitationSmsContent = () =>
-  api.get(`/v2/communities/invitation_message`);
+  api.get(`/communities/invitation_message`);
 
 /**
  * Profile Notification Settings
  */
 export function readNotificationsSettings(): PR<NotificationSettings> {
-  return api.get(`/v2/settings/notifications`);
+  return api.get(`/settings/notifications`);
 }
 
 export function updateNotificationsSettings(
   data: NotificationSettings
 ): PR<NotificationSettings> {
-  return api.put(`/v2/settings/notifications`, data);
+  return api.put(`/settings/notifications`, data);
 }
 
 /**
  * Push Notifications
  */
 export const RQEnablePushNotifications = (token: string) =>
-  api.post('/v2/push-notifications/register', { token });
+  api.post('/push-notifications/register', { token });
 
 export const RQDisablePushNotifications = (token: string) =>
-  api.delete('/v2/push-notifications/register');
+  api.delete('/push-notifications/register');
