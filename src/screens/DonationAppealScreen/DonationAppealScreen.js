@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { Screen } from '../../atoms';
 import Form from '../../blocks/Donation/DonationForm';
 import Header from '../../blocks/Donation/DonationHeader';
-import { donationReq } from '../../utils/requestFactory';
+import { RQMakeDonation } from '../../utils/requestFactory';
 import type { ScreenProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
@@ -18,7 +18,7 @@ export default class DonationAppealScreen extends Component<Props> {
   };
 
   onSuccess = async (payload: *) => {
-    const response = await donationReq({
+    const response = await RQMakeDonation({
       donation: payload.donation,
       payer: payload.payer,
     });

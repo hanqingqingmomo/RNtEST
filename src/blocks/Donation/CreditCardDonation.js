@@ -60,7 +60,7 @@ const RULES = {
   'payer.first_name': 'required',
   'payer.last_name': 'required',
   'payer.street': 'required',
-  'payer.apt': 'required',
+  'payer.apt': 'string',
   'payer.city': 'required',
   'payer.zip': 'required',
   'payer.country': 'required',

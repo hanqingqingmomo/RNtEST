@@ -160,7 +160,7 @@ export const makeChangePasswordReq = (password: string) =>
  * Donations
  */
 
-export const donationReq = (donationPayload: {
+export const RQMakeDonation = (donationPayload: {
   donation: {
     payment_method_nonce: string,
     amount: number,
