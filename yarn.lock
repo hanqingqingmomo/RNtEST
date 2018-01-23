@@ -140,6 +140,36 @@ apisauce@^0.14.1:
     axios "^0.16.2"
     ramda "^0.24.1"
 
+appcenter-analytics@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-1.1.0.tgz#81bae895b551fe68a53974f9ba50c66066560f24"
+  dependencies:
+    appcenter "1.1.0"
+
+appcenter-crashes@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-1.1.0.tgz#14b60ef1ca3051ae673f520bd8c7bd66264e3ff7"
+  dependencies:
+    appcenter "1.1.0"
+
+appcenter-link-scripts@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.1.0.tgz#f7c7422fc681adfc583ea9c9ece4a1f4958c6fdb"
+  dependencies:
+    debug "^2.2.0"
+    glob "^5.0.15"
+    inquirer "1.1.2"
+    mkdirp "^0.5.1"
+    plist "1.2.0"
+    which "^1.2.11"
+    xcode "^0.8.9"
+
+appcenter@1.1.0, appcenter@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.1.0.tgz#367eb7590a8babf8f340d458ec0ad529059be0b2"
+  dependencies:
+    appcenter-link-scripts "1.1.0"
+
 append-transform@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/append-transform/-/append-transform-0.4.0.tgz#d76ebf8ca94d276e247a36bad44a4b74ab611991"
@@ -3849,36 +3879,6 @@ mitt@*, mitt@^1.1.2:
   dependencies:
     minimist "0.0.8"
 
-mobile-center-analytics@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/mobile-center-analytics/-/mobile-center-analytics-0.10.0.tgz#81888dbda3a7cc0f62a4e6e86826a3e4e3482bd7"
-  dependencies:
-    mobile-center "0.10.0"
-
-mobile-center-crashes@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/mobile-center-crashes/-/mobile-center-crashes-0.10.0.tgz#4223fb7f7cc8adf7828ee65d0f18a58213ec0d4d"
-  dependencies:
-    mobile-center "0.10.0"
-
-mobile-center-link-scripts@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/mobile-center-link-scripts/-/mobile-center-link-scripts-0.10.0.tgz#4acf7c5d1ebe30fcc2f76d1dfaf6d2c1a5af8996"
-  dependencies:
-    debug "^2.2.0"
-    glob "^5.0.15"
-    inquirer "1.1.2"
-    mkdirp "^0.5.1"
-    plist "1.2.0"
-    which "^1.2.11"
-    xcode "^0.8.9"
-
-mobile-center@0.10.0, mobile-center@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/mobile-center/-/mobile-center-0.10.0.tgz#e0b87673833b70da4a150a9f0f7fad4d751a7e4a"
-  dependencies:
-    mobile-center-link-scripts "0.10.0"
-
 morgan@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.6.1.tgz#5fd818398c6819cba28a7cd6664f292fe1c0bbf2"
@@ -4623,8 +4623,9 @@ react-native-modalbox@^1.4.2:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
 
-react-native-payments-addon-braintree@./3rdparty/react-native-payments/packages/react-native-payments-addon-braintree:
-  version "4.8.4-1"
+react-native-payments-addon-braintree@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-payments-addon-braintree/-/react-native-payments-addon-braintree-0.4.0.tgz#03047f5c16cb6074073020d470e293bb27925f4c"
 
 react-native-payments-cli@^0.2.0:
   version "0.2.0"
@@ -4637,8 +4638,9 @@ react-native-payments-cli@^0.2.0:
     meow "^3.7.0"
     xcode "^0.9.3"
 
-react-native-payments@./3rdparty/react-native-payments/packages/react-native-payments:
-  version "0.3.1"
+react-native-payments@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-payments/-/react-native-payments-0.4.0.tgz#52c3c9bac3bd5cf26cd70bd4ab1c2cea647278aa"
   dependencies:
     es6-error "^4.0.2"
     uuid "^3.1.0"
@@ -5812,8 +5814,8 @@ uuid@^2.0.1:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
 uuid@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"

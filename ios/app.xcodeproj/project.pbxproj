@@ -886,6 +886,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4BDCF0BB42214B18B6E10465 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			path = /Users/andrej/code/pba-rn/node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
