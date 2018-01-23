@@ -140,36 +140,6 @@ apisauce@^0.14.1:
     axios "^0.16.2"
     ramda "^0.24.1"
 
-appcenter-analytics@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-1.1.0.tgz#81bae895b551fe68a53974f9ba50c66066560f24"
-  dependencies:
-    appcenter "1.1.0"
-
-appcenter-crashes@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-1.1.0.tgz#14b60ef1ca3051ae673f520bd8c7bd66264e3ff7"
-  dependencies:
-    appcenter "1.1.0"
-
-appcenter-link-scripts@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.1.0.tgz#f7c7422fc681adfc583ea9c9ece4a1f4958c6fdb"
-  dependencies:
-    debug "^2.2.0"
-    glob "^5.0.15"
-    inquirer "1.1.2"
-    mkdirp "^0.5.1"
-    plist "1.2.0"
-    which "^1.2.11"
-    xcode "^0.8.9"
-
-appcenter@1.1.0, appcenter@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.1.0.tgz#367eb7590a8babf8f340d458ec0ad529059be0b2"
-  dependencies:
-    appcenter-link-scripts "1.1.0"
-
 append-transform@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/append-transform/-/append-transform-0.4.0.tgz#d76ebf8ca94d276e247a36bad44a4b74ab611991"
@@ -3878,6 +3848,36 @@ mitt@*, mitt@^1.1.2:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mobile-center-analytics@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/mobile-center-analytics/-/mobile-center-analytics-0.10.0.tgz#81888dbda3a7cc0f62a4e6e86826a3e4e3482bd7"
+  dependencies:
+    mobile-center "0.10.0"
+
+mobile-center-crashes@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/mobile-center-crashes/-/mobile-center-crashes-0.10.0.tgz#4223fb7f7cc8adf7828ee65d0f18a58213ec0d4d"
+  dependencies:
+    mobile-center "0.10.0"
+
+mobile-center-link-scripts@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/mobile-center-link-scripts/-/mobile-center-link-scripts-0.10.0.tgz#4acf7c5d1ebe30fcc2f76d1dfaf6d2c1a5af8996"
+  dependencies:
+    debug "^2.2.0"
+    glob "^5.0.15"
+    inquirer "1.1.2"
+    mkdirp "^0.5.1"
+    plist "1.2.0"
+    which "^1.2.11"
+    xcode "^0.8.9"
+
+mobile-center@0.10.0, mobile-center@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/mobile-center/-/mobile-center-0.10.0.tgz#e0b87673833b70da4a150a9f0f7fad4d751a7e4a"
+  dependencies:
+    mobile-center-link-scripts "0.10.0"
 
 morgan@~1.6.1:
   version "1.6.1"
