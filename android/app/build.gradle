@@ -110,8 +110,8 @@ android {
         resValue "string", "build_config_package", "com.app"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 12
-        versionName "1.0.1"
+        versionCode 13
+        versionName "1.0.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

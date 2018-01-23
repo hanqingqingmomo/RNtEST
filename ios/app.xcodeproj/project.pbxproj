@@ -306,6 +306,20 @@
 			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
 			remoteInfo = "RCTPushNotification-tvOS";
 		};
+		778DCC1320179F8B0093FCD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9936F3131F5F2E4B0010BF04;
+			remoteInfo = privatedata;
+		};
+		778DCC1520179F8B0093FCD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
+			remoteInfo = "privatedata-tvOS";
+		};
 		7790FA4A1F90CF7100AE7915 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FFF9909A11DD4FF684D8BB9A /* ReactNativePayments.xcodeproj */;
@@ -623,6 +637,8 @@
 				77CCBD961F2736C300C1C9E3 /* libthird-party.a */,
 				77CCBD981F2736C300C1C9E3 /* libdouble-conversion.a */,
 				77CCBD9A1F2736C300C1C9E3 /* libdouble-conversion.a */,
+				778DCC1420179F8B0093FCD9 /* libprivatedata.a */,
+				778DCC1620179F8B0093FCD9 /* libprivatedata-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -884,14 +900,6 @@
 				85563F6D7B98C8D235796234 /* libPods-appTests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		4BDCF0BB42214B18B6E10465 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			path = /Users/andrej/code/pba-rn/node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1336,6 +1344,20 @@
 			fileType = archive.ar;
 			path = "libRCTPushNotification-tvOS.a";
 			remoteRef = 775AEFA21FDA061300089CC5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		778DCC1420179F8B0093FCD9 /* libprivatedata.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprivatedata.a;
+			remoteRef = 778DCC1320179F8B0093FCD9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		778DCC1620179F8B0093FCD9 /* libprivatedata-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libprivatedata-tvOS.a";
+			remoteRef = 778DCC1520179F8B0093FCD9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		7790FA4B1F90CF7100AE7915 /* libReactNativePayments.a */ = {
