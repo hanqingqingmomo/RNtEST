@@ -42,7 +42,7 @@ type Props = {
 
 class NewsFeed extends Component<Props> {
   static defaultProps = {
-    limit: 5,
+    limit: 20,
   };
 
   componentDidMount() {
