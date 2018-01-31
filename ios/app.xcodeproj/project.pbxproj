@@ -32,8 +32,8 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6E5FCAB7CD714B5C9F1BA0C7 /* libRNAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7AD341BF0FC4432B0F296CE /* libRNAnalytics.a */; };
 		775AEFA41FDA063900089CC5 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 775AEFA11FDA061300089CC5 /* libRCTPushNotification.a */; };
+		775F93C62022280300D2B049 /* pba.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 775F93C52022280300D2B049 /* pba.ttf */; };
 		77BBB4FE363B496D883CACB5 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C6C760B504276822A1C1D /* BraintreeApplePay.framework */; };
-		77ED64D11F7BB4CD00AE439E /* pba.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77ED64D01F7BB3F200AE439E /* pba.ttf */; };
 		810DFEDB73474EC8AAF0D6C0 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84696391DE9F4D9D91ABA05F /* libReactNativeConfig.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89AF67511FC320BF0065B381 /* libOAuthManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AF67241FC31F930065B381 /* libOAuthManager.a */; };
@@ -457,8 +457,8 @@
 		70195C374EE60F9BB2C0BEE5 /* Pods-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.release.xcconfig"; sourceTree = "<group>"; };
 		72D6975DC13D4BC89806D5E7 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		775AEF9B1FDA061300089CC5 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		775F93C52022280300D2B049 /* pba.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pba.ttf; sourceTree = "<group>"; };
 		7790FA871F90CF9600AE7915 /* app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = app.entitlements; path = app/app.entitlements; sourceTree = "<group>"; };
-		77ED64D01F7BB3F200AE439E /* pba.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = pba.ttf; path = ../src/atoms/Icon/fontello/font/pba.ttf; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		804A4142E4274AAFB98531FA /* OAuthManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = OAuthManager.xcodeproj; path = "../node_modules/react-native-oauth/ios/OAuthManager.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -726,7 +726,7 @@
 		7744604F1F73B08300236CBF /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				77ED64D01F7BB3F200AE439E /* pba.ttf */,
+				775F93C52022280300D2B049 /* pba.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -812,7 +812,6 @@
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */,
-				8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */,
 				2AB322ED29034860A0007FA7 /* RCTContacts.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
 				00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */,
@@ -1492,9 +1491,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77ED64D11F7BB4CD00AE439E /* pba.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				775F93C62022280300D2B049 /* pba.ttf in Resources */,
 				E3432D223BCF4DCE9D4BBD08 /* MobileCenter-Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
