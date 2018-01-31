@@ -4647,9 +4647,9 @@ react-native-modalbox@^1.4.2:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
 
-react-native-oauth@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-oauth/-/react-native-oauth-2.2.0.tgz#8aa7fad344b22cd29f24a4c3385244684dbcbe9e"
+react-native-oauth@creatixpublic/react-native-oauth:
+  version "2.1.15"
+  resolved "https://codeload.github.com/creatixpublic/react-native-oauth/tar.gz/6783c4a40d766da90d15af7ef61e2ca483c5c0b7"
   dependencies:
     invariant "^2.2.1"
     valib "^2.0.0"
