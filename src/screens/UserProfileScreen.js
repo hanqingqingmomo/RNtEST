@@ -221,10 +221,10 @@ class UserProfileScreen extends React.Component<P> {
               <Form
                 onSubmit={this.handleSubmit(fetch)}
                 initialValues={{
-                  first_name: user.first_name,
-                  last_name: user.last_name,
-                  email: user.email,
-                  profile_photo: user.profile_photo,
+                  first_name: user.first_name || '',
+                  last_name: user.last_name || '',
+                  email: user.email || '',
+                  profile_photo: user.profile_photo || '',
                 }}
                 render={form => (
                   <Screen>
