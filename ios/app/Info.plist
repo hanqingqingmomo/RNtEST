@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.2</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -29,7 +29,7 @@
 			<string>facebook</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1252416728196036</string>
+				<string>__RN_CONFIG_FACEBOOK_URL_SCHEME</string>
 			</array>
 		</dict>
 		<dict>
@@ -69,12 +69,12 @@
 			<string>twitter</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pba-app</string>
+				<string>__RN_CONFIG_TWITTER_URL_SCHEME</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>13</string>
+	<string>14</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
