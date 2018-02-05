@@ -84,7 +84,12 @@ class AuthenticationRootScreen extends Component<Props, State> {
             </Text>
           </View>
         </View>
-        <Modal visible={this.state.busy} transparent animationType="fade">
+        <Modal
+          onRequestClose={() => {}}
+          visible={this.state.busy}
+          transparent
+          animationType="fade"
+        >
           <View style={styles.modalLayer}>
             <ActivityIndicator color="#333" />
           </View>
