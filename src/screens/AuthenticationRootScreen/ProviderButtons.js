@@ -155,7 +155,7 @@ export function LinkedIn(props: ButtonProps) {
     <LinkedInModal
       clientID={Config.LINKEDIN_ID}
       clientSecret={Config.LINKEDIN_SECRET}
-      redirectUri={Config.LINKEDIN_REDICER_URL}
+      redirectUri={Config.LINKEDIN_REDIRECT_URL}
       onSuccess={(params: { access_token: string }) => {
         props.onAuthStatusChange({
           provider: 'linkedin',
