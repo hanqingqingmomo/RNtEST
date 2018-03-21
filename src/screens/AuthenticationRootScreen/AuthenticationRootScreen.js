@@ -10,6 +10,7 @@ import type { ScreenProps } from '../../Types';
 import {
   setUserAccessToken,
   setUserProfile,
+  startSession,
 } from '../../redux/ducks/application';
 import {
   EmailRegistration,
@@ -22,8 +23,9 @@ import {
 type Route = 'EmailAuthenticationScreen' | 'EmailRegistrationScreen';
 
 type Props = ScreenProps<*> & {
-  setUserAccessToken: Function,
-  setUserProfile: Function,
+  setUserAccessToken: typeof Function,
+  setUserProfile: typeof setUserProfile,
+  startSession: typeof startSession,
 };
 
 type State = {
@@ -54,6 +56,7 @@ class AuthenticationRootScreen extends Component<Props, State> {
         this.props.setUserAccessToken(response.data.mobile_token);
         const profileResponse = await RQReadProfile('me');
         this.props.setUserProfile(profileResponse.data);
+        this.props.startSession();
       }
 
       this.setState({ busy: false });
@@ -99,9 +102,11 @@ class AuthenticationRootScreen extends Component<Props, State> {
   }
 }
 
-export default connect(null, { setUserAccessToken, setUserProfile })(
-  AuthenticationRootScreen
-);
+export default connect(null, {
+  setUserAccessToken,
+  setUserProfile,
+  startSession,
+})(AuthenticationRootScreen);
 
 const styles = StyleSheet.create({
   container: {

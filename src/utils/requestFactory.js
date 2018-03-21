@@ -359,5 +359,5 @@ export function updateNotificationsSettings(
 export const RQEnablePushNotifications = (token: string) =>
   api.post('/push-notifications/register', { token });
 
-export const RQDisablePushNotifications = (token: string) =>
+export const RQDisablePushNotifications = () =>
   api.delete('/push-notifications/register');

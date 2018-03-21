@@ -104,10 +104,13 @@ function transformResponse(
       };
 }
 
-async function authenticateOAuth(provider: Provider): Promise<?AuthPayload> {
+async function authenticateOAuth(
+  provider: Provider,
+  options?: Object
+): Promise<?AuthPayload> {
   const manager = makeManager();
   try {
-    const providerResp = await manager.authorize(provider);
+    const providerResp = await manager.authorize(provider, options);
     await manager.deauthorize(provider);
     return transformResponse(provider, providerResp);
   } catch (err) {
@@ -125,7 +128,11 @@ export function Facebook(props: ButtonProps) {
       color={getColor('facebookBlue')}
       textColor={getColor('white')}
       onPress={async () => {
-        props.onAuthStatusChange(await authenticateOAuth('facebook'));
+        props.onAuthStatusChange(
+          await authenticateOAuth('facebook', {
+            scopes: 'email,public_profile',
+          })
+        );
       }}
       title="Continue with Facebook"
     />

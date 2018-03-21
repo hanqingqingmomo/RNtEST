@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
 
-import { clearUserData } from '../redux/ducks/application';
+import { endSession } from '../redux/ducks/application';
 import { TableView, Screen, Icon } from '../atoms';
 import { getColor } from '../utils/color';
 import type { IconName, ScreenProps } from '../Types';
@@ -24,7 +24,7 @@ type Action = {
 };
 
 type Props = ScreenProps<*> & {
-  clearUserData: Function,
+  endSession: typeof endSession,
 };
 
 const SETTINGS: Array<{ name: ActionName, iconName: IconName }> = [
@@ -72,7 +72,8 @@ class UserProfileScreen extends Component<Props> {
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Sign Out',
-        onPress: this.props.clearUserData,
+        onPress: this.props.endSession,
+        style: 'destructive',
       },
     ]);
   };
@@ -111,4 +112,4 @@ class UserProfileScreen extends Component<Props> {
   }
 }
 
-export default connect(null, { clearUserData })(UserProfileScreen);
+export default connect(null, { endSession })(UserProfileScreen);

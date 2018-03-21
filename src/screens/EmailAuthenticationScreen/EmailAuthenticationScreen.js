@@ -7,14 +7,16 @@ import { Screen } from '../../atoms';
 import {
   setUserAccessToken,
   setUserProfile,
+  startSession,
 } from '../../redux/ducks/application';
 import FormBlock, { type FormValues } from './EmailAuthenticationBlock';
 import { RQSignIn, RQReadProfile } from '../../utils/requestFactory';
 import type { ScreenProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
-  setUserAccessToken: Function,
-  setUserProfile: Function,
+  setUserAccessToken: typeof setUserAccessToken,
+  setUserProfile: typeof setUserProfile,
+  startSession: typeof startSession,
 };
 
 type State = {
@@ -53,6 +55,7 @@ class EmailAuthenticationScreen extends Component<Props, State> {
       const profileResponse = await RQReadProfile('me');
       if (profileResponse.ok) {
         this.props.setUserProfile(profileResponse.data);
+        this.props.startSession();
       } else {
         this.updateState({ error: true });
       }
@@ -79,6 +82,8 @@ class EmailAuthenticationScreen extends Component<Props, State> {
   }
 }
 
-export default connect(null, { setUserAccessToken, setUserProfile })(
-  EmailAuthenticationScreen
-);
+export default connect(null, {
+  setUserAccessToken,
+  setUserProfile,
+  startSession,
+})(EmailAuthenticationScreen);

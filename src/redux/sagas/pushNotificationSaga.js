@@ -3,11 +3,11 @@
 import { takeEvery, put, select } from 'redux-saga/effects';
 
 import {
-  APP_SET_USER_DATA,
+  APP_START_SESSION,
+  APP_END_SESSION,
   setPushToken,
-  type UserSetDataAction,
 } from '../ducks/application';
-import { selectIsLoggedIn, selectPushToken } from '../selectors';
+import { selectIsAuthenticated } from '../selectors';
 import PushNotificationsHandler from '../../services/PushNotifications';
 import {
   RQDisablePushNotifications,
@@ -17,24 +17,20 @@ import {
 /**
  * Register or unregister Push notifications service
  */
-const registerOrUnregisterSaga = function* registerOrUnregisterSaga(
-  action: UserSetDataAction
-) {
-  const isAuthenticated = yield select(selectIsLoggedIn);
-  const storedPushToken = yield select(selectPushToken);
+const doRegisterOrUnregisterSaga = function* doRegisterOrUnregisterSaga() {
+  const isAuthenticated = yield select(selectIsAuthenticated);
   if (isAuthenticated) {
     const { token } = yield PushNotificationsHandler.register();
-    if (!storedPushToken) {
-      yield put(setPushToken(token));
-      RQEnablePushNotifications(token);
-    }
+    yield put(setPushToken(token));
+    RQEnablePushNotifications(token);
   } else {
-    RQDisablePushNotifications(storedPushToken);
+    RQDisablePushNotifications();
   }
 };
 
 const pushNotifSaga = function* pushNotifSaga(): Generator<*, *, *> {
-  yield takeEvery(APP_SET_USER_DATA, registerOrUnregisterSaga);
+  yield takeEvery(APP_START_SESSION, doRegisterOrUnregisterSaga);
+  yield takeEvery(APP_END_SESSION, doRegisterOrUnregisterSaga);
 };
 
 export default pushNotifSaga;

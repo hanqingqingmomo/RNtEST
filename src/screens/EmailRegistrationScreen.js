@@ -20,7 +20,11 @@ import { getColor } from '../utils/color';
 import { css } from '../utils/style';
 import type { ScreenProps } from '../Types';
 import { RQSignUp, RQSignIn, RQReadProfile } from '../utils/requestFactory';
-import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
+import {
+  setUserAccessToken,
+  setUserProfile,
+  startSession,
+} from '../redux/ducks/application';
 
 const INITIAL_VALUES = {
   first_name: '',
@@ -48,8 +52,9 @@ const MESSAGES = {
 type FormValues = typeof INITIAL_VALUES;
 
 type Props = ScreenProps<*> & {
-  setUserAccessToken: Function,
-  setUserProfile: Function,
+  setUserAccessToken: typeof setUserAccessToken,
+  setUserProfile: typeof setUserProfile,
+  startSession: typeof startSession,
 };
 
 type State = {
@@ -79,6 +84,7 @@ class EmailRegistrationScreen extends Component<Props, State> {
         this.props.setUserAccessToken(signinResponse.data.mobile_token);
         const profileResponse = await RQReadProfile('me');
         this.props.setUserProfile(profileResponse.data);
+        this.props.startSession();
       } else {
         this.setState(state => ({
           errors: state.errors.concat(
@@ -219,9 +225,11 @@ class EmailRegistrationScreen extends Component<Props, State> {
   }
 }
 
-export default connect(null, { setUserAccessToken, setUserProfile })(
-  EmailRegistrationScreen
-);
+export default connect(null, {
+  setUserAccessToken,
+  setUserProfile,
+  startSession,
+})(EmailRegistrationScreen);
 
 const styles = StyleSheet.create({
   container: {
