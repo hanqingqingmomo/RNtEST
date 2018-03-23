@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "echo &quot;.env.dev&quot; &gt; /tmp/envfile&#10;cd node_modules/react-native-payments-addon-braintree &amp;&amp; carthage update --platform ios --cache-builds">
+               scriptText = "echo &quot;.env.dev&quot; &gt; /tmp/envfile">
             </ActionContent>
          </ExecutionAction>
       </PreActions>

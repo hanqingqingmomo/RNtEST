@@ -5,9 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
-		007C576036054DFFAE735218 /* libRCTBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
@@ -25,26 +23,27 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		17F0E9128A7E42D99580E60D /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B662CB7CDF745A9B0A0A49F /* libReactNativeKeyboardManager.a */; };
+		21B5E44FD66542CC942BAC94 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E7CE7303A7438D834599D1 /* BraintreeApplePay.framework */; };
 		233DE397E27E07824FD337B3 /* libPods-appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85563F6D7B98C8D235796234 /* libPods-appTests.a */; };
 		2B2EA3821C024946903A97A6 /* libRNMobileCenter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BCEB8BF3294F35B2B607DD /* libRNMobileCenter.a */; };
 		2D67D51519694B92949F0D7C /* libRNCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E1B6F5FC5D476A8F867644 /* libRNCrashes.a */; };
 		4E31A4B24C2B497285F3B36C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF457C6A21D94B87A0F376BD /* libRNVectorIcons.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		669C0652D26F4DFEA650D8BE /* BraintreeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EE6E37E1E1E486792A88C1F /* BraintreeCore.framework */; };
 		6E5FCAB7CD714B5C9F1BA0C7 /* libRNAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7AD341BF0FC4432B0F296CE /* libRNAnalytics.a */; };
 		775AEFA41FDA063900089CC5 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 775AEFA11FDA061300089CC5 /* libRCTPushNotification.a */; };
 		775F93C62022280300D2B049 /* pba.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 775F93C52022280300D2B049 /* pba.ttf */; };
-		77BBB4FE363B496D883CACB5 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C6C760B504276822A1C1D /* BraintreeApplePay.framework */; };
+		7B394B884A19487F96843D46 /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA703977FE64E3E94A74705 /* libReactNativePayments.a */; };
 		810DFEDB73474EC8AAF0D6C0 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84696391DE9F4D9D91ABA05F /* libReactNativeConfig.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89AF67511FC320BF0065B381 /* libOAuthManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AF67241FC31F930065B381 /* libOAuthManager.a */; };
-		9D1C7AA306EA429A9F0A3EB5 /* BraintreeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB20B757E607428EADA9E934 /* BraintreeCore.framework */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BD8E8B6C23B84012A27C821A /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 363186C0551E401DA1373AE2 /* libRCTContacts.a */; };
+		BF8C6E7A232042FE8824AAD9 /* libRCTBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB8B5140419F4434B67BA8A9 /* libRCTBraintree.a */; };
 		C0C2D0DCA1A6EA9ABA718741 /* libPods-app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD7D1C3364EFB88B1C85A7 /* libPods-app.a */; };
 		D28730B2A6E1463EAF5D048C /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EEB624848CA4CC08C10BA87 /* libSplashScreen.a */; };
 		E3432D223BCF4DCE9D4BBD08 /* MobileCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62B9D8C501364C9E8C8968A1 /* MobileCenter-Config.plist */; };
 		F47D0054E3DB44D484EED79D /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 505BCDA2B65F4195B6075565 /* libRNDeviceInfo.a */; };
-		FC6F92787263493FB404B45A /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FCEE2834B6B4BA3929CCA88 /* libReactNativePayments.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,13 +236,6 @@
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
 		};
-		771BA3551FA1F864002266CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DE4F06CC1D156AA8005F99CD;
-			remoteInfo = RCTBraintree;
-		};
 		772016A21F84FAD8003E0F20 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 608E8122102D43B083E65A1C /* SplashScreen.xcodeproj */;
@@ -307,6 +299,13 @@
 			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
 			remoteInfo = "RCTPushNotification-tvOS";
 		};
+		776E46B12063F4C800A9DE48 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FDEBC83BE7A440A86093C68 /* RCTBraintree.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DE4F06CC1D156AA8005F99CD;
+			remoteInfo = RCTBraintree;
+		};
 		778DCC1320179F8B0093FCD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -320,13 +319,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
-		};
-		7790FA4A1F90CF7100AE7915 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FFF9909A11DD4FF684D8BB9A /* ReactNativePayments.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = ReactNativePayments;
 		};
 		77B1830E1FA145C000E17E4F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -384,6 +376,13 @@
 			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
 			remoteInfo = ReactNativeConfig;
 		};
+		77FEE8432063CCCE008E8B37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 72B1B121F80F4EF29D56BB1A /* ReactNativePayments.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = ReactNativePayments;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -425,6 +424,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* appTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = appTests.m; sourceTree = "<group>"; };
 		035DB4726007DC0C97C8FBC8 /* Pods-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.debug.xcconfig"; sourceTree = "<group>"; };
+		0AA703977FE64E3E94A74705 /* libReactNativePayments.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePayments.a; sourceTree = "<group>"; };
 		0BEC15E1C0E645B8BEE81BCA /* RNCrashes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCrashes.xcodeproj; path = "../node_modules/mobile-center-crashes/ios/RNCrashes.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -437,6 +437,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = app/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1EEB624848CA4CC08C10BA87 /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		20E7CE7303A7438D834599D1 /* BraintreeApplePay.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeApplePay.framework; path = System/Library/Frameworks/BraintreeApplePay.framework; sourceTree = SDKROOT; };
 		28465007F9564A2EBF03CFAD /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		2AB322ED29034860A0007FA7 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		2C5685911CB5E56461D631AE /* Pods-app-tvOS.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOS.beta.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOS/Pods-app-tvOS.beta.xcconfig"; sourceTree = "<group>"; };
@@ -447,44 +448,53 @@
 		3975680CACC9414CB4C7568F /* Pods-appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-appTests/Pods-appTests.release.xcconfig"; sourceTree = "<group>"; };
 		3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeKeyboardManager.xcodeproj; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; };
 		4B662CB7CDF745A9B0A0A49F /* libReactNativeKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeKeyboardManager.a; sourceTree = "<group>"; };
+		4FDEBC83BE7A440A86093C68 /* RCTBraintree.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBraintree.xcodeproj; path = "../node_modules/react-native-braintree-xplat/ios/RCTBraintree.xcodeproj"; sourceTree = "<group>"; };
 		505BCDA2B65F4195B6075565 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		5EE6E37E1E1E486792A88C1F /* BraintreeCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeCore.framework; path = System/Library/Frameworks/BraintreeCore.framework; sourceTree = SDKROOT; };
 		5FF81E07BEF8DBFB4D32E5C6 /* libPods-app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		608E8122102D43B083E65A1C /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		60AB91C9CC4E420F952CC9C5 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		62B9D8C501364C9E8C8968A1 /* MobileCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "MobileCenter-Config.plist"; path = "app/MobileCenter-Config.plist"; sourceTree = "<group>"; };
 		62E1B6F5FC5D476A8F867644 /* libRNCrashes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCrashes.a; sourceTree = "<group>"; };
 		70195C374EE60F9BB2C0BEE5 /* Pods-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.release.xcconfig"; sourceTree = "<group>"; };
+		72B1B121F80F4EF29D56BB1A /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = "../node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj"; sourceTree = "<group>"; };
 		72D6975DC13D4BC89806D5E7 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		775AEF9B1FDA061300089CC5 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		775F93C52022280300D2B049 /* pba.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pba.ttf; sourceTree = "<group>"; };
+		776E45AA2063DC8500A9DE48 /* libBraintree.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBraintree.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7790FA871F90CF9600AE7915 /* app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = app.entitlements; path = app/app.entitlements; sourceTree = "<group>"; };
+		77FEE87B2063D5F2008E8B37 /* BraintreeApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BraintreeApplePay.h; path = Pods/Braintree/BraintreeApplePay/Public/BraintreeApplePay.h; sourceTree = "<group>"; };
+		77FEE8B02063D642008E8B37 /* libBraintree.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBraintree.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		77FEE8B22063D77F008E8B37 /* BTApplePayClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTApplePayClient.m; sourceTree = "<group>"; };
+		77FEE8B32063D77F008E8B37 /* BTApplePayCardNonce.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTApplePayCardNonce.m; sourceTree = "<group>"; };
+		77FEE8B42063D77F008E8B37 /* BTApplePayClient_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTApplePayClient_Internal.h; sourceTree = "<group>"; };
+		77FEE8B62063D77F008E8B37 /* BTApplePayCardNonce.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTApplePayCardNonce.h; sourceTree = "<group>"; };
+		77FEE8B72063D77F008E8B37 /* BraintreeApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BraintreeApplePay.h; sourceTree = "<group>"; };
+		77FEE8B82063D77F008E8B37 /* BTConfiguration+ApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BTConfiguration+ApplePay.h"; sourceTree = "<group>"; };
+		77FEE8B92063D77F008E8B37 /* BTApplePayClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTApplePayClient.h; sourceTree = "<group>"; };
+		77FEE8BA2063D77F008E8B37 /* BTConfiguration+ApplePay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BTConfiguration+ApplePay.m"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		804A4142E4274AAFB98531FA /* OAuthManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = OAuthManager.xcodeproj; path = "../node_modules/react-native-oauth/ios/OAuthManager.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		84696391DE9F4D9D91ABA05F /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
 		85563F6D7B98C8D235796234 /* libPods-appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBraintree.xcodeproj; path = "../node_modules/react-native-braintree-xplat/ios/RCTBraintree.xcodeproj"; sourceTree = "<group>"; };
 		89BCEB8BF3294F35B2B607DD /* libRNMobileCenter.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNMobileCenter.a; sourceTree = "<group>"; };
 		8DBD7D1C3364EFB88B1C85A7 /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		947291F5387043ADB5AF3EB8 /* RNMobileCenter.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNMobileCenter.xcodeproj; path = "../node_modules/mobile-center/ios/RNMobileCenter.xcodeproj"; sourceTree = "<group>"; };
 		98D07EA64375390D59A7A4B5 /* libPods-app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CB2A4ECC0F7F25885C95AE3 /* Pods-app.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.beta.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.beta.xcconfig"; sourceTree = "<group>"; };
-		9FCEE2834B6B4BA3929CCA88 /* libReactNativePayments.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePayments.a; sourceTree = "<group>"; };
 		A69B33C802F60FDE90B3DC85 /* Pods-app-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOS/Pods-app-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A7AD341BF0FC4432B0F296CE /* libRNAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAnalytics.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		BB8B5140419F4434B67BA8A9 /* libRCTBraintree.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBraintree.a; sourceTree = "<group>"; };
 		BC16E14B9559F5AE97CBA786 /* Pods-app-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOSTests/Pods-app-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C1C9F17DE2EC669BDDE6DC20 /* Pods-app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOSTests/Pods-app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C3E2266AD956CC4AC2984CE0 /* Pods-app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOS/Pods-app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		C5BD2E67ECA97BA51F894731 /* Pods-appTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appTests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-appTests/Pods-appTests.beta.xcconfig"; sourceTree = "<group>"; };
-		CF2C6C760B504276822A1C1D /* BraintreeApplePay.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeApplePay.framework; path = System/Library/Frameworks/BraintreeApplePay.framework; sourceTree = SDKROOT; };
-		DB20B757E607428EADA9E934 /* BraintreeCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeCore.framework; path = System/Library/Frameworks/BraintreeCore.framework; sourceTree = SDKROOT; };
 		DB7ED76349BD4221915F5C20 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		EFD4C1BCE89B46DFBB3212BB /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
-		FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBraintree.a; sourceTree = "<group>"; };
 		FF457C6A21D94B87A0F376BD /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
-		FFF9909A11DD4FF684D8BB9A /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = "../node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -493,9 +503,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
-				9D1C7AA306EA429A9F0A3EB5 /* BraintreeCore.framework in Frameworks */,
-				77BBB4FE363B496D883CACB5 /* BraintreeApplePay.framework in Frameworks */,
 				233DE397E27E07824FD337B3 /* libPods-appTests.a in Frameworks */,
+				669C0652D26F4DFEA650D8BE /* BraintreeCore.framework in Frameworks */,
+				21B5E44FD66542CC942BAC94 /* BraintreeApplePay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,13 +534,13 @@
 				0CDA883426E64747B23905DB /* libRNImagePicker.a in Frameworks */,
 				D28730B2A6E1463EAF5D048C /* libSplashScreen.a in Frameworks */,
 				BD8E8B6C23B84012A27C821A /* libRCTContacts.a in Frameworks */,
-				FC6F92787263493FB404B45A /* libReactNativePayments.a in Frameworks */,
 				2B2EA3821C024946903A97A6 /* libRNMobileCenter.a in Frameworks */,
 				C0C2D0DCA1A6EA9ABA718741 /* libPods-app.a in Frameworks */,
 				2D67D51519694B92949F0D7C /* libRNCrashes.a in Frameworks */,
 				6E5FCAB7CD714B5C9F1BA0C7 /* libRNAnalytics.a in Frameworks */,
-				007C576036054DFFAE735218 /* libRCTBraintree.a in Frameworks */,
 				F47D0054E3DB44D484EED79D /* libRNDeviceInfo.a in Frameworks */,
+				7B394B884A19487F96843D46 /* libReactNativePayments.a in Frameworks */,
+				BF8C6E7A232042FE8824AAD9 /* libRCTBraintree.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,24 +689,14 @@
 				EFD4C1BCE89B46DFBB3212BB /* libRNImagePicker.a */,
 				1EEB624848CA4CC08C10BA87 /* libSplashScreen.a */,
 				363186C0551E401DA1373AE2 /* libRCTContacts.a */,
-				9FCEE2834B6B4BA3929CCA88 /* libReactNativePayments.a */,
-				DB20B757E607428EADA9E934 /* BraintreeCore.framework */,
-				CF2C6C760B504276822A1C1D /* BraintreeApplePay.framework */,
 				89BCEB8BF3294F35B2B607DD /* libRNMobileCenter.a */,
 				62E1B6F5FC5D476A8F867644 /* libRNCrashes.a */,
 				A7AD341BF0FC4432B0F296CE /* libRNAnalytics.a */,
-				FA288B9458C74A4EB06A3C63 /* libRCTBraintree.a */,
 				505BCDA2B65F4195B6075565 /* libRNDeviceInfo.a */,
+				0AA703977FE64E3E94A74705 /* libReactNativePayments.a */,
+				BB8B5140419F4434B67BA8A9 /* libRCTBraintree.a */,
 			);
 			name = "Recovered References";
-			sourceTree = "<group>";
-		};
-		771BA3521FA1F863002266CD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				771BA3561FA1F864002266CD /* libRCTBraintree.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		7720169F1F84FAD8003E0F20 /* Products */ = {
@@ -757,10 +757,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7790FA471F90CF7100AE7915 /* Products */ = {
+		776E46AE2063F4C700A9DE48 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7790FA4B1F90CF7100AE7915 /* libReactNativePayments.a */,
+				776E46B22063F4C800A9DE48 /* libRCTBraintree.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -797,6 +797,38 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		77FEE8402063CCCE008E8B37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77FEE8442063CCCE008E8B37 /* libReactNativePayments.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		77FEE8B12063D77F008E8B37 /* BraintreeApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				77FEE8B22063D77F008E8B37 /* BTApplePayClient.m */,
+				77FEE8B32063D77F008E8B37 /* BTApplePayCardNonce.m */,
+				77FEE8B42063D77F008E8B37 /* BTApplePayClient_Internal.h */,
+				77FEE8B52063D77F008E8B37 /* Public */,
+				77FEE8BA2063D77F008E8B37 /* BTConfiguration+ApplePay.m */,
+			);
+			name = BraintreeApplePay;
+			path = Pods/Braintree/BraintreeApplePay;
+			sourceTree = "<group>";
+		};
+		77FEE8B52063D77F008E8B37 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				77FEE8B62063D77F008E8B37 /* BTApplePayCardNonce.h */,
+				77FEE8B72063D77F008E8B37 /* BraintreeApplePay.h */,
+				77FEE8B82063D77F008E8B37 /* BTConfiguration+ApplePay.h */,
+				77FEE8B92063D77F008E8B37 /* BTApplePayClient.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,9 +857,7 @@
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				60AB91C9CC4E420F952CC9C5 /* ReactNativeConfig.xcodeproj */,
 				3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */,
-				FFF9909A11DD4FF684D8BB9A /* ReactNativePayments.xcodeproj */,
 				349E0B72CCB149188DFEA9B2 /* RNAnalytics.xcodeproj */,
-				8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */,
 				804A4142E4274AAFB98531FA /* OAuthManager.xcodeproj */,
 				0BEC15E1C0E645B8BEE81BCA /* RNCrashes.xcodeproj */,
 				28465007F9564A2EBF03CFAD /* RNDeviceInfo.xcodeproj */,
@@ -835,6 +865,8 @@
 				947291F5387043ADB5AF3EB8 /* RNMobileCenter.xcodeproj */,
 				DB7ED76349BD4221915F5C20 /* RNVectorIcons.xcodeproj */,
 				608E8122102D43B083E65A1C /* SplashScreen.xcodeproj */,
+				72B1B121F80F4EF29D56BB1A /* ReactNativePayments.xcodeproj */,
+				4FDEBC83BE7A440A86093C68 /* RCTBraintree.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -913,12 +945,26 @@
 		D71B41E8DC5C69F19ACD2618 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				776E45AA2063DC8500A9DE48 /* libBraintree.a */,
+				77FEE8B12063D77F008E8B37 /* BraintreeApplePay */,
+				77FEE8B02063D642008E8B37 /* libBraintree.a */,
+				77FEE87B2063D5F2008E8B37 /* BraintreeApplePay.h */,
 				8DBD7D1C3364EFB88B1C85A7 /* libPods-app.a */,
 				5FF81E07BEF8DBFB4D32E5C6 /* libPods-app-tvOS.a */,
 				98D07EA64375390D59A7A4B5 /* libPods-app-tvOSTests.a */,
 				85563F6D7B98C8D235796234 /* libPods-appTests.a */,
+				5EE6E37E1E1E486792A88C1F /* BraintreeCore.framework */,
+				20E7CE7303A7438D834599D1 /* BraintreeApplePay.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14612ABFD9F64ADC95DA15CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			path = /Users/andrej/code/pba-rn/node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -954,9 +1000,9 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				0DC2668543734E76A6DED490 /* Copy Carthage Frameworks (Generated by react-native-payments-cli) */,
 				19E211520DC3AFE723D8C7B2 /* [CP] Embed Pods Frameworks */,
 				6E16C2220F9E04C164B30DC1 /* [CP] Copy Pods Resources */,
+				E26A39EF0B6A4DBA8139EB28 /* Copy Carthage Frameworks (Generated by react-native-payments-cli) */,
 			);
 			buildRules = (
 			);
@@ -985,6 +1031,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.Keychain = {
@@ -1023,8 +1072,8 @@
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
 				},
 				{
-					ProductGroup = 771BA3521FA1F863002266CD /* Products */;
-					ProjectRef = 8883AF224BA44D03BDCFD3C4 /* RCTBraintree.xcodeproj */;
+					ProductGroup = 776E46AE2063F4C700A9DE48 /* Products */;
+					ProjectRef = 4FDEBC83BE7A440A86093C68 /* RCTBraintree.xcodeproj */;
 				},
 				{
 					ProductGroup = 2D4458131F8BB30500B52494 /* Products */;
@@ -1079,8 +1128,8 @@
 					ProjectRef = 3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */;
 				},
 				{
-					ProductGroup = 7790FA471F90CF7100AE7915 /* Products */;
-					ProjectRef = FFF9909A11DD4FF684D8BB9A /* ReactNativePayments.xcodeproj */;
+					ProductGroup = 77FEE8402063CCCE008E8B37 /* Products */;
+					ProjectRef = 72B1B121F80F4EF29D56BB1A /* ReactNativePayments.xcodeproj */;
 				},
 				{
 					ProductGroup = 77B183151FA145C000E17E4F /* Products */;
@@ -1302,13 +1351,6 @@
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		771BA3561FA1F864002266CD /* libRCTBraintree.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTBraintree.a;
-			remoteRef = 771BA3551FA1F864002266CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		772016A31F84FAD8003E0F20 /* libSplashScreen.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1372,6 +1414,13 @@
 			remoteRef = 775AEFA21FDA061300089CC5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		776E46B22063F4C800A9DE48 /* libRCTBraintree.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTBraintree.a;
+			remoteRef = 776E46B12063F4C800A9DE48 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		778DCC1420179F8B0093FCD9 /* libprivatedata.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1384,13 +1433,6 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = 778DCC1520179F8B0093FCD9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7790FA4B1F90CF7100AE7915 /* libReactNativePayments.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativePayments.a;
-			remoteRef = 7790FA4A1F90CF7100AE7915 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		77B1830F1FA145C000E17E4F /* libRNMobileCenter.a */ = {
@@ -1447,6 +1489,13 @@
 			fileType = archive.ar;
 			path = libReactNativeConfig.a;
 			remoteRef = 77CCBD9C1F2736C300C1C9E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		77FEE8442063CCCE008E8B37 /* libReactNativePayments.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativePayments.a;
+			remoteRef = 77FEE8432063CCCE008E8B37 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -1515,24 +1564,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		0DC2668543734E76A6DED490 /* Copy Carthage Frameworks (Generated by react-native-payments-cli) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeCore.framework",
-				"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeApplePay.framework",
-			);
-			name = "Copy Carthage Frameworks (Generated by react-native-payments-cli)";
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeCore.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeApplePay.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
 		19E211520DC3AFE723D8C7B2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1554,9 +1585,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-app/Pods-app-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Braintree/Braintree-UI-Localization.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Braintree/Braintree-Drop-In-Localization.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Braintree-UI-Localization.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Braintree-Drop-In-Localization.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1629,6 +1665,24 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-appTests/Pods-appTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E26A39EF0B6A4DBA8139EB28 /* Copy Carthage Frameworks (Generated by react-native-payments-cli) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Copy Carthage Frameworks (Generated by react-native-payments-cli)";
+			inputPaths = (
+				"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeCore.framework",
+				"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeApplePay.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeCore.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeApplePay.framework",
+			);
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1677,7 +1731,10 @@
 			baseConfigurationReference = 33B94CD68C92A93B65E5815F /* Pods-appTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"",
+					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1690,26 +1747,19 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
-					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
-					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 					"$(SRCROOT)/../node_modules/neact-native-oauthiosOAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1729,7 +1779,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"",
+					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -1738,26 +1791,19 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
-					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
-					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 					"$(SRCROOT)/../node_modules/neact-native-oauthiosOAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1793,14 +1839,14 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
-					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
-					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS",
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1841,14 +1887,14 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
-					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/mobile-center-crashes/ios/RNCrashes",
 					"$(SRCROOT)/../node_modules/mobile-center-analytics/ios/RNAnalytics",
-					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS",
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1888,7 +1934,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"",
+					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1935,7 +1984,10 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"",
+					"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

@@ -1,4 +1,8 @@
 rootProject.name = 'app'
+include ':react-native-braintree-xplat'
+project(':react-native-braintree-xplat').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-braintree-xplat/android')
+include ':react-native-payments'
+project(':react-native-payments').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-payments/android')
 include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-push-notification'
@@ -9,8 +13,6 @@ include ':mobile-center-crashes'
 project(':mobile-center-crashes').projectDir = new File(rootProject.projectDir, '../node_modules/mobile-center-crashes/android')
 include ':mobile-center'
 project(':mobile-center').projectDir = new File(rootProject.projectDir, '../node_modules/mobile-center/android')
-include ':react-native-braintree-xplat'
-project(':react-native-braintree-xplat').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-braintree-xplat/android')
 include ':react-native-contacts'
 project(':react-native-contacts').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-contacts/android')
 include ':react-native-splash-screen'
