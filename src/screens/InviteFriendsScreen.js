@@ -282,7 +282,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
 
       case 'authorized':
         return (
-          <Screen tintColor="white" scrollEnabled={false}>
+          <Screen tintColor="white" scrollEnabled>
             <View style={styles.searchBox}>
               <SearchBox
                 placeholder="Search..."
