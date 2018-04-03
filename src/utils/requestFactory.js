@@ -47,8 +47,8 @@ const api = create({
 });
 
 api.addRequestTransform(request => {
-  request.headers['x-http-device'] = DeviceInfo.getUniqueID();
-  request.headers['x-http-platform'] = Platform.OS.toLowerCase();
+  request.headers['x_device_id'] = DeviceInfo.getUniqueID();
+  request.headers['x_device_platform'] = Platform.OS.toLowerCase();
   if (request.headers['API-KEY'] === undefined) {
     request.headers['API-KEY'] = selectAccessToken(Store.getState());
   }
