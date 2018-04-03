@@ -268,6 +268,7 @@ export default class MainTabs extends Component<{}, State> {
           swipeToClose={false}
           isOpen={this.state.modalRoute !== null}
           onClosed={this.closeModalRoute}
+          keyboardTopOffset={0}
         >
           {this.renderModalRoute()}
         </Modal>
