@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, Avatar, Spacer, TouchableItem } from '../../atoms';
+import { Text, Avatar, Spacer, TouchableItem, View } from '../../atoms';
 import { css } from '../../utils/style';
 import { type User } from '../../Types';
 
@@ -25,21 +25,19 @@ export default class NewsFeedItemAuthor extends Component<P> {
     const { first_name, last_name, profile_photo } = author;
 
     return (
-      <TouchableItem
-        onPress={onPress}
-        hitSlop={HIT_SLOP}
-        style={styles.container}
-      >
-        <Avatar imageURI={profile_photo} size={28} />
-        <Spacer width={10} />
-        <Text
-          style={css('color', '#455A64')}
-          size={13}
-          lineHeight={15}
-          weight="600"
-        >
-          {`${first_name} ${last_name}`}
-        </Text>
+      <TouchableItem onPress={onPress} hitSlop={HIT_SLOP}>
+        <View style={styles.container}>
+          <Avatar imageURI={profile_photo} size={28} />
+          <Spacer width={10} />
+          <Text
+            style={css('color', '#455A64')}
+            size={13}
+            lineHeight={15}
+            weight="600"
+          >
+            {`${first_name} ${last_name}`}
+          </Text>
+        </View>
       </TouchableItem>
     );
   }
