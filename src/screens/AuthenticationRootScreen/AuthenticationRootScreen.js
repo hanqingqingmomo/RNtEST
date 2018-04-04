@@ -56,10 +56,13 @@ class AuthenticationRootScreen extends Component<Props, State> {
         this.props.setUserAccessToken(response.data.mobile_token);
         const profileResponse = await RQReadProfile('me');
         this.props.setUserProfile(profileResponse.data);
-        this.props.startSession();
       }
 
-      this.setState({ busy: false });
+      this.setState({ busy: false }, () => {
+        if (response.ok) {
+          this.props.startSession();
+        }
+      });
     }
   };
 
