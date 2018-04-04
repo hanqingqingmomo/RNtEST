@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 
 import { type ContentDestroyAction } from './contentObject';
 import { normalize } from '../schemas';
+import { APP_END_SESSION } from './application';
 
 export const TIMELINE_LOAD = 'timeline/load';
 const TIMELINE_UPDATE_STATE = 'timeline/update-state';
@@ -169,6 +170,9 @@ export function reducer(
           $merge: action.payload.state,
         },
       });
+
+    case APP_END_SESSION:
+      return INITIAL_STATE;
 
     default:
       return state;
