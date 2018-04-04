@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
     borderBottomColor: getColor('orange'),
   },
   content: {
-    flexGrow: 1,
+    flex: 1,
   },
 });

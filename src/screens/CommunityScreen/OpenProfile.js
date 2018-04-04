@@ -33,7 +33,7 @@ export default class OpenProfile extends Component<Props, State> {
     const { community } = this.props;
 
     return (
-      <Screen fill>
+      <Screen fill scrollEnabled={false}>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
           <CommunityHeader
             title={community.name}
