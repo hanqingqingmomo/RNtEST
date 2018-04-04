@@ -124,7 +124,7 @@ class UserProfileScreen extends React.Component<P> {
         title={placeholder}
         titleTextColor={getColor('gray')}
         cellAccessoryView={
-          <View style={{ flexGrow: 1 }}>
+          <View style={{ flexGrow: 2 }}>
             <FormField
               style={{ fontSize: 16, textAlign: 'right' }}
               label=""
