@@ -210,122 +210,124 @@ class UserProfileScreen extends React.Component<P> {
 
   render() {
     const myProfileReq = makeReadProfileRq('me');
+    let user = this.props.user;
 
     return (
       <Fetch url={myProfileReq.url} options={myProfileReq.options}>
         {({ loading, data, fetch }: FetchProps<User>) => {
           if (loading === false && data) {
-            const user = data ? data : this.props.user;
-
-            return (
-              <Form
-                onSubmit={this.handleSubmit(fetch)}
-                initialValues={{
-                  first_name: user.first_name || '',
-                  last_name: user.last_name || '',
-                  email: user.email || '',
-                  profile_photo: user.profile_photo || '',
-                }}
-                render={form => (
-                  <Screen>
-                    <BlackPortal name={HEADER_LEFT_ID}>
-                      <DismissModalButton
-                        onPress={() =>
-                          this.handleClose(
-                            Object.keys(form.touched).length > 0
-                          )}
-                      />
-                    </BlackPortal>
-                    <BlackPortal name={HEADER_RIGHT_ID}>
-                      {!this.compareData(this.props.user, {
-                        ...this.props.user,
-                        ...form.values,
-                      }) ? (
-                        <NavigationTextButton
-                          title="Save"
-                          onPress={form.handleSubmit}
-                        />
-                      ) : null}
-                    </BlackPortal>
-                    <Table>
-                      <Section sectionPaddingTop={0}>
-                        <Cell
-                          cellContentView={
-                            <CenterView style={styles.avatarPickerCell}>
-                              <AvatarPicker
-                                imageURI={form.values.profile_photo}
-                                onChange={this.onAvatarChange(
-                                  form.setFieldValue,
-                                  form.setFieldTouched
-                                )}
-                                outline={3}
-                                size={82}
-                              />
-                            </CenterView>
-                          }
-                        />
-                      </Section>
-                      <Section
-                        header="personal details"
-                        separatorTintColor={BG_COLOR}
-                      >
-                        {this.renderUserDetailCell({
-                          placeholder: 'First name',
-                          name: 'first_name',
-                          editable: true,
-                          onChange: e =>
-                            this.handleFieldChange(
-                              form.setFieldValue,
-                              form.setFieldTouched,
-                              e
-                            ),
-                        })}
-                        {this.renderUserDetailCell({
-                          placeholder: 'Last name',
-                          name: 'last_name',
-                          editable: true,
-                          onChange: e =>
-                            this.handleFieldChange(
-                              form.setFieldValue,
-                              form.setFieldTouched,
-                              e
-                            ),
-                        })}
-                        {this.renderUserDetailCell({
-                          placeholder: 'Email',
-                          name: 'email',
-                          editable: false,
-                          onChange: e =>
-                            this.handleFieldChange(
-                              form.setFieldValue,
-                              form.setFieldTouched,
-                              e
-                            ),
-                        })}
-                      </Section>
-                      {user.joined_communities &&
-                      user.joined_communities.length ? (
-                        <Section
-                          header="your communities"
-                          separatorTintColor={BG_COLOR}
-                        >
-                          {(user.joined_communities || []
-                          ).map((community: CommunitySimple) =>
-                            this.renderCommunityCell(fetch, community)
-                          )}
-                        </Section>
-                      ) : null}
-                    </Table>
-                  </Screen>
-                )}
-              />
-            );
+            user = data;
           }
 
           return (
-            <CenterView>
-              <ActivityIndicator />
-            </CenterView>
+            <Form
+              onSubmit={this.handleSubmit(fetch)}
+              initialValues={{
+                first_name: user.first_name || '',
+                last_name: user.last_name || '',
+                email: user.email || '',
+                profile_photo: user.profile_photo || '',
+              }}
+              enableReinitialize={true}
+              render={form => (
+                <Screen fill>
+                  <BlackPortal name={HEADER_LEFT_ID}>
+                    <DismissModalButton
+                      onPress={() =>
+                        this.handleClose(Object.keys(form.touched).length > 0)}
+                    />
+                  </BlackPortal>
+                  {loading === false && data ? (
+                    <View>
+                      <BlackPortal name={HEADER_RIGHT_ID}>
+                        {!this.compareData(this.props.user, {
+                          ...this.props.user,
+                          ...form.values,
+                        }) ? (
+                          <NavigationTextButton
+                            title="Save"
+                            onPress={form.handleSubmit}
+                          />
+                        ) : null}
+                      </BlackPortal>
+                      <Table>
+                        <Section sectionPaddingTop={0}>
+                          <Cell
+                            cellContentView={
+                              <CenterView style={styles.avatarPickerCell}>
+                                <AvatarPicker
+                                  imageURI={form.values.profile_photo}
+                                  onChange={this.onAvatarChange(
+                                    form.setFieldValue,
+                                    form.setFieldTouched
+                                  )}
+                                  outline={3}
+                                  size={82}
+                                />
+                              </CenterView>
+                            }
+                          />
+                        </Section>
+                        <Section
+                          header="personal details"
+                          separatorTintColor={BG_COLOR}
+                        >
+                          {this.renderUserDetailCell({
+                            placeholder: 'First name',
+                            name: 'first_name',
+                            editable: true,
+                            onChange: e =>
+                              this.handleFieldChange(
+                                form.setFieldValue,
+                                form.setFieldTouched,
+                                e
+                              ),
+                          })}
+                          {this.renderUserDetailCell({
+                            placeholder: 'Last name',
+                            name: 'last_name',
+                            editable: true,
+                            onChange: e =>
+                              this.handleFieldChange(
+                                form.setFieldValue,
+                                form.setFieldTouched,
+                                e
+                              ),
+                          })}
+                          {this.renderUserDetailCell({
+                            placeholder: 'Email',
+                            name: 'email',
+                            editable: false,
+                            onChange: e =>
+                              this.handleFieldChange(
+                                form.setFieldValue,
+                                form.setFieldTouched,
+                                e
+                              ),
+                          })}
+                        </Section>
+                        {user.joined_communities &&
+                        user.joined_communities.length ? (
+                          <Section
+                            header="your communities"
+                            separatorTintColor={BG_COLOR}
+                          >
+                            {(user.joined_communities || []
+                            ).map((community: CommunitySimple) =>
+                              this.renderCommunityCell(fetch, community)
+                            )}
+                          </Section>
+                        ) : null}
+                      </Table>
+                    </View>
+                  ) : (
+                    <CenterView>
+                      <ActivityIndicator />
+                    </CenterView>
+                  )}
+                </Screen>
+              )}
+            />
           );
         }}
       </Fetch>
