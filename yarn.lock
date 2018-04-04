@@ -4622,9 +4622,9 @@ react-native-image-picker@^0.26.7:
   version "0.26.7"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
 
-react-native-keyboard-manager@^4.0.13-4:
-  version "4.0.13-4"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-manager/-/react-native-keyboard-manager-4.0.13-4.tgz#00ec1ab0b1960737a85be614c3fe175c0581cdd8"
+react-native-keyboard-manager@4.0.13-5:
+  version "4.0.13-5"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-manager/-/react-native-keyboard-manager-4.0.13-5.tgz#47876a66743ef8f4a9debd167c89835ed97480de"
 
 react-native-lightbox@^0.7.0:
   version "0.7.0"

@@ -25,7 +25,7 @@ import {
   View,
 } from '../atoms';
 import { getColor } from '../utils/color';
-import { makeLeaveCommunity } from '../utils/requestFactory';
+import { RQLeaveCommunity } from '../utils/requestFactory';
 import { selectUser } from '../redux/selectors';
 import { setUserProfile } from '../redux/ducks/application';
 import type {
@@ -85,17 +85,12 @@ class UserProfileScreen extends React.Component<P> {
   };
 
   leaveCommunity = async (fetch: any, community: CommunitySimple) => {
-    const leaveCommunityReg = makeLeaveCommunity(
+    const leaveCommunityRes = await RQLeaveCommunity(
       this.props.user.id,
       community.id
     );
-    const leaveCommunityRes = await fetch(
-      leaveCommunityReg.url,
-      leaveCommunityReg.options
-    );
 
-    if (leaveCommunityRes.error) {
-    } else {
+    if (leaveCommunityRes.ok) {
       const { data } = await fetch();
       this.props.setUserProfile(data);
     }

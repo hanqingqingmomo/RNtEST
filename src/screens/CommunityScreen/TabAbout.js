@@ -2,13 +2,7 @@
 
 import React, { Component } from 'react';
 
-import {
-  ContactGroupCell,
-  ScrollView,
-  TableView,
-  Text,
-  View,
-} from '../../atoms';
+import { ContactGroupCell, TableView, Text, View, Screen } from '../../atoms';
 import { css } from '../../utils/style';
 import { type User } from '../../Types';
 
@@ -28,28 +22,26 @@ export default class TabAbout extends Component<Props> {
     const { community } = this.props;
 
     return (
-      <ScrollView>
-        <Table>
-          <Section header="contact">
-            <ContactGroupCell
-              onContactSelect={this.props.navigateToMember}
-              users={community.administrators}
-            />
-          </Section>
+      <Table>
+        <Section header="contact">
+          <ContactGroupCell
+            onContactSelect={this.props.navigateToMember}
+            users={community.administrators}
+          />
+        </Section>
 
-          <Section header="about us">
-            <Cell
-              cellContentView={
-                <View style={css('paddingVertical', 20)}>
-                  <Text color="#455A64" size={14} lineHeight={18}>
-                    {community.description}
-                  </Text>
-                </View>
-              }
-            />
-          </Section>
-        </Table>
-      </ScrollView>
+        <Section header="about us">
+          <Cell
+            cellContentView={
+              <View style={css('paddingVertical', 20)}>
+                <Text color="#455A64" size={14} lineHeight={18}>
+                  {community.description}
+                </Text>
+              </View>
+            }
+          />
+        </Section>
+      </Table>
     );
   }
 }

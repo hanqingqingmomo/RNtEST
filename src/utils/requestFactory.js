@@ -222,9 +222,9 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/communities?membership_status=${joinedOnly
-        ? 'joined'
-        : 'unjoined'}`,
+      path: `/communities?membership_status=${
+        joinedOnly ? 'joined' : 'unjoined'
+      }`,
     }),
     options: {
       method: 'GET',

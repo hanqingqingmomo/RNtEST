@@ -5,7 +5,7 @@ import { InteractionManager } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { connect } from 'react-redux';
 
-import { CommunityHeader, View } from '../../atoms';
+import { CommunityHeader, Screen } from '../../atoms';
 import { RQJoinCommunity } from '../../utils/requestFactory';
 import { setUserProfile } from '../../redux/ducks/application';
 import { selectUser } from '../../redux/selectors';
@@ -62,7 +62,7 @@ class ClosedProfile extends Component<Props, State> {
       this.setState({ joined: true });
       setTimeout(() => {
         if (typeof reloadCommunity === 'function') {
-          reloadCommunity();
+          reloadCommunity(community.id);
         }
         if (typeof reloadCommunityList === 'function') {
           reloadCommunityList();
@@ -76,7 +76,7 @@ class ClosedProfile extends Component<Props, State> {
     const { community } = this.props;
 
     return (
-      <View>
+      <Screen fill>
         <Collapsible collapsed={this.state.activeTab !== 'News'}>
           <CommunityHeader
             title={community.name}
@@ -93,7 +93,7 @@ class ClosedProfile extends Component<Props, State> {
           community={community}
           navigateToMember={this.props.navigateToMember}
         />
-      </View>
+      </Screen>
     );
   }
 }

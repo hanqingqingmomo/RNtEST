@@ -37,7 +37,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
   };
 
   componentWillMount() {
-    this.fetchCommunity();
+    this.fetchCommunity(this.props.navigation.state.params.communityId);
     InteractionManager.runAfterInteractions(() => {
       this.setState({ screenIsReady: true });
     });
@@ -47,10 +47,8 @@ export default class CommunityCenterScreen extends Component<Props, State> {
     this.setState({ activeTab });
   };
 
-  async fetchCommunity() {
-    const response = await RQReadCommunity(
-      this.props.navigation.state.params.communityId
-    );
+  async fetchCommunity(communityId: string) {
+    const response = await RQReadCommunity(communityId);
 
     this.setState({ community: response.data });
   }
@@ -82,7 +80,7 @@ export default class CommunityCenterScreen extends Component<Props, State> {
       <ClosedProfile
         community={community}
         navigateToMember={this.navigateToMember}
-        reloadCommunity={fetch}
+        reloadCommunity={id => this.fetchCommunity(id)}
         reloadCommunityList={
           this.props.navigation.state.params.reloadCommunityList
         }

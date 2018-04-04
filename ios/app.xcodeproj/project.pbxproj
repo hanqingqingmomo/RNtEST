@@ -22,7 +22,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		17F0E9128A7E42D99580E60D /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B662CB7CDF745A9B0A0A49F /* libReactNativeKeyboardManager.a */; };
 		21B5E44FD66542CC942BAC94 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E7CE7303A7438D834599D1 /* BraintreeApplePay.framework */; };
 		233DE397E27E07824FD337B3 /* libPods-appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85563F6D7B98C8D235796234 /* libPods-appTests.a */; };
 		2B2EA3821C024946903A97A6 /* libRNMobileCenter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BCEB8BF3294F35B2B607DD /* libRNMobileCenter.a */; };
@@ -44,6 +43,7 @@
 		D28730B2A6E1463EAF5D048C /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EEB624848CA4CC08C10BA87 /* libSplashScreen.a */; };
 		E3432D223BCF4DCE9D4BBD08 /* MobileCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62B9D8C501364C9E8C8968A1 /* MobileCenter-Config.plist */; };
 		F47D0054E3DB44D484EED79D /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 505BCDA2B65F4195B6075565 /* libRNDeviceInfo.a */; };
+		332EF7B20B1C4A04ADEA230A /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B8A21AF9E74F01B9F6853D /* libReactNativeKeyboardManager.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -250,13 +250,6 @@
 			remoteGlobalIDString = ADD01A681E09402E00F6D226;
 			remoteInfo = "RCTBlob-tvOS";
 		};
-		77445D181F285B6F0028125A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A51183591EFAC02F0077C68F;
-			remoteInfo = ReactNativeKeyboardManager;
-		};
 		774460471F730CB700236CBF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB7ED76349BD4221915F5C20 /* RNVectorIcons.xcodeproj */;
@@ -446,8 +439,6 @@
 		349E0B72CCB149188DFEA9B2 /* RNAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAnalytics.xcodeproj; path = "../node_modules/mobile-center-analytics/ios/RNAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		363186C0551E401DA1373AE2 /* libRCTContacts.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTContacts.a; sourceTree = "<group>"; };
 		3975680CACC9414CB4C7568F /* Pods-appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-appTests/Pods-appTests.release.xcconfig"; sourceTree = "<group>"; };
-		3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeKeyboardManager.xcodeproj; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; };
-		4B662CB7CDF745A9B0A0A49F /* libReactNativeKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeKeyboardManager.a; sourceTree = "<group>"; };
 		4FDEBC83BE7A440A86093C68 /* RCTBraintree.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBraintree.xcodeproj; path = "../node_modules/react-native-braintree-xplat/ios/RCTBraintree.xcodeproj"; sourceTree = "<group>"; };
 		505BCDA2B65F4195B6075565 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -495,6 +486,8 @@
 		DB7ED76349BD4221915F5C20 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		EFD4C1BCE89B46DFBB3212BB /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		FF457C6A21D94B87A0F376BD /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		8D93489CFC944D08A778DE6C /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeKeyboardManager.xcodeproj"; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A8B8A21AF9E74F01B9F6853D /* libReactNativeKeyboardManager.a */ = {isa = PBXFileReference; name = "libReactNativeKeyboardManager.a"; path = "libReactNativeKeyboardManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -529,7 +522,6 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				810DFEDB73474EC8AAF0D6C0 /* libReactNativeConfig.a in Frameworks */,
-				17F0E9128A7E42D99580E60D /* libReactNativeKeyboardManager.a in Frameworks */,
 				4E31A4B24C2B497285F3B36C /* libRNVectorIcons.a in Frameworks */,
 				0CDA883426E64747B23905DB /* libRNImagePicker.a in Frameworks */,
 				D28730B2A6E1463EAF5D048C /* libSplashScreen.a in Frameworks */,
@@ -541,6 +533,7 @@
 				F47D0054E3DB44D484EED79D /* libRNDeviceInfo.a in Frameworks */,
 				7B394B884A19487F96843D46 /* libReactNativePayments.a in Frameworks */,
 				BF8C6E7A232042FE8824AAD9 /* libRCTBraintree.a in Frameworks */,
+				332EF7B20B1C4A04ADEA230A /* libReactNativeKeyboardManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,14 +700,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		77445CF71F285B6F0028125A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				77445D191F285B6F0028125A /* libReactNativeKeyboardManager.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		774460231F730CB600236CBF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -856,7 +841,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				60AB91C9CC4E420F952CC9C5 /* ReactNativeConfig.xcodeproj */,
-				3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */,
 				349E0B72CCB149188DFEA9B2 /* RNAnalytics.xcodeproj */,
 				804A4142E4274AAFB98531FA /* OAuthManager.xcodeproj */,
 				0BEC15E1C0E645B8BEE81BCA /* RNCrashes.xcodeproj */,
@@ -867,6 +851,7 @@
 				608E8122102D43B083E65A1C /* SplashScreen.xcodeproj */,
 				72B1B121F80F4EF29D56BB1A /* ReactNativePayments.xcodeproj */,
 				4FDEBC83BE7A440A86093C68 /* RCTBraintree.xcodeproj */,
+				8D93489CFC944D08A778DE6C /* ReactNativeKeyboardManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1124,10 +1109,6 @@
 					ProjectRef = 60AB91C9CC4E420F952CC9C5 /* ReactNativeConfig.xcodeproj */;
 				},
 				{
-					ProductGroup = 77445CF71F285B6F0028125A /* Products */;
-					ProjectRef = 3AAADC98082F4E49A35442FE /* ReactNativeKeyboardManager.xcodeproj */;
-				},
-				{
 					ProductGroup = 77FEE8402063CCCE008E8B37 /* Products */;
 					ProjectRef = 72B1B121F80F4EF29D56BB1A /* ReactNativePayments.xcodeproj */;
 				},
@@ -1363,13 +1344,6 @@
 			fileType = archive.ar;
 			path = "libRCTBlob-tvOS.a";
 			remoteRef = 77417D741F67F63100E5CEA6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		77445D191F285B6F0028125A /* libReactNativeKeyboardManager.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeKeyboardManager.a;
-			remoteRef = 77445D181F285B6F0028125A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		774460481F730CB700236CBF /* libRNVectorIcons.a */ = {
@@ -1742,7 +1716,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
-					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1754,13 +1727,13 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1786,7 +1759,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
-					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1798,13 +1770,13 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1834,7 +1806,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
-					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1847,6 +1818,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1882,7 +1854,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
-					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1895,6 +1866,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-payments/lib/ios",
 					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
