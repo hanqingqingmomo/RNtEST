@@ -4719,9 +4719,9 @@ react-native-tableview-simple@^0.16.13:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-twitter-signin@^1.0.2:
+react-native-twitter-signin@creatixpublic/react-native-twitter-signin:
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-twitter-signin/-/react-native-twitter-signin-1.0.2.tgz#9cf3666f7c7f35c2d36738f630149664bc03b2de"
+  resolved "https://codeload.github.com/creatixpublic/react-native-twitter-signin/tar.gz/2f3b3ef2a173dc8de13fa81b35fc143451ea5f42"
 
 react-native-vector-icons@^4.4.0:
   version "4.4.2"

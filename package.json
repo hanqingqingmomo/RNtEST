@@ -59,7 +59,7 @@
     "react-native-push-notification": "^3.0.1",
     "react-native-splash-screen": "^3.0.1",
     "react-native-tableview-simple": "^0.16.13",
-    "react-native-twitter-signin": "^1.0.2",
+    "react-native-twitter-signin": "creatixpublic/react-native-twitter-signin",
     "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.5",
