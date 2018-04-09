@@ -3,27 +3,21 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Config from 'react-native-config';
-import OAuthManager from 'react-native-oauth';
 import LinkedInModal from 'react-native-linkedin';
+
 import { Button } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { FacebookModal, type FacebookAuth } from './Facebook';
+import { TwitterModal, type TwitterAuth } from './Twitter';
 
-type Provider = 'twitter' | 'facebook';
+type LinkedinPayload = {
+  access_token: string,
+  expires_in: number,
+};
 
 export type AuthPayload =
-  | {
-      provider: 'twitter',
-      credentials: {
-        access_token: string,
-        access_token_secret: string,
-      },
-    }
-  | {
-      provider: 'facebook',
-      credentials: {
-        access_token: string,
-      },
-    }
+  | FacebookAuth
+  | TwitterAuth
   | {
       provider: 'linkedin',
       credentials: {
@@ -31,92 +25,9 @@ export type AuthPayload =
       },
     };
 
-type OAuthRawPayload =
-  | {
-      // Facebook
-      status: string,
-      response: {
-        authorized: boolean,
-        identifier: string,
-        uuid: string,
-        credentials: {
-          accessToken: string,
-          authorizationHeader: string,
-          clientId: string,
-          clientSecret: string,
-        },
-      },
-    }
-  | {
-      // Twitter
-      status: string,
-      response: {
-        authorized: boolean,
-        identifier: string,
-        uuid: string,
-        credentials: {
-          access_token: string,
-          access_token_secret: string,
-        },
-      },
-    };
-
-type ButtonProps = {
-  onAuthStatusChange: (?AuthPayload) => mixed,
+export type ButtonProps = {
+  onAuthStatusChange: AuthPayload => mixed,
 };
-
-function makeManager() {
-  const manager = new OAuthManager('pba-app');
-  manager.configure({
-    facebook: {
-      client_id: Config.FACEBOOK_ID,
-      client_secret: Config.FACEBOOK_SECRET,
-    },
-    twitter: {
-      consumer_key: Config.TWITTER_ID,
-      consumer_secret: Config.TWITTER_SECRET,
-    },
-  });
-  return manager;
-}
-
-function transformResponse(
-  provider: Provider,
-  providerResponse: OAuthRawPayload
-): AuthPayload {
-  const { response } = providerResponse;
-  return provider === 'twitter'
-    ? {
-        provider: 'twitter',
-        credentials: {
-          // $FlowExpectedError
-          access_token: response.credentials.access_token,
-          // $FlowExpectedError
-          access_token_secret: response.credentials.access_token_secret,
-        },
-      }
-    : {
-        provider: 'facebook',
-        credentials: {
-          // $FlowExpectedError
-          access_token: response.credentials.accessToken,
-        },
-      };
-}
-
-async function authenticateOAuth(
-  provider: Provider,
-  options?: Object
-): Promise<?AuthPayload> {
-  const manager = makeManager();
-  try {
-    const providerResp = await manager.authorize(provider, options);
-    await manager.deauthorize(provider);
-    return transformResponse(provider, providerResp);
-  } catch (err) {
-    return null;
-  }
-}
 
 function AuthenticationButton(props): React$Node {
   return <Button block {...props} size="lg" style={styles.button} />;
@@ -124,30 +35,24 @@ function AuthenticationButton(props): React$Node {
 
 export function Facebook(props: ButtonProps) {
   return (
-    <AuthenticationButton
+    <FacebookModal
       color={getColor('facebookBlue')}
       textColor={getColor('white')}
-      onPress={async () => {
-        props.onAuthStatusChange(
-          await authenticateOAuth('facebook', {
-            scopes: 'email,public_profile',
-          })
-        );
-      }}
       title="Continue with Facebook"
+      style={styles.button}
+      {...props}
     />
   );
 }
 
 export function Twitter(props: ButtonProps) {
   return (
-    <AuthenticationButton
+    <TwitterModal
       color={getColor('twitterBlue')}
       textColor={getColor('white')}
-      onPress={async () => {
-        props.onAuthStatusChange(await authenticateOAuth('twitter'));
-      }}
       title="Continue with Twitter"
+      style={styles.button}
+      {...props}
     />
   );
 }
@@ -158,7 +63,11 @@ export function LinkedIn(props: ButtonProps) {
       clientID={Config.LINKEDIN_ID}
       clientSecret={Config.LINKEDIN_SECRET}
       redirectUri={Config.LINKEDIN_REDIRECT_URL}
-      onSuccess={(params: { access_token: string }) => {
+      onSuccess={(params: LinkedinPayload) => {
+        if (__DEV__) {
+          console.log('[Linkedin] Auth Login', params);
+        }
+
         props.onAuthStatusChange({
           provider: 'linkedin',
           credentials: {

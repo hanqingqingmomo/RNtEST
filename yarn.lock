@@ -2806,7 +2806,7 @@ invariant@^2.0.0, invariant@^2.2.0:
   dependencies:
     loose-envify "^1.0.0"
 
-invariant@^2.2.1, invariant@^2.2.2:
+invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -3078,6 +3078,10 @@ istanbul-reports@^1.1.1:
   resolved "https://registry.yarnpkg.com/istanbul-reports/-/istanbul-reports-1.1.1.tgz#042be5c89e175bc3f86523caab29c014e77fee4e"
   dependencies:
     handlebars "^4.0.3"
+
+itypeof@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/itypeof/-/itypeof-1.1.2.tgz#6fb22639dc78a414f594b3d553a5f2c2488fd022"
 
 jest-changed-files@^21.2.0:
   version "21.2.0"
@@ -4618,6 +4622,12 @@ react-native-dropdownalert@^3.1.2:
   dependencies:
     prop-types "15.5.10"
 
+react-native-facebook-login@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-facebook-login/-/react-native-facebook-login-1.6.1.tgz#c1c10ddccab8eb99a5c5432ea7e6ebdd2ab2319e"
+  dependencies:
+    itypeof "^1.1.2"
+
 react-native-image-picker@^0.26.7:
   version "0.26.7"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
@@ -4652,13 +4662,6 @@ react-native-modalbox@^1.4.2:
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
-
-react-native-oauth@creatixpublic/react-native-oauth:
-  version "2.1.15"
-  resolved "https://codeload.github.com/creatixpublic/react-native-oauth/tar.gz/6783c4a40d766da90d15af7ef61e2ca483c5c0b7"
-  dependencies:
-    invariant "^2.2.1"
-    valib "^2.0.0"
 
 react-native-payments-addon-braintree@^0.4.0:
   version "0.4.0"
@@ -4715,6 +4718,10 @@ react-native-tableview-simple@^0.16.13:
   resolved "https://registry.yarnpkg.com/react-native-tableview-simple/-/react-native-tableview-simple-0.16.13.tgz#1cb3ce81d1a3230a91f495f50c70f682b4164522"
   dependencies:
     prop-types "^15.5.10"
+
+react-native-twitter-signin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-twitter-signin/-/react-native-twitter-signin-1.0.2.tgz#9cf3666f7c7f35c2d36738f630149664bc03b2de"
 
 react-native-vector-icons@^4.4.0:
   version "4.4.2"
@@ -5864,10 +5871,6 @@ uuid@^2.0.1:
 uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
-
-valib@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/valib/-/valib-2.0.0.tgz#e0d455b10e17ae605c0f33971adac73564ee18a7"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"

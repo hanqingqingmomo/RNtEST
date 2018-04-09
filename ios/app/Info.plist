@@ -20,18 +20,32 @@
 	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+  <key>FacebookAppID</key>
+  <string>__RN_CONFIG_FACEBOOK_ID</string>
+  <key>FacebookDisplayName</key>
+  <string>MPWR</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
+    <dict>
+      <key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>facebook</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>__RN_CONFIG_FACEBOOK_URL_SCHEME</string>
-			</array>
-		</dict>
+      <key>CFBundleURLName</key>
+			<string>Facebook</string>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>__RN_CONFIG_FACEBOOK_URL_SCHEME</string>
+      </array>
+    </dict>
+    <dict>
+      <key>CFBundleTypeRole</key>
+			<string>Editor</string>
+      <key>CFBundleURLName</key>
+			<string>Twitter</string>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>twitterkit-__RN_CONFIG_TWITTER_ID</string>
+      </array>
+    </dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -60,16 +74,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.venmo.touch.v2</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>twitter</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>__RN_CONFIG_TWITTER_URL_SCHEME</string>
 			</array>
 		</dict>
 	</array>
@@ -116,5 +120,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    <string>fbapi</string>
+    <string>fb-messenger-api</string>
+    <string>fbauth2</string>
+    <string>fbshareextension</string>
+    <string>twitter</string>
+    <string>twitterauth</string>
+  </array>
 </dict>
 </plist>

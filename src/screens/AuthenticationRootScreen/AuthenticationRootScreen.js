@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Modal } from 'react-native';
+import { StyleSheet, Modal, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import { ActivityIndicator, Icon, Screen, Text, View } from '../../atoms';
@@ -15,8 +15,8 @@ import {
 import {
   EmailRegistration,
   Facebook,
-  LinkedIn,
   Twitter,
+  LinkedIn,
   type AuthPayload,
 } from './ProviderButtons';
 
@@ -41,29 +41,27 @@ class AuthenticationRootScreen extends Component<Props, State> {
     return this.props.navigation.navigate(route);
   };
 
-  onAuthStatusChange = async (payload: ?AuthPayload) => {
-    if (payload) {
-      this.setState({ busy: true });
+  onAuthStatusChange = async (payload: AuthPayload) => {
+    this.setState({ busy: true });
 
-      const response = await RQSocialSignIn({
-        provider: payload.provider,
-        access_token: payload.credentials.access_token,
-        // $FlowExpectedError
-        access_token_secret: payload.credentials.access_token_secret,
-      });
+    const response = await RQSocialSignIn({
+      provider: payload.provider,
+      ...payload.credentials,
+    });
 
-      if (response.ok) {
-        this.props.setUserAccessToken(response.data.mobile_token);
-        const profileResponse = await RQReadProfile('me');
-        this.props.setUserProfile(profileResponse.data);
-      }
-
-      this.setState({ busy: false }, () => {
-        if (response.ok) {
-          this.props.startSession();
-        }
-      });
+    if (response.ok) {
+      this.props.setUserAccessToken(response.data.mobile_token);
+      const profileResponse = await RQReadProfile('me');
+      this.props.setUserProfile(profileResponse.data);
     }
+
+    this.setState({ busy: false }, () => {
+      if (response.ok) {
+        this.props.startSession();
+      } else {
+        Alert.alert('Error', response.data);
+      }
+    });
   };
 
   render() {
@@ -97,7 +95,7 @@ class AuthenticationRootScreen extends Component<Props, State> {
           animationType="fade"
         >
           <View style={styles.modalLayer}>
-            <ActivityIndicator color="#333" />
+            <ActivityIndicator color="white" />
           </View>
         </Modal>
       </Screen>

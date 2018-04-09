@@ -1,5 +1,4 @@
 PODS:
-  - DCTAuth (3.0)
   - MobileCenter/Analytics (0.13.0):
     - MobileCenter/Core
   - MobileCenter/Core (0.13.0)
@@ -9,25 +8,14 @@ PODS:
     - MobileCenter/Core (~> 0.13.0)
 
 DEPENDENCIES:
-  - DCTAuth (from `https://github.com/danielctull/DCTAuth.git`)
   - MobileCenter/Analytics (~> 0.13.0)
   - MobileCenter/Crashes (~> 0.13.0)
   - RNMobileCenterShared (~> 0.10.0)
 
-EXTERNAL SOURCES:
-  DCTAuth:
-    :git: https://github.com/danielctull/DCTAuth.git
-
-CHECKOUT OPTIONS:
-  DCTAuth:
-    :commit: 0a8091a3fc165fb99a6f70cf15b3aed25252dad9
-    :git: https://github.com/danielctull/DCTAuth.git
-
 SPEC CHECKSUMS:
-  DCTAuth: 8add154decd00335d62917828896bba790ce47fd
   MobileCenter: aba87f4957647dfbd0b5e71ecac1070892a0abbb
   RNMobileCenterShared: d36d0245f9eb9627e60cd20623502906f61a783f
 
-PODFILE CHECKSUM: 59d95d11d66dfaf48afc6d97a51bf83311524cf5
+PODFILE CHECKSUM: ad4ff301737dcf1890f0be824e5cfbd7e6951de5
 
 COCOAPODS: 1.4.0
