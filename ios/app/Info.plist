@@ -20,32 +20,28 @@
 	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-  <key>FacebookAppID</key>
-  <string>__RN_CONFIG_FACEBOOK_ID</string>
-  <key>FacebookDisplayName</key>
-  <string>MPWR</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-    <dict>
-      <key>CFBundleTypeRole</key>
+		<dict>
+			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-      <key>CFBundleURLName</key>
+			<key>CFBundleURLName</key>
 			<string>Facebook</string>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>__RN_CONFIG_FACEBOOK_URL_SCHEME</string>
-      </array>
-    </dict>
-    <dict>
-      <key>CFBundleTypeRole</key>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>__RN_CONFIG_FACEBOOK_URL_SCHEME</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-      <key>CFBundleURLName</key>
+			<key>CFBundleURLName</key>
 			<string>Twitter</string>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>twitterkit-__RN_CONFIG_TWITTER_ID</string>
-      </array>
-    </dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>twitterkit-__RN_CONFIG_TWITTER_ID</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -78,7 +74,20 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>17</string>
+	<string>18</string>
+	<key>FacebookAppID</key>
+	<string>__RN_CONFIG_FACEBOOK_ID</string>
+	<key>FacebookDisplayName</key>
+	<string>MPWR</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+		<string>twitter</string>
+		<string>twitterauth</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -120,14 +129,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-    <string>fbapi</string>
-    <string>fb-messenger-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-    <string>twitter</string>
-    <string>twitterauth</string>
-  </array>
 </dict>
 </plist>
