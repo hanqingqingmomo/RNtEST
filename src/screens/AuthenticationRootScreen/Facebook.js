@@ -79,8 +79,6 @@ export function FacebookModal(props: Props) {
         FBLoginManager.loginWithPermissions(
           ['email', 'public_profile'],
           (error: FacebookError, data: FacebookPayload) => {
-            console.log(data);
-
             if (!error) {
               if (__DEV__) {
                 console.log('[Facebook] Auth Login end', data);
