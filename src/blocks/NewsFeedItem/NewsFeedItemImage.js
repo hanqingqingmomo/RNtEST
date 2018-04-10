@@ -1,14 +1,29 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
 import { Text, View, Image, ImagePreview } from '../../atoms';
 import { css } from '../../utils/style';
 import { parseTextContent } from '../../utils/text';
 
-type P = {
+const { width } = Dimensions.get('window');
+
+type Layout = {
+  height: number,
+  width: number,
+  x: number,
+  y: number,
+};
+
+type LayoutPayload = {
+  nativeEvent: {
+    layout: Layout,
+  },
+};
+
+type Props = {
   isDetail?: boolean,
   title?: string,
   type: string,
@@ -16,22 +31,52 @@ type P = {
   onPress: () => any,
 };
 
-export default class NewsFeedItemAttachment extends Component<P> {
-  renderImage({ url }: P): React$Node {
-    return (
+type State = {
+  size: ?{
+    width: string | number,
+    height: string | number,
+  },
+  layout: ?Layout,
+};
+
+export default class NewsFeedItemAttachment extends Component<Props, State> {
+  state = {
+    size: null,
+    layout: null,
+  };
+
+  renderImage({ url }: Props): React$Node {
+    const { layout, size } = this.state;
+    const marginLeft = layout ? -1 * ((width - layout.width) / 2) : 0;
+
+    Image.getSize(url, (origWidth, origHeight) => {
+      const ratio = origWidth / origHeight;
+
+      if (size === null) {
+        this.setState({
+          size: {
+            width,
+            height: width / ratio,
+          },
+        });
+      }
+    });
+
+    return layout && size ? (
       <Lightbox
+        style={[styles.imageWrapper, { marginLeft }]}
         underlayColor="white"
+        springConfig={{ tension: 10 }}
         renderContent={() => (
           <ImagePreview resizeMode="contain" imageURI={this.props.url} />
         )}
       >
-        <View style={styles.imageWrapper}>
-          <Image source={{ url }} style={styles.image} resizeMode="cover" />
-        </View>
+        <Image source={{ url }} style={size} />
       </Lightbox>
-    );
+    ) : null;
   }
-  renderTextContent({ title, isDetail }: P): React$Node {
+
+  renderTextContent({ title, isDetail }: Props): React$Node {
     return title ? (
       <TouchableOpacity onPress={this.props.onPress}>
         <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
@@ -41,9 +86,15 @@ export default class NewsFeedItemAttachment extends Component<P> {
     ) : null;
   }
 
+  onLayout = ({ nativeEvent }: LayoutPayload) => {
+    if (!this.state.layout) {
+      this.setState({ layout: nativeEvent.layout });
+    }
+  };
+
   render() {
     return (
-      <View style={styles.container}>
+      <View onLayout={this.onLayout}>
         {this.renderImage(this.props)}
         {this.renderTextContent(this.props)}
       </View>
@@ -52,17 +103,10 @@ export default class NewsFeedItemAttachment extends Component<P> {
 }
 
 const styles = StyleSheet.create({
-  container: {},
   imageWrapper: {
-    height: 200,
     marginBottom: 11,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: -26,
-    marginLeft: -26,
-  },
-  image: {
-    width: '100%',
-    height: 200,
+    width,
   },
 });
