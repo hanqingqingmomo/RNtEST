@@ -37,6 +37,7 @@
     "react": "16.0.0",
     "react-fetch-component": "^5.0.0",
     "react-native": "0.50.4",
+    "react-native-autolink": "^1.4.0",
     "react-native-braintree-xplat": "^4.0.0",
     "react-native-collapsible": "^0.9.0",
     "react-native-config": "^0.6.1",

@@ -282,6 +282,10 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
+autolinker@^1.6.0:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-1.6.2.tgz#67ae9da272e808e0d8eb8e02cbc8cde303947457"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -4577,6 +4581,13 @@ react-devtools-core@^2.5.0:
 react-fetch-component@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-5.0.0.tgz#551f2d3e0ea26cbe79b909178a032ad35bc0a8ee"
+
+react-native-autolink@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-autolink/-/react-native-autolink-1.4.0.tgz#aaec1a65d6e7be8ded3f1063181ffb610b5706ec"
+  dependencies:
+    autolinker "^1.6.0"
+    prop-types "^15.6.0"
 
 react-native-braintree-xplat@^4.0.0:
   version "4.0.0"

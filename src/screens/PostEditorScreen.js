@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
+import { type NavigationProp } from 'react-navigation';
 
 import { selectUser, selectRequest } from '../redux/selectors';
 import type { User, LinkAttachment } from '../Types';
@@ -12,6 +13,8 @@ import { createPost } from '../redux/ducks/contentObject';
 
 type Props = {
   user: User,
+  navigation: NavigationProp<{}>,
+  createPost: Function,
 };
 
 type State = {
