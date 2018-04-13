@@ -11,6 +11,7 @@ import {
   setUserAccessToken,
   setUserProfile,
   startSession,
+  setProvider,
 } from '../../redux/ducks/application';
 import {
   EmailRegistration,
@@ -23,9 +24,10 @@ import {
 type Route = 'EmailAuthenticationScreen' | 'EmailRegistrationScreen';
 
 type Props = ScreenProps<*> & {
-  setUserAccessToken: typeof Function,
+  setUserAccessToken: typeof setUserAccessToken,
   setUserProfile: typeof setUserProfile,
   startSession: typeof startSession,
+  setProvider: typeof setProvider,
 };
 
 type State = {
@@ -51,6 +53,7 @@ class AuthenticationRootScreen extends Component<Props, State> {
 
     if (response.ok) {
       this.props.setUserAccessToken(response.data.mobile_token);
+      this.props.setProvider(payload.provider);
       const profileResponse = await RQReadProfile('me');
       this.props.setUserProfile(profileResponse.data);
     }
@@ -107,6 +110,7 @@ export default connect(null, {
   setUserAccessToken,
   setUserProfile,
   startSession,
+  setProvider,
 })(AuthenticationRootScreen);
 
 const styles = StyleSheet.create({
