@@ -282,6 +282,10 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
+autolinker@^1.6.0:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-1.6.2.tgz#67ae9da272e808e0d8eb8e02cbc8cde303947457"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -4578,6 +4582,13 @@ react-fetch-component@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-5.0.0.tgz#551f2d3e0ea26cbe79b909178a032ad35bc0a8ee"
 
+react-native-autolink@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-autolink/-/react-native-autolink-1.4.0.tgz#aaec1a65d6e7be8ded3f1063181ffb610b5706ec"
+  dependencies:
+    autolinker "^1.6.0"
+    prop-types "^15.6.0"
+
 react-native-braintree-xplat@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-native-braintree-xplat/-/react-native-braintree-xplat-4.0.0.tgz#4222b4892138628dd39033902f0741b404d51f48"
@@ -4631,6 +4642,10 @@ react-native-facebook-login@^1.6.1:
 react-native-image-picker@^0.26.7:
   version "0.26.7"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
+
+react-native-iphone-x-helper@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
 
 react-native-keyboard-manager@4.0.13-5:
   version "4.0.13-5"
@@ -4706,6 +4721,12 @@ react-native-push-notification@^3.0.1:
 react-native-splash-screen@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.0.1.tgz#178b29b7d848e6ee5a41fbb9c1299eb2b5aaa600"
+
+react-native-status-bar-height@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.0.0.tgz#9def59bdfa162da73134aff4f480ef2fc873ee0a"
+  dependencies:
+    react-native-iphone-x-helper "^1.0.1"
 
 react-native-tab-view@^0.0.70:
   version "0.0.70"

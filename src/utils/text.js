@@ -1,75 +1,44 @@
 // @flow
 
 import React from 'react';
-import { Linking } from 'react-native';
+import Autolink from 'react-native-autolink';
 
 import { Text } from '../atoms';
 import { getColor } from '../utils/color';
 
-// TODO maxLength by malo byt undefined, ak ho nezadam
-export function parseTextContent(string: string, maxLength: ?number): any {
-  let words = (string || '').split(/\s/);
+function getSubstring(string, maxLength): string {
+  const firstString = string.substr(0, maxLength);
+  const lastChar = string.charAt(maxLength);
+  let lastString = '';
 
-  if (
-    typeof string === 'string' &&
-    maxLength !== null &&
-    maxLength !== undefined
-  ) {
-    let length = 0;
-
-    words = words.filter((word: string): boolean => {
-      length += word.length + 1;
-
-      if (maxLength !== null && maxLength !== undefined) {
-        return length < maxLength;
-      }
-
-      return true;
-    });
-
-    if (string.length > maxLength) {
-      words.push('... ');
-      words.push(
-        <Text key={words.length + 1} color={getColor('linkBlue')}>
-          Continue Reading
-        </Text>
-      );
-    }
+  if (!/[\s|\n]/.test(lastChar)) {
+    lastString = string.substr(maxLength).split(/[\s|\n]/)[0];
   }
 
-  words = words.map((word: string, idx: number): React$Node => {
-    if (typeof word === 'string') {
-      if (word.match(/^https?\:\//)) {
-        // detect url
-        return (
-          <Text
-            key={idx}
-            color={getColor('linkBlue')}
-            onPress={() => Linking.openURL(word)}
-          >
-            {`${word} `}
-          </Text>
-        );
-      } else if (
-        word.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-      ) {
-        // detect email
-        return (
-          <Text
-            key={idx}
-            color={getColor('linkBlue')}
-            onPress={() => Linking.openURL(`mailto:${word}`)}
-          >
-            {`${word} `}
-          </Text>
-        );
-      }
+  return firstString + lastString;
+}
 
-      return `${word} `;
-    }
+export function parseTextContent(
+  string: string,
+  maxLength: ?number
+): React$Node {
+  let newString = maxLength ? getSubstring(string, maxLength) : string;
 
-    return word;
-  });
+  if (string.length > newString.length) {
+    newString = `${newString} ... `;
+  }
 
-  return <Text>{words}</Text>;
+  return (
+    <Text>
+      <Autolink
+        text={newString}
+        stripPrefix={false}
+        truncate={0}
+        linkStyle={{ color: getColor('linkBlue') }}
+      />
+      {string.length > newString.length ? (
+        <Text color={getColor('linkBlue')}>Continue Reading</Text>
+      ) : null}
+    </Text>
+  );
 }

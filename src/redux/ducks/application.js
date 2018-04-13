@@ -12,6 +12,7 @@ type State = {
   +pushToken: ?string,
   +userAccessToken: ?string,
   +userProfile: ?Object,
+  +provider: ?string,
 };
 
 //
@@ -54,6 +55,17 @@ export function setUserProfile(userProfile: Object): UserSetDataAction {
   return setUserData({ userProfile });
 }
 
+export function setProvider(provider: string): UserSetDataAction {
+  return setUserData({ provider });
+}
+
+//
+// Selectors
+//
+export function getProvider(state: { application: State }) {
+  return state.application.provider;
+}
+
 //
 // Reducer
 //
@@ -62,6 +74,7 @@ const INITIAL_STATE: State = {
   pushToken: null,
   userAccessToken: null,
   userProfile: null,
+  provider: null,
 };
 
 export default function(state: State = INITIAL_STATE, action: Action): State {

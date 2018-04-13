@@ -27,7 +27,7 @@ import {
 import { getColor } from '../utils/color';
 import { RQLeaveCommunity } from '../utils/requestFactory';
 import { selectUser } from '../redux/selectors';
-import { setUserProfile } from '../redux/ducks/application';
+import { setUserProfile, getProvider } from '../redux/ducks/application';
 import type {
   CommunitySimple,
   FetchProps,
@@ -47,6 +47,7 @@ type P = ScreenProps<*> & {
   setUserProfile: Function,
   showActionSheetWithOptions: Function,
   user: User,
+  provider: string,
 };
 
 const BG_COLOR = '#ECEFF1';
@@ -70,6 +71,12 @@ class UserProfileScreen extends React.Component<P> {
     setFieldValue('profile_photo', photo);
     setFieldTouched('profile_photo', true);
   };
+
+  get disableEditing(): boolean {
+    return ['facebook', 'twitter', 'linkedin'].includes(
+      this.props.provider || ''
+    );
+  }
 
   handleSubmit = (fetch: any) => async (user: User) => {
     const updateProfileReq = makeUpdateProfileReq(user);
@@ -124,7 +131,7 @@ class UserProfileScreen extends React.Component<P> {
         title={placeholder}
         titleTextColor={getColor('gray')}
         cellAccessoryView={
-          <View style={{ flexGrow: 2 }}>
+          <View style={{ flexGrow: 3 }}>
             <FormField
               style={{ fontSize: 16, textAlign: 'right' }}
               label=""
@@ -238,7 +245,7 @@ class UserProfileScreen extends React.Component<P> {
                         {!this.compareData(this.props.user, {
                           ...this.props.user,
                           ...form.values,
-                        }) ? (
+                        }) && !this.disableEditing ? (
                           <NavigationTextButton
                             title="Save"
                             onPress={form.handleSubmit}
@@ -258,6 +265,7 @@ class UserProfileScreen extends React.Component<P> {
                                   )}
                                   outline={3}
                                   size={82}
+                                  editable={!this.disableEditing}
                                 />
                               </CenterView>
                             }
@@ -270,7 +278,7 @@ class UserProfileScreen extends React.Component<P> {
                           {this.renderUserDetailCell({
                             placeholder: 'First name',
                             name: 'first_name',
-                            editable: true,
+                            editable: !this.disableEditing,
                             onChange: e =>
                               this.handleFieldChange(
                                 form.setFieldValue,
@@ -281,7 +289,7 @@ class UserProfileScreen extends React.Component<P> {
                           {this.renderUserDetailCell({
                             placeholder: 'Last name',
                             name: 'last_name',
-                            editable: true,
+                            editable: !this.disableEditing,
                             onChange: e =>
                               this.handleFieldChange(
                                 form.setFieldValue,
@@ -349,6 +357,7 @@ class Provider extends React.Component<P> {
 export default (connect(
   (state: Store) => ({
     user: selectUser(state),
+    provider: getProvider(state),
   }),
   { setUserProfile }
 ): Connector<{}, P>)(Provider);

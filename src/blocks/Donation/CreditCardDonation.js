@@ -4,6 +4,7 @@ import React from 'react';
 import { Modal, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import Braintree from 'react-native-braintree-xplat';
 import { flatten, unflatten } from 'flat';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import {
   Button,
@@ -210,46 +211,48 @@ export class CreditCardDonationButton extends React.Component<Props, State> {
             rules={RULES}
             render={formik => {
               return (
-                <ScrollView
-                  alwaysBounceVertical={false}
-                  keyboardShouldPersistTaps="always"
-                  style={styles.container}
-                  contentContainerStyle={{ minHeight: '100%' }}
-                >
-                  <Spacer height={40} />
-                  {this.renderCardDetails()}
-
-                  <Spacer height={50} />
-                  {this.renderCardholderDetails(formik)}
-
-                  <TouchableOpacity
-                    style={{
-                      padding: 10,
-                      position: 'absolute',
-                      top: 30,
-                      right: 0,
-                    }}
-                    onPress={this.cancelPayment}
+                <View style={{ paddingTop: getStatusBarHeight(true) }}>
+                  <ScrollView
+                    alwaysBounceVertical={false}
+                    keyboardShouldPersistTaps="always"
+                    style={styles.container}
+                    contentContainerStyle={{ minHeight: '100%' }}
                   >
-                    <Icon name="close" size={24} color="gray" />
-                  </TouchableOpacity>
+                    <Spacer height={20} />
+                    {this.renderCardDetails()}
 
-                  <Button
-                    disabled={
-                      this.state.busy ||
-                      CardInput.isValid(unflatten(formik.values).card) ===
-                        false ||
-                      (formik.dirty && formik.isValid === false)
-                    }
-                    block
-                    color={getColor('orange')}
-                    onPress={formik.handleSubmit}
-                    size="lg"
-                    style={styles.button}
-                    textColor={getColor('white')}
-                    title={this.state.busy ? 'Donate...' : 'Donate'}
-                  />
-                </ScrollView>
+                    <Spacer height={50} />
+                    {this.renderCardholderDetails(formik)}
+
+                    <TouchableOpacity
+                      style={{
+                        padding: 10,
+                        position: 'absolute',
+                        top: 10,
+                        right: 0,
+                      }}
+                      onPress={this.cancelPayment}
+                    >
+                      <Icon name="close" size={24} color="gray" />
+                    </TouchableOpacity>
+
+                    <Button
+                      disabled={
+                        this.state.busy ||
+                        CardInput.isValid(unflatten(formik.values).card) ===
+                          false ||
+                        (formik.dirty && formik.isValid === false)
+                      }
+                      block
+                      color={getColor('orange')}
+                      onPress={formik.handleSubmit}
+                      size="lg"
+                      style={styles.button}
+                      textColor={getColor('white')}
+                      title={this.state.busy ? 'Donate...' : 'Donate'}
+                    />
+                  </ScrollView>
+                </View>
               );
             }}
           />
