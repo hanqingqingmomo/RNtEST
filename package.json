@@ -59,6 +59,7 @@
     "react-native-portal": "^1.2.1",
     "react-native-push-notification": "^3.0.1",
     "react-native-splash-screen": "^3.0.1",
+    "react-native-status-bar-height": "^2.0.0",
     "react-native-tableview-simple": "^0.16.13",
     "react-native-twitter-signin": "creatixpublic/react-native-twitter-signin",
     "react-native-vector-icons": "^4.4.0",
