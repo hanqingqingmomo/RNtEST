@@ -1,14 +1,19 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
 import { Text, View, Image, ImagePreview } from '../../atoms';
 import { css } from '../../utils/style';
 import { parseTextContent } from '../../utils/text';
 
-const { width } = Dimensions.get('window');
+const WINDOW_WIDTH = Dimensions.get('window').width;
 
 type Layout = {
   height: number,
@@ -45,46 +50,43 @@ export default class NewsFeedItemAttachment extends Component<Props, State> {
     layout: null,
   };
 
-  renderImage({ url }: Props): React$Node {
-    const { layout, size } = this.state;
-    const marginLeft = layout ? -1 * ((width - layout.width) / 2) : 0;
+  computeImageSize = (origWidth: number, origHeight: number): Object => {
+    const { layout } = this.state;
+    const ratio = origWidth / origHeight;
 
-    Image.getSize(url, (origWidth, origHeight) => {
-      const ratio = origWidth / origHeight;
+    if (Platform.OS === 'android' && layout) {
+      return {
+        width: layout.width,
+        height: layout.width / ratio,
+      };
+    }
 
-      if (size === null) {
-        this.setState({
-          size: {
-            width,
-            height: width / ratio,
-          },
-        });
-      }
-    });
+    return {
+      width: WINDOW_WIDTH,
+      height: WINDOW_WIDTH / ratio,
+    };
+  };
 
-    return layout && size ? (
-      <Lightbox
-        style={[styles.imageWrapper, { marginLeft }]}
-        underlayColor="white"
-        springConfig={{ tension: 10 }}
-        renderContent={() => (
-          <ImagePreview resizeMode="contain" imageURI={this.props.url} />
-        )}
-      >
-        <Image source={{ url }} style={size} />
-      </Lightbox>
-    ) : null;
-  }
+  computeLightboxMargin = (): number => {
+    const { layout } = this.state;
 
-  renderTextContent({ title, isDetail }: Props): React$Node {
-    return title ? (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-          {parseTextContent(title, isDetail ? null : 120)}
-        </Text>
-      </TouchableOpacity>
-    ) : null;
-  }
+    if (Platform.OS === 'ios' && !!layout) {
+      return -1 * ((WINDOW_WIDTH - layout.width) / 2);
+    }
+
+    return 0;
+  };
+
+  computeLightboxWidth = (): number => {
+    const { layout } = this.state;
+
+    return Platform.OS === 'android' && layout ? layout.width : WINDOW_WIDTH;
+  };
+
+  computeLightboxStyle = (): Object => ({
+    marginLeft: this.computeLightboxMargin(),
+    width: this.computeLightboxWidth(),
+  });
 
   onLayout = ({ nativeEvent }: LayoutPayload) => {
     if (!this.state.layout) {
@@ -92,11 +94,53 @@ export default class NewsFeedItemAttachment extends Component<Props, State> {
     }
   };
 
+  renderImage(): React$Node {
+    const { url } = this.props;
+    const { layout, size } = this.state;
+
+    if (!layout) {
+      return null;
+    }
+
+    if (size === null) {
+      Image.getSize(url, (origWidth: number, origHeight: number) => {
+        this.setState({
+          size: this.computeImageSize(origWidth, origHeight),
+        });
+      });
+    }
+
+    return size ? (
+      <Lightbox
+        style={[styles.imageWrapper, this.computeLightboxStyle()]}
+        underlayColor="white"
+        springConfig={{ tension: 10 }}
+        renderContent={() => (
+          <ImagePreview resizeMode="contain" imageURI={url} style={size} />
+        )}
+      >
+        <Image source={{ uri: url }} style={size} />
+      </Lightbox>
+    ) : null;
+  }
+
+  renderTextContent(): React$Node {
+    const { title, isDetail, onPress } = this.props;
+
+    return title ? (
+      <TouchableOpacity onPress={onPress}>
+        <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
+          {parseTextContent(title, isDetail ? null : 120)}
+        </Text>
+      </TouchableOpacity>
+    ) : null;
+  }
+
   render() {
     return (
       <View onLayout={this.onLayout}>
-        {this.renderImage(this.props)}
-        {this.renderTextContent(this.props)}
+        {this.renderImage()}
+        {this.renderTextContent()}
       </View>
     );
   }
@@ -105,8 +149,5 @@ export default class NewsFeedItemAttachment extends Component<Props, State> {
 const styles = StyleSheet.create({
   imageWrapper: {
     marginBottom: 11,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width,
   },
 });
