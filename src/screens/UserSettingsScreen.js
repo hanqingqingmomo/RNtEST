@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import Config from 'react-native-config';
 import { connect } from 'react-redux';
 
 import { endSession } from '../redux/ducks/application';
@@ -104,7 +105,12 @@ class UserProfileScreen extends Component<Props> {
             />
           </TableView.Section>
           <TableView.Section header="Application version">
-            <TableView.Cell title={DeviceInfo.getReadableVersion()} />
+            <TableView.Cell
+              title={`${DeviceInfo.getReadableVersion()}${Config.ENVIRONMENT !==
+              'production'
+                ? `, env: ${Config.ENVIRONMENT}`
+                : ''}`}
+            />
           </TableView.Section>
         </TableView.Table>
       </Screen>
