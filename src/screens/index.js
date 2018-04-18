@@ -28,6 +28,7 @@ import TermsAndConditionsScreen from './TermsAndConditionsScreen';
 import UserProfileScreen from './UserProfileScreen';
 import UserSettingsScreen from './UserSettingsScreen';
 import WebViewScreen from './WebViewScreen';
+import CreateEventScreen from './CreateEvent/CreateEventScreen';
 
 export { AggregatedNewsFeedScreen };
 export { AuthenticationRootScreen };
@@ -57,3 +58,4 @@ export { TermsAndConditionsScreen };
 export { UserProfileScreen };
 export { UserSettingsScreen };
 export { WebViewScreen };
+export { CreateEventScreen };

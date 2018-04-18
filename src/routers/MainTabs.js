@@ -24,6 +24,7 @@ import type { Community, FetchProps } from '../Types';
 import GlobalFeedStack from './MainTabs/GlobalFeedStack';
 import CommunityStack from './MainTabs/CommunityStack';
 import EventStack from './MainTabs/EventStack';
+import CreateEventStack from './CreateEventStack';
 
 let ALERT = null;
 
@@ -74,7 +75,7 @@ const Navigator = TabNavigator(
     },
   },
   {
-    initialRouteName: 'GlobalFeedTab',
+    initialRouteName: 'EventTab',
     lazy: true,
     swipeEnabled: false,
     tabBarComponent: TabBarBottom,
@@ -228,6 +229,8 @@ export default class MainTabs extends Component<{}, State> {
         return <HelpStack {...props} />;
       case 'OrganisationProfileModal':
         return <OrganisationStack {...props} />;
+      case 'CreateEventModal':
+        return <CreateEventStack {...props} />;
       default:
         if (__DEV__) {
           console.warn(
@@ -268,6 +271,7 @@ export default class MainTabs extends Component<{}, State> {
                   this._drawerRef.openDrawer();
                 }
               },
+              openModalRoute: this.openModalRoute,
             }}
           />
         </DrawerLayout>
