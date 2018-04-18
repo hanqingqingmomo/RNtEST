@@ -23,6 +23,7 @@ import type { Community, FetchProps } from '../Types';
 // Screens
 import GlobalFeedStack from './MainTabs/GlobalFeedStack';
 import CommunityStack from './MainTabs/CommunityStack';
+import EventStack from './MainTabs/EventStack';
 
 let ALERT = null;
 
@@ -57,6 +58,12 @@ const Navigator = TabNavigator(
       screen: GlobalFeedStack,
       navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: makeTabBarIcon('home'),
+      }),
+    },
+    EventTab: {
+      screen: EventStack,
+      navigationOptions: ({ navigation, screenProps }) => ({
+        tabBarIcon: makeTabBarIcon('calendar'),
       }),
     },
     CommunityTab: {
