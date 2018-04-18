@@ -9,6 +9,7 @@ type Props = {
   disabled?: boolean,
   onPress: Function,
   textStyle?: Object,
+  textColor?: string,
   title: string,
 };
 
@@ -21,7 +22,7 @@ export default function NavigationTextButton(props: Props): React$Node {
     >
       <Text
         size={18}
-        color="black"
+        color={props.textColor || 'black'}
         style={[
           props.disabled ? styles.disabled : undefined,
           styles.text,

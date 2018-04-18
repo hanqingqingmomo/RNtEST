@@ -16,6 +16,7 @@ type EventGroup = { [date: string]: Array<EventProps> };
 
 type Props = {
   data: Array<EventProps>,
+  onActionPress: (action: string, event_id: string) => void,
 };
 
 function Line() {
@@ -63,10 +64,6 @@ export default class EventFeed extends Component<Props> {
       }, {});
   }
 
-  _onActionPress = (action: string) => {
-    console.log('action', action);
-  };
-
   _renderItem = ({ item }: FlatListItemProps) => {
     const events = this.events[item];
     const hasWebinar = events.some(
@@ -83,7 +80,12 @@ export default class EventFeed extends Component<Props> {
           <FlatList
             data={events}
             renderItem={({ item }: { item: EventProps }) => (
-              <Event onActionPress={this._onActionPress} event={item} />
+              <Event
+                onActionPress={(action: string) => {
+                  this.props.onActionPress(action, item.id);
+                }}
+                event={item}
+              />
             )}
             keyExtractor={(event: EventProps): string => event.id}
             ItemSeparatorComponent={Line}

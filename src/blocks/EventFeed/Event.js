@@ -30,11 +30,14 @@ type PostProps = {
 type UserProps = {
   id: string,
   profile_photo: string,
+  first_name: string,
+  last_name: string,
 };
 
 export type EventProps = {
   id: string,
   name: string,
+  location: string,
   post_in: Array<PostProps>,
   start: Date,
   end: Date,
