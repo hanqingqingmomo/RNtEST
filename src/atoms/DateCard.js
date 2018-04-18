@@ -10,7 +10,7 @@ import { getColor } from '../utils/color';
 type SizeStyle = $Keys<typeof sizeStyles>;
 
 type Props = {
-  date: Date,
+  date: Date | string,
   highlighted?: boolean,
   size: SizeStyle,
 };

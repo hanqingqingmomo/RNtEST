@@ -1,85 +1,107 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import format from 'date-fns/format';
 
-import Event from './Event';
+import Event, { type EventProps } from './Event';
 import { View, DateCard, FlatList } from '../../atoms';
 
-const ATTENDING_STATUS = {
-  GOING: 'GOING',
-  NOT_GOING: 'NOT_GOING',
-  PENDING: 'PENDING',
-};
-
-type EventProps = {
-  date: Date,
-  duration: { from: Date, to: Date },
-  id: string,
-  live: boolean,
-  name: string,
-  participants: Array<string>,
-  status: $Keys<typeof ATTENDING_STATUS>,
-  tag: string,
-};
-
-type ItemProps = {
-  date: Date,
-  events: Array<EventProps>,
-};
-
 type FlatListItemProps = {
-  item: ItemProps,
+  item: string,
   index: number,
 };
 
-type P = {
-  data: Array<ItemProps>,
+type EventGroup = { [date: string]: Array<EventProps> };
+
+type Props = {
+  data: Array<EventProps>,
 };
 
-export default class EventFeed extends React.Component<P> {
-  onJoin = (id: number | string) => {};
+function Line() {
+  return (
+    <View
+      style={{ height: StyleSheet.hairlineWidth, backgroundColor: '#ddd' }}
+    />
+  );
+}
 
-  onGoing = (id: number | string) => {};
+function ItemSeparatorComponent() {
+  return (
+    <View style={{ paddingLeft: 71 }}>
+      <Line />
+    </View>
+  );
+}
 
-  onNotGoing = (id: number | string) => {};
+export default class EventFeed extends Component<Props> {
+  get events(): EventGroup {
+    let groups = this.props.data
+      .sort((event_a: EventProps, event_b: EventProps): number => {
+        return event_a.webinar === event_b.webinar
+          ? 0
+          : event_a.webinar ? -1 : 1;
+      })
+      .reduce((acc: EventGroup, event: EventProps): EventGroup => {
+        const date = format(event.start, 'MM/DD/YYYY');
 
-  renderEvent = (event: EventProps, border: boolean) => {
-    return (
-      <Event
-        actions={{
-          onJoin: this.onJoin,
-          onGoing: this.onGoing,
-          onNotGoing: this.onNotGoing,
-        }}
-        event={event}
-        key={event.id}
-        border={border}
-      />
-    );
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+
+        acc[date].push(event);
+
+        return acc;
+      }, {});
+
+    return Object.keys(groups)
+      .sort()
+      .reduce((acc: EventGroup, key: string): EventGroup => {
+        acc[key] = groups[key];
+
+        return acc;
+      }, {});
+  }
+
+  _onActionPress = (action: string) => {
+    console.log('action', action);
   };
 
-  renderItem = ({ item: { date, events }, index }: FlatListItemProps) => {
+  _renderItem = ({ item }: FlatListItemProps) => {
+    const events = this.events[item];
+    const hasWebinar = events.some(
+      (event: EventProps): boolean => !!event.webinar
+    );
+
     return (
-      <View style={styles.rowContainer} key={index}>
+      <View style={styles.rowContainer} key={item}>
         <View style={styles.dateColumn}>
-          <DateCard date={date} size="md" />
+          <DateCard date={item} size="md" highlighted={hasWebinar} />
         </View>
+
         <View style={styles.eventColumn}>
-          {events.map((event, idx) => this.renderEvent(event, true))}
+          <FlatList
+            data={events}
+            renderItem={({ item }: { item: EventProps }) => (
+              <Event onActionPress={this._onActionPress} event={item} />
+            )}
+            keyExtractor={(event: EventProps): string => event.id}
+            ItemSeparatorComponent={Line}
+          />
         </View>
       </View>
     );
   };
 
-  keyExtractor = (data: ItemProps): string => data.date.toString();
+  _keyExtractor = (date: string): string => date;
 
-  render() {
+  render(): React$Node {
     return (
       <FlatList
-        data={this.props.data}
-        renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
+        data={Object.keys(this.events)}
+        renderItem={this._renderItem}
+        keyExtractor={this._keyExtractor}
+        ItemSeparatorComponent={ItemSeparatorComponent}
       />
     );
   }

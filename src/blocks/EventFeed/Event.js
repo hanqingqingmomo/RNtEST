@@ -10,9 +10,9 @@ import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 
 const ATTENDING_STATUS = {
-  GOING: 'GOING',
-  NOT_GOING: 'NOT_GOING',
-  PENDING: 'PENDING',
+  GOING: 'going',
+  NOT_GOING: 'not_going',
+  PENDING: 'pending',
 };
 
 const EVENT_STATUS = {
@@ -20,23 +20,34 @@ const EVENT_STATUS = {
   INACTIVE: 'INACTIVE',
 };
 
-type P = {
-  actions: {
-    onJoin: (number | string) => void,
-    onGoing: (number | string) => void,
-    onNotGoing: (number | string) => void,
-  },
-  border?: boolean,
-  event: {
-    date: Date,
-    duration: { from: Date, to: Date },
-    id: string,
-    live: boolean,
-    name: string,
-    participants: Array<string>,
-    status: $Keys<typeof ATTENDING_STATUS>,
-    tag: string,
-  },
+type RSVPStatus = $Values<typeof ATTENDING_STATUS>;
+
+type PostProps = {
+  id: string,
+  name: string,
+};
+
+type UserProps = {
+  id: string,
+  profile_photo: string,
+};
+
+export type EventProps = {
+  id: string,
+  name: string,
+  post_in: Array<PostProps>,
+  start: Date,
+  end: Date,
+  rsvp: RSVPStatus,
+  representers: Array<UserProps>,
+  privacy: 'public' | 'private',
+  atendees: Array<UserProps>,
+  webinar?: boolean,
+};
+
+type Props = {
+  onActionPress: (RSVPStatus | 'join') => void,
+  event: EventProps,
 };
 
 const palettes = {
@@ -107,17 +118,74 @@ const common = {
   },
 };
 
-export default function Event({ actions, event, border }: P) {
-  const { date, duration, id, live, name, participants, status, tag } = event;
+function _renderWebinar({ palette, onActionPress }): React$Node {
+  return (
+    <View style={[styles.midSection, styles.alignment]}>
+      <Text style={styles.liveLabel} color="white" size={13} weight="bold">
+        Live
+      </Text>
+      <Button
+        color={palette.joinButton.color}
+        onPress={() => onActionPress('join')}
+        size="md"
+        textColor={palette.joinButton.text}
+        title="Join"
+        style={styles.buttonJoin}
+      />
+    </View>
+  );
+}
 
-  const pastEvent = isPast(date);
+function _renderEvent({ event, palette, onActionPress }): React$Node {
+  const pastEvent = isPast(event.start);
+
+  return (
+    <View style={[styles.midSection, styles.alignment]}>
+      <Text color="gray" size={13} lineHeight={15}>
+        {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
+      </Text>
+      <View style={styles.alignment}>
+        <Button.Icon
+          color={
+            event.rsvp ? palette[event.rsvp].notGoingButton.color : '#B0BEC5'
+          }
+          disabled={pastEvent}
+          iconColor={
+            event.rsvp
+              ? palette[event.rsvp].notGoingButton.iconColor
+              : '#B0BEC5'
+          }
+          iconName="close"
+          onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
+          outline={event.rsvp !== ATTENDING_STATUS.NOT_GOING}
+          size="md"
+          style={css('paddingRight', 12)}
+        />
+        <Button.Icon
+          color={event.rsvp ? palette[event.rsvp].goingButton.color : '#B0BEC5'}
+          disabled={pastEvent}
+          iconColor={
+            event.rsvp ? palette[event.rsvp].goingButton.iconColor : '#B0BEC5'
+          }
+          iconName="check"
+          onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
+          outline={event.rsvp !== ATTENDING_STATUS.GOING}
+          size="md"
+        />
+      </View>
+    </View>
+  );
+}
+
+export default function Event({ event, onActionPress }: Props): React$Node {
+  const pastEvent = isPast(event.start);
   const palette = {
     ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
     ...common,
   };
 
   return (
-    <View style={[styles.container, border ? styles.borderBottom : undefined]}>
+    <View style={styles.container}>
       <Text
         style={css('color', palette.titleColor)}
         fontSize={13}
@@ -126,60 +194,30 @@ export default function Event({ actions, event, border }: P) {
         numberOfLines={2}
         ellipsizeMode="tail"
       >
-        {name}
+        {event.name}
       </Text>
 
-      {live ? (
-        <View style={[styles.midSection, styles.alignment]}>
-          <Text style={styles.liveLabel} color="white" size={13} weight="bold">
-            Live
-          </Text>
-          <Button
-            color={palette.joinButton.color}
-            onPress={() => actions.onJoin(id)}
-            size="sm"
-            textColor={palette.joinButton.text}
-            title="Join"
-            style={styles.buttonJoin}
-          />
-        </View>
-      ) : (
-        <View style={[styles.midSection, styles.alignment]}>
-          <Text color="gray" size={13} lineHeight={15}>
-            {`${format(duration.from, 'h:mm A')} - ${format(
-              duration.to,
-              'h:mm A'
-            )}`}
-          </Text>
-          <View style={styles.alignment}>
-            <Button.Icon
-              color={palette[status].notGoingButton.color}
-              disabled={pastEvent}
-              iconColor={palette[status].notGoingButton.iconColor}
-              iconName="close"
-              onPress={() => actions.onNotGoing(id)}
-              outline={status !== ATTENDING_STATUS.NOT_GOING}
-              size="sm"
-              style={css('paddingRight', 12)}
-            />
-            <Button.Icon
-              color={palette[status].goingButton.color}
-              disabled={pastEvent}
-              iconColor={palette[status].goingButton.iconColor}
-              iconName="close"
-              onPress={() => actions.onGoing(id)}
-              outline={status !== ATTENDING_STATUS.GOING}
-              size="sm"
-            />
-          </View>
-        </View>
-      )}
+      {event.webinar
+        ? _renderWebinar({ palette, onActionPress })
+        : _renderEvent({ event, palette, onActionPress })}
 
       <View style={styles.alignment}>
         <View style={styles.pillWrapper}>
-          <Pill color={palette.pillTextColor} title={tag} />
+          {event.post_in.map((post: PostProps): React$Node => (
+            <Pill
+              key={post.id}
+              color={palette.pillTextColor}
+              title={post.name}
+              truncate
+            />
+          ))}
         </View>
-        <AvatarGroup imageURIs={participants} title={more => `+${more}`} />
+        <AvatarGroup
+          imageURIs={event.atendees.map(
+            (atendee: UserProps): string => atendee.profile_photo
+          )}
+          title={(more: number): string => `+${more}`}
+        />
       </View>
     </View>
   );
@@ -191,17 +229,12 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingVertical: 14,
   },
-  borderBottom: {
-    borderColor: '#EDEFF2',
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-  },
   alignment: {
     alignItems: 'center',
     flexDirection: 'row',
   },
   buttonJoin: {
-    width: 60,
+    minWidth: 34 + 34 + 12,
   },
   liveLabel: {
     paddingHorizontal: 7,
@@ -212,7 +245,7 @@ const styles = StyleSheet.create({
   },
   midSection: {
     justifyContent: 'space-between',
-    marginVertical: 8,
+    marginVertical: 2,
   },
   pillWrapper: {
     maxWidth: '50%',

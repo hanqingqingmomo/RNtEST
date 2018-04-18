@@ -1,62 +1,58 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import { type NavigationScreenConfigProps } from 'react-navigation';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-import {
-  Icon,
-  SearchBox,
-  View,
-  ShadowView,
-  TouchableOpacity,
-} from '../../atoms';
+import { Icon, SearchBox, View, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
 
-export default function EventFeedHeader() {
+type Props = NavigationScreenConfigProps & {
+  onChangeText: string => void,
+  onPress: Function,
+  searchValue: string,
+};
+
+export default function EventFeedHeader(props: Props): React$Node {
   return (
-    <ShadowView style={styles.container}>
-      <View style={styles.iconLeftContainer}>
-        <TouchableOpacity>
-          <Icon name="ywca" size={33} color="orange" />
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container} radius={0}>
+      <TouchableOpacity
+        onPress={props.screenProps.openDrawer}
+        style={styles.icon}
+      >
+        <Icon name="menu-1" size={20} color={getColor('orange')} />
+      </TouchableOpacity>
+
       <View style={styles.searchContainer}>
         <SearchBox
-          onChangeText={() => {}}
-          placeholder={'Search...'}
-          value={'Search...'}
+          onChangeText={props.onChangeText}
+          placeholder="Search..."
+          value={props.searchValue}
         />
       </View>
-      <View style={styles.iconRightContainer}>
-        <TouchableOpacity>
-          <Icon name="plus-bold" size={33} color="orange" />
-        </TouchableOpacity>
-      </View>
-    </ShadowView>
+
+      <TouchableOpacity onPress={props.onPress} style={styles.icon}>
+        <Icon name="plus" size={20} color="orange" />
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: getStatusBarHeight() + 6,
+    paddingBottom: 7,
     alignItems: 'center',
-    backgroundColor: getColor('white'),
+    backgroundColor: Platform.OS === 'ios' ? '#f6f6f6' : '#FFF',
     flexDirection: 'row',
-    height: 50,
+    borderColor: '#a2a2a2',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-
-  iconLeftContainer: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
+  icon: {
+    paddingHorizontal: 10,
   },
-
-  iconRightContainer: {
-    flex: 1,
-    marginRight: 10,
-  },
-
   searchContainer: {
-    flex: 8,
-    marginRight: 10,
+    flex: 1,
   },
 });

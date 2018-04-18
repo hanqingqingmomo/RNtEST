@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { css } from '../utils/style';
 import { Avatar, Text, View } from './index';
 
-const AVATAR_WIDTH = 22;
+const AVATAR_WIDTH = 24;
 const OUTLINE_WIDTH = 2;
 const OVERLAP = AVATAR_WIDTH * 0.45;
 
@@ -29,15 +29,17 @@ export default function AvatarGroup({ imageURIs, title }: Props) {
           <Avatar imageURI={img} size={AVATAR_WIDTH - OUTLINE_WIDTH * 2} />
         </View>
       ))}
-      <Text
-        color="gray"
-        size={12}
-        weight="600"
-        lineHeight={18}
-        style={css('marginLeft', 5)}
-      >
-        {title(diff)}
-      </Text>
+      {diff > 0 ? (
+        <Text
+          color="gray"
+          size={12}
+          weight="600"
+          lineHeight={18}
+          style={css('marginLeft', 5)}
+        >
+          {title(diff)}
+        </Text>
+      ) : null}
     </View>
   );
 }

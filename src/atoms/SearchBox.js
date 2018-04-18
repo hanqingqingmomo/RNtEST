@@ -30,9 +30,9 @@ export default function SearchBox({ onChangeText, placeholder, value }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ECEFF1',
-    borderRadius: 35 / 2,
-    height: 35,
+    backgroundColor: '#eaebec',
+    borderRadius: 30 / 2,
+    height: 30,
     flexDirection: 'row',
     paddingLeft: 15,
     overflow: 'hidden',
