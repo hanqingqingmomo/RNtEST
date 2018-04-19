@@ -7,6 +7,7 @@ import {
   CreateEventScreen,
   CreateDescriptionScreen,
   SelectLocationScreen,
+  SelectCommunityScreen,
 } from '../screens';
 import { NavigationIconButton } from '../atoms';
 
@@ -32,5 +33,11 @@ export default StackNavigator({
   },
   SelectLocationScreen: {
     screen: SelectLocationScreen,
+  },
+  SelectCommunityScreen: {
+    screen: SelectCommunityScreen,
+    navigationOptions: ({ navigation, screenProps }) => ({
+      headerTitle: 'Post in',
+    }),
   },
 });

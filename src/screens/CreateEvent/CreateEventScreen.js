@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import { Switch } from 'react-native';
+import { type NavigationScreenConfigProps } from 'react-navigation';
 
 import { Screen, NavigationTextButton, Form, TableView } from '../../atoms';
 import { getColor } from '../../utils/color';
@@ -144,6 +145,11 @@ export default class CreateEventScreen extends Component<Props> {
           formik: data,
         });
         break;
+      case 'post_in':
+        this.props.navigation.navigate('SelectCommunityScreen', {
+          formik: data,
+        });
+        break;
       default:
     }
   };
@@ -180,7 +186,6 @@ export default class CreateEventScreen extends Component<Props> {
                 </TableView.Section>
 
                 <TableView.Section header="event details">
-                  <TableView.Cell title="Post in" />
                   <TableView.Cell
                     cellStyle="RightDetail"
                     title="Location"
@@ -188,6 +193,21 @@ export default class CreateEventScreen extends Component<Props> {
                     titleTextColor={getColor('gray')}
                     rightDetailColor="#455A64"
                     onPress={() => this._onCellPress('location', formik)}
+                  />
+                  <TableView.Cell
+                    cellContentView={
+                      <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <Text
+                          color={getColor('gray')}
+                          style={{ flex: 1, paddingRight: 2 }}
+                        >
+                          Post in
+                        </Text>
+                        {_renderPills(formik.values.post_in, 2)}
+                      </View>
+                    }
+                    onPress={() => this._onCellPress('post_in', formik)}
+                    accessory="DisclosureIndicator"
                   />
                 </TableView.Section>
 
