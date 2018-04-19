@@ -2,11 +2,31 @@
 
 import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
-import { Switch } from 'react-native';
+import { TextInput, FlatList, Alert, Platform } from 'react-native';
+import { showImagePicker } from 'react-native-image-picker';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 
-import { Screen, NavigationTextButton, Form, TableView } from '../../atoms';
+import {
+  Screen,
+  NavigationTextButton,
+  Form,
+  TableView,
+  FormField,
+  View,
+  Text,
+  Pill,
+} from '../../atoms';
 import { getColor } from '../../utils/color';
+import { InviteButton, PhotoButton } from './Buttons';
+import { UserPreview, CommunityPreview } from './Previews';
+import {
+  SettingsCell,
+  PrivacyCell,
+  SharingCell,
+  SurveyCell,
+  DatePickerCell,
+  DateCell,
+} from './Cells';
 
 type Props = NavigationScreenConfigProps;
 
@@ -15,7 +35,6 @@ type State = {
 };
 
 const SCHEDULE_BUTTON_ID = 'CreateEvent:ScheduleButton';
-const LIGHT_GRAY = '#455A64';
 
 const INITIAL_VALUES = {
   privacy: 'public',
@@ -28,90 +47,197 @@ const INITIAL_VALUES = {
   'settings.add_event_to_calnedar': true,
   'settings.send_invitations_via_email': true,
   'settings.send_reminders_via_email': true,
+  cover_photo: '',
+  post_in: [],
+  start: new Date(),
+  end: new Date(),
 };
 
-function _renderPrivacyCell(
-  formik: Object,
-  value: 'public' | 'private'
-): React$Node {
-  return (
-    <TableView.Cell
-      title={value === 'public' ? 'Public' : 'Private'}
-      accessory={formik.values.privacy === value ? 'Checkmark' : undefined}
-      titleTextColor={
-        formik.values.privacy === value ? LIGHT_GRAY : getColor('gray')
-      }
-      onPress={
-        formik.values.privacy === value
-          ? false
-          : () => formik.setFieldValue('privacy', value)
-      }
-    />
-  );
-}
+const USERS = [
+  {
+    id: '0',
+    button: true,
+  },
+  {
+    id: 'b520ce3ed232',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+  {
+    id: 'b520ce3ed233',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+  {
+    id: 'b520ce3ed234',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+  {
+    id: 'b520ce3ed235',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+  {
+    id: 'b520ce3ed236',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+  {
+    id: 'b520ce3ed237',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+  {
+    id: 'b520ce3ed238',
+    first_name: 'Roberto',
+    last_name: 'Planto',
+    email: 'robertop@email.com',
+    profile_photo:
+      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
+  },
+];
 
-function _renderSurveyCell(formik: Object, value: boolean): React$Node {
-  return (
-    <TableView.Cell
-      title={value ? 'On' : 'Off'}
-      accessory={
-        formik.values.enable_survey === value ? 'Checkmark' : undefined
-      }
-      titleTextColor={
-        formik.values.enable_survey === value ? LIGHT_GRAY : getColor('gray')
-      }
-      onPress={
-        formik.values.enable_survey === value
-          ? false
-          : () => formik.setFieldValue('enable_survey', value)
-      }
-    />
-  );
-}
+const COMUNITIES = [
+  {
+    id: '0',
+    button: true,
+  },
+  {
+    id: '5c4b12e77d0b',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d0C',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d0d',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d0e',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d0f',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d1b',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d2b',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d3b',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d4b',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+  {
+    id: '5c4b12e77d5b',
+    name: 'Test communitasdasdy',
+    cover_photo:
+      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+  },
+];
 
-function _renderSharingCell(
-  formik: Object,
-  value: 'presenters' | 'everyone'
-): React$Node {
-  return (
-    <TableView.Cell
-      title={value === 'presenters' ? 'Only presenters' : 'Everyone'}
-      accessory={
-        formik.values.sharing_webcams === value ? 'Checkmark' : undefined
-      }
-      titleTextColor={
-        formik.values.sharing_webcams === value ? LIGHT_GRAY : getColor('gray')
-      }
-      onPress={
-        formik.values.sharing_webcams === value
-          ? false
-          : () => formik.setFieldValue('sharing_webcams', value)
-      }
-    />
-  );
-}
+const IMAGE_PICKER_OPTIONS = {
+  title: 'Choose Photo',
+  takePhotoButtonTitle: 'Take Photo',
+  chooseFromLibraryButtonTitle: 'Choose from Library',
+  mediaType: 'photo',
+  noData: true,
+  storageOptions: {
+    skipBackup: true,
+  },
+};
 
-function _renderSwitch(formik: Object, key: string): React$Node {
+function _renderInput({ name, placeholder }) {
   return (
-    <Switch
-      value={formik.values[key]}
-      onValueChange={(value: boolean) => {
-        return formik.setFieldValue(key, value);
+    <FormField
+      name={name}
+      render={({ field, form }) => {
+        return (
+          <TextInput
+            value={field.value}
+            placeholder={placeholder}
+            placeholderTextColor={getColor('gray')}
+            onChangeText={(text: string) => {
+              form.setFieldValue(field.name, text);
+            }}
+            underlineColorAndroid="transparent"
+            style={{ flex: 1, padding: 0, paddingRight: 15 }}
+          />
+        );
       }}
     />
   );
 }
 
-function _renderSettingsCell({ formik, title, key }): React$Node {
-  return (
-    <TableView.Cell
-      title={title}
-      cellAccessoryView={_renderSwitch(formik, key)}
-    />
-  );
+function _renderPills(commuities: Array<Object>, max: number): React$Node {
+  const comms = [...commuities];
+  comms.splice(0 + max);
+
+  const array = comms.map((community: Object, index: number): React$Node => (
+    <View key={community.id} style={{ paddingHorizontal: 2 }}>
+      <Pill color="orange" title={community.name} truncate />
+    </View>
+  ));
+
+  if (commuities.length > max) {
+    array.push(
+      <View key={commuities.length} style={{ paddingHorizontal: 2 }}>
+        <Pill color="orange" title={`+${commuities.length - max}`} />
+      </View>
+    );
+  }
+
+  return array;
 }
 
-export default class CreateEventScreen extends Component<Props> {
+export default class CreateEventScreen extends Component<Props, State> {
   static navigationOptions = ({ navigation }) => ({
     headerRight: <WhitePortal name={SCHEDULE_BUTTON_ID} />,
   });
@@ -128,6 +254,18 @@ export default class CreateEventScreen extends Component<Props> {
     console.log('submit');
   };
 
+  openFilePicker = (formik: Object) => {
+    showImagePicker(IMAGE_PICKER_OPTIONS, response => {
+      const { error, didCancel, uri } = response;
+
+      if (error) {
+        Alert.alert('Error', error);
+      } else if (!didCancel) {
+        formik.setFieldValue('cover_photo', uri);
+      }
+    });
+  };
+
   _onCellPress = (
     field: 'description' | 'location' | 'post_in' | 'start' | 'end' | 'photo',
     data: any
@@ -135,6 +273,9 @@ export default class CreateEventScreen extends Component<Props> {
     this.setState({ selectedField: field });
 
     switch (field) {
+      case 'photo':
+        this.openFilePicker(data);
+        break;
       case 'description':
         this.props.navigation.navigate('CreateDescriptionScreen', {
           formik: data,
@@ -175,7 +316,18 @@ export default class CreateEventScreen extends Component<Props> {
 
               <TableView.Table>
                 <TableView.Section sectionPaddingTop={0}>
-                  <TableView.Cell title="Title" />
+                  <TableView.Cell
+                    cellContentView={_renderInput({
+                      name: 'name',
+                      placeholder: 'Title',
+                    })}
+                    cellAccessoryView={
+                      <PhotoButton
+                        name="cover_photo"
+                        onPress={() => this._onCellPress('photo', formik)}
+                      />
+                    }
+                  />
                   <TableView.Cell
                     title={formik.values.description || 'Description'}
                     titleTextColor={
@@ -212,76 +364,152 @@ export default class CreateEventScreen extends Component<Props> {
                 </TableView.Section>
 
                 <TableView.Section header="duration">
-                  <TableView.Cell />
+                  <DateCell
+                    title="Starts"
+                    onPress={() => this._onCellPress('start')}
+                    value={formik.values.start}
+                  />
+                  <DatePickerCell
+                    open={selectedField === 'start'}
+                    date={formik.values.start}
+                    onDateChange={(date: Date) => {
+                      if (Platform.OS === 'android') {
+                        this.setState({ selectedField: '' });
+                      }
+                      formik.setFieldValue('start', date);
+                    }}
+                  />
+
+                  <DateCell
+                    title="Ends"
+                    onPress={() => this._onCellPress('end')}
+                    value={formik.values.end}
+                  />
+                  <DatePickerCell
+                    open={selectedField === 'end'}
+                    date={formik.values.end}
+                    onDateChange={(date: Date) => {
+                      if (Platform.OS === 'android') {
+                        this.setState({ selectedField: '' });
+                      }
+                      formik.setFieldValue('end', date);
+                    }}
+                  />
                 </TableView.Section>
 
                 <TableView.Section header="presenters">
-                  <TableView.Cell />
+                  <TableView.Cell
+                    contentContainerStyle={{
+                      paddingLeft: 15,
+                      paddingRight: 15,
+                    }}
+                    cellContentView={
+                      <View style={{ flexDirection: 'row' }}>
+                        <FlatList
+                          data={USERS}
+                          renderItem={({ item }) =>
+                            item.button ? (
+                              <InviteButton title="Add" />
+                            ) : (
+                              <UserPreview {...item} />
+                            )}
+                          keyExtractor={(item, index) => item.id}
+                          ItemSeparatorComponent={() => (
+                            <View style={{ width: 16 }} />
+                          )}
+                          horizontal
+                        />
+                      </View>
+                    }
+                  />
                 </TableView.Section>
 
                 <TableView.Section
                   header="privacy"
                   footer="Webinar will be listed publicly"
                 >
-                  {_renderPrivacyCell(formik, 'public')}
-                  {_renderPrivacyCell(formik, 'private')}
+                  <PrivacyCell value="public" />
+                  <PrivacyCell value="private" />
+                </TableView.Section>
+
+                <TableView.Section
+                  header="atendees"
+                  footer="Invite individually or entire community"
+                >
+                  <TableView.Cell
+                    contentContainerStyle={{
+                      paddingLeft: 15,
+                      paddingRight: 15,
+                    }}
+                    cellContentView={
+                      <View style={{ flexDirection: 'row' }}>
+                        <FlatList
+                          data={COMUNITIES}
+                          renderItem={({ item }) =>
+                            item.button ? (
+                              <InviteButton title="Add" />
+                            ) : (
+                              <CommunityPreview {...item} />
+                            )}
+                          keyExtractor={(item, index) => item.id}
+                          ItemSeparatorComponent={() => (
+                            <View style={{ width: 16 }} />
+                          )}
+                          horizontal
+                        />
+                      </View>
+                    }
+                  />
                 </TableView.Section>
 
                 <TableView.Section footer="Attendees will have the option to enter without logging in">
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Allow atendee enter as a guest',
-                    key: 'atendees_settings.allow_guest',
-                  })}
+                  <SettingsCell
+                    title="Allow atendee enter as a guest"
+                    name="atendees_settings.allow_guest"
+                  />
                 </TableView.Section>
 
                 <TableView.Section>
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Atendees can see poll results',
-                    key: 'atendees_settings.see_poll_results',
-                  })}
+                  <SettingsCell
+                    title="Atendees can see poll results"
+                    name="atendees_settings.see_poll_results"
+                  />
                 </TableView.Section>
 
                 <TableView.Section
                   header="questions &amp; answers"
                   footer="Atendees will be allowed to submit questions"
                 >
-                  {_renderSurveyCell(formik, true)}
-                  {_renderSurveyCell(formik, false)}
+                  <SurveyCell value={true} />
+                  <SurveyCell value={false} />
                 </TableView.Section>
 
                 <TableView.Section header="sharing webcams &amp; mics">
-                  {_renderSharingCell(formik, 'presenters')}
-                  {_renderSharingCell(formik, 'everyone')}
+                  <SharingCell value="presenters" />
+                  <SharingCell value="everyone" />
                 </TableView.Section>
 
                 <TableView.Section header="advanced settings">
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Record event',
-                    key: 'settings.record_event',
-                  })}
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Show chat in the recording',
-                    key: 'settings.show_chat_in_recording',
-                  })}
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Add event to Calendar',
-                    key: 'settings.add_event_to_calnedar',
-                  })}
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Send invitations via email',
-                    key: 'settings.send_invitations_via_email',
-                  })}
-                  {_renderSettingsCell({
-                    formik,
-                    title: 'Send reminders via email',
-                    key: 'settings.send_reminders_via_email',
-                  })}
+                  <SettingsCell
+                    title="Record event"
+                    name="settings.record_event"
+                  />
+                  <SettingsCell
+                    title="Show chat in the recording"
+                    name="settings.show_chat_in_recording"
+                  />
+                  <SettingsCell
+                    title="Add event to Calendar"
+                    name="settings.add_event_to_calnedar"
+                  />
+                  <SettingsCell
+                    title="Send invitations via email"
+                    name="settings.send_invitations_via_email"
+                  />
+                  <SettingsCell
+                    title="Send reminders via email"
+                    name="settings.send_reminders_via_email"
+                  />
                 </TableView.Section>
               </TableView.Table>
 
