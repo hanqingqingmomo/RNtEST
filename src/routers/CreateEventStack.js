@@ -6,6 +6,7 @@ import { StackNavigator } from '../navigation';
 import {
   CreateEventScreen,
   CreateDescriptionScreen,
+  SelectLocationScreen,
 } from '../screens';
 import { NavigationIconButton } from '../atoms';
 
@@ -28,5 +29,8 @@ export default StackNavigator({
     navigationOptions: ({ navigation, screenProps }) => ({
       headerTitle: 'Description',
     }),
+  },
+  SelectLocationScreen: {
+    screen: SelectLocationScreen,
   },
 });

@@ -7,7 +7,11 @@ import { Switch } from 'react-native';
 import { Screen, NavigationTextButton, Form, TableView } from '../../atoms';
 import { getColor } from '../../utils/color';
 
-type Props = {};
+type Props = NavigationScreenConfigProps;
+
+type State = {
+  selectedField: string,
+};
 
 const SCHEDULE_BUTTON_ID = 'CreateEvent:ScheduleButton';
 const LIGHT_GRAY = '#455A64';
@@ -111,6 +115,10 @@ export default class CreateEventScreen extends Component<Props> {
     headerRight: <WhitePortal name={SCHEDULE_BUTTON_ID} />,
   });
 
+  state = {
+    selectedField: '',
+  };
+
   _onCreteEvent = () => {
     console.log('create event');
   };
@@ -128,6 +136,11 @@ export default class CreateEventScreen extends Component<Props> {
     switch (field) {
       case 'description':
         this.props.navigation.navigate('CreateDescriptionScreen', {
+          formik: data,
+        });
+        break;
+      case 'location':
+        this.props.navigation.navigate('SelectLocationScreen', {
           formik: data,
         });
         break;
@@ -167,8 +180,15 @@ export default class CreateEventScreen extends Component<Props> {
                 </TableView.Section>
 
                 <TableView.Section header="event details">
-                  <TableView.Cell title="Location" />
                   <TableView.Cell title="Post in" />
+                  <TableView.Cell
+                    cellStyle="RightDetail"
+                    title="Location"
+                    detail={formik.values.location}
+                    titleTextColor={getColor('gray')}
+                    rightDetailColor="#455A64"
+                    onPress={() => this._onCellPress('location', formik)}
+                  />
                 </TableView.Section>
 
                 <TableView.Section header="duration">
