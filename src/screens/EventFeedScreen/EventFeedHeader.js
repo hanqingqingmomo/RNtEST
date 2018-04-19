@@ -16,7 +16,7 @@ type Props = NavigationScreenConfigProps & {
 
 export default function EventFeedHeader(props: Props): React$Node {
   return (
-    <View style={styles.container} radius={0}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={props.screenProps.openDrawer}
         style={styles.icon}
