@@ -3,7 +3,10 @@
 import React from 'react';
 
 import { StackNavigator } from '../navigation';
-import { CreateEventScreen } from '../screens';
+import {
+  CreateEventScreen,
+  CreateDescriptionScreen,
+} from '../screens';
 import { NavigationIconButton } from '../atoms';
 
 export default StackNavigator({
@@ -18,6 +21,12 @@ export default StackNavigator({
           onPress={screenProps.dismissModalRoute}
         />
       ),
+    }),
+  },
+  CreateDescriptionScreen: {
+    screen: CreateDescriptionScreen,
+    navigationOptions: ({ navigation, screenProps }) => ({
+      headerTitle: 'Description',
     }),
   },
 });

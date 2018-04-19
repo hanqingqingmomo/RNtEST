@@ -29,6 +29,7 @@ import UserProfileScreen from './UserProfileScreen';
 import UserSettingsScreen from './UserSettingsScreen';
 import WebViewScreen from './WebViewScreen';
 import CreateEventScreen from './CreateEvent/CreateEventScreen';
+import CreateDescriptionScreen from './CreateEvent/CreateDescriptionScreen';
 
 export { AggregatedNewsFeedScreen };
 export { AuthenticationRootScreen };
@@ -59,3 +60,4 @@ export { UserProfileScreen };
 export { UserSettingsScreen };
 export { WebViewScreen };
 export { CreateEventScreen };
+export { CreateDescriptionScreen };

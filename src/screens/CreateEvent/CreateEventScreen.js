@@ -119,7 +119,25 @@ export default class CreateEventScreen extends Component<Props> {
     console.log('submit');
   };
 
+  _onCellPress = (
+    field: 'description' | 'location' | 'post_in' | 'start' | 'end' | 'photo',
+    data: any
+  ) => {
+    this.setState({ selectedField: field });
+
+    switch (field) {
+      case 'description':
+        this.props.navigation.navigate('CreateDescriptionScreen', {
+          formik: data,
+        });
+        break;
+      default:
+    }
+  };
+
   render() {
+    const { selectedField } = this.state;
+
     return (
       <Form
         initialValues={INITIAL_VALUES}
@@ -139,7 +157,13 @@ export default class CreateEventScreen extends Component<Props> {
               <TableView.Table>
                 <TableView.Section sectionPaddingTop={0}>
                   <TableView.Cell title="Title" />
-                  <TableView.Cell title="Description" />
+                  <TableView.Cell
+                    title={formik.values.description || 'Description'}
+                    titleTextColor={
+                      formik.values.description ? '#455A64' : getColor('gray')
+                    }
+                    onPress={() => this._onCellPress('description', formik)}
+                  />
                 </TableView.Section>
 
                 <TableView.Section header="event details">
