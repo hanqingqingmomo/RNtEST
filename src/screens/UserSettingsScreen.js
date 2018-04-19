@@ -111,6 +111,13 @@ class UserProfileScreen extends Component<Props> {
                 ? `, env: ${Config.ENVIRONMENT}`
                 : ''}`}
             />
+            {Config.ENVIRONMENT !== 'production' ? (
+              <TableView.Cell
+                cellStyle="Subtitle"
+                title="Device ID"
+                detail={DeviceInfo.getUniqueID()}
+              />
+            ) : null}
           </TableView.Section>
         </TableView.Table>
       </Screen>
