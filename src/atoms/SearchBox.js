@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     color: getColor('gray'),
     fontSize: 14,
     fontWeight: '500',
+    paddingVertical: 0,
     paddingLeft: 7,
   },
 });

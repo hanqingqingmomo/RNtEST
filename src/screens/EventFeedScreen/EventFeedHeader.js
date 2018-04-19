@@ -41,7 +41,7 @@ export default function EventFeedHeader(props: Props): React$Node {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: getStatusBarHeight() + 6,
+    paddingTop: getStatusBarHeight(true) + 6,
     paddingBottom: 7,
     alignItems: 'center',
     backgroundColor: Platform.OS === 'ios' ? '#f6f6f6' : '#FFF',
