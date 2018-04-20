@@ -1,8 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, InteractionManager } from 'react-native';
 import { type NavigationScreenConfigProps } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import {
   Screen,
@@ -17,9 +18,17 @@ import { type Community, type FetchProps } from '../../Types';
 import { css } from '../../utils/style';
 import { makeReadCommunitiesListRq } from '../../utils/requestFactory';
 
-export default class AtendeesCommunitiesScreen extends Component<
-  NavigationScreenConfigProps
-> {
+class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
+  membersCount = (id: string): number | string => {
+    const { formik } = this.props;
+
+    const community = formik.values.atendees.find(
+      (community: Community): boolean => community.id === id
+    );
+
+    return community ? community.members.length : '';
+  };
+
   render() {
     const readCommunitiesListRq = makeReadCommunitiesListRq(true);
 
@@ -53,8 +62,10 @@ export default class AtendeesCommunitiesScreen extends Component<
                 <TableView.Section header="Communities">
                   {data.data.map((community: Community): React$Node => (
                     <TableView.Cell
+                      cellStyle="RightDetail"
                       key={community.id}
                       title={community.name}
+                      detail={__DEV__ ? this.membersCount(community.id) : ''}
                       accessory="DisclosureIndicator"
                       cellImageView={
                         <Avatar
@@ -68,8 +79,8 @@ export default class AtendeesCommunitiesScreen extends Component<
                         this.props.navigation.navigate(
                           'AtendeesMembersScreen',
                           {
-                            ...this.props.navigation.state.params,
-                            community_id: community.id,
+                            ...this.props,
+                            community,
                           }
                         );
                       }}
@@ -88,6 +99,12 @@ export default class AtendeesCommunitiesScreen extends Component<
     );
   }
 }
+
+const mapState = (state, props) => ({
+  ...props.navigation.state.params,
+});
+
+export default connect(mapState, {})(AtendeesCommunitiesScreen);
 
 const styles = StyleSheet.create({
   avatar: {

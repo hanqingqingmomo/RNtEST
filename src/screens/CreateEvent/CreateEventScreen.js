@@ -51,13 +51,10 @@ const INITIAL_VALUES = {
   post_in: [],
   start: new Date(),
   end: new Date(),
+  atendees: [],
 };
 
 const USERS = [
-  {
-    id: '0',
-    button: true,
-  },
   {
     id: 'b520ce3ed232',
     first_name: 'Roberto',
@@ -113,73 +110,6 @@ const USERS = [
     email: 'robertop@email.com',
     profile_photo:
       'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-];
-
-const COMUNITIES = [
-  {
-    id: '0',
-    button: true,
-  },
-  {
-    id: '5c4b12e77d0b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d0C',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d0d',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d0e',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d0f',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d1b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d2b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d3b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d4b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d5b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
   },
 ];
 
@@ -405,28 +335,27 @@ export default class CreateEventScreen extends Component<Props, State> {
                 <TableView.Section header="presenters">
                   <TableView.Cell
                     contentContainerStyle={{
-                      paddingLeft: 15,
-                      paddingRight: 15,
+                      paddingLeft: 0,
+                      paddingRight: 0,
                     }}
                     cellContentView={
                       <View style={{ flexDirection: 'row' }}>
                         <FlatList
                           data={USERS}
-                          renderItem={({ item }) =>
-                            item.button ? (
-                              <InviteButton
-                                title="Add"
-                                onPress={() => {
-                                  this._onCellPress('presenters', formik);
-                                }}
-                              />
-                            ) : (
-                              <UserPreview {...item} />
-                            )}
+                          renderItem={({ item }) => <UserPreview {...item} />}
                           keyExtractor={(item, index) => item.id}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
                           )}
+                          ListHeaderComponent={
+                            <InviteButton
+                              title="Add"
+                              onPress={() => {
+                                this._onCellPress('presenters', formik);
+                              }}
+                            />
+                          }
+                          ListFooterComponent={<View style={{ width: 15 }} />}
                           horizontal
                         />
                       </View>
@@ -448,28 +377,33 @@ export default class CreateEventScreen extends Component<Props, State> {
                 >
                   <TableView.Cell
                     contentContainerStyle={{
-                      paddingLeft: 15,
-                      paddingRight: 15,
+                      paddingLeft: 0,
+                      paddingRight: 0,
                     }}
                     cellContentView={
                       <View style={{ flexDirection: 'row' }}>
                         <FlatList
-                          data={COMUNITIES}
-                          renderItem={({ item }) =>
-                            item.button ? (
-                              <InviteButton
-                                title="Add"
-                                onPress={() => {
-                                  this._onCellPress('atendees', formik);
-                                }}
-                              />
-                            ) : (
-                              <CommunityPreview {...item} />
-                            )}
+                          data={formik.values.atendees}
+                          renderItem={({ item }) => (
+                            <CommunityPreview {...item} />
+                          )}
                           keyExtractor={(item, index) => item.id}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
                           )}
+                          ListHeaderComponent={
+                            <InviteButton
+                              title="Invite"
+                              onPress={() => {
+                                this._onCellPress(
+                                  'atendees',
+                                  formik,
+                                  () => formik.values
+                                );
+                              }}
+                            />
+                          }
+                          ListFooterComponent={<View style={{ width: 15 }} />}
                           horizontal
                         />
                       </View>

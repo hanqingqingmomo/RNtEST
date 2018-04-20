@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 15,
+    padding: 15,
   },
   iconWrapper: {
     width: 42,

@@ -3,19 +3,19 @@
 import React, { Component } from 'react';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
+import { connect } from 'react-redux';
 
 import {
   Screen,
-  Text,
-  Fetch,
   CenterView,
   ActivityIndicator,
   TableView,
   Avatar,
   NavigationTextButton,
+  NavigationIconButton,
   SearchBox,
 } from '../../atoms';
-import { type FetchProps, type User } from '../../Types';
+import { type User, type Community } from '../../Types';
 import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
 import { getColor } from '../../utils/color';
 import { Checkmark } from './Checkmark';
@@ -30,16 +30,23 @@ type State = {
   loading: boolean,
 };
 
-export default class AtendeesMembersScreen extends Component<
+let oldAtendees = [];
+
+class AtendeesMembersScreen extends Component<
   NavigationScreenConfigProps,
   State
 > {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: <WhitePortal name={HEADER_TITLE_ID} />,
-      headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
-    };
-  };
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: <WhitePortal name={HEADER_TITLE_ID} />,
+    headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
+    headerLeft: (
+      <NavigationIconButton
+        name="arrow-open-left-thin"
+        color={getColor('orange')}
+        onPress={() => navigation.goBack()}
+      />
+    ),
+  });
 
   state = {
     members: [],
@@ -56,14 +63,28 @@ export default class AtendeesMembersScreen extends Component<
     );
   }
 
+  getCommunity = (): Community => {
+    const { formik, community } = this.props;
+
+    return formik.values.atendees.find(
+      (selectedCommunity: Community) => selectedCommunity.id === community.id
+    );
+  };
+
   componentDidMount() {
     this.fetch();
+
+    const community = this.getCommunity();
+
+    if (community) {
+      this.setState({ selectedMembers: community.members });
+    }
   }
 
   fetch = async () => {
     this.setState({ loading: true });
     const readCommunityMembersRq = makeReadCommunityMembersRq(
-      this.props.navigation.state.params.community_id
+      this.props.community.id
     );
 
     try {
@@ -100,7 +121,32 @@ export default class AtendeesMembersScreen extends Component<
   };
 
   _onSaveMembers = () => {
-    console.log('save');
+    const { formik, community } = this.props;
+
+    const isPushedCommunity = oldAtendees.some(
+      (selectedCommunity: Community): boolean =>
+        selectedCommunity.id === community.id
+    );
+
+    const newData = {
+      ...community,
+      members: this.state.selectedMembers,
+    };
+
+    if (isPushedCommunity) {
+      const index = oldAtendees.findIndex(
+        (selectedCommunity: Community): boolean =>
+          selectedCommunity.id === community.id
+      );
+
+      oldAtendees.splice(index, 1);
+    }
+
+    oldAtendees.push(newData);
+
+    formik.setFieldValue('atendees', oldAtendees);
+
+    this.props.navigation.goBack();
   };
 
   _onSearchMembers = (searchValue: string) => {
@@ -187,3 +233,9 @@ export default class AtendeesMembersScreen extends Component<
     );
   }
 }
+
+const mapState = (state, props) => ({
+  ...props.navigation.state.params,
+});
+
+export default connect(mapState, {})(AtendeesMembersScreen);
