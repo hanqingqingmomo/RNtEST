@@ -9,6 +9,7 @@ import {
   SelectLocationScreen,
   PostInScreen,
   AtendeesCommunitiesScreen,
+  AtendeesMembersScreen,
 } from '../screens';
 import { NavigationIconButton } from '../atoms';
 
@@ -48,20 +49,7 @@ export default StackNavigator(
         headerTitle: 'Add Atendees',
       }),
     },
+    AtendeesMembersScreen: {
+      screen: AtendeesMembersScreen,
+    },
   },
-  CreateDescriptionScreen: {
-    screen: CreateDescriptionScreen,
-    navigationOptions: ({ navigation, screenProps }) => ({
-      headerTitle: 'Description',
-    }),
-  },
-  SelectLocationScreen: {
-    screen: SelectLocationScreen,
-  },
-  PostInScreen: {
-    screen: PostInScreen,
-    navigationOptions: ({ navigation, screenProps }) => ({
-      headerTitle: 'Post in',
-    }),
-  },
-});

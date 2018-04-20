@@ -32,6 +32,8 @@ import CreateEventScreen from './CreateEvent/CreateEventScreen';
 import CreateDescriptionScreen from './CreateEvent/CreateDescriptionScreen';
 import SelectLocationScreen from './CreateEvent/SelectLocationScreen';
 import PostInScreen from './CreateEvent/PostInScreen';
+import AtendeesCommunitiesScreen from './CreateEvent/AtendeesCommunitiesScreen';
+import AtendeesMembersScreen from './CreateEvent/AtendeesMembersScreen';
 
 export { AggregatedNewsFeedScreen };
 export { AuthenticationRootScreen };
@@ -65,3 +67,5 @@ export { CreateEventScreen };
 export { CreateDescriptionScreen };
 export { SelectLocationScreen };
 export { PostInScreen };
+export { AtendeesCommunitiesScreen };
+export { AtendeesMembersScreen };
