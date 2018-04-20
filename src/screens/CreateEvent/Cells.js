@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import Collapsible from 'react-native-collapsible';
 
-import { TableView, Icon, Image, View, Text } from '../../atoms';
+import { TableView, Icon, View, Avatar } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { type Community } from '../../Types';
@@ -176,7 +176,12 @@ export class CommunityCell extends Component<
       <TableView.Cell
         title={name}
         cellImageView={
-          <Image source={{ uri: cover_photo }} style={styles.communityImage} />
+          <Avatar
+            imageURI={cover_photo}
+            size={28}
+            radius={3}
+            style={styles.communityImage}
+          />
         }
         cellAccessoryView={
           <View
@@ -269,7 +274,7 @@ export const DateCell = (props: DateProps): React$Node => {
       detail={format(props.value, 'MMM D, YYYY    h:mm A')}
       titleTextColor={getColor('gray')}
       rightDetailColor={getColor('linkBlue')}
-      onPress={() => props.onPress('date')}
+      onPress={props.onPress}
     />
   );
 };
@@ -285,9 +290,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   communityImage: {
-    width: 28,
-    height: 28,
-    borderRadius: 3,
-    marginRight: 10,
+    marginRight: 7,
   },
 });

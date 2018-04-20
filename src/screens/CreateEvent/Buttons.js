@@ -9,6 +9,7 @@ import { getColor } from '../../utils/color';
 
 type InviteProps = {
   title: string,
+  onPress: Function,
 };
 
 type PhotoProps = {
@@ -16,9 +17,9 @@ type PhotoProps = {
   onPress: Function,
 };
 
-export function InviteButton({ title }: InviteProps): React$Node {
+export function InviteButton({ title, onPress }: InviteProps): React$Node {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.iconWrapper}>
           <Icon name="plus" color={getColor('linkBlue')} size="sm" />
