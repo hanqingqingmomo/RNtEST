@@ -216,15 +216,19 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
   return api.get(`/communities/${id}`);
 }
 
+export function RQReadJoinedCommunity(): P<RS<Community>> {
+  return api.get('/joined-communities');
+}
+
 /**
  * Communities
  */
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/communities?membership_status=${
-        joinedOnly ? 'joined' : 'unjoined'
-      }`,
+      path: `/communities?membership_status=${joinedOnly
+        ? 'joined'
+        : 'unjoined'}`,
     }),
     options: {
       method: 'GET',
@@ -243,7 +247,7 @@ export const makeReadCommunityDetailRq = (communityId: string | number) =>
 
 export const makeReadCommunityMembersRq = (
   communityId: string | number,
-  limit: number
+  limit?: number
 ) =>
   inject({
     url: buildUrl({

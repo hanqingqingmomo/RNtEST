@@ -17,6 +17,7 @@ import { TableView, Icon, View, Avatar } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { type Community } from '../../Types';
+import { Checkmark } from './Checkmark';
 
 type SetingsProps = {
   title: string,
@@ -184,21 +185,10 @@ export class CommunityCell extends Component<
           />
         }
         cellAccessoryView={
-          <View
-            style={[
-              styles.checkmarkWrapper,
-              {
-                borderColor: selected ? getColor('red') : '#CFD8DC',
-                backgroundColor: selected ? getColor('red') : 'transparent',
-              },
-            ]}
-          >
-            <Icon
-              name="check"
-              size={18}
-              color={selected ? 'white' : '#B0BEC5'}
-            />
-          </View>
+          <Checkmark
+            selected={selected}
+            selectedBackgroundColor={getColor('red')}
+          />
         }
         onPress={onPress}
       />

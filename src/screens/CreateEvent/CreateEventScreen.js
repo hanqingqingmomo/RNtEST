@@ -267,28 +267,34 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   _onCellPress = (
-    field: 'description' | 'location' | 'post_in' | 'start' | 'end' | 'photo',
-    data: any
+    field:
+      | 'description'
+      | 'location'
+      | 'post_in'
+      | 'start'
+      | 'end'
+      | 'photo'
+      | 'atendees'
+      | 'presenters',
+    formik: any
   ) => {
     this.setState({ selectedField: field });
 
     switch (field) {
       case 'photo':
-        this.openFilePicker(data);
+        this.openFilePicker(formik);
         break;
       case 'description':
-        this.props.navigation.navigate('CreateDescriptionScreen', {
-          formik: data,
-        });
+        this.props.navigation.navigate('CreateDescriptionScreen', { formik });
         break;
       case 'location':
-        this.props.navigation.navigate('SelectLocationScreen', {
-          formik: data,
-        });
+        this.props.navigation.navigate('SelectLocationScreen', { formik });
         break;
       case 'post_in':
         this.props.navigation.navigate('PostInScreen', { formik });
         break;
+      case 'atendees':
+        this.props.navigation.navigate('AtendeesCommunitiesScreen', { formik });
         break;
       default:
     }
@@ -408,13 +414,18 @@ export default class CreateEventScreen extends Component<Props, State> {
                           data={USERS}
                           renderItem={({ item }) =>
                             item.button ? (
-                              <InviteButton title="Add" />
+                              <InviteButton
+                                title="Add"
+                                onPress={() => {
+                                  this._onCellPress('presenters', formik);
+                                }}
+                              />
                             ) : (
                               <UserPreview {...item} />
                             )}
                           keyExtractor={(item, index) => item.id}
                           ItemSeparatorComponent={() => (
-                            <View style={{ width: 16 }} />
+                            <View style={{ width: 15 }} />
                           )}
                           horizontal
                         />
@@ -446,13 +457,18 @@ export default class CreateEventScreen extends Component<Props, State> {
                           data={COMUNITIES}
                           renderItem={({ item }) =>
                             item.button ? (
-                              <InviteButton title="Add" />
+                              <InviteButton
+                                title="Add"
+                                onPress={() => {
+                                  this._onCellPress('atendees', formik);
+                                }}
+                              />
                             ) : (
                               <CommunityPreview {...item} />
                             )}
                           keyExtractor={(item, index) => item.id}
                           ItemSeparatorComponent={() => (
-                            <View style={{ width: 16 }} />
+                            <View style={{ width: 15 }} />
                           )}
                           horizontal
                         />
