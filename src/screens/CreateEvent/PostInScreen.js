@@ -36,7 +36,7 @@ type State = {
   selectedCommunities: Array<Community>,
 };
 
-export default class SelectCommunityScreen extends Component<
+export default class PostInScreen extends Component<
   NavigationScreenConfigProps,
   State
 > {

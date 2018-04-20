@@ -31,7 +31,7 @@ import WebViewScreen from './WebViewScreen';
 import CreateEventScreen from './CreateEvent/CreateEventScreen';
 import CreateDescriptionScreen from './CreateEvent/CreateDescriptionScreen';
 import SelectLocationScreen from './CreateEvent/SelectLocationScreen';
-import SelectCommunityScreen from './CreateEvent/SelectCommunityScreen';
+import PostInScreen from './CreateEvent/PostInScreen';
 
 export { AggregatedNewsFeedScreen };
 export { AuthenticationRootScreen };
@@ -64,4 +64,4 @@ export { WebViewScreen };
 export { CreateEventScreen };
 export { CreateDescriptionScreen };
 export { SelectLocationScreen };
-export { SelectCommunityScreen };
+export { PostInScreen };

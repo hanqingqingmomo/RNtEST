@@ -287,9 +287,8 @@ export default class CreateEventScreen extends Component<Props, State> {
         });
         break;
       case 'post_in':
-        this.props.navigation.navigate('SelectCommunityScreen', {
-          formik: data,
-        });
+        this.props.navigation.navigate('PostInScreen', { formik });
+        break;
         break;
       default:
     }
