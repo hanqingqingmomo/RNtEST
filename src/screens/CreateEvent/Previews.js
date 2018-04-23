@@ -35,9 +35,13 @@ export function UserPreview({
   );
 }
 
-export function CommunityPreview({ name, cover_photo }: Community): React$Node {
+export function CommunityPreview({
+  name,
+  cover_photo,
+  onPress,
+}: Community & { onPress: Function }): React$Node {
   return (
-    <TouchableOpacity disabled>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <View style={[styles.imageWrapper, { borderRadius: 3 }]}>
           <Image

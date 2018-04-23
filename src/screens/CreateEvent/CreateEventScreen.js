@@ -205,8 +205,10 @@ export default class CreateEventScreen extends Component<Props, State> {
       | 'end'
       | 'photo'
       | 'atendees'
+      | 'atendees-community'
       | 'presenters',
-    formik: any
+    formik: mixed,
+    data: mixed
   ) => {
     this.setState({ selectedField: field });
 
@@ -225,6 +227,12 @@ export default class CreateEventScreen extends Component<Props, State> {
         break;
       case 'atendees':
         this.props.navigation.navigate('AtendeesCommunitiesScreen', { formik });
+        break;
+      case 'atendees-community':
+        this.props.navigation.navigate('AtendeesMembersScreen', {
+          formik,
+          community: data,
+        });
         break;
       default:
     }
@@ -385,7 +393,16 @@ export default class CreateEventScreen extends Component<Props, State> {
                         <FlatList
                           data={formik.values.atendees}
                           renderItem={({ item }) => (
-                            <CommunityPreview {...item} />
+                            <CommunityPreview
+                              {...item}
+                              onPress={() => {
+                                this._onCellPress(
+                                  'atendees-community',
+                                  formik,
+                                  item
+                                );
+                              }}
+                            />
                           )}
                           keyExtractor={(item, index) => item.id}
                           ItemSeparatorComponent={() => (

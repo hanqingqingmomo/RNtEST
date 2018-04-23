@@ -142,7 +142,9 @@ class AtendeesMembersScreen extends Component<
       oldAtendees.splice(index, 1);
     }
 
-    oldAtendees.push(newData);
+    if (this.state.selectedMembers.length) {
+      oldAtendees.push(newData);
+    }
 
     formik.setFieldValue('atendees', oldAtendees);
 
@@ -170,7 +172,7 @@ class AtendeesMembersScreen extends Component<
       <Screen>
         <BlackPortal name={HEADER_RIGHT_ID}>
           <NavigationTextButton
-            disabled={this.state.selectedMembers.length === 0}
+            // disabled={this.state.selectedMembers.length === 0}
             title="Save"
             textColor={getColor('orange')}
             onPress={this._onSaveMembers}
