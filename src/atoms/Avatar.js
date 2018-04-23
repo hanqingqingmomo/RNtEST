@@ -7,15 +7,22 @@ import { css } from '../utils/style';
 
 type Props = {
   imageURI: string,
+  imageSource?: any,
   size: number,
   radius?: number,
   style?: Object | number,
 };
 
-export default function Avatar({ imageURI, size, radius, style }: Props) {
+export default function Avatar({
+  imageURI,
+  size,
+  radius,
+  style,
+  imageSource,
+}: Props) {
   return (
     <Image
-      source={{ uri: imageURI }}
+      source={imageURI ? { uri: imageURI } : imageSource}
       style={[
         css('borderRadius', radius || size / 2),
         css('width', size),

@@ -10,6 +10,7 @@ import {
   PostInScreen,
   AtendeesCommunitiesScreen,
   AtendeesMembersScreen,
+  AtendeesContactsScreen,
 } from '../screens';
 import { NavigationIconButton } from '../atoms';
 
@@ -52,4 +53,7 @@ export default StackNavigator(
     AtendeesMembersScreen: {
       screen: AtendeesMembersScreen,
     },
-  },
+    AtendeesContactsScreen: {
+      screen: AtendeesContactsScreen,
+    },
+  }

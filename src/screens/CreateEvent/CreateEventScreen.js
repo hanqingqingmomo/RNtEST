@@ -27,6 +27,8 @@ import {
   DatePickerCell,
   DateCell,
 } from './Cells';
+import type { Community } from '../../Types';
+import type { Contact } from './AtendeesContactsScreen';
 
 type Props = NavigationScreenConfigProps;
 
@@ -52,6 +54,7 @@ const INITIAL_VALUES = {
   start: new Date(),
   end: new Date(),
   atendees: [],
+  attendees_contacts: [],
 };
 
 const USERS = [
@@ -391,20 +394,34 @@ export default class CreateEventScreen extends Component<Props, State> {
                     cellContentView={
                       <View style={{ flexDirection: 'row' }}>
                         <FlatList
-                          data={formik.values.atendees}
-                          renderItem={({ item }) => (
-                            <CommunityPreview
-                              {...item}
-                              onPress={() => {
-                                this._onCellPress(
-                                  'atendees-community',
-                                  formik,
-                                  item
-                                );
-                              }}
-                            />
-                          )}
-                          keyExtractor={(item, index) => item.id}
+                          data={[
+                            ...formik.values.attendees_contacts,
+                            ...formik.values.atendees,
+                          ]}
+                          renderItem={({
+                            item,
+                          }: {
+                            item: Community | Contact,
+                          }) =>
+                            item.id ? (
+                              <CommunityPreview
+                                {...item}
+                                onPress={() => {
+                                  this._onCellPress(
+                                    'atendees-community',
+                                    formik,
+                                    item
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <UserPreview
+                                first_name={item.givenName}
+                                last_name={item.familyName}
+                                profile_photo={item.thumbnailPath}
+                              />
+                            )}
+                          keyExtractor={item => item.id || item.recordID}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
                           )}

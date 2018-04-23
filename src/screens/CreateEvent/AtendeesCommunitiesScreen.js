@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, InteractionManager } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -37,7 +37,13 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
         <TableView.Table>
           <TableView.Section sectionPaddingTop={0}>
             <TableView.Cell
+              cellStyle="RightDetail"
               title="Mobile Contacts"
+              detail={
+                __DEV__
+                  ? (this.props.formik.values.attendees_contacts || []).length
+                  : ''
+              }
               accessory="DisclosureIndicator"
               cellImageView={
                 <Image
@@ -50,6 +56,11 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
                   ]}
                 />
               }
+              onPress={() => {
+                this.props.navigation.navigate('AtendeesContactsScreen', {
+                  ...this.props,
+                });
+              }}
             />
           </TableView.Section>
 

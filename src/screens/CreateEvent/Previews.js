@@ -16,7 +16,9 @@ export function UserPreview({
       <View style={styles.container}>
         <View style={[styles.imageWrapper, { borderRadius: 21 }]}>
           <Image
-            source={{ uri: profile_photo }}
+            source={
+              profile_photo ? { uri: profile_photo } : require('./avatar.png')
+            }
             style={styles.image}
             resizeMode="cover"
           />
