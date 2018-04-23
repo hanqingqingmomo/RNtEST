@@ -21,58 +21,216 @@ const EVENTS = [
     location: 'Bratislava',
     post_in: [
       {
-        id: '7352d18dad90',
-        name: 'Comunity name',
+        id: 'ce571950f574',
+        name: 'Test communitasdasdy',
+        cover_photo:
+          'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
+        profile_photo:
+          'https://api-testing.poweredbyaction.org/assets/club_icons/default_community_icon.jpg',
       },
     ],
     start: '2017-12-07T11:51:06+00:00',
     end: '2017-12-07T12:51:06+00:00',
     rsvp: 'pending',
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
       },
+    ],
+    presenters_contacts: [
       {
-        id: '7352d18dad91',
-        profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
-      },
-      {
-        id: '7352d18dad92',
-        profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
       },
       {
-        id: '7352d18dad91',
+        id: '3a758fae966c',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
       },
+    ],
+    atendees_contacts: [
       {
-        id: '7352d18dad92',
-        profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -89,23 +247,139 @@ const EVENTS = [
     start: '2017-12-24T11:51:06+00:00',
     end: '2017-12-24T12:51:06+00:00',
     rsvp: 'not_going',
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    presenters_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    atendees_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -122,23 +396,139 @@ const EVENTS = [
     start: '2017-12-24T14:51:06+00:00',
     end: '2017-12-24T15:51:06+00:00',
     rsvp: 'not_going',
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    presenters_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    atendees_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -155,23 +545,139 @@ const EVENTS = [
     start: '2018-12-24T11:51:06+00:00',
     end: '2018-12-24T12:51:06+00:00',
     rsvp: 'not_going',
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    presenters_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    atendees_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -188,23 +694,139 @@ const EVENTS = [
     start: '2018-12-24T11:51:06+00:00',
     end: '2018-12-24T12:51:06+00:00',
     rsvp: 'pending',
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    presenters_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    atendees_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -221,23 +843,139 @@ const EVENTS = [
     start: '2018-12-24T11:51:06+00:00',
     end: '2018-12-24T12:51:06+00:00',
     rsvp: 'going',
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    presenters_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    atendees_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -255,23 +993,139 @@ const EVENTS = [
     end: '2018-12-24T12:51:06+00:00',
     rsvp: 'going',
     webinar: true,
-    representers: [
+    presenters_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966c',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966d',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+          {
+            id: '3a758fae966e',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    presenters_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
     privacy: 'public',
-    atendees: [
+    atendees_communities: [
       {
-        id: '7352d18dad90',
+        id: '3a758fae966b',
+        first_name: 'Pba',
+        last_name: 'Pba',
+        email: 'pba@dispostable.com',
         profile_photo:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-        first_name: 'pba',
-        last_name: 'pba',
+          'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+        members: [
+          {
+            id: '3a758fae966b',
+            first_name: 'Pba',
+            last_name: 'Pba',
+            email: 'pba@dispostable.com',
+            profile_photo:
+              'https://www.sunderland.ac.uk/assets/Upload/Your_Photo.png',
+          },
+        ],
+      },
+    ],
+    atendees_contacts: [
+      {
+        company: 'Creative Consulting',
+        emailAddresses: [
+          {
+            email: 'anna-haro@mac.com',
+            label: 'home',
+          },
+        ],
+        familyName: 'Bell',
+        givenName: 'Kate',
+        hasThumbnail: false,
+        jobTitle: 'Producer',
+        middleName: '',
+        phoneNumbers: [
+          {
+            label: 'home',
+            number: '555-522-8243',
+          },
+        ],
+        postalAddresses: [
+          {
+            city: 'Sausalito',
+            country: 'USA',
+            label: 'home',
+            postCode: '94965',
+            region: 'CA',
+            state: 'CA',
+            street: '1001  Leavenworth Street',
+          },
+        ],
+        recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+        thumbnailPath: '',
       },
     ],
   },
@@ -296,35 +1150,44 @@ export default class EventFeedScreen extends React.Component<
   };
 
   get filteredEvents(): Array<EventProps> {
-    // filter by representers, atendees, post_in and event name
+    // filter by presenters, atendees, post_in and event name
 
     return this.state.events.filter((event: EventProps): boolean => {
-      const representers = event.representers
-        .map((representer: Object): string => {
-          return `${representer.first_name} ${representer.last_name}`;
-        })
-        .join(' ');
-      const atendees = event.atendees
-        .map((atendee: Object): string => {
-          return `${atendee.first_name} ${atendee.last_name}`;
-        })
-        .join(' ');
-      const post_in = event.post_in
-        .map((community: Object): string => {
-          return community.name;
-        })
-        .join(' ');
+      const contacts = [
+        ...event.atendees_contacts,
+        ...event.presenters_contacts,
+      ].map((contact: Object): string => {
+        return `${contact.givenName}${contact.middleName
+          ? ` ${contact.middleName}`
+          : ''}${contact.familyName ? ` ${contact.familyName}` : ''}`;
+      });
 
-      const string = `${representers} ${atendees} ${post_in} ${event.name}`;
+      const communitiesMembers = [
+        ...event.atendees_communities,
+        ...event.presenters_communities,
+      ].map((community: Object): string => {
+        return `${community.members.first_name} ${community.members.last_name}`;
+      });
+
+      const post_in = event.post_in.map(
+        (community: Object): string => community.name
+      );
+
+      const string = [
+        ...contacts,
+        ...communitiesMembers,
+        ...post_in,
+        event.name,
+      ].join(' ');
 
       return string.includes(this.state.searchValue);
     });
   }
 
   componentDidMount() {
-    this.props.screenProps.openModalRoute({
-      routeName: 'CreateEventModal',
-    });
+    // this.props.screenProps.openModalRoute({
+    //   routeName: 'CreateEventModal',
+    // });
   }
 
   _onChangeText = (searchValue: string) => {

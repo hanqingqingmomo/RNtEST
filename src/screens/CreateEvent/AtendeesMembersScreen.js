@@ -30,8 +30,6 @@ type State = {
   loading: boolean,
 };
 
-let oldAtendees = [];
-
 class AtendeesMembersScreen extends Component<
   NavigationScreenConfigProps,
   State
@@ -64,9 +62,9 @@ class AtendeesMembersScreen extends Component<
   }
 
   getCommunity = (): Community & { members: Array<User> } => {
-    const { formik, community } = this.props;
+    const { formik, community, communitiesField } = this.props;
 
-    return formik.values.atendees_communities.find(
+    return formik.values[communitiesField].find(
       (selectedCommunity: Community) => selectedCommunity.id === community.id
     );
   };
@@ -121,9 +119,10 @@ class AtendeesMembersScreen extends Component<
   };
 
   _onSaveMembers = () => {
-    const { formik, community } = this.props;
+    const { formik, community, communitiesField } = this.props;
+    const communities = [...formik.values[communitiesField]];
 
-    const isPushedCommunity = oldAtendees.some(
+    const isPushedCommunity = communities.some(
       (selectedCommunity: Community): boolean =>
         selectedCommunity.id === community.id
     );
@@ -134,19 +133,19 @@ class AtendeesMembersScreen extends Component<
     };
 
     if (isPushedCommunity) {
-      const index = oldAtendees.findIndex(
+      const index = communities.findIndex(
         (selectedCommunity: Community): boolean =>
           selectedCommunity.id === community.id
       );
 
-      oldAtendees.splice(index, 1);
+      communities.splice(index, 1);
     }
 
     if (this.state.selectedMembers.length) {
-      oldAtendees.push(newData);
+      communities.push(newData);
     }
 
-    formik.setFieldValue('atendees_communities', oldAtendees);
+    formik.setFieldValue(communitiesField, communities);
 
     this.props.navigation.goBack();
   };

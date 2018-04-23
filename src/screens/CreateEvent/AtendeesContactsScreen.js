@@ -83,7 +83,7 @@ class AtendeesContactsScreen extends Component<
     contacts: [],
     permission: 'undefined',
     searchValue: '',
-    selectedContacts: this.props.formik.values.atendees_contacts || [],
+    selectedContacts: this.props.formik.values[this.props.contactsField] || [],
   };
 
   get filteredContacts(): Array<Contact> {
@@ -117,7 +117,7 @@ class AtendeesContactsScreen extends Component<
 
   _onSave = () => {
     this.props.formik.setFieldValue(
-      'atendees_contacts',
+      this.props.contactsField,
       this.state.selectedContacts
     );
 

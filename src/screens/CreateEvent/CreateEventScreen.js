@@ -55,7 +55,8 @@ const INITIAL_VALUES = {
   end: new Date(),
   atendees_communities: [],
   atendees_contacts: [],
-  presenters: [],
+  presenters_communities: [],
+  presenters_contacts: [],
 };
 
 const IMAGE_PICKER_OPTIONS = {
@@ -151,7 +152,8 @@ export default class CreateEventScreen extends Component<Props, State> {
       | 'photo'
       | 'atendees'
       | 'atendees-community'
-      | 'presenters',
+      | 'presenters'
+      | 'presenters-community',
     formik: mixed,
     data: mixed
   ) => {
@@ -171,11 +173,32 @@ export default class CreateEventScreen extends Component<Props, State> {
         this.props.navigation.navigate('PostInScreen', { formik });
         break;
       case 'atendees':
-        this.props.navigation.navigate('AtendeesCommunitiesScreen', { formik });
+        this.props.navigation.navigate('AtendeesCommunitiesScreen', {
+          formik,
+          contactsField: 'atendees_contacts',
+          communitiesField: 'atendees_communities',
+        });
+        break;
+      case 'presenters':
+        this.props.navigation.navigate('AtendeesCommunitiesScreen', {
+          formik,
+          contactsField: 'presenters_contacts',
+          communitiesField: 'presenters_communities',
+        });
         break;
       case 'atendees-community':
         this.props.navigation.navigate('AtendeesMembersScreen', {
           formik,
+          contactsField: 'atendees_contacts',
+          communitiesField: 'atendees_communities',
+          community: data,
+        });
+        break;
+      case 'presenters-community':
+        this.props.navigation.navigate('AtendeesMembersScreen', {
+          formik,
+          contactsField: 'presenters_contacts',
+          communitiesField: 'presenters_communities',
           community: data,
         });
         break;
@@ -294,9 +317,35 @@ export default class CreateEventScreen extends Component<Props, State> {
                     cellContentView={
                       <View style={{ flexDirection: 'row' }}>
                         <FlatList
-                          data={formik.values.presenters}
-                          renderItem={({ item }) => <UserPreview {...item} />}
-                          keyExtractor={(item, index) => item.id}
+                          data={[
+                            ...formik.values.presenters_contacts,
+                            ...formik.values.presenters_communities,
+                          ]}
+                          renderItem={({
+                            item,
+                          }: {
+                            item: Community | Contact,
+                          }) =>
+                            item.id ? (
+                              <CommunityPreview
+                                {...item}
+                                onPress={() => {
+                                  this._onCellPress(
+                                    'presenters-community',
+                                    formik,
+                                    item
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <UserPreview
+                                first_name={item.givenName}
+                                last_name={item.familyName}
+                                profile_photo={item.thumbnailPath}
+                              />
+                            )}
+                          keyExtractor={(item, index) =>
+                            item.id || item.recordID}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
                           )}

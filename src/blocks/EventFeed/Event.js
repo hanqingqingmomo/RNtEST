@@ -27,13 +27,6 @@ type PostProps = {
   name: string,
 };
 
-type UserProps = {
-  id: string,
-  profile_photo: string,
-  first_name: string,
-  last_name: string,
-};
-
 export type EventProps = {
   id: string,
   name: string,
@@ -42,9 +35,11 @@ export type EventProps = {
   start: Date,
   end: Date,
   rsvp: RSVPStatus,
-  representers: Array<UserProps>,
+  presenters_contacts: Array<Object>,
+  presenters_communities: Array<Object>,
   privacy: 'public' | 'private',
-  atendees: Array<UserProps>,
+  atendees_contacts: Array<Object>,
+  atendees_communities: Array<Object>,
   webinar?: boolean,
 };
 
@@ -186,6 +181,11 @@ export default function Event({ event, onActionPress }: Props): React$Node {
     ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
     ...common,
   };
+  const communitiesMembers = event.atendees_communities.reduce(
+    (acc, community) => [...acc, ...community.members],
+    []
+  );
+  const atendees = [...event.atendees_contacts, ...communitiesMembers];
 
   return (
     <View style={styles.container}>
@@ -216,9 +216,12 @@ export default function Event({ event, onActionPress }: Props): React$Node {
           ))}
         </View>
         <AvatarGroup
-          imageURIs={event.atendees.map(
-            (atendee: UserProps): string => atendee.profile_photo
-          )}
+          imageURIs={atendees
+            .map(
+              (atendee: Object): string =>
+                atendee.thumbnailPath || atendee.profile_photo
+            )
+            .filter((path: string): boolean => !!path)}
           title={(more: number): string => `+${more}`}
         />
       </View>

@@ -57,7 +57,7 @@ export default class EventFeed extends Component<Props> {
 
     return Object.keys(groups)
       .sort()
-      .reduce((acc: EventGroup, key: string): EventGroup => {
+      .reduce((acc, key) => {
         acc[key] = groups[key];
 
         return acc;

@@ -19,18 +19,20 @@ import { css } from '../../utils/style';
 import { makeReadCommunitiesListRq } from '../../utils/requestFactory';
 
 class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
-  membersCount = (id: string): number | string => {
-    const { formik } = this.props;
+  membersCount = (id: string): number => {
+    const { formik, communitiesField } = this.props;
 
-    const community = formik.values.atendees_communities.find(
+    const community = formik.values[communitiesField].find(
       (community: Community): boolean => community.id === id
     );
 
-    return community ? community.members.length : '';
+    return community ? community.members.length : 0;
   };
 
   render() {
     const readCommunitiesListRq = makeReadCommunitiesListRq(true);
+
+    const { contactsField } = this.props;
 
     return (
       <Screen>
@@ -41,7 +43,7 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
               title="Mobile Contacts"
               detail={
                 __DEV__
-                  ? (this.props.formik.values.atendees_contacts || []).length
+                  ? (this.props.formik.values[contactsField] || []).length
                   : ''
               }
               accessory="DisclosureIndicator"
