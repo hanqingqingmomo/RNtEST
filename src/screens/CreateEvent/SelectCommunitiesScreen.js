@@ -18,7 +18,7 @@ import { type Community, type FetchProps } from '../../Types';
 import { css } from '../../utils/style';
 import { makeReadCommunitiesListRq } from '../../utils/requestFactory';
 
-class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
+class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: navigation.state.params.title,
   });
@@ -63,7 +63,7 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
                 />
               }
               onPress={() => {
-                this.props.navigation.navigate('AtendeesContactsScreen', {
+                this.props.navigation.navigate('SelectContactsScreen', {
                   ...this.props,
                 });
               }}
@@ -93,13 +93,10 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
                         />
                       }
                       onPress={() => {
-                        this.props.navigation.navigate(
-                          'AtendeesMembersScreen',
-                          {
-                            ...this.props,
-                            community,
-                          }
-                        );
+                        this.props.navigation.navigate('SelectMembersScreen', {
+                          ...this.props,
+                          community,
+                        });
                       }}
                     />
                   ))}
@@ -121,7 +118,7 @@ const mapState = (state, props) => ({
   ...props.navigation.state.params,
 });
 
-export default connect(mapState, {})(AtendeesCommunitiesScreen);
+export default connect(mapState, {})(SelectCommunitiesScreen);
 
 const styles = StyleSheet.create({
   avatar: {

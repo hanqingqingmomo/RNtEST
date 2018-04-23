@@ -63,7 +63,7 @@ type State = {
   selectedContacts: Array<Contact>,
 };
 
-class AtendeesContactsScreen extends Component<
+class SelectContactsScreen extends Component<
   NavigationScreenConfigProps,
   State
 > {
@@ -245,7 +245,7 @@ const mapState = (state, props) => ({
   ...props.navigation.state.params,
 });
 
-export default connect(mapState, {})(AtendeesContactsScreen);
+export default connect(mapState, {})(SelectContactsScreen);
 
 const styles = StyleSheet.create({
   avatar: {

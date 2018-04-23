@@ -4,13 +4,13 @@ import React from 'react';
 
 import { StackNavigator } from '../navigation';
 import {
-  CreateEventScreen,
   CreateDescriptionScreen,
-  SelectLocationScreen,
+  CreateEventScreen,
   PostInScreen,
-  AtendeesCommunitiesScreen,
-  AtendeesMembersScreen,
-  AtendeesContactsScreen,
+  SelectCommunitiesScreen,
+  SelectContactsScreen,
+  SelectLocationScreen,
+  SelectMembersScreen,
 } from '../screens';
 import { NavigationIconButton } from '../atoms';
 
@@ -43,13 +43,13 @@ export default StackNavigator({
       headerTitle: 'Post in',
     }),
   },
-  AtendeesCommunitiesScreen: {
-    screen: AtendeesCommunitiesScreen,
+  SelectCommunitiesScreen: {
+    screen: SelectCommunitiesScreen,
   },
-  AtendeesMembersScreen: {
-    screen: AtendeesMembersScreen,
+  SelectMembersScreen: {
+    screen: SelectMembersScreen,
   },
-  AtendeesContactsScreen: {
-    screen: AtendeesContactsScreen,
+  SelectContactsScreen: {
+    screen: SelectContactsScreen,
   },
 });

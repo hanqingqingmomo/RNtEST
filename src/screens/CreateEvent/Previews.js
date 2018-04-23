@@ -4,20 +4,26 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { TouchableOpacity, View, Image, Text } from '../../atoms';
-import { type User, type Community } from '../../Types';
+import { type Community } from '../../Types';
+
+type Props = {
+  fullName: string,
+  profilePhoto: string,
+  onPress: Function,
+};
 
 export function UserPreview({
-  first_name,
-  last_name,
-  profile_photo,
-}: User): React$Node {
+  fullName,
+  profilePhoto,
+  onPress,
+}: Props): React$Node {
   return (
-    <TouchableOpacity disabled>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <View style={[styles.imageWrapper, { borderRadius: 21 }]}>
           <Image
             source={
-              profile_photo ? { uri: profile_photo } : require('./avatar.png')
+              profilePhoto ? { uri: profilePhoto } : require('./avatar.png')
             }
             style={styles.image}
             resizeMode="cover"
@@ -30,7 +36,7 @@ export function UserPreview({
           style={styles.text}
           numberOfLines={1}
         >
-          {first_name} {last_name}
+          {fullName}
         </Text>
       </View>
     </TouchableOpacity>

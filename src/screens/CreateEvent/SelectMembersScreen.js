@@ -30,7 +30,7 @@ type State = {
   loading: boolean,
 };
 
-class AtendeesMembersScreen extends Component<
+class SelectMembersScreen extends Component<
   NavigationScreenConfigProps,
   State
 > {
@@ -239,4 +239,4 @@ const mapState = (state, props) => ({
   ...props.navigation.state.params,
 });
 
-export default connect(mapState, {})(AtendeesMembersScreen);
+export default connect(mapState, {})(SelectMembersScreen);

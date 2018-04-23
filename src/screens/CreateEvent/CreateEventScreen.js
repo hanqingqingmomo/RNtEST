@@ -28,7 +28,7 @@ import {
   DateCell,
 } from './Cells';
 import type { Community } from '../../Types';
-import type { Contact } from './AtendeesContactsScreen';
+import type { Contact } from './SelectContactsScreen';
 
 type Props = NavigationScreenConfigProps;
 
@@ -122,12 +122,10 @@ export default class CreateEventScreen extends Component<Props, State> {
     selectedField: '',
   };
 
-  _onCreteEvent = () => {
-    console.log('create event');
-  };
-
-  _onSubmit = () => {
-    console.log('submit');
+  _onSubmit = values => {
+    if (__DEV__) {
+      console.log('[Create Event] submit', values);
+    }
   };
 
   openFilePicker = (formik: Object) => {
@@ -151,9 +149,7 @@ export default class CreateEventScreen extends Component<Props, State> {
       | 'end'
       | 'photo'
       | 'atendees'
-      | 'atendees-community'
-      | 'presenters'
-      | 'presenters-community',
+      | 'presenters',
     formik: mixed,
     data: mixed
   ) => {
@@ -172,36 +168,13 @@ export default class CreateEventScreen extends Component<Props, State> {
       case 'post_in':
         this.props.navigation.navigate('PostInScreen', { formik });
         break;
-      case 'atendees':
-        this.props.navigation.navigate('AtendeesCommunitiesScreen', {
-          formik,
-          title: 'Add Atendees',
-          contactsField: 'atendees_contacts',
-          communitiesField: 'atendees_communities',
-        });
-        break;
       case 'presenters':
-        this.props.navigation.navigate('AtendeesCommunitiesScreen', {
+      case 'atendees':
+        this.props.navigation.navigate('SelectCommunitiesScreen', {
           formik,
-          title: 'Add Presenters',
-          contactsField: 'presenters_contacts',
-          communitiesField: 'presenters_communities',
-        });
-        break;
-      case 'atendees-community':
-        this.props.navigation.navigate('AtendeesMembersScreen', {
-          formik,
-          contactsField: 'atendees_contacts',
-          communitiesField: 'atendees_communities',
-          community: data,
-        });
-        break;
-      case 'presenters-community':
-        this.props.navigation.navigate('AtendeesMembersScreen', {
-          formik,
-          contactsField: 'presenters_contacts',
-          communitiesField: 'presenters_communities',
-          community: data,
+          title: field === 'atendees' ? 'Add Atendees' : 'Add Presenters',
+          contactsField: `${field}_contacts`,
+          communitiesField: `${field}_communities`,
         });
         break;
       default:
@@ -210,6 +183,34 @@ export default class CreateEventScreen extends Component<Props, State> {
 
   _keyExtractor(item: Community | Contact): string {
     return item.id || item.recordID;
+  }
+
+  _renderInviteItem(formik, key: 'presenters' | 'contacts') {
+    return ({ item }: { item: Community | Contact }) =>
+      item.id ? (
+        <CommunityPreview
+          {...item}
+          onPress={() => {
+            this.props.navigation.navigate('SelectMembersScreen', {
+              formik,
+              contactsField: `${key}_contacts`,
+              communitiesField: `${key}_communities`,
+              community: item,
+            });
+          }}
+        />
+      ) : (
+        <UserPreview
+          fullName={`${item.givenName} ${item.familyName}`}
+          profilePhoto={item.thumbnailPath}
+          onPress={() => {
+            this.props.navigation.navigate('SelectContactsScreen', {
+              formik,
+              contactsField: `${key}_contacts`,
+            });
+          }}
+        />
+      );
   }
 
   render() {
@@ -327,29 +328,10 @@ export default class CreateEventScreen extends Component<Props, State> {
                             ...formik.values.presenters_contacts,
                             ...formik.values.presenters_communities,
                           ]}
-                          renderItem={({
-                            item,
-                          }: {
-                            item: Community | Contact,
-                          }) =>
-                            item.id ? (
-                              <CommunityPreview
-                                {...item}
-                                onPress={() => {
-                                  this._onCellPress(
-                                    'presenters-community',
-                                    formik,
-                                    item
-                                  );
-                                }}
-                              />
-                            ) : (
-                              <UserPreview
-                                first_name={item.givenName}
-                                last_name={item.familyName}
-                                profile_photo={item.thumbnailPath}
-                              />
-                            )}
+                          renderItem={this._renderInviteItem(
+                            formik,
+                            'presenters'
+                          )}
                           keyExtractor={this._keyExtractor}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
@@ -394,29 +376,10 @@ export default class CreateEventScreen extends Component<Props, State> {
                             ...formik.values.atendees_contacts,
                             ...formik.values.atendees_communities,
                           ]}
-                          renderItem={({
-                            item,
-                          }: {
-                            item: Community | Contact,
-                          }) =>
-                            item.id ? (
-                              <CommunityPreview
-                                {...item}
-                                onPress={() => {
-                                  this._onCellPress(
-                                    'atendees-community',
-                                    formik,
-                                    item
-                                  );
-                                }}
-                              />
-                            ) : (
-                              <UserPreview
-                                first_name={item.givenName}
-                                last_name={item.familyName}
-                                profile_photo={item.thumbnailPath}
-                              />
-                            )}
+                          renderItem={this._renderInviteItem(
+                            formik,
+                            'contacts'
+                          )}
                           keyExtractor={this._keyExtractor}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
