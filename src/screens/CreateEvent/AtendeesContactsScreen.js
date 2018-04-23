@@ -32,7 +32,18 @@ type PhoneDetail = {
   number: string,
 };
 
+type Address = {
+  city: string,
+  country: string,
+  label: string,
+  postCode: string,
+  region: string,
+  state: string,
+  street: string,
+};
+
 export type Contact = {
+  company: string,
   emailAddresses: Array<EmailDetail>,
   phoneNumbers: Array<PhoneDetail>,
   familyName: string,
@@ -42,6 +53,7 @@ export type Contact = {
   middleName: string,
   recordID: string,
   thumbnailPath: string,
+  postalAddresses: Array<Address>,
 };
 
 type State = {
@@ -71,7 +83,7 @@ class AtendeesContactsScreen extends Component<
     contacts: [],
     permission: 'undefined',
     searchValue: '',
-    selectedContacts: this.props.formik.values.attendees_contacts || [],
+    selectedContacts: this.props.formik.values.atendees_contacts || [],
   };
 
   get filteredContacts(): Array<Contact> {
@@ -105,7 +117,7 @@ class AtendeesContactsScreen extends Component<
 
   _onSave = () => {
     this.props.formik.setFieldValue(
-      'attendees_contacts',
+      'atendees_contacts',
       this.state.selectedContacts
     );
 

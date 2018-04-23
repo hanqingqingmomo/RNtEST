@@ -22,7 +22,7 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
   membersCount = (id: string): number | string => {
     const { formik } = this.props;
 
-    const community = formik.values.atendees.find(
+    const community = formik.values.atendees_communities.find(
       (community: Community): boolean => community.id === id
     );
 
@@ -41,7 +41,7 @@ class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
               title="Mobile Contacts"
               detail={
                 __DEV__
-                  ? (this.props.formik.values.attendees_contacts || []).length
+                  ? (this.props.formik.values.atendees_contacts || []).length
                   : ''
               }
               accessory="DisclosureIndicator"

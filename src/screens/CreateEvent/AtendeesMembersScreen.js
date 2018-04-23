@@ -63,10 +63,10 @@ class AtendeesMembersScreen extends Component<
     );
   }
 
-  getCommunity = (): Community => {
+  getCommunity = (): Community & { members: Array<User> } => {
     const { formik, community } = this.props;
 
-    return formik.values.atendees.find(
+    return formik.values.atendees_communities.find(
       (selectedCommunity: Community) => selectedCommunity.id === community.id
     );
   };
@@ -146,7 +146,7 @@ class AtendeesMembersScreen extends Component<
       oldAtendees.push(newData);
     }
 
-    formik.setFieldValue('atendees', oldAtendees);
+    formik.setFieldValue('atendees_communities', oldAtendees);
 
     this.props.navigation.goBack();
   };

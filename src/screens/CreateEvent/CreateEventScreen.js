@@ -53,68 +53,10 @@ const INITIAL_VALUES = {
   post_in: [],
   start: new Date(),
   end: new Date(),
-  atendees: [],
-  attendees_contacts: [],
+  atendees_communities: [],
+  atendees_contacts: [],
+  presenters: [],
 };
-
-const USERS = [
-  {
-    id: 'b520ce3ed232',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-  {
-    id: 'b520ce3ed233',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-  {
-    id: 'b520ce3ed234',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-  {
-    id: 'b520ce3ed235',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-  {
-    id: 'b520ce3ed236',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-  {
-    id: 'b520ce3ed237',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-  {
-    id: 'b520ce3ed238',
-    first_name: 'Roberto',
-    last_name: 'Planto',
-    email: 'robertop@email.com',
-    profile_photo:
-      'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150555/thumb/image.jpg?1508590682',
-  },
-];
 
 const IMAGE_PICKER_OPTIONS = {
   title: 'Choose Photo',
@@ -352,7 +294,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                     cellContentView={
                       <View style={{ flexDirection: 'row' }}>
                         <FlatList
-                          data={USERS}
+                          data={formik.values.presenters}
                           renderItem={({ item }) => <UserPreview {...item} />}
                           keyExtractor={(item, index) => item.id}
                           ItemSeparatorComponent={() => (
@@ -395,8 +337,8 @@ export default class CreateEventScreen extends Component<Props, State> {
                       <View style={{ flexDirection: 'row' }}>
                         <FlatList
                           data={[
-                            ...formik.values.attendees_contacts,
-                            ...formik.values.atendees,
+                            ...formik.values.atendees_contacts,
+                            ...formik.values.atendees_communities,
                           ]}
                           renderItem={({
                             item,
@@ -445,7 +387,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                 </TableView.Section>
 
-                <TableView.Section footer="Attendees will have the option to enter without logging in">
+                <TableView.Section footer="Atendees will have the option to enter without logging in">
                   <SettingsCell
                     title="Allow atendee enter as a guest"
                     name="atendees_settings.allow_guest"
