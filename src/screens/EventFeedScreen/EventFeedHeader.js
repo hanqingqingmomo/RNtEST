@@ -4,9 +4,20 @@ import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 import { Icon, SearchBox, View, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
+
+let NAVIGATION_HEIGHT = 56;
+
+if (Platform.OS === 'ios') {
+  NAVIGATION_HEIGHT = 70;
+
+  if (isIphoneX()) {
+    NAVIGATION_HEIGHT = 88;
+  }
+}
 
 type Props = NavigationScreenConfigProps & {
   onChangeText: string => void,
@@ -48,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#a2a2a2',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    height: NAVIGATION_HEIGHT,
   },
   icon: {
     paddingHorizontal: 10,

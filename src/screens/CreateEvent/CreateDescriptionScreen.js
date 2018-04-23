@@ -33,7 +33,7 @@ export default class CreateDescriptionScreen extends Component<
     const { formik } = this.props.navigation.state.params;
 
     return (
-      <Screen fill style={css('padding', 15)}>
+      <Screen style={css('padding', 15)}>
         <BlackPortal name={SAVE_BUTTON_ID}>
           <NavigationTextButton
             disabled={!this.state.text}
@@ -51,6 +51,7 @@ export default class CreateDescriptionScreen extends Component<
           placeholder="What is your webinar about?"
           placeholderTextColor="#B0BEC5"
           multiline
+          underlineColorAndroid="transparent"
           onChangeText={(text: string) => {
             this.setState({ text });
           }}

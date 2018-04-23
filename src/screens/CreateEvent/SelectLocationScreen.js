@@ -5,6 +5,7 @@ import { StyleSheet, Platform } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import { type NavigationScreenConfigProps } from 'react-navigation';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 import {
   Screen,
@@ -16,6 +17,16 @@ import {
 } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
+
+let NAVIGATION_HEIGHT = 56;
+
+if (Platform.OS === 'ios') {
+  NAVIGATION_HEIGHT = 70;
+
+  if (isIphoneX()) {
+    NAVIGATION_HEIGHT = 88;
+  }
+}
 
 const HEADER_ID = 'CreateEvent:SearchBox';
 
@@ -131,6 +142,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#a2a2a2',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    height: NAVIGATION_HEIGHT,
   },
   searchContainer: {
     flex: 1,

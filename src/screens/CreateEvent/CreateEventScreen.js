@@ -5,6 +5,7 @@ import { WhitePortal, BlackPortal } from 'react-native-portal';
 import { TextInput, FlatList, Alert, Platform } from 'react-native';
 import { showImagePicker } from 'react-native-image-picker';
 import { type NavigationScreenConfigProps } from 'react-navigation';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 import {
   Screen,
@@ -202,7 +203,9 @@ export default class CreateEventScreen extends Component<Props, State> {
         />
       ) : (
         <UserPreview
-          fullName={`${item.givenName} ${item.familyName}`}
+          fullName={`${item.givenName}${item.middleName
+            ? ` ${item.middleName}`
+            : ''}${item.familyName ? ` ${item.familyName}` : ''}`}
           profilePhoto={item.thumbnailPath}
           onPress={() => {
             this.props.navigation.navigate('SelectContactsScreen', {
@@ -224,7 +227,7 @@ export default class CreateEventScreen extends Component<Props, State> {
         onSubmit={this._onSubmit}
         render={formik => {
           return (
-            <Screen>
+            <Screen containerStyle={css('paddingBottom', isIphoneX() ? 30 : 0)}>
               <BlackPortal name={SCHEDULE_BUTTON_ID}>
                 <NavigationTextButton
                   title="Schedule"

@@ -1,10 +1,17 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Dimensions, StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Dimensions,
+  StatusBar,
+  StyleSheet,
+  View,
+  Platform,
+} from 'react-native';
 import { TabBarBottom, TabNavigator } from 'react-navigation';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Modal from 'react-native-modalbox';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { Icon, Fetch, DropdownAlert } from '../atoms';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
@@ -25,6 +32,9 @@ import GlobalFeedStack from './MainTabs/GlobalFeedStack';
 import CommunityStack from './MainTabs/CommunityStack';
 import EventStack from './MainTabs/EventStack';
 import CreateEventStack from './CreateEventStack';
+
+const WINDOW_WIDTH = Dimensions.get('window').width;
+const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 let ALERT = null;
 
@@ -242,12 +252,18 @@ export default class MainTabs extends Component<{}, State> {
   };
 
   render() {
+    let height = WINDOW_HEIGHT;
+
+    if (Platform.OS === 'android') {
+      height -= getStatusBarHeight();
+    }
+
     return (
-      <View style={{ flex: 1 }}>
+      <View style={[css('width', WINDOW_WIDTH), css('height', height)]}>
         <DrawerLayout
           ref={this.drawerRef}
           useNativeAnimations
-          drawerWidth={Math.min(Dimensions.get('window').width - 50, 300)}
+          drawerWidth={Math.min(WINDOW_WIDTH - 50, 300)}
           drawerPosition={DrawerLayout.positions.Left}
           renderNavigationView={this.renderNavigationView}
           onDrawerOpen={() => {
