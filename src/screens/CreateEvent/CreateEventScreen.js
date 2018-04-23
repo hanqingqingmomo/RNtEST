@@ -175,6 +175,7 @@ export default class CreateEventScreen extends Component<Props, State> {
       case 'atendees':
         this.props.navigation.navigate('AtendeesCommunitiesScreen', {
           formik,
+          title: 'Add Atendees',
           contactsField: 'atendees_contacts',
           communitiesField: 'atendees_communities',
         });
@@ -182,6 +183,7 @@ export default class CreateEventScreen extends Component<Props, State> {
       case 'presenters':
         this.props.navigation.navigate('AtendeesCommunitiesScreen', {
           formik,
+          title: 'Add Presenters',
           contactsField: 'presenters_contacts',
           communitiesField: 'presenters_communities',
         });
@@ -205,6 +207,10 @@ export default class CreateEventScreen extends Component<Props, State> {
       default:
     }
   };
+
+  _keyExtractor(item: Community | Contact): string {
+    return item.id || item.recordID;
+  }
 
   render() {
     const { selectedField } = this.state;
@@ -344,8 +350,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                                 profile_photo={item.thumbnailPath}
                               />
                             )}
-                          keyExtractor={(item, index) =>
-                            item.id || item.recordID}
+                          keyExtractor={this._keyExtractor}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
                           )}
@@ -412,7 +417,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                                 profile_photo={item.thumbnailPath}
                               />
                             )}
-                          keyExtractor={item => item.id || item.recordID}
+                          keyExtractor={this._keyExtractor}
                           ItemSeparatorComponent={() => (
                             <View style={{ width: 15 }} />
                           )}

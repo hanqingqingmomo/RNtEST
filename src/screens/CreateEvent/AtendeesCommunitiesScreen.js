@@ -19,6 +19,10 @@ import { css } from '../../utils/style';
 import { makeReadCommunitiesListRq } from '../../utils/requestFactory';
 
 class AtendeesCommunitiesScreen extends Component<NavigationScreenConfigProps> {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: navigation.state.params.title,
+  });
+
   membersCount = (id: string): number => {
     const { formik, communitiesField } = this.props;
 

@@ -45,9 +45,6 @@ export default StackNavigator({
   },
   AtendeesCommunitiesScreen: {
     screen: AtendeesCommunitiesScreen,
-    navigationOptions: ({ navigation, screenProps }) => ({
-      headerTitle: 'Add Atendees',
-    }),
   },
   AtendeesMembersScreen: {
     screen: AtendeesMembersScreen,
