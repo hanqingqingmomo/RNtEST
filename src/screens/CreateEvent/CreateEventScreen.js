@@ -17,6 +17,7 @@ import {
   Pill,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 import { InviteButton, PhotoButton } from './Buttons';
 import { UserPreview, CommunityPreview } from './Previews';
 import {
@@ -84,7 +85,7 @@ function _renderInput({ name, placeholder }) {
               form.setFieldValue(field.name, text);
             }}
             underlineColorAndroid="transparent"
-            style={{ flex: 1, padding: 0, paddingRight: 15 }}
+            style={[css('flex', 1), css('padding', 0), css('paddingRight', 15)]}
           />
         );
       }}
@@ -97,14 +98,14 @@ function _renderPills(commuities: Array<Object>, max: number): React$Node {
   comms.splice(0 + max);
 
   const array = comms.map((community: Object, index: number): React$Node => (
-    <View key={community.id} style={{ paddingHorizontal: 2 }}>
+    <View key={community.id} style={css('paddingHorizontal', 2)}>
       <Pill color="orange" title={community.name} truncate />
     </View>
   ));
 
   if (commuities.length > max) {
     array.push(
-      <View key={commuities.length} style={{ paddingHorizontal: 2 }}>
+      <View key={commuities.length} style={css('paddingHorizontal', 2)}>
         <Pill color="orange" title={`+${commuities.length - max}`} />
       </View>
     );
@@ -266,10 +267,12 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                   <TableView.Cell
                     cellContentView={
-                      <View style={{ flex: 1, flexDirection: 'row' }}>
+                      <View
+                        style={[css('flex', 1), css('flexDirection', 'row')]}
+                      >
                         <Text
                           color={getColor('gray')}
-                          style={{ flex: 1, paddingRight: 2 }}
+                          style={[css('flex', 1), css('paddingRight', 1)]}
                         >
                           Post in
                         </Text>
@@ -317,12 +320,12 @@ export default class CreateEventScreen extends Component<Props, State> {
 
                 <TableView.Section header="presenters">
                   <TableView.Cell
-                    contentContainerStyle={{
-                      paddingLeft: 0,
-                      paddingRight: 0,
-                    }}
+                    contentContainerStyle={[
+                      css('paddingLeft', 0),
+                      css('paddingRight', 0),
+                    ]}
                     cellContentView={
-                      <View style={{ flexDirection: 'row' }}>
+                      <View style={css('flexDirection', 'row')}>
                         <FlatList
                           data={[
                             ...formik.values.presenters_contacts,
@@ -334,7 +337,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                           )}
                           keyExtractor={this._keyExtractor}
                           ItemSeparatorComponent={() => (
-                            <View style={{ width: 15 }} />
+                            <View style={css('width', 15)} />
                           )}
                           ListHeaderComponent={
                             <InviteButton
@@ -344,7 +347,9 @@ export default class CreateEventScreen extends Component<Props, State> {
                               }}
                             />
                           }
-                          ListFooterComponent={<View style={{ width: 15 }} />}
+                          ListFooterComponent={
+                            <View style={css('width', 15)} />
+                          }
                           horizontal
                         />
                       </View>
@@ -365,12 +370,12 @@ export default class CreateEventScreen extends Component<Props, State> {
                   footer="Invite individually or entire community"
                 >
                   <TableView.Cell
-                    contentContainerStyle={{
-                      paddingLeft: 0,
-                      paddingRight: 0,
-                    }}
+                    contentContainerStyle={[
+                      css('paddingLeft', 0),
+                      css('paddingRight', 0),
+                    ]}
                     cellContentView={
-                      <View style={{ flexDirection: 'row' }}>
+                      <View style={css('flexDirection', 'row')}>
                         <FlatList
                           data={[
                             ...formik.values.atendees_contacts,
@@ -382,7 +387,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                           )}
                           keyExtractor={this._keyExtractor}
                           ItemSeparatorComponent={() => (
-                            <View style={{ width: 15 }} />
+                            <View style={css('width', 15)} />
                           )}
                           ListHeaderComponent={
                             <InviteButton
@@ -396,7 +401,9 @@ export default class CreateEventScreen extends Component<Props, State> {
                               }}
                             />
                           }
-                          ListFooterComponent={<View style={{ width: 15 }} />}
+                          ListFooterComponent={
+                            <View style={css('width', 15)} />
+                          }
                           horizontal
                         />
                       </View>

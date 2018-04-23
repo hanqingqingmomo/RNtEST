@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import { TouchableOpacity, View, Image, Text } from '../../atoms';
 import { type Community } from '../../Types';
+import { css } from '../../utils/style';
 
 type Props = {
   fullName: string,
@@ -20,7 +21,7 @@ export function UserPreview({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <View style={[styles.imageWrapper, { borderRadius: 21 }]}>
+        <View style={[styles.imageWrapper, css('borderRadius', 21)]}>
           <Image
             source={
               profilePhoto ? { uri: profilePhoto } : require('./avatar.png')
@@ -51,7 +52,7 @@ export function CommunityPreview({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <View style={[styles.imageWrapper, { borderRadius: 3 }]}>
+        <View style={[styles.imageWrapper, css('borderRadius', 3)]}>
           <Image
             source={{ uri: cover_photo }}
             style={styles.image}

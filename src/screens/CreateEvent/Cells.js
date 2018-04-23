@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import {
   Switch,
-  StyleSheet,
   DatePickerIOS,
   DatePickerAndroid,
   TimePickerAndroid,
@@ -13,11 +12,9 @@ import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import Collapsible from 'react-native-collapsible';
 
-import { TableView, Icon, View, Avatar } from '../../atoms';
+import { TableView, View } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
-import { type Community } from '../../Types';
-import { Checkmark } from './Checkmark';
 
 type SetingsProps = {
   title: string,
@@ -34,11 +31,6 @@ type SurveyProps = {
 
 type SharingProps = {
   value: 'presenters' | 'everyone',
-};
-
-type LocationProps = {
-  title: string,
-  onPress: Function,
 };
 
 type DatePickerProps = {
@@ -148,54 +140,6 @@ export class SettingsCell extends Component<SetingsProps> {
   }
 }
 
-export class LocationCell extends Component<LocationProps> {
-  render() {
-    return (
-      <TableView.Cell
-        titleTextColor="#455A64"
-        cellImageView={
-          <Icon
-            name="map-pin"
-            size="md"
-            color="#455A64"
-            style={css('marginRight', 15)}
-          />
-        }
-        {...this.props}
-      />
-    );
-  }
-}
-
-export class CommunityCell extends Component<
-  Community & { onPress: Function, selected: boolean }
-> {
-  render(): React$Node {
-    const { cover_photo, name, onPress, selected } = this.props;
-
-    return (
-      <TableView.Cell
-        title={name}
-        cellImageView={
-          <Avatar
-            imageURI={cover_photo}
-            size={28}
-            radius={3}
-            style={styles.communityImage}
-          />
-        }
-        cellAccessoryView={
-          <Checkmark
-            selected={selected}
-            selectedBackgroundColor={getColor('red')}
-          />
-        }
-        onPress={onPress}
-      />
-    );
-  }
-}
-
 export const DatePickerCell = (props: DatePickerProps): React$Node => {
   let date = {};
 
@@ -209,7 +153,11 @@ export const DatePickerCell = (props: DatePickerProps): React$Node => {
 
         openAndroidTimePicker();
       }
-    } catch ({ code, message }) {}
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[ANDROID DATE PICKER] error', err);
+      }
+    }
   }
 
   async function openAndroidTimePicker() {
@@ -234,7 +182,11 @@ export const DatePickerCell = (props: DatePickerProps): React$Node => {
 
         date = {};
       }
-    } catch ({ code, message }) {}
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[ANDROID TIME PICKER] error', err);
+      }
+    }
   }
 
   if (props.open && Platform.OS === 'android') {
@@ -247,7 +199,7 @@ export const DatePickerCell = (props: DatePickerProps): React$Node => {
     <Collapsible collapsed={!props.open}>
       <TableView.Cell
         cellContentView={
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={[css('flex', 1), css('justifyContent', 'center')]}>
             <DatePickerIOS {...props} />
           </View>
         }
@@ -268,18 +220,3 @@ export const DateCell = (props: DateProps): React$Node => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  checkmarkWrapper: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 1,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  communityImage: {
-    marginRight: 7,
-  },
-});

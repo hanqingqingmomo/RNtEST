@@ -12,9 +12,10 @@ import {
   TableView,
   SearchBox,
   View,
+  Icon,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
-import { LocationCell } from './Cells';
+import { css } from '../../utils/style';
 
 const HEADER_ID = 'CreateEvent:SearchBox';
 
@@ -98,10 +99,19 @@ export default class SelectLocationScreen extends Component<
         <TableView.Table>
           <TableView.Section header="Recent Locations">
             {this.filteredLocations.map((location: Object): React$Node => (
-              <LocationCell
+              <TableView.Cell
                 key={location.id}
                 title={location.name}
                 onPress={() => this._onCellPress(location.name)}
+                titleTextColor="#455A64"
+                cellImageView={
+                  <Icon
+                    name="map-pin"
+                    size="md"
+                    color="#455A64"
+                    style={css('marginRight', 15)}
+                  />
+                }
               />
             ))}
           </TableView.Section>

@@ -7,6 +7,7 @@ import { type NavigationScreenConfigProps } from 'react-navigation';
 
 import { Screen, NavigationTextButton } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 
 const SAVE_BUTTON_ID = 'CreateEvent:SaveButton';
 
@@ -32,7 +33,7 @@ export default class CreateDescriptionScreen extends Component<
     const { formik } = this.props.navigation.state.params;
 
     return (
-      <Screen fill style={{ padding: 15 }}>
+      <Screen fill style={css('padding', 15)}>
         <BlackPortal name={SAVE_BUTTON_ID}>
           <NavigationTextButton
             disabled={!this.state.text}

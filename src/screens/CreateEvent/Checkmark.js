@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View, Icon } from '../../atoms';
+import { css } from '../../utils/style';
 
 type Props = {
   selected: boolean,
@@ -22,10 +23,11 @@ export const Checkmark = ({
     <View
       style={[
         styles.checkmarkWrapper,
-        {
-          borderColor: selected ? selectedBackgroundColor : '#CFD8DC',
-          backgroundColor: selected ? selectedBackgroundColor : 'transparent',
-        },
+        css('borderColor', selected ? selectedBackgroundColor : '#CFD8DC'),
+        css(
+          'backgroundColor',
+          selected ? selectedBackgroundColor : 'transparent'
+        ),
       ]}
     >
       <Icon name="check" size={18} color={selected ? selectedColor : color} />

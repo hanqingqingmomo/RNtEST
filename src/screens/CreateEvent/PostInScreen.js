@@ -4,33 +4,22 @@ import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 
-import { Screen, NavigationTextButton, TableView } from '../../atoms';
+import {
+  Screen,
+  NavigationTextButton,
+  TableView,
+  Avatar,
+  CenterView,
+  ActivityIndicator,
+  Fetch,
+} from '../../atoms';
 import { getColor } from '../../utils/color';
-import { CommunityCell } from './Cells';
-import { type Community } from '../../Types';
+import { css } from '../../utils/style';
+import { type Community, type FetchProps } from '../../Types';
+import { Checkmark } from './Checkmark';
+import { makeReadCommunitiesListRq } from '../../utils/requestFactory';
 
 const DONE_BUTTON_ID = 'CreateEvent:DoneButton';
-
-const COMMUNUTIES = [
-  {
-    id: '5c4b12e77d0b',
-    name: 'Test communitasdasdy',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d0c',
-    name: 'Test communitasdasdy 2',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-  {
-    id: '5c4b12e77d0d',
-    name: 'Test communitasdasdy 3',
-    cover_photo:
-      'https://api-testing.poweredbyaction.org/assets/cover_photos/boytelescope.jpg',
-  },
-];
 
 type State = {
   selectedCommunities: Array<Community>,
@@ -79,31 +68,59 @@ export default class PostInScreen extends Component<
   };
 
   render(): React$Node {
-    return (
-      <Screen fill>
-        <BlackPortal name={DONE_BUTTON_ID}>
-          <NavigationTextButton
-            title="Done"
-            textColor={getColor('orange')}
-            onPress={() => {
-              this.props.navigation.goBack();
-            }}
-          />
-        </BlackPortal>
+    const readCommunitiesListRq = makeReadCommunitiesListRq(true);
 
-        <TableView.Table>
-          <TableView.Section sectionPaddingTop={0}>
-            {COMMUNUTIES.map((community: Object): React$Node => (
-              <CommunityCell
-                key={community.id}
-                onPress={() => this._onCellPress(community)}
-                selected={this.isSelected(community.id)}
-                {...community}
-              />
-            ))}
-          </TableView.Section>
-        </TableView.Table>
-      </Screen>
+    return (
+      <Fetch
+        url={readCommunitiesListRq.url}
+        options={readCommunitiesListRq.options}
+      >
+        {({ loading, data }: FetchProps<{ data: Array<Community> }>) => {
+          return loading === false ? (
+            <Screen fill>
+              <BlackPortal name={DONE_BUTTON_ID}>
+                <NavigationTextButton
+                  title="Done"
+                  textColor={getColor('orange')}
+                  onPress={() => {
+                    this.props.navigation.goBack();
+                  }}
+                />
+              </BlackPortal>
+
+              <TableView.Table>
+                <TableView.Section sectionPaddingTop={0}>
+                  {data.data.map((community: Community): React$Node => (
+                    <TableView.Cell
+                      key={community.id}
+                      title={community.name}
+                      cellImageView={
+                        <Avatar
+                          imageURI={community.cover_photo}
+                          size={28}
+                          radius={3}
+                          style={css('marginRight', 7)}
+                        />
+                      }
+                      cellAccessoryView={
+                        <Checkmark
+                          selected={this.isSelected(community.id)}
+                          selectedBackgroundColor={getColor('red')}
+                        />
+                      }
+                      onPress={() => this._onCellPress(community)}
+                    />
+                  ))}
+                </TableView.Section>
+              </TableView.Table>
+            </Screen>
+          ) : (
+            <CenterView>
+              <ActivityIndicator />
+            </CenterView>
+          );
+        }}
+      </Fetch>
     );
   }
 }

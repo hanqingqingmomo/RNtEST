@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import Contacts from 'react-native-contacts';
-import { StyleSheet, InteractionManager, FlatList } from 'react-native';
+import { InteractionManager, FlatList } from 'react-native';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Separator } from 'react-native-tableview-simple';
@@ -21,7 +21,12 @@ import {
   NavigationIconButton,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 import { Checkmark } from './Checkmark';
+
+const HEADER_RIGHT_ID = 'CreateEvent:ContactsSaveContacts';
+const HEADER_TITLE_ID = 'CreateEvent:ContactsSearchBox';
+
 type EmailDetail = {
   email: string,
   label: string,
@@ -68,8 +73,8 @@ class SelectContactsScreen extends Component<
   State
 > {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <WhitePortal name="header-title" />,
-    headerRight: <WhitePortal name="header-right" />,
+    headerTitle: <WhitePortal name={HEADER_TITLE_ID} />,
+    headerRight: <WhitePortal name={HEADER_RIGHT_ID} />,
     headerLeft: (
       <NavigationIconButton
         name="arrow-open-left-thin"
@@ -171,7 +176,7 @@ class SelectContactsScreen extends Component<
               name="sad-face"
               color={getColor('gray')}
               size={100}
-              style={{ paddingBottom: 25 }}
+              style={css('paddingBottom', 25)}
             />
             <Text color={getColor('gray')} size={16}>
               Allow permission via system settings
@@ -182,7 +187,7 @@ class SelectContactsScreen extends Component<
       case 'authorized':
         return (
           <Screen tintColor="white" scrollEnabled fill>
-            <BlackPortal name="header-title">
+            <BlackPortal name={HEADER_TITLE_ID}>
               <SearchBox
                 placeholder="Search..."
                 value={this.state.searchValue}
@@ -191,7 +196,7 @@ class SelectContactsScreen extends Component<
               />
             </BlackPortal>
 
-            <BlackPortal name="header-right">
+            <BlackPortal name={HEADER_RIGHT_ID}>
               <NavigationTextButton
                 textColor={getColor('orange')}
                 title="Save"
@@ -201,7 +206,7 @@ class SelectContactsScreen extends Component<
 
             <TableView.Section header="Contacts">
               <FlatList
-                contentContainerStyle={{ height: '100%' }}
+                contentContainerStyle={css('height', '100%')}
                 data={this.filteredContacts}
                 keyExtractor={this.keyExtractor}
                 renderItem={({ item }: { item: Contact }) => (
@@ -215,7 +220,7 @@ class SelectContactsScreen extends Component<
                         imageSource={require('./avatar.png')}
                         size={28}
                         radius={14}
-                        style={styles.avatar}
+                        style={css('marginRight', 7)}
                       />
                     }
                     cellAccessoryView={
@@ -246,9 +251,3 @@ const mapState = (state, props) => ({
 });
 
 export default connect(mapState, {})(SelectContactsScreen);
-
-const styles = StyleSheet.create({
-  avatar: {
-    marginRight: 7,
-  },
-});

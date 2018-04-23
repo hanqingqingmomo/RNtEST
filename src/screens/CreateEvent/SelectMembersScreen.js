@@ -18,6 +18,7 @@ import {
 import { type User, type Community } from '../../Types';
 import { makeReadCommunityMembersRq } from '../../utils/requestFactory';
 import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
 import { Checkmark } from './Checkmark';
 
 const HEADER_TITLE_ID = 'CreateEvent:SearchMembers';
@@ -218,7 +219,7 @@ class SelectMembersScreen extends Component<
                   <Avatar
                     imageURI={member.profile_photo}
                     size={28}
-                    style={{ marginRight: 7 }}
+                    style={css('marginRight', 7)}
                   />
                 }
                 onPress={() => this._onSelectMember(member)}
