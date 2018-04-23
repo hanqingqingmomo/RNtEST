@@ -1184,12 +1184,6 @@ export default class EventFeedScreen extends React.Component<
     });
   }
 
-  componentDidMount() {
-    // this.props.screenProps.openModalRoute({
-    //   routeName: 'CreateEventModal',
-    // });
-  }
-
   _onChangeText = (searchValue: string) => {
     this.setState({ searchValue });
   };

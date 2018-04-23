@@ -75,7 +75,7 @@ const Navigator = TabNavigator(
     },
   },
   {
-    initialRouteName: 'EventTab',
+    initialRouteName: 'GlobalFeedTab',
     lazy: true,
     swipeEnabled: false,
     tabBarComponent: TabBarBottom,
