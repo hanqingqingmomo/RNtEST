@@ -1,12 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  RefreshControl,
-  InteractionManager,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, RefreshControl, InteractionManager, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import { View } from '../../atoms';
@@ -49,8 +44,6 @@ class NewsFeed extends Component<Props> {
     InteractionManager.runAfterInteractions(this.fetchFreshData);
   }
 
-  keyExtractor = (item: Post): string => item.id;
-
   loadTimeline(mergeMode) {
     this.props.loadTimeline({
       id: this.props.id,
@@ -68,14 +61,13 @@ class NewsFeed extends Component<Props> {
     this.loadTimeline('append');
   };
 
-  renderItem = ({ item }: { item: Post }) => (
-    <View style={css('paddingHorizontal', 10)}>
+  renderItem = (item: Post) => (
+    <View key={item.id} style={css('paddingHorizontal', 10)}>
       <NewsFeedItem
         item={item}
         navigateToCommunity={this.props.navigateToCommunity}
         navigateToPostDetail={() => this.props.navigateToPostDetail(item)}
-        navigateToMemberProfile={() =>
-          this.props.navigateToMemberProfile(item.author)}
+        navigateToMemberProfile={() => this.props.navigateToMemberProfile(item.author)}
       />
     </View>
   );
@@ -84,11 +76,7 @@ class NewsFeed extends Component<Props> {
     const { timeline } = this.props;
 
     return (
-      <FlatList
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
-        data={timeline.content}
-        ItemSeparatorComponent={ItemSeparatorComponent}
+      <ScrollView
         refreshControl={
           <RefreshControl
             refreshing={timeline.refreshing}
@@ -96,23 +84,22 @@ class NewsFeed extends Component<Props> {
             colors={[getColor('orange')]}
           />
         }
-        ListHeaderComponent={
-          this.props.ListHeaderComponent !== undefined ? (
-            <View style={styles.ListHeaderComponent}>
-              {this.props.ListHeaderComponent}
-            </View>
-          ) : null
-        }
-        ListFooterComponent={
-          <View style={styles.ListFooterComponent}>
-            <Footer
-              disabled={timeline.next === null}
-              loading={timeline.loading}
-              onRequestMoreData={this.fetchNextData}
-            />
-          </View>
-        }
-      />
+      >
+        {this.props.ListHeaderComponent !== undefined ? (
+          <View style={styles.ListHeaderComponent}>{this.props.ListHeaderComponent}</View>
+        ) : null}
+        {timeline.content.map((item: Post, index: number) => [
+          index > 0 ? <ItemSeparatorComponent key={`${item.id}-${index}`} /> : null,
+          this.renderItem(item),
+        ])}
+        <View style={styles.ListFooterComponent}>
+          <Footer
+            disabled={timeline.next === null}
+            loading={timeline.loading}
+            onRequestMoreData={this.fetchNextData}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
