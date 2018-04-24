@@ -97,7 +97,7 @@ class PostEditorScreen extends Component<Props, State> {
 
   render() {
     return (
-      <Screen fill>
+      <Screen fill keyboardShouldPersistTaps="always">
         <BlackPortal name={HEADER_RIGHT_ID}>
           <NavigationTextButton
             title={this.busy ? 'Sending' : 'Send'}
