@@ -26,7 +26,7 @@ const AVATAR_WIDTH = 30;
 const StartConversationButton = (props: Props) => {
   return (
     <TouchableOpacity onPress={props.navigateToEditorScreen}>
-      <ShadowView flexDirection="row" style={styles.cellContainer}>
+      <ShadowView style={styles.cellContainer} radius={0}>
         <Avatar imageURI={props.user.profile_photo} size={AVATAR_WIDTH} />
         <Text color="gray" style={styles.textContainer}>
           Start a conversation...
@@ -49,7 +49,7 @@ const mapStateToProps = state => ({
   user: selectUser(state),
 });
 
-export default connect(mapStateToProps)(StartConversationButton);
+export default connect(mapStateToProps, {})(StartConversationButton);
 
 const styles = StyleSheet.create({
   cellContainer: {
