@@ -1,10 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Dimensions, StatusBar, StyleSheet, View } from 'react-native';
+import { Dimensions, StatusBar, StyleSheet, View, Modal } from 'react-native';
 import { TabBarBottom, TabNavigator } from 'react-navigation';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
-import Modal from 'react-native-modalbox';
 
 import { Icon, Fetch, DropdownAlert } from '../atoms';
 import DrawerView, { type NavigationItem } from '../navigation/Drawer/Drawer';
@@ -265,10 +264,10 @@ export default class MainTabs extends Component<{}, State> {
           />
         </DrawerLayout>
         <Modal
-          swipeToClose={false}
-          isOpen={this.state.modalRoute !== null}
-          onClosed={this.closeModalRoute}
-          keyboardTopOffset={0}
+          animationType="slide"
+          visible={this.state.modalRoute !== null}
+          onRequestClose={this.closeModalRoute}
+          transparent={false}
         >
           {this.renderModalRoute()}
         </Modal>
