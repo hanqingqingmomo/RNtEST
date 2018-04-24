@@ -25,12 +25,14 @@ function ItemSeparatorComponent() {
  */
 
 type Props = {
+  disableRefreshControl?: boolean,
   id: string,
   limit: number,
   ListHeaderComponent?: React$Node,
+  loadTimeline: typeof loadTimeline,
   navigateToCommunity: CommunitySimple => mixed,
-  navigateToPostDetail(Post): mixed,
   navigateToMemberProfile(User): mixed,
+  navigateToPostDetail(Post): mixed,
   path: string,
   timeline: Timeline,
 };
@@ -73,16 +75,18 @@ class NewsFeed extends Component<Props> {
   );
 
   render() {
-    const { timeline } = this.props;
+    const { timeline, disableRefreshControl } = this.props;
 
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={timeline.refreshing}
-            onRefresh={this.fetchFreshData}
-            colors={[getColor('orange')]}
-          />
+          disableRefreshControl ? null : (
+            <RefreshControl
+              refreshing={timeline.refreshing}
+              onRefresh={this.fetchFreshData}
+              colors={[getColor('orange')]}
+            />
+          )
         }
       >
         {this.props.ListHeaderComponent !== undefined ? (

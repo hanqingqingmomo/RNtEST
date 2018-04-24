@@ -10,6 +10,7 @@ import type { Community, CommunitySimple, Post, User } from '../Types';
 type Props = {
   communityId: string,
   navigation: any,
+  disableRefreshControl?: boolean,
 };
 
 export default class CommunityFeedScreen extends Component<Props> {
@@ -39,6 +40,7 @@ export default class CommunityFeedScreen extends Component<Props> {
         navigateToCommunity={this.navigateToCommunity}
         navigateToPostDetail={this.navigateToPostDetail}
         navigateToMemberProfile={this.navigateToMemberProfile}
+        disableRefreshControl={this.props.disableRefreshControl}
         ListHeaderComponent={
           <View>
             <StartConversationButton
