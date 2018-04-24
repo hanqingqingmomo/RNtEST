@@ -28,6 +28,7 @@ import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
+import PollEditorPlayground from './PollEditorPlayground';
 import PopoverPlayground from './PopoverPlayground';
 import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
@@ -136,7 +137,15 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="NotificationSettingsScreen"
       navigation={navigation}
     />
-    <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
+    <Link
+      title="Poll Editor"
+      screen="PollEditorPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Popover"
+      screen="PopoverPlayground"
+      navigation={navigation} />
     <Link
       title="Search Result"
       screen="SearchResultPlayground"
@@ -244,6 +253,9 @@ export default StackNavigator(
     },
     NotificationSettingsScreen: {
       screen: NotificationSettingsScreen,
+    },
+    PollEditorPlayground: {
+      screen: PollEditorPlayground,
     },
     PopoverPlayground: {
       screen: PopoverPlayground,

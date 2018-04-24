@@ -15,6 +15,8 @@ export { default as NewsFeed } from './NewsFeed/NewsFeed';
 export { default as NewsFeedItem } from './NewsFeedItem/NewsFeedItem';
 export { default as NoContent } from './NoContent';
 export { default as PinnedPost } from './PinnedPost';
+export { Poll, UpdateData } from './PollEditor/PollEditor';
+export { default as PollEditor } from './PollEditor/PollEditor';
 export { default as ProfileCard } from './ProfileCard';
 export { default as SearchResult } from './SearchResult';
 export { default as PopupActions } from './PopupActions';
