@@ -33,6 +33,7 @@ import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
+import RichTextEditorPlayground from './RichTextEditorPlayground';
 
 type LinkProps = {
   screen: string,
@@ -162,6 +163,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="UserProfilePlayground"
       navigation={navigation}
     />
+    <Link
+      title="Rich Text Editor"
+      screen="RichTextEditorPlayground"
+      navigation={navigation}
+    />
   </ScrollView>
 );
 
@@ -259,6 +265,9 @@ export default StackNavigator(
     },
     UserSettingsScreen: {
       screen: UserSettingsScreen,
+    },
+    RichTextEditorPlayground: {
+      screen: RichTextEditorPlayground,
     },
   },
   {

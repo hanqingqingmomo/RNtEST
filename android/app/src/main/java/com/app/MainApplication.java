@@ -21,6 +21,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.magus.fblogin.FacebookLoginPackage;
+import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,8 @@ public class MainApplication extends Application implements ReactApplication {
         new ReactNativeConfigPackage(),
         new VectorIconsPackage(),
         new ImagePickerPackage(),
-        new FacebookLoginPackage()
+        new FacebookLoginPackage(),
+        new WebViewBridgePackage()
       );
     }
 
