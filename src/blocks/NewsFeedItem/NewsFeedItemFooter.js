@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import { contentLike } from '../../redux/ducks/contentObject';
-import { Text, View, TouchableItem, Count } from '../../atoms';
+import { Text, View, TouchableOpacity, Count } from '../../atoms';
 import { type Post } from '../../Types';
 
 type Action = {
@@ -47,11 +47,11 @@ class NewsFeedItemFooter extends Component<Props> {
         key={action.label}
         style={[styles.action, idx > 0 ? styles.actionWithBorder : {}]}
       >
-        <TouchableItem onPress={action.onPress} hitSlop={HIT_SLOP}>
+        <TouchableOpacity onPress={action.onPress} hitSlop={HIT_SLOP}>
           <Text size={13} lineHeight={18} color="linkBlue">
             {action.label}
           </Text>
-        </TouchableItem>
+        </TouchableOpacity>
       </View>
     ));
   }
@@ -63,21 +63,21 @@ class NewsFeedItemFooter extends Component<Props> {
     return (
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
-          <TouchableItem
+          <TouchableOpacity
             style={styles.likeWrapper}
             onPress={() => {
               this.props.contentLike(this.props.item);
             }}
           >
             <Count iconName="like" count={likes_count} pinned={liked} />
-          </TouchableItem>
-          <TouchableItem
+          </TouchableOpacity>
+          <TouchableOpacity
             disabled={isDetail}
             onPress={this.props.navigateToPostDetail}
             style={styles.likeWrapper}
           >
             <Count iconName="comment" count={comments_count} />
-          </TouchableItem>
+          </TouchableOpacity>
         </View>
         <View style={[styles.actionsWrapper]}>
           {this.renderActions(this.actions)}
