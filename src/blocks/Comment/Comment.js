@@ -21,13 +21,13 @@ import CommentList from './CommentList';
 
 type Props = {
   item: TComment,
-  level: number,
   onRequestReply?: TComment => mixed,
   viewer: User,
 };
 
 type State = {
-  showReplies: boolean,
+  showAllReplies: boolean,
+  showOnlyLastComment: boolean,
 };
 
 type ActionCollection = {
@@ -45,11 +45,8 @@ const mapDispatch = { contentLike, contentDestroy, contentReport };
 
 class Comment extends Component<Props, State> {
   state = {
-    showReplies: false,
-  };
-
-  toggleShowAllReplies = () => {
-    this.setState({ showReplies: !this.state.showReplies });
+    showAllReplies: false,
+    showOnlyLastComment: false,
   };
 
   get actions(): Array<PopupAction> {
@@ -77,108 +74,152 @@ class Comment extends Component<Props, State> {
       .map(({ action }) => action);
   }
 
+  get lastComment(): Array<TComment> {
+    const replies = [...this.props.item.replies];
+    const lastComment = replies.pop();
+
+    return lastComment ? [lastComment] : [];
+  }
+
+  toggleShowAllReplies = () => {
+    this.setState({
+      showAllReplies: !this.state.showAllReplies,
+      showOnlyLastComment: false,
+    });
+  };
+
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.item.replies.length !== this.props.item.replies.length) {
+      if (nextProps.item.replies.length > 1) {
+        this.setState({ showOnlyLastComment: true });
+      } else {
+        this.setState({ showAllReplies: true });
+      }
+    }
+  }
+
   render() {
-    const { item, onRequestReply } = this.props;
+    const { showAllReplies, showOnlyLastComment } = this.state;
+    const { item, onRequestReply, contentLike } = this.props;
 
     return (
-      <View style={styles.flexRow}>
-        <View style={styles.avatarWrapper}>
-          <Avatar imageURI={item.author.profile_photo} size={AVATAR_SIZE} />
-        </View>
-        <View style={[styles.contentWrapper]}>
-          <View style={[styles.alignItemsCenter, styles.flexRow]}>
-            <View style={[styles.headerInfo, styles.flexRow]}>
-              <Text
-                size={13}
-                lineHeight={15}
-                weight="600"
-                color="#455A64"
-                style={styles.authorName}
-              >
-                {item.author.first_name} {item.author.last_name}
-              </Text>
-
-              <TimeAgo
-                date={item.created_at}
-                size={11}
-                weight="500"
-                color="gray"
-              />
-            </View>
-            <PopupActions actions={this.actions} />
+      <View>
+        <View style={[styles.flexRow, css('paddingHorizontal', 15)]}>
+          <View style={styles.avatarWrapper}>
+            <Avatar imageURI={item.author.profile_photo} size={AVATAR_SIZE} />
           </View>
-
-          <Text size={14} lineHeight={18} color="#455A64">
-            {item.text_content}
-          </Text>
-
-          <View
-            style={[styles.footer, styles.flexRow, styles.alignItemsCenter]}
-          >
-            <View
-              style={[
-                styles.footerLeft,
-                styles.flexRow,
-                styles.alignItemsCenter,
-              ]}
-            >
-              <TouchableItem
-                style={styles.likeWrapper}
-                onPress={() => this.props.contentLike(this.props.item)}
-              >
-                <Count
-                  iconName="like"
-                  count={item.likes_count}
-                  pinned={item.liked}
-                />
-              </TouchableItem>
-
-              {onRequestReply && (
+          <View style={[styles.contentWrapper]}>
+            <View style={[styles.alignItemsCenter, styles.flexRow]}>
+              <View style={[styles.headerInfo, styles.flexRow]}>
                 <Text
-                  onPress={() => onRequestReply(item)}
+                  size={13}
+                  lineHeight={15}
+                  weight="600"
+                  color="#455A64"
+                  style={styles.authorName}
+                >
+                  {item.author.first_name} {item.author.last_name}
+                </Text>
+
+                <TimeAgo
+                  date={item.created_at}
+                  size={11}
+                  weight="500"
+                  color="gray"
+                />
+              </View>
+              <PopupActions actions={this.actions} />
+            </View>
+
+            <Text size={14} lineHeight={18} color="#455A64">
+              {item.text_content}
+            </Text>
+
+            <View
+              style={[styles.footer, styles.flexRow, styles.alignItemsCenter]}
+            >
+              <View
+                style={[
+                  styles.footerLeft,
+                  styles.flexRow,
+                  styles.alignItemsCenter,
+                ]}
+              >
+                <TouchableItem
+                  style={styles.likeWrapper}
+                  onPress={() => contentLike(this.props.item)}
+                >
+                  <Count
+                    iconName="like"
+                    count={item.likes_count}
+                    pinned={item.liked}
+                  />
+                </TouchableItem>
+
+                {onRequestReply && (
+                  <Text
+                    onPress={() => onRequestReply(item)}
+                    size={13}
+                    lineHeight={18}
+                    color={getColor('linkBlue')}
+                    style={styles.replyButton}
+                  >
+                    Reply
+                  </Text>
+                )}
+              </View>
+
+              {item.replies.length > 0 ? (
+                <Text
                   size={13}
                   lineHeight={18}
-                  color={getColor('linkBlue')}
-                  style={styles.replyButton}
+                  color="gray"
+                  onPress={this.toggleShowAllReplies}
                 >
-                  Reply
+                  {showAllReplies
+                    ? plural(
+                        `Hide ${item.replies.length} reply(s)`,
+                        item.replies.length
+                      )
+                    : plural(
+                        `Show ${item.replies.length} reply(s)`,
+                        item.replies.length
+                      )}
                 </Text>
-              )}
+              ) : null}
             </View>
-
-            {item.replies.length > 0 ? (
-              <Text
-                size={13}
-                lineHeight={18}
-                color="gray"
-                onPress={this.toggleShowAllReplies}
-              >
-                {this.state.showReplies
-                  ? plural(
-                      `Hide ${item.replies.length} reply(s)`,
-                      item.replies.length
-                    )
-                  : plural(
-                      `Show ${item.replies.length} reply(s)`,
-                      item.replies.length
-                    )}
-              </Text>
-            ) : null}
           </View>
-
-          <Collapsible
-            collapsed={
-              item.replies.length === 0 || this.state.showReplies === false
-            }
-          >
-            <View style={css('paddingTop', 30)}>
-              <CommentList
-                level={this.props.level + 1}
-                replies={item.replies}
-              />
-            </View>
-          </Collapsible>
         </View>
+
+        <Collapsible
+          collapsed={item.replies.length === 0 || showAllReplies === false}
+        >
+          <View style={[css('paddingTop', 30), css('paddingLeft', 35)]}>
+            <CommentList replies={item.replies} />
+          </View>
+        </Collapsible>
+
+        {showOnlyLastComment ? (
+          <Text
+            size={13}
+            lineHeight={18}
+            color={getColor('orange')}
+            style={{ textAlign: 'center', marginTop: 30 }}
+            onPress={this.toggleShowAllReplies}
+          >
+            {plural('Show all reply(s)', item.replies.length)}
+          </Text>
+        ) : null}
+
+        <Collapsible
+          collapsed={
+            this.lastComment.length === 0 || showOnlyLastComment === false
+          }
+        >
+          <View style={[css('paddingTop', 30), css('paddingLeft', 35)]}>
+            <CommentList replies={this.lastComment} />
+          </View>
+        </Collapsible>
       </View>
     );
   }
