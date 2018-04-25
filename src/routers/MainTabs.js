@@ -6,11 +6,11 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Modal,
   Platform,
 } from 'react-native';
 import { TabBarBottom, TabNavigator } from 'react-navigation';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
-import Modal from 'react-native-modalbox';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { Icon, Fetch, DropdownAlert } from '../atoms';
@@ -292,10 +292,10 @@ export default class MainTabs extends Component<{}, State> {
           />
         </DrawerLayout>
         <Modal
-          swipeToClose={false}
-          isOpen={this.state.modalRoute !== null}
-          onClosed={this.closeModalRoute}
-          keyboardTopOffset={0}
+          animationType="slide"
+          visible={this.state.modalRoute !== null}
+          onRequestClose={this.closeModalRoute}
+          transparent={false}
         >
           {this.renderModalRoute()}
         </Modal>

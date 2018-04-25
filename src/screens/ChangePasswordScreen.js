@@ -102,7 +102,7 @@ export default class ChangePasswordScreen extends Component<P> {
                       secureTextEntry
                     />
                     <FormField
-                      label="Confirm password"
+                      label="Confirm Password"
                       name="confirmPassword"
                       secureTextEntry
                     />

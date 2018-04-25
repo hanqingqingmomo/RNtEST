@@ -62,6 +62,7 @@ class PostScreen extends Component<Props, State> {
   render() {
     const { post } = this.props;
     const { replyingTo } = this.state;
+
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
         <ScrollView>
@@ -73,7 +74,6 @@ class PostScreen extends Component<Props, State> {
           />
           <View style={css('paddingVertical', 20)}>
             <CommentList
-              level={0}
               replies={this.props.post.replies}
               onRequestReply={this.focusReplyInput}
             />

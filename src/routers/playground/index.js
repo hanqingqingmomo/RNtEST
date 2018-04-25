@@ -28,11 +28,13 @@ import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
+import PollEditorPlayground from './PollEditorPlayground';
 import PopoverPlayground from './PopoverPlayground';
 import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
+import RichTextEditorPlayground from './RichTextEditorPlayground';
 
 type LinkProps = {
   screen: string,
@@ -135,7 +137,15 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="NotificationSettingsScreen"
       navigation={navigation}
     />
-    <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
+    <Link
+      title="Poll Editor"
+      screen="PollEditorPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Popover"
+      screen="PopoverPlayground"
+      navigation={navigation} />
     <Link
       title="Search Result"
       screen="SearchResultPlayground"
@@ -160,6 +170,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     <Link
       title="User Profile"
       screen="UserProfilePlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Rich Text Editor"
+      screen="RichTextEditorPlayground"
       navigation={navigation}
     />
   </ScrollView>
@@ -239,6 +254,9 @@ export default StackNavigator(
     NotificationSettingsScreen: {
       screen: NotificationSettingsScreen,
     },
+    PollEditorPlayground: {
+      screen: PollEditorPlayground,
+    },
     PopoverPlayground: {
       screen: PopoverPlayground,
     },
@@ -259,6 +277,9 @@ export default StackNavigator(
     },
     UserSettingsScreen: {
       screen: UserSettingsScreen,
+    },
+    RichTextEditorPlayground: {
+      screen: RichTextEditorPlayground,
     },
   },
   {

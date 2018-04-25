@@ -34,6 +34,7 @@
 		2D4DF89D2076458B007E8A12 /* libRNTwitterSignIn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4DF89C207644F2007E8A12 /* libRNTwitterSignIn.a */; };
 		2D67D51519694B92949F0D7C /* libRNCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E1B6F5FC5D476A8F867644 /* libRNCrashes.a */; };
 		2D8B6F002075EF5200003BDA /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8B6EFF2075EF3500003BDA /* libRCTFBLogin.a */; };
+		2DDC1D3B2085B44B008E8073 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDC1D202085B426008E8073 /* libReact-Native-Webview-Bridge.a */; };
 		332EF7B20B1C4A04ADEA230A /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B8A21AF9E74F01B9F6853D /* libReactNativeKeyboardManager.a */; };
 		4E31A4B24C2B497285F3B36C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF457C6A21D94B87A0F376BD /* libRNVectorIcons.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -211,6 +212,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 4F3A6B5B1ACFBCC500CA65F7;
 			remoteInfo = RCTFBLogin;
+		};
+		2DDC1D1F2085B426008E8073 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DDC1D012085B426008E8073 /* React-Native-Webview-Bridge.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
+			remoteInfo = "React-Native-Webview-Bridge";
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -468,6 +476,7 @@
 		2D4DF79A207640A6007E8A12 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/TwitterKitResources.bundle; sourceTree = "<group>"; };
 		2D4DF79B207640A6007E8A12 /* TwitterShareExtensionUIResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TwitterShareExtensionUIResources.bundle; sourceTree = "<group>"; };
 		2D8B6EFA2075EF3500003BDA /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
+		2DDC1D012085B426008E8073 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge-updated/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		320473B6727E3AD75FAE4151 /* Pods-app-tvOSTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOSTests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOSTests/Pods-app-tvOSTests.beta.xcconfig"; sourceTree = "<group>"; };
 		33B94CD68C92A93B65E5815F /* Pods-appTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-appTests/Pods-appTests.debug.xcconfig"; sourceTree = "<group>"; };
 		349E0B72CCB149188DFEA9B2 /* RNAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAnalytics.xcodeproj; path = "../node_modules/mobile-center-analytics/ios/RNAnalytics.xcodeproj"; sourceTree = "<group>"; };
@@ -542,6 +551,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DDC1D3B2085B44B008E8073 /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				2D4DF89D2076458B007E8A12 /* libRNTwitterSignIn.a in Frameworks */,
 				2D8B6F002075EF5200003BDA /* libRCTFBLogin.a in Frameworks */,
 				2D340AEA207607C400DD5414 /* FBSDKLoginKit.framework in Frameworks */,
@@ -733,6 +743,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2DDC1D022085B426008E8073 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DDC1D202085B426008E8073 /* libReact-Native-Webview-Bridge.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,6 +918,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2DDC1D012085B426008E8073 /* React-Native-Webview-Bridge.xcodeproj */,
 				2D8B6EFA2075EF3500003BDA /* RCTFBLogin.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -1167,6 +1186,10 @@
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
 				},
 				{
+					ProductGroup = 2DDC1D022085B426008E8073 /* Products */;
+					ProjectRef = 2DDC1D012085B426008E8073 /* React-Native-Webview-Bridge.xcodeproj */;
+				},
+				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
@@ -1369,6 +1392,13 @@
 			fileType = archive.ar;
 			path = libRCTFBLogin.a;
 			remoteRef = 2D8B6EFE2075EF3500003BDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2DDC1D202085B426008E8073 /* libReact-Native-Webview-Bridge.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReact-Native-Webview-Bridge.a";
+			remoteRef = 2DDC1D1F2085B426008E8073 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
