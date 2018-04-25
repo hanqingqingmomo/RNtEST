@@ -3,7 +3,6 @@
 import AggregatedNewsFeedScreen from './AggregatedNewsFeedScreen/AggregatedNewsFeedScreen';
 import AuthenticationRootScreen from './AuthenticationRootScreen';
 import BootScreen from './BootScreen';
-import CommunityCenterScreen from './CommunityCenterScreen/CommunityCenterScreen';
 import CommunityListScreen from './CommunityListScreen';
 import CommunityScreen from './CommunityScreen/CommunityScreen';
 import DonationAppealScreen from './DonationAppealScreen/DonationAppealScreen';
@@ -34,7 +33,6 @@ import WebViewScreen from './WebViewScreen';
 export { AggregatedNewsFeedScreen };
 export { AuthenticationRootScreen };
 export { BootScreen };
-export { CommunityCenterScreen };
 export { CommunityListScreen };
 export { CommunityScreen };
 export { DonationAppealScreen };
