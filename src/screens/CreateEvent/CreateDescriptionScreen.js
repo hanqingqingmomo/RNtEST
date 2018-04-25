@@ -6,7 +6,6 @@ import { type NavigationScreenConfigProps } from 'react-navigation';
 
 import { Screen, NavigationTextButton } from '../../atoms';
 import { getColor } from '../../utils/color';
-import { css } from '../../utils/style';
 import { RichTextEditor } from '../../blocks/PostEditor/RichTextEditor';
 
 const SAVE_BUTTON_ID = 'CreateEvent:EditorSaveButton';
