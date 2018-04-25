@@ -87,7 +87,7 @@ export default class DonationResult extends Component<P> {
           </View>
         </View>
         <View style={styles.actionsWrapper}>
-          {success === false ? (
+          {actions.tryAgain && success === false ? (
             <Button
               block
               color={getColor('orange')}

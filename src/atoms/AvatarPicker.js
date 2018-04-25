@@ -14,6 +14,7 @@ type P = {
   imageURI?: ?string,
   size?: number,
   outlineWidth?: number,
+  editable: boolean,
   onChange: (imageURI: string) => void,
 };
 
@@ -30,6 +31,10 @@ const DEFAULT_OPTIONS = {
 };
 
 export default class AvatarPicker extends Component<P> {
+  static defaultProps = {
+    editable: true,
+  };
+
   onPress = () => {
     const { onChange } = this.props;
 
@@ -44,21 +49,15 @@ export default class AvatarPicker extends Component<P> {
   };
 
   render() {
-    const { imageURI, size, outlineWidth } = this.props;
+    const { imageURI, size, outlineWidth, editable } = this.props;
 
     const s = typeof size !== 'undefined' ? size : SIZE;
     const o =
       typeof outlineWidth !== 'undefined' ? outlineWidth : OUTLINE_WIDTH;
 
     return (
-      <TouchableItem onPress={this.onPress}>
-        <View
-          style={[
-            css('width', s + 20),
-            css('height', s + 20),
-            styles.centerContent,
-          ]}
-        >
+      <TouchableItem onPress={this.onPress} disabled={!editable}>
+        <View style={[css('width', s), css('height', s), styles.centerContent]}>
           <ShadowView
             radius={s / 2}
             style={[
@@ -69,11 +68,11 @@ export default class AvatarPicker extends Component<P> {
             ]}
           >
             <View>
-              {!imageURI && <Icon name="plus" size={18} color="#B0BEC5" />}
-              {imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
+              {!imageURI && <Icon name="plus" size={18} color="orange" />}
+              {!!imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
             </View>
           </ShadowView>
-          {imageURI && (
+          {editable && (
             <ShadowView
               radius={16}
               style={[styles.editIconCircle, styles.centerContent]}

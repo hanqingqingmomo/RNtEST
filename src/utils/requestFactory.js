@@ -1,15 +1,39 @@
 // @flow
 
+import { Platform } from 'react-native';
 import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import update from 'immutability-helper';
 import { create } from 'apisauce';
 
 import { selectAccessToken } from '../redux/selectors';
 import { type RequestOptions } from '../atoms/Fetch';
 import { build } from '../utils/url';
-import type { Cursor } from '../Types';
+import type { Community, NotificationSettings } from '../Types';
 
 let Store: any = null;
+
+export type Response<D> = {
+  config: Object,
+  data: D,
+  duration: number,
+  headers: Object,
+  ok: boolean,
+  problem:
+    | null
+    | 'CLIENT_ERROR'
+    | 'SERVER_ERROR'
+    | 'TIMEOUT_ERROR'
+    | 'CONNECTION_ERROR'
+    | 'NETWORK_ERROR'
+    | 'CANCEL_ERROR',
+  status: number,
+};
+
+type P<T> = Promise<T>;
+type RS<D> = Response<D>;
+
+type PR<T> = Promise<Response<T>>;
 
 export type Request = {
   url: string,
@@ -23,6 +47,8 @@ const api = create({
 });
 
 api.addRequestTransform(request => {
+  request.headers['x_device_id'] = DeviceInfo.getUniqueID();
+  request.headers['x_device_platform'] = Platform.OS.toLowerCase();
   if (request.headers['API-KEY'] === undefined) {
     request.headers['API-KEY'] = selectAccessToken(Store.getState());
   }
@@ -96,44 +122,28 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
 /**
  * Get Braintree client token
  */
-export const makeReadBTClientTokenReq = () =>
-  inject({
-    url: buildUrl({
-      path: '/v1/members/braintree-client-token',
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const readBraintreeClientTokenReq = () =>
+  api.get('/members/braintree-client-token');
 
 /**
  * Authentication requests
  */
-export const makeSigninRq = (credentials: {
+export function RQSignIn(data: {
   email: string,
   password: string,
-}) =>
-  inject({
-    url: buildUrl({ path: '/v1/members/login' }),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    },
-  });
+}): PR<{ mobile_token: string }> {
+  return api.post('/members/login', data);
+}
 
-export const makeSignupRq = (body: *) =>
-  inject({
-    url: buildUrl({ path: '/v1/members/signup' }),
-    options: {
-      method: 'POST',
-      body: makeFormData(body, ['profile_photo']),
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
-  });
+export const RQSignUp = (body: *) =>
+  api.post('/members/signup', makeFormData(body, ['profile_photo']));
+
+export const RQSocialSignIn = (body: *) =>
+  api.post('/members/social-login', makeFormData(body));
 
 export const makePasswordResetReq = (email: string) =>
   inject({
-    url: buildUrl({ path: '/v1/members/reset_password' }),
+    url: buildUrl({ path: '/members/reset_password' }),
     options: {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -142,7 +152,7 @@ export const makePasswordResetReq = (email: string) =>
 
 export const makeChangePasswordReq = (password: string) =>
   inject({
-    url: buildUrl({ path: 'v1/members/profile_settings' }),
+    url: buildUrl({ path: '/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: JSON.stringify({ password }),
@@ -152,28 +162,24 @@ export const makeChangePasswordReq = (password: string) =>
 /**
  * Donations
  */
-type DonationPayload = {
-  payment_method_nonce: string,
-  amount: number,
-  interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
-};
 
-export const makeDonationRq = (donationPayload: DonationPayload) =>
-  inject({
-    url: buildUrl({ path: '/v1/donations' }),
-    options: {
-      method: 'POST',
-      body: JSON.stringify(donationPayload),
-    },
-  });
+export const RQMakeDonation = (donationPayload: {
+  donation: {
+    payment_method_nonce: string,
+    amount: number,
+    interval: 'one-time' | 'monthly' | 'quarterly' | 'annually',
+  },
+  payer: Object,
+}) => api.post('/donations', donationPayload);
 
 /**
  * Profile
  */
+// TODO remove makeReadProfileRq
 export const makeReadProfileRq = (id: 'me' | string | number) =>
   inject({
     url: buildUrl({
-      path: id === 'me' ? '/v1/members' : `/v1/members/${id}`,
+      path: id === 'me' ? '/members' : `/members/${id}`,
     }),
     options: {
       method: 'GET',
@@ -183,9 +189,12 @@ export const makeReadProfileRq = (id: 'me' | string | number) =>
     },
   });
 
+export const RQReadProfile = (id: 'me' | string | number) =>
+  api.get(id === 'me' ? '/members' : `/members/${id}`);
+
 export const makeUpdateProfileReq = (user: Object) =>
   inject({
-    url: buildUrl({ path: '/v1/members/profile_settings' }),
+    url: buildUrl({ path: '/members/profile_settings' }),
     options: {
       method: 'PUT',
       body: makeFormData(user, ['profile_photo']),
@@ -199,15 +208,13 @@ export const makeUpdateProfileReq = (user: Object) =>
 
 export const makeReadOrganisationReq = () =>
   inject({
-    url: buildUrl({ path: 'v1/communities/81bad81ca2be' }),
+    url: buildUrl({ path: '/communities/81bad81ca2be' }),
     options: { method: 'GET' },
   });
 
-export const makeReadCommunityReq = (id: string) =>
-  inject({
-    url: buildUrl({ path: `v1/communities/${id}` }),
-    options: { method: 'GET' },
-  });
+export function RQReadCommunity(id: string): P<RS<Community>> {
+  return api.get(`/communities/${id}`);
+}
 
 /**
  * Communities
@@ -215,9 +222,9 @@ export const makeReadCommunityReq = (id: string) =>
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities?membership_status=${joinedOnly
-        ? 'joined'
-        : 'unjoined'}`,
+      path: `/communities?membership_status=${
+        joinedOnly ? 'joined' : 'unjoined'
+      }`,
     }),
     options: {
       method: 'GET',
@@ -227,7 +234,7 @@ export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
 export const makeReadCommunityDetailRq = (communityId: string | number) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities/${communityId}`,
+      path: `/communities/${communityId}`,
     }),
     options: {
       method: 'GET',
@@ -240,98 +247,79 @@ export const makeReadCommunityMembersRq = (
 ) =>
   inject({
     url: buildUrl({
-      path: `/v1/communities/${communityId}/members?limit=${limit}`,
+      path: `/communities/${communityId}/members?limit=${limit}`,
     }),
     options: {
       method: 'GET',
     },
   });
 
-export const makeLeaveCommunity = (
+// TODO change request to [DELETE] /communities/{communityId}/membership
+export const RQLeaveCommunity = (
   memberId: string | number,
   communityId: string | number
-) =>
-  inject({
-    url: buildUrl({
-      path: `/v1/communities/${memberId}/${communityId}/membership`,
-    }),
-    options: {
-      method: 'DELETE',
-    },
-  });
+) => api.delete(`/communities/${memberId}/${communityId}/membership`);
 
 // TODO: inject authenticated profile ID, even better update URL
-export const makeJoinCommunityReq = (
+export const RQJoinCommunity = (
   memberId: string | number,
   communityId: string | number
-) =>
-  inject({
-    url: buildUrl({
-      path: `/v1/communities/${memberId}/${communityId}/membership`,
-    }),
-    options: {
-      method: 'POST',
-    },
-  });
+) => api.post(`/communities/${memberId}/${communityId}/membership`);
 
 /**
  * Content Object
  */
 
 export const readContentObjectReq = (id: string) =>
-  api.get(`/v1/content_objects/${id}`);
+  api.get(`/content_objects/${id}`);
 
 type ContentObject = { id: string };
 
 export const likeContentObjectReq = (object: ContentObject) =>
-  api.post(`/v1/content_objects/${object.id}/like`);
+  api.post(`/content_objects/${object.id}/like`);
 
 export const unlikeContentObjectReq = (object: ContentObject) =>
-  api.delete(`/v1/content_objects/${object.id}/like`);
+  api.delete(`/content_objects/${object.id}/like`);
 
 export const destroyContentObjectReq = (object: ContentObject) =>
-  api.delete(`/v1/content_objects/${object.id}`);
+  api.delete(`/content_objects/${object.id}`);
 
 /**
  * News feed requests
  */
-export const requestWithCursor = (path: string, cursor: Cursor) =>
-  api.get(
-    `${buildUrl({
-      path: `v1/${path}`,
-      query: {
-        limit: cursor.limit,
-        next: cursor.next,
-      },
-    })}`
-  );
+export const RQWithCursor = (
+  path: string,
+  cursor: { limit?: ?number, next?: ?number }
+) => api.get(`/${path}`, cursor);
 
 export const makeReadPinnedItemsRq = (communityId: string | number) =>
   inject({
     url: `${buildUrl({
-      path: `/v1/content_objects/posts/${communityId}?pinned_only=true`,
+      path: `/content_objects/posts/${communityId}?pinned_only=true`,
     })}`,
     options: {
       method: 'GET',
     },
   });
 
-export const createPostReq = (object: {
+export const RQCreatePost = (object: {
   text_content: string,
   communities: Array<string>,
   attachment?: ?string,
   cached_url?: ?string,
-}) => api.post('/v1/content_objects/', makeFormData(object, ['attachment']));
+}) => {
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  const data = makeFormData(object, ['attachment']);
+  return api.post('/content_objects/', data, { headers });
+};
 
-export const reportReq = (object: {
-  id: string,
-  type: 'comment' | 'post' | 'user',
-}) => api.post('/v1/abuse_reports', { [`${object.type}Id`]: object.id });
+export const reportReq = (object: { id: string }) =>
+  api.post('/abuse_reports', { objectId: object.id });
 
 export const makeScrapeUrlReq = (url: string) =>
   inject({
     url: buildUrl({
-      path: '/v1/content_objects/generate_thumbnail',
+      path: '/content_objects/generate_thumbnail',
     }),
     options: {
       method: 'POST',
@@ -339,32 +327,37 @@ export const makeScrapeUrlReq = (url: string) =>
     },
   });
 
-export const createCommentReq = (objectId: string, text_content: string) =>
-  api.post(`/v1/content_objects/${objectId}/comment`, { text_content });
+export const RQCreateComment = (objectId: string, text_content: string) =>
+  api.post(`/content_objects/${objectId}/comment`, { text_content });
 
 /**
- * Invitations
+ * Friend Invitations
  */
 
-export const makeInvitationRq = (email: string) =>
-  inject({
-    url: buildUrl({
-      path: '/v1/club_invitations/480b7b2ed0a1',
-    }),
-    options: {
-      method: 'PUT',
-      body: JSON.stringify({
-        member_invitations: email,
-      }),
-    },
-  });
+export const RQinviteFriend = (email: string) =>
+  api.put('/club_invitations/480b7b2ed0a1', { member_invitations: email });
 
-export const makeReadInvitationMessage = () =>
-  inject({
-    url: buildUrl({
-      path: `/v1/communities/invitation_message`,
-    }),
-    options: {
-      method: 'GET',
-    },
-  });
+export const RQGetInvitationSmsContent = () =>
+  api.get(`/communities/invitation_message`);
+
+/**
+ * Profile Notification Settings
+ */
+export function readNotificationsSettings(): PR<NotificationSettings> {
+  return api.get(`/settings/notifications`);
+}
+
+export function updateNotificationsSettings(
+  data: NotificationSettings
+): PR<NotificationSettings> {
+  return api.put(`/settings/notifications`, data);
+}
+
+/**
+ * Push Notifications
+ */
+export const RQEnablePushNotifications = (token: string) =>
+  api.post('/push-notifications/register', { token });
+
+export const RQDisablePushNotifications = () =>
+  api.delete('/push-notifications/register');

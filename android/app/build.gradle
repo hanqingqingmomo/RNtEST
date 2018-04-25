@@ -74,7 +74,6 @@ import com.android.build.OutputFile
 
 project.ext.envConfigFiles = [
   dev: ".env.dev",
-  beta: ".env.beta",
   prod: ".env.prod",
 ]
 
@@ -85,6 +84,11 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+
+project.afterEvaluate {
+    apply from: '../../node_modules/react-native-zss-rich-text-editor/htmlCopy.gradle';
+    copyEditorHtmlToAppAssets(file('../../node_modules/react-native-zss-rich-text-editor'))
+}
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -111,8 +115,8 @@ android {
         resValue "string", "build_config_package", "com.app"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 12
-        versionName "1.0.1"
+        versionCode 20
+        versionName "1.2.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -143,8 +147,6 @@ android {
     productFlavors {
         dev {
         }
-        beta {
-        }
         production {
         }
     }
@@ -164,10 +166,15 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-twitter-signin')
+    compile project(':react-native-braintree-xplat')
+    compile project(':react-native-payments')
+    compile project(':react-native-device-info')
+    compile project(':react-native-push-notification')
+    compile "com.google.android.gms:play-services-gcm:11.0.4"
     compile project(':mobile-center-analytics')
     compile project(':mobile-center-crashes')
     compile project(':mobile-center')
-    compile project(':react-native-braintree-xplat')
     compile project(':react-native-contacts')
     compile project(':react-native-splash-screen')
     compile project(':react-native-vector-icons')
@@ -176,6 +183,8 @@ dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
+    compile project(':react-native-facebook-login')
+    compile project(':react-native-webview-bridge')
 }
 
 // Run this once to be able to run the application with BUCK

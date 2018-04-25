@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { View } from '../../atoms';
 import { type CommunitySimple, type LinkAttachment } from '../../Types';
 import PostEditorContent from './PostEditorContent';
-import PosteEditorSearchBox from './PostEditorSearchBox';
+import PostEditorSearchBox from './PostEditorSearchBox';
 import ImagePicker from './ImagePicker';
 import AttachmentsPanel from './AttachmentsPanel';
 import { makeScrapeUrlReq } from '../../utils/requestFactory';
@@ -28,7 +28,7 @@ type State = {
   attachment: ?string,
 };
 
-const LINK_PATTERN = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+const LINK_PATTERN = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/;
 
 export default class PostEditorScreen extends Component<Props, State> {
   state = {
@@ -70,7 +70,7 @@ export default class PostEditorScreen extends Component<Props, State> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <PosteEditorSearchBox
+        <PostEditorSearchBox
           selection={this.props.communitiesSelection}
           communities={this.props.communities}
           selectCommunity={this.selectCommunity}

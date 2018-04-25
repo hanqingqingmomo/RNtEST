@@ -24,9 +24,8 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     isCollapsed: true,
   };
 
-  closeInterval: any = null;
-
-  get autoJoinCommnuties(): Array<CommunitySimple> {
+  // TODO move level up
+  get autoJoinCommunities(): Array<CommunitySimple> {
     return this.props.communities.filter(community => community.auto_join);
   }
 
@@ -44,30 +43,26 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.autoJoinCommnuties.forEach((community: CommunitySimple) => {
-      this.selectCommunity(community);
-    });
+    if (!(this.props.selection || []).length) {
+      this.autoJoinCommunities.forEach((community: CommunitySimple) => {
+        this.selectCommunity(community);
+      });
+    }
 
-    if (this.autoJoinCommnuties.length === 0) {
+    if (
+      this.autoJoinCommunities.length === 0 &&
+      !(this.props.selection || []).length
+    ) {
       this.refs.searchInput.focus();
     }
   }
 
-  componentWillUnmount() {
-    clearInterval(this.closeInterval);
-  }
-
   showList = () => {
-    clearInterval(this.closeInterval);
     this.setState({ isCollapsed: false });
   };
 
   hideList = () => {
-    clearInterval(this.closeInterval);
-    this.closeInterval = setInterval(() => {
-      this.setState({ isCollapsed: true });
-      clearInterval(this.closeInterval);
-    }, 2000);
+    this.setState({ isCollapsed: true });
   };
 
   onSearchChange(searchValue: string) {
@@ -84,6 +79,7 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   };
 
   selectCommunity = (item: CommunitySimple) => {
+    this.refs.searchInput.blur();
     const selection = this.props.selection.concat(item.id);
 
     this.props.selectCommunity(selection);
@@ -110,7 +106,11 @@ export default class PostEditorSearchBox extends Component<Props, State> {
       <View style={styles.pillContainer}>
         {communities.map(pill => (
           <View key={pill.id} style={styles.pillItem}>
-            <Pill title={pill.name} color={getColor('orange')} />
+            <Pill
+              title={pill.name}
+              color={getColor('orange')}
+              truncate={communities.length > 1}
+            />
           </View>
         ))}
       </View>

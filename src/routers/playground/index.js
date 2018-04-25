@@ -4,7 +4,6 @@ import React from 'react';
 
 import { StackNavigator } from '../../navigation';
 import { ScrollView, Text, NavigationIconButton } from '../../atoms';
-import { getColor } from '../../utils/color';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
@@ -30,11 +29,13 @@ import FormPlayground from './FormPlayground';
 import IconPlayground from './IconPlayground';
 import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
+import PollEditorPlayground from './PollEditorPlayground';
 import PopoverPlayground from './PopoverPlayground';
 import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
+import RichTextEditorPlayground from './RichTextEditorPlayground';
 
 type LinkProps = {
   screen: string,
@@ -139,10 +140,18 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link
       title="Notification Settings"
-      screen="NotificationSettingsPlayground"
+      screen="NotificationSettingsScreen"
       navigation={navigation}
     />
-    <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
+    <Link
+      title="Poll Editor"
+      screen="PollEditorPlayground"
+      navigation={navigation}
+    />
+    <Link
+      title="Popover"
+      screen="PopoverPlayground"
+      navigation={navigation} />
     <Link
       title="Search Result"
       screen="SearchResultPlayground"
@@ -169,6 +178,11 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="UserProfilePlayground"
       navigation={navigation}
     />
+    <Link
+      title="Rich Text Editor"
+      screen="RichTextEditorPlayground"
+      navigation={navigation}
+    />
   </ScrollView>
 );
 
@@ -182,7 +196,7 @@ export default StackNavigator(
           headerLeft: (
             <NavigationIconButton
               name="close"
-              color={getColor('orange')}
+              color="orange"
               onPress={screenProps.dismissModalRoute}
             />
           ),
@@ -246,8 +260,11 @@ export default StackNavigator(
     NewsFeedSettingsPlayground: {
       screen: NewsFeedSettingsScreen,
     },
-    NotificationSettingsPlayground: {
+    NotificationSettingsScreen: {
       screen: NotificationSettingsScreen,
+    },
+    PollEditorPlayground: {
+      screen: PollEditorPlayground,
     },
     PopoverPlayground: {
       screen: PopoverPlayground,
@@ -269,6 +286,9 @@ export default StackNavigator(
     },
     UserSettingsScreen: {
       screen: UserSettingsScreen,
+    },
+    RichTextEditorPlayground: {
+      screen: RichTextEditorPlayground,
     },
   },
   {

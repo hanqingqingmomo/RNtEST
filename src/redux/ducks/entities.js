@@ -8,6 +8,7 @@
 import update from 'immutability-helper';
 
 import { normalize, type Entity, type NormalizedPayload } from '../schemas';
+import { APP_END_SESSION } from './application';
 
 export const ENTITY_DESTROY = 'entity/destroy';
 export const ENTITY_MERGE = 'entity/merge';
@@ -63,6 +64,9 @@ export default function(state: State = INITIAL_STATE, action: Action): State {
           $merge: action.payload.entities,
         },
       });
+
+    case APP_END_SESSION:
+      return INITIAL_STATE;
 
     default:
       return state;

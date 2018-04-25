@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
+import { type NavigationProp } from 'react-navigation';
 
 import { selectUser, selectRequest } from '../redux/selectors';
 import type { User, LinkAttachment } from '../Types';
@@ -12,6 +13,8 @@ import { createPost } from '../redux/ducks/contentObject';
 
 type Props = {
   user: User,
+  navigation: NavigationProp<{}>,
+  createPost: Function,
 };
 
 type State = {
@@ -36,7 +39,9 @@ class PostEditorScreen extends Component<Props, State> {
 
   state = {
     attachment: null,
-    communitiesSelection: [],
+    communitiesSelection: this.props.navigation.state.params
+      ? [this.props.navigation.state.params.preselectedCommunityId]
+      : [],
     content: '',
     link: null,
   };
@@ -92,7 +97,7 @@ class PostEditorScreen extends Component<Props, State> {
 
   render() {
     return (
-      <Screen fill>
+      <Screen fill keyboardShouldPersistTaps="always">
         <BlackPortal name={HEADER_RIGHT_ID}>
           <NavigationTextButton
             title={this.busy ? 'Sending' : 'Send'}

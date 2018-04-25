@@ -1,36 +1,50 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, RefreshControl, InteractionManager } from 'react-native';
+import { StyleSheet, RefreshControl, InteractionManager, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import { View } from '../../atoms';
-import NewsFeedList from '../../blocks/NewsFeedItem/NewsFeedList';
-import type { Post, TimelineState } from '../../Types';
-import { loadTimeline } from '../../redux/ducks/timelines';
+import NewsFeedItem from '../../blocks/NewsFeedItem/NewsFeedItem';
+import { loadTimeline, type Timeline } from '../../redux/ducks/timelines';
 import { selectTimeline } from '../../redux/selectors';
-
+import { css } from '../../utils/style';
+import { getColor } from '../../utils/color';
+import type { CommunitySimple, Post, User } from '../../Types';
 import Footer from './Footer';
 
+/**
+ * Separator
+ */
+function ItemSeparatorComponent() {
+  return <View style={styles.Separator} />;
+}
+
+/**
+ * Main component
+ */
+
 type Props = {
+  disableRefreshControl?: boolean,
   id: string,
-  path: string,
   limit: number,
   ListHeaderComponent?: React$Node,
-  navigation: any,
-  timeline: TimelineState,
+  loadTimeline: typeof loadTimeline,
+  navigateToCommunity: CommunitySimple => mixed,
+  navigateToMemberProfile(User): mixed,
+  navigateToPostDetail(Post): mixed,
+  path: string,
+  timeline: Timeline,
 };
 
 class NewsFeed extends Component<Props> {
   static defaultProps = {
-    limit: 5,
+    limit: 20,
   };
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(this.fetchFreshData);
   }
-
-  keyExtractor = (item: Post) => item.id;
 
   loadTimeline(mergeMode) {
     this.props.loadTimeline({
@@ -49,38 +63,47 @@ class NewsFeed extends Component<Props> {
     this.loadTimeline('append');
   };
 
+  renderItem = (item: Post) => (
+    <View key={item.id} style={css('paddingHorizontal', 10)}>
+      <NewsFeedItem
+        item={item}
+        navigateToCommunity={this.props.navigateToCommunity}
+        navigateToPostDetail={() => this.props.navigateToPostDetail(item)}
+        navigateToMemberProfile={() => this.props.navigateToMemberProfile(item.author)}
+      />
+    </View>
+  );
+
   render() {
-    const { timeline } = this.props;
+    const { timeline, disableRefreshControl } = this.props;
+
     return (
-      <NewsFeedList
-        {...this.props}
-        data={timeline.content}
-        renderItemProps={{
-          navigation: this.props.navigation,
-        }}
+      <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={timeline.refreshing}
-            onRefresh={this.fetchFreshData}
-          />
-        }
-        ListHeaderComponent={
-          this.props.ListHeaderComponent && (
-            <View style={styles.ListHeaderComponent}>
-              {this.props.ListHeaderComponent}
-            </View>
+          disableRefreshControl ? null : (
+            <RefreshControl
+              refreshing={timeline.refreshing}
+              onRefresh={this.fetchFreshData}
+              colors={[getColor('orange')]}
+            />
           )
         }
-        ListFooterComponent={
-          <View style={styles.ListFooterComponent}>
-            <Footer
-              disabled={timeline.next === null}
-              loading={timeline.loading}
-              onRequestMoreData={this.fetchNextData}
-            />
-          </View>
-        }
-      />
+      >
+        {this.props.ListHeaderComponent !== undefined ? (
+          <View style={styles.ListHeaderComponent}>{this.props.ListHeaderComponent}</View>
+        ) : null}
+        {timeline.content.map((item: Post, index: number) => [
+          index > 0 ? <ItemSeparatorComponent key={`${item.id}-${index}`} /> : null,
+          this.renderItem(item),
+        ])}
+        <View style={styles.ListFooterComponent}>
+          <Footer
+            disabled={timeline.next === null}
+            loading={timeline.loading}
+            onRequestMoreData={this.fetchNextData}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -91,6 +114,9 @@ const styles = StyleSheet.create({
   },
   ListFooterComponent: {
     marginTop: 10,
+  },
+  Separator: {
+    height: 10,
   },
 });
 

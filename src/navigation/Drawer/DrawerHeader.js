@@ -3,7 +3,7 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-import { Button, Image, TouchableOpacity, Text, View } from '../../atoms';
+import { Button, TouchableOpacity, Text, View, Avatar } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type Props = {
@@ -24,10 +24,12 @@ const DrawerHeader = ({
     {data && (
       <TouchableOpacity onPress={onOrganisationTilePress}>
         <View style={styles.logoTile}>
-          <Image
-            source={{ uri: data.profile_photo }}
-            style={styles.image}
+          <Avatar
+            imageURI={data.profile_photo}
+            radius={3}
+            size={40}
             resizeMode="contain"
+            style={styles.image}
           />
           <Text color="white" size={15} style={styles.title} weight="600">
             {data.name}
@@ -63,11 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    borderRadius: 4,
-    width: 40,
-    height: 40,
     backgroundColor: 'white',
-    overflow: 'hidden',
   },
   title: {
     flexGrow: 1,

@@ -13,7 +13,7 @@ import {
   Screen,
   View,
 } from '../atoms';
-import { type AlertPayload } from '../atoms/DropdownAlert';
+import { type AlertPayload } from '../atoms/react-native-dropdownalert';
 import { getColor } from '../utils/color';
 import type { ScreenProps, FetchProps } from '../Types';
 
@@ -102,7 +102,7 @@ export default class ChangePasswordScreen extends Component<P> {
                       secureTextEntry
                     />
                     <FormField
-                      label="Confirm password"
+                      label="Confirm Password"
                       name="confirmPassword"
                       secureTextEntry
                     />

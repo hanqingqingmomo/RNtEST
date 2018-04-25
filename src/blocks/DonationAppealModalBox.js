@@ -1,8 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
-import Modal from 'react-native-modalbox';
+import { StyleSheet, Modal } from 'react-native';
 
 import { Text, View, Button, TouchableItem, Icon } from '../atoms';
 import { getColor } from '../utils/color';
@@ -47,12 +46,8 @@ export default class DonationScreen extends Component<Props, State> {
   render() {
     return (
       <Modal
-        isOpen={this.props.forceOpen || this.state.open}
-        backdrop
-        backdropPressToClose={false}
-        swipeToClose={false}
-        position="center"
-        style={styles.modalWrapper}
+        visible={this.props.forceOpen || this.state.open}
+        animationType="slide"
       >
         <View style={styles.wrapper}>
           <View style={styles.contentTop}>
@@ -109,13 +104,6 @@ export default class DonationScreen extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  modalWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: Dimensions.get('window').width - 50,
-    height: 410,
-    backgroundColor: 'transparent',
-  },
   wrapper: {
     borderRadius: 10,
     overflow: 'hidden',

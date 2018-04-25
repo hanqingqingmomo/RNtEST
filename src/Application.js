@@ -3,15 +3,16 @@
 import React from 'react';
 import { connect, type Connector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
-import { selectUser } from './redux/selectors';
-import { AuthenticationNavigator, MainNavigator } from './routers';
+import { selectIsAuthenticated } from './redux/selectors';
+import { AuthenticationStack, MainTabs } from './routers';
 import { View } from './atoms';
 import { Network } from './blocks';
 import { type Store } from './Types';
 
 type Props = {
-  authenticated: boolean,
+  isAuthenticated: boolean,
 };
 
 class Application extends React.PureComponent<Props> {
@@ -20,18 +21,19 @@ class Application extends React.PureComponent<Props> {
   }
 
   render = () => {
-    const { authenticated } = this.props;
-
+    const { isAuthenticated } = this.props;
     return (
-      <View flexGrow={1}>
-        <Network>
-          {authenticated ? <MainNavigator /> : <AuthenticationNavigator />}
-        </Network>
-      </View>
+      <ActionSheetProvider>
+        <View flexGrow={1}>
+          <Network>
+            {isAuthenticated ? <MainTabs /> : <AuthenticationStack />}
+          </Network>
+        </View>
+      </ActionSheetProvider>
     );
   };
 }
 
 export default (connect((state: Store) => ({
-  authenticated: selectUser(state) !== null,
+  isAuthenticated: selectIsAuthenticated(state),
 })): Connector<{}, Props>)(Application);

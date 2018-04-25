@@ -5,8 +5,7 @@ import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import { contentLike } from '../../redux/ducks/contentObject';
-import { Text, View, TouchableItem, Count } from '../../atoms';
-import { css } from '../../utils/style';
+import { Text, View, TouchableOpacity, Count } from '../../atoms';
 import { type Post } from '../../Types';
 
 type Action = {
@@ -15,10 +14,10 @@ type Action = {
 };
 
 type Props = {
-  detailView: boolean,
+  isDetail: boolean,
   item: Post,
   like: Post => mixed,
-  navigate: (routeName: string, params?: Object) => mixed,
+  navigateToPostDetail(): mixed,
 };
 
 const HIT_SLOP = {
@@ -30,65 +29,58 @@ const HIT_SLOP = {
 
 class NewsFeedItemFooter extends Component<Props> {
   get actions(): Array<Action> {
-    const { item, navigate, detailView } = this.props;
-    const { id: postId } = item;
-
     const links = [];
 
-    if (!detailView) {
+    if (!this.props.isDetail) {
       links.push({
         label: 'Comment',
-        onPress: () => navigate('PostDetailScreen', { postId }),
+        onPress: this.props.navigateToPostDetail,
       });
     }
 
     return links;
   }
 
+  renderActions(actions: Array<Action>) {
+    return actions.map((action, idx) => (
+      <View
+        key={action.label}
+        style={[styles.action, idx > 0 ? styles.actionWithBorder : {}]}
+      >
+        <TouchableOpacity onPress={action.onPress} hitSlop={HIT_SLOP}>
+          <Text size={13} lineHeight={18} color="linkBlue">
+            {action.label}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    ));
+  }
+
   render() {
+    const { isDetail } = this.props;
     const { likes_count, comments_count, liked } = this.props.item;
 
     return (
       <View style={[styles.footer, styles.row]}>
         <View style={[styles.footerLeft, styles.row]}>
-          <TouchableItem
+          <TouchableOpacity
             style={styles.likeWrapper}
             onPress={() => {
               this.props.contentLike(this.props.item);
             }}
           >
             <Count iconName="like" count={likes_count} pinned={liked} />
-          </TouchableItem>
-
-          <View style={styles.likeWrapper}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={isDetail}
+            onPress={this.props.navigateToPostDetail}
+            style={styles.likeWrapper}
+          >
             <Count iconName="comment" count={comments_count} />
-          </View>
+          </TouchableOpacity>
         </View>
-        <View style={[styles.footerRight, styles.row]}>
-          {this.actions.map((action, idx) => (
-            <TouchableItem
-              key={action.label}
-              onPress={action.onPress}
-              hitSlop={HIT_SLOP}
-            >
-              <View
-                style={[
-                  styles.footerLink,
-                  idx > 0 ? styles.borderLeft : undefined,
-                ]}
-              >
-                <Text
-                  size={13}
-                  lineHeight={18}
-                  style={
-                    ({ backgroundColor: 'white' }, css('color', '#00B0FF'))
-                  }
-                >
-                  {action.label}
-                </Text>
-              </View>
-            </TouchableItem>
-          ))}
+        <View style={[styles.actionsWrapper]}>
+          {this.renderActions(this.actions)}
         </View>
       </View>
     );
@@ -98,11 +90,6 @@ class NewsFeedItemFooter extends Component<Props> {
 export default connect(null, { contentLike })(NewsFeedItemFooter);
 
 const styles = StyleSheet.create({
-  borderLeft: {
-    borderLeftWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#ECEFF1',
-  },
   row: {
     flexDirection: 'row',
   },
@@ -119,13 +106,16 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginHorizontal: -8,
   },
-  footerRight: {
+  actionsWrapper: {
     marginHorizontal: -15,
+    flexDirection: 'row',
   },
-  footerLink: {
-    height: 19,
-    alignItems: 'center',
-    justifyContent: 'center',
+  action: {
     paddingHorizontal: 15,
+  },
+  actionWithBorder: {
+    borderLeftWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#ECEFF1',
   },
 });

@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 import {
   AvatarPicker,
   Button,
-  Fetch,
   Form,
   FormField,
   Icon,
+  Screen,
   ScrollView,
   Spacer,
   Text,
@@ -18,13 +18,14 @@ import {
 } from '../atoms';
 import { getColor } from '../utils/color';
 import { css } from '../utils/style';
-import type { ScreenProps, FetchProps } from '../Types';
+import type { ScreenProps } from '../Types';
+import { RQSignUp, RQSignIn, RQReadProfile } from '../utils/requestFactory';
 import {
-  makeSignupRq,
-  makeSigninRq,
-  makeReadProfileRq,
-} from '../utils/requestFactory';
-import { setUserAccessToken, setUserProfile } from '../redux/ducks/application';
+  setUserAccessToken,
+  setUserProfile,
+  startSession,
+  setProvider,
+} from '../redux/ducks/application';
 
 const INITIAL_VALUES = {
   first_name: '',
@@ -32,7 +33,7 @@ const INITIAL_VALUES = {
   email: '',
   password: '',
   password_confirmation: '',
-  profile_photo: null,
+  profile_photo: '',
 };
 
 const RULES = {
@@ -52,50 +53,59 @@ const MESSAGES = {
 type FormValues = typeof INITIAL_VALUES;
 
 type Props = ScreenProps<*> & {
-  setUserAccessToken: Function,
-  setUserProfile: Function,
+  setUserAccessToken: typeof setUserAccessToken,
+  setUserProfile: typeof setUserProfile,
+  startSession: typeof startSession,
+  setProvider: typeof setProvider,
 };
 
 type State = {
-  errors: ?Array<string>,
+  busy: boolean,
+  errors: Array<string>,
 };
 
+// TODO either update navigation or dont setState on unmounted component
 class EmailRegistrationScreen extends Component<Props, State> {
   static navigationOptions = {
     headerTitle: 'Sign Up',
   };
 
   state = {
-    errors: null,
+    busy: false,
+    errors: [],
   };
 
-  handleSubmit = (fetch: Function) => async (
-    values: FormValues,
-    form: Object
-  ) => {
-    const signupReq = makeSignupRq(values);
-    const signupRes = await fetch(signupReq.url, signupReq.options);
-
-    if (signupRes.response.ok) {
+  attemptSignup = async (values: FormValues, form: Object) => {
+    this.setState({ busy: true });
+    form.setErrors({});
+    const signupResponse = await RQSignUp(values);
+    if (signupResponse.ok) {
       const { email, password } = values;
-      const signinReq = makeSigninRq({ email, password });
-      const signinRes = await fetch(signinReq.url, signinReq.options);
-      this.props.setUserAccessToken(signinRes.data.mobile_token);
-
-      const readProfileReq = makeReadProfileRq('me');
-      const readProfileRes = await fetch(
-        readProfileReq.url,
-        readProfileReq.options
-      );
-
-      this.props.setUserProfile(readProfileRes.data);
+      const signinResponse = await RQSignIn({ email, password });
+      if (signinResponse.ok) {
+        this.props.setUserAccessToken(signinResponse.data.mobile_token);
+        const profileResponse = await RQReadProfile('me');
+        this.props.setUserProfile(profileResponse.data);
+        this.props.setProvider('email');
+        this.props.startSession();
+      } else {
+        this.setState(state => ({
+          errors: state.errors.concat(
+            'Authentication failed. Invalid email and/or password.'
+          ),
+        }));
+      }
     } else {
-      let errors = signupRes.error.message;
-
-      errors = Object.keys(errors).map((key: string) => errors[key].join('\n'));
-
-      this.setState({ errors });
+      const errors = signupResponse.data.message;
+      const errorMap = Object.keys(
+        signupResponse.data.message
+      ).reduce((map, key) => {
+        map[key] = errors[key].join('/\n');
+        return map;
+      }, {});
+      form.setErrors(errorMap);
     }
+    this.setState({ busy: false });
   };
 
   onAvatarChange = (setFieldValue: (string, any) => void) => (
@@ -112,119 +122,118 @@ class EmailRegistrationScreen extends Component<Props, State> {
 
   render() {
     return (
-      <Fetch manual>
-        {({ loading, fetch }: FetchProps<*>) => (
-          <Form
-            initialValues={INITIAL_VALUES}
-            onSubmit={this.handleSubmit(fetch)}
-            messages={MESSAGES}
-            rules={RULES}
-            render={form => (
-              <ScrollView style={styles.container}>
-                <Icon
-                  color="orange"
-                  name="mpwr-logo"
-                  size={64}
-                  style={styles.icon}
+      <Screen>
+        <Form
+          initialValues={INITIAL_VALUES}
+          onSubmit={this.attemptSignup}
+          messages={MESSAGES}
+          rules={RULES}
+          render={form => (
+            <ScrollView style={styles.container}>
+              <Icon
+                color="orange"
+                name="mpwr-logo"
+                size={64}
+                style={styles.icon}
+              />
+
+              <Text
+                style={[styles.addText, css('color', getColor('gray'))]}
+                size={17}
+                lineHeight={20}
+              >
+                Add Photo
+              </Text>
+
+              <View style={styles.picker}>
+                <AvatarPicker
+                  imageURI={form.values.profile_photo}
+                  onChange={this.onAvatarChange(form.setFieldValue)}
                 />
+              </View>
 
-                <Text
-                  style={[styles.addText, css('color', getColor('gray'))]}
-                  size={17}
-                  lineHeight={20}
-                >
-                  Add Photo
-                </Text>
-
-                <View style={styles.picker}>
-                  <AvatarPicker
-                    imageURI={form.values.profile_photo}
-                    onChange={this.onAvatarChange(form.setFieldValue)}
-                  />
+              <View flexDirection="row">
+                <View flexGrow={1}>
+                  <FormField label="First Name" name="first_name" />
                 </View>
+                <Spacer width={10} />
 
-                <View flexDirection="row">
-                  <View flexGrow={1}>
-                    <FormField label="First Name" name="first_name" />
-                  </View>
-                  <Spacer width={10} />
-
-                  <View flexGrow={1}>
-                    <FormField label="Last Name" name="last_name" />
-                  </View>
+                <View flexGrow={1}>
+                  <FormField label="Last Name" name="last_name" />
                 </View>
-                <FormField
-                  label="E-mail Address"
-                  name="email"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-                <FormField
-                  label="Password"
-                  name="password"
-                  secureTextEntry
-                  onChangeText={this.onPasswordChange(form.setFieldValue)}
-                />
+              </View>
+              <FormField
+                label="E-mail Address"
+                name="email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <FormField
+                label="Password"
+                name="password"
+                secureTextEntry
+                onChangeText={this.onPasswordChange(form.setFieldValue)}
+              />
 
-                {loading === false && this.state.errors ? (
-                  <Text color={getColor('red')}>
-                    {'\n'}
-                    {this.state.errors.join('\n')}
-                  </Text>
-                ) : null}
-
-                <Button
-                  block
-                  disabled={loading}
-                  color={getColor('orange')}
-                  onPress={form.handleSubmit}
-                  size="lg"
-                  style={styles.button}
-                  textColor={getColor('white')}
-                  title={loading ? 'Signing Up...' : 'Sign Up'}
-                />
-
-                <Text
-                  size={13}
-                  lineHeight={20}
-                  style={[css('color', getColor('gray')), styles.policyText]}
-                >
-                  {'By signing up, you agree to our '}
-                  <Text
-                    style={styles.specialText}
-                    weight="bold"
-                    onPress={() => {
-                      this.props.navigation.navigate(
-                        'TermsAndConditionsScreen'
-                      );
-                    }}
-                  >
-                    Terms
-                  </Text>
-                  {' & '}
-                  <Text
-                    style={styles.specialText}
-                    weight="bold"
-                    onPress={() => {
-                      this.props.navigation.navigate('PrivacyScreen');
-                    }}
-                  >
-                    Privacy Policy
-                  </Text>
+              {this.state.busy === false && this.state.errors.length ? (
+                <Text color={getColor('red')}>
+                  {'\n'}
+                  {this.state.errors.join('\n')}
                 </Text>
-              </ScrollView>
-            )}
-          />
-        )}
-      </Fetch>
+              ) : null}
+
+              <Button
+                block
+                disabled={this.state.busy}
+                color={getColor('orange')}
+                onPress={form.handleSubmit}
+                size="lg"
+                style={styles.button}
+                textColor={getColor('white')}
+                title={this.state.busy ? 'Signing Up...' : 'Sign Up'}
+              />
+
+              <Text
+                size={13}
+                lineHeight={20}
+                style={[css('color', getColor('gray')), styles.policyText]}
+              >
+                {'By signing up, you agree to our\n'}
+                <Text
+                  style={styles.specialText}
+                  weight="bold"
+                  onPress={() => {
+                    this.props.navigation.navigate('TermsAndConditionsScreen');
+                  }}
+                >
+                  Terms
+                </Text>
+                {' & '}
+                <Text
+                  style={styles.specialText}
+                  weight="bold"
+                  onPress={() => {
+                    this.props.navigation.navigate('PrivacyScreen');
+                  }}
+                >
+                  Privacy Policy
+                </Text>
+              </Text>
+            </ScrollView>
+          )}
+        />
+      </Screen>
     );
   }
 }
 
-export default connect(null, { setUserAccessToken, setUserProfile })(
-  EmailRegistrationScreen
-);
+export default connect(null, {
+  setUserAccessToken,
+  setUserProfile,
+  startSession,
+  setProvider,
+})(EmailRegistrationScreen);
 
 const styles = StyleSheet.create({
   container: {

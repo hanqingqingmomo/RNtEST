@@ -10,8 +10,6 @@ target 'app' do
   pod 'MobileCenter/Crashes', '~> 0.13.0'
   pod 'RNMobileCenterShared', '~> 0.10.0'
 
-  
-
   target 'appTests' do
     inherit! :search_paths
     # Pods for testing

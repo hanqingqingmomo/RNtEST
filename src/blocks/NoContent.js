@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Text, CenterView, Icon } from '../atoms';
+import { Text, CenterView, Icon, Button } from '../atoms';
 import { getColor } from '../utils/color';
 import type { IconName } from '../atoms/Icon/Utils';
 
@@ -11,6 +11,7 @@ type Props = {
   iconName: IconName,
   subtitle?: string,
   title: string,
+  refresh?: Function,
 };
 
 export default class NoContent extends Component<Props> {
@@ -34,9 +35,17 @@ export default class NoContent extends Component<Props> {
         ) : null}
 
         {subtitle ? (
-          <Text size={14} color={getColor('gray')} lineHeight={22}>
+          <Text
+            size={14}
+            color={getColor('gray')}
+            lineHeight={22}
+            style={styles.subtitle}
+          >
             {subtitle}
           </Text>
+        ) : null}
+        {this.props.refresh ? (
+          <Button title="Refresh" onPress={this.props.refresh} />
         ) : null}
       </CenterView>
     );
@@ -50,5 +59,8 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 40,
     marginBottom: 14,
+  },
+  subtitle: {
+    textAlign: 'center',
   },
 });

@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import Config from 'react-native-config';
 import { connect } from 'react-redux';
 
-import { clearUserData } from '../redux/ducks/application';
+import { endSession } from '../redux/ducks/application';
 import { TableView, Screen, Icon } from '../atoms';
 import { getColor } from '../utils/color';
 import type { IconName, ScreenProps } from '../Types';
@@ -14,7 +15,7 @@ type ActionName =
   | 'Sync Calendars'
   | 'Use Invite Code'
   | 'Change Password'
-  | 'Terms and conditions'
+  | 'Terms and Conditions'
   | 'Privacy Policy'
   | 'Change Password';
 
@@ -24,12 +25,12 @@ type Action = {
 };
 
 type Props = ScreenProps<*> & {
-  clearUserData: Function,
+  endSession: typeof endSession,
 };
 
-const SETTINGS = [
+const SETTINGS: Array<{ name: ActionName, iconName: IconName }> = [
   {
-    name: 'Terms and conditions',
+    name: 'Terms and Conditions',
     iconName: 'file-empty',
   },
   {
@@ -56,7 +57,7 @@ class UserProfileScreen extends Component<Props> {
         case 'Change Password':
           this.props.navigation.navigate('ChangePasswordScreen');
           break;
-        case 'Terms and conditions':
+        case 'Terms and Conditions':
           this.props.navigation.navigate('TermsAndConditionsScreen');
           break;
         case 'Privacy Policy':
@@ -68,11 +69,12 @@ class UserProfileScreen extends Component<Props> {
   }
 
   signOut = () => {
-    Alert.alert('Log out', 'Are you sure you want to log out?', [
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       { text: 'Cancel', style: 'cancel' },
       {
-        text: 'Logout',
-        onPress: this.props.clearUserData,
+        text: 'Sign Out',
+        onPress: this.props.endSession,
+        style: 'destructive',
       },
     ]);
   };
@@ -104,8 +106,18 @@ class UserProfileScreen extends Component<Props> {
           </TableView.Section>
           <TableView.Section header="Application version">
             <TableView.Cell
-              title={`Version: ${Config.APP_DISPLAY_VERSION}, Build: ${Config.APP_DISPLAY_BUILD}`}
+              title={`${DeviceInfo.getReadableVersion()}${Config.ENVIRONMENT !==
+              'production'
+                ? `, env: ${Config.ENVIRONMENT}`
+                : ''}`}
             />
+            {Config.ENVIRONMENT !== 'production' ? (
+              <TableView.Cell
+                cellStyle="Subtitle"
+                title="Device ID"
+                detail={DeviceInfo.getUniqueID()}
+              />
+            ) : null}
           </TableView.Section>
         </TableView.Table>
       </Screen>
@@ -113,4 +125,4 @@ class UserProfileScreen extends Component<Props> {
   }
 }
 
-export default connect(null, { clearUserData })(UserProfileScreen);
+export default connect(null, { endSession })(UserProfileScreen);

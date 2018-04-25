@@ -1,16 +1,12 @@
 // @flow
 
 import React, { Component } from 'react';
-import { NativeModules } from 'react-native';
-import { PaymentRequest } from 'react-native-payments';
 
-import { CommunityHeader, Screen, Fetch } from '../../atoms';
-import DonationForm, {
-  type Payment,
-} from '../../blocks/DonationForm/DonationForm';
-import { paymentMethods, paymentDetails } from './paymentConfig';
-import { makeDonationRq } from '../../utils/requestFactory';
-import type { ScreenProps, FetchProps } from '../../Types';
+import { Screen } from '../../atoms';
+import Form from '../../blocks/Donation/DonationForm';
+import Header from '../../blocks/Donation/DonationHeader';
+import { RQMakeDonation } from '../../utils/requestFactory';
+import type { ScreenProps } from '../../Types';
 
 type Props = ScreenProps<*> & {
   screenProps: Object,
@@ -18,96 +14,42 @@ type Props = ScreenProps<*> & {
 
 export default class DonationAppealScreen extends Component<Props> {
   static navigationOptions = {
-    title: 'Donation Form',
+    title: 'Donate',
   };
 
-  onPaymentNonceReceived = (fetchProps: *) => async (
-    paymentToken: *,
-    payment: *
-  ) => {
-    const req = makeDonationRq({
-      ...payment,
-      payment_method_nonce: paymentToken,
+  onSuccess = async (payload: *) => {
+    const response = await RQMakeDonation({
+      donation: payload.donation,
+      payer: payload.payer,
     });
-
-    const donationResponse = await fetchProps.fetch(req.url, req.options);
-    this.completePaymentCallback({ donationResponse, fetchProps, payment });
+    payload.complete(response.ok ? 'success' : 'fail');
+    this.completePaymentCallback(response.ok, payload);
   };
 
   onPaymentFailed = () => {
     //
   };
 
-  initiatePayment = (
-    fetchProps: *,
-    completePaymentCallback: Function
-  ) => async (payment: Payment) => {
-    const paymentRequest = new PaymentRequest(
-      paymentMethods,
-      paymentDetails(payment)
-    );
-
-    try {
-      var paymentResponse = await paymentRequest.show();
-      const { paymentToken } = paymentResponse.details;
-      const req = makeDonationRq({
-        ...payment,
-        payment_method_nonce: paymentToken,
-      });
-
-      const donationResponse = await fetchProps.fetch(req.url, req.options);
-      paymentResponse.complete(
-        donationResponse.response.ok ? 'success' : 'fail'
-      );
-      completePaymentCallback({ donationResponse, fetchProps, payment });
-    } catch (err) {
-      if (err.message !== 'AbortError') {
-        NativeModules.ReactNativePayments.complete('fail', () => {});
-      }
-    }
-  };
-
-  completePaymentCallback = ({
-    donationResponse,
-    fetchProps,
-    payment,
-  }: Object) => {
+  completePaymentCallback = (success: boolean, payload: *) => {
     this.props.navigation.navigate('DonationResultScreen', {
-      amount: payment.amount,
-      recurrent: payment.interval !== 'one-time',
-      success: donationResponse.response.ok,
+      amount: payload.donation.amount,
+      recurrent: payload.donation.interval !== 'one-time',
+      success,
       inviteFriends: () =>
         this.props.screenProps.openModalRoute({
           routeName: 'InviteFriendModal',
         }),
-      repeatPayment: () => {
-        this.initiatePayment(fetchProps, this.completePaymentCallback)(payment);
-      },
+      repeatPayment:
+        payload.method === 'credit-card' ? () => this.onSuccess(payload) : null,
     });
   };
 
   render() {
     return (
-      <Fetch manual>
-        {(fetchProps: FetchProps<*>) => (
-          <Screen fill>
-            <CommunityHeader
-              title="The Future is Female"
-              subtitle="Help us in creating a future where ALL women thrive. Make a donation today."
-              profileImageURI="https://logos-download.com/wp-content/uploads/2016/11/YWCA_logo_logotype.png"
-              coverImageURI="https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg"
-            />
-            <DonationForm
-              onPaymentNonceReceived={this.onPaymentNonceReceived(fetchProps)}
-              onFail={this.onPaymentFailed}
-              onInitiatePayment={this.initiatePayment(
-                fetchProps,
-                this.completePaymentCallback
-              )}
-            />
-          </Screen>
-        )}
-      </Fetch>
+      <Screen fill>
+        <Header />
+        <Form onSuccess={this.onSuccess} onFailure={this.onPaymentFailed} />
+      </Screen>
     );
   }
 }

@@ -2,10 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>aps-environment</key>
+	<string>development</string>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
 		<string>merchant.com.pba.ywca</string>
 		<string>merchant.com.pba.dev</string>
+		<string>merchant.com.ywca.mpwr-app</string>
+	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)__RN_CONFIG_BUNDLE_IDENTIFIER</string>
 	</array>
 </dict>
 </plist>

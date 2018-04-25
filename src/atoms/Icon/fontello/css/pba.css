@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'pba';
-  src: url('../font/pba.eot?78639617');
-  src: url('../font/pba.eot?78639617#iefix') format('embedded-opentype'),
-       url('../font/pba.woff2?78639617') format('woff2'),
-       url('../font/pba.woff?78639617') format('woff'),
-       url('../font/pba.ttf?78639617') format('truetype'),
-       url('../font/pba.svg?78639617#pba') format('svg');
+  src: url('../font/pba.eot?20162097');
+  src: url('../font/pba.eot?20162097#iefix') format('embedded-opentype'),
+       url('../font/pba.woff2?20162097') format('woff2'),
+       url('../font/pba.woff?20162097') format('woff'),
+       url('../font/pba.ttf?20162097') format('truetype'),
+       url('../font/pba.svg?20162097#pba') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'pba';
-    src: url('../font/pba.svg?78639617#pba') format('svg');
+    src: url('../font/pba.svg?20162097#pba') format('svg');
   }
 }
 */
@@ -83,6 +83,8 @@
 .icon-menu-1:before { content: '\e819'; } /* '' */
 .icon-report:before { content: '\e81a'; } /* '' */
 .icon-offline:before { content: '\e81b'; } /* '' */
+.icon-community:before { content: '\e81c'; } /* '' */
+.icon-text-editor-8:before { content: '\e81d'; } /* '' */
 .icon-add-file:before { content: '\e828'; } /* '' */
 .icon-arrow-left:before { content: '\e82b'; } /* '' */
 .icon-arrow-open-bottom-thin:before { content: '\e82c'; } /* '' */
@@ -141,7 +143,8 @@
 .icon-text-editor-3:before { content: '\e861'; } /* '' */
 .icon-text-editor-4:before { content: '\e862'; } /* '' */
 .icon-text-editor-5:before { content: '\e863'; } /* '' */
-.icon-text-editor-6:before { content: '\e865'; } /* '' */
+.icon-text-editor-6:before { content: '\e864'; } /* '' */
+.icon-text-editor-7:before { content: '\e865'; } /* '' */
 .icon-user-plus:before { content: '\e866'; } /* '' */
 .icon-video-arrow-full:before { content: '\e867'; } /* '' */
 .icon-video-arrow:before { content: '\e868'; } /* '' */

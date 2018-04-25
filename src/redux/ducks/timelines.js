@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 
 import { type ContentDestroyAction } from './contentObject';
 import { normalize } from '../schemas';
+import { APP_END_SESSION } from './application';
 
 export const TIMELINE_LOAD = 'timeline/load';
 const TIMELINE_UPDATE_STATE = 'timeline/update-state';
@@ -14,17 +15,17 @@ const TIMELINE_UNSET_CONTENT = 'timeline/unset-content';
 // Typedefs
 //
 
-type TimelineState = typeof INITIAL_SUBSTATE;
+export type Timeline = typeof INITIAL_SUBSTATE;
 
 type PartialTimelineState = {
-  content?: $PropertyType<TimelineState, 'content'>,
-  next?: $PropertyType<TimelineState, 'content'>,
-  loading?: $PropertyType<TimelineState, 'loading'>,
-  refreshing?: $PropertyType<TimelineState, 'refreshing'>,
+  content?: $PropertyType<Timeline, 'content'>,
+  next?: $PropertyType<Timeline, 'content'>,
+  loading?: $PropertyType<Timeline, 'loading'>,
+  refreshing?: $PropertyType<Timeline, 'refreshing'>,
 };
 
 type State = {
-  [string]: TimelineState,
+  [string]: Timeline,
 };
 
 type TimelineSetContentAction = {
@@ -32,7 +33,7 @@ type TimelineSetContentAction = {
   payload: {
     id: string,
     mergeMode: 'replace' | 'append' | 'prepend',
-    result: $PropertyType<TimelineState, 'content'>,
+    result: $PropertyType<Timeline, 'content'>,
   },
 };
 
@@ -113,7 +114,7 @@ export function setTimelineState(
 
 const INITIAL_STATE: State = {};
 
-const INITIAL_SUBSTATE: TimelineState = {
+const INITIAL_SUBSTATE: Timeline = {
   content: [],
   loading: false,
   next: null,
@@ -169,6 +170,9 @@ export function reducer(
           $merge: action.payload.state,
         },
       });
+
+    case APP_END_SESSION:
+      return INITIAL_STATE;
 
     default:
       return state;

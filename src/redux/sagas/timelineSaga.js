@@ -2,7 +2,7 @@
 
 import { cancel, fork, put, take, select } from 'redux-saga/effects';
 
-import { requestWithCursor } from '../../utils/requestFactory';
+import { RQWithCursor } from '../../utils/requestFactory';
 import { selectTimeline } from '../selectors';
 import { mergeEntity } from '../ducks/entities';
 import {
@@ -25,7 +25,7 @@ const fetchTimelineData = function remoteLikeSaga(action: TimelineLoadAction) {
       [mergeMode === 'replace' ? 'refreshing' : 'loading']: true,
     });
 
-    const { data: { data, meta } } = yield requestWithCursor(path, {
+    const { data: { data, meta } } = yield RQWithCursor(path, {
       next: mergeMode === 'replace' ? null : timeline.next,
       limit,
     });
