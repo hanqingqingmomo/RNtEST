@@ -106,7 +106,10 @@ class Comment extends Component<Props, State> {
       <View>
         <View style={[styles.flexRow, css('paddingHorizontal', 15)]}>
           <View style={styles.avatarWrapper}>
-            <Avatar imageURI={item.author.profile_photo} size={AVATAR_SIZE} />
+            <Avatar
+              source={{ uri: item.author.profile_photo }}
+              size={AVATAR_SIZE}
+            />
           </View>
           <View style={[styles.contentWrapper]}>
             <View style={[styles.alignItemsCenter, styles.flexRow]}>

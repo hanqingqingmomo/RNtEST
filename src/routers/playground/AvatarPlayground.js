@@ -37,7 +37,10 @@ export default class AvatarPlayground extends Component<{}, S> {
     return (
       <CenterView style={styles.container}>
         <Avatar
-          imageURI="https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg"
+          source={{
+            uri:
+              'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
+          }}
           size={100}
         />
 

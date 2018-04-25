@@ -27,7 +27,7 @@ export default class NewsFeedItemAuthor extends Component<P> {
     return (
       <TouchableItem onPress={onPress} hitSlop={HIT_SLOP}>
         <View style={styles.container}>
-          <Avatar imageURI={profile_photo} size={28} />
+          <Avatar source={{ uri: profile_photo }} size={28} />
           <Spacer width={10} />
           <Text
             style={css('color', '#455A64')}

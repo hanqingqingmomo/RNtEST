@@ -217,7 +217,7 @@ class SelectMembersScreen extends Component<
                 }
                 cellImageView={
                   <Avatar
-                    imageURI={member.profile_photo}
+                    source={{ uri: member.profile_photo }}
                     size={28}
                     style={css('marginRight', 7)}
                   />

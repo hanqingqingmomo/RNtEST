@@ -169,7 +169,7 @@ export default class InviteFriendsScreen extends React.Component<P, S> {
 
   cellImageView(user: Contact): React$Node {
     if (user.hasThumbnail) {
-      return <Avatar size={28} imageURI={user.thumbnailPath} />;
+      return <Avatar size={28} source={{ uri: user.thumbnailPath }} />;
     }
     return <Icon name="user" size="md" color={getColor('gray')} />;
   }

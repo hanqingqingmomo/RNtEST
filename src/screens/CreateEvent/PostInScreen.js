@@ -96,7 +96,7 @@ export default class PostInScreen extends Component<
                       title={community.name}
                       cellImageView={
                         <Avatar
-                          imageURI={community.cover_photo}
+                          source={{ uri: community.cover_photo }}
                           size={28}
                           radius={3}
                           style={css('marginRight', 7)}

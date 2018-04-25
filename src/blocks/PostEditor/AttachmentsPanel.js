@@ -49,7 +49,7 @@ export default class AttachmentsPanel extends Component<Props> {
         ) : null}
         {attachment ? (
           <View style={styles.cell}>
-            <ImagePreview resizeMode="contain" imageURI={attachment} />
+            <ImagePreview resizeMode="contain" source={{ uri: attachment }} />
             <RemoveButton onPress={this.props.onClearAttachment} />
           </View>
         ) : null}

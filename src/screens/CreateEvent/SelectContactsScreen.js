@@ -216,8 +216,11 @@ class SelectContactsScreen extends Component<
                     title={this.renderFullName(item)}
                     cellImageView={
                       <Avatar
-                        imageURI={item.thumbnailPath}
-                        imageSource={require('./avatar.png')}
+                        source={
+                          item.thumbnailPath
+                            ? { uri: item.thumbnailPath }
+                            : require('./avatar.png')
+                        }
                         size={28}
                         radius={14}
                         style={css('marginRight', 7)}

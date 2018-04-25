@@ -69,7 +69,9 @@ export default class AvatarPicker extends Component<P> {
           >
             <View>
               {!imageURI && <Icon name="plus" size={18} color="orange" />}
-              {!!imageURI && <Avatar imageURI={imageURI} size={s - o * 2} />}
+              {!!imageURI && (
+                <Avatar source={{ uri: imageURI }} size={s - o * 2} />
+              )}
             </View>
           </ShadowView>
           {editable && (

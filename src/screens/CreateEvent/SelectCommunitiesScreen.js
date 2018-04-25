@@ -86,7 +86,7 @@ class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
                       accessory="DisclosureIndicator"
                       cellImageView={
                         <Avatar
-                          imageURI={community.cover_photo}
+                          source={{ uri: community.cover_photo }}
                           size={28}
                           radius={3}
                           style={styles.avatar}

@@ -24,9 +24,9 @@ export default function AvatarGroup({ imageURIs, title }: Props) {
 
   return (
     <View style={styles.groupContainer}>
-      {imageURIs.slice(0, visibleCount).map((img, i) => (
+      {imageURIs.slice(0, visibleCount).map((uri, i) => (
         <View key={i} style={styles.avatarContainer}>
-          <Avatar imageURI={img} size={AVATAR_WIDTH - OUTLINE_WIDTH * 2} />
+          <Avatar source={{ uri }} size={AVATAR_WIDTH - OUTLINE_WIDTH * 2} />
         </View>
       ))}
       {diff > 0 ? (

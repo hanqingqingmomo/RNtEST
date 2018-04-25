@@ -31,7 +31,9 @@ export default class MembersTab extends Component<Props> {
     <TableView.Cell
       title={`${item.first_name} ${item.last_name}`}
       titleTextColor="#455A64"
-      image={<Avatar imageURI={item.profile_photo} size={AVATAR_WIDTH} />}
+      image={
+        <Avatar source={{ uri: item.profile_photo }} size={AVATAR_WIDTH} />
+      }
       cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
       onPress={() => this.props.navigateToMember(item)}
       disableImageResize

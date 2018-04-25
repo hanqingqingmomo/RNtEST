@@ -27,7 +27,10 @@ const StartConversationButton = (props: Props) => {
   return (
     <TouchableOpacity onPress={props.navigateToEditorScreen}>
       <ShadowView style={styles.cellContainer} radius={0}>
-        <Avatar imageURI={props.user.profile_photo} size={AVATAR_WIDTH} />
+        <Avatar
+          source={{ uri: props.user.profile_photo }}
+          size={AVATAR_WIDTH}
+        />
         <Text color="gray" style={styles.textContainer}>
           Start a conversation...
         </Text>

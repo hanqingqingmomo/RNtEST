@@ -116,7 +116,11 @@ export default class NewsFeedItemAttachment extends Component<Props, State> {
         underlayColor="white"
         springConfig={{ tension: 10 }}
         renderContent={() => (
-          <ImagePreview resizeMode="contain" imageURI={url} style={size} />
+          <ImagePreview
+            resizeMode="contain"
+            source={{ uri: url }}
+            style={size}
+          />
         )}
       >
         <Image source={{ uri: url }} style={size} />
