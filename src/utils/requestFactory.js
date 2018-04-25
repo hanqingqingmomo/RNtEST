@@ -216,10 +216,6 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
   return api.get(`/communities/${id}`);
 }
 
-export function RQReadJoinedCommunity(): P<RS<Community>> {
-  return api.get('/joined-communities');
-}
-
 /**
  * Communities
  */
