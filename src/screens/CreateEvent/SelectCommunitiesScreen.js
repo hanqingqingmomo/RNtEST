@@ -9,13 +9,11 @@ import {
   Screen,
   TableView,
   Avatar,
-  Image,
   Fetch,
   ActivityIndicator,
   CenterView,
 } from '../../atoms';
 import { type Community, type FetchProps } from '../../Types';
-import { css } from '../../utils/style';
 import { makeReadCommunitiesListRq } from '../../utils/requestFactory';
 
 class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
@@ -52,14 +50,10 @@ class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
               }
               accessory="DisclosureIndicator"
               cellImageView={
-                <Image
+                <Avatar
                   source={require('./avatar.png')}
-                  style={[
-                    css('borderRadius', 28 / 2),
-                    css('width', 28),
-                    css('height', 28),
-                    styles.avatar,
-                  ]}
+                  size={28}
+                  style={styles.avatar}
                 />
               }
               onPress={() => {

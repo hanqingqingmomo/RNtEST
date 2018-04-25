@@ -3,9 +3,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { TouchableOpacity, View, Image, Text } from '../../atoms';
+import { TouchableOpacity, View, Text, Avatar } from '../../atoms';
 import { type Community } from '../../Types';
-import { css } from '../../utils/style';
 
 type Props = {
   fullName: string,
@@ -21,15 +20,14 @@ export function UserPreview({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <View style={[styles.imageWrapper, css('borderRadius', 21)]}>
-          <Image
-            source={
-              profilePhoto ? { uri: profilePhoto } : require('./avatar.png')
-            }
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </View>
+        <Avatar
+          source={
+            profilePhoto ? { uri: profilePhoto } : require('./avatar.png')
+          }
+          size={42}
+          resizeMode="cover"
+          style={styles.imageWrapper}
+        />
         <Text
           size={12}
           lineHeight={12}
@@ -52,13 +50,13 @@ export function CommunityPreview({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <View style={[styles.imageWrapper, css('borderRadius', 3)]}>
-          <Image
-            source={{ uri: cover_photo }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </View>
+        <Avatar
+          radius={3}
+          resizeMode="cover"
+          size={42}
+          source={{ uri: cover_photo }}
+          style={styles.imageWrapper}
+        />
         <Text
           size={12}
           lineHeight={12}
@@ -82,14 +80,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   imageWrapper: {
-    width: 42,
-    height: 42,
-    overflow: 'hidden',
     marginBottom: 7,
-  },
-  image: {
-    width: 42,
-    height: 42,
   },
   text: {
     textAlign: 'center',

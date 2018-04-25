@@ -222,7 +222,6 @@ class SelectContactsScreen extends Component<
                             : require('./avatar.png')
                         }
                         size={28}
-                        radius={14}
                         style={css('marginRight', 7)}
                       />
                     }
