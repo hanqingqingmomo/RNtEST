@@ -24,16 +24,11 @@ export default function AvatarGroup({ imageURIs, title }: Props) {
 
   return (
     <View style={styles.groupContainer}>
-      {imageURIs
-        .slice(0, visibleCount)
-        .map((uri, i) => (
-          <Avatar
-            key={i}
-            source={{ uri }}
-            size={AVATAR_WIDTH - OUTLINE_WIDTH * 2}
-            style={styles.avatarContainer}
-          />
-        ))}
+      {imageURIs.slice(0, visibleCount).map((uri, i) => (
+        <View key={i} style={styles.avatarContainer}>
+          <Avatar source={{ uri }} size={AVATAR_WIDTH - OUTLINE_WIDTH * 2} />
+        </View>
+      ))}
       {diff > 0 ? (
         <Text
           color="gray"
@@ -59,6 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: 'transparent',
     borderWidth: OUTLINE_WIDTH,
+    borderRadius: AVATAR_WIDTH / 2,
     marginLeft: -OVERLAP,
   },
 });
