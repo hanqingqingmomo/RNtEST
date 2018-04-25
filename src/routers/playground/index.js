@@ -7,13 +7,13 @@ import { ScrollView, Text, NavigationIconButton } from '../../atoms';
 import {
   AuthenticationRootScreen,
   EmailRegistrationScreen,
-  EventCenterScreen,
+  EventDetailScreen,
   InviteFriendsScreen,
   LandingScreen,
-  UserProfileScreen,
-  UserSettingsScreen,
   NewsFeedSettingsScreen,
   NotificationSettingsScreen,
+  UserProfileScreen,
+  UserSettingsScreen,
 } from '../../screens';
 
 import AvatarPlayground from './AvatarPlayground';
@@ -31,11 +31,11 @@ import LikePlayground from './LikePlayground';
 import NewsfeedPlayground from './NewsfeedPlayground';
 import PollEditorPlayground from './PollEditorPlayground';
 import PopoverPlayground from './PopoverPlayground';
+import RichTextEditorPlayground from './RichTextEditorPlayground';
 import SearchResultPlayground from './SearchResultPlayground';
 import SegmentedControlPlayground from './SegmentedControlPlayground';
 import TabsPlayground from './TabsPlayground';
 import UserProfilePlayground from './UserProfilePlayground';
-import RichTextEditorPlayground from './RichTextEditorPlayground';
 
 type LinkProps = {
   screen: string,
@@ -99,7 +99,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
     />
     <Link
       title="Event Screen"
-      screen="EventCenterScreen"
+      screen="EventDetailScreen"
       navigation={navigation}
     />
     <Link
@@ -148,10 +148,7 @@ const PlaygroundIndexScreen = ({ navigation }) => (
       screen="PollEditorPlayground"
       navigation={navigation}
     />
-    <Link
-      title="Popover"
-      screen="PopoverPlayground"
-      navigation={navigation} />
+    <Link title="Popover" screen="PopoverPlayground" navigation={navigation} />
     <Link
       title="Search Result"
       screen="SearchResultPlayground"
@@ -233,8 +230,8 @@ export default StackNavigator(
     EventFeedPlayground: {
       screen: EventFeedPlayground,
     },
-    EventCenterScreen: {
-      screen: EventCenterScreen,
+    EventDetailScreen: {
+      screen: EventDetailScreen,
     },
     EmailRegistrationScreen: {
       screen: EmailRegistrationScreen,

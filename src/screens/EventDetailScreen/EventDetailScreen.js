@@ -70,7 +70,7 @@ type Props = {
   navigation: any,
 };
 
-export default class EventCenterScreen extends Component<Props> {
+export default class EventDetailScreen extends Component<Props> {
   render() {
     return (
       <Screen fill>
