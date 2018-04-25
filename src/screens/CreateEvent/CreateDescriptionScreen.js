@@ -1,60 +1,48 @@
 // @flow
 
 import React, { Component } from 'react';
-import { TextInput } from 'react-native';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 
 import { Screen, NavigationTextButton } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
+import { RichTextEditor } from '../../blocks/PostEditor/RichTextEditor';
 
-const SAVE_BUTTON_ID = 'CreateEvent:SaveButton';
-
-type State = {
-  text: string,
-};
-
-// TODO treba pridat Rich Editor
+const SAVE_BUTTON_ID = 'CreateEvent:EditorSaveButton';
+const FORMIK_FIELD = 'description';
 
 export default class CreateDescriptionScreen extends Component<
-  NavigationScreenConfigProps,
-  State
+  NavigationScreenConfigProps
 > {
   static navigationOptions = ({ navigation }) => ({
     headerRight: <WhitePortal name={SAVE_BUTTON_ID} />,
   });
 
-  state = {
-    text: '',
-  };
-
   render() {
     const { formik } = this.props.navigation.state.params;
 
     return (
-      <Screen style={css('padding', 15)}>
+      <Screen fill>
         <BlackPortal name={SAVE_BUTTON_ID}>
           <NavigationTextButton
-            disabled={!this.state.text}
             title="Save"
             textColor={getColor('orange')}
-            onPress={() => {
-              formik.setFieldValue('description', this.state.text);
+            onPress={async () => {
+              const content = await this.refs.editor.getContentHtml();
+
+              formik.setFieldValue(FORMIK_FIELD, content);
 
               this.props.navigation.goBack();
             }}
           />
         </BlackPortal>
 
-        <TextInput
-          placeholder="What is your webinar about?"
-          placeholderTextColor="#B0BEC5"
-          multiline
-          underlineColorAndroid="transparent"
-          onChangeText={(text: string) => {
-            this.setState({ text });
-          }}
+        <RichTextEditor
+          ref="editor"
+          hiddenTitle
+          contentPlaceholder="What is your webinar about?"
+          initialContentHTML={formik.values[FORMIK_FIELD]}
         />
       </Screen>
     );

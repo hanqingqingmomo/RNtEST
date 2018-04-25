@@ -85,8 +85,13 @@ export class RichTextEditor extends Component<RichTextEditorProps, State> {
     }).start();
   };
 
+  getTitleHtml = () => this.refs.richtext.getTitleHtml();
+  getTitleText = () => this.refs.richtext.getTitleText();
+  getContentHtml = () => this.refs.richtext.getContentHtml();
+  getSelectedText = () => this.refs.richtext.getSelectedText();
+
   render() {
-    let { opacityAnim } = this.state;
+    const { opacityAnim } = this.state;
 
     return (
       <Animated.View

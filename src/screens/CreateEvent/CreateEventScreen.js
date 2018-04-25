@@ -251,7 +251,10 @@ export default class CreateEventScreen extends Component<Props, State> {
                     }
                   />
                   <TableView.Cell
-                    title={formik.values.description || 'Description'}
+                    title={(formik.values.description || 'Description').replace(
+                      /<\/?[^>]+(>|$)/g,
+                      ''
+                    )}
                     titleTextColor={
                       formik.values.description ? '#455A64' : getColor('gray')
                     }
