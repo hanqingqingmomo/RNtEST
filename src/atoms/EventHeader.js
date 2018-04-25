@@ -2,116 +2,106 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import format from 'date-fns/format';
+import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 
-import { Button, Image, ImageBackground, Pill, Text, View } from './index';
+import { ImageBackground, Pill, Text, View } from './index';
 import { getColor } from '../utils/color';
+import { css } from '../utils/style';
+import type { Community } from '../Types';
 
 type Props = {
-  coverImageURI: string,
-  isClosed: boolean,
-  subtitle?: string,
-  title: string,
-  pillTitle: string,
-  onPress: Function,
+  name: string,
+  cover_photo: string,
+  start: Date,
+  end: Date,
+  location: string,
+  post_in: Array<Community>,
 };
 
 export default function EventHeader({
-  coverImageURI,
-  onPress,
-  pillTitle,
-  status,
-  subtitle,
-  title,
-}: Props) {
+  name,
+  cover_photo,
+  start,
+  end,
+  location,
+  post_in,
+}: Props): React$Node {
+  function isBetween(): boolean {
+    return isBefore(new Date(), end) && isAfter(new Date(), start);
+  }
+
+  function status(): string {
+    if (isBetween()) {
+      return 'In Progress';
+    }
+
+    if (isAfter(new Date(), end)) {
+      return format(start, 'MM/DD/YYYY');
+    }
+
+    return format(start, 'MM/DD/YYYY');
+  }
+
   return (
-    <ImageBackground
-      source={{ uri: coverImageURI }}
-      style={styles.coverContainer}
-    >
+    <ImageBackground source={{ uri: cover_photo }} style={styles.container}>
       <View style={[styles.dimm, StyleSheet.absoluteFill]} />
       <View style={styles.headerContainer}>
-        <View style={styles.profileWrapper}>
-          <View style={styles.titleWrapper}>
-            <Text color={getColor('white')} lineHeight={24} size={20}>
-              {title}
-            </Text>
-            {subtitle ? (
-              <Text
-                color={getColor('white')}
-                ellipsizeMode="tail"
-                lineHeight={16}
-                size={14}
-              >
-                {subtitle}
-              </Text>
-            ) : null}
-          </View>
-          <View style={styles.pillWrapper}>
-            <Pill color={getColor('white')} title={pillTitle} />
-          </View>
+        <View style={styles.textWrapper}>
+          <Text
+            color={getColor('white')}
+            lineHeight={24}
+            size={20}
+            style={css('marginBottom', 6)}
+          >
+            {name}
+          </Text>
+          <Text
+            color={getColor('white')}
+            lineHeight={16}
+            size={14}
+            weight="500"
+          >
+            {`${status()}, ${format(start, 'h:mm A')} - ${format(
+              end,
+              'h:mm A'
+            )}, ${location}`}
+          </Text>
         </View>
-        {status != 'past' ? null : (
-          <View style={styles.buttonWrapper}>
-            <Button.Icon
+
+        <View style={css('flexDirection', 'row')}>
+          {post_in.map((community: Community) => (
+            <Pill
+              key={community.id}
               color={getColor('white')}
-              iconColor={getColor('orange')}
-              iconName="video-arrow"
-              onPress={onPress}
-              size="lg"
-              style={styles.shadow}
+              title={community.name}
             />
-          </View>
-        )}
+          ))}
+        </View>
       </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 95,
-    flex: 1,
-  },
-  coverContainer: {
+  container: {
     width: '100%',
-    height: 185,
-    justifyContent: 'flex-end',
+    height: 186,
   },
   dimm: {
     backgroundColor: '#161D21',
     opacity: 0.35,
   },
   headerContainer: {
-    flexDirection: 'row',
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    justifyContent: 'flex-end',
     flex: 1,
-    alignItems: 'flex-end',
   },
-  pillWrapper: {
-    paddingTop: 10,
-    marginBottom: 15,
-  },
-  profileWrapper: {
+  textWrapper: {
     backgroundColor: 'transparent',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: 95,
-    paddingLeft: 15,
-    flex: 3,
-  },
-  title: {
-    color: getColor('white'),
-    fontSize: 20,
-    lineHeight: 24,
-  },
-  titleWrapper: {
-    flex: 1,
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    paddingBottom: 10,
+    width: '100%',
   },
 });
