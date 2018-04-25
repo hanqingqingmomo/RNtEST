@@ -2,66 +2,162 @@
 
 import React, { Component } from 'react';
 
-import { Screen } from '../../atoms';
-import EventDetail from './EventDetail';
+import { Screen, Tabs, View, EventHeader } from '../../atoms';
 
-const data = {
-  community: 'Child Care Assistance Program',
-  cover_photo: 'https://www.ywcaknox.com/wp-content/uploads/photo3-407x222.jpg',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt utlabore et dolore magna aliqua.',
-  participants_count: 56,
-  subtitle: '1 day ago, 3:00 AM-5:00 PM, Chicago',
-  status: 'live',
-  title: 'Annual Meeting Reception',
-  participants: [
+const EVENT = {
+  id: '7352d18dad46',
+  name: 'Example Event name',
+  descrption: 'Lorem ...',
+  cover_photo:
+    'https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg',
+  location: 'Chicago',
+  post_in: [
     {
-      first_name: 'Member',
-      last_name: '1',
-      profile_photo:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-      id: 0,
-      status: 'going',
+      id: 'ce571950f574',
+      name: 'Test communitasdasdy',
     },
+  ],
+  rsvp: 'not_going',
+  start: '2017-12-07T11:51:06+00:00',
+  end: '2017-12-07T12:51:06+00:00',
+  presenters_communities: [
     {
-      first_name: 'Member',
-      last_name: '2',
+      id: '3a758fae966b',
+      first_name: 'Pba',
+      last_name: 'Pba',
+      email: 'pba@dispostable.com',
       profile_photo:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-      id: 1,
-      status: 'pending',
+        'https://d32f6hrwlnquvu.cloudfront.net/member_photos/150606/thumb/image.jpg?1514973923',
+      members: [
+        {
+          id: '3a758fae966b',
+          first_name: 'Pba',
+          last_name: 'Pba',
+          email: 'pba@dispostable.com',
+          profile_photo:
+            'https://d32f6hrwlnquvu.cloudfront.net/member_photos/150606/thumb/image.jpg?1514973923',
+        },
+      ],
     },
+  ],
+  presenters_contacts: [
     {
-      first_name: 'Member',
-      last_name: '3',
-      profile_photo:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-      id: 2,
-      status: 'notgoing',
+      company: 'Creative Consulting',
+      emailAddresses: [
+        {
+          email: 'anna-haro@mac.com',
+          label: 'home',
+        },
+      ],
+      familyName: 'Bell',
+      givenName: 'Kate',
+      hasThumbnail: false,
+      jobTitle: 'Producer',
+      middleName: '',
+      phoneNumbers: [
+        {
+          label: 'home',
+          number: '555-522-8243',
+        },
+      ],
+      postalAddresses: [
+        {
+          city: 'Sausalito',
+          country: 'USA',
+          label: 'home',
+          postCode: '94965',
+          region: 'CA',
+          state: 'CA',
+          street: '1001  Leavenworth Street',
+        },
+      ],
+      recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+      thumbnailPath: '',
     },
+  ],
+  privacy: 'public',
+  atendees_communities: [
     {
-      first_name: 'Member',
-      last_name: '4',
+      id: '3a758fae966b',
+      first_name: 'Pba',
+      last_name: 'Pba',
+      email: 'pba@dispostable.com',
       profile_photo:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-      id: 0,
-      status: 'going',
+        'https://d32f6hrwlnquvu.cloudfront.net/member_photos/150606/thumb/image.jpg?1514973923',
+      members: [
+        {
+          id: '3a758fae966b',
+          first_name: 'Pba',
+          last_name: 'Pba',
+          email: 'pba@dispostable.com',
+          profile_photo:
+            'https://d32f6hrwlnquvu.cloudfront.net/member_photos/150606/thumb/image.jpg?1514973923',
+        },
+      ],
     },
+  ],
+  atendees_contacts: [
     {
-      first_name: 'Member',
-      last_name: '5',
-      profile_photo:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-      id: 1,
-      status: 'pending',
+      company: 'Creative Consulting',
+      emailAddresses: [
+        {
+          email: 'anna-haro@mac.com',
+          label: 'home',
+        },
+      ],
+      familyName: 'Bell',
+      givenName: 'Kate',
+      hasThumbnail: false,
+      jobTitle: 'Producer',
+      middleName: '',
+      phoneNumbers: [
+        {
+          label: 'home',
+          number: '555-522-8243',
+        },
+      ],
+      postalAddresses: [
+        {
+          city: 'Sausalito',
+          country: 'USA',
+          label: 'home',
+          postCode: '94965',
+          region: 'CA',
+          state: 'CA',
+          street: '1001  Leavenworth Street',
+        },
+      ],
+      recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
+      thumbnailPath: '',
     },
+  ],
+  comments: [
     {
-      first_name: 'Member',
-      last_name: '6',
-      profile_photo:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg',
-      id: 2,
-      status: 'notgoing',
+      id: '17bcdf57b4c4',
+      text_content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet. Habitasse platea dictumst quisque sagittis purus sit.',
+      created_at: '2017-10-28T19:04:38+00:00',
+      pinned: false,
+      attachment: null,
+      cached_url: null,
+      author: {
+        id: '23360b92c96c',
+        first_name: 'Tom',
+        last_name: 'Delonge',
+        email: 'tomd@email.com',
+        profile_photo:
+          'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150557/thumb/8xWfh0KR_400x400.jpg?1508596012',
+      },
+      comments_count: 0,
+      likes_count: 0,
+      liked: false,
+      replies: [],
+    },
+  ],
+  files: [
+    {
+      id: '7352d18dad46',
+      uri: 'path/to/file',
     },
   ],
 };
@@ -74,7 +170,7 @@ export default class EventDetailScreen extends Component<Props> {
   render() {
     return (
       <Screen fill>
-        <EventDetail {...this.props} event={data} />
+        <EventHeader {...EVENT} />
       </Screen>
     );
   }
