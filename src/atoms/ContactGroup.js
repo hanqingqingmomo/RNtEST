@@ -30,12 +30,11 @@ export default function ContactGroup({ onContactSelect, style, users }: Props) {
         {users.map((user, i) => (
           <TouchableItem onPress={() => onContactSelect(user)} key={i}>
             <View style={[styles.itemStyle, css('width', ITEM_WIDTH)]}>
-              <View style={styles.avatarContainer}>
-                <Avatar
-                  source={{ uri: user.profile_photo }}
-                  size={AVATAR_WIDTH}
-                />
-              </View>
+              <Avatar
+                source={{ uri: user.profile_photo }}
+                size={AVATAR_WIDTH}
+                style={styles.avatarContainer}
+              />
               <Text
                 ellipsizeMode="tail"
                 numberOfLines={1}
@@ -61,10 +60,10 @@ export default function ContactGroup({ onContactSelect, style, users }: Props) {
 
 const styles = StyleSheet.create({
   avatarContainer: {
-    alignSelf: 'center',
     marginBottom: 5,
   },
   itemStyle: {
+    alignItems: 'center',
     paddingHorizontal: 5,
   },
   scrollContainer: {
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   textStyle: {
-    alignSelf: 'center',
     color: '#455a64',
     fontSize: 11,
     lineHeight: 13,

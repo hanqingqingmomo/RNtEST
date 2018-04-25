@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 
-import { Image, ImageBackground, Text, View } from './index';
+import { ImageBackground, Text, View, Avatar } from './index';
 import { getColor } from '../utils/color';
 
 type Props = {
@@ -28,12 +28,13 @@ export default function OrganizationHeader({
     >
       <View style={[styles.dimm, StyleSheet.absoluteFill]} />
       <View style={styles.profileWrapper}>
-        <Image
-          source={{ uri: profileImageURI }}
-          style={styles.profileImage}
+        <Avatar
+          imageURI={profileImageURI}
+          radius={3}
+          size={58}
           resizeMode="contain"
+          style={styles.profileImage}
         />
-
         <View style={styles.titleWrapper}>
           <Text
             color={getColor('white')}
@@ -72,9 +73,6 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     backgroundColor: 'white',
-    borderRadius: 3,
-    height: 58,
-    width: 58,
   },
   profileWrapper: {
     alignItems: 'center',

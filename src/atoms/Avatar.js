@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Image } from './index';
+import { Image, View } from './index';
 import { css } from '../utils/style';
 
 type Props = {
@@ -12,16 +12,22 @@ type Props = {
   style?: Object | number,
 };
 
-export default function Avatar({ source, size, radius, style }: Props) {
+export default function Avatar({ source, size, style, radius, ...bag }: Props) {
   return (
-    <Image
-      source={source}
+    <View
       style={[
-        css('borderRadius', radius || size / 2),
         css('width', size),
         css('height', size),
+        css('borderRadius', radius || size / 2),
+        css('overflow', 'hidden'),
         style,
       ]}
-    />
+    >
+      <Image
+        source={source}
+        style={[css('width', size), css('height', size)]}
+        {...bag}
+      />
+    </View>
   );
 }

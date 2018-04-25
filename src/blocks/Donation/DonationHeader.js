@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Image, ImageBackground, Text, View } from '../../atoms';
+import { ImageBackground, Text, View, Avatar } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
@@ -62,10 +62,12 @@ export default function DonationHeader() {
     >
       <View style={[styles.dimm, StyleSheet.absoluteFill]} />
       <View style={styles.profileWrapper}>
-        <Image
-          source={{ uri: PROFILE_IMAGE }}
-          style={styles.profileImage}
+        <Avatar
+          imageURI={PROFILE_IMAGE}
+          radius={3}
+          size={58}
           resizeMode="contain"
+          style={styles.profileImage}
         />
         <View style={styles.titleWrapper}>
           <Text
@@ -98,9 +100,6 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     backgroundColor: 'white',
-    borderRadius: 3,
-    height: 58,
-    width: 58,
   },
   profileWrapper: {
     backgroundColor: 'transparent',
