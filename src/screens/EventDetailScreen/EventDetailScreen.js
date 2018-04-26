@@ -7,6 +7,7 @@ import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
 import { css } from '../../utils/style';
+import type { Community } from '../../Types';
 
 const EVENT = {
   id: '7352d18dad46',
@@ -21,7 +22,6 @@ const EVENT = {
       name: 'Test communitasdasdy',
     },
   ],
-  rsvp: 'not_going',
   start: '2017-12-07T11:51:06+00:00',
   end: '2017-12-07T12:51:06+00:00',
   presenters_communities: [
@@ -97,6 +97,7 @@ const EVENT = {
           email: 'pba@dispostable.com',
           profile_photo:
             'https://d32f6hrwlnquvu.cloudfront.net/member_photos/150606/thumb/image.jpg?1514973923',
+          rsvp: 'not_going',
         },
       ],
     },
@@ -133,7 +134,9 @@ const EVENT = {
         },
       ],
       recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
-      thumbnailPath: '',
+      thumbnailPath:
+        'https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-256.png',
+      rsvp: 'not_going',
     },
   ],
   replies: [
@@ -219,11 +222,21 @@ type State = {
 
 export default class EventDetailScreen extends Component<Props, State> {
   state = {
-    activeTab: 'About',
+    activeTab: 'Participants',
   };
 
   changeActiveTab = (activeTab: string) => {
     this.setState({ activeTab });
+  };
+
+  computePaticipantsCount = (): number => {
+    return (
+      EVENT.atendees_communities.reduce((acc: number, community: Community) => {
+        acc += (community.members || []).length;
+
+        return acc;
+      }, 0) + EVENT.atendees_contacts.length
+    );
   };
 
   render() {
@@ -238,10 +251,10 @@ export default class EventDetailScreen extends Component<Props, State> {
               label: 'About',
               component: () => <TabAbout {...EVENT} />,
             },
-            // {
-            //   label: `Participants (${EVENT.participants_count})`,
-            //   component: () => <TabEventParticipants event={EVENT} />,
-            // },
+            {
+              label: `Participants (${this.computePaticipantsCount()})`,
+              component: () => <TabEventParticipants {...EVENT} />,
+            },
             // {
             //   label: `Files`,
             //   component: () => <TabEventFiles event={EVENT} />,

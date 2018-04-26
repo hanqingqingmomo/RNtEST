@@ -52,6 +52,8 @@ export type LinkAttachment = {
   description: ?string,
 };
 
+export type RSVPStatuses = 'going' | 'pending' | 'not_going';
+
 export type CommunitySimple = {
   auto_join: boolean,
   categories: Array<*>,

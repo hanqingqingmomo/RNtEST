@@ -118,8 +118,8 @@ export default class TabAbout extends Component<Props, State> {
     return [
       ...presenters_contacts.map((contact: Contact): User => ({
         id: contact.recordID,
-        first_name: contact.familyName,
-        last_name: contact.givenName,
+        first_name: contact.givenName,
+        last_name: contact.familyName,
         profile_photo: contact.thumbnailPath,
         disabled: true,
       })),
