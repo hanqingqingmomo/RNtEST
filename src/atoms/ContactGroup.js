@@ -14,8 +14,10 @@ const ITEM_WIDTH = DEVICE_WIDTH / 4.5;
 type Props = {
   onContactSelect: User => void,
   style?: Style,
-  users: Array<User>,
+  users: Array<User & { disabled?: boolean }>,
 };
+
+// Zmenit imageURI na source pre Avatar
 
 export default function ContactGroup({ onContactSelect, style, users }: Props) {
   return (
@@ -28,7 +30,11 @@ export default function ContactGroup({ onContactSelect, style, users }: Props) {
         snapToAlignment={'center'}
       >
         {users.map((user, i) => (
-          <TouchableItem onPress={() => onContactSelect(user)} key={i}>
+          <TouchableItem
+            onPress={() => onContactSelect(user)}
+            key={i}
+            disabled={user.disabled}
+          >
             <View style={[styles.itemStyle, css('width', ITEM_WIDTH)]}>
               <Avatar
                 imageURI={user.profile_photo}

@@ -3,11 +3,15 @@
 import React, { Component } from 'react';
 
 import { Screen, Tabs, View, EventHeader } from '../../atoms';
+import TabAbout from './TabAbout';
+import TabEventParticipants from './TabEventParticipants';
+import TabEventFiles from './TabEventFiles';
+import { css } from '../../utils/style';
 
 const EVENT = {
   id: '7352d18dad46',
   name: 'Example Event name',
-  descrption: 'Lorem ...',
+  description: 'Lorem ...',
   cover_photo:
     'https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg',
   location: 'Chicago',
@@ -72,7 +76,8 @@ const EVENT = {
         },
       ],
       recordID: 'AE18B251-39AB-452E-99E1-7809EBE7ECE9',
-      thumbnailPath: '',
+      thumbnailPath:
+        'https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-256.png',
     },
   ],
   privacy: 'public',
@@ -131,9 +136,51 @@ const EVENT = {
       thumbnailPath: '',
     },
   ],
-  comments: [
+  replies: [
     {
       id: '17bcdf57b4c4',
+      text_content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet. Habitasse platea dictumst quisque sagittis purus sit.',
+      created_at: '2017-10-28T19:04:38+00:00',
+      pinned: false,
+      attachment: null,
+      cached_url: null,
+      author: {
+        id: '23360b92c96c',
+        first_name: 'Tom',
+        last_name: 'Delonge',
+        email: 'tomd@email.com',
+        profile_photo:
+          'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150557/thumb/8xWfh0KR_400x400.jpg?1508596012',
+      },
+      comments_count: 0,
+      likes_count: 0,
+      liked: false,
+      replies: [],
+    },
+    {
+      id: 'jkl',
+      text_content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet. Habitasse platea dictumst quisque sagittis purus sit.',
+      created_at: '2017-10-28T19:04:38+00:00',
+      pinned: false,
+      attachment: null,
+      cached_url: null,
+      author: {
+        id: '23360b92c96gfdgfg',
+        first_name: 'Tom',
+        last_name: 'Delonge',
+        email: 'tomd@email.com',
+        profile_photo:
+          'https://d2qn6shxhjvtsw.cloudfront.net/member_photos/150557/thumb/8xWfh0KR_400x400.jpg?1508596012',
+      },
+      comments_count: 0,
+      likes_count: 0,
+      liked: false,
+      replies: [],
+    },
+    {
+      id: 'gfdgfdsh',
       text_content:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet. Habitasse platea dictumst quisque sagittis purus sit.',
       created_at: '2017-10-28T19:04:38+00:00',
@@ -166,12 +213,42 @@ type Props = {
   navigation: any,
 };
 
-export default class EventDetailScreen extends Component<Props> {
+type State = {
+  activeTab: string,
+};
+
+export default class EventDetailScreen extends Component<Props, State> {
+  state = {
+    activeTab: 'About',
+  };
+
+  changeActiveTab = (activeTab: string) => {
+    this.setState({ activeTab });
+  };
+
   render() {
     return (
-      <Screen fill>
+      <View style={css('flex', 1)}>
         <EventHeader {...EVENT} />
-      </Screen>
+        <Tabs
+          activeItem={this.state.activeTab}
+          onChange={this.changeActiveTab}
+          items={[
+            {
+              label: 'About',
+              component: () => <TabAbout {...EVENT} />,
+            },
+            // {
+            //   label: `Participants (${EVENT.participants_count})`,
+            //   component: () => <TabEventParticipants event={EVENT} />,
+            // },
+            // {
+            //   label: `Files`,
+            //   component: () => <TabEventFiles event={EVENT} />,
+            // },
+          ]}
+        />
+      </View>
     );
   }
 }

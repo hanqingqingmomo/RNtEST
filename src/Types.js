@@ -75,6 +75,40 @@ export type User = {
   joined_communities: Array<CommunitySimple>,
 };
 
+export type ContactEmailDetail = {
+  email: string,
+  label: string,
+};
+
+export type ContactPhoneDetail = {
+  label: string,
+  number: string,
+};
+
+export type ContactAddress = {
+  city: string,
+  country: string,
+  label: string,
+  postCode: string,
+  region: string,
+  state: string,
+  street: string,
+};
+
+export type Contact = {
+  company: string,
+  emailAddresses: Array<ContactEmailDetail>,
+  phoneNumbers: Array<ContactPhoneDetail>,
+  familyName: string,
+  givenName: string,
+  hasThumbnail: boolean,
+  jobTitle: string,
+  middleName: string,
+  recordID: string,
+  thumbnailPath: string,
+  postalAddresses: Array<ContactAddress>,
+};
+
 export type Comment = $Exact<{
   id: string,
   text_content: string,
