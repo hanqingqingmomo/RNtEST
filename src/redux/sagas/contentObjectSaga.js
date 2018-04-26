@@ -26,11 +26,13 @@ import {
   CONTENT_DESTROY,
   CONTENT_LIKE,
   CONTENT_REPORT,
+  CONTENT_LOAD,
   type ContentDestroyAction,
   type ContentLikeAction,
   type ContentReportAction,
   type CreateCommentAction,
   type CreatePostAction,
+  type ContentLoadAction,
 } from '../ducks/contentObject';
 import {
   startRequest,
@@ -183,6 +185,26 @@ const reportSaga = function* reportSaga(action: ContentReportAction) {
 };
 
 /**
+ * LOAD saga
+ */
+const loadSaga = function* loadSaga(action: ContentLoadAction) {
+  const id = 'req:content-object:load';
+
+  yield put(startRequest(id));
+  const { data, ok } = yield readContentObjectReq(
+    action.payload.id,
+    action.payload.params
+  );
+
+  if (ok) {
+    yield put(mergeEntity(data));
+    yield put(endRequest(id));
+  } else {
+    yield put(endRequestWithError(id, data));
+  }
+};
+
+/**
  * Root saga
  */
 const contentObjectSaga = function* contentObjectSaga(): Generator<*, *, *> {
@@ -191,6 +213,7 @@ const contentObjectSaga = function* contentObjectSaga(): Generator<*, *, *> {
   yield takeEvery(CONTENT_CREATE_COMMENT, createContentSaga);
   yield takeEvery(CONTENT_DESTROY, destroySaga);
   yield takeEvery(CONTENT_REPORT, reportSaga);
+  yield takeEvery(CONTENT_LOAD, loadSaga);
 };
 
 export default contentObjectSaga;

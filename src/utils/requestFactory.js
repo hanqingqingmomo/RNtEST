@@ -222,9 +222,9 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/communities?membership_status=${
-        joinedOnly ? 'joined' : 'unjoined'
-      }`,
+      path: `/communities?membership_status=${joinedOnly
+        ? 'joined'
+        : 'unjoined'}`,
     }),
     options: {
       method: 'GET',
@@ -269,9 +269,18 @@ export const RQJoinCommunity = (
 /**
  * Content Object
  */
+const serializeParamsToUrl = (params: Object): string =>
+  Object.keys(params).reduce(
+    (url, key, index) => url + (index > 0 ? '&' : '') + `${key}=${params[key]}`,
+    '?'
+  );
 
-export const readContentObjectReq = (id: string) =>
-  api.get(`/content_objects/${id}`);
+export const readContentObjectReq = (
+  id: string,
+  params = {
+    sortComments: 'popularity',
+  }
+) => api.get(`/content_objects/${id}${serializeParamsToUrl(params)}`);
 
 type ContentObject = { id: string };
 
