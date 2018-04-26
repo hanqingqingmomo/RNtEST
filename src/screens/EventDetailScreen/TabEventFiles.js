@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 import { CenterView, Text } from '../../atoms';
-import { type User } from '../../Types';
+import { getColor } from '../../utils/color';
 
 type Props = {
   event: Object,
@@ -15,11 +15,11 @@ export default class TabEventFiles extends Component<Props> {
   };
 
   render() {
-    const { event } = this.props;
-
     return (
       <CenterView>
-        <Text size={16}>Nothing to see here.</Text>
+        <Text size={16} color={getColor('gray')}>
+          Nothing to see here.
+        </Text>
       </CenterView>
     );
   }
