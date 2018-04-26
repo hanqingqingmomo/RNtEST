@@ -96,14 +96,13 @@ class CommentInput extends Component<Props, State> {
         <TouchableItem
           disabled={this.disabled}
           onPress={this.handleSubmit}
-          style={[
-            styles.sendButton,
-            this.disabled
-              ? styles.sendButtonDisabled
-              : styles.sendButtonEnabled,
-          ]}
+          style={styles.sendButton}
         >
-          <Text size={17} color="orange">
+          <Text
+            size={17}
+            color="orange"
+            style={this.disabled ? styles.sendButtonDisabled : undefined}
+          >
             {this.busy ? 'Sending' : 'Send'}
           </Text>
         </TouchableItem>
@@ -186,8 +185,7 @@ const styles = StyleSheet.create({
     height: MIN_INPUT_HEIGHT,
     justifyContent: 'center',
   },
-  sendButtonDisabled: {},
-  sendButtonEnabled: {
+  sendButtonDisabled: {
     opacity: 0.5,
   },
 });
