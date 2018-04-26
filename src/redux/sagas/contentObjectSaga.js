@@ -109,6 +109,7 @@ const destroySaga = function* destroySaga(action: ContentDestroyAction) {
       const parent = yield select(selectEntity(object.parent_id));
       const nextParent = {
         ...parent,
+        comments_count: parent.comments_count - 1,
         replies: parent.replies.filter(id => id !== object.id),
       };
       yield put(mergeEntity(nextParent));

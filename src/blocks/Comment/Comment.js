@@ -90,9 +90,11 @@ class Comment extends Component<Props, State> {
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.item.replies.length !== this.props.item.replies.length) {
-      if (nextProps.item.replies.length > 1) {
-        this.setState({ showOnlyLastComment: true });
+      if (nextProps.item.replies.length > this.props.item.replies.length) {
+        // added new comment
+        this.setState({ showAllReplies: false, showOnlyLastComment: true });
       } else {
+        // removed some comment
         this.setState({ showAllReplies: true });
       }
     }
