@@ -222,7 +222,7 @@ type State = {
 
 export default class EventDetailScreen extends Component<Props, State> {
   state = {
-    activeTab: 'Participants',
+    activeTab: 'About',
   };
 
   changeActiveTab = (activeTab: string) => {

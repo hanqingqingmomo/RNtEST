@@ -137,7 +137,7 @@ export default class TabAbout extends Component<Props, State> {
     const { replyingTo } = this.state;
 
     return (
-      <View style={css('flex', 1)}>
+      <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
         <ScrollView>
           {isBefore(new Date(), start) ? (
             <FutureEventButtons />
