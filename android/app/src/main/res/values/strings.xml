@@ -1,6 +1,4 @@
 <resources>
-    <string moduleConfig="true" name="mobileCenterAnalytics_whenToEnableAnalytics">ALWAYS_SEND</string>
-    <string moduleConfig="true" name="mobileCenterCrashes_whenToSendCrashes">ALWAYS_SEND</string>
     <string name="fb_app_id">@string/FACEBOOK_ID</string>
     <string name="fb_login_protocol_scheme">@string/FACEBOOK_URL_SCHEME</string>
 </resources>

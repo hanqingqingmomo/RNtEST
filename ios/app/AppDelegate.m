@@ -8,9 +8,6 @@
  */
 
 #import "AppDelegate.h"
-#import <RNAnalytics/RNAnalytics.h>
-#import <RNCrashes/RNCrashes.h>
-#import <RNMobileCenter/RNMobileCenter.h>
 #import "SplashScreen.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -24,12 +21,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
-
-  [RNAnalytics registerWithInitiallyEnabled:true];  // Initialize Mobile Center analytics
-
-  [RNCrashes registerWithCrashDelegate: [[RNCrashesDelegateAlwaysSend alloc] init]];  // Initialize Mobile Center crashes
-
-  [RNMobileCenter register];  // Initialize Mobile Center
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 
