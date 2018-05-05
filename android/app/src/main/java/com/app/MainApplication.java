@@ -3,6 +3,7 @@ package com.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
 import com.pw.droplet.braintree.BraintreePackage;
 import com.reactnativepayments.ReactNativePaymentsPackage;
@@ -12,7 +13,6 @@ import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -35,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new ReactNativeConfigPackage(),
             new TwitterSigninPackage(),
             new BraintreePackage(),
             new ReactNativePaymentsPackage(),

@@ -25,7 +25,7 @@ const { store, persistor } = initStore();
 
 initRequestFactory(store);
 
-AppRegistry.registerComponent('app', () => () => (
+AppRegistry.registerComponent('pba', () => () => (
   <PersistGate persistor={persistor} loading={<BootScreen />}>
     <PortalProvider>
       <FetchProvider store={store}>

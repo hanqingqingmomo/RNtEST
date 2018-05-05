@@ -62,3 +62,5 @@ Pods
 
 .vscode/.react
 
+# Bundle artifact
+*.jsbundle
