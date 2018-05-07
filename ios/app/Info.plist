@@ -102,13 +102,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>MPWR will only upload and share photos you choose.</string>
+	<string>$(PRODUCT_NAME) will only upload and share photos you choose.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>This allows MPWR to let choose which friends to invite to download the app</string>
+	<string>This allows $(PRODUCT_NAME) to let choose which friends to invite to download the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>MPWR will only upload and share photos you choose.</string>
+	<string>$(PRODUCT_NAME) will only upload and share photos you choose.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>pba.ttf</string>
@@ -129,5 +129,16 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>
