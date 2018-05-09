@@ -45,6 +45,7 @@
 		7727870D20A0514400DDDADF /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7727870C20A0511D00DDDADF /* libReact-Native-Webview-Bridge.a */; };
 		7727871020A052AD00DDDADF /* pba.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7727870F20A052AD00DDDADF /* pba.ttf */; };
 		774D67A120A39C8C008ECFF7 /* libRNTwitterSignIn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 774D679F20A39BE9008ECFF7 /* libRNTwitterSignIn.a */; };
+		774D67AB20A39E39008ECFF7 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 774D67A820A39E1D008ECFF7 /* libRCTPushNotification.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		873DE576CEF64BB2AB9C2CF6 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC145DDF4B48EABFF06146 /* libSplashScreen.a */; };
 		90A31925C51A42C7974C8063 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D750A3889245B2A41FEE8F /* libRNImagePicker.a */; };
@@ -343,6 +344,20 @@
 			remoteGlobalIDString = D07E57251F07806700A7160F;
 			remoteInfo = RNTwitterSignIn;
 		};
+		774D67A720A39E1D008ECFF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 774D67A220A39E1D008ECFF7 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		774D67A920A39E1D008ECFF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 774D67A220A39E1D008ECFF7 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
 		777A7EFA20A068C500C8F9EB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F33BD372EEBE4259B854BF76 /* RCTContacts.xcodeproj */;
@@ -441,6 +456,7 @@
 		7727870720A0511C00DDDADF /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge-updated/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		7727870F20A052AD00DDDADF /* pba.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pba.ttf; sourceTree = SOURCE_ROOT; };
 		774D672920A39AB1008ECFF7 /* libRNTwitterSignIn.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNTwitterSignIn.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		774D67A220A39E1D008ECFF7 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		796B87FF46D74ED1AE98C532 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		7E44AA6009C54E0FAC8D379D /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
@@ -484,6 +500,7 @@
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
+				774D67AB20A39E39008ECFF7 /* libRCTPushNotification.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -747,6 +764,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		774D67A320A39E1D008ECFF7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				774D67A820A39E1D008ECFF7 /* libRCTPushNotification.a */,
+				774D67AA20A39E1D008ECFF7 /* libRCTPushNotification-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		777A7EF520A068C500C8F9EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +818,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				774D67A220A39E1D008ECFF7 /* RCTPushNotification.xcodeproj */,
 				7727870720A0511C00DDDADF /* React-Native-Webview-Bridge.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -1020,6 +1047,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 774D67A320A39E1D008ECFF7 /* Products */;
+					ProjectRef = 774D67A220A39E1D008ECFF7 /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1352,6 +1383,20 @@
 			fileType = archive.ar;
 			path = libRNTwitterSignIn.a;
 			remoteRef = 774D679E20A39BE9008ECFF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		774D67A820A39E1D008ECFF7 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = 774D67A720A39E1D008ECFF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		774D67AA20A39E1D008ECFF7 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = 774D67A920A39E1D008ECFF7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		777A7EFB20A068C500C8F9EB /* libRCTContacts.a */ = {
