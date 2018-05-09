@@ -36,8 +36,7 @@
 
   [SplashScreen show];
 
-  // return YES;
-  return [[FBSDKApplicationDelegate sharedInstance] application:application
+  [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -58,6 +57,7 @@
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   [RCTPushNotificationManager didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+  return YES;
 }
 
 // Required for the registrationError event.
@@ -76,17 +76,15 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)applicationDidBecomeActive:(UIApplication *)application {
   [FBSDKAppEvents activateApp];
 }
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
   if([[url scheme] rangeOfString:@"twitterkit"].location == 0) { // Twitter
-    return [[Twitter sharedInstance] application:application openURL:url options:options];
-  } else if([[url scheme] rangeOfString:@"fb"].location == 0) { // Facebook SDK
-    NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
-
+    //    return [[Twitter sharedInstance] application:application openURL:url options:options];
+  } else if([[url scheme] rangeOfString:@"fb"].location == 0) {
+    // Facebook SDK
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
-                                                sourceApplication:sourceApplication
-                                                      annotation:nil];
+                                                sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                       annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
   }
 
   return false;

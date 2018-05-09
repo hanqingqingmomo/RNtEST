@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.goldenowl.twittersignin.TwitterSigninPackage;
 import com.pw.droplet.braintree.BraintreePackage;
 import com.reactnativepayments.ReactNativePaymentsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -36,7 +35,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
             new ReactNativeConfigPackage(),
-            new TwitterSigninPackage(),
             new BraintreePackage(),
             new ReactNativePaymentsPackage(),
             new RNDeviceInfo(),

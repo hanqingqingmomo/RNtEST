@@ -78,7 +78,7 @@
 	<key>FacebookAppID</key>
 	<string>__RN_CONFIG_FACEBOOK_ID</string>
 	<key>FacebookDisplayName</key>
-	<string>MPWR</string>
+	<string>__RN_CONFIG_BUNDLE_DISPLAY_NAME</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -129,16 +129,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
 </dict>
 </plist>

@@ -4,7 +4,6 @@ const ch = require('chalk');
 const path = require('path');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const program = require('commander');
 const shell = require('shelljs');
 const ora = require('ora');
 const log = console.log;

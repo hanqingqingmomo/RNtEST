@@ -3,7 +3,6 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { FBLoginManager } from 'react-native-facebook-login';
-
 import { Button } from '../../atoms';
 
 type Permissions = Array<string>;
@@ -56,58 +55,67 @@ type FacebookError = {
   type: 'error',
 };
 
-type Props = {
+type Props = $Exact<{
+  color: string,
   onAuthStatusChange: FacebookAuth => void,
   style: Object | number,
-};
+  textColor: string,
+  title: string,
+}>;
 
-export function FacebookModal(props: Props) {
-  const { onAuthStatusChange, ...bag } = props;
+export class FacebookModal extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Native);
+  }
 
-  FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Native);
+  render() {
+    return (
+      <Button
+        block
+        color={this.props.color}
+        size="lg"
+        style={this.props.style}
+        textColor={this.props.textColor}
+        title={this.props.title}
+        onPress={() => {
+          if (__DEV__) {
+            console.log('[Facebook] Auth Login start');
+          }
 
-  return (
-    <Button
-      block
-      {...bag}
-      size="lg"
-      onPress={() => {
-        if (__DEV__) {
-          console.log('[Facebook] Auth Login start');
-        }
-
-        FBLoginManager.loginWithPermissions(
-          ['email', 'public_profile'],
-          (error: FacebookError, data: FacebookPayload) => {
-            if (!error) {
-              if (__DEV__) {
-                console.log('[Facebook] Auth Login end', data);
-              }
-
-              onAuthStatusChange({
-                provider: data.provider || 'facebook',
-                credentials: {
-                  access_token: data.credentials.token,
-                },
-              });
-
-              FBLoginManager.logout(() => {
+          FBLoginManager.loginWithPermissions(
+            ['email', 'public_profile'],
+            (error: FacebookError, data: FacebookPayload) => {
+              if (!error) {
                 if (__DEV__) {
-                  console.log('[Facebook] Auth Logout');
+                  console.log('[Facebook] Auth Login end', data);
                 }
-              });
-            } else {
-              if (__DEV__) {
-                console.log('[Facebook] Auth Error', error);
-              }
 
-              if (error.message) {
-                Alert.alert('Error', error.message);
+                this.props.onAuthStatusChange({
+                  provider: data.provider || 'facebook',
+                  credentials: {
+                    access_token: data.credentials.token,
+                  },
+                });
+
+                FBLoginManager.logout(() => {
+                  if (__DEV__) {
+                    console.log('[Facebook] Auth Logout');
+                  }
+                });
+              } else {
+                if (__DEV__) {
+                  console.log('[Facebook] Auth Error', error);
+                }
+
+                if (error.message) {
+                  Alert.alert('Error', error.message);
+                }
               }
             }
-          }
-        );
-      }}
-    />
-  );
+          );
+        }}
+      />
+    );
+  }
 }
