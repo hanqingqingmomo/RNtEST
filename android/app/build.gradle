@@ -168,6 +168,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-twitter-signin')
     compile project(':react-native-config')
     compile project(':react-native-braintree-xplat')
     compile project(':react-native-payments')

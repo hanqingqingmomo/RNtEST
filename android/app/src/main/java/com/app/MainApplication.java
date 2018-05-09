@@ -3,6 +3,7 @@ package com.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.goldenowl.twittersignin.TwitterSigninPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.pw.droplet.braintree.BraintreePackage;
 import com.reactnativepayments.ReactNativePaymentsPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new TwitterSigninPackage(),
             new ReactNativeConfigPackage(),
             new BraintreePackage(),
             new ReactNativePaymentsPackage(),
