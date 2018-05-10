@@ -55,6 +55,9 @@ buck-out/
 # Pods
 Pods
 
+# Carthage
+Carthage
+
 # Environment settings
 .env
 .env.*

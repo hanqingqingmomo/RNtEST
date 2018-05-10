@@ -39,6 +39,7 @@
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		301349F6BC9248928D84B242 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6EEE977B134704A1D5D5A0 /* libRCTContacts.a */; };
 		350D2A7BDB8E47988212D50C /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 796B87FF46D74ED1AE98C532 /* libRNDeviceInfo.a */; };
+		42AE537288C24D6D8618BB22 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A317C89D5640EE981229D7 /* BraintreeApplePay.framework */; };
 		512DE5DD3CC94908BD1F43FE /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E850ABD8CD95442787258F1D /* libRCTFBLogin.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		74840102A79B4314B2974C3F /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CF34A777D046A191CE0DFE /* libReactNativeConfig.a */; };
@@ -46,6 +47,8 @@
 		7727871020A052AD00DDDADF /* pba.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7727870F20A052AD00DDDADF /* pba.ttf */; };
 		774D67A120A39C8C008ECFF7 /* libRNTwitterSignIn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 774D679F20A39BE9008ECFF7 /* libRNTwitterSignIn.a */; };
 		774D67AB20A39E39008ECFF7 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 774D67A820A39E1D008ECFF7 /* libRCTPushNotification.a */; };
+		77C0EB2220A3BC7F00A13163 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C0EB2120A3BC7F00A13163 /* BraintreeApplePay.framework */; };
+		77C0EB5720A3BC9500A13163 /* BraintreeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C0EB5620A3BC9500A13163 /* BraintreeCore.framework */; };
 		7A55892098374EFE9A225C6D /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C96A024B124C4683AE9076 /* libReactNativePayments.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		873DE576CEF64BB2AB9C2CF6 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC145DDF4B48EABFF06146 /* libSplashScreen.a */; };
@@ -55,6 +58,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BC4AF163D868401CB257B1F3 /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 083C7FA2C0174990B1ABEC49 /* libReactNativeKeyboardManager.a */; };
 		BCE05CBF45F6B2E58749083F /* libPods-app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0614FE789A20E15DEAFCADD /* libPods-app-tvOSTests.a */; };
+		CC4F089B76904AB7B5688128 /* BraintreeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24565F7F6B43388428EF53 /* BraintreeCore.framework */; };
 		F3B30917C985474A842A6781 /* libRCTBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3311BED85904AD4A1B1B500 /* libRCTBraintree.a */; };
 /* End PBXBuildFile section */
 
@@ -475,13 +479,18 @@
 		7727870F20A052AD00DDDADF /* pba.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pba.ttf; sourceTree = SOURCE_ROOT; };
 		774D672920A39AB1008ECFF7 /* libRNTwitterSignIn.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNTwitterSignIn.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		774D67A220A39E1D008ECFF7 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		77C0EB2120A3BC7F00A13163 /* BraintreeApplePay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BraintreeApplePay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77C0EB5620A3BC9500A13163 /* BraintreeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BraintreeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77C0EBF520A3C59C00A13163 /* app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = app.entitlements; path = app/app.entitlements; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		796B87FF46D74ED1AE98C532 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		7E44AA6009C54E0FAC8D379D /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		87D750A3889245B2A41FEE8F /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		89CA066E5BAE417DBA2976C5 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
+		9F24565F7F6B43388428EF53 /* BraintreeCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeCore.framework; path = System/Library/Frameworks/BraintreeCore.framework; sourceTree = SDKROOT; };
 		A3311BED85904AD4A1B1B500 /* libRCTBraintree.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBraintree.a; sourceTree = "<group>"; };
+		A4A317C89D5640EE981229D7 /* BraintreeApplePay.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = BraintreeApplePay.framework; path = System/Library/Frameworks/BraintreeApplePay.framework; sourceTree = SDKROOT; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AF6EEE977B134704A1D5D5A0 /* libRCTContacts.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTContacts.a; sourceTree = "<group>"; };
 		B72361C661A8E7678251B314 /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -504,6 +513,8 @@
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 				A35B5009F37CDAE60DF186FB /* libPods-appTests.a in Frameworks */,
+				CC4F089B76904AB7B5688128 /* BraintreeCore.framework in Frameworks */,
+				42AE537288C24D6D8618BB22 /* BraintreeApplePay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +548,8 @@
 				774D67A120A39C8C008ECFF7 /* libRNTwitterSignIn.a in Frameworks */,
 				F3B30917C985474A842A6781 /* libRCTBraintree.a in Frameworks */,
 				7A55892098374EFE9A225C6D /* libReactNativePayments.a in Frameworks */,
+				77C0EB5720A3BC9500A13163 /* BraintreeCore.framework in Frameworks */,
+				77C0EB2220A3BC7F00A13163 /* BraintreeApplePay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,12 +702,16 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77C0EB5620A3BC9500A13163 /* BraintreeCore.framework */,
+				77C0EB2120A3BC7F00A13163 /* BraintreeApplePay.framework */,
 				774D672920A39AB1008ECFF7 /* libRNTwitterSignIn.a */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				B72361C661A8E7678251B314 /* libPods-app.a */,
 				40526433F40ACEE3E86EBA69 /* libPods-app-tvOS.a */,
 				D0614FE789A20E15DEAFCADD /* libPods-app-tvOSTests.a */,
 				05F5D4D27B753B67129FDD86 /* libPods-appTests.a */,
+				9F24565F7F6B43388428EF53 /* BraintreeCore.framework */,
+				A4A317C89D5640EE981229D7 /* BraintreeApplePay.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -966,6 +983,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F6AC9FEEBA406B998AB43DE3 /* [CP] Embed Pods Frameworks */,
 				EC471B562B06F1B95732D69F /* [CP] Copy Pods Resources */,
+				D60586CAA479445DA783ACA6 /* [Carthage] Copy Carthage Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1663,6 +1681,24 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-app-tvOS/Pods-app-tvOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D60586CAA479445DA783ACA6 /* [Carthage] Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/BraintreeCore.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BraintreeApplePay.framework",
+			);
+			name = "[Carthage] Copy Carthage Frameworks";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeCore.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeApplePay.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		DCEEC8636F59915FF3810F08 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1852,6 +1888,13 @@
 			baseConfigurationReference = 09B75219087F2CE173F072CF /* Pods-appTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/TwitterCore/iOS\"",
+					"\"${PODS_ROOT}/TwitterKit/iOS\"",
+					"\"${SRCROOT}/Carthage/Build/iOS",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1891,6 +1934,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/TwitterCore/iOS\"",
+					"\"${PODS_ROOT}/TwitterKit/iOS\"",
+					"\"${SRCROOT}/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -1927,6 +1977,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/TwitterCore/iOS\"",
+					"\"${PODS_ROOT}/TwitterKit/iOS\"",
+					"\"${SRCROOT}/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -1961,6 +2018,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/TwitterCore/iOS\"",
+					"\"${PODS_ROOT}/TwitterKit/iOS\"",
+					"\"${SRCROOT}/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
