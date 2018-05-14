@@ -32,6 +32,6 @@ You can create as many env files as you need. You are asked which file should be
   CLI finds available env files and you are asked to confirm your selection.
   When you - `yarn env:activate` is run together with `yarn run:(ios|android)`.
   We suggest this approach in order to run app right away.
-* use `yarn env:generate` to generate content of env file from loaded system environment variables.
+* use `yarn env:generate` to generate content of release env file from loaded system environment variables. This is only usefull for etc. building in cloud (AppCenter).
   Only variables prefixed with `RN_` will be picked.
 * use `import Config from 'react-native-config';` to access loaded variables.
