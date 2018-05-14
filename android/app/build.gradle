@@ -72,14 +72,7 @@ import com.android.build.OutputFile
  * ]
  */
 
-// Env config
-project.ext.envConfigFiles = [
-  dev: ".env.dev",
-  prod: ".env.prod",
-]
-
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
-//
 
 project.ext.react = [
     entryFile: "index.js"
