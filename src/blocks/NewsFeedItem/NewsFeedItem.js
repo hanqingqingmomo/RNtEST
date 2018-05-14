@@ -52,7 +52,7 @@ class NewsFeedItem extends Component<Props> {
             disabled={this.props.isDetail}
           >
             <Text size={14} lineHeight={18} style={css('color', '#455A64')}>
-              {parseTextContent(text_content, isDetail ? null : 120)}
+              {parseTextContent(text_content || '', isDetail ? null : 120)}
             </Text>
           </TouchableOpacity>
         ) : null}
