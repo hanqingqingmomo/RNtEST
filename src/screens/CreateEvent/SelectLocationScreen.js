@@ -44,6 +44,7 @@ const Navigation = (props: Object): React$Node => {
           onChangeText={props.onLocationChange}
           placeholder="Enter location"
           value={props.searchValue}
+          hiddenIcon
         />
       </View>
 
