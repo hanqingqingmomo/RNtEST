@@ -18,7 +18,6 @@ export default StackNavigator({
   CreateEventScreen: {
     screen: CreateEventScreen,
     navigationOptions: ({ navigation, screenProps }) => ({
-      headerTitle: 'Create Event',
       headerLeft: (
         <NavigationIconButton
           name="close"

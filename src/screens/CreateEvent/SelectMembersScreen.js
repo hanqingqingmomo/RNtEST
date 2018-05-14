@@ -29,6 +29,7 @@ type State = {
   searchValue: string,
   selectedMembers: Array<User>,
   loading: boolean,
+  everyone: boolean,
 };
 
 class SelectMembersScreen extends Component<
@@ -52,6 +53,7 @@ class SelectMembersScreen extends Component<
     searchValue: '',
     selectedMembers: [],
     loading: true,
+    everyone: false,
   };
 
   get filteredMembers(): Array<User> {
@@ -72,12 +74,6 @@ class SelectMembersScreen extends Component<
 
   componentDidMount() {
     this.fetch();
-
-    const community = this.getCommunity();
-
-    if (community) {
-      this.setState({ selectedMembers: community.members });
-    }
   }
 
   fetch = async () => {
@@ -92,18 +88,29 @@ class SelectMembersScreen extends Component<
         readCommunityMembersRq.options
       );
 
+      const members = JSON.parse(data._bodyInit).data;
+
       this.setState({
-        members: JSON.parse(data._bodyInit).data,
+        members,
         loading: false,
       });
+
+      const community = this.getCommunity();
+
+      if (community) {
+        this.setState({
+          selectedMembers: community.members,
+          everyone: community.members.length === members.length,
+        });
+      }
     } catch (err) {}
   };
 
   _onSelectAll = () => {
     if (this.state.selectedMembers.length === this.state.members.length) {
-      this.setState({ selectedMembers: [] });
+      this.setState({ selectedMembers: [], everyone: false });
     } else {
-      this.setState({ selectedMembers: this.state.members });
+      this.setState({ selectedMembers: this.state.members, everyone: true });
     }
   };
 
@@ -116,7 +123,10 @@ class SelectMembersScreen extends Component<
       selectedMembers.push(member);
     }
 
-    this.setState({ selectedMembers });
+    this.setState({
+      selectedMembers,
+      everyone: selectedMembers.length === this.state.members.length,
+    });
   };
 
   _onSaveMembers = () => {
@@ -131,6 +141,7 @@ class SelectMembersScreen extends Component<
     const newData = {
       ...community,
       members: this.state.selectedMembers,
+      everyone: this.state.everyone,
     };
 
     if (isPushedCommunity) {
@@ -192,10 +203,7 @@ class SelectMembersScreen extends Component<
               title="Select all community"
               cellAccessoryView={
                 <Checkmark
-                  selected={
-                    this.state.selectedMembers.length ===
-                    this.state.members.length
-                  }
+                  selected={this.state.everyone}
                   selectedBackgroundColor={getColor('linkBlue')}
                   color="white"
                 />

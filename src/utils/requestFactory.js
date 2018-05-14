@@ -285,6 +285,10 @@ export const destroyContentObjectReq = (object: ContentObject) =>
   api.delete(`/content_objects/${object.id}`);
 
 /**
+ * Events
+ */
+export const createEvent = (data: Object) => api.post('/event', data);
+/**
  * News feed requests
  */
 export const RQWithCursor = (

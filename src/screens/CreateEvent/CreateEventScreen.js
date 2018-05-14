@@ -16,6 +16,8 @@ import {
   View,
   Text,
   Pill,
+  CenterView,
+  ActivityIndicator,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
@@ -29,34 +31,76 @@ import {
   DatePickerCell,
   DateCell,
 } from './Cells';
-import type { Community } from '../../Types';
+import type { Community, User } from '../../Types';
 import type { Contact } from './SelectContactsScreen';
+import { createEvent } from '../../utils/requestFactory';
 
 type Props = NavigationScreenConfigProps;
 
 type State = {
   selectedField: string,
+  busy: boolean,
+};
+
+type RequestCommunity = {
+  id: string,
+  everyone: boolean,
+  members: ?Array<string>,
+};
+
+type RequestContact = {
+  email: ?string,
+  first_name: string,
+  last_name: string,
+  phone: ?string,
+  profile_photo: string,
+};
+
+type CreateEventPayload = {
+  name: string,
+  description: string,
+  cover_photo: string,
+  location: string,
+  post_in: Array<string>,
+  start: Date,
+  end: Date,
+  presenters_communities: Array<RequestCommunity>,
+  presenters_contacts: Array<RequestContact>,
+  attendees_communities: Array<RequestCommunity>,
+  attendees_contacts: Array<RequestContact>,
+  privacy: 'public' | 'private',
+  webinar: boolean,
+  enable_survey: boolean,
+  sharing_webcams: 'presenters' | 'everyone',
+  record_event: boolean,
+  show_chat_in_recording: boolean,
+  add_event_to_calendar: boolean,
+  send_invitations_via_email: boolean,
+  send_reminders_via_email: boolean,
+  allow_guest: boolean,
+  see_poll_results: boolean,
 };
 
 const SCHEDULE_BUTTON_ID = 'CreateEvent:ScheduleButton';
 
 const INITIAL_VALUES = {
+  community_id: '81bad81ca2be',
   privacy: 'public',
-  'atendees_settings.allow_guest': true,
-  'atendees_settings.see_poll_results': true,
+  allow_guest: true,
+  see_poll_results: true,
   enable_survey: true,
   sharing_webcams: 'presenters',
-  'settings.record_event': true,
-  'settings.show_chat_in_recording': false,
-  'settings.add_event_to_calnedar': true,
-  'settings.send_invitations_via_email': true,
-  'settings.send_reminders_via_email': true,
+  record_event: true,
+  show_chat_in_recording: false,
+  add_event_to_calendar: true,
+  send_invitations_via_email: true,
+  send_reminders_via_email: true,
   cover_photo: '',
   post_in: [],
   start: new Date(),
   end: new Date(),
-  atendees_communities: [],
-  atendees_contacts: [],
+  attendees_communities: [],
+  attendees_contacts: [],
   presenters_communities: [],
   presenters_contacts: [],
 };
@@ -115,18 +159,80 @@ function _renderPills(commuities: Array<Object>, max: number): React$Node {
   return array;
 }
 
+function prepareCommunities(
+  commuities: Array<Community & RequestCommunity>
+): Array<RequestCommunity> {
+  return commuities.map(
+    (commuity: Community & RequestCommunity): RequestCommunity => ({
+      id: commuity.id,
+      everyone: commuity.everyone,
+      members: commuity.everyone
+        ? null
+        : commuity.members.map((member: User) => member.id),
+    })
+  );
+}
+
+function prepareContacts(contacts: Array<Contact>): Array<RequestContact> {
+  return contacts.map((contact: Contact): RequestContact => {
+    const emails = contact.emailAddresses;
+    const phones = contact.phoneNumbers;
+
+    return {
+      email: emails.length ? emails[0].email || null : null,
+      first_name: contact.givenName,
+      last_name: contact.familyName,
+      phone: phones.length ? phones[0].label || null : null,
+      profile_photo: contact.thumbnailPath,
+    };
+  });
+}
+
+function preparePostIn(commuities: Array<Community>): Array<string> {
+  return commuities.map((commuity: Community) => commuity.id);
+}
+
+function prepareSubmitData(values: Object): CreateEventPayload {
+  values.presenters_communities = prepareCommunities(
+    values.presenters_communities
+  );
+  values.attendees_communities = prepareCommunities(
+    values.attendees_communities
+  );
+  values.presenters_contacts = prepareContacts(values.presenters_contacts);
+  values.attendees_contacts = prepareContacts(values.attendees_contacts);
+  values.post_in = preparePostIn(values.post_in);
+
+  return values;
+}
+
 export default class CreateEventScreen extends Component<Props, State> {
   static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Create Event',
     headerRight: <WhitePortal name={SCHEDULE_BUTTON_ID} />,
   });
 
   state = {
     selectedField: '',
+    busy: false,
   };
 
-  _onSubmit = values => {
+  _onSubmit = async (values: Object) => {
+    const data: CreateEventPayload = prepareSubmitData({ ...values });
+
+    this.setState({ busy: true });
+
+    try {
+      const response = await createEvent(data);
+
+      console.log(response);
+    } catch (err) {
+    } finally {
+      this.setState({ busy: false });
+    }
+
     if (__DEV__) {
-      console.log('[Create Event] submit', values);
+      console.log('[Create Event] submit', data);
     }
   };
 
@@ -150,9 +256,9 @@ export default class CreateEventScreen extends Component<Props, State> {
       | 'start'
       | 'end'
       | 'photo'
-      | 'atendees'
+      | 'attendees'
       | 'presenters',
-    formik: mixed,
+    formik: Object,
     data: mixed
   ) => {
     this.setState({ selectedField: field });
@@ -171,10 +277,10 @@ export default class CreateEventScreen extends Component<Props, State> {
         this.props.navigation.navigate('PostInScreen', { formik });
         break;
       case 'presenters':
-      case 'atendees':
+      case 'attendees':
         this.props.navigation.navigate('SelectCommunitiesScreen', {
           formik,
-          title: field === 'atendees' ? 'Add Atendees' : 'Add Presenters',
+          title: field === 'attendees' ? 'Add Attendees' : 'Add Presenters',
           contactsField: `${field}_contacts`,
           communitiesField: `${field}_communities`,
         });
@@ -218,9 +324,13 @@ export default class CreateEventScreen extends Component<Props, State> {
   }
 
   render() {
-    const { selectedField } = this.state;
+    const { selectedField, busy } = this.state;
 
-    return (
+    return busy ? (
+      <CenterView>
+        <ActivityIndicator />
+      </CenterView>
+    ) : (
       <Form
         initialValues={INITIAL_VALUES}
         validateOnChange
@@ -372,7 +482,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                 </TableView.Section>
 
                 <TableView.Section
-                  header="atendees"
+                  header="attendees"
                   footer="Invite individually or entire community"
                 >
                   <TableView.Cell
@@ -384,8 +494,8 @@ export default class CreateEventScreen extends Component<Props, State> {
                       <View style={css('flexDirection', 'row')}>
                         <FlatList
                           data={[
-                            ...formik.values.atendees_contacts,
-                            ...formik.values.atendees_communities,
+                            ...formik.values.attendees_contacts,
+                            ...formik.values.attendees_communities,
                           ]}
                           renderItem={this._renderInviteItem(
                             formik,
@@ -400,7 +510,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                               title="Invite"
                               onPress={() => {
                                 this._onCellPress(
-                                  'atendees',
+                                  'attendees',
                                   formik,
                                   () => formik.values
                                 );
@@ -417,23 +527,23 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                 </TableView.Section>
 
-                <TableView.Section footer="Atendees will have the option to enter without logging in">
+                <TableView.Section footer="Attendees will have the option to enter without logging in">
                   <SettingsCell
                     title="Allow atendee enter as a guest"
-                    name="atendees_settings.allow_guest"
+                    name="allow_guest"
                   />
                 </TableView.Section>
 
                 <TableView.Section>
                   <SettingsCell
-                    title="Atendees can see poll results"
-                    name="atendees_settings.see_poll_results"
+                    title="Attendees can see poll results"
+                    name="see_poll_results"
                   />
                 </TableView.Section>
 
                 <TableView.Section
                   header="questions &amp; answers"
-                  footer="Atendees will be allowed to submit questions"
+                  footer="Attendees will be allowed to submit questions"
                 >
                   <SurveyCell value={true} />
                   <SurveyCell value={false} />
@@ -445,25 +555,22 @@ export default class CreateEventScreen extends Component<Props, State> {
                 </TableView.Section>
 
                 <TableView.Section header="advanced settings">
-                  <SettingsCell
-                    title="Record event"
-                    name="settings.record_event"
-                  />
+                  <SettingsCell title="Record event" name="record_event" />
                   <SettingsCell
                     title="Show chat in the recording"
-                    name="settings.show_chat_in_recording"
+                    name="show_chat_in_recording"
                   />
                   <SettingsCell
                     title="Add event to Calendar"
-                    name="settings.add_event_to_calnedar"
+                    name="add_event_to_calendar"
                   />
                   <SettingsCell
                     title="Send invitations via email"
-                    name="settings.send_invitations_via_email"
+                    name="send_invitations_via_email"
                   />
                   <SettingsCell
                     title="Send reminders via email"
-                    name="settings.send_reminders_via_email"
+                    name="send_reminders_via_email"
                   />
                 </TableView.Section>
               </TableView.Table>
