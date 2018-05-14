@@ -17,6 +17,7 @@ import {
 } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
+import { recentLocations } from '../../utils/requestFactory';
 
 let NAVIGATION_HEIGHT = 56;
 
@@ -30,19 +31,9 @@ if (Platform.OS === 'ios') {
 
 const HEADER_ID = 'CreateEvent:SearchBox';
 
-const LOCATIONS = [
-  {
-    id: '7352d18dad46',
-    name: 'Chicago',
-  },
-  {
-    id: '7352d18dad78',
-    name: 'Las Wegas',
-  },
-];
-
 type State = {
   searchValue: string,
+  locations: Array<{ id: string, name: string }>,
 };
 
 const Navigation = (props: Object): React$Node => {
@@ -77,11 +68,36 @@ export default class SelectLocationScreen extends Component<
 
   state = {
     searchValue: '',
+    locations: [],
+  };
+
+  componentWillMount() {
+    this.fetch();
+  }
+
+  fetch = async () => {
+    try {
+      const { data } = await recentLocations();
+
+      if (__DEV__) {
+        console.log('[Event Locations] locations', data);
+      }
+
+      if (!data.error) {
+        this.setState({ locations: data });
+      }
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[Event Locations] error', err.message);
+      }
+    }
   };
 
   get filteredLocations(): Array<Object> {
-    return LOCATIONS.filter((location: Object) =>
-      location.name.toLowerCase().includes(this.state.searchValue.toLowerCase())
+    const { locations, searchValue } = this.state;
+
+    return locations.filter((location: Object): boolean =>
+      location.name.toLowerCase().includes(searchValue.toLowerCase())
     );
   }
 
@@ -93,6 +109,11 @@ export default class SelectLocationScreen extends Component<
   };
 
   _onLocationChange = (searchValue: string) => {
+    this.props.navigation.state.params.formik.setFieldValue(
+      'location',
+      searchValue
+    );
+
     this.setState({ searchValue });
   };
 
@@ -103,30 +124,35 @@ export default class SelectLocationScreen extends Component<
           <Navigation
             navigation={this.props.navigation}
             onLocationChange={this._onLocationChange}
-            searchValue={this.state.searchValue}
+            searchValue={
+              this.state.searchValue ||
+              this.props.navigation.state.params.formik.values.location
+            }
           />
         </BlackPortal>
 
-        <TableView.Table>
-          <TableView.Section header="Recent Locations">
-            {this.filteredLocations.map((location: Object): React$Node => (
-              <TableView.Cell
-                key={location.id}
-                title={location.name}
-                onPress={() => this._onCellPress(location.name)}
-                titleTextColor="#455A64"
-                cellImageView={
-                  <Icon
-                    name="map-pin"
-                    size="md"
-                    color="#455A64"
-                    style={css('marginRight', 15)}
-                  />
-                }
-              />
-            ))}
-          </TableView.Section>
-        </TableView.Table>
+        {this.filteredLocations.length ? (
+          <TableView.Table>
+            <TableView.Section header="Recent Locations">
+              {this.filteredLocations.map((location: Object): React$Node => (
+                <TableView.Cell
+                  key={location.id}
+                  title={location.name}
+                  onPress={() => this._onCellPress(location.name)}
+                  titleTextColor="#455A64"
+                  cellImageView={
+                    <Icon
+                      name="map-pin"
+                      size="md"
+                      color="#455A64"
+                      style={css('marginRight', 15)}
+                    />
+                  }
+                />
+              ))}
+            </TableView.Section>
+          </TableView.Table>
+        ) : null}
       </Screen>
     );
   }

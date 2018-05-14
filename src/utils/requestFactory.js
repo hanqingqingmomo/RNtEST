@@ -288,6 +288,8 @@ export const destroyContentObjectReq = (object: ContentObject) =>
  * Events
  */
 export const createEvent = (data: Object) => api.post('/event', data);
+export const recentLocations = () => api.get('/places/user');
+
 /**
  * News feed requests
  */
