@@ -34,13 +34,11 @@ export type EventProps = {
   post_in: Array<PostProps>,
   start: Date,
   end: Date,
-  rsvp: RSVPStatus,
-  presenters_contacts: Array<Object>,
-  presenters_communities: Array<Object>,
+  current_user_rsvp: RSVPStatus,
   privacy: 'public' | 'private',
-  atendees_contacts: Array<Object>,
-  atendees_communities: Array<Object>,
   webinar?: boolean,
+  profile_photos: Array<string>,
+  total_attendees_count: number,
 };
 
 type Props = {
@@ -145,29 +143,37 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
       <View style={styles.alignment}>
         <Button.Icon
           color={
-            event.rsvp ? palette[event.rsvp].notGoingButton.color : '#B0BEC5'
+            event.current_user_rsvp
+              ? palette[event.current_user_rsvp].notGoingButton.color
+              : '#B0BEC5'
           }
           disabled={pastEvent}
           iconColor={
-            event.rsvp
-              ? palette[event.rsvp].notGoingButton.iconColor
+            event.current_user_rsvp
+              ? palette[event.current_user_rsvp].notGoingButton.iconColor
               : '#B0BEC5'
           }
           iconName="close"
           onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
-          outline={event.rsvp !== ATTENDING_STATUS.NOT_GOING}
+          outline={event.current_user_rsvp !== ATTENDING_STATUS.NOT_GOING}
           size="md"
           style={css('paddingRight', 12)}
         />
         <Button.Icon
-          color={event.rsvp ? palette[event.rsvp].goingButton.color : '#B0BEC5'}
+          color={
+            event.current_user_rsvp
+              ? palette[event.current_user_rsvp].goingButton.color
+              : '#B0BEC5'
+          }
           disabled={pastEvent}
           iconColor={
-            event.rsvp ? palette[event.rsvp].goingButton.iconColor : '#B0BEC5'
+            event.current_user_rsvp
+              ? palette[event.current_user_rsvp].goingButton.iconColor
+              : '#B0BEC5'
           }
           iconName="check"
           onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
-          outline={event.rsvp !== ATTENDING_STATUS.GOING}
+          outline={event.current_user_rsvp !== ATTENDING_STATUS.GOING}
           size="md"
         />
       </View>
@@ -181,11 +187,6 @@ export default function Event({ event, onActionPress }: Props): React$Node {
     ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
     ...common,
   };
-  const communitiesMembers = event.atendees_communities.reduce(
-    (acc, community) => [...acc, ...community.members],
-    []
-  );
-  const atendees = [...event.atendees_contacts, ...communitiesMembers];
 
   return (
     <View style={styles.container}>
@@ -216,13 +217,10 @@ export default function Event({ event, onActionPress }: Props): React$Node {
           ))}
         </View>
         <AvatarGroup
-          imageURIs={atendees
-            .map(
-              (atendee: Object): string =>
-                atendee.thumbnailPath || atendee.profile_photo
-            )
-            .filter((path: string): boolean => !!path)}
-          title={(more: number): string => `+${more}`}
+          imageURIs={[...event.profile_photos, '']}
+          title={(more: number): string =>
+            `+${event.total_attendees_count -
+              (event.profile_photos || []).length}`}
         />
       </View>
     </View>

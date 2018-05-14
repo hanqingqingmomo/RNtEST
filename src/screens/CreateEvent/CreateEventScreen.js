@@ -42,13 +42,13 @@ type State = {
   busy: boolean,
 };
 
-type RequestCommunity = {
+type PayloadCommunity = {
   id: string,
   everyone: boolean,
   members: ?Array<string>,
 };
 
-type RequestContact = {
+type PayloadContact = {
   email: ?string,
   first_name: string,
   last_name: string,
@@ -64,10 +64,10 @@ type CreateEventPayload = {
   post_in: Array<string>,
   start: Date,
   end: Date,
-  presenters_communities: Array<RequestCommunity>,
-  presenters_contacts: Array<RequestContact>,
-  attendees_communities: Array<RequestCommunity>,
-  attendees_contacts: Array<RequestContact>,
+  presenters_communities: Array<PayloadCommunity>,
+  presenters_contacts: Array<PayloadContact>,
+  attendees_communities: Array<PayloadCommunity>,
+  attendees_contacts: Array<PayloadContact>,
   privacy: 'public' | 'private',
   webinar: boolean,
   enable_survey: boolean,
@@ -124,11 +124,11 @@ const IMAGE_PICKER_OPTIONS = {
   },
 };
 
-function _renderInput({ name, placeholder, error }) {
+function _renderInput({ name, placeholder, error }): React$Node {
   return (
     <FormField
       name={name}
-      render={({ field, form }) => {
+      render={({ field, form }): React$Node => {
         return (
           <TextInput
             value={field.value}
@@ -146,7 +146,10 @@ function _renderInput({ name, placeholder, error }) {
   );
 }
 
-function _renderPills(commuities: Array<Object>, max: number): React$Node {
+function _renderPills(
+  commuities: Array<Object>,
+  max: number
+): Array<React$Node> {
   const comms = [...commuities];
   comms.splice(0 + max);
 
@@ -168,10 +171,12 @@ function _renderPills(commuities: Array<Object>, max: number): React$Node {
 }
 
 function prepareCommunities(
-  commuities: Array<Community & RequestCommunity>
-): Array<RequestCommunity> {
+  commuities: Array<Community & PayloadCommunity & { members: Array<User> }>
+): Array<PayloadCommunity> {
   return commuities.map(
-    (commuity: Community & RequestCommunity): RequestCommunity => ({
+    (
+      commuity: Community & PayloadCommunity & { members: Array<User> }
+    ): PayloadCommunity => ({
       id: commuity.id,
       everyone: commuity.everyone,
       members: commuity.everyone
@@ -181,8 +186,8 @@ function prepareCommunities(
   );
 }
 
-function prepareContacts(contacts: Array<Contact>): Array<RequestContact> {
-  return contacts.map((contact: Contact): RequestContact => {
+function prepareContacts(contacts: Array<Contact>): Array<PayloadContact> {
+  return contacts.map((contact: Contact): PayloadContact => {
     const emails = contact.emailAddresses;
     const phones = contact.phoneNumbers;
 
@@ -301,12 +306,12 @@ export default class CreateEventScreen extends Component<Props, State> {
     }
   };
 
-  _keyExtractor(item: Community | Contact): string {
+  _keyExtractor(item: Community & Contact): string {
     return item.id || item.recordID;
   }
 
   _renderInviteItem(formik, key: 'presenters' | 'contacts') {
-    return ({ item }: { item: Community | Contact }) =>
+    return ({ item }: { item: Community & Contact }) =>
       item.id ? (
         <CommunityPreview
           {...item}
@@ -601,12 +606,12 @@ export default class CreateEventScreen extends Component<Props, State> {
                 </TableView.Section>
               </TableView.Table>
 
-              <TableView.Section>
+              {/* <TableView.Section>
                 <TableView.Cell
                   title="Delete event"
                   titleTextColor={getColor('red')}
                 />
-              </TableView.Section>
+              </TableView.Section> */}
             </Screen>
           );
         }}
