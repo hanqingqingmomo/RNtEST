@@ -105,6 +105,14 @@ const INITIAL_VALUES = {
   presenters_contacts: [],
 };
 
+const RULES = {
+  community_id: 'required',
+  name: 'required',
+  description: 'required',
+  location: 'required',
+  post_in: 'required|array',
+};
+
 const IMAGE_PICKER_OPTIONS = {
   title: 'Choose Photo',
   takePhotoButtonTitle: 'Take Photo',
@@ -116,7 +124,7 @@ const IMAGE_PICKER_OPTIONS = {
   },
 };
 
-function _renderInput({ name, placeholder }) {
+function _renderInput({ name, placeholder, error }) {
   return (
     <FormField
       name={name}
@@ -125,7 +133,7 @@ function _renderInput({ name, placeholder }) {
           <TextInput
             value={field.value}
             placeholder={placeholder}
-            placeholderTextColor={getColor('gray')}
+            placeholderTextColor={error ? getColor('red') : getColor('gray')}
             onChangeText={(text: string) => {
               form.setFieldValue(field.name, text);
             }}
@@ -202,6 +210,7 @@ function prepareSubmitData(values: Object): CreateEventPayload {
   values.presenters_contacts = prepareContacts(values.presenters_contacts);
   values.attendees_contacts = prepareContacts(values.attendees_contacts);
   values.post_in = preparePostIn(values.post_in);
+  values.community_id = values.post_in[0];
 
   return values;
 }
@@ -218,21 +227,24 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   _onSubmit = async (values: Object) => {
-    const data: CreateEventPayload = prepareSubmitData({ ...values });
-
     this.setState({ busy: true });
 
-    try {
-      const response = await createEvent(data);
-
-      console.log(response);
-    } catch (err) {
-    } finally {
-      this.setState({ busy: false });
-    }
+    const data: CreateEventPayload = prepareSubmitData({ ...values });
 
     if (__DEV__) {
       console.log('[Create Event] submit', data);
+    }
+
+    try {
+      await createEvent(data);
+
+      this.props.screenProps.dismissModalRoute();
+    } catch (err) {
+      this.setState({ busy: false });
+
+      if (__DEV__) {
+        console.log('[Create Event] submit error', err.message);
+      }
     }
   };
 
@@ -333,6 +345,7 @@ export default class CreateEventScreen extends Component<Props, State> {
     ) : (
       <Form
         initialValues={INITIAL_VALUES}
+        rules={RULES}
         validateOnChange
         onSubmit={this._onSubmit}
         render={formik => {
@@ -352,6 +365,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                     cellContentView={_renderInput({
                       name: 'name',
                       placeholder: 'Title',
+                      error: formik.errors.name,
                     })}
                     cellAccessoryView={
                       <PhotoButton
@@ -366,7 +380,11 @@ export default class CreateEventScreen extends Component<Props, State> {
                       ''
                     )}
                     titleTextColor={
-                      formik.values.description ? '#455A64' : getColor('gray')
+                      formik.errors.description
+                        ? getColor('red')
+                        : formik.values.description
+                          ? '#455A64'
+                          : getColor('gray')
                     }
                     onPress={() => this._onCellPress('description', formik)}
                   />
@@ -377,7 +395,11 @@ export default class CreateEventScreen extends Component<Props, State> {
                     cellStyle="RightDetail"
                     title="Location"
                     detail={formik.values.location}
-                    titleTextColor={getColor('gray')}
+                    titleTextColor={
+                      formik.errors.location
+                        ? getColor('red')
+                        : getColor('gray')
+                    }
                     rightDetailColor="#455A64"
                     onPress={() => this._onCellPress('location', formik)}
                   />
@@ -387,7 +409,11 @@ export default class CreateEventScreen extends Component<Props, State> {
                         style={[css('flex', 1), css('flexDirection', 'row')]}
                       >
                         <Text
-                          color={getColor('gray')}
+                          color={
+                            formik.errors.post_in
+                              ? getColor('red')
+                              : getColor('gray')
+                          }
                           style={[css('flex', 1), css('paddingRight', 1)]}
                         >
                           Post in
