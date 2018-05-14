@@ -20,6 +20,10 @@
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
     "apisauce": "^0.14.1",
+    "appcenter": "^1.5.0",
+    "appcenter-analytics": "^1.5.0",
+    "appcenter-crashes": "^1.5.0",
+    "appcenter-push": "^1.5.0",
     "card-validator": "^4.1.1",
     "color": "^2.0.0",
     "date-fns": "^1.28.5",
