@@ -46,6 +46,8 @@ export type EventProps = {
   title: string,
   total_attendees_count: number,
   webinar?: boolean,
+  is_author: boolean,
+  author_id: string,
 };
 
 type Props = {
@@ -130,15 +132,17 @@ function _renderWebinar({ event, palette, onActionPress }): React$Node {
       <Text style={styles.liveLabel} color="white" size={13} weight="bold">
         Live
       </Text>
-      <Button
-        disabled={pastEvent || event.current_user_rsvp === 'going'}
-        color={palette.joinButton.color}
-        onPress={() => onActionPress('going')}
-        size="md"
-        textColor={palette.joinButton.text}
-        title="Join"
-        style={styles.buttonJoin}
-      />
+      {event.is_author ? null : (
+        <Button
+          disabled={pastEvent || event.current_user_rsvp === 'going'}
+          color={palette.joinButton.color}
+          onPress={() => onActionPress('going')}
+          size="md"
+          textColor={palette.joinButton.text}
+          title="Join"
+          style={styles.buttonJoin}
+        />
+      )}
     </View>
   );
 }
@@ -153,31 +157,33 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
       <Text color="gray" size={13} lineHeight={15}>
         {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
       </Text>
-      <View style={styles.alignment}>
-        <Button.Icon
-          color={event.current_user_rsvp ? notGoingButton.color : '#B0BEC5'}
-          disabled={pastEvent}
-          iconColor={
-            event.current_user_rsvp ? notGoingButton.iconColor : '#B0BEC5'
-          }
-          iconName="close"
-          onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
-          outline={event.current_user_rsvp !== ATTENDING_STATUS.NOT_GOING}
-          size="md"
-          style={css('paddingRight', 12)}
-        />
-        <Button.Icon
-          color={event.current_user_rsvp ? goingButton.color : '#B0BEC5'}
-          disabled={pastEvent}
-          iconColor={
-            event.current_user_rsvp ? goingButton.iconColor : '#B0BEC5'
-          }
-          iconName="check"
-          onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
-          outline={event.current_user_rsvp !== ATTENDING_STATUS.GOING}
-          size="md"
-        />
-      </View>
+      {event.is_author ? null : (
+        <View style={styles.alignment}>
+          <Button.Icon
+            color={event.current_user_rsvp ? notGoingButton.color : '#B0BEC5'}
+            disabled={pastEvent}
+            iconColor={
+              event.current_user_rsvp ? notGoingButton.iconColor : '#B0BEC5'
+            }
+            iconName="close"
+            onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
+            outline={event.current_user_rsvp !== ATTENDING_STATUS.NOT_GOING}
+            size="md"
+            style={css('paddingRight', 12)}
+          />
+          <Button.Icon
+            color={event.current_user_rsvp ? goingButton.color : '#B0BEC5'}
+            disabled={pastEvent}
+            iconColor={
+              event.current_user_rsvp ? goingButton.iconColor : '#B0BEC5'
+            }
+            iconName="check"
+            onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
+            outline={event.current_user_rsvp !== ATTENDING_STATUS.GOING}
+            size="md"
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -193,7 +199,7 @@ export default function Event({
     ...common,
   };
 
-  return (
+  return event.webinar ? null : (
     <View style={styles.container}>
       <TouchableOpacity disabled={pastEvent} onPress={() => onPress(event.id)}>
         <Text
