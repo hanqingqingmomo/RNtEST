@@ -108,7 +108,7 @@ const INITIAL_VALUES = {
 
 const RULES = {
   community_id: 'required',
-  name: 'required',
+  title: 'required',
   description: 'required',
   location: 'required',
   post_in: 'required|array',
@@ -369,9 +369,9 @@ export default class CreateEventScreen extends Component<Props, State> {
                 <TableView.Section sectionPaddingTop={0}>
                   <TableView.Cell
                     cellContentView={_renderInput({
-                      name: 'name',
+                      name: 'title',
                       placeholder: 'Title',
-                      error: formik.errors.name,
+                      error: formik.errors.title,
                     })}
                     cellAccessoryView={
                       <PhotoButton
