@@ -131,11 +131,7 @@ function _renderWebinar({ event, palette, onActionPress }): React$Node {
         Live
       </Text>
       <Button
-        disabled={
-          pastEvent ||
-          !event.current_user_rsvp ||
-          event.current_user_rsvp === 'going'
-        }
+        disabled={pastEvent || event.current_user_rsvp === 'going'}
         color={palette.joinButton.color}
         onPress={() => onActionPress('going')}
         size="md"
@@ -198,8 +194,8 @@ export default function Event({
   };
 
   return (
-    <TouchableOpacity disabled={pastEvent} onPress={() => onPress(event.id)}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <TouchableOpacity disabled={pastEvent} onPress={() => onPress(event.id)}>
         <Text
           style={css('color', palette.titleColor)}
           fontSize={13}
@@ -210,34 +206,34 @@ export default function Event({
         >
           {event.title}
         </Text>
+      </TouchableOpacity>
 
-        {!event.webinar
-          ? _renderWebinar({ event, palette, onActionPress })
-          : _renderEvent({ event, palette, onActionPress })}
+      {event.webinar
+        ? _renderWebinar({ event, palette, onActionPress })
+        : _renderEvent({ event, palette, onActionPress })}
 
-        <View style={styles.alignment}>
-          <View style={styles.pillWrapper}>
-            {event.post_in.map((post: PostProps): React$Node => (
-              <Pill
-                key={post.id}
-                color={palette.pillTextColor}
-                title={post.name}
-                truncate
-              />
-            ))}
-          </View>
-          {event.profile_photos.length ? (
-            <AvatarGroup
-              imageURIs={[...event.profile_photos, '']}
-              count={5}
-              title={(more: number): string =>
-                `+${event.total_attendees_count -
-                  (event.profile_photos || []).length}`}
+      <View style={styles.alignment}>
+        <View style={styles.pillWrapper}>
+          {event.post_in.map((post: PostProps): React$Node => (
+            <Pill
+              key={post.id}
+              color={palette.pillTextColor}
+              title={post.name}
+              truncate
             />
-          ) : null}
+          ))}
         </View>
+        {event.profile_photos.length ? (
+          <AvatarGroup
+            imageURIs={[...event.profile_photos, '']}
+            count={5}
+            title={(more: number): string =>
+              `+${event.total_attendees_count -
+                (event.profile_photos || []).length}`}
+          />
+        ) : null}
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 
