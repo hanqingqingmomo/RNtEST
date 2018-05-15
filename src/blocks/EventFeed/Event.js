@@ -114,13 +114,16 @@ const common = {
   },
 };
 
-function _renderWebinar({ palette, onActionPress }): React$Node {
+function _renderWebinar({ event, palette, onActionPress }): React$Node {
+  const pastEvent = isPast(event.start);
+
   return (
     <View style={[styles.midSection, styles.alignment]}>
       <Text style={styles.liveLabel} color="white" size={13} weight="bold">
         Live
       </Text>
       <Button
+        disabled={pastEvent}
         color={palette.joinButton.color}
         onPress={() => onActionPress('join')}
         size="md"
@@ -202,7 +205,7 @@ export default function Event({ event, onActionPress }: Props): React$Node {
       </Text>
 
       {event.webinar
-        ? _renderWebinar({ palette, onActionPress })
+        ? _renderWebinar({ event, palette, onActionPress })
         : _renderEvent({ event, palette, onActionPress })}
 
       <View style={styles.alignment}>
