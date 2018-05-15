@@ -118,6 +118,10 @@ export default class TabAbout extends Component<Props, State> {
   parsePresenters = (): Array<User> => {
     const { presenters_contacts, presenters_communities } = this.props;
 
+    if (!presenters_contacts || !presenters_communities) {
+      return [];
+    }
+
     return [
       ...presenters_contacts.map((contact: Contact): User => ({
         id: contact.recordID,
@@ -149,8 +153,9 @@ export default class TabAbout extends Component<Props, State> {
           ) : null}
 
           <Text size={14} lineHeight={18} color="#455A64" style={styles.text}>
-            {parseTextContent(description, 80)}
+            {parseTextContent(description || '', 80)}
           </Text>
+
           <ContactGroup
             users={this.parsePresenters()}
             onContactSelect={this._onContactSelect}
@@ -166,9 +171,11 @@ export default class TabAbout extends Component<Props, State> {
             />
           </View>
 
-          <View style={css('paddingVertical', 20)}>
-            <CommentList replies={replies} onRequestReply={this._onReply} />
-          </View>
+          {replies && replies.length ? (
+            <View style={css('paddingVertical', 20)}>
+              <CommentList replies={replies} onRequestReply={this._onReply} />
+            </View>
+          ) : null}
         </ScrollView>
 
         <CommentInput

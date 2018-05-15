@@ -17,10 +17,6 @@ import { css } from '../../utils/style';
 import type { Community } from '../../Types';
 import { acceptEvent, getEvent } from '../../utils/requestFactory';
 
-const EVENT = {
-  id: 'eb5905ecb542',
-};
-
 type Props = {
   navigation: any,
 };
@@ -46,7 +42,9 @@ export default class EventDetailScreen extends Component<Props, State> {
     this.setState({ busy: true });
 
     try {
-      const { data } = await getEvent(EVENT.id);
+      const { data } = await getEvent(
+        this.props.navigation.state.params.event_id
+      );
 
       if (__DEV__) {
         console.log('[Event detail] fetch', data);
@@ -102,7 +100,7 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   render() {
-    const { busy } = this.state;
+    const { busy, event } = this.state;
 
     return busy ? (
       <CenterView>
@@ -118,12 +116,12 @@ export default class EventDetailScreen extends Component<Props, State> {
             {
               label: 'About',
               component: () => (
-                <TabAbout {...EVENT} onActionPress={this._onActionPress} />
+                <TabAbout {...event} onActionPress={this._onActionPress} />
               ),
             },
             {
               label: `Participants (${this.computePaticipantsCount()})`,
-              component: () => <TabEventParticipants {...EVENT} />,
+              component: () => <TabEventParticipants {...event} />,
             },
             // {
             //   label: `Files`,
