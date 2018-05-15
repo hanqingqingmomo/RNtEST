@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 
 import {
-  Screen,
   Tabs,
   View,
   EventHeader,
@@ -15,7 +14,11 @@ import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
 import { css } from '../../utils/style';
 import type { Community } from '../../Types';
-import { acceptEvent, getEvent } from '../../utils/requestFactory';
+import {
+  acceptEvent,
+  getEvent,
+  createEventCommnet,
+} from '../../utils/requestFactory';
 
 type Props = {
   navigation: any,
@@ -67,15 +70,15 @@ export default class EventDetailScreen extends Component<Props, State> {
   computePaticipantsCount = (): number => {
     const { event } = this.state;
 
-    return event.atendees_communities && event.atendees_contacts
-      ? event.atendees_communities.reduce(
+    return event.attendees_communities && event.attendees_contacts
+      ? event.attendees_communities.reduce(
           (acc: number, community: Community) => {
             acc += (community.members || []).length;
 
             return acc;
           },
           0
-        ) + event.atendees_contacts.length
+        ) + event.attendees_contacts.length
       : 0;
   };
 
@@ -91,10 +94,26 @@ export default class EventDetailScreen extends Component<Props, State> {
         console.log('[Event detail] accept', data);
       }
     } catch (err) {
-      if (__DEV__) {
-        console.log('[Event detail] accept error', err.message);
-      }
+      global.alertWithType('error', 'Oppps!', err.message);
+    }
+  };
 
+  _onCreateComment = async (id, value: string) => {
+    const { event } = this.state;
+
+    if (!event.replies) {
+      event.replies = [];
+    }
+
+    try {
+      const { data } = await createEventCommnet(id, value);
+
+      event.replies.push(data);
+
+      if (__DEV__) {
+        console.log('[Event detail] create comment', event.replies);
+      }
+    } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     }
   };
@@ -116,7 +135,11 @@ export default class EventDetailScreen extends Component<Props, State> {
             {
               label: 'About',
               component: () => (
-                <TabAbout {...event} onActionPress={this._onActionPress} />
+                <TabAbout
+                  {...event}
+                  onActionPress={this._onActionPress}
+                  onCreateComment={this._onCreateComment}
+                />
               ),
             },
             {

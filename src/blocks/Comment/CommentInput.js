@@ -14,6 +14,9 @@ type Props = {
   target: { id: string, type: 'post' } | Comment,
   onReplyCancel: Function,
   passRef: Function,
+  type?: 'comment' | 'event',
+  createComment: typeof createComment,
+  onCreateComment: Function,
 };
 
 type State = {
@@ -60,8 +63,14 @@ class CommentInput extends Component<Props, State> {
   };
 
   handleSubmit = () => {
-    // TODO move to parent
-    this.props.createComment(this.props.target.id, this.state.value);
+    const { target, type } = this.props;
+
+    if (type === 'event') {
+      this.props.onCreateComment(target.id, this.state.value);
+    } else {
+      // TODO move to parent
+      this.props.createComment(target.id, this.state.value);
+    }
   };
 
   renderReplyIndicator = () => {

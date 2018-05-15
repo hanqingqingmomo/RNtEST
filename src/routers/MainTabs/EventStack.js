@@ -9,5 +9,8 @@ export default StackNavigator({
   },
   EventDetailScreen: {
     screen: EventDetailScreen,
+    navigationOptions: {
+      headerTitle: 'Event',
+    },
   },
 });

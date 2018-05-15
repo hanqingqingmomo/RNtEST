@@ -29,6 +29,7 @@ type Props = {
   replies: Array<Comment>,
   id: string,
   onActionPress: Function,
+  onCreateComment: Function,
 };
 
 type State = {
@@ -152,24 +153,28 @@ export default class TabAbout extends Component<Props, State> {
             <LiveEventButton />
           ) : null}
 
-          <Text size={14} lineHeight={18} color="#455A64" style={styles.text}>
-            {parseTextContent(description || '', 80)}
-          </Text>
+          {description ? (
+            <Text size={14} lineHeight={18} color="#455A64" style={styles.text}>
+              {parseTextContent(description, 80)}
+            </Text>
+          ) : null}
 
           <ContactGroup
             users={this.parsePresenters()}
             onContactSelect={this._onContactSelect}
           />
 
-          <View style={styles.segmentedWrapper}>
-            <SegmentedControl
-              labels={['Top comments', 'Newest first']}
-              selectedLabel={this.state.commentType}
-              onChange={(commentType: CommentType) => {
-                this.setState({ commentType });
-              }}
-            />
-          </View>
+          {replies && replies.length ? (
+            <View style={styles.segmentedWrapper}>
+              <SegmentedControl
+                labels={['Top comments', 'Newest first']}
+                selectedLabel={this.state.commentType}
+                onChange={(commentType: CommentType) => {
+                  this.setState({ commentType });
+                }}
+              />
+            </View>
+          ) : null}
 
           {replies && replies.length ? (
             <View style={css('paddingVertical', 20)}>
@@ -180,10 +185,10 @@ export default class TabAbout extends Component<Props, State> {
 
         <CommentInput
           target={replyingTo || { id, type: 'event' }}
-          postId={id}
-          replyingTo={replyingTo}
+          type="event"
           onReplyCancel={this._onReplyCancel}
           passRef={this.passRef}
+          onCreateComment={this.props.onCreateComment}
         />
       </View>
     );

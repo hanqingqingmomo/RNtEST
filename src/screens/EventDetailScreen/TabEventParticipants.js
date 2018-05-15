@@ -41,16 +41,34 @@ const attendanceStatus: { [key: RSVPStatuses]: Object } = {
 
 const ICON_WIDTH = 28;
 
-type Props = {
-  event: Object,
-};
+type Props = Object;
 
 export default class TabEventMembers extends Component<Props> {
   static navigationOptions = {
     tabBarLabel: 'Participants',
   };
 
-  keyExtractor = (item: User): string => item.id;
+  get participants(): Array<User> {
+    const { attendees_communities, attendees_contacts } = this.props;
+
+    if (!attendees_communities || !attendees_contacts) {
+      return [];
+    }
+
+    return [
+      ...attendees_contacts.map((contact: Contact): User => ({
+        id: contact.recordID,
+        first_name: contact.givenName,
+        last_name: contact.familyName,
+        profile_photo: contact.thumbnailPath,
+        disabled: true,
+        rsvp: contact.rsvp,
+      })),
+      ...attendees_communities.reduce((acc: Array<*>, communuty: Community) => {
+        return [...acc, ...communuty.members];
+      }, []),
+    ];
+  }
 
   renderItem = ({
     item,
@@ -63,7 +81,7 @@ export default class TabEventMembers extends Component<Props> {
       titleTextColor="#455A64"
       cellImageView={
         <View style={[css('marginBottom', 6), css('marginRight', 21)]}>
-          <Avatar imageURI={item.profile_photo} size={36} />
+          <Avatar source={{ uri: item.profile_photo }} size={36} />
           <View
             style={[
               styles.iconAccessory,
@@ -105,24 +123,6 @@ export default class TabEventMembers extends Component<Props> {
     );
   };
 
-  get participants(): Array<User> {
-    const { atendees_communities, atendees_contacts } = this.props;
-
-    return [
-      ...atendees_contacts.map((contact: Contact): User => ({
-        id: contact.recordID,
-        first_name: contact.givenName,
-        last_name: contact.familyName,
-        profile_photo: contact.thumbnailPath,
-        disabled: true,
-        rsvp: contact.rsvp,
-      })),
-      ...atendees_communities.reduce((acc: Array<*>, communuty: Community) => {
-        return [...acc, ...communuty.members];
-      }, []),
-    ];
-  }
-
   render() {
     return (
       <Screen fill>
@@ -136,7 +136,7 @@ export default class TabEventMembers extends Component<Props> {
         >
           <FlatList
             data={this.participants}
-            keyExtractor={this.keyExtractor}
+            keyExtractor={(item: User): string => item.id}
             renderItem={this.renderItem}
             ItemSeparatorComponent={() => <Separator />}
           />
