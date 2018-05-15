@@ -103,6 +103,7 @@ const INITIAL_VALUES = {
   attendees_contacts: [],
   presenters_communities: [],
   presenters_contacts: [],
+  webinar: false,
 };
 
 const RULES = {
