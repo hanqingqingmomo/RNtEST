@@ -108,7 +108,7 @@ export default class EventDetailScreen extends Component<Props, State> {
       </CenterView>
     ) : (
       <View style={css('flex', 1)}>
-        <EventHeader {...EVENT} />
+        <EventHeader {...event} />
         <Tabs
           activeItem={this.state.activeTab}
           onChange={this.changeActiveTab}

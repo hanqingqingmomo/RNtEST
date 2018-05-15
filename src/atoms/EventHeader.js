@@ -71,7 +71,7 @@ export default function EventHeader({
         </View>
 
         <View style={css('flexDirection', 'row')}>
-          {post_in.map((community: Community) => (
+          {(post_in || []).map((community: Community) => (
             <Pill
               key={community.id}
               color={getColor('white')}
