@@ -40,7 +40,6 @@ export default class EventFeedScreen extends React.Component<
   }
 
   fetch = async () => {
-    console.log('fetch');
     try {
       const { data } = await getEvents(this.state.searchValue);
 
