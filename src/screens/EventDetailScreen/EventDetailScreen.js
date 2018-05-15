@@ -18,6 +18,7 @@ import {
   acceptEvent,
   getEvent,
   createEventCommnet,
+  RQCreateComment,
 } from '../../utils/requestFactory';
 
 type Props = {
@@ -110,13 +111,27 @@ export default class EventDetailScreen extends Component<Props, State> {
     }
 
     try {
-      const { data } = await createEventCommnet(id, value);
+      const { data } = await (id === event.id
+        ? createEventCommnet(id, value)
+        : RQCreateComment(id, value));
 
-      event.replies.push(data);
+      if (id === event.id) {
+        event.replies.push(data);
+      } else {
+        event.replies.map((reply: Object) => {
+          if (id === reply.id) {
+            reply.replies.push(data);
+          }
+
+          return reply;
+        });
+      }
 
       if (__DEV__) {
         console.log('[Event detail] create comment', event.replies);
       }
+
+      this.setState({ event });
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     }
