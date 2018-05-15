@@ -128,7 +128,11 @@ export default class EventFeedScreen extends React.Component<
 
         {events.length ? (
           <View style={styles.container}>
-            <EventFeed data={events} onActionPress={this._onActionPress} />
+            <EventFeed
+              data={events}
+              onActionPress={this._onActionPress}
+              navigation={this.props.navigation}
+            />
           </View>
         ) : null}
       </ScrollView>

@@ -5,7 +5,14 @@ import { StyleSheet } from 'react-native';
 import format from 'date-fns/format';
 import isPast from 'date-fns/is_past';
 
-import { AvatarGroup, Button, Pill, Text, View } from '../../atoms';
+import {
+  AvatarGroup,
+  Button,
+  Pill,
+  Text,
+  View,
+  TouchableOpacity,
+} from '../../atoms';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 
@@ -44,6 +51,7 @@ export type EventProps = {
 type Props = {
   onActionPress: RSVPStatus => void,
   event: EventProps,
+  onPress: Function,
 };
 
 const palettes = {
@@ -178,7 +186,11 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
   );
 }
 
-export default function Event({ event, onActionPress }: Props): React$Node {
+export default function Event({
+  event,
+  onActionPress,
+  onPress,
+}: Props): React$Node {
   const pastEvent = isPast(event.start);
   const palette = {
     ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
@@ -186,44 +198,46 @@ export default function Event({ event, onActionPress }: Props): React$Node {
   };
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={css('color', palette.titleColor)}
-        fontSize={13}
-        weight="500"
-        lineHeight={16}
-        numberOfLines={2}
-        ellipsizeMode="tail"
-      >
-        {event.title}
-      </Text>
+    <TouchableOpacity disabled={pastEvent} onPress={() => onPress(event.id)}>
+      <View style={styles.container}>
+        <Text
+          style={css('color', palette.titleColor)}
+          fontSize={13}
+          weight="500"
+          lineHeight={16}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {event.title}
+        </Text>
 
-      {!event.webinar
-        ? _renderWebinar({ event, palette, onActionPress })
-        : _renderEvent({ event, palette, onActionPress })}
+        {!event.webinar
+          ? _renderWebinar({ event, palette, onActionPress })
+          : _renderEvent({ event, palette, onActionPress })}
 
-      <View style={styles.alignment}>
-        <View style={styles.pillWrapper}>
-          {event.post_in.map((post: PostProps): React$Node => (
-            <Pill
-              key={post.id}
-              color={palette.pillTextColor}
-              title={post.name}
-              truncate
+        <View style={styles.alignment}>
+          <View style={styles.pillWrapper}>
+            {event.post_in.map((post: PostProps): React$Node => (
+              <Pill
+                key={post.id}
+                color={palette.pillTextColor}
+                title={post.name}
+                truncate
+              />
+            ))}
+          </View>
+          {event.profile_photos.length ? (
+            <AvatarGroup
+              imageURIs={[...event.profile_photos, '']}
+              count={5}
+              title={(more: number): string =>
+                `+${event.total_attendees_count -
+                  (event.profile_photos || []).length}`}
             />
-          ))}
+          ) : null}
         </View>
-        {event.profile_photos.length ? (
-          <AvatarGroup
-            imageURIs={[...event.profile_photos, '']}
-            count={5}
-            title={(more: number): string =>
-              `+${event.total_attendees_count -
-                (event.profile_photos || []).length}`}
-          />
-        ) : null}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

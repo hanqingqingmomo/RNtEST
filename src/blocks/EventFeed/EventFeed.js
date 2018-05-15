@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import format from 'date-fns/format';
+import type { NavigationScreenConfigProps } from 'react-navigation';
 
 import Event, { type EventProps } from './Event';
 import { View, DateCard, FlatList } from '../../atoms';
@@ -17,6 +18,7 @@ type EventGroup = { [date: string]: Array<EventProps> };
 type Props = {
   data: Array<EventProps>,
   onActionPress: (action: string, event_id: string) => void,
+  navigation: NavigationScreenConfigProps,
 };
 
 function Line() {
@@ -64,6 +66,10 @@ export default class EventFeed extends Component<Props> {
       }, {});
   }
 
+  _navigateToDetail = (event_id: string) => {
+    this.props.navigation.navigate('EventDetailScreen', event_id);
+  };
+
   _renderItem = ({ item }: FlatListItemProps) => {
     const events = this.events[item];
     const hasWebinar = events.some(
@@ -86,6 +92,7 @@ export default class EventFeed extends Component<Props> {
                   this.props.onActionPress(action, item.id);
                 }}
                 event={item}
+                onPress={this._navigateToDetail}
               />
             )}
             keyExtractor={(event: EventProps): string => event.id}
