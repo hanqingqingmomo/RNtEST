@@ -295,7 +295,7 @@ export const updateEvent = (event_id: string, data: Object) =>
 export const deleteEvent = (event_id: string) =>
   api.delete(`/event/${event_id}`);
 
-export const getEvent = (event_id: string, sortComments: string) =>
+export const getEvent = (event_id: string, sortComments?: string) =>
   api.get(`/event/${event_id}?sortComments=${sortComments || 'chronological'}`);
 
 export const getEvents = (query?: string, cursor?: string, limit?: string) =>

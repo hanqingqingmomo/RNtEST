@@ -28,6 +28,7 @@ type Props = {
   description: string,
   replies: Array<Comment>,
   id: string,
+  onActionPress: Function,
 };
 
 type State = {
@@ -50,7 +51,7 @@ const LiveEventButton = () => (
   </View>
 );
 
-const FutureEventButtons = () => (
+const FutureEventButtons = ({ onPress }) => (
   <View style={styles.going}>
     <Text>Are you going?</Text>
     <View style={styles.buttonsWrapper}>
@@ -61,12 +62,14 @@ const FutureEventButtons = () => (
         outline
         size="md"
         style={css('paddingRight', 12)}
+        onPress={() => onPress('not_going')}
       />
       <Button.Icon
         color={getColor('green')}
         iconColor={getColor('white')}
         iconName="check"
         size="md"
+        onPress={() => onPress('going')}
       />
     </View>
   </View>
@@ -133,14 +136,14 @@ export default class TabAbout extends Component<Props, State> {
   };
 
   render() {
-    const { start, end, description, replies, id } = this.props;
+    const { start, end, description, replies, id, onActionPress } = this.props;
     const { replyingTo } = this.state;
 
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
         <ScrollView>
           {isBefore(new Date(), start) ? (
-            <FutureEventButtons />
+            <FutureEventButtons onPress={onActionPress} />
           ) : isBefore(new Date(), end) ? (
             <LiveEventButton />
           ) : null}

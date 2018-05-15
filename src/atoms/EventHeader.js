@@ -12,7 +12,7 @@ import { css } from '../utils/style';
 import type { Community } from '../Types';
 
 type Props = {
-  name: string,
+  title: string,
   cover_photo: string,
   start: Date,
   end: Date,
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function EventHeader({
-  name,
+  title,
   cover_photo,
   start,
   end,
@@ -55,7 +55,7 @@ export default function EventHeader({
             size={20}
             style={css('marginBottom', 6)}
           >
-            {name}
+            {title}
           </Text>
           <Text
             color={getColor('white')}
