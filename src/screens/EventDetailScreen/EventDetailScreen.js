@@ -83,8 +83,22 @@ export default class EventDetailScreen extends Component<Props, State> {
 
   _onActionPress = async (status: 'going' | 'not_going') => {
     try {
-      await acceptEvent(this.state.event.id, status);
-    } catch (err) {}
+      const { data } = await acceptEvent(this.state.event.id, status);
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      if (__DEV__) {
+        console.log('[Event detail] accept', data);
+      }
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[Event detail] accept error', err.message);
+      }
+
+      global.alertWithType('error', 'Oppps!', err.message);
+    }
   };
 
   render() {

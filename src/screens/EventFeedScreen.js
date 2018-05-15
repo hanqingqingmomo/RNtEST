@@ -71,16 +71,26 @@ export default class EventFeedScreen extends React.Component<
 
   _onActionPress = async (action: string, id: string) => {
     try {
+      const { data } = await acceptEvent(id, action);
+
       if (__DEV__) {
-        console.log(`[Accept Event] event id: ${id}, action: ${action}`);
+        console.log(
+          `[Accept Event] event id: ${id}, action: ${action}, response: `,
+          data
+        );
       }
 
-      await acceptEvent(id, action);
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
       await this.fetch();
     } catch (err) {
       if (__DEV__) {
         console.log('[Accept Event] error', err.message);
       }
+
+      global.alertWithType('error', 'Oppps!', err.message);
     }
   };
 

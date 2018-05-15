@@ -42,7 +42,7 @@ export type EventProps = {
 };
 
 type Props = {
-  onActionPress: (RSVPStatus | 'join') => void,
+  onActionPress: RSVPStatus => void,
   event: EventProps,
 };
 
@@ -123,9 +123,13 @@ function _renderWebinar({ event, palette, onActionPress }): React$Node {
         Live
       </Text>
       <Button
-        disabled={pastEvent}
+        disabled={
+          pastEvent ||
+          !event.current_user_rsvp ||
+          event.current_user_rsvp === 'going'
+        }
         color={palette.joinButton.color}
-        onPress={() => onActionPress('join')}
+        onPress={() => onActionPress('going')}
         size="md"
         textColor={palette.joinButton.text}
         title="Join"
@@ -137,6 +141,8 @@ function _renderWebinar({ event, palette, onActionPress }): React$Node {
 
 function _renderEvent({ event, palette, onActionPress }): React$Node {
   const pastEvent = isPast(event.start);
+  const goingButton = palette[event.current_user_rsvp].goingButton;
+  const notGoingButton = palette[event.current_user_rsvp].notGoingButton;
 
   return (
     <View style={[styles.midSection, styles.alignment]}>
@@ -145,16 +151,10 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
       </Text>
       <View style={styles.alignment}>
         <Button.Icon
-          color={
-            event.current_user_rsvp
-              ? palette[event.current_user_rsvp].notGoingButton.color
-              : '#B0BEC5'
-          }
+          color={event.current_user_rsvp ? notGoingButton.color : '#B0BEC5'}
           disabled={pastEvent}
           iconColor={
-            event.current_user_rsvp
-              ? palette[event.current_user_rsvp].notGoingButton.iconColor
-              : '#B0BEC5'
+            event.current_user_rsvp ? notGoingButton.iconColor : '#B0BEC5'
           }
           iconName="close"
           onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
@@ -163,16 +163,10 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
           style={css('paddingRight', 12)}
         />
         <Button.Icon
-          color={
-            event.current_user_rsvp
-              ? palette[event.current_user_rsvp].goingButton.color
-              : '#B0BEC5'
-          }
+          color={event.current_user_rsvp ? goingButton.color : '#B0BEC5'}
           disabled={pastEvent}
           iconColor={
-            event.current_user_rsvp
-              ? palette[event.current_user_rsvp].goingButton.iconColor
-              : '#B0BEC5'
+            event.current_user_rsvp ? goingButton.iconColor : '#B0BEC5'
           }
           iconName="check"
           onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
@@ -204,7 +198,7 @@ export default function Event({ event, onActionPress }: Props): React$Node {
         {event.title}
       </Text>
 
-      {event.webinar
+      {!event.webinar
         ? _renderWebinar({ event, palette, onActionPress })
         : _renderEvent({ event, palette, onActionPress })}
 
