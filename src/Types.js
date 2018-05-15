@@ -52,6 +52,8 @@ export type LinkAttachment = {
   description: ?string,
 };
 
+export type RSVPStatuses = 'going' | 'pending' | 'not_going';
+
 export type CommunitySimple = {
   auto_join: boolean,
   categories: Array<*>,
@@ -73,6 +75,40 @@ export type User = {
   profile_photo: string,
   role?: string,
   joined_communities: Array<CommunitySimple>,
+};
+
+export type ContactEmailDetail = {
+  email: string,
+  label: string,
+};
+
+export type ContactPhoneDetail = {
+  label: string,
+  number: string,
+};
+
+export type ContactAddress = {
+  city: string,
+  country: string,
+  label: string,
+  postCode: string,
+  region: string,
+  state: string,
+  street: string,
+};
+
+export type Contact = {
+  company: string,
+  emailAddresses: Array<ContactEmailDetail>,
+  phoneNumbers: Array<ContactPhoneDetail>,
+  familyName: string,
+  givenName: string,
+  hasThumbnail: boolean,
+  jobTitle: string,
+  middleName: string,
+  recordID: string,
+  thumbnailPath: string,
+  postalAddresses: Array<ContactAddress>,
 };
 
 export type Comment = $Exact<{
