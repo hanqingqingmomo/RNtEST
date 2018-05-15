@@ -288,6 +288,12 @@ export const destroyContentObjectReq = (object: ContentObject) =>
  * Events
  */
 export const createEvent = (data: Object) => api.post('/event', data);
+export const updateEvent = (event_id: string, data: Object) =>
+  api.put(`/event/${event_id}`, data);
+export const deleteEvent = (event_id: string) =>
+  api.delete(`/event/${event_id}`);
+export const getEvent = (event_id: string, sortComments: string) =>
+  api.get(`/event/${event_id}?sortComments=${sortComments || 'chronological'}`);
 export const getEvents = (query?: string, cursor?: string, limit?: string) =>
   api.get(
     `/events?query=${query || ''}&cursor=${cursor || ''}&limit=${limit || ''}`
@@ -295,6 +301,8 @@ export const getEvents = (query?: string, cursor?: string, limit?: string) =>
 export const acceptEvent = (event_id: string, rsvp_status: string) =>
   api.post('/event/accept', { event_id, rsvp_status });
 export const recentLocations = () => api.get('/places/user');
+export const createEventCommnet = (event_id: string, text_content: string) =>
+  api.post(`/event/${event_id}/commnet`, { text_content });
 
 /**
  * News feed requests
