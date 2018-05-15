@@ -28,17 +28,17 @@ type PostProps = {
 };
 
 export type EventProps = {
+  current_user_rsvp: RSVPStatus,
+  end: Date,
   id: string,
-  name: string,
   location: string,
   post_in: Array<PostProps>,
-  start: Date,
-  end: Date,
-  current_user_rsvp: RSVPStatus,
   privacy: 'public' | 'private',
-  webinar?: boolean,
   profile_photos: Array<string>,
+  start: Date,
+  title: string,
   total_attendees_count: number,
+  webinar?: boolean,
 };
 
 type Props = {
@@ -198,7 +198,7 @@ export default function Event({ event, onActionPress }: Props): React$Node {
         numberOfLines={2}
         ellipsizeMode="tail"
       >
-        {event.name}
+        {event.title}
       </Text>
 
       {event.webinar
@@ -216,12 +216,14 @@ export default function Event({ event, onActionPress }: Props): React$Node {
             />
           ))}
         </View>
-        <AvatarGroup
-          imageURIs={[...event.profile_photos, '']}
-          title={(more: number): string =>
-            `+${event.total_attendees_count -
-              (event.profile_photos || []).length}`}
-        />
+        {event.profile_photos.length ? (
+          <AvatarGroup
+            imageURIs={[...event.profile_photos, '']}
+            title={(more: number): string =>
+              `+${event.total_attendees_count -
+                (event.profile_photos || []).length}`}
+          />
+        ) : null}
       </View>
     </View>
   );
