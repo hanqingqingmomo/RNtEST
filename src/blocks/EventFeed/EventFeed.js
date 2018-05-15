@@ -78,6 +78,7 @@ export default class EventFeed extends Component<Props> {
 
         <View style={styles.eventColumn}>
           <FlatList
+            scrollEnabled={false}
             data={events}
             renderItem={({ item }: { item: EventProps }) => (
               <Event
@@ -100,6 +101,7 @@ export default class EventFeed extends Component<Props> {
   render(): React$Node {
     return (
       <FlatList
+        scrollEnabled={false}
         data={Object.keys(this.events)}
         renderItem={this._renderItem}
         keyExtractor={this._keyExtractor}

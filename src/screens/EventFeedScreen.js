@@ -1,12 +1,12 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, RefreshControl } from 'react-native';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import plural from 'plural-parens';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 
-import { Screen, Text, View, CenterView, ActivityIndicator } from '../atoms';
+import { Text, View, ScrollView } from '../atoms';
 import { EventFeed } from '../blocks';
 import { getColor } from '../utils/color';
 import EventFeedHeader from './EventFeedScreen/EventFeedHeader';
@@ -36,12 +36,13 @@ export default class EventFeedScreen extends React.Component<
   };
 
   componentWillMount() {
-    this.fetch('aa');
+    this.fetch();
   }
 
-  fetch = async (query?: string) => {
+  fetch = async () => {
+    console.log('fetch');
     try {
-      const { data } = await getEvents(query);
+      const { data } = await getEvents(this.state.searchValue);
 
       if (__DEV__) {
         console.log('[Events] events', data.events);
@@ -59,7 +60,7 @@ export default class EventFeedScreen extends React.Component<
 
   _onChangeText = (searchValue: string) => {
     this.setState({ searchValue });
-    this.fetch(searchValue);
+    this.fetch();
   };
 
   _onCreateEvent = () => {
@@ -75,7 +76,7 @@ export default class EventFeedScreen extends React.Component<
       }
 
       await acceptEvent(id, action);
-      await this.fetch(this.state.searchValue);
+      await this.fetch();
     } catch (err) {
       if (__DEV__) {
         console.log('[Accept Event] error', err.message);
@@ -86,12 +87,16 @@ export default class EventFeedScreen extends React.Component<
   render(): React$Node {
     const { busy, events } = this.state;
 
-    return busy ? (
-      <CenterView>
-        <ActivityIndicator />
-      </CenterView>
-    ) : (
-      <Screen>
+    return (
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={busy}
+            onRefresh={this.fetch}
+            colors={[getColor('gray')]}
+          />
+        }
+      >
         <BlackPortal name={EVENT_FEED_ID}>
           <EventFeedHeader
             {...this.props}
@@ -116,7 +121,7 @@ export default class EventFeedScreen extends React.Component<
             <EventFeed data={events} onActionPress={this._onActionPress} />
           </View>
         ) : null}
-      </Screen>
+      </ScrollView>
     );
   }
 }
