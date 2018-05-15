@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import isBefore from 'date-fns/is_before';
+import isPast from 'date-fns/is_past';
 
 import {
   View,
@@ -16,11 +16,20 @@ import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { parseTextContent } from '../../utils/text';
 import { CommentList, CommentInput } from '../../blocks';
+import {
+  ATTENDING_STATUS,
+  common,
+  EVENT_STATUS,
+  palettes,
+  type RSVPStatus,
+} from '../../blocks/EventFeed/Event';
 import type { Comment, User, Contact, Community } from '../../Types';
 
 type CommentType = 'Top comments' | 'Newest first';
 
 type Props = {
+  webinar: boolean,
+  is_author: boolean,
   start: Date,
   end: Date,
   presenters_contacts: Array<Contact>,
@@ -28,8 +37,10 @@ type Props = {
   description: string,
   replies: Array<Comment>,
   id: string,
+  current_user_rsvp: RSVPStatus,
   onActionPress: Function,
   onCreateComment: Function,
+  onContactSelect: Function,
 };
 
 type State = {
@@ -37,44 +48,60 @@ type State = {
   replyingTo?: Comment,
 };
 
-const LiveEventButton = () => (
+type Presenter = User & { role: string };
+
+const LiveEventButton = ({ onPress, current_user_rsvp }) => (
   <View style={styles.join}>
     <View style={styles.joinButton}>
       <Button
         block
+        disabled={current_user_rsvp === ATTENDING_STATUS.GOING}
         title="Join Now!"
         size="lg"
         color={getColor('#00E676')}
         textColor="white"
-        onPress={() => {}}
+        onPress={() => onPress(ATTENDING_STATUS.GOING)}
       />
     </View>
   </View>
 );
 
-const FutureEventButtons = ({ onPress }) => (
-  <View style={styles.going}>
-    <Text>Are you going?</Text>
-    <View style={styles.buttonsWrapper}>
-      <Button.Icon
-        color={getColor('gray')}
-        iconColor={getColor('gray')}
-        iconName="close"
-        outline
-        size="md"
-        style={css('paddingRight', 12)}
-        onPress={() => onPress('not_going')}
-      />
-      <Button.Icon
-        color={getColor('green')}
-        iconColor={getColor('white')}
-        iconName="check"
-        size="md"
-        onPress={() => onPress('going')}
-      />
+const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
+  if (!current_user_rsvp) {
+    return null;
+  }
+  const pastEvent = isPast(start);
+  const palette = {
+    ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
+    ...common,
+  };
+  const goingButton = palette[current_user_rsvp].goingButton;
+  const notGoingButton = palette[current_user_rsvp].notGoingButton;
+
+  return (
+    <View style={styles.going}>
+      <Text>Are you going?</Text>
+      <View style={styles.buttonsWrapper}>
+        <Button.Icon
+          color={current_user_rsvp ? notGoingButton.color : getColor('gray')}
+          iconColor={getColor('gray')}
+          iconName="close"
+          outline
+          size="md"
+          style={css('paddingRight', 12)}
+          onPress={() => onPress(ATTENDING_STATUS.NOT_GOING)}
+        />
+        <Button.Icon
+          color={current_user_rsvp ? goingButton.color : getColor('gray')}
+          iconColor={getColor('white')}
+          iconName="check"
+          size="md"
+          onPress={() => onPress(ATTENDING_STATUS.GOING)}
+        />
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default class TabAbout extends Component<Props, State> {
   static navigationOptions = {
@@ -87,10 +114,6 @@ export default class TabAbout extends Component<Props, State> {
   };
 
   inputRef: ?any;
-
-  _onContactSelect = (user: User) => {
-    console.log(user);
-  };
 
   _onReply = (comment: Comment) => {
     console.log('reply');
@@ -116,52 +139,64 @@ export default class TabAbout extends Component<Props, State> {
     this.inputRef = ref;
   };
 
-  parsePresenters = (): Array<User> => {
+  parsePresenters = (): Array<Presenter> => {
     const { presenters_contacts, presenters_communities } = this.props;
+    let members = [];
 
-    if (!presenters_contacts || !presenters_communities) {
-      return [];
-    }
-
-    return [
-      ...presenters_contacts.map((contact: Contact): User => ({
-        id: contact.recordID,
-        first_name: contact.givenName,
-        last_name: contact.familyName,
-        profile_photo: contact.thumbnailPath,
-        disabled: true,
-      })),
-      ...presenters_communities.reduce(
+    if (presenters_communities) {
+      members = presenters_communities.reduce(
         (acc: Array<*>, communuty: Community) => {
           return [...acc, ...communuty.members];
         },
         []
-      ),
-    ];
+      );
+    }
+
+    if (presenters_contacts) {
+      members = [...members, ...presenters_contacts];
+    }
+
+    return members.map((member: User): Presenter => {
+      member.role = 'Presenter';
+
+      return member;
+    });
   };
 
   render() {
-    const { start, end, description, replies, id, onActionPress } = this.props;
+    const {
+      description,
+      replies,
+      id,
+      onActionPress,
+      webinar,
+      is_author,
+    } = this.props;
     const { replyingTo } = this.state;
 
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
         <ScrollView>
-          {isBefore(new Date(), start) ? (
-            <FutureEventButtons onPress={onActionPress} />
-          ) : isBefore(new Date(), end) ? (
-            <LiveEventButton />
-          ) : null}
+          {is_author ? null : webinar ? (
+            <LiveEventButton onPress={onActionPress} {...this.props} />
+          ) : (
+            <FutureEventButtons onPress={onActionPress} {...this.props} />
+          )}
 
           {description ? (
-            <Text size={14} lineHeight={18} color="#455A64" style={styles.text}>
+            <Text
+              size={14}
+              lineHeight={18}
+              color={getColor('gray')}
+              style={styles.text}
+            >
               {parseTextContent(description, 80)}
             </Text>
           ) : null}
 
           <ContactGroup
             users={this.parsePresenters()}
-            onContactSelect={this._onContactSelect}
+            onContactSelect={this.props.onContactSelect}
           />
 
           {replies && replies.length ? (

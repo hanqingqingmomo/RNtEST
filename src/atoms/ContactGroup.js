@@ -11,10 +11,12 @@ const AVATAR_WIDTH = 42;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = DEVICE_WIDTH / 4.5;
 
+type Contact = User & { disabled?: boolean, role?: string };
+
 type Props = {
   onContactSelect: User => void,
   style?: Style,
-  users: Array<User & { disabled?: boolean }>,
+  users: Array<Contact>,
 };
 
 // Zmenit imageURI na source pre Avatar

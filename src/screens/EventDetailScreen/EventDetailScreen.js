@@ -13,7 +13,7 @@ import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
 import { css } from '../../utils/style';
-import type { Community } from '../../Types';
+import type { Community, User } from '../../Types';
 import {
   acceptEvent,
   getEvent,
@@ -51,6 +51,10 @@ export default class EventDetailScreen extends Component<Props, State> {
 
       if (__DEV__) {
         console.log('[Event detail] fetch', data);
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
       }
 
       this.setState({ event: data });
@@ -118,6 +122,10 @@ export default class EventDetailScreen extends Component<Props, State> {
     }
   };
 
+  _onContactSelect = (user: User) => {
+    console.log(user);
+  };
+
   render() {
     const { busy, event } = this.state;
 
@@ -139,6 +147,7 @@ export default class EventDetailScreen extends Component<Props, State> {
                   {...event}
                   onActionPress={this._onActionPress}
                   onCreateComment={this._onCreateComment}
+                  onContactSelect={this._onContactSelect}
                 />
               ),
             },

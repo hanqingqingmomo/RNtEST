@@ -16,18 +16,18 @@ import {
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 
-const ATTENDING_STATUS = {
+export const ATTENDING_STATUS = {
   GOING: 'going',
   NOT_GOING: 'not_going',
   PENDING: 'pending',
 };
 
-const EVENT_STATUS = {
+export const EVENT_STATUS = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
 };
 
-type RSVPStatus = $Values<typeof ATTENDING_STATUS>;
+export type RSVPStatus = $Values<typeof ATTENDING_STATUS>;
 
 type PostProps = {
   id: string,
@@ -56,7 +56,7 @@ type Props = {
   onPress: Function,
 };
 
-const palettes = {
+export const palettes = {
   [EVENT_STATUS.ACTIVE]: {
     [ATTENDING_STATUS.GOING]: {
       goingButton: {
@@ -107,7 +107,7 @@ const palettes = {
   },
 };
 
-const common = {
+export const common = {
   joinButton: {
     color: getColor('green'),
     text: getColor('white'),
