@@ -13,22 +13,33 @@ const OVERLAP = AVATAR_WIDTH * 0.45;
 type Props = {
   imageURIs: Array<string>,
   title: number => string,
+  count?: number,
 };
 
-export default function AvatarGroup({ imageURIs, title }: Props) {
+export default function AvatarGroup({ imageURIs, title, count }: Props) {
   const total = imageURIs.length;
   let visibleCount = Math.floor(total / 10);
-  visibleCount = Math.max(2, Math.min(visibleCount, 10));
+  if (count) {
+    visibleCount = Math.min(count, total);
+  } else {
+    visibleCount = Math.max(2, Math.min(visibleCount, 10));
+  }
 
   const diff = total - visibleCount;
 
   return (
     <View style={styles.groupContainer}>
-      {imageURIs.slice(0, visibleCount).map((uri, i) => (
-        <View key={i} style={styles.avatarContainer}>
-          <Avatar source={{ uri }} size={AVATAR_WIDTH - OUTLINE_WIDTH * 2} />
-        </View>
-      ))}
+      {imageURIs.slice(0, visibleCount).map(
+        (uri, i) =>
+          uri ? (
+            <View key={i} style={styles.avatarContainer}>
+              <Avatar
+                source={{ uri }}
+                size={AVATAR_WIDTH - OUTLINE_WIDTH * 2}
+              />
+            </View>
+          ) : null
+      )}
       {diff > 0 ? (
         <Text
           color="gray"

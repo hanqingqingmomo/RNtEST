@@ -222,6 +222,7 @@ export default function Event({ event, onActionPress }: Props): React$Node {
         {event.profile_photos.length ? (
           <AvatarGroup
             imageURIs={[...event.profile_photos, '']}
+            count={5}
             title={(more: number): string =>
               `+${event.total_attendees_count -
                 (event.profile_photos || []).length}`}
