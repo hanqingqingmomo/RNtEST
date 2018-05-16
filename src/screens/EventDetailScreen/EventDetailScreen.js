@@ -149,6 +149,12 @@ export default class EventDetailScreen extends Component<Props, State> {
       : 0;
   };
 
+  _onNavigateToMemberProfile = (user: User) => {
+    this.props.navigation.navigate('MemberProfileScreen', {
+      user,
+    });
+  };
+
   _onActionPress = async (status: 'going' | 'not_going') => {
     try {
       const { data } = await acceptEvent(this.state.event.id, status);
@@ -198,10 +204,6 @@ export default class EventDetailScreen extends Component<Props, State> {
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     }
-  };
-
-  _onContactSelect = (user: User) => {
-    console.log(user);
   };
 
   _onEditEvent = () => {
@@ -274,7 +276,7 @@ export default class EventDetailScreen extends Component<Props, State> {
                     {...event}
                     onActionPress={this._onActionPress}
                     onCreateComment={this._onCreateComment}
-                    onContactSelect={this._onContactSelect}
+                    onContactSelect={this._onNavigateToMemberProfile}
                   >
                     {event.replies && event.replies.length ? (
                       <View>

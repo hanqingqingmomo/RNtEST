@@ -10,10 +10,7 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 import { showImagePicker } from 'react-native-image-picker';
-import {
-  type NavigationScreenConfigProps,
-  NavigationActions,
-} from 'react-navigation';
+import { type NavigationScreenConfigProps } from 'react-navigation';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
 import {
@@ -99,7 +96,7 @@ type CreateEventPayload = {
 const SCHEDULE_BUTTON_ID = 'CreateEvent:ScheduleButton';
 
 const INITIAL_VALUES = {
-  community_id: null,
+  community_id: 'aaa',
   privacy: 'public',
   allow_guest: true,
   see_poll_results: true,
@@ -202,15 +199,15 @@ function prepareCommunities(
   );
 }
 
-function prepareContacts(contacts: Array<Contact>): Array<PayloadContact> {
-  return contacts.map((contact: Contact): PayloadContact => ({
-    email: contact.emailAddresses[0].email,
-    first_name: contact.givenName,
-    last_name: contact.familyName,
-    profile_photo: contact.thumbnailPath,
-    record_id: contact.recordID,
-  }));
-}
+// function prepareContacts(contacts: Array<Contact>): Array<PayloadContact> {
+//   return contacts.map((contact: Contact): PayloadContact => ({
+//     email: contact.emailAddresses[0].email,
+//     first_name: contact.givenName,
+//     last_name: contact.familyName,
+//     profile_photo: contact.thumbnailPath,
+//     record_id: contact.recordID,
+//   }));
+// }
 
 function preparePostIn(commuities: Array<Community>): Array<string> {
   return commuities.map((commuity: Community) => commuity.id);
@@ -227,7 +224,11 @@ function prepareSubmitData(values: Object): CreateEventPayload {
   // values.attendees_contacts = prepareContacts(values.attendees_contacts);
   values.post_in = preparePostIn(values.post_in);
 
-  if (!values.community_id) {
+  if (values.replies) {
+    values.replies = undefined;
+  }
+
+  if (values.community_id === INITIAL_VALUES.community_id) {
     values.community_id = values.post_in[0];
   }
 
@@ -370,21 +371,20 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   _onDeleteEvent = async () => {
-    const { navigation } = this.props;
-    const { event_id } = navigation.state.params;
+    const { screenProps } = this.props;
+    const { params } = screenProps;
 
     this.setState({ busy: true });
 
-    await deleteEvent(event_id);
+    await deleteEvent(params.event_id);
 
-    DeviceEventEmitter.emit('delete event', event_id);
+    DeviceEventEmitter.emit('delete event', params.event_id);
 
     if (__DEV__) {
       console.log('[Delete Event]');
     }
 
-    navigation.dispatch(NavigationActions.back({}));
-    navigation.dispatch(NavigationActions.back({}));
+    screenProps.dismissModalRoute();
   };
 
   _keyExtractor(item: Community & Contact): string {
@@ -437,6 +437,9 @@ export default class CreateEventScreen extends Component<Props, State> {
         validateOnChange
         onSubmit={this._onSubmit}
         render={formik => {
+          if (__DEV__) {
+            console.log('[Create Event] errors', formik.errors);
+          }
           return (
             <Screen containerStyle={css('paddingBottom', isIphoneX() ? 30 : 0)}>
               <BlackPortal name={SCHEDULE_BUTTON_ID}>

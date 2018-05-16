@@ -65,7 +65,10 @@ export default function EventHeader({
   }
 
   return (
-    <ImageBackground source={{ uri: cover_photo }} style={styles.container}>
+    <ImageBackground
+      source={{ uri: cover_photo || '' }}
+      style={styles.container}
+    >
       <View style={[styles.dimm, StyleSheet.absoluteFill]} />
       <View style={styles.headerContainer}>
         <View style={styles.textWrapper}>

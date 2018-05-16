@@ -1,7 +1,11 @@
 // @flow
 
 import { StackNavigator } from '../../navigation';
-import { EventFeedScreen, EventDetailScreen } from '../../screens';
+import {
+  EventFeedScreen,
+  EventDetailScreen,
+  MemberProfileScreen,
+} from '../../screens';
 
 export default StackNavigator({
   EventFeedScreen: {
@@ -9,5 +13,8 @@ export default StackNavigator({
   },
   EventDetailScreen: {
     screen: EventDetailScreen,
+  },
+  MemberProfileScreen: {
+    screen: MemberProfileScreen,
   },
 });
