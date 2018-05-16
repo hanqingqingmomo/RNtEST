@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, ScrollView, StyleSheet } from 'react-native';
 
 import {
   Tabs,
@@ -11,6 +11,7 @@ import {
   CenterView,
   ActivityIndicator,
   NavigationTextButton,
+  SegmentedControl,
 } from '../../atoms';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
@@ -23,24 +24,32 @@ import {
   getEvent,
   createEventCommnet,
   RQCreateComment,
+  getEventComments,
 } from '../../utils/requestFactory';
 
 type Props = {
   navigation: any,
+  screenProps: Object,
 };
 
 type State = {
   activeTab: string,
   busy: boolean,
   event: ?Object,
+  replyingTo?: Comment,
+  commentType: CommentType,
 };
 
 export default class EventDetailScreen extends Component<Props, State> {
   state = {
     activeTab: 'About',
+    commentType: 'Top comments',
     busy: false,
     event: null,
+    replyingTo: undefined,
   };
+
+  inputRef: ?any;
 
   static navigationOptions = () => ({
     headerTitle: 'Event',
@@ -84,14 +93,43 @@ export default class EventDetailScreen extends Component<Props, State> {
     }
   };
 
-  changeActiveTab = (activeTab: string) => {
+  fetchComments = async () => {
+    const { commentType, event } = this.state;
+    const sortKeys = {
+      'Top comments': 'popularity',
+      'Newest first': '',
+    };
+
+    try {
+      const { data } = await getEventComments(event.id, sortKeys[commentType]);
+
+      if (__DEV__) {
+        console.log('[Event detail] fetch comments', data);
+      }
+
+      event.replies = data;
+
+      this.setState({ event });
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[Event detail] fetch comments error', err.message);
+      }
+    }
+  };
+
+  _changeActiveTab = (activeTab: string) => {
     this.setState({ activeTab });
+  };
+
+  _changeCommentSorting = (commentType: CommentType) => {
+    this.setState({ commentType });
+    this.fetchComments();
   };
 
   computePaticipantsCount = (): number => {
     const { event } = this.state;
 
-    return event.attendees_communities && event.attendees_contacts
+    return event.attendees_communities
       ? event.attendees_communities.reduce(
           (acc: number, community: Community) => {
             acc += (community.members || []).length;
@@ -99,7 +137,7 @@ export default class EventDetailScreen extends Component<Props, State> {
             return acc;
           },
           0
-        ) + event.attendees_contacts.length
+        )
       : 0;
   };
 
@@ -121,10 +159,6 @@ export default class EventDetailScreen extends Component<Props, State> {
 
   _onCreateComment = async (id, value: string) => {
     const { event } = this.state;
-
-    if (!event.replies) {
-      event.replies = [];
-    }
 
     try {
       const { data } = await (id === event.id
@@ -166,8 +200,30 @@ export default class EventDetailScreen extends Component<Props, State> {
     });
   };
 
+  _onReply = (comment: Comment) => {
+    comment.type = 'comment';
+
+    this.setState({ replyingTo: comment });
+
+    if (this.inputRef) {
+      this.inputRef.focus();
+    }
+  };
+
+  _onReplyCancel = () => {
+    this.setState({ replyingTo: undefined });
+
+    if (this.inputRef) {
+      this.inputRef.blur();
+    }
+  };
+
+  passRef = (ref: any) => {
+    this.inputRef = ref;
+  };
+
   render() {
-    const { busy, event } = this.state;
+    const { busy, event, activeTab, replyingTo } = this.state;
 
     return busy || !event ? (
       <CenterView>
@@ -175,42 +231,78 @@ export default class EventDetailScreen extends Component<Props, State> {
       </CenterView>
     ) : (
       <View style={css('flex', 1)}>
-        {event.is_author ? (
-          <BlackPortal name="editButton">
-            <NavigationTextButton
-              title="Edit"
-              textColor={getColor('orange')}
-              onPress={this._onEditEvent}
-            />
-          </BlackPortal>
+        <ScrollView>
+          {event.is_author ? (
+            <BlackPortal name="editButton">
+              <NavigationTextButton
+                title="Edit"
+                textColor={getColor('orange')}
+                onPress={this._onEditEvent}
+              />
+            </BlackPortal>
+          ) : null}
+          <EventHeader {...event} />
+          <Tabs
+            activeItem={this.state.activeTab}
+            onChange={this._changeActiveTab}
+            items={[
+              {
+                label: 'About',
+                component: () => (
+                  <TabAbout
+                    {...event}
+                    onActionPress={this._onActionPress}
+                    onCreateComment={this._onCreateComment}
+                    onContactSelect={this._onContactSelect}
+                  >
+                    {event.replies && event.replies.length ? (
+                      <View>
+                        <View style={styles.segmentedWrapper}>
+                          <SegmentedControl
+                            labels={['Top comments', 'Newest first']}
+                            selectedLabel={this.state.commentType}
+                            onChange={this._changeCommentSorting}
+                          />
+                        </View>
+
+                        <View style={css('paddingVertical', 20)}>
+                          <CommentList
+                            replies={event.replies}
+                            onRequestReply={this._onReply}
+                          />
+                        </View>
+                      </View>
+                    ) : null}
+                  </TabAbout>
+                ),
+              },
+              {
+                label: `Participants (${this.computePaticipantsCount()})`,
+                component: () => <TabEventParticipants {...event} />,
+              },
+              // {
+              //   label: `Files`,
+              //   component: () => <TabEventFiles event={EVENT} />,
+              // },
+            ]}
+          />
+        </ScrollView>
+
+        {activeTab === 'About' ? (
+          <CommentEventInput
+            target={replyingTo || { id: event.id, type: 'event' }}
+            onReplyCancel={this._onReplyCancel}
+            passRef={this.passRef}
+          />
         ) : null}
-        <EventHeader {...event} />
-        <Tabs
-          activeItem={this.state.activeTab}
-          onChange={this.changeActiveTab}
-          items={[
-            {
-              label: 'About',
-              component: () => (
-                <TabAbout
-                  {...event}
-                  onActionPress={this._onActionPress}
-                  onCreateComment={this._onCreateComment}
-                  onContactSelect={this._onContactSelect}
-                />
-              ),
-            },
-            {
-              label: `Participants (${this.computePaticipantsCount()})`,
-              component: () => <TabEventParticipants {...event} />,
-            },
-            // {
-            //   label: `Files`,
-            //   component: () => <TabEventFiles event={EVENT} />,
-            // },
-          ]}
-        />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  segmentedWrapper: {
+    paddingHorizontal: 50,
+    paddingVertical: 10,
+  },
+});

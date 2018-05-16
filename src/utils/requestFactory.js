@@ -311,6 +311,9 @@ export const recentLocations = () => api.get('/places/user');
 export const createEventCommnet = (event_id: string, text_content: string) =>
   api.post(`/event/${event_id}/comment`, { text_content });
 
+export const getEventComments = (event_id: string, sortComments: string = '') =>
+  api.get(`/event/${event_id}/comments?sortComments=${sortComments}`);
+
 /**
  * News feed requests
  */

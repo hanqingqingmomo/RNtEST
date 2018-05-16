@@ -7,7 +7,6 @@ import isPast from 'date-fns/is_past';
 import {
   View,
   Button,
-  ScrollView,
   Text,
   ContactGroup,
   SegmentedControl,
@@ -41,11 +40,6 @@ type Props = {
   onActionPress: Function,
   onCreateComment: Function,
   onContactSelect: Function,
-};
-
-type State = {
-  commentType: CommentType,
-  replyingTo?: Comment,
 };
 
 type Presenter = User & { role: string };
@@ -103,40 +97,9 @@ const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
   );
 };
 
-export default class TabAbout extends Component<Props, State> {
+export default class TabAbout extends Component<Props> {
   static navigationOptions = {
     tabBarLabel: 'About',
-  };
-
-  state = {
-    commentType: 'Top comments',
-    replyingTo: undefined,
-  };
-
-  inputRef: ?any;
-
-  _onReply = (comment: Comment) => {
-    console.log('reply');
-
-    this.setState({ replyingTo: comment });
-
-    if (this.inputRef) {
-      this.inputRef.focus();
-    }
-  };
-
-  _onReplyCancel = () => {
-    console.log('cancel');
-
-    this.setState({ replyingTo: undefined });
-
-    if (this.inputRef) {
-      this.inputRef.blur();
-    }
-  };
-
-  passRef = (ref: any) => {
-    this.inputRef = ref;
   };
 
   parsePresenters = (): Array<Presenter> => {
@@ -164,67 +127,33 @@ export default class TabAbout extends Component<Props, State> {
   };
 
   render() {
-    const {
-      description,
-      replies,
-      id,
-      onActionPress,
-      webinar,
-      is_author,
-    } = this.props;
-    const { replyingTo } = this.state;
+    const { description, onActionPress, webinar, is_author } = this.props;
 
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
-        <ScrollView>
-          {is_author ? null : webinar ? (
-            <LiveEventButton onPress={onActionPress} {...this.props} />
-          ) : (
-            <FutureEventButtons onPress={onActionPress} {...this.props} />
-          )}
+        {is_author ? null : webinar ? (
+          <LiveEventButton onPress={onActionPress} {...this.props} />
+        ) : (
+          <FutureEventButtons onPress={onActionPress} {...this.props} />
+        )}
 
-          {description ? (
-            <Text
-              size={14}
-              lineHeight={18}
-              color={getColor('gray')}
-              style={styles.text}
-            >
-              {parseTextContent(description, 80)}
-            </Text>
-          ) : null}
+        {description ? (
+          <Text
+            size={14}
+            lineHeight={18}
+            color={getColor('gray')}
+            style={styles.text}
+          >
+            {parseTextContent(description, 80)}
+          </Text>
+        ) : null}
 
-          <ContactGroup
-            users={this.parsePresenters()}
-            onContactSelect={this.props.onContactSelect}
-          />
-
-          {replies && replies.length ? (
-            <View style={styles.segmentedWrapper}>
-              <SegmentedControl
-                labels={['Top comments', 'Newest first']}
-                selectedLabel={this.state.commentType}
-                onChange={(commentType: CommentType) => {
-                  this.setState({ commentType });
-                }}
-              />
-            </View>
-          ) : null}
-
-          {replies && replies.length ? (
-            <View style={css('paddingVertical', 20)}>
-              <CommentList replies={replies} onRequestReply={this._onReply} />
-            </View>
-          ) : null}
-        </ScrollView>
-
-        <CommentInput
-          target={replyingTo || { id, type: 'event' }}
-          type="event"
-          onReplyCancel={this._onReplyCancel}
-          passRef={this.passRef}
-          onCreateComment={this.props.onCreateComment}
+        <ContactGroup
+          users={this.parsePresenters()}
+          onContactSelect={this.props.onContactSelect}
         />
+
+        {this.props.children}
       </View>
     );
   }
@@ -255,8 +184,5 @@ const styles = StyleSheet.create({
   text: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-  },
-  segmentedWrapper: {
-    paddingHorizontal: 50,
   },
 });
