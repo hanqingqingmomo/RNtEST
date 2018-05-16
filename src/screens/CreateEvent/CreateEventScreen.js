@@ -4,7 +4,10 @@ import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import { TextInput, FlatList, Alert, Platform } from 'react-native';
 import { showImagePicker } from 'react-native-image-picker';
-import { type NavigationScreenConfigProps } from 'react-navigation';
+import {
+  type NavigationScreenConfigProps,
+  NavigationActions,
+} from 'react-navigation';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
 import {
@@ -33,13 +36,19 @@ import {
 } from './Cells';
 import type { Community, User } from '../../Types';
 import type { Contact } from './SelectContactsScreen';
-import { createEvent } from '../../utils/requestFactory';
+import {
+  createEvent,
+  getEvent,
+  deleteEvent,
+  updateEvent,
+} from '../../utils/requestFactory';
 
 type Props = NavigationScreenConfigProps;
 
 type State = {
   selectedField: string,
   busy: boolean,
+  initialValues: Object,
 };
 
 type PayloadCommunity = {
@@ -230,9 +239,46 @@ export default class CreateEventScreen extends Component<Props, State> {
   state = {
     selectedField: '',
     busy: false,
+    initialValues: INITIAL_VALUES,
+  };
+
+  componentWillMount() {
+    this.fetch();
+  }
+
+  fetch = async () => {
+    const { params } = this.props.navigation.state.params;
+
+    if (params && params.event_id) {
+      return null;
+    }
+
+    this.setState({ busy: true });
+
+    try {
+      const { data } = await getEvent(params.event_id);
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      if (__DEV__) {
+        console.log('[Create Event] fetch', data);
+      }
+
+      this.setState({ initialValues: data });
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[Create Event] fetch error', err.message);
+      }
+    } finally {
+      this.setState({ busy: false });
+    }
   };
 
   _onSubmit = async (values: Object) => {
+    const { params } = this.props.navigation.state;
+
     this.setState({ busy: true });
 
     const data: CreateEventPayload = prepareSubmitData({ ...values });
@@ -242,7 +288,11 @@ export default class CreateEventScreen extends Component<Props, State> {
     }
 
     try {
-      await createEvent(data);
+      if (params && params.event_id) {
+        await updateEvent(params.event_id, data);
+      } else {
+        await createEvent(data);
+      }
 
       this.props.screenProps.dismissModalRoute();
     } catch (err) {
@@ -307,6 +357,21 @@ export default class CreateEventScreen extends Component<Props, State> {
     }
   };
 
+  _onDeleteEvent = async () => {
+    const { navigation } = this.props;
+    const { event_id } = navigation.state.params;
+
+    await deleteEvent(event_id);
+
+
+    if (__DEV__) {
+      console.log('[Delete Event]');
+    }
+
+    navigation.dispatch(NavigationActions.back({}));
+    navigation.dispatch(NavigationActions.back({}));
+  };
+
   _keyExtractor(item: Community & Contact): string {
     return item.id || item.recordID;
   }
@@ -342,7 +407,8 @@ export default class CreateEventScreen extends Component<Props, State> {
   }
 
   render() {
-    const { selectedField, busy } = this.state;
+    const { selectedField, busy, initialValues } = this.state;
+    const { params } = this.props.navigation.state;
 
     return busy ? (
       <CenterView>
@@ -350,7 +416,8 @@ export default class CreateEventScreen extends Component<Props, State> {
       </CenterView>
     ) : (
       <Form
-        initialValues={INITIAL_VALUES}
+        initialValues={initialValues}
+        enableReinitialize
         rules={RULES}
         validateOnChange
         onSubmit={this._onSubmit}
@@ -607,12 +674,15 @@ export default class CreateEventScreen extends Component<Props, State> {
                 </TableView.Section>
               </TableView.Table>
 
-              {/* <TableView.Section>
-                <TableView.Cell
-                  title="Delete event"
-                  titleTextColor={getColor('red')}
-                />
-              </TableView.Section> */}
+              {params && params.event_id ? (
+                <TableView.Section>
+                  <TableView.Cell
+                    title="Delete event"
+                    titleTextColor={getColor('red')}
+                    onPress={this._onDeleteEvent}
+                  />
+                </TableView.Section>
+              ) : null}
             </Screen>
           );
         }}
