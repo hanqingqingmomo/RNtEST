@@ -99,7 +99,7 @@ type CreateEventPayload = {
 const SCHEDULE_BUTTON_ID = 'CreateEvent:ScheduleButton';
 
 const INITIAL_VALUES = {
-  community_id: '81bad81ca2be',
+  community_id: null,
   privacy: 'public',
   allow_guest: true,
   see_poll_results: true,
@@ -223,10 +223,13 @@ function prepareSubmitData(values: Object): CreateEventPayload {
   values.attendees_communities = prepareCommunities(
     values.attendees_communities
   );
-  values.presenters_contacts = prepareContacts(values.presenters_contacts);
-  values.attendees_contacts = prepareContacts(values.attendees_contacts);
+  // values.presenters_contacts = prepareContacts(values.presenters_contacts);
+  // values.attendees_contacts = prepareContacts(values.attendees_contacts);
   values.post_in = preparePostIn(values.post_in);
-  values.community_id = values.post_in[0];
+
+  if (!values.community_id) {
+    values.community_id = values.post_in[0];
+  }
 
   return values;
 }
@@ -248,7 +251,7 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   componentWillMount() {
-    // this.fetch();
+    this.fetch();
   }
 
   fetch = async () => {
@@ -452,12 +455,12 @@ export default class CreateEventScreen extends Component<Props, State> {
                       placeholder: 'Title',
                       error: formik.errors.title,
                     })}
-                    // cellAccessoryView={
-                    //   <PhotoButton
-                    //     name="cover_photo"
-                    //     onPress={() => this._onCellPress('photo', formik)}
-                    //   />
-                    // }
+                    cellAccessoryView={
+                      <PhotoButton
+                        name="cover_photo"
+                        onPress={() => this._onCellPress('photo', formik)}
+                      />
+                    }
                   />
                   <TableView.Cell
                     title={(formik.values.description || 'Description').replace(
@@ -519,7 +522,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                   <DatePickerCell
                     open={selectedField === 'start'}
-                    date={formik.values.start}
+                    date={new Date(formik.values.start)}
                     onDateChange={(date: Date) => {
                       if (Platform.OS === 'android') {
                         this.setState({ selectedField: '' });
@@ -535,7 +538,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                   <DatePickerCell
                     open={selectedField === 'end'}
-                    date={formik.values.end}
+                    date={new Date(formik.values.end)}
                     onDateChange={(date: Date) => {
                       if (Platform.OS === 'android') {
                         this.setState({ selectedField: '' });
@@ -555,7 +558,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                       <View style={css('flexDirection', 'row')}>
                         <FlatList
                           data={[
-                            ...formik.values.presenters_contacts,
+                            // ...formik.values.presenters_contacts,
                             ...formik.values.presenters_communities,
                           ]}
                           renderItem={this._renderInviteItem(
@@ -605,7 +608,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                       <View style={css('flexDirection', 'row')}>
                         <FlatList
                           data={[
-                            ...formik.values.attendees_contacts,
+                            // ...formik.values.attendees_contacts,
                             ...formik.values.attendees_communities,
                           ]}
                           renderItem={this._renderInviteItem(
