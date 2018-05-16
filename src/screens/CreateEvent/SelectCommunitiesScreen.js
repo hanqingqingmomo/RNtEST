@@ -34,18 +34,16 @@ class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
   render() {
     const readCommunitiesListRq = makeReadCommunitiesListRq(true);
 
-    const { contactsField } = this.props;
-
     return (
       <Screen>
         <TableView.Table>
-          <TableView.Section sectionPaddingTop={0}>
+          {/* <TableView.Section sectionPaddingTop={0}>
             <TableView.Cell
               cellStyle="RightDetail"
               title="Mobile Contacts"
               detail={
                 __DEV__
-                  ? (this.props.formik.values[contactsField] || []).length
+                  ? (this.props.formik.values[this.props.contactsField] || []).length
                   : ''
               }
               accessory="DisclosureIndicator"
@@ -62,7 +60,7 @@ class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
                 });
               }}
             />
-          </TableView.Section>
+          </TableView.Section> */}
 
           <Fetch
             url={readCommunitiesListRq.url}
