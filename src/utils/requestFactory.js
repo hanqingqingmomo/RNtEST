@@ -109,7 +109,7 @@ function makeFormData(payload: Object, fileNames: Array<string> = []) {
     } else {
       if (Array.isArray(payload[key])) {
         payload[key].forEach(value => {
-          formData.append(key, value);
+          formData.append(`${key}[]`, value);
         });
       } else {
         formData.append(key, payload[key]);
