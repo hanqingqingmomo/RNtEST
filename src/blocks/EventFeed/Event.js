@@ -225,7 +225,7 @@ export default function Event({
 
   return event.webinar ? null : (
     <View style={styles.container}>
-      <TouchableOpacity disabled={pastEvent} onPress={() => onPress(event.id)}>
+      <TouchableOpacity onPress={() => onPress(event.id)}>
         <Text
           style={css('color', palette.titleColor)}
           fontSize={13}
@@ -287,6 +287,5 @@ const styles = StyleSheet.create({
   pillWrapper: {
     paddingRight: 8,
     flexDirection: 'row',
-    flex: 1,
   },
 });
