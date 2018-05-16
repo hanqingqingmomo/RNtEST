@@ -232,11 +232,11 @@ function prepareSubmitData(values: Object): CreateEventPayload {
 }
 
 export default class CreateEventScreen extends Component<Props, State> {
-  static navigationOptions = ({ navigation }) => {
-    const { params } = navigation.state;
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { params } = screenProps;
 
     return {
-      headerTitle: params && params.event_id ? 'Update Event' : 'Create Event',
+      headerTitle: params && params.event_id ? 'Edit Event' : 'Create Event',
       headerRight: <WhitePortal name={SCHEDULE_BUTTON_ID} />,
     };
   };
@@ -248,11 +248,11 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   componentWillMount() {
-    this.fetch();
+    // this.fetch();
   }
 
   fetch = async () => {
-    const { params } = this.props.navigation.state;
+    const { params } = this.props.screenProps;
 
     if (params && !params.event_id) {
       return;
@@ -282,7 +282,7 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   _onSubmit = async (values: Object) => {
-    const { params } = this.props.navigation.state;
+    const { params, dismissModalRoute } = this.props.screenProps;
 
     this.setState({ busy: true });
 
@@ -303,7 +303,7 @@ export default class CreateEventScreen extends Component<Props, State> {
         DeviceEventEmitter.emit('create event', values);
       }
 
-      this.props.screenProps.dismissModalRoute();
+      dismissModalRoute();
     } catch (err) {
       this.setState({ busy: false });
 
@@ -420,7 +420,7 @@ export default class CreateEventScreen extends Component<Props, State> {
 
   render() {
     const { selectedField, busy, initialValues } = this.state;
-    const { params } = this.props.navigation.state;
+    const { params } = this.props.screenProps;
 
     return busy ? (
       <CenterView>

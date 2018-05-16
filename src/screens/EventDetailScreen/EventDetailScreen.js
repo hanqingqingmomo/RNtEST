@@ -158,8 +158,11 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   _onEditEvent = () => {
-    this.props.navigation.navigate('CreateEventScreen', {
-      event_id: this.state.event.id,
+    this.props.screenProps.openModalRoute({
+      routeName: 'CreateEventModal',
+      params: {
+        event_id: this.state.event.id,
+      },
     });
   };
 
