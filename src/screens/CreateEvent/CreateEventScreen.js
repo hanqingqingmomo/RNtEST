@@ -253,10 +253,10 @@ export default class CreateEventScreen extends Component<Props, State> {
   }
 
   fetch = async () => {
-    const { params } = this.props.navigation.state.params;
+    const { params } = this.props.navigation.state;
 
-    if (params && params.event_id) {
-      return null;
+    if (params && !params.event_id) {
+      return;
     }
 
     this.setState({ busy: true });

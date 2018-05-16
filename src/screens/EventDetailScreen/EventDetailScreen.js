@@ -172,7 +172,7 @@ export default class EventDetailScreen extends Component<Props, State> {
       </CenterView>
     ) : (
       <View style={css('flex', 1)}>
-        {/* {event.is_author ? (
+        {event.is_author ? (
           <BlackPortal name="editButton">
             <NavigationTextButton
               title="Edit"
@@ -180,7 +180,7 @@ export default class EventDetailScreen extends Component<Props, State> {
               onPress={this._onEditEvent}
             />
           </BlackPortal>
-        ) : null} */}
+        ) : null}
         <EventHeader {...event} />
         <Tabs
           activeItem={this.state.activeTab}
