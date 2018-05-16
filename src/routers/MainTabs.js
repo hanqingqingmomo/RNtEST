@@ -213,6 +213,7 @@ export default class MainTabs extends Component<{}, State> {
     const props = {
       screenProps: {
         dismissModalRoute: this.closeModalRoute,
+        params: modalRoute.params,
       },
     };
 
