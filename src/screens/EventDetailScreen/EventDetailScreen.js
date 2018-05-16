@@ -2,7 +2,12 @@
 
 import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
-import { DeviceEventEmitter, ScrollView, StyleSheet } from 'react-native';
+import {
+  DeviceEventEmitter,
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+} from 'react-native';
 
 import {
   Tabs,
@@ -27,6 +32,8 @@ import {
   RQCreateComment,
   getEventComments,
 } from '../../utils/requestFactory';
+
+type CommentType = 'Top comments' | 'Newest first';
 
 type Props = {
   navigation: any,
@@ -231,13 +238,21 @@ export default class EventDetailScreen extends Component<Props, State> {
   render() {
     const { busy, event, activeTab, replyingTo } = this.state;
 
-    return busy || !event ? (
+    return busy && !event ? (
       <CenterView>
         <ActivityIndicator />
       </CenterView>
     ) : (
       <View style={css('flex', 1)}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={busy}
+              onRefresh={this.fetch}
+              colors={[getColor('orange')]}
+            />
+          }
+        >
           {event.is_author ? (
             <BlackPortal name="editButton">
               <NavigationTextButton

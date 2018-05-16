@@ -4,17 +4,10 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import isPast from 'date-fns/is_past';
 
-import {
-  View,
-  Button,
-  Text,
-  ContactGroup,
-  SegmentedControl,
-} from '../../atoms';
+import { View, Button, Text, ContactGroup } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import { parseTextContent } from '../../utils/text';
-import { CommentList, CommentInput } from '../../blocks';
 import {
   ATTENDING_STATUS,
   common,
@@ -23,8 +16,6 @@ import {
   type RSVPStatus,
 } from '../../blocks/EventFeed/Event';
 import type { Comment, User, Contact, Community } from '../../Types';
-
-type CommentType = 'Top comments' | 'Newest first';
 
 type Props = {
   webinar: boolean,
