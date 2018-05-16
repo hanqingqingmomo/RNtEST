@@ -237,10 +237,14 @@ function prepareSubmitData(values: Object): CreateEventPayload {
 }
 
 export default class CreateEventScreen extends Component<Props, State> {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Create Event',
-    headerRight: <WhitePortal name={SCHEDULE_BUTTON_ID} />,
-  });
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+
+    return {
+      headerTitle: params && params.event_id ? 'Update Event' : 'Create Event',
+      headerRight: <WhitePortal name={SCHEDULE_BUTTON_ID} />,
+    };
+  };
 
   state = {
     selectedField: '',
@@ -371,6 +375,8 @@ export default class CreateEventScreen extends Component<Props, State> {
     const { navigation } = this.props;
     const { event_id } = navigation.state.params;
 
+    this.setState({ busy: true });
+
     await deleteEvent(event_id);
 
     DeviceEventEmitter.emit('delete event', event_id);
@@ -437,7 +443,7 @@ export default class CreateEventScreen extends Component<Props, State> {
             <Screen containerStyle={css('paddingBottom', isIphoneX() ? 30 : 0)}>
               <BlackPortal name={SCHEDULE_BUTTON_ID}>
                 <NavigationTextButton
-                  title="Schedule"
+                  title={params && params.event_id ? 'Update' : 'Schedule'}
                   textColor={getColor('orange')}
                   onPress={formik.handleSubmit}
                 />
