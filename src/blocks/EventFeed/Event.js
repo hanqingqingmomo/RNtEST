@@ -188,6 +188,30 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
   );
 }
 
+function _renderPills(communities, color) {
+  if (communities.length === 0) {
+    return null;
+  }
+
+  const copy = [...communities];
+  const item = copy.splice(0, 1);
+
+  return (
+    <View style={styles.pillWrapper}>
+      {item.map(a => (
+        <View key={a.id} style={css('marginHorizontal', 2)}>
+          <Pill color={color} title={a.name} truncate />
+        </View>
+      ))}
+      {copy.length > 0 ? (
+        <View style={css('marginHorizontal', 2)}>
+          <Pill color={color} title={`+${copy.length}`} />
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
 export default function Event({
   event,
   onActionPress,
@@ -220,14 +244,7 @@ export default function Event({
 
       <View style={styles.alignment}>
         <View style={styles.pillWrapper}>
-          {event.post_in.map((post: PostProps): React$Node => (
-            <Pill
-              key={post.id}
-              color={palette.pillTextColor}
-              title={post.name}
-              truncate
-            />
-          ))}
+          {_renderPills(event.post_in, palette.pillTextColor)}
         </View>
         {event.profile_photos.length ? (
           <AvatarGroup
@@ -268,7 +285,8 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   pillWrapper: {
-    maxWidth: '50%',
     paddingRight: 8,
+    flexDirection: 'row',
+    flex: 1,
   },
 });

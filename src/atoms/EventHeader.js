@@ -20,6 +20,26 @@ type Props = {
   post_in: Array<Community>,
 };
 
+function _renderPills(communities: Array<Community>) {
+  const copy = [...communities];
+  const items = copy.splice(0, 2);
+
+  return (
+    <View style={css('flexDirection', 'row')}>
+      {items.map((community: Community) => (
+        <View key={community.id} style={css('marginHorizontal', 2)}>
+          <Pill color={getColor('white')} title={community.name} />
+        </View>
+      ))}
+      {copy.length > 0 ? (
+        <View style={css('marginHorizontal', 2)}>
+          <Pill color={getColor('white')} title={`+${copy.length}`} />
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
 export default function EventHeader({
   title,
   cover_photo,
@@ -70,13 +90,7 @@ export default function EventHeader({
           </Text>
         </View>
 
-        <View style={css('flexDirection', 'row')}>
-          {(post_in || []).map((community: Community) => (
-            <View key={community.id} style={css('marginHorizontal', 2)}>
-              <Pill color={getColor('white')} title={community.name} />
-            </View>
-          ))}
-        </View>
+        {_renderPills(post_in)}
       </View>
     </ImageBackground>
   );
