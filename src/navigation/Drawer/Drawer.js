@@ -6,11 +6,13 @@ import { StyleSheet } from 'react-native';
 import { Icon, Link, View, Text, TouchableHighlight } from '../../atoms';
 import { getColor } from '../../utils/color';
 import DrawerHeader from './DrawerHeader';
+import type { IconName } from '../../Types';
 
 export type NavigationItem = {
   name?: string,
-  icon?: string,
+  icon?: IconName,
   routeName: string,
+  params?: mixed,
 };
 
 type Props = {

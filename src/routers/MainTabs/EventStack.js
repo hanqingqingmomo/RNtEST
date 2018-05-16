@@ -2,7 +2,6 @@
 
 import { StackNavigator } from '../../navigation';
 import { EventFeedScreen, EventDetailScreen } from '../../screens';
-import { screens as CreateEventStackScreens } from '../CreateEventStack';
 
 export default StackNavigator({
   EventFeedScreen: {
@@ -11,5 +10,4 @@ export default StackNavigator({
   EventDetailScreen: {
     screen: EventDetailScreen,
   },
-  ...CreateEventStackScreens,
 });
