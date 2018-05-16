@@ -49,60 +49,46 @@ export default class TabEventMembers extends Component<Props> {
   };
 
   get participants(): Array<User> {
-    const { attendees_communities, attendees_contacts } = this.props;
+    const { attendees_communities } = this.props;
 
-    if (!attendees_communities || !attendees_contacts) {
+    if (!attendees_communities) {
       return [];
     }
 
-    return [
-      ...attendees_contacts.map((contact: Contact): User => ({
-        id: contact.recordID,
-        first_name: contact.givenName,
-        last_name: contact.familyName,
-        profile_photo: contact.thumbnailPath,
-        disabled: true,
-        rsvp: contact.rsvp,
-      })),
-      ...attendees_communities.reduce((acc: Array<*>, communuty: Community) => {
+    return attendees_communities.reduce(
+      (acc: Array<*>, communuty: Community) => {
         return [...acc, ...communuty.members];
-      }, []),
-    ];
+      },
+      []
+    );
   }
 
-  renderItem = ({
-    item,
-  }: {
-    item: User & { rsvp: RSVPStatuses },
-  }): React$Node => (
-    <TableView.Cell
-      contentContainerStyle={css('height', 55)}
-      title={`${item.first_name} ${item.last_name}`}
-      titleTextColor="#455A64"
-      cellImageView={
-        <View style={[css('marginBottom', 6), css('marginRight', 21)]}>
-          <Avatar source={{ uri: item.profile_photo }} size={36} />
-          <View
-            style={[
-              styles.iconAccessory,
-              styles.centerView,
-              css(
-                'backgroundColor',
-                attendanceStatus[item.rsvp].backgroundColor
-              ),
-            ]}
-          >
-            <Icon
-              name={attendanceStatus[item.rsvp].icon}
-              size={10}
-              color="white"
-            />
+  renderItem = ({ item }: { item: User & { rsvp_status: RSVPStatuses } }) => {
+    const style = attendanceStatus[item.rsvp_status];
+
+    return (
+      <TableView.Cell
+        contentContainerStyle={css('height', 55)}
+        title={`${item.first_name} ${item.last_name}`}
+        titleTextColor="#455A64"
+        cellImageView={
+          <View style={[css('marginBottom', 6), css('marginRight', 21)]}>
+            <Avatar source={{ uri: item.profile_photo }} size={36} />
+            <View
+              style={[
+                styles.iconAccessory,
+                styles.centerView,
+                css('backgroundColor', style.backgroundColor),
+              ]}
+            >
+              <Icon name={style.icon} size={10} color="white" />
+            </View>
           </View>
-        </View>
-      }
-      cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
-    />
-  );
+        }
+        cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
+      />
+    );
+  };
 
   renderAttendance() {
     return attendanceDescription.map(item => (
@@ -117,15 +103,15 @@ export default class TabEventMembers extends Component<Props> {
     ));
   }
 
-  getPartisipantsByStatus = (status: RSVPStatuses) => {
-    return this.participants.filter(
-      (user: User & { rsvp: RSVPStatuses }): boolean => user.rsvp === status
+  getPartisipantsByStatus = (status: RSVPStatuses) =>
+    this.participants.filter(
+      (user: User & { rsvp_status: RSVPStatuses }): boolean =>
+        user.rsvp_status === status
     );
-  };
 
   render() {
     return (
-      <Screen fill>
+      <View>
         <ShadowView style={styles.attendanceContainer} radius={0}>
           {this.renderAttendance()}
         </ShadowView>
@@ -141,7 +127,7 @@ export default class TabEventMembers extends Component<Props> {
             ItemSeparatorComponent={() => <Separator />}
           />
         </ShadowView>
-      </Screen>
+      </View>
     );
   }
 }
