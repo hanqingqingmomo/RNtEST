@@ -457,12 +457,12 @@ export default class CreateEventScreen extends Component<Props, State> {
                       placeholder: 'Title',
                       error: formik.errors.title,
                     })}
-                    cellAccessoryView={
-                      <PhotoButton
-                        name="cover_photo"
-                        onPress={() => this._onCellPress('photo', formik)}
-                      />
-                    }
+                    // cellAccessoryView={
+                    //   <PhotoButton
+                    //     name="cover_photo"
+                    //     onPress={() => this._onCellPress('photo', formik)}
+                    //   />
+                    // }
                   />
                   <TableView.Cell
                     title={(formik.values.description || 'Description').replace(
