@@ -125,11 +125,11 @@ export default class EventDetailScreen extends Component<Props, State> {
     }
   };
 
-  _changeActiveTab = (activeTab: string) => {
+  _onActiveTab = (activeTab: string) => {
     this.setState({ activeTab });
   };
 
-  _changeCommentSorting = (commentType: CommentType) => {
+  _onCommentSorting = (commentType: CommentType) => {
     this.setState({ commentType });
     this.fetchComments();
   };
@@ -265,7 +265,7 @@ export default class EventDetailScreen extends Component<Props, State> {
           <EventHeader {...event} />
           <Tabs
             activeItem={this.state.activeTab}
-            onChange={this._changeActiveTab}
+            onChange={this._onActiveTab}
             items={[
               {
                 label: 'About',
@@ -282,7 +282,7 @@ export default class EventDetailScreen extends Component<Props, State> {
                           <SegmentedControl
                             labels={['Top comments', 'Newest first']}
                             selectedLabel={this.state.commentType}
-                            onChange={this._changeCommentSorting}
+                            onChange={this._onCommentSorting}
                           />
                         </View>
 
