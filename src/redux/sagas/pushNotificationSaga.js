@@ -1,14 +1,9 @@
 // @flow
 
-import { takeEvery, put, select } from 'redux-saga/effects';
-
-import {
-  APP_START_SESSION,
-  APP_END_SESSION,
-  setPushToken,
-} from '../ducks/application';
+import { takeEvery, select } from 'redux-saga/effects';
+import { APP_START_SESSION, APP_END_SESSION } from '../ducks/application';
 import { selectIsAuthenticated } from '../selectors';
-import PushNotificationsHandler from '../../services/PushNotifications';
+import '../../services/PushNotifications';
 import {
   RQDisablePushNotifications,
   RQEnablePushNotifications,
@@ -20,9 +15,7 @@ import {
 const doRegisterOrUnregisterSaga = function* doRegisterOrUnregisterSaga() {
   const isAuthenticated = yield select(selectIsAuthenticated);
   if (isAuthenticated) {
-    const { token } = yield PushNotificationsHandler.register();
-    yield put(setPushToken(token));
-    RQEnablePushNotifications(token);
+    RQEnablePushNotifications();
   } else {
     RQDisablePushNotifications();
   }

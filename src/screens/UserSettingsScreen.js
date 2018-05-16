@@ -1,13 +1,15 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { Alert, Clipboard, TouchableOpacity } from 'react-native';
 import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
+import AppCenter from 'appcenter';
 
 import { endSession } from '../redux/ducks/application';
 import { TableView, Screen, Icon } from '../atoms';
+import { Await } from '../atoms/Await';
 import { getColor } from '../utils/color';
 import type { IconName, ScreenProps } from '../Types';
 
@@ -105,20 +107,29 @@ class UserProfileScreen extends Component<Props> {
             />
           </TableView.Section>
           <TableView.Section header="Application version">
-            <TableView.Cell
-              title={`${DeviceInfo.getReadableVersion()}${Config.ENVIRONMENT !==
-              'production'
-                ? `, env: ${Config.ENVIRONMENT}`
-                : ''}`}
-            />
-            {Config.ENVIRONMENT !== 'production' ? (
-              <TableView.Cell
-                cellStyle="Subtitle"
-                title="Device ID"
-                detail={DeviceInfo.getUniqueID()}
-              />
-            ) : null}
+            <TableView.Cell title={DeviceInfo.getReadableVersion()} />
           </TableView.Section>
+          {Config.ENVIRONMENT !== 'production' ? (
+            <TableView.Section header="Developer">
+              <Await
+                promise={AppCenter.getInstallId()}
+                render={value => (
+                  <TableView.Cell
+                    cellStyle="Subtitle"
+                    title="Install ID"
+                    detail={value}
+                    cellAccessoryView={
+                      <TouchableOpacity
+                        onPress={() => Clipboard.setString(value)}
+                      >
+                        <Icon name="add-file" size={24} />
+                      </TouchableOpacity>
+                    }
+                  />
+                )}
+              />
+            </TableView.Section>
+          ) : null}
         </TableView.Table>
       </Screen>
     );

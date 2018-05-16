@@ -55,6 +55,9 @@ buck-out/
 # Pods
 Pods
 
+# Carthage
+Carthage
+
 # Environment settings
 .env
 .env.*
@@ -62,3 +65,5 @@ Pods
 
 .vscode/.react
 
+# Bundle artifact
+*.jsbundle

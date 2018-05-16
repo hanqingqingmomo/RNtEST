@@ -1,21 +1,58 @@
 PODS:
-  - MobileCenter/Analytics (0.13.0):
-    - MobileCenter/Core
-  - MobileCenter/Core (0.13.0)
-  - MobileCenter/Crashes (0.13.0):
-    - MobileCenter/Core
-  - RNMobileCenterShared (0.10.0):
-    - MobileCenter/Core (~> 0.13.0)
+  - AppCenter/Analytics (1.6.0):
+    - AppCenter/Core
+  - AppCenter/Core (1.6.0)
+  - AppCenter/Crashes (1.6.0):
+    - AppCenter/Core
+  - AppCenter/Push (1.6.0):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (1.5.0):
+    - AppCenter/Core (= 1.6.0)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
+  - Fabric (1.7.5)
+  - FBSDKCoreKit (4.31.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.31.0):
+    - FBSDKCoreKit
+  - TwitterCore (2.8.0):
+    - Fabric
+  - TwitterKit (2.8.1):
+    - TwitterCore (>= 2.8)
 
 DEPENDENCIES:
-  - MobileCenter/Analytics (~> 0.13.0)
-  - MobileCenter/Crashes (~> 0.13.0)
-  - RNMobileCenterShared (~> 0.10.0)
+  - AppCenter/Analytics (~> 1.6.0)
+  - AppCenter/Crashes (~> 1.6.0)
+  - AppCenter/Push (~> 1.6.0)
+  - AppCenterReactNativeShared (~> 1.5.0)
+  - FBSDKLoginKit
+  - TwitterKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AppCenter
+    - AppCenterReactNativeShared
+    - Bolts
+    - Fabric
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - TwitterCore
+    - TwitterKit
 
 SPEC CHECKSUMS:
-  MobileCenter: aba87f4957647dfbd0b5e71ecac1070892a0abbb
-  RNMobileCenterShared: d36d0245f9eb9627e60cd20623502906f61a783f
+  AppCenter: 05e11ff99d3224131363abb61830172f5f28e53e
+  AppCenterReactNativeShared: fac1cabd1f76cc2f7019a53a58eaae60734a68bd
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
+  FBSDKCoreKit: 54db4c581123745d25a9f7c1608020b3aeabd118
+  FBSDKLoginKit: 95a252ddffd6919c0f132a02292f0824616d8709
+  TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
+  TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: ad4ff301737dcf1890f0be824e5cfbd7e6951de5
+PODFILE CHECKSUM: 333a3f6b766edabae50211450c9acec14578e02b
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.2

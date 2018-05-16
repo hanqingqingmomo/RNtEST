@@ -3,10 +3,7 @@
 import React from 'react';
 import Config from 'react-native-config';
 import { NativeModules } from 'react-native';
-
 import { Button } from '../../atoms';
-
-const { RNTwitterSignIn } = NativeModules;
 
 type TwitterPayload = {
   authToken: string,
@@ -16,8 +13,6 @@ type TwitterPayload = {
   userID: string,
   userName: string,
 };
-
-RNTwitterSignIn.init(Config.TWITTER_ID, Config.TWITTER_SECRET);
 
 export type TwitterAuth = {
   provider: 'twitter',
@@ -32,31 +27,41 @@ type Props = {
   style: Object | number,
 };
 
-export function TwitterModal(props: Props) {
-  return (
-    <Button
-      block
-      {...props}
-      size="lg"
-      onPress={async () => {
-        try {
-          const data: TwitterPayload = await RNTwitterSignIn.logIn();
-          props.onAuthStatusChange({
-            provider: 'twitter',
-            credentials: {
-              access_token: data.authToken,
-              access_token_secret: data.authTokenSecret,
-            },
-          });
-          if (__DEV__) {
-            console.log('[Twitter] Auth Login', data);
+export class TwitterModal extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+    NativeModules.RNTwitterSignIn.init(
+      Config.TWITTER_ID,
+      Config.TWITTER_SECRET
+    );
+  }
+
+  render() {
+    return (
+      <Button
+        block
+        {...this.props}
+        size="lg"
+        onPress={async () => {
+          try {
+            const data: TwitterPayload = await NativeModules.RNTwitterSignIn.logIn();
+            this.props.onAuthStatusChange({
+              provider: 'twitter',
+              credentials: {
+                access_token: data.authToken,
+                access_token_secret: data.authTokenSecret,
+              },
+            });
+            if (__DEV__) {
+              console.log('[Twitter] Auth Login', data);
+            }
+          } catch (error) {
+            if (__DEV__) {
+              console.log('[Twitter] Auth Error', error);
+            }
           }
-        } catch (error) {
-          if (__DEV__) {
-            console.log('[Twitter] Auth Error', error);
-          }
-        }
-      }}
-    />
-  );
+        }}
+      />
+    );
+  }
 }

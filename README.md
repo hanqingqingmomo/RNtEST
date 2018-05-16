@@ -1,58 +1,37 @@
 # YWCA (PbA) - React Native
 
-## Configuration
-Application can run in 3 different environments:
-
-* **dev:** local development environment. Used for development and debugging purposes.
-* **beta:** QA environment, connected to QA/beta/staging services (e.g. testing REST API, bug reporting, ...)
-* **prod:** production environment, connected to production services (e.g. live REST API, bug reporting, ...)
-
-
-
-Configuration files loaded for particular environments:
-
-* dev: **.env.dev**
-* beta: **.env.beta**
-* prod: **.env.prod**
-
-You can find configuration example in `.env.example` file at project root.
-
 ## Launching application
-### Android
 
-We will use `react-native` CLI to launch application on Android simulator, or device if connected.
-RN CLI allows us to launch application in specific environment using `--variant` flag.
-
-Make sure configuration file for selected environment exists before launching!
-
-**1. Run application in development environment:**
+To run application on simulator, please run one of following commands:
 
 ```shell
-react-native run-android --variant devDebug
+yarn run:ios
+// or
+yarn run:android
 ```
 
-**2. Run application in other environments:**
+You are then asked to pick configuration file as described in **Configuration** section
 
-```shell
-react-native run-android --variant {environment}Debug
-```
+## Configuration
 
+Application supports static configuration via **_env_** file. Configuration module loads environment variables from a .env file into **_Config_** object available from **_react-native-config_** package.
 
+You can create as many env files as you need. You are asked which file should be used before running application.
 
-### iOS
-Unfortunately, RN CLI does not work correctly with `--scheme` flag as of now. We will be using xCode in order to launch application in other than development environment.
+**Requirements:**
 
-Make sure configuration file for selected environment exists before launching!
+* follow format as described in `.env.example` file.
+  You can find configuration example in `.env.example` file at project root.
+* prefix files with `.env` prefix, e.g.:
+  `.env.dev`
+  `.env.production`
 
-Also, after selecting different schema, do "Clean (Shift + Cmd + K)" before running build task. If you skip this step, configuration file will be ignored.
+**Usage:**
 
-**1. Run application in development environment:**
-
-```shell
-react-native run-ios
-```
-**2. Run application in other environments:**
-
-* Open `ios/app.xcodeproj` in xCode
-* Select desired product schema and device
-* Press "Build"
+* run `yarn env:activate` to initiate activation process.
+  CLI finds available env files and you are asked to confirm your selection.
+  When you - `yarn env:activate` is run together with `yarn run:(ios|android)`.
+  We suggest this approach in order to run app right away.
+* use `yarn env:generate` to generate content of release env file from loaded system environment variables. This is only usefull for etc. building in cloud (AppCenter).
+  Only variables prefixed with `RN_` will be picked.
+* use `import Config from 'react-native-config';` to access loaded variables.

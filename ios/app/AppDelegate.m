@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #import "AppDelegate.h"
-#import <RNAnalytics/RNAnalytics.h>
-#import <RNCrashes/RNCrashes.h>
-#import <RNMobileCenter/RNMobileCenter.h>
+#import <AppCenterReactNativePush/AppCenterReactNativePush.h>
+#import <AppCenterReactNativeCrashes/AppCenterReactNativeCrashes.h>
+#import <AppCenterReactNativeAnalytics/AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNative/AppCenterReactNative.h>
 #import "SplashScreen.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -25,11 +24,13 @@
 {
   NSURL *jsCodeLocation;
 
-  [RNAnalytics registerWithInitiallyEnabled:true];  // Initialize Mobile Center analytics
+  [AppCenterReactNativePush register];  // Initialize AppCenter push
 
-  [RNCrashes registerWithCrashDelegate: [[RNCrashesDelegateAlwaysSend alloc] init]];  // Initialize Mobile Center crashes
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];  // Initialize AppCenter crashes
 
-  [RNMobileCenter register];  // Initialize Mobile Center
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];  // Initialize AppCenter analytics
+
+  [AppCenterReactNative register];  // Initialize AppCenter 
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 
@@ -47,9 +48,25 @@
 
   [SplashScreen show];
 
-  // return YES;
-  return [[FBSDKApplicationDelegate sharedInstance] application:application
+  [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
+
+  return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+  if([[url scheme] rangeOfString:@"twitterkit"].location == 0) {
+    // Twitter
+    return [[Twitter sharedInstance] application:application openURL:url options:options];
+  } else if([[url scheme] rangeOfString:@"fb"].location == 0) {
+    // Facebook SDK
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                       annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+  }
+
+  return false;
 }
 
 // Required to register for notifications
@@ -57,50 +74,26 @@
 {
   [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
 }
-
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
-
 // Required for the notification event. You must call the completion handler after handling the remote notification.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   [RCTPushNotificationManager didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
-
 // Required for the registrationError event.
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
   [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
-
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
-}
-
-// Facebook SDK
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-  [FBSDKAppEvents activateApp];
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-  if([[url scheme] rangeOfString:@"twitterkit"].location == 0) { // Twitter
-    return [[Twitter sharedInstance] application:application openURL:url options:options];
-  } else if([[url scheme] rangeOfString:@"fb"].location == 0) { // Facebook SDK
-    NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
-
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                      annotation:nil];
-  }
-
-  return false;
 }
 
 @end

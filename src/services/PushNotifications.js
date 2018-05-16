@@ -1,67 +1,37 @@
 // @flow
 
-import PN from 'react-native-push-notification';
-import Config from 'react-native-config';
+import Push from 'appcenter-push';
+import { AppState } from 'react-native';
 
-import type { NotificationAndroid, NotificationIOS } from '../Types';
+Push.setListener({
+  onPushNotificationReceived: function(pushNotification) {
+    let message = pushNotification.message;
+    let title = pushNotification.title;
 
-type RegistrationResponse = {
-  token: string,
-  os: 'ios' | 'android',
-};
+    if (message === null || message === undefined) {
+      // Android messages received in the background don't include a message. On Android, that fact can be used to
+      // check if the message was received in the background or foreground. For iOS the message is always present.
+      title = 'Android background';
+      message = '<empty>';
+    }
 
-export default class PushNotificationsHandler {
-  static register(): Promise<{ token: string }> {
-    return new Promise((resolve, reject) => {
-      const rejectTimeout = setTimeout(resolve, 20000, { token: '' });
+    // Custom name/value pairs set in the App Center web portal are in customProperties
+    if (
+      pushNotification.customProperties &&
+      Object.keys(pushNotification.customProperties).length > 0
+    ) {
+      message +=
+        '\nCustom properties:\n' +
+        JSON.stringify(pushNotification.customProperties);
+    }
 
-      PN.configure({
-        onRegister(response: RegistrationResponse) {
-          clearTimeout(rejectTimeout);
-          resolve(response);
-        },
-
-        onNotification(
-          pushNotification: NotificationAndroid | NotificationIOS
-        ) {
-          let message = '';
-          let title = '';
-
-          switch (typeof pushNotification['notification']) {
-            case 'undefined':
-              message = pushNotification.message;
-              break;
-
-            case 'object':
-              message = pushNotification.notification.body;
-              title = pushNotification.notification.title;
-              break;
-
-            default:
-              break;
-          }
-
-          if (pushNotification.foreground) {
-            global.alertWithType(
-              'custom',
-              title || Config.BUNDLE_DISPLAY_NAME,
-              message
-            );
-          }
-        },
-
-        senderID: Config.FCM_SENDER_ID,
-
-        permissions: {
-          alert: true,
-          badge: true,
-          sound: true,
-        },
-
-        popInitialNotification: true,
-
-        requestPermissions: true,
-      });
-    });
-  }
-}
+    if (AppState.currentState === 'active') {
+      global.alertWithType('custom', title, message);
+    } else {
+      // Sometimes the push callback is received shortly before the app is fully active in the foreground.
+      // In this case you'll want to save off the notification info and wait until the app is fully shown
+      // in the foreground before displaying any UI. You could use AppState.addEventListener to be notified
+      // when the app is fully in the foreground.
+    }
+  },
+});
