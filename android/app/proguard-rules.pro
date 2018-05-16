@@ -71,3 +71,5 @@
 
 # React Native Config
 -keep class com.app.BuildConfig { *; }
+
+-dontwarn com.microsoft.appcenter.push.**

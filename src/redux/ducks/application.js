@@ -9,7 +9,6 @@ export const APP_END_SESSION = 'application/END_SESSION';
 //
 type State = {
   +isAuthenticated: boolean,
-  +pushToken: ?string,
   +userAccessToken: ?string,
   +userProfile: ?Object,
   +provider: ?string,
@@ -43,10 +42,6 @@ function setUserData(payload: $Shape<State>): UserSetDataAction {
   };
 }
 
-export function setPushToken(pushToken: string): UserSetDataAction {
-  return setUserData({ pushToken });
-}
-
 export function setUserAccessToken(userAccessToken: string): UserSetDataAction {
   return setUserData({ userAccessToken });
 }
@@ -71,7 +66,6 @@ export function getProvider(state: { application: State }) {
 //
 const INITIAL_STATE: State = {
   isAuthenticated: false,
-  pushToken: null,
   userAccessToken: null,
   userProfile: null,
   provider: null,

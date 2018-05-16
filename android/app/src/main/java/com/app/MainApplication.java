@@ -3,6 +3,7 @@ package com.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.appcenter.push.Push;
 import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
@@ -72,6 +73,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    Push.setSenderId(BuildConfig.FCM_SENDER_ID);
     SoLoader.init(this, /* native exopackage */ false);
   }
 }
