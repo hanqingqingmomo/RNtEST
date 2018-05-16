@@ -110,11 +110,9 @@ class SelectContactsScreen extends Component<
   fetchContacts = () => {
     Contacts.getAll((err, contacts) => {
       if (err !== 'denied') {
-        const filteredContacts = contacts.filter(contact => {
-          const { emailAddresses, phoneNumbers } = contact;
-
-          return !!emailAddresses.length || !!phoneNumbers.length;
-        });
+        const filteredContacts = contacts.filter(
+          contact => !!contact.emailAddresses.length
+        );
         this.setState({ contacts: filteredContacts });
       }
     });
