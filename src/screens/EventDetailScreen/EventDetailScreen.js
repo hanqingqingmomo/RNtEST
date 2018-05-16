@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { WhitePortal, BlackPortal } from 'react-native-portal';
 
 import {
   Tabs,
@@ -8,11 +9,13 @@ import {
   EventHeader,
   CenterView,
   ActivityIndicator,
+  NavigationTextButton,
 } from '../../atoms';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
 import { css } from '../../utils/style';
+import { getColor } from '../../utils/color';
 import type { Community, User } from '../../Types';
 import {
   acceptEvent,
@@ -38,6 +41,11 @@ export default class EventDetailScreen extends Component<Props, State> {
     event: null,
   };
 
+  static navigationOptions = () => ({
+    headerTitle: 'Event',
+    headerRight: <WhitePortal name="editButton" />,
+  });
+
   componentWillMount() {
     this.fetch();
   }
@@ -50,12 +58,12 @@ export default class EventDetailScreen extends Component<Props, State> {
         this.props.navigation.state.params.event_id
       );
 
-      if (__DEV__) {
-        console.log('[Event detail] fetch', data);
-      }
-
       if (data.error) {
         throw new Error(data.error);
+      }
+
+      if (__DEV__) {
+        console.log('[Event detail] fetch', data);
       }
 
       this.setState({ event: data });
@@ -141,15 +149,30 @@ export default class EventDetailScreen extends Component<Props, State> {
     console.log(user);
   };
 
+  _onEditEvent = () => {
+    this.props.navigation.navigate('CreateEventScreen', {
+      event_id: this.state.event.id,
+    });
+  };
+
   render() {
     const { busy, event } = this.state;
 
-    return busy ? (
+    return busy || !event ? (
       <CenterView>
         <ActivityIndicator />
       </CenterView>
     ) : (
       <View style={css('flex', 1)}>
+        {/* {event.is_author ? (
+          <BlackPortal name="editButton">
+            <NavigationTextButton
+              title="Edit"
+              textColor={getColor('orange')}
+              onPress={this._onEditEvent}
+            />
+          </BlackPortal>
+        ) : null} */}
         <EventHeader {...event} />
         <Tabs
           activeItem={this.state.activeTab}
