@@ -160,6 +160,7 @@ export default class EventDetailScreen extends Component<Props, State> {
 
   _onCreateComment = async (id, value: string) => {
     const { event } = this.state;
+    const replies = [...event.replies];
 
     try {
       const { data } = await (id === event.id
@@ -167,9 +168,9 @@ export default class EventDetailScreen extends Component<Props, State> {
         : RQCreateComment(id, value));
 
       if (id === event.id) {
-        event.replies.push(data);
+        replies.push(data);
       } else {
-        event.replies.map((reply: Object) => {
+        replies.map((reply: Object) => {
           if (id === reply.id) {
             reply.replies.push(data);
           }
@@ -178,11 +179,15 @@ export default class EventDetailScreen extends Component<Props, State> {
         });
       }
 
+      event.replies = [];
+      this.setState({ event });
+
+      event.replies = replies;
+      this.setState({ event });
+
       if (__DEV__) {
         console.log('[Event detail] create comment', event.replies);
       }
-
-      this.setState({ event });
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     }
