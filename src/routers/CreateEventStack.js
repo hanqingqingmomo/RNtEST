@@ -14,7 +14,7 @@ import {
 } from '../screens';
 import { NavigationIconButton } from '../atoms';
 
-export default StackNavigator({
+export const screens = {
   CreateEventScreen: {
     screen: CreateEventScreen,
     navigationOptions: ({ navigation, screenProps }) => ({
@@ -51,4 +51,6 @@ export default StackNavigator({
   SelectContactsScreen: {
     screen: SelectContactsScreen,
   },
-});
+};
+
+export default StackNavigator(screens);
