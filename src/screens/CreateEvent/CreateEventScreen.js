@@ -2,7 +2,13 @@
 
 import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
-import { TextInput, FlatList, Alert, Platform } from 'react-native';
+import {
+  TextInput,
+  FlatList,
+  Alert,
+  Platform,
+  DeviceEventEmitter,
+} from 'react-native';
 import { showImagePicker } from 'react-native-image-picker';
 import {
   type NavigationScreenConfigProps,
@@ -290,8 +296,12 @@ export default class CreateEventScreen extends Component<Props, State> {
     try {
       if (params && params.event_id) {
         await updateEvent(params.event_id, data);
+
+        DeviceEventEmitter.emit('update event', values);
       } else {
         await createEvent(data);
+
+        DeviceEventEmitter.emit('create event', values);
       }
 
       this.props.screenProps.dismissModalRoute();
@@ -363,6 +373,7 @@ export default class CreateEventScreen extends Component<Props, State> {
 
     await deleteEvent(event_id);
 
+    DeviceEventEmitter.emit('delete event', event_id);
 
     if (__DEV__) {
       console.log('[Delete Event]');

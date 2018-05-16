@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
+import { DeviceEventEmitter } from 'react-native';
 
 import {
   Tabs,
@@ -48,7 +49,14 @@ export default class EventDetailScreen extends Component<Props, State> {
 
   componentWillMount() {
     this.fetch();
+    this.addListeners();
   }
+
+  addListeners = () => {
+    DeviceEventEmitter.addListener('update event', (data: Object) => {
+      this.fetch();
+    });
+  };
 
   fetch = async () => {
     this.setState({ busy: true });

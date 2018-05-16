@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, RefreshControl } from 'react-native';
+import { StyleSheet, RefreshControl, DeviceEventEmitter } from 'react-native';
 import { WhitePortal, BlackPortal } from 'react-native-portal';
 import plural from 'plural-parens';
 import { type NavigationScreenConfigProps } from 'react-navigation';
@@ -37,7 +37,20 @@ export default class EventFeedScreen extends React.Component<
 
   componentWillMount() {
     this.fetch();
+    this.addListeners();
   }
+
+  addListeners = () => {
+    DeviceEventEmitter.addListener('create event', (data: Object) => {
+      this.fetch();
+    });
+    DeviceEventEmitter.addListener('update event', (data: Object) => {
+      this.fetch();
+    });
+    DeviceEventEmitter.addListener('delete event', (event_id: string) => {
+      this.fetch();
+    });
+  };
 
   fetch = async () => {
     try {
