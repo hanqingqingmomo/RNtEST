@@ -67,8 +67,8 @@ type PayloadContact = {
   email: ?string,
   first_name: string,
   last_name: string,
-  phone: ?string,
   profile_photo: string,
+  record_id: string,
 };
 
 type CreateEventPayload = {
@@ -203,18 +203,13 @@ function prepareCommunities(
 }
 
 function prepareContacts(contacts: Array<Contact>): Array<PayloadContact> {
-  return contacts.map((contact: Contact): PayloadContact => {
-    const emails = contact.emailAddresses;
-    const phones = contact.phoneNumbers;
-
-    return {
-      email: emails.length ? emails[0].email || null : null,
-      first_name: contact.givenName,
-      last_name: contact.familyName,
-      phone: phones.length ? phones[0].label || null : null,
-      profile_photo: contact.thumbnailPath,
-    };
-  });
+  return contacts.map((contact: Contact): PayloadContact => ({
+    email: contact.emailAddresses[0].email,
+    first_name: contact.givenName,
+    last_name: contact.familyName,
+    profile_photo: contact.thumbnailPath,
+    record_id: contact.recordID,
+  }));
 }
 
 function preparePostIn(commuities: Array<Community>): Array<string> {
