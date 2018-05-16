@@ -12,9 +12,8 @@ import {
   Avatar,
   ShadowView,
   View,
-  Screen,
 } from '../../atoms';
-import type { User, Contact, Community, RSVPStatuses } from '../../Types';
+import type { User, Community, RSVPStatuses } from '../../Types';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 
