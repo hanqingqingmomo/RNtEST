@@ -13,6 +13,7 @@ import {
   NavigationTextButton,
   SegmentedControl,
 } from '../../atoms';
+import { CommentList, CommentInput } from '../../blocks';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
@@ -22,7 +23,7 @@ import type { Community, User } from '../../Types';
 import {
   acceptEvent,
   getEvent,
-  createEventCommnet,
+  createEventComment,
   RQCreateComment,
   getEventComments,
 } from '../../utils/requestFactory';
@@ -162,7 +163,7 @@ export default class EventDetailScreen extends Component<Props, State> {
 
     try {
       const { data } = await (id === event.id
-        ? createEventCommnet(id, value)
+        ? createEventComment(id, value)
         : RQCreateComment(id, value));
 
       if (id === event.id) {
@@ -289,10 +290,12 @@ export default class EventDetailScreen extends Component<Props, State> {
         </ScrollView>
 
         {activeTab === 'About' ? (
-          <CommentEventInput
+          <CommentInput
             target={replyingTo || { id: event.id, type: 'event' }}
+            type="event"
             onReplyCancel={this._onReplyCancel}
             passRef={this.passRef}
+            onCreateComment={this._onCreateComment}
           />
         ) : null}
       </View>
