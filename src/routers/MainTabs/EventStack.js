@@ -8,13 +8,13 @@ import {
 } from '../../screens';
 
 export default StackNavigator({
-  EventFeedScreen: {
+  'EventTab:EventFeedScreen': {
     screen: EventFeedScreen,
   },
-  EventDetailScreen: {
+  'EventTab:EventDetailScreen': {
     screen: EventDetailScreen,
   },
-  MemberProfileScreen: {
+  'EventTab:MemberProfileScreen': {
     screen: MemberProfileScreen,
   },
 });

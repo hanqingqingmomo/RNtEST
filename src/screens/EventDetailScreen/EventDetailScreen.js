@@ -151,7 +151,7 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   _onNavigateToMemberProfile = (user: User) => {
-    this.props.navigation.navigate('MemberProfileScreen', {
+    this.props.navigation.navigate('EventTab:MemberProfileScreen', {
       user,
     });
   };

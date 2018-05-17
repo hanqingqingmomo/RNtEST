@@ -68,7 +68,7 @@ export default class EventFeed extends Component<Props> {
   }
 
   _navigateToDetail = (event_id: string) => {
-    this.props.navigation.navigate('EventDetailScreen', { event_id });
+    this.props.navigation.navigate('EventTab:EventDetailScreen', { event_id });
   };
 
   _renderItem = ({ item }: FlatListItemProps) => {

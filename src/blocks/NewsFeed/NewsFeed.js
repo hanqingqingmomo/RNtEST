@@ -1,7 +1,12 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, RefreshControl, InteractionManager, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  RefreshControl,
+  InteractionManager,
+  ScrollView,
+} from 'react-native';
 import { connect } from 'react-redux';
 
 import { View } from '../../atoms';
@@ -69,7 +74,8 @@ class NewsFeed extends Component<Props> {
         item={item}
         navigateToCommunity={this.props.navigateToCommunity}
         navigateToPostDetail={() => this.props.navigateToPostDetail(item)}
-        navigateToMemberProfile={() => this.props.navigateToMemberProfile(item.author)}
+        navigateToMemberProfile={() =>
+          this.props.navigateToMemberProfile(item.author)}
       />
     </View>
   );
@@ -90,10 +96,14 @@ class NewsFeed extends Component<Props> {
         }
       >
         {this.props.ListHeaderComponent !== undefined ? (
-          <View style={styles.ListHeaderComponent}>{this.props.ListHeaderComponent}</View>
+          <View style={styles.ListHeaderComponent}>
+            {this.props.ListHeaderComponent}
+          </View>
         ) : null}
         {timeline.content.map((item: Post, index: number) => [
-          index > 0 ? <ItemSeparatorComponent key={`${item.id}-${index}`} /> : null,
+          index > 0 ? (
+            <ItemSeparatorComponent key={`${item.id}-${index}`} />
+          ) : null,
           this.renderItem(item),
         ])}
         <View style={styles.ListFooterComponent}>
