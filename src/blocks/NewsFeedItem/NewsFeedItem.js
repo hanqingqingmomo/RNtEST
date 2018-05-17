@@ -85,7 +85,8 @@ class NewsFeedItem extends Component<Props> {
 
   render() {
     const { item, isDetail, radius } = this.props;
-    const { author, event } = item;
+    const { author, event, type } = item;
+
     // TODO move green border logic outside of this component
     return (
       <ShadowView
@@ -98,9 +99,9 @@ class NewsFeedItem extends Component<Props> {
             navigateToCommunity={this.props.navigateToCommunity}
           />
 
-          {this.renderContent(this.props)}
+          {type === 'post' ? this.renderContent(this.props) : null}
 
-          {author ? (
+          {author && type === 'post' ? (
             <View style={styles.authorAvatar}>
               <NewsFeedItemAuthor
                 detailView={this.props.isDetail}
@@ -119,7 +120,7 @@ class NewsFeedItem extends Component<Props> {
             />
           ) : null} */}
 
-          {event ? <NewsFeedItemEvent {...event} /> : null}
+          {type === 'event' ? <NewsFeedItemEvent {...event} /> : null}
 
           <NewsFeedItemFooter
             item={item}
@@ -136,7 +137,7 @@ const mapState = state => ({
   user: selectUser(state),
 });
 
-export default connect(mapState)(NewsFeedItem);
+export default connect(mapState, {})(NewsFeedItem);
 
 const styles = StyleSheet.create({
   container: {

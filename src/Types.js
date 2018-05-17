@@ -130,6 +130,7 @@ export type Post = {
     type: string,
     url: string,
   },
+  type: 'post' | 'event',
   author: User,
   cached_url: ?LinkAttachment,
   comments_count: number,
@@ -138,7 +139,12 @@ export type Post = {
   likes_count: number,
   liked: boolean,
   donation: {}, // todo
-  event: {}, // todo
+  event: {
+    cover_photo: string,
+    end: Date,
+    start: Date,
+    title: string,
+  },
   replies: Array<Comment>,
 };
 

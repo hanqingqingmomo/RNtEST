@@ -8,20 +8,24 @@ import { Text, View, Image, ShadowView } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type Props = {
-  endDate: Date,
-  imageURI: string,
-  startDate: Date,
+  cover_photo: string,
+  end: Date,
+  start: Date,
   title: string,
 };
 
 export default class NewsFeedItemEvent extends Component<Props> {
   render() {
-    const { title, imageURI, startDate, endDate } = this.props;
+    const { title, cover_photo, start, end } = this.props;
 
     return (
       <View>
         <View style={styles.imageWrapper}>
-          <Image source={imageURI} style={styles.image} resizeMode="cover" />
+          <Image
+            source={{ uri: cover_photo }}
+            style={styles.image}
+            resizeMode="cover"
+          />
         </View>
         <View style={styles.dateContainer}>
           <ShadowView style={styles.dateBox} radius={3}>
@@ -31,7 +35,7 @@ export default class NewsFeedItemEvent extends Component<Props> {
               weight="bold"
               color={getColor('gray')}
             >
-              {format(startDate, 'DD')}
+              {format(start, 'DD')}
             </Text>
             <Text
               size={11}
@@ -39,7 +43,7 @@ export default class NewsFeedItemEvent extends Component<Props> {
               weight="600"
               color={getColor('gray')}
             >
-              {format(startDate, 'MMM')}
+              {format(start, 'MMM')}
             </Text>
           </ShadowView>
           <View style={styles.text}>
@@ -55,10 +59,7 @@ export default class NewsFeedItemEvent extends Component<Props> {
               {title}
             </Text>
             <Text size={13} lineHeight={18} color={getColor('gray')}>
-              {`${format(startDate, 'HH:MM A')} - ${format(
-                endDate,
-                'HH:MM A'
-              )}`}
+              {`${format(start, 'HH:MM A')} - ${format(end, 'HH:MM A')}`}
             </Text>
           </View>
         </View>
@@ -69,7 +70,6 @@ export default class NewsFeedItemEvent extends Component<Props> {
 
 const styles = StyleSheet.create({
   imageWrapper: {
-    height: 200,
     marginBottom: 13,
     alignItems: 'center',
     justifyContent: 'center',

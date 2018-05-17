@@ -9,6 +9,7 @@ import { PopupActions } from '../../blocks';
 import type { CommunitySimple, User, Post, PopupAction } from '../../Types';
 import { selectUser } from '../../redux/selectors';
 import { contentReport, contentDestroy } from '../../redux/ducks/contentObject';
+import { getColor } from '../../utils/color';
 
 type Props = {
   item: Post,
@@ -63,21 +64,27 @@ class NewsFeedItemHeader extends Component<Props> {
   }
 
   render() {
+    const { type, communities } = this.props.item;
+    const maxPills = type === 'event' ? 2 : 3;
+
     return (
       <View style={styles.container}>
         <View style={styles.pillsWrapper}>
-          {this.props.item.communities
-            .slice(0, 3)
-            .map((community: CommunitySimple) => (
-              <TouchableItem
-                key={community.id}
-                onPress={() => this.props.navigateToCommunity(community)}
-                hitSlop={HIT_SLOP}
-                style={styles.pill}
-              >
-                <Pill title={community.name} color={'orange'} />
-              </TouchableItem>
-            ))}
+          {type === 'event' ? (
+            <View style={styles.pill}>
+              <Pill title="Event" color={getColor('gray')} truncate />
+            </View>
+          ) : null}
+          {communities.slice(0, maxPills).map((community: CommunitySimple) => (
+            <TouchableItem
+              key={community.id}
+              onPress={() => this.props.navigateToCommunity(community)}
+              hitSlop={HIT_SLOP}
+              style={styles.pill}
+            >
+              <Pill title={community.name} color={'orange'} truncate />
+            </TouchableItem>
+          ))}
         </View>
         <PopupActions actions={this.actions} />
       </View>

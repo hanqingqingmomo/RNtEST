@@ -1,7 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import { NavigationActions } from 'react-navigation';
+import {
+  NavigationActions,
+  type NavigationScreenConfigProps,
+} from 'react-navigation';
 
 import { View } from '../../atoms';
 import { NewsFeed } from '../../blocks';
@@ -10,7 +13,9 @@ import FeedNavigationHeader from './FeedNavigationHeader';
 import StartConversationButton from './StartConversationButton';
 import type { Post, User } from '../../Types';
 
-export default class AggregatedNewsFeedScreen extends Component<{}> {
+type Props = NavigationScreenConfigProps;
+
+export default class AggregatedNewsFeedScreen extends Component<Props> {
   static navigationOptions = ({ screenProps }) => ({
     headerLeft: <FeedNavigationHeader openDrawer={screenProps.openDrawer} />,
     title: 'News Feed',
@@ -29,9 +34,15 @@ export default class AggregatedNewsFeedScreen extends Component<{}> {
   };
 
   navigateToPostDetail = (post: Post) => {
-    this.props.navigation.navigate('GlobalFeedTab:PostScreen', {
-      postId: post.id,
-    });
+    if (post.type === 'post') {
+      this.props.navigation.navigate('GlobalFeedTab:PostScreen', {
+        postId: post.id,
+      });
+    } else if (post.type === 'event') {
+      this.props.navigation.navigate('EventTab:EventDetailScreen', {
+        event_id: post.event.id,
+      });
+    }
   };
 
   navigateToMemberProfile = (user: User) => {
