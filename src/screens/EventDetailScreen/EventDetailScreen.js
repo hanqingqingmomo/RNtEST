@@ -114,9 +114,10 @@ export default class EventDetailScreen extends Component<Props, State> {
       if (__DEV__) {
         console.log('[Event detail] fetch comments', data);
       }
+      event.replies = [];
+      this.setState({ event });
 
       event.replies = data;
-
       this.setState({ event });
     } catch (err) {
       if (__DEV__) {
