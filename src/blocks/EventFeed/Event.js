@@ -168,25 +168,24 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
       >
         {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
       </Text>
-      {event.is_author ? null : (
-        <View style={styles.alignment}>
-          <Button.Icon
-            {...notGoingButton}
-            disabled={pastEvent}
-            iconName="close"
-            onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
-            size="md"
-            style={css('paddingRight', 12)}
-          />
-          <Button.Icon
-            {...goingButton}
-            disabled={pastEvent}
-            iconName="check"
-            onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
-            size="md"
-          />
-        </View>
-      )}
+
+      <View style={styles.alignment}>
+        <Button.Icon
+          {...notGoingButton}
+          disabled={pastEvent}
+          iconName="close"
+          onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
+          size="md"
+          style={css('paddingRight', 12)}
+        />
+        <Button.Icon
+          {...goingButton}
+          disabled={pastEvent}
+          iconName="check"
+          onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
+          size="md"
+        />
+      </View>
     </View>
   );
 }

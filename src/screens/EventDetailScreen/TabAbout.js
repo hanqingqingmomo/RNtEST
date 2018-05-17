@@ -117,11 +117,11 @@ export default class TabAbout extends Component<Props> {
   };
 
   render() {
-    const { description, onActionPress, webinar, is_author } = this.props;
+    const { description, onActionPress, webinar } = this.props;
 
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
-        {is_author ? null : webinar ? (
+        {webinar ? (
           <LiveEventButton onPress={onActionPress} {...this.props} />
         ) : (
           <FutureEventButtons onPress={onActionPress} {...this.props} />
