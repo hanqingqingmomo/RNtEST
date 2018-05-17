@@ -60,7 +60,10 @@ export default class TabEventMembers extends Component<Props> {
 
     return attendees_communities
       .reduce(
-        (acc: Array<*>, communuty: Community) => [...acc, ...communuty.members],
+        (acc: Array<*>, communuty: Community & { members: Array<User> }) => [
+          ...acc,
+          ...communuty.members,
+        ],
         []
       )
       .reduce((acc: Array<User>, member: User) => {
