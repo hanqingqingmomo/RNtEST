@@ -66,12 +66,14 @@ export const palettes = {
       notGoingButton: {
         color: getColor('gray'),
         iconColor: getColor('gray'),
+        outline: true,
       },
     },
     [ATTENDING_STATUS.NOT_GOING]: {
       goingButton: {
         color: getColor('gray'),
         iconColor: getColor('gray'),
+        outline: true,
       },
       notGoingButton: {
         color: getColor('red'),
@@ -90,12 +92,14 @@ export const palettes = {
       notGoingButton: {
         color: getColor('gray'),
         iconColor: getColor('gray'),
+        outline: true,
       },
     },
     [ATTENDING_STATUS.NOT_GOING]: {
       goingButton: {
         color: getColor('gray'),
         iconColor: getColor('gray'),
+        outline: true,
       },
       notGoingButton: {
         color: getColor('gray'),
@@ -116,10 +120,12 @@ export const common = {
     goingButton: {
       color: getColor('gray'),
       iconColor: getColor('gray'),
+      outline: true,
     },
     notGoingButton: {
       color: getColor('gray'),
       iconColor: getColor('gray'),
+      outline: true,
     },
   },
 };
@@ -154,32 +160,29 @@ function _renderEvent({ event, palette, onActionPress }): React$Node {
 
   return (
     <View style={[styles.midSection, styles.alignment]}>
-      <Text color="gray" size={13} lineHeight={15}>
+      <Text
+        color="gray"
+        size={13}
+        lineHeight={15}
+        style={{ paddingVertical: 9 }}
+      >
         {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
       </Text>
       {event.is_author ? null : (
         <View style={styles.alignment}>
           <Button.Icon
-            color={event.current_user_rsvp ? notGoingButton.color : '#B0BEC5'}
+            {...notGoingButton}
             disabled={pastEvent}
-            iconColor={
-              event.current_user_rsvp ? notGoingButton.iconColor : '#B0BEC5'
-            }
             iconName="close"
             onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
-            outline={event.current_user_rsvp !== ATTENDING_STATUS.NOT_GOING}
             size="md"
             style={css('paddingRight', 12)}
           />
           <Button.Icon
-            color={event.current_user_rsvp ? goingButton.color : '#B0BEC5'}
+            {...goingButton}
             disabled={pastEvent}
-            iconColor={
-              event.current_user_rsvp ? goingButton.iconColor : '#B0BEC5'
-            }
             iconName="check"
             onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
-            outline={event.current_user_rsvp !== ATTENDING_STATUS.GOING}
             size="md"
           />
         </View>

@@ -53,13 +53,15 @@ const LiveEventButton = ({ onPress, current_user_rsvp }) => (
 
 const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
   if (!current_user_rsvp) {
-    return null;
+    current_user_rsvp = 'pending';
   }
   const pastEvent = isPast(start);
+
   const palette = {
-    ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
+    ...palettes[!pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
     ...common,
   };
+
   const goingButton = palette[current_user_rsvp].goingButton;
   const notGoingButton = palette[current_user_rsvp].notGoingButton;
 
@@ -68,17 +70,16 @@ const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
       <Text>Are you going?</Text>
       <View style={styles.buttonsWrapper}>
         <Button.Icon
-          color={current_user_rsvp ? notGoingButton.color : getColor('gray')}
-          iconColor={getColor('gray')}
+          {...notGoingButton}
+          disabled={!pastEvent}
           iconName="close"
-          outline
           size="md"
           style={css('paddingRight', 12)}
           onPress={() => onPress(ATTENDING_STATUS.NOT_GOING)}
         />
         <Button.Icon
-          color={current_user_rsvp ? goingButton.color : getColor('gray')}
-          iconColor={getColor('white')}
+          {...goingButton}
+          disabled={!pastEvent}
           iconName="check"
           size="md"
           onPress={() => onPress(ATTENDING_STATUS.GOING)}
