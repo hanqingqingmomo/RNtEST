@@ -51,4 +51,3 @@ export { default as TextInput } from './TextInput';
 export { default as TimeAgo } from './TimeAgo';
 export { default as TouchableItem } from './TouchableItem';
 export { default as View } from './View';
-export { default as EventHeader } from './EventHeader';

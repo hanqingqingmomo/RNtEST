@@ -6,10 +6,10 @@ import format from 'date-fns/format';
 import isBefore from 'date-fns/is_before';
 import isAfter from 'date-fns/is_after';
 
-import { ImageBackground, Pill, Text, View } from './index';
-import { getColor } from '../utils/color';
-import { css } from '../utils/style';
-import type { Community } from '../Types';
+import { ImageBackground, Pill, Text, View } from '../../atoms';
+import { getColor } from '../../utils/color';
+import { css } from '../../utils/style';
+import type { Community } from '../../Types';
 
 type Props = {
   title: string,
@@ -22,7 +22,7 @@ type Props = {
 
 function _renderPills(communities: Array<Community>) {
   const copy = [...communities];
-  const items = copy.splice(0, 2);
+  const items = copy.splice(0, 1);
 
   return (
     <View style={css('flexDirection', 'row')}>
@@ -66,7 +66,7 @@ export default function EventHeader({
 
   return (
     <ImageBackground
-      source={{ uri: cover_photo || '' }}
+      source={cover_photo ? { uri: cover_photo } : require('./bg.jpg')}
       style={styles.container}
     >
       <View style={[styles.dimm, StyleSheet.absoluteFill]} />

@@ -12,13 +12,13 @@ import {
 import {
   Tabs,
   View,
-  EventHeader,
   CenterView,
   ActivityIndicator,
   NavigationTextButton,
   SegmentedControl,
 } from '../../atoms';
 import { CommentList, CommentInput } from '../../blocks';
+import EventHeader from './EventHeader';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
@@ -281,6 +281,7 @@ export default class EventDetailScreen extends Component<Props, State> {
                     {event.replies && event.replies.length ? (
                       <View>
                         <View style={styles.segmentedWrapper}>
+                          {/* $FlowFixMe */}
                           <SegmentedControl
                             labels={['Top comments', 'Newest first']}
                             selectedLabel={this.state.commentType}
@@ -289,6 +290,7 @@ export default class EventDetailScreen extends Component<Props, State> {
                         </View>
 
                         <View style={css('paddingVertical', 20)}>
+                          {/* $FlowFixMe */}
                           <CommentList
                             replies={event.replies}
                             onRequestReply={this._onReply}
