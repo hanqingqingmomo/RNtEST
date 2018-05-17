@@ -45,6 +45,7 @@ export default class EventFeed extends Component<Props> {
           ? 0
           : event_a.webinar ? -1 : 1;
       })
+      .filter((event: EventProps) => !event.webinar) // remove webinar
       .reduce((acc: EventGroup, event: EventProps): EventGroup => {
         const date = format(event.start, 'MM/DD/YYYY');
 
