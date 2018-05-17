@@ -170,9 +170,7 @@ export default class EventDetailScreen extends Component<Props, State> {
         console.log('[Event detail] accept', data);
       }
 
-      event.current_user_rsvp = status;
-
-      this.setState({ event });
+      this.fetch();
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     }
@@ -252,7 +250,7 @@ export default class EventDetailScreen extends Component<Props, State> {
         <ActivityIndicator />
       </CenterView>
     ) : (
-      <View style={css('flex', 1)}>
+      <View style={[css('backgroundColor', 'white'), css('flex', 1)]}>
         <ScrollView
           refreshControl={
             <RefreshControl

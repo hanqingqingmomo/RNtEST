@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 
-import { Text, View, Image, ShadowView } from '../../atoms';
+import { Text, View, Image, ShadowView, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
 
 type Props = {
@@ -12,58 +12,63 @@ type Props = {
   end: Date,
   start: Date,
   title: string,
+  onPress: Function,
 };
 
 export default class NewsFeedItemEvent extends Component<Props> {
   render() {
-    const { title, cover_photo, start, end } = this.props;
+    const { title, cover_photo, start, end, onPress } = this.props;
 
     return (
-      <View>
-        <View style={styles.imageWrapper}>
-          <Image
-            source={{ uri: cover_photo }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </View>
-        <View style={styles.dateContainer}>
-          <ShadowView style={styles.dateBox} radius={3}>
-            <Text
-              size={20}
-              lineHeight={20}
-              weight="bold"
-              color={getColor('gray')}
-            >
-              {format(start, 'DD')}
-            </Text>
-            <Text
-              size={11}
-              lineHeight={11}
-              weight="600"
-              color={getColor('gray')}
-            >
-              {format(start, 'MMM')}
-            </Text>
-          </ShadowView>
-          <View style={styles.text}>
-            <Text
-              size={14}
-              lineHeight={18}
-              weight="600"
-              numberOfLines={2}
-              ellipsizeMode="tail"
-              color="#455A64"
-              style={styles.title}
-            >
-              {title}
-            </Text>
-            <Text size={13} lineHeight={18} color={getColor('gray')}>
-              {`${format(start, 'HH:MM A')} - ${format(end, 'HH:MM A')}`}
-            </Text>
+      <TouchableOpacity onPress={onPress}>
+        <View>
+          {cover_photo ? (
+            <View style={styles.imageWrapper}>
+              <Image
+                source={{ uri: cover_photo }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            </View>
+          ) : null}
+          <View style={styles.dateContainer}>
+            <ShadowView style={styles.dateBox} radius={3}>
+              <Text
+                size={20}
+                lineHeight={20}
+                weight="bold"
+                color={getColor('gray')}
+              >
+                {format(start, 'DD')}
+              </Text>
+              <Text
+                size={11}
+                lineHeight={11}
+                weight="600"
+                color={getColor('gray')}
+              >
+                {format(start, 'MMM')}
+              </Text>
+            </ShadowView>
+            <View style={styles.text}>
+              <Text
+                size={14}
+                lineHeight={18}
+                weight="600"
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                color="#455A64"
+                style={styles.title}
+              >
+                {title}
+              </Text>
+              <Text size={13} lineHeight={18} color={getColor('gray')}>
+                {`${format(start, 'HH:MM A')} - ${format(end, 'HH:MM A')}`}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

@@ -99,9 +99,9 @@ class NewsFeedItem extends Component<Props> {
             navigateToCommunity={this.props.navigateToCommunity}
           />
 
-          {type === 'post' ? this.renderContent(this.props) : null}
+          {event ? null : this.renderContent(this.props)}
 
-          {author && type === 'post' ? (
+          {author && !event ? (
             <View style={styles.authorAvatar}>
               <NewsFeedItemAuthor
                 detailView={this.props.isDetail}
@@ -120,7 +120,12 @@ class NewsFeedItem extends Component<Props> {
             />
           ) : null} */}
 
-          {type === 'event' ? <NewsFeedItemEvent {...event} /> : null}
+          {event ? (
+            <NewsFeedItemEvent
+              {...event}
+              onPress={this.props.navigateToPostDetail}
+            />
+          ) : null}
 
           <NewsFeedItemFooter
             item={item}

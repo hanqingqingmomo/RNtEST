@@ -34,13 +34,13 @@ export default class AggregatedNewsFeedScreen extends Component<Props> {
   };
 
   navigateToPostDetail = (post: Post) => {
-    if (post.type === 'post') {
-      this.props.navigation.navigate('GlobalFeedTab:PostScreen', {
-        postId: post.id,
-      });
-    } else if (post.type === 'event') {
+    if (post.event) {
       this.props.navigation.navigate('EventTab:EventDetailScreen', {
         event_id: post.event.id,
+      });
+    } else {
+      this.props.navigation.navigate('GlobalFeedTab:PostScreen', {
+        postId: post.id,
       });
     }
   };

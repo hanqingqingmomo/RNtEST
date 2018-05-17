@@ -64,13 +64,13 @@ class NewsFeedItemHeader extends Component<Props> {
   }
 
   render() {
-    const { type, communities } = this.props.item;
-    const maxPills = type === 'event' ? 2 : 3;
+    const { communities, event } = this.props.item;
+    const maxPills = event ? 2 : 3;
 
     return (
       <View style={styles.container}>
         <View style={styles.pillsWrapper}>
-          {type === 'event' ? (
+          {event ? (
             <View style={styles.pill}>
               <Pill title="Event" color={getColor('gray')} truncate />
             </View>
