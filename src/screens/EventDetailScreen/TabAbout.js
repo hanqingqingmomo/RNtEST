@@ -56,12 +56,10 @@ const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
     current_user_rsvp = 'pending';
   }
   const pastEvent = isPast(start);
-
   const palette = {
-    ...palettes[!pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
+    ...palettes[pastEvent ? EVENT_STATUS.INACTIVE : EVENT_STATUS.ACTIVE],
     ...common,
   };
-
   const goingButton = palette[current_user_rsvp].goingButton;
   const notGoingButton = palette[current_user_rsvp].notGoingButton;
 
