@@ -225,6 +225,10 @@ export default function Event({
     ...common,
   };
 
+  if (!event.current_user_rsvp) {
+    event.current_user_rsvp = 'pending';
+  }
+
   return event.webinar ? null : (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => onPress(event.id)}>
