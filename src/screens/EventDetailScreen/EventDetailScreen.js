@@ -24,7 +24,7 @@ import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
 import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
-import type { Community, User } from '../../Types';
+import type { Community, User, RSVPStatuses } from '../../Types';
 import {
   acceptEvent,
   getEvent,
@@ -156,7 +156,9 @@ export default class EventDetailScreen extends Component<Props, State> {
     });
   };
 
-  _onActionPress = async (status: 'going' | 'not_going') => {
+  _onActionPress = async (status: RSVPStatuses) => {
+    const { event } = this.state;
+
     try {
       const { data } = await acceptEvent(this.state.event.id, status);
 
@@ -167,6 +169,10 @@ export default class EventDetailScreen extends Component<Props, State> {
       if (__DEV__) {
         console.log('[Event detail] accept', data);
       }
+
+      event.current_user_rsvp = status;
+
+      this.setState({ event });
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     }
