@@ -160,10 +160,10 @@ export default class EventDetailScreen extends Component<Props, State> {
     const { event } = this.state;
 
     try {
-      const { data } = await acceptEvent(this.state.event.id, status);
+      const { data, ok } = await acceptEvent(this.state.event.id, status);
 
-      if (data.error) {
-        throw new Error(data.error);
+      if (!ok) {
+        throw new Error(data.error || data);
       }
 
       if (__DEV__) {
