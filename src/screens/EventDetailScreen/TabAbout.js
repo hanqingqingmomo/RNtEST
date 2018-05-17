@@ -69,7 +69,7 @@ const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
       <View style={styles.buttonsWrapper}>
         <Button.Icon
           {...notGoingButton}
-          disabled={!pastEvent}
+          disabled={pastEvent}
           iconName="close"
           size="md"
           style={css('paddingRight', 12)}
@@ -77,7 +77,7 @@ const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
         />
         <Button.Icon
           {...goingButton}
-          disabled={!pastEvent}
+          disabled={pastEvent}
           iconName="check"
           size="md"
           onPress={() => onPress(ATTENDING_STATUS.GOING)}
