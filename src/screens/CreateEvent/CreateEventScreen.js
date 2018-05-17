@@ -44,6 +44,7 @@ import {
   getEvent,
   deleteEvent,
   updateEvent,
+  eventCoverPhotoUpload,
 } from '../../utils/requestFactory';
 
 type Props = NavigationScreenConfigProps;
@@ -52,6 +53,7 @@ type State = {
   selectedField: string,
   busy: boolean,
   initialValues: Object,
+  uploadImage: boolean,
 };
 
 type PayloadCommunity = {
@@ -249,6 +251,7 @@ export default class CreateEventScreen extends Component<Props, State> {
     selectedField: '',
     busy: false,
     initialValues: INITIAL_VALUES,
+    uploadImage: false,
   };
 
   componentWillMount() {
@@ -286,6 +289,7 @@ export default class CreateEventScreen extends Component<Props, State> {
   };
 
   _onSubmit = async (values: Object) => {
+    const { uploadImage } = this.state;
     const { params, dismissModalRoute } = this.props.screenProps;
 
     this.setState({ busy: true });
@@ -300,9 +304,21 @@ export default class CreateEventScreen extends Component<Props, State> {
       if (params && params.event_id) {
         await updateEvent(params.event_id, data);
 
+        if (uploadImage) {
+          await eventCoverPhotoUpload(params.event_id, {
+            cover_photo: data.cover_photo,
+          });
+        }
+
         DeviceEventEmitter.emit('update event', values);
       } else {
-        await createEvent(data);
+        const response = await createEvent(data);
+
+        if (uploadImage) {
+          await eventCoverPhotoUpload(response.data.id, {
+            cover_photo: values.cover_photo,
+          });
+        }
 
         DeviceEventEmitter.emit('create event', values);
       }
@@ -324,6 +340,7 @@ export default class CreateEventScreen extends Component<Props, State> {
       if (error) {
         Alert.alert('Error', error);
       } else if (!didCancel) {
+        this.setState({ uploadImage: true });
         formik.setFieldValue('cover_photo', uri);
       }
     });

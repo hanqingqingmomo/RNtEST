@@ -314,6 +314,12 @@ export const createEventComment = (event_id: string, text_content: string) =>
 export const getEventComments = (event_id: string, sortComments: string = '') =>
   api.get(`/event/${event_id}/comments?sortComments=${sortComments}`);
 
+export const eventCoverPhotoUpload = (event_id: string, data: Object) =>
+  api.post(
+    `/event/${event_id}/cover_photo`,
+    makeFormData(data, ['cover_photo'])
+  );
+
 /**
  * News feed requests
  */
