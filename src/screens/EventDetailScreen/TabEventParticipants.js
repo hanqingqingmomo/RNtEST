@@ -54,15 +54,25 @@ export default class TabEventMembers extends Component<Props> {
       return [];
     }
 
-    return attendees_communities.reduce(
-      (acc: Array<*>, communuty: Community) => {
-        return [...acc, ...communuty.members];
-      },
-      []
-    );
+    function some(array: Array<User>, user: User) {
+      return array.some((m: User) => m.id === user.id);
+    }
+
+    return attendees_communities
+      .reduce(
+        (acc: Array<*>, communuty: Community) => [...acc, ...communuty.members],
+        []
+      )
+      .reduce((acc: Array<User>, member: User) => {
+        if (!some(acc, member)) {
+          acc.push(member);
+        }
+
+        return acc;
+      }, []);
   }
 
-  renderItem = ({ item }: { item: User & { rsvp_status: RSVPStatuses } }) => {
+  renderItem({ item }: { item: User & { rsvp_status: RSVPStatuses } }) {
     const style = attendanceStatus[item.rsvp_status];
 
     return (
@@ -87,7 +97,7 @@ export default class TabEventMembers extends Component<Props> {
         cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
       />
     );
-  };
+  }
 
   renderAttendance() {
     return attendanceDescription.map(item => (
@@ -102,11 +112,13 @@ export default class TabEventMembers extends Component<Props> {
     ));
   }
 
-  getPartisipantsByStatus = (status: RSVPStatuses) =>
-    this.participants.filter(
+  getPartisipantsByStatus(status: RSVPStatuses): Array<User> {
+    /* $FlowFixMe */
+    return this.participants.filter(
       (user: User & { rsvp_status: RSVPStatuses }): boolean =>
         user.rsvp_status === status
     );
+  }
 
   render() {
     return (
@@ -119,6 +131,7 @@ export default class TabEventMembers extends Component<Props> {
           style={[css('marginTop', 10), css('minHeight', '100%')]}
           radius={0}
         >
+          {/* $FlowFixMe */}
           <FlatList
             data={this.participants}
             keyExtractor={(item: User): string => item.id}
