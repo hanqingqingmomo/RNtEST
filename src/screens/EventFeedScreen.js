@@ -81,6 +81,7 @@ export default class EventFeedScreen extends React.Component<
   };
 
   _onChangeListType = (value: $Keys<typeof listType>) => {
+    this.setState({ busy: true });
     this.setState({ listType: value }, () => {
       this.fetch();
     });
