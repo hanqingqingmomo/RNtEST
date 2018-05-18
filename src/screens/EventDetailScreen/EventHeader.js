@@ -63,9 +63,9 @@ export default class EventHeader extends Component<Props, State> {
     const max = this.state.showAllPills ? copy.length : 1;
     const items = copy.splice(0, max);
 
-    function renderPill(title: string) {
+    function renderPill(title: string, key?: string) {
       return (
-        <View style={css('margin', 2)}>
+        <View style={css('margin', 2)} key={key}>
           <Pill color={getColor('white')} title={title} />
         </View>
       );
@@ -73,7 +73,9 @@ export default class EventHeader extends Component<Props, State> {
 
     return (
       <View style={[css('flexDirection', 'row'), css('flexWrap', 'wrap')]}>
-        {items.map((community: Community) => renderPill(community.name))}
+        {items.map((community: Community) =>
+          renderPill(community.name, community.id)
+        )}
         {copy.length > 0 ? (
           <TouchableOpacity onPress={this.onShowAllCommunities}>
             {renderPill(`+${copy.length}`)}
