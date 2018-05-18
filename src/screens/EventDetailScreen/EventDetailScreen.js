@@ -203,7 +203,6 @@ export default class EventDetailScreen extends Component<Props, State> {
 
       if (ok) {
         this.fetchComments();
-        request.error = false;
       }
 
       if (__DEV__) {
@@ -211,11 +210,8 @@ export default class EventDetailScreen extends Component<Props, State> {
       }
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
-      request.error = true;
     } finally {
-      request.loading = false;
-
-      this.setState({ request });
+      this.setState({ request: null });
     }
   };
 
