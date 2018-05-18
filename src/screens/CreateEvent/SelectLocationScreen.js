@@ -110,15 +110,12 @@ export default class SelectLocationScreen extends Component<
   };
 
   _onLocationChange = (searchValue: string) => {
-    this.props.navigation.state.params.formik.setFieldValue(
-      'location',
-      searchValue
-    );
-
     this.setState({ searchValue });
   };
 
   render(): React$Node {
+    const { searchValue } = this.state;
+
     return (
       <Screen fill>
         <BlackPortal name={HEADER_ID}>
@@ -132,28 +129,41 @@ export default class SelectLocationScreen extends Component<
           />
         </BlackPortal>
 
-        {this.filteredLocations.length ? (
-          <TableView.Table>
-            <TableView.Section header="Recent Locations">
-              {this.filteredLocations.map((location: Object): React$Node => (
-                <TableView.Cell
-                  key={location.id}
-                  title={location.name}
-                  onPress={() => this._onCellPress(location.name)}
-                  titleTextColor="#455A64"
-                  cellImageView={
-                    <Icon
-                      name="map-pin"
-                      size="md"
-                      color="#455A64"
-                      style={css('marginRight', 15)}
-                    />
-                  }
-                />
-              ))}
-            </TableView.Section>
-          </TableView.Table>
-        ) : null}
+        <TableView.Table>
+          <TableView.Section header="Recent Locations">
+            {this.filteredLocations.map((location: Object): React$Node => (
+              <TableView.Cell
+                key={location.id}
+                title={location.name}
+                onPress={() => this._onCellPress(location.name)}
+                titleTextColor="#455A64"
+                cellImageView={
+                  <Icon
+                    name="map-pin"
+                    size="md"
+                    color="#455A64"
+                    style={css('marginRight', 15)}
+                  />
+                }
+              />
+            ))}
+            {searchValue ? (
+              <TableView.Cell
+                title={`Just use "${searchValue}"`}
+                onPress={() => this._onCellPress(searchValue)}
+                titleTextColor="#455A64"
+                cellImageView={
+                  <Icon
+                    name="map-pin"
+                    size="md"
+                    color="#455A64"
+                    style={css('marginRight', 15)}
+                  />
+                }
+              />
+            ) : null}
+          </TableView.Section>
+        </TableView.Table>
       </Screen>
     );
   }
