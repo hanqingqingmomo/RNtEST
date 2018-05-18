@@ -17,7 +17,8 @@ import {
   NavigationTextButton,
   SegmentedControl,
 } from '../../atoms';
-import { CommentList, CommentInput } from '../../blocks';
+import { CommentInput } from '../../blocks';
+import CommentList from './CommentList';
 import EventHeader from './EventHeader';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
@@ -73,6 +74,9 @@ export default class EventDetailScreen extends Component<Props, State> {
     DeviceEventEmitter.addListener('update event', (data: Object) => {
       this.fetch();
     });
+    DeviceEventEmitter.addListener('delete comment', (data: Object) => {
+      this.fetchComments();
+    });
   };
 
   fetch = async () => {
@@ -102,7 +106,8 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   fetchComments = async () => {
-    const { commentType, event } = this.state;
+    const { commentType } = this.state;
+    const event = { ...this.state.event };
     const sortKeys = {
       'Top comments': 'popularity',
       'Newest first': '',
@@ -114,8 +119,6 @@ export default class EventDetailScreen extends Component<Props, State> {
       if (__DEV__) {
         console.log('[Event detail] fetch comments', data);
       }
-      event.replies = [];
-      this.setState({ event });
 
       event.replies = data;
       this.setState({ event });
@@ -157,8 +160,6 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   _onActionPress = async (status: RSVPStatuses) => {
-    const { event } = this.state;
-
     try {
       const { data, ok } = await acceptEvent(this.state.event.id, status);
 
@@ -178,30 +179,15 @@ export default class EventDetailScreen extends Component<Props, State> {
 
   _onCreateComment = async (id, value: string) => {
     const { event } = this.state;
-    const replies = [...event.replies];
 
     try {
-      const { data } = await (id === event.id
+      const { ok } = await (id === event.id
         ? createEventComment(id, value)
         : RQCreateComment(id, value));
 
-      if (id === event.id) {
-        replies.push(data);
-      } else {
-        replies.map((reply: Object) => {
-          if (id === reply.id) {
-            reply.replies.push(data);
-          }
-
-          return reply;
-        });
+      if (ok) {
+        this.fetchComments();
       }
-
-      event.replies = [];
-      this.setState({ event });
-
-      event.replies = replies;
-      this.setState({ event });
 
       if (__DEV__) {
         console.log('[Event detail] create comment', event.replies);
