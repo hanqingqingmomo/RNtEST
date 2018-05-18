@@ -52,6 +52,9 @@ type State = {
   event: ?Object,
   replyingTo?: Comment,
   commentType: CommentType,
+  request: {
+    loading: boolean,
+  },
 };
 
 export default class EventDetailScreen extends Component<Props, State> {
@@ -61,6 +64,9 @@ export default class EventDetailScreen extends Component<Props, State> {
     busy: false,
     event: null,
     replyingTo: undefined,
+    request: {
+      loading: false,
+    },
   };
 
   inputRef: ?any;
@@ -180,7 +186,11 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   _onCreateComment = async (id, value: string) => {
-    const { event } = this.state;
+    const { event, request } = this.state;
+
+    request.loading = true;
+
+    this.setState({ request });
 
     try {
       const { ok } = await (id === event.id
@@ -196,6 +206,10 @@ export default class EventDetailScreen extends Component<Props, State> {
       }
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
+    } finally {
+      request.loading = false;
+
+      this.setState({ request });
     }
   };
 
@@ -231,7 +245,7 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   render() {
-    const { busy, event, activeTab, replyingTo } = this.state;
+    const { busy, event, activeTab, replyingTo, request } = this.state;
 
     return busy && !event ? (
       <CenterView>
@@ -309,6 +323,7 @@ export default class EventDetailScreen extends Component<Props, State> {
         {activeTab === 'About' ? (
           <CommentInput
             target={replyingTo || { id: event.id, type: 'event' }}
+            busy={request}
             type="event"
             onReplyCancel={this._onReplyCancel}
             passRef={this.passRef}
