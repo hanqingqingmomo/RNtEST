@@ -6,7 +6,7 @@ import { WhitePortal, BlackPortal } from 'react-native-portal';
 import plural from 'plural-parens';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 
-import { Text, View, ScrollView } from '../atoms';
+import { Text, View, ScrollView, SegmentedControl } from '../atoms';
 import { EventFeed } from '../blocks';
 import { getColor } from '../utils/color';
 import EventFeedHeader from './EventFeedScreen/EventFeedHeader';
@@ -15,10 +15,16 @@ import { getEvents, acceptEvent } from '../utils/requestFactory';
 
 const EVENT_FEED_ID = 'EventFeed:Header';
 
+const listType = {
+  Upcoming: 'upcoming',
+  Discovery: 'discovery',
+};
+
 type State = {
   searchValue: string,
   events: Array<EventProps>,
   busy: boolean,
+  listType: $Keys<typeof listType>,
 };
 
 export default class EventFeedScreen extends React.Component<
@@ -33,6 +39,7 @@ export default class EventFeedScreen extends React.Component<
     searchValue: '',
     events: [],
     busy: true,
+    listType: 'Upcoming',
   };
 
   componentWillMount() {
@@ -54,7 +61,10 @@ export default class EventFeedScreen extends React.Component<
 
   fetch = async () => {
     try {
-      const { data } = await getEvents(this.state.searchValue);
+      const { data } = await getEvents({
+        query: this.state.searchValue,
+        type: listType[this.state.listType],
+      });
 
       if (__DEV__) {
         console.log('[Events] events', data.events);
@@ -70,9 +80,16 @@ export default class EventFeedScreen extends React.Component<
     }
   };
 
+  _onChangeListType = (value: $Keys<typeof listType>) => {
+    this.setState({ listType: value }, () => {
+      this.fetch();
+    });
+  };
+
   _onChangeText = (searchValue: string) => {
-    this.setState({ searchValue });
-    this.fetch();
+    this.setState({ searchValue }, () => {
+      this.fetch();
+    });
   };
 
   _onCreateEvent = () => {
@@ -128,6 +145,14 @@ export default class EventFeedScreen extends React.Component<
           />
         </BlackPortal>
 
+        <View style={styles.segmentedWrapper}>
+          <SegmentedControl
+            labels={['Upcoming', 'Discovery']}
+            selectedLabel={this.state.listType}
+            onChange={this._onChangeListType}
+          />
+        </View>
+
         <Text
           size={12}
           color={getColor('gray')}
@@ -163,5 +188,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 7,
     paddingHorizontal: 10,
+  },
+  segmentedWrapper: {
+    paddingHorizontal: 50,
+    paddingVertical: 10,
+    backgroundColor: 'white',
   },
 });

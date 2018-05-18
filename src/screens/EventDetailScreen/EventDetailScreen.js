@@ -34,7 +34,12 @@ import {
   getEventComments,
 } from '../../utils/requestFactory';
 
-type CommentType = 'Top comments' | 'Newest first';
+const SORT_KEYS = {
+  'Top comments': 'popularity',
+  'Newest first': '',
+};
+
+type CommentType = $Keys<typeof SORT_KEYS>;
 
 type Props = {
   navigation: any,
@@ -108,13 +113,9 @@ export default class EventDetailScreen extends Component<Props, State> {
   fetchComments = async () => {
     const { commentType } = this.state;
     const event = { ...this.state.event };
-    const sortKeys = {
-      'Top comments': 'popularity',
-      'Newest first': '',
-    };
 
     try {
-      const { data } = await getEventComments(event.id, sortKeys[commentType]);
+      const { data } = await getEventComments(event.id, SORT_KEYS[commentType]);
 
       if (__DEV__) {
         console.log('[Event detail] fetch comments', data);
@@ -134,8 +135,9 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   _onCommentSorting = (commentType: CommentType) => {
-    this.setState({ commentType });
-    this.fetchComments();
+    this.setState({ commentType }, () => {
+      this.fetchComments();
+    });
   };
 
   computePaticipantsCount = (): number => {

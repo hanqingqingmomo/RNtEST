@@ -298,9 +298,20 @@ export const deleteEvent = (event_id: string) =>
 export const getEvent = (event_id: string, sortComments?: string) =>
   api.get(`/event/${event_id}?sortComments=${sortComments || 'chronological'}`);
 
-export const getEvents = (query?: string, cursor?: string, limit?: string) =>
+export const getEvents = ({
+  query,
+  cursor,
+  limit,
+  type,
+}: {
+  query?: string,
+  cursor?: string,
+  limit?: string,
+  type: 'upcoming' | 'discovery',
+}) =>
   api.get(
-    `/events?query=${query || ''}&cursor=${cursor || ''}&limit=${limit || ''}`
+    `/events?query=${query || ''}&cursor=${cursor || ''}&limit=${limit ||
+      ''}&type=${type}`
   );
 
 export const acceptEvent = (event_id: string, rsvp_status: string) =>

@@ -314,22 +314,34 @@ export default class CreateEventScreen extends Component<Props, State> {
       } else {
         const response = await createEvent(data);
 
-        if (uploadImage) {
-          await eventCoverPhotoUpload(response.data.id, {
-            cover_photo: values.cover_photo,
-          });
+        if (response.ok) {
+          if (uploadImage) {
+            await eventCoverPhotoUpload(response.data.id, {
+              cover_photo: values.cover_photo,
+            });
+          }
+
+          DeviceEventEmitter.emit('create event', values);
+        } else {
+          const messages = Object.keys(response.data).map(
+            (key: string) => response.data[key]
+          );
+
+          throw new Error(messages.join(' '));
         }
-
-        DeviceEventEmitter.emit('create event', values);
       }
-
-      dismissModalRoute();
     } catch (err) {
       this.setState({ busy: false });
+
+      if (typeof err.message === 'string') {
+        global.alertWithType('error', 'Ooops', err.message);
+      }
 
       if (__DEV__) {
         console.log('[Create Event] submit error', err.message);
       }
+    } finally {
+      dismissModalRoute();
     }
   };
 
