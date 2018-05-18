@@ -52,8 +52,9 @@ type State = {
   event: ?Object,
   replyingTo?: Comment,
   commentType: CommentType,
-  request: {
+  request: ?{
     loading: boolean,
+    error: boolean,
   },
 };
 
@@ -64,9 +65,7 @@ export default class EventDetailScreen extends Component<Props, State> {
     busy: false,
     event: null,
     replyingTo: undefined,
-    request: {
-      loading: false,
-    },
+    request: null,
   };
 
   inputRef: ?any;
@@ -186,7 +185,12 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   _onCreateComment = async (id, value: string) => {
-    const { event, request } = this.state;
+    const { event } = this.state;
+    let { request } = this.state;
+
+    if (!request) {
+      request = {};
+    }
 
     request.loading = true;
 
@@ -199,6 +203,7 @@ export default class EventDetailScreen extends Component<Props, State> {
 
       if (ok) {
         this.fetchComments();
+        request.error = false;
       }
 
       if (__DEV__) {
@@ -206,6 +211,7 @@ export default class EventDetailScreen extends Component<Props, State> {
       }
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
+      request.error = true;
     } finally {
       request.loading = false;
 

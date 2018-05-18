@@ -48,10 +48,10 @@ class CommentInput extends Component<Props, State> {
     const thisReq = this.props.busy || this.props.request;
 
     if (
-      prevReq.request &&
-      thisReq.request &&
-      prevReq.request.loading === true &&
-      thisReq.request.loading === false
+      prevReq &&
+      thisReq &&
+      prevReq.loading === true &&
+      thisReq.loading === false
     ) {
       this.setState({ value: '' });
       this.props.onReplyCancel();
