@@ -17,6 +17,7 @@ type Props = {
   type?: 'comment' | 'event',
   createComment: typeof createComment,
   onCreateComment: Function,
+  busy?: Object,
 };
 
 type State = {
@@ -34,7 +35,8 @@ class CommentInput extends Component<Props, State> {
   };
 
   get busy(): boolean {
-    return this.props.request && this.props.request.loading ? true : false;
+    const req = this.props.busy || this.props.request;
+    return req && req.loading ? true : false;
   }
 
   get disabled(): boolean {
@@ -42,11 +44,14 @@ class CommentInput extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const prevReq = prevProps.busy || prevProps.request;
+    const thisReq = this.props.busy || this.props.request;
+
     if (
-      prevProps.request &&
-      this.props.request &&
-      prevProps.request.loading === true &&
-      this.props.request.loading === false
+      prevReq.request &&
+      thisReq.request &&
+      prevReq.request.loading === true &&
+      thisReq.request.loading === false
     ) {
       this.setState({ value: '' });
       this.props.onReplyCancel();
@@ -121,6 +126,7 @@ class CommentInput extends Component<Props, State> {
   };
 
   render() {
+    console.log(this.busy);
     return (
       <View style={styles.container}>
         {this.renderReplyIndicator()}
