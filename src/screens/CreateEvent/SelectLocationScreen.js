@@ -68,7 +68,8 @@ export default class SelectLocationScreen extends Component<
   });
 
   state = {
-    searchValue: '',
+    searchValue:
+      this.props.navigation.state.params.formik.values.location || '',
     locations: [],
   };
 
@@ -122,10 +123,7 @@ export default class SelectLocationScreen extends Component<
           <Navigation
             navigation={this.props.navigation}
             onLocationChange={this._onLocationChange}
-            searchValue={
-              this.state.searchValue ||
-              this.props.navigation.state.params.formik.values.location
-            }
+            searchValue={searchValue}
           />
         </BlackPortal>
 
