@@ -126,7 +126,6 @@ class CommentInput extends Component<Props, State> {
   };
 
   render() {
-    console.log(this.busy);
     return (
       <View style={styles.container}>
         {this.renderReplyIndicator()}
