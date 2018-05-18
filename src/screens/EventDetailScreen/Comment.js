@@ -135,6 +135,13 @@ class Comment extends Component<Props, State> {
     });
   };
 
+  onShowAllReplies = () => {
+    this.setState({
+      showAllReplies: true,
+      showOnlyLastComment: false,
+    });
+  };
+
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.item.replies.length !== this.state.item.replies.length) {
       if (nextProps.item.replies.length > this.state.item.replies.length) {
@@ -264,7 +271,7 @@ class Comment extends Component<Props, State> {
             lineHeight={18}
             color={getColor('orange')}
             style={{ textAlign: 'center', marginTop: 30 }}
-            onPress={this.toggleShowAllReplies}
+            onPress={this.onShowAllReplies}
           >
             {plural('Show all reply(s)', item.replies.length)}
           </Text>
