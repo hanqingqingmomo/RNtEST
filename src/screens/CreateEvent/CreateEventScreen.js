@@ -359,13 +359,7 @@ export default class CreateEventScreen extends Component<Props, State> {
     formik: Object,
     data: mixed
   ) => {
-    const { selectedField } = this.state;
-
-    if (selectedField === field && ['start', 'end'].includes(field)) {
-      this.setState({ selectedField: '' });
-    } else {
-      this.setState({ selectedField: field });
-    }
+    this.setState({ selectedField: field });
 
     switch (field) {
       case 'photo':
