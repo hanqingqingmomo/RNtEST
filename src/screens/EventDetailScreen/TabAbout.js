@@ -128,13 +128,7 @@ export default class TabAbout extends Component<Props> {
 
         {description ? (
           <View style={styles.text}>
-            <HTML
-              html={description}
-              baseFontStyle={{
-                fontSize: 14,
-                color: getColor('gray'),
-              }}
-            />
+            <HTML html={description} />
           </View>
         ) : null}
 

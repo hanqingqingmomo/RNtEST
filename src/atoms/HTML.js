@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import HTML from 'react-native-render-html';
 import { Linking } from 'react-native';
 
+import { getColor } from '../utils/color';
+
 type Props = {
   renderers?: Object,
   ignoredTags?: Array<mixed>,
@@ -47,15 +49,35 @@ export default class HTMLText extends Component<Props> {
   };
 
   render(): React$Node {
-    const { renderers, ...bag } = this.props;
+    const { renderers, baseFontStyle, ...bag } = this.props;
 
     return (
       <HTML
         onLinkPress={(evt, href) => this.openUrl(href)}
         tagsStyles={{
-          h1: { fontSize: 20, fontWeight: 'bold' },
-          h2: { fontSize: 18, fontWeight: 'bold' },
-          p: { fontSize: 14 },
+          h1: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginTop: 20,
+            marginBottom: 10,
+          },
+          h2: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginTop: 20,
+            marginBottom: 10,
+          },
+          ul: {
+            marginVertical: 10,
+          },
+          ol: {
+            marginVertical: 10,
+          },
+        }}
+        baseFontStyle={{
+          fontSize: 14,
+          color: getColor('gray'),
+          ...baseFontStyle,
         }}
         {...bag}
       />
