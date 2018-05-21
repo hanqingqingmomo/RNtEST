@@ -17,8 +17,8 @@ import {
   NavigationTextButton,
   SegmentedControl,
 } from '../../atoms';
-import { CommentInput } from '../../blocks';
 import CommentList from './CommentList';
+import CommentInput from './CommentInput';
 import EventHeader from './EventHeader';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
@@ -52,10 +52,7 @@ type State = {
   event: ?Object,
   replyingTo?: Comment,
   commentType: CommentType,
-  request: ?{
-    loading: boolean,
-    error: boolean,
-  },
+  request: boolean,
 };
 
 export default class EventDetailScreen extends Component<Props, State> {
@@ -65,7 +62,7 @@ export default class EventDetailScreen extends Component<Props, State> {
     busy: false,
     event: null,
     replyingTo: undefined,
-    request: null,
+    request: false,
   };
 
   inputRef: ?any;
@@ -186,15 +183,8 @@ export default class EventDetailScreen extends Component<Props, State> {
 
   _onCreateComment = async (id, value: string) => {
     const { event } = this.state;
-    let { request } = this.state;
 
-    if (!request) {
-      request = {};
-    }
-
-    request.loading = true;
-
-    this.setState({ request });
+    this.setState({ request: true });
 
     try {
       const { ok } = await (id === event.id
@@ -211,7 +201,7 @@ export default class EventDetailScreen extends Component<Props, State> {
     } catch (err) {
       global.alertWithType('error', 'Oppps!', err.message);
     } finally {
-      this.setState({ request: null });
+      this.setState({ request: false });
     }
   };
 
@@ -329,9 +319,8 @@ export default class EventDetailScreen extends Component<Props, State> {
 
         {activeTab === 'About' ? (
           <CommentInput
-            target={replyingTo || { id: event.id, type: 'event' }}
+            target={replyingTo || { id: event.id }}
             busy={request}
-            type="event"
             onReplyCancel={this._onReplyCancel}
             passRef={this.passRef}
             onCreateComment={this._onCreateComment}
