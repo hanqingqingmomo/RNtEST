@@ -78,17 +78,27 @@ export class RichTextEditor extends Component<RichTextEditorProps, State> {
     return -100000;
   }
 
-  endLoading = () => {
+  endLoading = (cb?: Function) => {
     Animated.timing(this.state.opacityAnim, {
       toValue: 1,
       duration: 10,
-    }).start();
+    }).start(cb);
   };
 
   getTitleHtml = () => this.refs.richtext.getTitleHtml();
   getTitleText = () => this.refs.richtext.getTitleText();
   getContentHtml = () => this.refs.richtext.getContentHtml();
   getSelectedText = () => this.refs.richtext.getSelectedText();
+
+  focusTitle = () => this.refs.richtext.focusTitle();
+  focusContent = () => this.refs.richtext.focusContent();
+  blurTitleEditor = () => this.refs.richtext.blurTitleEditor();
+  blurContentEditor = () => this.refs.richtext.blurContentEditor();
+
+  setTitleFocusHandler = (...props) =>
+    this.refs.richtext.setTitleFocusHandler(...props);
+  setContentFocusHandler = (...props) =>
+    this.refs.richtext.setContentFocusHandler(...props);
 
   render() {
     const { opacityAnim } = this.state;
@@ -102,7 +112,11 @@ export class RichTextEditor extends Component<RichTextEditorProps, State> {
           editorInitializedCallback={() => {
             this.refs.richtext.setEditorHeight(-1);
 
-            this.endLoading();
+            this.endLoading(() => {
+              if (this.props.hiddenTitle) {
+                this.refs.richtext.focusContent();
+              }
+            });
           }}
           style={{}}
           customCSS={CUSTOM_CSS}
