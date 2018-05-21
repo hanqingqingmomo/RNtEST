@@ -261,6 +261,14 @@ export default class MainTabs extends Component<{}, State> {
 
     return (
       <View style={[css('width', WINDOW_WIDTH), css('height', height)]}>
+        <Modal
+          animationType="slide"
+          visible={this.state.modalRoute !== null}
+          onRequestClose={this.closeModalRoute}
+          transparent={false}
+        >
+          {this.renderModalRoute()}
+        </Modal>
         <DrawerLayout
           ref={this.drawerRef}
           useNativeAnimations
@@ -292,14 +300,6 @@ export default class MainTabs extends Component<{}, State> {
             }}
           />
         </DrawerLayout>
-        <Modal
-          animationType="slide"
-          visible={this.state.modalRoute !== null}
-          onRequestClose={this.closeModalRoute}
-          transparent={false}
-        >
-          {this.renderModalRoute()}
-        </Modal>
         <DropdownAlert
           ref={ref => (ALERT = ref)}
           styles={{
