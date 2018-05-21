@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import format from 'date-fns/format';
 import isPast from 'date-fns/is_past';
+import isBefore from 'date-fns/is_before';
 
 import {
   AvatarGroup,
@@ -55,6 +56,14 @@ type Props = {
   event: EventProps,
   onPress: Function,
 };
+
+function inProgress(start: Date): boolean {
+  if (isPast(start) && isBefore(start, new Date())) {
+    return true;
+  }
+
+  return false;
+}
 
 export const palettes = {
   [EVENT_STATUS.ACTIVE]: {
@@ -130,17 +139,36 @@ export const common = {
   },
 };
 
-function _renderWebinar({ event, palette, onActionPress }): React$Node {
-  const pastEvent = isPast(event.start);
-
+function _renderWebinar({
+  event,
+  palette,
+  onActionPress,
+  onPress,
+}): React$Node {
   return (
     <View style={[styles.midSection, styles.alignment]}>
-      <Text style={styles.liveLabel} color="white" size={13} weight="bold">
-        Live
-      </Text>
+      <TouchableOpacity onPress={onPress}>
+        {inProgress(event.start) ? (
+          <Text style={styles.liveLabel} color="white" size={13} weight="bold">
+            Live
+          </Text>
+        ) : (
+          <Text
+            color="gray"
+            size={13}
+            lineHeight={15}
+            style={{ paddingVertical: 9 }}
+          >
+            {`${format(event.start, 'h:mm A')} - ${format(
+              event.end,
+              'h:mm A'
+            )}`}
+          </Text>
+        )}
+      </TouchableOpacity>
       {event.is_author ? null : (
         <Button
-          disabled={pastEvent || event.current_user_rsvp === 'going'}
+          disabled={isPast(event.end) || event.current_user_rsvp === 'going'}
           color={palette.joinButton.color}
           onPress={() => onActionPress('going')}
           size="md"

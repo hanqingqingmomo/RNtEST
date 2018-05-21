@@ -70,9 +70,7 @@ export default class EventFeedScreen extends React.Component<
         console.log('[Events] events', data.events);
       }
 
-      this.setState({
-        events: data.events.filter((event: EventProps) => !event.webinar),
-      });
+      this.setState({ events: data.events });
     } catch (err) {
       if (__DEV__) {
         console.log('[Events] error', err.message);
