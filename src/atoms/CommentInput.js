@@ -3,9 +3,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Platform } from 'react-native';
 
-import { Text, TouchableItem, View, Icon } from '../../atoms';
-import { type Comment } from '../../Types';
-import { css } from '../../utils/style';
+import { Text, TouchableItem, View, Icon } from '../atoms';
+import { type Comment } from '../Types';
+import { css } from '../utils/style';
 
 type Props = {
   busy: boolean,

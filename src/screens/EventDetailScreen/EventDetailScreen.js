@@ -16,9 +16,9 @@ import {
   ActivityIndicator,
   NavigationTextButton,
   SegmentedControl,
+  CommentInput,
 } from '../../atoms';
 import CommentList from './CommentList';
-import CommentInput from './CommentInput';
 import EventHeader from './EventHeader';
 import TabAbout from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
