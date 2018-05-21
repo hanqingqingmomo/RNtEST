@@ -721,6 +721,10 @@ export default class CreateEventScreen extends Component<Props, State> {
                 </TableView.Section>
               </TableView.Table>
 
+              {/* <TableView.Section>
+                <SettingsCell title="Webinar" name="webinar" />
+              </TableView.Section> */}
+
               {params && params.event_id ? (
                 <TableView.Section>
                   <TableView.Cell
