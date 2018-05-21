@@ -153,21 +153,23 @@ function _renderWebinar({ event, palette, onActionPress }): React$Node {
   );
 }
 
-function _renderEvent({ event, palette, onActionPress }): React$Node {
+function _renderEvent({ event, palette, onActionPress, onPress }): React$Node {
   const pastEvent = isPast(event.start);
   const goingButton = palette[event.current_user_rsvp].goingButton;
   const notGoingButton = palette[event.current_user_rsvp].notGoingButton;
 
   return (
     <View style={[styles.midSection, styles.alignment]}>
-      <Text
-        color="gray"
-        size={13}
-        lineHeight={15}
-        style={{ paddingVertical: 9 }}
-      >
-        {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
-      </Text>
+      <TouchableOpacity onPress={() => onPress(event.id)}>
+        <Text
+          color="gray"
+          size={13}
+          lineHeight={15}
+          style={{ paddingVertical: 9 }}
+        >
+          {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
+        </Text>
+      </TouchableOpacity>
 
       <View style={styles.alignment}>
         <Button.Icon
@@ -245,23 +247,25 @@ export default function Event({
       </TouchableOpacity>
 
       {event.webinar
-        ? _renderWebinar({ event, palette, onActionPress })
-        : _renderEvent({ event, palette, onActionPress })}
+        ? _renderWebinar({ event, palette, onActionPress, onPress })
+        : _renderEvent({ event, palette, onActionPress, onPress })}
 
-      <View style={styles.alignment}>
-        <View style={styles.pillWrapper}>
-          {_renderPills(event.post_in, palette.pillTextColor)}
+      <TouchableOpacity onPress={() => onPress(event.id)}>
+        <View style={styles.alignment}>
+          <View style={styles.pillWrapper}>
+            {_renderPills(event.post_in, palette.pillTextColor)}
+          </View>
+          {event.profile_photos.length ? (
+            <AvatarGroup
+              imageURIs={[...event.profile_photos, '']}
+              count={5}
+              title={(more: number): string =>
+                `+${event.total_attendees_count -
+                  (event.profile_photos || []).length}`}
+            />
+          ) : null}
         </View>
-        {event.profile_photos.length ? (
-          <AvatarGroup
-            imageURIs={[...event.profile_photos, '']}
-            count={5}
-            title={(more: number): string =>
-              `+${event.total_attendees_count -
-                (event.profile_photos || []).length}`}
-          />
-        ) : null}
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
