@@ -84,11 +84,7 @@ export default class CommentInput extends Component<Props, State> {
           />
         </View>
 
-        <TouchableItem
-          disabled={this.disabled}
-          onPress={this.handleSubmit}
-          style={styles.sendButton}
-        >
+        <TouchableItem disabled={this.disabled} onPress={this.handleSubmit}>
           <Text
             size={17}
             color="orange"

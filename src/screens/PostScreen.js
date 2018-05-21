@@ -80,9 +80,7 @@ class PostScreen extends Component<Props, State> {
           </View>
         </ScrollView>
         <CommentInput
-          target={replyingTo || post}
-          postId={post.id}
-          replyingTo={replyingTo}
+          target={replyingTo || { id: post.id }}
           onReplyCancel={this.onReplyCancel}
           passRef={this.passRef}
         />
