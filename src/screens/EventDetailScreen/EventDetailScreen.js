@@ -312,7 +312,12 @@ export default class EventDetailScreen extends Component<Props, State> {
               },
               {
                 label: `Participants (${this.computePaticipantsCount()})`,
-                component: () => <TabEventParticipants {...event} />,
+                component: () => (
+                  <TabEventParticipants
+                    {...event}
+                    onContactSelect={this._onNavigateToMemberProfile}
+                  />
+                ),
               },
               // {
               //   label: `Files`,

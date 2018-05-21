@@ -98,6 +98,7 @@ export default class TabEventMembers extends Component<Props> {
           </View>
         }
         cellAccessoryView={<Icon name="chat-1" size="md" color="#CFD8DC" />}
+        onPress={() => this.props.onContactSelect(item)}
       />
     );
   }
