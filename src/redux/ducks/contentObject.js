@@ -5,6 +5,7 @@ export const CONTENT_CREATE_POST = 'content-object/create-post';
 export const CONTENT_DESTROY = 'content-object/destroy';
 export const CONTENT_LIKE = 'content-object/like';
 export const CONTENT_REPORT = 'content-object/report';
+export const CONTENT_LOAD = 'content-object/load';
 
 //
 // Typedefs
@@ -74,6 +75,14 @@ export type ContentReportAction = {
   },
 };
 
+export type ContentLoadAction = {
+  type: typeof CONTENT_LOAD,
+  payload: {
+    id: string,
+    params?: Object,
+  },
+};
+
 //
 // Action creators
 //
@@ -120,5 +129,12 @@ export function contentLike(
   return {
     type: CONTENT_LIKE,
     payload: { object },
+  };
+}
+
+export function loadContent(id: string, params?: Object): ContentLikeAction {
+  return {
+    type: CONTENT_LOAD,
+    payload: { id, params },
   };
 }

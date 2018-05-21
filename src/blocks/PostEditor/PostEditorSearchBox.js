@@ -1,7 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  DeviceEventEmitter,
+  Platform,
+} from 'react-native';
 
 import { View, Text, Pill, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
@@ -43,6 +49,14 @@ export default class PostEditorSearchBox extends Component<Props, State> {
   }
 
   componentDidMount() {
+    if (Platform.OS === 'android') {
+      DeviceEventEmitter.addListener('onKeyPressed', (keyCode: number) => {
+        if (keyCode === 67) {
+          this.removeLastComunity();
+        }
+      });
+    }
+
     if (!(this.props.selection || []).length) {
       this.autoJoinCommunities.forEach((community: CommunitySimple) => {
         this.selectCommunity(community);
@@ -54,6 +68,12 @@ export default class PostEditorSearchBox extends Component<Props, State> {
       !(this.props.selection || []).length
     ) {
       this.refs.searchInput.focus();
+    }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === 'android') {
+      DeviceEventEmitter.removeListener('onKeyPressed');
     }
   }
 
@@ -97,24 +117,16 @@ export default class PostEditorSearchBox extends Component<Props, State> {
     this.props.selectCommunity(selection);
   }
 
-  renderselection() {
+  renderSelection() {
     const communities = this.props.communities.filter(community =>
       this.props.selection.includes(community.id)
     );
 
-    return (
-      <View style={styles.pillContainer}>
-        {communities.map(pill => (
-          <View key={pill.id} style={styles.pillItem}>
-            <Pill
-              title={pill.name}
-              color={getColor('orange')}
-              truncate={communities.length > 1}
-            />
-          </View>
-        ))}
+    return communities.map(pill => (
+      <View key={pill.id} style={styles.pillItem}>
+        <Pill title={pill.name} color={getColor('orange')} truncate={true} />
       </View>
-    );
+    ));
   }
 
   renderListOfCommunities(): ?React$Element<*> {
@@ -156,7 +168,9 @@ export default class PostEditorSearchBox extends Component<Props, State> {
             >
               Post in:
             </Text>
-            {this.renderselection()}
+
+            {this.renderSelection()}
+
             <View style={styles.inputContainer}>
               <TextInput
                 onChangeText={(text: string) => this.onSearchChange(text)}
@@ -192,17 +206,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 15,
   },
-  pillContainer: {
-    margin: -1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   pillItem: {
-    padding: 1,
+    paddingHorizontal: 1,
     paddingBottom: 10,
   },
   text: {
     marginRight: 10,
+    paddingBottom: 10,
   },
   inputContainer: {
     flexGrow: 1,
@@ -211,9 +221,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   searchInput: {
+    height: 18,
     lineHeight: 18,
     fontSize: 14,
     color: '#B0BEC5',
+    padding: 0,
+    margin: 0,
   },
   listContainer: {},
   listRow: {

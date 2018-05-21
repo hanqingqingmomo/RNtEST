@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 
 import type { Comment as TComment } from '../../Types';
 import { FlatList, View } from '../../atoms';
@@ -13,7 +14,17 @@ export type Props = {
 };
 
 function Separator() {
-  return <View style={css('height', 30)} />;
+  return (
+    <View style={[css('paddingLeft', 50)]}>
+      <View
+        style={[
+          css('height', StyleSheet.hairlineWidth),
+          css('backgroundColor', '#EDEFF2'),
+          css('marginVertical', 14),
+        ]}
+      />
+    </View>
+  );
 }
 
 export default class CommentList extends Component<Props> {

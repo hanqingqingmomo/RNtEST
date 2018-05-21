@@ -5,8 +5,9 @@ import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import { contentLike } from '../../redux/ducks/contentObject';
-import { Text, View, TouchableOpacity, Count } from '../../atoms';
-import { type Post } from '../../Types';
+import { Text, View, TouchableOpacity, Count, AvatarGroup } from '../../atoms';
+import { type Post, User } from '../../Types';
+import { css } from '../../utils/style';
 
 type Action = {
   label: string,
@@ -39,6 +40,44 @@ class NewsFeedItemFooter extends Component<Props> {
     }
 
     return links;
+  }
+
+  get authors(): Array<User> {
+    const a = [];
+    return this.props.item.replies
+      .reduce((acc: Array<User>, comment: Comment) => {
+        if (comment.replies.length > 0) {
+          acc = [
+            ...acc,
+            comment.author,
+            ...comment.replies.map((comment: Comment) => comment.author),
+          ];
+        } else {
+          acc.push(comment.author);
+        }
+
+        return acc;
+      }, [])
+      .filter((user: User): boolean => {
+        if (a.includes(user.id)) {
+          return false;
+        }
+
+        a.push(user.id);
+
+        return true;
+      });
+  }
+
+  renderAvatarGroup(authors: Array<User>) {
+    return (
+      <View style={css('paddingRight', 15)}>
+        <AvatarGroup
+          imageURIs={authors.map((author: User) => author.profile_photo)}
+          title={more => `+${more}`}
+        />
+      </View>
+    );
   }
 
   renderActions(actions: Array<Action>) {
@@ -80,7 +119,9 @@ class NewsFeedItemFooter extends Component<Props> {
           </TouchableOpacity>
         </View>
         <View style={[styles.actionsWrapper]}>
-          {this.renderActions(this.actions)}
+          {this.props.isDetail
+            ? this.renderAvatarGroup(this.authors)
+            : this.renderActions(this.actions)}
         </View>
       </View>
     );
@@ -105,6 +146,7 @@ const styles = StyleSheet.create({
   footerLeft: {
     flexGrow: 1,
     marginHorizontal: -8,
+    paddingVertical: 3,
   },
   actionsWrapper: {
     marginHorizontal: -15,

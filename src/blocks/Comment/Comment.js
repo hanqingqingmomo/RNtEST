@@ -43,6 +43,19 @@ const mapStateToProps = state => ({
 
 const mapDispatch = { contentLike, contentDestroy, contentReport };
 
+function Separator() {
+  return (
+    <View style={[css('paddingLeft', 15), css('marginVertical', 14)]}>
+      <View
+        style={[
+          css('height', StyleSheet.hairlineWidth),
+          css('backgroundColor', '#EDEFF2'),
+        ]}
+      />
+    </View>
+  );
+}
+
 class Comment extends Component<Props, State> {
   state = {
     showAllReplies: false,
@@ -90,9 +103,11 @@ class Comment extends Component<Props, State> {
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.item.replies.length !== this.props.item.replies.length) {
-      if (nextProps.item.replies.length > 1) {
-        this.setState({ showOnlyLastComment: true });
+      if (nextProps.item.replies.length > this.props.item.replies.length) {
+        // added new comment
+        this.setState({ showAllReplies: false, showOnlyLastComment: true });
       } else {
+        // removed some comment
         this.setState({ showAllReplies: true });
       }
     }
@@ -196,8 +211,10 @@ class Comment extends Component<Props, State> {
 
         <Collapsible
           collapsed={item.replies.length === 0 || showAllReplies === false}
+          style={css('paddingLeft', 35)}
         >
-          <View style={[css('paddingTop', 30), css('paddingLeft', 35)]}>
+          <View>
+            <Separator />
             <CommentList replies={item.replies} />
           </View>
         </Collapsible>
@@ -219,7 +236,8 @@ class Comment extends Component<Props, State> {
             this.lastComment.length === 0 || showOnlyLastComment === false
           }
         >
-          <View style={[css('paddingTop', 30), css('paddingLeft', 35)]}>
+          <View>
+            <Separator />
             <CommentList replies={this.lastComment} />
           </View>
         </Collapsible>
