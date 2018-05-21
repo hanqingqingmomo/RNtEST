@@ -4,10 +4,9 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import isPast from 'date-fns/is_past';
 
-import { View, Button, Text, ContactGroup } from '../../atoms';
+import { View, Button, Text, ContactGroup, HTML } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
-import { parseTextContent } from '../../utils/text';
 import {
   ATTENDING_STATUS,
   common,
@@ -128,14 +127,15 @@ export default class TabAbout extends Component<Props> {
         )}
 
         {description ? (
-          <Text
-            size={14}
-            lineHeight={18}
-            color={getColor('gray')}
-            style={styles.text}
-          >
-            {parseTextContent(description, 80)}
-          </Text>
+          <View style={styles.text}>
+            <HTML
+              html={description}
+              baseFontStyle={{
+                fontSize: 14,
+                color: getColor('gray'),
+              }}
+            />
+          </View>
         ) : null}
 
         <ContactGroup

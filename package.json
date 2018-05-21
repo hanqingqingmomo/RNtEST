@@ -59,6 +59,7 @@
     "react-native-popover-tooltip": "^1.1.1",
     "react-native-portal": "^1.2.1",
     "react-native-push-notification": "^3.0.1",
+    "react-native-render-html": "^3.10.0",
     "react-native-splash-screen": "^3.0.1",
     "react-native-status-bar-height": "^2.0.0",
     "react-native-tableview-simple": "^0.16.13",
