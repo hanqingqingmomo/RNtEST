@@ -18,7 +18,7 @@ import {
   CommentInput,
 } from '../../atoms';
 import EventHeader from './EventHeader';
-import TabAbout, { type SORT_KEYS } from './TabAbout';
+import TabAbout, { SORT_KEYS } from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
 import { getColor } from '../../utils/color';
@@ -52,6 +52,7 @@ export default class EventDetailScreen extends Component<Props, State> {
     event: null,
     replyingTo: undefined,
     request: false,
+    commentType: SORT_KEYS[0],
   };
 
   inputRef: ?any;
