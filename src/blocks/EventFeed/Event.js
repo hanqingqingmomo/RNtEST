@@ -148,7 +148,7 @@ function _renderWebinar({
   return (
     <View style={[styles.midSection, styles.alignment]}>
       <TouchableOpacity onPress={onPress}>
-        {inProgress(event.start) ? (
+        {inProgress(event.start) && !isPast(event.start) ? (
           <Text style={styles.liveLabel} color="white" size={13} weight="bold">
             Live
           </Text>
@@ -166,7 +166,7 @@ function _renderWebinar({
           </Text>
         )}
       </TouchableOpacity>
-      {event.is_author ? null : (
+      {event.is_author || isPast(event.start) ? null : (
         <Button
           disabled={isPast(event.end) || event.current_user_rsvp === 'going'}
           color={palette.joinButton.color}
@@ -289,7 +289,8 @@ export default function Event({
               count={5}
               title={(more: number): string =>
                 `+${event.total_attendees_count -
-                  (event.profile_photos || []).length}`}
+                  (event.profile_photos || []).length}`
+              }
             />
           ) : null}
         </View>
