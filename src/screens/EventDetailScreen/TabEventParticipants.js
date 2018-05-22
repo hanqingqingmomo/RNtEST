@@ -75,7 +75,7 @@ export default class TabEventMembers extends Component<Props> {
       }, []);
   }
 
-  renderItem({ item }: { item: User & { rsvp_status: RSVPStatuses } }) {
+  renderItem = ({ item }: { item: User & { rsvp_status: RSVPStatuses } }) => {
     const style = attendanceStatus[item.rsvp_status];
 
     return (
@@ -101,7 +101,7 @@ export default class TabEventMembers extends Component<Props> {
         onPress={() => this.props.onContactSelect(item)}
       />
     );
-  }
+  };
 
   renderAttendance() {
     return attendanceDescription.map(item => (
@@ -117,7 +117,6 @@ export default class TabEventMembers extends Component<Props> {
   }
 
   getPartisipantsByStatus(status: RSVPStatuses): Array<User> {
-    /* $FlowFixMe */
     return this.participants.filter(
       (user: User & { rsvp_status: RSVPStatuses }): boolean =>
         user.rsvp_status === status
