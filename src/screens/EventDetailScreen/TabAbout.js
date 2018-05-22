@@ -4,7 +4,14 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import isPast from 'date-fns/is_past';
 
-import { View, Button, Text, ContactGroup, HTML } from '../../atoms';
+import {
+  View,
+  Button,
+  Text,
+  ContactGroup,
+  HTML,
+  SegmentedControl,
+} from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
 import {
@@ -15,6 +22,16 @@ import {
   type RSVPStatus,
 } from '../../blocks/EventFeed/Event';
 import type { Comment, User, Contact, Community } from '../../Types';
+import CommentList from './CommentList';
+
+export const SORT_KEYS = {
+  'Top comments': 'popularity',
+  'Newest first': 'newest',
+};
+
+const LABELS = Object.keys(SORT_KEYS);
+
+type CommentType = $Keys<typeof SORT_KEYS>;
 
 type Props = {
   webinar: boolean,
@@ -30,6 +47,10 @@ type Props = {
   onActionPress: Function,
   onCreateComment: Function,
   onContactSelect: Function,
+};
+
+type State = {
+  commentType: CommentType,
 };
 
 type Presenter = User & { role: string };
@@ -86,9 +107,13 @@ const FutureEventButtons = ({ onPress, current_user_rsvp, start }) => {
   );
 };
 
-export default class TabAbout extends Component<Props> {
+export default class TabAbout extends Component<Props, State> {
   static navigationOptions = {
     tabBarLabel: 'About',
+  };
+
+  state = {
+    commentType: LABELS[0],
   };
 
   parsePresenters = (): Array<Presenter> => {
@@ -115,8 +140,20 @@ export default class TabAbout extends Component<Props> {
     });
   };
 
+  _onCommentSorting = (commentType: CommentType) => {
+    this.setState({ commentType });
+    this.props.onCommentSorting(SORT_KEYS[commentType]);
+  };
+
   render() {
-    const { description, onActionPress, webinar } = this.props;
+    const {
+      description,
+      onActionPress,
+      webinar,
+      replies,
+      onContactSelect,
+      onRequestReply,
+    } = this.props;
 
     return (
       <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
@@ -134,10 +171,24 @@ export default class TabAbout extends Component<Props> {
 
         <ContactGroup
           users={this.parsePresenters()}
-          onContactSelect={this.props.onContactSelect}
+          onContactSelect={onContactSelect}
         />
 
-        {this.props.children}
+        {replies && replies.length ? (
+          <View>
+            <View style={styles.segmentedWrapper}>
+              <SegmentedControl
+                labels={LABELS}
+                selectedLabel={this.state.commentType}
+                onChange={this._onCommentSorting}
+              />
+            </View>
+
+            <View style={css('paddingVertical', 20)}>
+              <CommentList replies={replies} onRequestReply={onRequestReply} />
+            </View>
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -168,5 +219,9 @@ const styles = StyleSheet.create({
   text: {
     paddingHorizontal: 15,
     paddingVertical: 15,
+  },
+  segmentedWrapper: {
+    paddingHorizontal: 50,
+    paddingVertical: 10,
   },
 });

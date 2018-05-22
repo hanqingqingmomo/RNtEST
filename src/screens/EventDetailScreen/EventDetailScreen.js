@@ -15,15 +15,12 @@ import {
   CenterView,
   ActivityIndicator,
   NavigationTextButton,
-  SegmentedControl,
   CommentInput,
 } from '../../atoms';
-import CommentList from './CommentList';
 import EventHeader from './EventHeader';
-import TabAbout from './TabAbout';
+import TabAbout, { type SORT_KEYS } from './TabAbout';
 import TabEventParticipants from './TabEventParticipants';
 import TabEventFiles from './TabEventFiles';
-import { css } from '../../utils/style';
 import { getColor } from '../../utils/color';
 import type { Community, User, RSVPStatuses } from '../../Types';
 import {
@@ -33,13 +30,6 @@ import {
   RQCreateComment,
   getEventComments,
 } from '../../utils/requestFactory';
-
-const SORT_KEYS = {
-  'Top comments': 'popularity',
-  'Newest first': '',
-};
-
-type CommentType = $Keys<typeof SORT_KEYS>;
 
 type Props = {
   navigation: any,
@@ -51,14 +41,13 @@ type State = {
   busy: boolean,
   event: ?Object,
   replyingTo?: Comment,
-  commentType: CommentType,
   request: boolean,
+  commentType: $Values<SORT_KEYS>,
 };
 
 export default class EventDetailScreen extends Component<Props, State> {
   state = {
     activeTab: 'About',
-    commentType: 'Top comments',
     busy: false,
     event: null,
     replyingTo: undefined,
@@ -113,11 +102,10 @@ export default class EventDetailScreen extends Component<Props, State> {
   };
 
   fetchComments = async () => {
-    const { commentType } = this.state;
-    const event = { ...this.state.event };
+    const { event, commentType } = this.state;
 
     try {
-      const { data } = await getEventComments(event.id, SORT_KEYS[commentType]);
+      const { data } = await getEventComments(event.id, commentType);
 
       if (__DEV__) {
         console.log('[Event detail] fetch comments', data);
@@ -214,7 +202,7 @@ export default class EventDetailScreen extends Component<Props, State> {
     });
   };
 
-  _onReply = (comment: Comment) => {
+  _onRequestReply = (comment: Comment) => {
     comment.type = 'comment';
 
     this.setState({ replyingTo: comment });
@@ -244,7 +232,7 @@ export default class EventDetailScreen extends Component<Props, State> {
         <ActivityIndicator />
       </CenterView>
     ) : (
-      <View style={[css('backgroundColor', 'white'), css('flex', 1)]}>
+      <View style={styles.container}>
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -274,30 +262,11 @@ export default class EventDetailScreen extends Component<Props, State> {
                   <TabAbout
                     {...event}
                     onActionPress={this._onActionPress}
-                    onCreateComment={this._onCreateComment}
+                    onCommentSorting={this._onCommentSorting}
                     onContactSelect={this._onNavigateToMemberProfile}
-                  >
-                    {event.replies && event.replies.length ? (
-                      <View>
-                        <View style={styles.segmentedWrapper}>
-                          {/* $FlowFixMe */}
-                          <SegmentedControl
-                            labels={['Top comments', 'Newest first']}
-                            selectedLabel={this.state.commentType}
-                            onChange={this._onCommentSorting}
-                          />
-                        </View>
-
-                        <View style={css('paddingVertical', 20)}>
-                          {/* $FlowFixMe */}
-                          <CommentList
-                            replies={event.replies}
-                            onRequestReply={this._onReply}
-                          />
-                        </View>
-                      </View>
-                    ) : null}
-                  </TabAbout>
+                    onCreateComment={this._onCreateComment}
+                    onRequestReply={this._onRequestReply}
+                  />
                 ),
               },
               {
@@ -332,8 +301,8 @@ export default class EventDetailScreen extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  segmentedWrapper: {
-    paddingHorizontal: 50,
-    paddingVertical: 10,
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
   },
 });
