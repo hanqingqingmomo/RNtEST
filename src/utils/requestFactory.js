@@ -222,9 +222,9 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/communities?membership_status=${
-        joinedOnly ? 'joined' : 'unjoined'
-      }`,
+      path: `/communities?membership_status=${joinedOnly
+        ? 'joined'
+        : 'unjoined'}`,
     }),
     options: {
       method: 'GET',
@@ -296,16 +296,18 @@ export const destroyContentObjectReq = (object: ContentObject) =>
 /**
  * Events
  */
-export const createEvent = (data: Object) => api.post('/event', data);
+export const createEvent = (data: Object) => api.post('/events', data);
 
 export const updateEvent = (event_id: string, data: Object) =>
-  api.put(`/event/${event_id}`, data);
+  api.put(`/events/${event_id}`, data);
 
 export const deleteEvent = (event_id: string) =>
-  api.delete(`/event/${event_id}`);
+  api.delete(`/events/${event_id}`);
 
 export const getEvent = (event_id: string, sortComments?: string) =>
-  api.get(`/event/${event_id}?sortComments=${sortComments || 'chronological'}`);
+  api.get(
+    `/events/${event_id}?sortComments=${sortComments || 'chronological'}`
+  );
 
 export const getEvents = ({
   query,
@@ -324,19 +326,19 @@ export const getEvents = ({
   );
 
 export const acceptEvent = (event_id: string, rsvp_status: string) =>
-  api.post('/event/accept', { event_id, rsvp_status });
+  api.post('/events/accept', { event_id, rsvp_status });
 
 export const recentLocations = () => api.get('/places/user');
 
 export const RQCreateEventComment = (event_id: string, text_content: string) =>
-  api.post(`/event/${event_id}/comment`, { text_content });
+  api.post(`/events/${event_id}/comment`, { text_content });
 
 export const getEventComments = (event_id: string, sortComments: string = '') =>
-  api.get(`/event/${event_id}/comments?sortComments=${sortComments}`);
+  api.get(`/events/${event_id}/comments?sortComments=${sortComments}`);
 
 export const eventCoverPhotoUpload = (event_id: string, data: Object) =>
   api.post(
-    `/event/${event_id}/cover_photo`,
+    `/events/${event_id}/cover_photo`,
     makeFormData(data, ['cover_photo'])
   );
 
