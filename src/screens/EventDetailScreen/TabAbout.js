@@ -156,7 +156,7 @@ export default class TabAbout extends Component<Props, State> {
     } = this.props;
 
     return (
-      <View style={[css('flex', 1), css('backgroundColor', 'white')]}>
+      <View style={styles.container}>
         {webinar ? (
           <LiveEventButton onPress={onActionPress} {...this.props} />
         ) : (
@@ -195,6 +195,10 @@ export default class TabAbout extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   buttonsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
