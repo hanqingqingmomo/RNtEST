@@ -2,7 +2,7 @@
 
 import { Platform } from 'react-native';
 import Config from 'react-native-config';
-import DeviceInfo from 'react-native-device-info';
+import AppCenter from 'appcenter';
 import update from 'immutability-helper';
 import { create } from 'apisauce';
 
@@ -46,12 +46,14 @@ const api = create({
   headers: { Accept: 'application/json' },
 });
 
-api.addRequestTransform(request => {
-  request.headers['x_device_id'] = DeviceInfo.getUniqueID();
+api.addAsyncRequestTransform(async request => {
+  request.headers['x_install_id'] = await AppCenter.getInstallId();
   request.headers['x_device_platform'] = Platform.OS.toLowerCase();
   if (request.headers['API-KEY'] === undefined) {
     request.headers['API-KEY'] = selectAccessToken(Store.getState());
   }
+
+  return request;
 });
 
 function buildUrl(options) {
@@ -222,9 +224,9 @@ export function RQReadCommunity(id: string): P<RS<Community>> {
 export const makeReadCommunitiesListRq = (joinedOnly?: boolean) =>
   inject({
     url: buildUrl({
-      path: `/communities?membership_status=${joinedOnly
-        ? 'joined'
-        : 'unjoined'}`,
+      path: `/communities?membership_status=${
+        joinedOnly ? 'joined' : 'unjoined'
+      }`,
     }),
     options: {
       method: 'GET',
@@ -414,8 +416,8 @@ export function updateNotificationsSettings(
 /**
  * Push Notifications
  */
-export const RQEnablePushNotifications = (token: string) =>
-  api.post('/push-notifications/register', { token });
+export const RQEnablePushNotifications = () =>
+  api.post('/push-notifications/register');
 
 export const RQDisablePushNotifications = () =>
   api.delete('/push-notifications/register');

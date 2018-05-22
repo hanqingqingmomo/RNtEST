@@ -151,6 +151,7 @@ export default class TabAbout extends Component<Props, State> {
       onActionPress,
       webinar,
       replies,
+      id,
       onContactSelect,
       onRequestReply,
     } = this.props;
@@ -185,7 +186,11 @@ export default class TabAbout extends Component<Props, State> {
             </View>
 
             <View style={css('paddingVertical', 20)}>
-              <CommentList replies={replies} onRequestReply={onRequestReply} />
+              <CommentList
+                listKey={id}
+                replies={replies}
+                onRequestReply={onRequestReply}
+              />
             </View>
           </View>
         ) : null}

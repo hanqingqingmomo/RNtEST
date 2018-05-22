@@ -260,7 +260,7 @@ class Comment extends Component<Props, State> {
             collapsed={item.replies.length === 0 || showAllReplies === false}
           >
             <View style={[css('paddingTop', 30), css('paddingLeft', 35)]}>
-              <CommentList replies={item.replies} />
+              <CommentList listKey={`${item.id}-0`} replies={item.replies} />
             </View>
           </Collapsible>
         )}
@@ -283,7 +283,7 @@ class Comment extends Component<Props, State> {
           }
         >
           <View style={[css('paddingTop', 30), css('paddingLeft', 35)]}>
-            <CommentList replies={this.lastComment} />
+            <CommentList listKey={`${item.id}-1`} replies={this.lastComment} />
           </View>
         </Collapsible>
       </View>

@@ -26,6 +26,7 @@ export default class CommentList extends Component<Props> {
   render() {
     return (
       <FlatList
+        listKey={this.props.listKey}
         scrollEnabled={false}
         data={this.props.replies}
         keyExtractor={this.keyExtractor}

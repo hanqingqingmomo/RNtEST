@@ -58,7 +58,7 @@
 
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class okhttp3.** { *; }-keep class com.mypackage.BuildConfig { *; }
+-keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
 
@@ -71,3 +71,5 @@
 
 # React Native Config
 -keep class com.app.BuildConfig { *; }
+
+-dontwarn com.microsoft.appcenter.push.**

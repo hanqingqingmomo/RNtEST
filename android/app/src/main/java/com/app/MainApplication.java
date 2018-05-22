@@ -3,19 +3,21 @@ package com.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.appcenter.push.Push;
+import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
+import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
+import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
+import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
 import com.pw.droplet.braintree.BraintreePackage;
 import com.reactnativepayments.ReactNativePaymentsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.microsoft.azure.mobile.react.analytics.RNAnalyticsPackage;
-import com.microsoft.azure.mobile.react.crashes.RNCrashesPackage;
-import com.microsoft.azure.mobile.react.mobilecenter.RNMobileCenterPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -38,14 +40,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new TwitterSigninPackage(),
-            new BraintreePackage(),
-            new ReactNativePaymentsPackage(),
-            new RNDeviceInfo(),
-            new ReactNativePushNotificationPackage(),
-            new RNAnalyticsPackage(MainApplication.this, getResources().getString(R.string.mobileCenterAnalytics_whenToEnableAnalytics)),
-            new RNCrashesPackage(MainApplication.this, getResources().getString(R.string.mobileCenterCrashes_whenToSendCrashes)),
-            new RNMobileCenterPackage(MainApplication.this),
+        new AppCenterReactNativePushPackage(MainApplication.this),
+        new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
+        new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
+        new AppCenterReactNativePackage(MainApplication.this),
+        new TwitterSigninPackage(),
+        new BraintreePackage(),
+        new ReactNativePaymentsPackage(),
+        new RNDeviceInfo(),
+        new ReactNativePushNotificationPackage(),
         new ReactNativeContacts(),
         new SplashScreenReactPackage(),
         new ReactNativeConfigPackage(),
@@ -70,6 +73,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    Push.setSenderId(BuildConfig.FCM_SENDER_ID);
     SoLoader.init(this, /* native exopackage */ false);
   }
 }

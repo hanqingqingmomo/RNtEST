@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>__RN_CONFIG_BUNDLE_IDENTIFIER</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -42,43 +42,13 @@
 				<string>twitterkit-__RN_CONFIG_TWITTER_ID</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.paypal.ppclient.touch.v1</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.paypal.ppclient.touch.v1</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.paypal.ppclient.touch.v2</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.paypal.ppclient.touch.v2</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.venmo.touch.v2</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.venmo.touch.v2</string>
-			</array>
-		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>20</string>
 	<key>FacebookAppID</key>
 	<string>__RN_CONFIG_FACEBOOK_ID</string>
 	<key>FacebookDisplayName</key>
-	<string>MPWR</string>
+	<string>__RN_CONFIG_BUNDLE_DISPLAY_NAME</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -102,13 +72,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>MPWR will only upload and share photos you choose.</string>
+	<string>$(PRODUCT_NAME) will only upload and share photos you choose.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>This allows MPWR to let choose which friends to invite to download the app</string>
+	<string>This allows $(PRODUCT_NAME) to let choose which friends to invite to download the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>MPWR will only upload and share photos you choose.</string>
+	<string>$(PRODUCT_NAME) will only upload and share photos you choose.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>pba.ttf</string>
