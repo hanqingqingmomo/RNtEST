@@ -26,7 +26,7 @@ import type { Community, User, RSVPStatuses } from '../../Types';
 import {
   acceptEvent,
   getEvent,
-  createEventComment,
+  RQCreateEventComment,
   RQCreateComment,
   getEventComments,
 } from '../../utils/requestFactory';
@@ -176,7 +176,7 @@ export default class EventDetailScreen extends Component<Props, State> {
 
     try {
       const { ok } = await (id === event.id
-        ? createEventComment(id, value)
+        ? RQCreateEventComment(id, value)
         : RQCreateComment(id, value));
 
       if (ok) {
