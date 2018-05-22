@@ -76,13 +76,13 @@
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.4",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-react-native": "^4.0.0",
+    "babel-preset-react-native": "2.1.0",
     "eslint": "^4.19.1",
-    "eslint-config-react-app": "^2.1.0",
+    "eslint-config-react-app": "^1.0.5",
     "eslint-plugin-flowtype": "^2.46.3",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.8.2",
+    "eslint-plugin-react": "7.0.1",
     "flow-watch": "^1.1.3",
     "jest": "^21.2.1",
     "prettier": "^1.12.1",
@@ -98,8 +98,10 @@
     ]
   },
   "eslintConfig": {
-    "sourceType": "module",
     "extends": "react-app",
+    "parserOptions": {
+      "sourceType": "module"
+    },
     "globals": {
       "__DEV__": false
     }
