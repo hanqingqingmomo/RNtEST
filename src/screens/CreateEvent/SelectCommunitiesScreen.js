@@ -35,39 +35,43 @@ class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
     const readCommunitiesListRq = makeReadCommunitiesListRq(true);
 
     return (
-      <Screen>
-        <TableView.Table>
-          {/* <TableView.Section sectionPaddingTop={0}>
-            <TableView.Cell
-              cellStyle="RightDetail"
-              title="Mobile Contacts"
-              detail={
-                __DEV__
-                  ? (this.props.formik.values[this.props.contactsField] || []).length
-                  : ''
-              }
-              accessory="DisclosureIndicator"
-              cellImageView={
-                <Avatar
-                  source={require('./avatar.png')}
-                  size={28}
-                  style={styles.avatar}
-                />
-              }
-              onPress={() => {
-                this.props.navigation.navigate('SelectContactsScreen', {
-                  ...this.props,
-                });
-              }}
-            />
-          </TableView.Section> */}
+      <Fetch
+        url={readCommunitiesListRq.url}
+        options={readCommunitiesListRq.options}
+      >
+        {({ loading, data }: FetchProps<{ data: Array<Community> }>) => {
+          return loading === false ? (
+            <Screen fill>
+              <TableView.Table>
+                {/* <TableView.Section sectionPaddingTop={0}>
+                  <TableView.Cell
+                    cellStyle="RightDetail"
+                    title="Mobile Contacts"
+                    detail={
+                      __DEV__
+                        ? (
+                            this.props.formik.values[
+                              this.props.contactsField
+                            ] || []
+                          ).length
+                        : ''
+                    }
+                    accessory="DisclosureIndicator"
+                    cellImageView={
+                      <Avatar
+                        source={require('./avatar.png')}
+                        size={28}
+                        style={styles.avatar}
+                      />
+                    }
+                    onPress={() => {
+                      this.props.navigation.navigate('SelectContactsScreen', {
+                        ...this.props,
+                      });
+                    }}
+                  />
+                </TableView.Section> */}
 
-          <Fetch
-            url={readCommunitiesListRq.url}
-            options={readCommunitiesListRq.options}
-          >
-            {({ loading, data }: FetchProps<{ data: Array<Community> }>) => {
-              return loading === false ? (
                 <TableView.Section header="Communities">
                   {data.data.map((community: Community): React$Node => (
                     <TableView.Cell
@@ -93,15 +97,15 @@ class SelectCommunitiesScreen extends Component<NavigationScreenConfigProps> {
                     />
                   ))}
                 </TableView.Section>
-              ) : (
-                <CenterView>
-                  <ActivityIndicator />
-                </CenterView>
-              );
-            }}
-          </Fetch>
-        </TableView.Table>
-      </Screen>
+              </TableView.Table>
+            </Screen>
+          ) : (
+            <CenterView>
+              <ActivityIndicator />
+            </CenterView>
+          );
+        }}
+      </Fetch>
     );
   }
 }
