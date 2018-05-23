@@ -721,11 +721,15 @@ export default class CreateEventScreen extends Component<Props, State> {
                 </TableView.Section>
 
                 <TableView.Section header="advanced settings">
-                  <SettingsCell title="Record event" name="record_event" />
-                  <SettingsCell
-                    title="Show chat in the recording"
-                    name="show_chat_in_recording"
-                  />
+                  {formik.values.webinar ? null : (
+                    <SettingsCell title="Record event" name="record_event" />
+                  )}
+                  {formik.values.webinar ? null : (
+                    <SettingsCell
+                      title="Show chat in the recording"
+                      name="show_chat_in_recording"
+                    />
+                  )}
                   <SettingsCell
                     title="Add event to Calendar"
                     name="add_event_to_calendar"
