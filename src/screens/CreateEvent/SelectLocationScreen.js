@@ -14,6 +14,8 @@ import {
   SearchBox,
   View,
   Icon,
+  CenterView,
+  Text,
 } from '../../atoms';
 import { getColor } from '../../utils/color';
 import { css } from '../../utils/style';
@@ -127,41 +129,53 @@ export default class SelectLocationScreen extends Component<
           />
         </BlackPortal>
 
-        <TableView.Table>
-          <TableView.Section header="Recent Locations">
-            {this.filteredLocations.map((location: Object): React$Node => (
-              <TableView.Cell
-                key={location.id}
-                title={location.name}
-                onPress={() => this._onCellPress(location.name)}
-                titleTextColor="#455A64"
-                cellImageView={
-                  <Icon
-                    name="map-pin"
-                    size="md"
-                    color="#455A64"
-                    style={css('marginRight', 15)}
-                  />
-                }
-              />
-            ))}
-            {searchValue ? (
-              <TableView.Cell
-                title={`Just use "${searchValue}"`}
-                onPress={() => this._onCellPress(searchValue)}
-                titleTextColor="#455A64"
-                cellImageView={
-                  <Icon
-                    name="map-pin"
-                    size="md"
-                    color="#455A64"
-                    style={css('marginRight', 15)}
-                  />
-                }
-              />
-            ) : null}
-          </TableView.Section>
-        </TableView.Table>
+        {this.filteredLocations.length ? (
+          <TableView.Table>
+            <TableView.Section header="Recent Locations">
+              {this.filteredLocations.map((location: Object): React$Node => (
+                <TableView.Cell
+                  key={location.id}
+                  title={location.name}
+                  onPress={() => this._onCellPress(location.name)}
+                  titleTextColor="#455A64"
+                  cellImageView={
+                    <Icon
+                      name="map-pin"
+                      size="md"
+                      color="#455A64"
+                      style={css('marginRight', 15)}
+                    />
+                  }
+                />
+              ))}
+              {searchValue ? (
+                <TableView.Cell
+                  title={`Just use "${searchValue}"`}
+                  onPress={() => this._onCellPress(searchValue)}
+                  titleTextColor="#455A64"
+                  cellImageView={
+                    <Icon
+                      name="map-pin"
+                      size="md"
+                      color="#455A64"
+                      style={css('marginRight', 15)}
+                    />
+                  }
+                />
+              ) : null}
+            </TableView.Section>
+          </TableView.Table>
+        ) : (
+          <CenterView>
+            <Text
+              color={getColor('gray')}
+              size={18}
+              style={{ textAlign: 'center' }}
+            >
+              No recent locations. {'\n'}Please enter a new one.
+            </Text>
+          </CenterView>
+        )}
       </Screen>
     );
   }
