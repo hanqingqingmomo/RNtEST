@@ -7,6 +7,7 @@ import {
   PostScreen,
   PostEditorScreen,
 } from '../../screens';
+import { screens as eventScreens } from './EventStack';
 
 export default StackNavigator(
   {
@@ -22,6 +23,7 @@ export default StackNavigator(
     'GlobalFeedTab:MemberProfileScreen': {
       screen: MemberProfileScreen,
     },
+    ...eventScreens,
   },
   {
     initialRouteName: `GlobalFeedTab:FeedScreen`,

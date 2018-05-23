@@ -7,7 +7,7 @@ import {
   MemberProfileScreen,
 } from '../../screens';
 
-export default StackNavigator({
+export const screens = {
   'EventTab:EventFeedScreen': {
     screen: EventFeedScreen,
   },
@@ -17,4 +17,6 @@ export default StackNavigator({
   'EventTab:MemberProfileScreen': {
     screen: MemberProfileScreen,
   },
-});
+};
+
+export default StackNavigator(screens);
