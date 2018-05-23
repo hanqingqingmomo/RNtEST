@@ -58,7 +58,6 @@ export default class EventFeed extends Component<Props> {
     return Object.keys(groups)
       .sort()
       .reduce((acc, key) => {
-        console.log(groups[key]);
         acc[key] = groups[key].sort(
           (event_a: EventProps, event_b: EventProps): number =>
             compareDesc(event_a.start, event_b.start)

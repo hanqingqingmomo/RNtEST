@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { format } from 'date-fns';
+import format from 'date-fns/format';
+import getDay from 'date-fns/get_day';
 
 import { Text, View, Image, ShadowView, TouchableOpacity } from '../../atoms';
 import { getColor } from '../../utils/color';
@@ -16,6 +17,23 @@ type Props = {
 };
 
 export default class NewsFeedItemEvent extends Component<Props> {
+  renderDate(start, end) {
+    const startDay = getDay(start);
+    const endDay = getDay(end);
+
+    let endFormat = 'HH:MM A';
+
+    if (startDay < endDay) {
+      endFormat = 'D.MMM, HH:MM A';
+    }
+
+    return (
+      <Text size={13} lineHeight={18} color={getColor('gray')}>
+        {`${format(start, 'HH:MM A')} - ${format(end, endFormat)}`}
+      </Text>
+    );
+  }
+
   render() {
     const { title, cover_photo, start, end, onPress } = this.props;
 
@@ -62,9 +80,7 @@ export default class NewsFeedItemEvent extends Component<Props> {
               >
                 {title}
               </Text>
-              <Text size={13} lineHeight={18} color={getColor('gray')}>
-                {`${format(start, 'HH:MM A')} - ${format(end, 'HH:MM A')}`}
-              </Text>
+              {this.renderDate(start, end)}
             </View>
           </View>
         </View>

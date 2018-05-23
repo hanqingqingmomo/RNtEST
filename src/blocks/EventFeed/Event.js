@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import format from 'date-fns/format';
 import isPast from 'date-fns/is_past';
 import isBefore from 'date-fns/is_before';
+import getDay from 'date-fns/get_day';
 
 import {
   AvatarGroup,
@@ -139,6 +140,23 @@ export const common = {
   },
 };
 
+function renderDate(start, end) {
+  const startDay = getDay(start);
+  const endDay = getDay(end);
+
+  let endFormat = 'h:mm A';
+
+  if (startDay < endDay) {
+    endFormat = 'D.MMM, h:mm A';
+  }
+
+  return (
+    <Text color="gray" size={13} lineHeight={15} style={{ paddingVertical: 9 }}>
+      {`${format(start, 'h:mm A')} - ${format(end, endFormat)}`}
+    </Text>
+  );
+}
+
 function _renderWebinar({
   event,
   palette,
@@ -153,17 +171,7 @@ function _renderWebinar({
             Live
           </Text>
         ) : (
-          <Text
-            color="gray"
-            size={13}
-            lineHeight={15}
-            style={{ paddingVertical: 9 }}
-          >
-            {`${format(event.start, 'h:mm A')} - ${format(
-              event.end,
-              'h:mm A'
-            )}`}
-          </Text>
+          renderDate(event.start, event.end)
         )}
       </TouchableOpacity>
       {event.is_author || isPast(event.start) ? null : (
@@ -189,14 +197,7 @@ function _renderEvent({ event, palette, onActionPress, onPress }): React$Node {
   return (
     <View style={[styles.midSection, styles.alignment]}>
       <TouchableOpacity onPress={() => onPress(event.id)}>
-        <Text
-          color="gray"
-          size={13}
-          lineHeight={15}
-          style={{ paddingVertical: 9 }}
-        >
-          {`${format(event.start, 'h:mm A')} - ${format(event.end, 'h:mm A')}`}
-        </Text>
+        {renderDate(event.start, event.end)}
       </TouchableOpacity>
 
       <View style={styles.alignment}>
