@@ -231,7 +231,7 @@ export default class EventDetailScreen extends Component<Props, State> {
   render() {
     const { busy, event, activeTab, replyingTo, request } = this.state;
 
-    return busy || !event ? (
+    return busy && !event ? (
       <CenterView>
         <ActivityIndicator />
       </CenterView>
