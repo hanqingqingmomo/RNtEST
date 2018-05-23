@@ -85,6 +85,7 @@ class MemberProfileScreen extends Component<Props> {
                     <TableView.Section header="Joined Communities">
                       {joined_communities.map((community: Community) => (
                         <TableView.Cell
+                          key={community.id}
                           cellImageView={
                             <TableImage key={community.id} {...community} />
                           }

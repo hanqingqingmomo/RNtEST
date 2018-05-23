@@ -27,6 +27,8 @@ export default class ProfileCard extends Component<P> {
     const { user, actionsView } = this.props;
     const { email, first_name, last_name, profile_photo, role } = user;
 
+    console.log(user);
+
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
@@ -36,11 +38,14 @@ export default class ProfileCard extends Component<P> {
           <Lightbox
             underlayColor="white"
             renderContent={() => (
-              <ImagePreview resizeMode="contain" imageURI={profile_photo} />
+              <ImagePreview
+                resizeMode="contain"
+                source={{ uri: profile_photo }}
+              />
             )}
           >
             <View>
-              <Avatar imageURI={profile_photo} size={100} />
+              <Avatar source={{ uri: profile_photo }} size={100} />
             </View>
           </Lightbox>
           <Text
