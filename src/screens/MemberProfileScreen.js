@@ -8,24 +8,28 @@ import {
   ActivityIndicator,
   CenterView,
   Fetch,
-  Pill,
   Screen,
   TableView,
-  TouchableOpacity,
   View,
+  Image,
 } from '../atoms';
 import { ProfileCard, PopupActions } from '../blocks';
-import { getColor } from '../utils/color';
 import { contentReport } from '../redux/ducks/contentObject';
 import { makeReadProfileRq } from '../utils/requestFactory';
-import type { User, CommunitySimple } from '../Types';
-
-const { Table, Section, Cell } = TableView;
+import type { CommunitySimple, Community } from '../Types';
 
 type Props = {
   navigation: Object,
   contentReport: Object => mixed,
 };
+
+function TableImage({ cover_photo }): React$Node {
+  return (
+    <View style={styles.imageWrapper}>
+      <Image source={{ uri: cover_photo }} style={styles.image} />
+    </View>
+  );
+}
 
 class MemberProfileScreen extends Component<Props> {
   static navigationOptions = ({ navigation }) => {
@@ -54,24 +58,6 @@ class MemberProfileScreen extends Component<Props> {
     ];
   }
 
-  renderCommunities = (member: User) => {
-    return (
-      <View style={styles.pillContainer}>
-        {(member.joined_communities || []).map(pill => (
-          <View key={pill.id} style={styles.pillItem}>
-            <TouchableOpacity onPress={() => this.handleCommunityPress(pill)}>
-              <Pill
-                title={pill.name}
-                color={getColor('orange')}
-                truncate={member.joined_communities.length > 1}
-              />
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-    );
-  };
-
   render() {
     const { navigation } = this.props;
 
@@ -82,24 +68,33 @@ class MemberProfileScreen extends Component<Props> {
         {({ loading, data, error, fetch }) => {
           if (loading === false) {
             const memeberData = data.data;
+            const { joined_communities } = memeberData;
 
             return (
               <Screen>
-                <Table>
-                  <Section sectionPaddingTop={0}>
+                <TableView.Table>
+                  <TableView.Section sectionPaddingTop={0}>
                     <ProfileCard
                       user={memeberData}
                       actionsView={
                         <PopupActions actions={this.getPopupSettings()} />
                       }
                     />
-                  </Section>
-                  <Section header="Communities">
-                    <Cell
-                      cellContentView={this.renderCommunities(memeberData)}
-                    />
-                  </Section>
-                </Table>
+                  </TableView.Section>
+                  {joined_communities && joined_communities.length ? (
+                    <TableView.Section header="Joined Communities">
+                      {joined_communities.map((community: Community) => (
+                        <TableView.Cell
+                          cellImageView={
+                            <TableImage key={community.id} {...community} />
+                          }
+                          title={community.name}
+                          onPress={() => this.handleCommunityPress(community)}
+                        />
+                      ))}
+                    </TableView.Section>
+                  ) : null}
+                </TableView.Table>
               </Screen>
             );
           } else {
@@ -118,14 +113,15 @@ class MemberProfileScreen extends Component<Props> {
 export default connect(null, { contentReport })(MemberProfileScreen);
 
 const styles = StyleSheet.create({
-  pillContainer: {
-    marginHorizontal: -1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingTop: 10,
+  imageWrapper: {
+    width: 28,
+    height: 28,
+    borderRadius: 3,
+    overflow: 'hidden',
+    marginRight: 10,
   },
-  pillItem: {
-    paddingHorizontal: 1,
-    paddingBottom: 10,
+  image: {
+    width: 28,
+    height: 28,
   },
 });

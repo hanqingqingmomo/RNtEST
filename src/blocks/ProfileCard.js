@@ -4,8 +4,18 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 
-import { View, Text, Avatar, Link, ShadowView, ImagePreview } from '../atoms';
+import {
+  View,
+  Text,
+  Avatar,
+  Link,
+  ShadowView,
+  ImagePreview,
+  Icon,
+  TouchableOpacity,
+} from '../atoms';
 import { type User } from '../Types';
+import { getColor } from '../utils/color';
 
 type P = {
   user: User,
@@ -26,14 +36,11 @@ export default class ProfileCard extends Component<P> {
           <Lightbox
             underlayColor="white"
             renderContent={() => (
-              <ImagePreview
-                resizeMode="contain"
-                source={{ uri: profile_photo }}
-              />
+              <ImagePreview resizeMode="contain" imageURI={profile_photo} />
             )}
           >
             <View>
-              <Avatar source={{ uri: profile_photo }} size={100} />
+              <Avatar imageURI={profile_photo} size={100} />
             </View>
           </Lightbox>
           <Text
@@ -69,20 +76,20 @@ export default class ProfileCard extends Component<P> {
               </Text>
             </Link>
           ) : null}
-          {/* <View style={styles.links}>
-            {email ? (
+          <View style={styles.links}>
+            {/* {email ? (
               <View style={styles.link}>
                 <Link type="mail" value={email}>
                   <View style={styles.linkWrapper}>
                     <Icon
                       name="conversation"
-                      size={32}
+                      size="md"
                       style={styles.icon}
                       color="orange"
                     />
                     <Text
                       size={14}
-                      color="#4e5f67"
+                      color={getColor('orange')}
                       weight="500"
                       lineHeight={16}
                     >
@@ -91,30 +98,29 @@ export default class ProfileCard extends Component<P> {
                   </View>
                 </Link>
               </View>
-            ) : null}
-            {phone ? (
-              <View style={styles.link}>
-                <Link type="phone" value={phone}>
-                  <View style={styles.linkWrapper}>
-                    <Icon
-                      name="call-1"
-                      size={32}
-                      style={styles.icon}
-                      color="orange"
-                    />
-                    <Text
-                      size={14}
-                      color="#4e5f67"
-                      weight="500"
-                      lineHeight={16}
-                    >
-                      Call
-                    </Text>
-                  </View>
-                </Link>
-              </View>
-            ) : null}
-          </View> */}
+            ) : null} */}
+
+            <View style={styles.link}>
+              <TouchableOpacity>
+                <View style={styles.linkWrapper}>
+                  <Icon
+                    name="call-1"
+                    size="md"
+                    style={styles.icon}
+                    color="orange"
+                  />
+                  <Text
+                    size={14}
+                    color={getColor('orange')}
+                    weight="500"
+                    lineHeight={16}
+                  >
+                    Call
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </ShadowView>
     );
@@ -135,18 +141,25 @@ const styles = StyleSheet.create({
   },
   links: {
     flexDirection: 'row',
-    maxWidth: 230,
+    maxWidth: 312,
     marginTop: 30,
   },
   link: {
-    flexGrow: 1,
     width: '50%',
+    paddingHorizontal: 6,
   },
   linkWrapper: {
+    height: 34,
     alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: getColor('orange'),
+    flexDirection: 'row',
+    borderRadius: 34 / 2,
+    backgroundColor: 'transparent',
   },
   icon: {
-    marginBottom: 13,
+    marginRight: 8,
   },
   subtitle: {
     marginTop: 3,
