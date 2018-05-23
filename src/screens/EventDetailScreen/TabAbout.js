@@ -23,6 +23,7 @@ import {
 } from '../../blocks/EventFeed/Event';
 import type { Comment, User, Contact, Community } from '../../Types';
 import CommentList from './CommentList';
+import { inProgress } from '../../blocks/EventFeed/Event';
 
 export const SORT_KEYS = {
   'Top comments': 'popularity',
@@ -60,12 +61,10 @@ const LiveEventButton = ({ onPress, current_user_rsvp }) => (
     <View style={styles.joinButton}>
       <Button
         block
-        disabled={current_user_rsvp === ATTENDING_STATUS.GOING}
         title="Join Now!"
         size="lg"
         color={getColor('#00E676')}
         textColor="white"
-        onPress={() => onPress(ATTENDING_STATUS.GOING)}
       />
     </View>
   </View>
@@ -148,21 +147,22 @@ export default class TabAbout extends Component<Props, State> {
   render() {
     const {
       description,
-      onActionPress,
-      webinar,
-      replies,
       id,
+      onActionPress,
       onContactSelect,
       onRequestReply,
+      replies,
+      start,
+      webinar,
     } = this.props;
 
     return (
       <View style={styles.container}>
-        {webinar ? (
+        <FutureEventButtons onPress={onActionPress} {...this.props} />
+
+        {webinar && inProgress(start) ? (
           <LiveEventButton onPress={onActionPress} {...this.props} />
-        ) : (
-          <FutureEventButtons onPress={onActionPress} {...this.props} />
-        )}
+        ) : null}
 
         {description ? (
           <View style={styles.text}>

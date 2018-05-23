@@ -58,7 +58,7 @@ type Props = {
   onPress: Function,
 };
 
-function inProgress(start: Date): boolean {
+export function inProgress(start: Date): boolean {
   if (isPast(start) && isBefore(start, new Date())) {
     return true;
   }
@@ -157,38 +157,12 @@ function renderDate(start, end) {
   );
 }
 
-function _renderWebinar({
+function _renderContent({
   event,
   palette,
   onActionPress,
   onPress,
 }): React$Node {
-  return (
-    <View style={[styles.midSection, styles.alignment]}>
-      {inProgress(event.start) && !isPast(event.start) ? (
-        <Text style={styles.liveLabel} color="white" size={13} weight="bold">
-          Live
-        </Text>
-      ) : (
-        renderDate(event.start, event.end)
-      )}
-
-      {event.is_author || isPast(event.start) ? null : (
-        <Button
-          disabled={isPast(event.end) || event.current_user_rsvp === 'going'}
-          color={palette.joinButton.color}
-          onPress={() => onActionPress('going')}
-          size="md"
-          textColor={palette.joinButton.text}
-          title="Join"
-          style={styles.buttonJoin}
-        />
-      )}
-    </View>
-  );
-}
-
-function _renderEvent({ event, palette, onActionPress, onPress }): React$Node {
   const pastEvent = isPast(event.start);
   const goingButton = palette[event.current_user_rsvp].goingButton;
   const notGoingButton = palette[event.current_user_rsvp].notGoingButton;
@@ -197,23 +171,33 @@ function _renderEvent({ event, palette, onActionPress, onPress }): React$Node {
     <View style={[styles.midSection, styles.alignment]}>
       {renderDate(event.start, event.end)}
 
-      <View style={styles.alignment}>
-        <Button.Icon
-          {...notGoingButton}
-          disabled={pastEvent}
-          iconName="close"
-          onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
+      {event.webinar && inProgress(event.start) ? (
+        <Button
+          color={palette.joinButton.color}
           size="md"
-          style={css('paddingRight', 12)}
+          textColor={palette.joinButton.text}
+          title="Join"
+          style={styles.buttonJoin}
         />
-        <Button.Icon
-          {...goingButton}
-          disabled={pastEvent}
-          iconName="check"
-          onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
-          size="md"
-        />
-      </View>
+      ) : (
+        <View style={styles.alignment}>
+          <Button.Icon
+            {...notGoingButton}
+            disabled={pastEvent}
+            iconName="close"
+            onPress={() => onActionPress(ATTENDING_STATUS.NOT_GOING)}
+            size="md"
+            style={css('paddingRight', 12)}
+          />
+          <Button.Icon
+            {...goingButton}
+            disabled={pastEvent}
+            iconName="check"
+            onPress={() => onActionPress(ATTENDING_STATUS.GOING)}
+            size="md"
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -271,9 +255,7 @@ export default function Event({
           {event.title}
         </Text>
 
-        {event.webinar
-          ? _renderWebinar({ event, palette, onActionPress, onPress })
-          : _renderEvent({ event, palette, onActionPress, onPress })}
+        {_renderContent({ event, palette, onActionPress, onPress })}
 
         <View style={styles.alignment}>
           <View style={styles.pillWrapper}>
