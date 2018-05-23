@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import format from 'date-fns/format';
+import compareDesc from 'date-fns/compare_desc';
 import type { NavigationScreenConfigProps } from 'react-navigation';
 
 import Event, { type EventProps } from './Event';
@@ -39,13 +40,8 @@ function ItemSeparatorComponent() {
 
 export default class EventFeed extends Component<Props> {
   get events(): EventGroup {
-    let groups = this.props.data
-      .sort((event_a: EventProps, event_b: EventProps): number => {
-        return event_a.webinar === event_b.webinar
-          ? 0
-          : event_a.webinar ? -1 : 1;
-      })
-      .reduce((acc: EventGroup, event: EventProps): EventGroup => {
+    const groups = this.props.data.reduce(
+      (acc: EventGroup, event: EventProps): EventGroup => {
         const date = format(event.start, 'MM/DD/YYYY');
 
         if (!acc[date]) {
@@ -55,12 +51,18 @@ export default class EventFeed extends Component<Props> {
         acc[date].push(event);
 
         return acc;
-      }, {});
+      },
+      {}
+    );
 
     return Object.keys(groups)
       .sort()
       .reduce((acc, key) => {
-        acc[key] = groups[key];
+        console.log(groups[key]);
+        acc[key] = groups[key].sort(
+          (event_a: EventProps, event_b: EventProps): number =>
+            compareDesc(event_a.start, event_b.start)
+        );
 
         return acc;
       }, {});
