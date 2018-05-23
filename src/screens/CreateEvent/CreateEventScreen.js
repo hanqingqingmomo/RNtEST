@@ -109,7 +109,7 @@ const INITIAL_VALUES = {
   enable_survey: true,
   sharing_webcams: 'presenters',
   record_event: true,
-  show_chat_in_recording: false,
+  show_chat_in_recording: true,
   add_event_to_calendar: true,
   send_invitations_via_email: true,
   send_reminders_via_email: true,
@@ -447,9 +447,9 @@ export default class CreateEventScreen extends Component<Props, State> {
         />
       ) : (
         <UserPreview
-          fullName={`${item.givenName}${item.middleName
-            ? ` ${item.middleName}`
-            : ''}${item.familyName ? ` ${item.familyName}` : ''}`}
+          fullName={`${item.givenName}${
+            item.middleName ? ` ${item.middleName}` : ''
+          }${item.familyName ? ` ${item.familyName}` : ''}`}
           profilePhoto={item.thumbnailPath}
           onPress={() => {
             this.props.navigation.navigate('SelectContactsScreen', {
@@ -570,6 +570,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                       if (Platform.OS === 'android') {
                         this.setState({ selectedField: '' });
                       }
+
                       formik.setFieldValue('start', date);
                     }}
                   />
@@ -693,7 +694,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                 </TableView.Section>
 
-                <TableView.Section footer="Attendees will have the option to enter without logging in">
+                {/* <TableView.Section footer="Attendees will have the option to enter without logging in">
                   <SettingsCell
                     title="Allow atendee enter as a guest"
                     name="allow_guest"
@@ -705,7 +706,7 @@ export default class CreateEventScreen extends Component<Props, State> {
                     title="Attendees can see poll results"
                     name="see_poll_results"
                   />
-                </TableView.Section>
+                </TableView.Section> */}
 
                 <TableView.Section
                   header="questions &amp; answers"
