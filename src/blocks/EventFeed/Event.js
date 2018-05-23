@@ -165,15 +165,14 @@ function _renderWebinar({
 }): React$Node {
   return (
     <View style={[styles.midSection, styles.alignment]}>
-      <TouchableOpacity onPress={onPress}>
-        {inProgress(event.start) && !isPast(event.start) ? (
-          <Text style={styles.liveLabel} color="white" size={13} weight="bold">
-            Live
-          </Text>
-        ) : (
-          renderDate(event.start, event.end)
-        )}
-      </TouchableOpacity>
+      {inProgress(event.start) && !isPast(event.start) ? (
+        <Text style={styles.liveLabel} color="white" size={13} weight="bold">
+          Live
+        </Text>
+      ) : (
+        renderDate(event.start, event.end)
+      )}
+
       {event.is_author || isPast(event.start) ? null : (
         <Button
           disabled={isPast(event.end) || event.current_user_rsvp === 'going'}
@@ -196,9 +195,7 @@ function _renderEvent({ event, palette, onActionPress, onPress }): React$Node {
 
   return (
     <View style={[styles.midSection, styles.alignment]}>
-      <TouchableOpacity onPress={() => onPress(event.id)}>
-        {renderDate(event.start, event.end)}
-      </TouchableOpacity>
+      {renderDate(event.start, event.end)}
 
       <View style={styles.alignment}>
         <Button.Icon
@@ -273,13 +270,11 @@ export default function Event({
         >
           {event.title}
         </Text>
-      </TouchableOpacity>
 
-      {event.webinar
-        ? _renderWebinar({ event, palette, onActionPress, onPress })
-        : _renderEvent({ event, palette, onActionPress, onPress })}
+        {event.webinar
+          ? _renderWebinar({ event, palette, onActionPress, onPress })
+          : _renderEvent({ event, palette, onActionPress, onPress })}
 
-      <TouchableOpacity onPress={() => onPress(event.id)}>
         <View style={styles.alignment}>
           <View style={styles.pillWrapper}>
             {_renderPills(event.post_in, palette.pillTextColor)}
