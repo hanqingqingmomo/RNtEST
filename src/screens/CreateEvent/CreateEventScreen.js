@@ -716,6 +716,13 @@ export default class CreateEventScreen extends Component<Props, State> {
                   <SurveyCell value={false} />
                 </TableView.Section>
 
+                <TableView.Section>
+                  <SettingsCell
+                    title="Webinar - video conference"
+                    name="webinar"
+                  />
+                </TableView.Section>
+
                 <TableView.Section header="sharing webcams &amp; mics">
                   <SharingCell value="presenters" />
                   <SharingCell value="everyone" />
@@ -745,10 +752,6 @@ export default class CreateEventScreen extends Component<Props, State> {
                   />
                 </TableView.Section>
               </TableView.Table>
-
-              <TableView.Section>
-                <SettingsCell title="Webinar" name="webinar" />
-              </TableView.Section>
 
               {params && params.event_id ? (
                 <TableView.Section>
