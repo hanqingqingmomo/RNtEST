@@ -27,8 +27,6 @@ export default class ProfileCard extends Component<P> {
     const { user, actionsView } = this.props;
     const { email, first_name, last_name, profile_photo, role } = user;
 
-    console.log(user);
-
     return (
       <ShadowView radius={0}>
         <View style={styles.container}>
