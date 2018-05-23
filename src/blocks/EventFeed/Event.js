@@ -169,7 +169,13 @@ function _renderContent({
 
   return (
     <View style={[styles.midSection, styles.alignment]}>
-      {renderDate(event.start, event.end)}
+      {event.webinar && inProgress(event.start) ? (
+        <View style={styles.liveLabel}>
+          <Text color="white">Live</Text>
+        </View>
+      ) : (
+        renderDate(event.start, event.end)
+      )}
 
       {event.webinar && inProgress(event.start) ? (
         <Button
