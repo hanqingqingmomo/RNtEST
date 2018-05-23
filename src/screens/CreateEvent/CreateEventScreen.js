@@ -12,6 +12,8 @@ import {
 import { showImagePicker } from 'react-native-image-picker';
 import { type NavigationScreenConfigProps } from 'react-navigation';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import differenceInMinutes from 'date-fns/difference_in_minutes';
+import addMinutes from 'date-fns/add_minutes';
 
 import {
   Screen,
@@ -46,6 +48,8 @@ import {
   updateEvent,
   eventCoverPhotoUpload,
 } from '../../utils/requestFactory';
+
+const MAX_WEBINAR_RANGE = 240;
 
 type Props = NavigationScreenConfigProps;
 
@@ -582,6 +586,15 @@ export default class CreateEventScreen extends Component<Props, State> {
                       if (Platform.OS === 'android') {
                         this.setState({ selectedField: '' });
                       }
+
+                      if (
+                        formik.values.webinar &&
+                        differenceInMinutes(formik.values.start, date) <
+                          -MAX_WEBINAR_RANGE
+                      ) {
+                        date = addMinutes(new Date(), MAX_WEBINAR_RANGE);
+                      }
+
                       formik.setFieldValue('end', date);
                     }}
                   />
