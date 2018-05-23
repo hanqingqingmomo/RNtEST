@@ -74,6 +74,9 @@ export default class EventDetailScreen extends Component<Props, State> {
     DeviceEventEmitter.addListener('delete comment', (data: Object) => {
       this.fetchComments();
     });
+    DeviceEventEmitter.addListener('delete event', () => {
+      this.props.navigation.goBack();
+    });
   };
 
   fetch = async () => {
