@@ -21,6 +21,10 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		202A510320B8575600D7D03F /* BMSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 202A50CB20B8575600D7D03F /* BMSDK.bundle */; };
+		2057945520BBEA0B00D906F0 /* Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2057941D20BBEA0B00D906F0 /* Conference.swift */; };
+		209B5A9420B8121700FB1A07 /* ConferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209B5A5C20B8121600FB1A07 /* ConferenceManager.swift */; };
+		209B5A9620B8124800FB1A07 /* ConferenceManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 209B5A9520B8124800FB1A07 /* ConferenceManagerBridge.m */; };
 		20C8FA3520B7D87F00BC2296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C8FA3420B7D87F00BC2296 /* AppDelegate.swift */; };
 		284725EAF384A0AC1E12977C /* Pods_appTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B683420B5DEBA00A96549A /* Pods_appTests.framework */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -489,6 +493,10 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = app/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = app/Info.plist; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		202A50CB20B8575600D7D03F /* BMSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMSDK.bundle; path = Pods/BigmarkerRoomSDK/BMSDK.bundle; sourceTree = "<group>"; };
+		2057941D20BBEA0B00D906F0 /* Conference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conference.swift; sourceTree = "<group>"; };
+		209B5A5C20B8121600FB1A07 /* ConferenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceManager.swift; sourceTree = "<group>"; };
+		209B5A9520B8124800FB1A07 /* ConferenceManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferenceManagerBridge.m; sourceTree = "<group>"; };
 		20C8F9FC20B7D7DE00BC2296 /* Bridge-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridge-Header.h"; sourceTree = "<group>"; };
 		20C8FA3420B7D87F00BC2296 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		222310629B4840DC8A3892CA /* RNTwitterSignIn.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTwitterSignIn.xcodeproj; path = "../node_modules/react-native-twitter-signin/ios/RNTwitterSignIn.xcodeproj"; sourceTree = "<group>"; };
@@ -706,6 +714,9 @@
 		13B07FAE1A68108700A75B9A /* app */ = {
 			isa = PBXGroup;
 			children = (
+				2057941D20BBEA0B00D906F0 /* Conference.swift */,
+				209B5A5C20B8121600FB1A07 /* ConferenceManager.swift */,
+				209B5A9520B8124800FB1A07 /* ConferenceManagerBridge.m */,
 				20C8FA3420B7D87F00BC2296 /* AppDelegate.swift */,
 				20C8F9FC20B7D7DE00BC2296 /* Bridge-Header.h */,
 				77E7AD6720A9CEBB00F643AB /* app.entitlements */,
@@ -997,6 +1008,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				202A50CB20B8575600D7D03F /* BMSDK.bundle */,
 				13B07FAE1A68108700A75B9A /* app */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* appTests */,
@@ -1684,6 +1696,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				202A510320B8575600D7D03F /* BMSDK.bundle in Resources */,
 				7727871020A052AD00DDDADF /* pba.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
@@ -1904,7 +1917,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2057945520BBEA0B00D906F0 /* Conference.swift in Sources */,
+				209B5A9420B8121700FB1A07 /* ConferenceManager.swift in Sources */,
 				20C8FA3520B7D87F00BC2296 /* AppDelegate.swift in Sources */,
+				209B5A9620B8124800FB1A07 /* ConferenceManagerBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

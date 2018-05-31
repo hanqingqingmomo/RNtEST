@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      self.window!.makeKeyAndVisible()
     
   
-    SplashScreen.show()
+    //SplashScreen.show()
     FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     
     return true

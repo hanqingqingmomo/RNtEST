@@ -20,7 +20,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
 
 # Android/IntelliJ
 #
@@ -53,7 +52,6 @@ buck-out/
 */fastlane/screenshots
 
 # Pods
-Pods
 
 # Carthage
 Carthage

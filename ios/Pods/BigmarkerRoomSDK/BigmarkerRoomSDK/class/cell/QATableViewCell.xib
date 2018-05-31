@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO">
+    <dependencies>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Walsheim-Pro-Trial-Regular.otf">
+            <string>GTWalsheimProTrial-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="QATableViewCell" customModule="BigmarkerRoomSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="464" height="145"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="464" height="144.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="qacell" translatesAutoresizingMaskIntoConstraints="NO" id="XR1-fd-yev">
+                        <rect key="frame" x="18" y="18" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="I2i-XY-ld1"/>
+                            <constraint firstAttribute="height" constant="40" id="Rtu-C9-5as"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="MAh-cZ-R8c">
+                        <rect key="frame" x="75" y="18" width="150" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="UdH-eZ-60O"/>
+                            <constraint firstAttribute="width" constant="150" id="kJJ-fb-ti5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="GTWalsheimProTrial-Regular" family="GT Walsheim Pro Trial" pointSize="14"/>
+                        <color key="textColor" red="0.30000001192092896" green="0.30000001192092896" blue="0.30000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xeg-at-UCR">
+                        <rect key="frame" x="228" y="18" width="100" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="hXN-eo-6OT"/>
+                            <constraint firstAttribute="height" constant="21" id="xxY-EY-lpj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="GTWalsheimProTrial-Regular" family="GT Walsheim Pro Trial" pointSize="13"/>
+                        <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="question" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMo-XS-mWq">
+                        <rect key="frame" x="75" y="47" width="366" height="17"/>
+                        <fontDescription key="fontDescription" name="GTWalsheimProTrial-Regular" family="GT Walsheim Pro Trial" pointSize="14"/>
+                        <color key="textColor" red="0.30000001192092896" green="0.30000001192092896" blue="0.30000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="poll_unvoted" translatesAutoresizingMaskIntoConstraints="NO" id="lBO-aB-XLn">
+                        <rect key="frame" x="75" y="125" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="BuT-cV-vzj"/>
+                            <constraint firstAttribute="height" constant="10" id="lSV-fD-hBc"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q35-JM-Wp6">
+                        <rect key="frame" x="93" y="125" width="50" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="DgL-Uy-wyH"/>
+                            <constraint firstAttribute="width" constant="50" id="QYZ-aO-ieH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="GTWalsheimProTrial-Regular" family="GT Walsheim Pro Trial" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="fMo-XS-mWq" secondAttribute="trailing" constant="15" id="6qW-lO-gOD"/>
+                    <constraint firstItem="XR1-fd-yev" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="6za-sY-2Oa"/>
+                    <constraint firstAttribute="bottom" secondItem="lBO-aB-XLn" secondAttribute="bottom" constant="10" id="8gd-bT-CsC"/>
+                    <constraint firstItem="lBO-aB-XLn" firstAttribute="top" secondItem="fMo-XS-mWq" secondAttribute="bottom" constant="15" id="Oa0-ne-lfe"/>
+                    <constraint firstItem="MAh-cZ-R8c" firstAttribute="top" secondItem="XR1-fd-yev" secondAttribute="top" id="Sks-Gs-8m1"/>
+                    <constraint firstItem="Q35-JM-Wp6" firstAttribute="top" secondItem="lBO-aB-XLn" secondAttribute="top" id="VLV-7e-3t2"/>
+                    <constraint firstItem="lBO-aB-XLn" firstAttribute="leading" secondItem="fMo-XS-mWq" secondAttribute="leading" id="Y2r-HY-kvs"/>
+                    <constraint firstItem="fMo-XS-mWq" firstAttribute="leading" secondItem="MAh-cZ-R8c" secondAttribute="leading" id="Yy3-81-MOd"/>
+                    <constraint firstItem="MAh-cZ-R8c" firstAttribute="leading" secondItem="XR1-fd-yev" secondAttribute="trailing" constant="17" id="kr4-Oz-Z7w"/>
+                    <constraint firstItem="Xeg-at-UCR" firstAttribute="leading" secondItem="MAh-cZ-R8c" secondAttribute="trailing" constant="3" id="ku5-Ef-1nf"/>
+                    <constraint firstItem="Xeg-at-UCR" firstAttribute="top" secondItem="MAh-cZ-R8c" secondAttribute="top" id="pI5-al-B2w"/>
+                    <constraint firstItem="XR1-fd-yev" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="pZK-Z8-gbh"/>
+                    <constraint firstItem="fMo-XS-mWq" firstAttribute="top" secondItem="MAh-cZ-R8c" secondAttribute="bottom" constant="8" id="wjt-aa-JDv"/>
+                    <constraint firstItem="Q35-JM-Wp6" firstAttribute="leading" secondItem="lBO-aB-XLn" secondAttribute="trailing" constant="8" id="yLD-7s-m3L"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarImageView" destination="XR1-fd-yev" id="ftn-KA-HIi"/>
+                <outlet property="numberLabel" destination="Q35-JM-Wp6" id="OiD-CG-wTe"/>
+                <outlet property="questionLabel" destination="fMo-XS-mWq" id="GPV-Uk-TVj"/>
+                <outlet property="timeLabel" destination="Xeg-at-UCR" id="dj3-tK-5ef"/>
+                <outlet property="usernameLabel" destination="MAh-cZ-R8c" id="uN6-uU-QLI"/>
+                <outlet property="voteImageView" destination="lBO-aB-XLn" id="Rrq-ls-dO0"/>
+            </connections>
+            <point key="canvasLocation" x="268" y="333"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="poll_unvoted" width="10" height="10"/>
+    </resources>
+</document>

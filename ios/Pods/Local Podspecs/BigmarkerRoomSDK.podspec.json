@@ -1,0 +1,94 @@
+{
+  "name": "BigmarkerRoomSDK",
+  "version": "1.2.5",
+  "summary": "BigmarkerRoomSDK",
+  "description": "Bigmarker Conference Room SDK",
+  "homepage": "https://github.com/BigMarker/BigmarkerRoomSDK",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "HanQing": "qing.han@bigmarker.com"
+  },
+  "source": {
+    "git": "git@github.com:BigMarker/BigmarkerRoomSDK.git",
+    "tag": "1.2.5"
+  },
+  "vendored_frameworks": [
+    "BMroomSDK.framework",
+    "WebRTC.framework"
+  ],
+  "vendored_libraries": "MQTTKit/libMQTTKit.a",
+  "public_header_files": [
+    "BigmarkerRoomSDK/class/*.h",
+    "MQTTKit/MQTTKit.h"
+  ],
+  "dependencies": {
+    "MBProgressHUD": [
+      "~> 1.0.0"
+    ],
+    "HMSegmentedControl": [
+
+    ],
+    "SVPullToRefresh": [
+
+    ],
+    "SDWebImage": [
+      "~>3.6"
+    ],
+    "CWStatusBarNotification": [
+      "~> 2.3.1"
+    ],
+    "youtube-ios-player-helper": [
+
+    ],
+    "Popover.OC": [
+
+    ],
+    "Masonry": [
+
+    ],
+    "AFNetworking": [
+      "~> 2.0"
+    ]
+  },
+  "frameworks": [
+    "UIKit",
+    "AVFoundation",
+    "Foundation"
+  ],
+  "resources": [
+    "BMSDK.bundle"
+  ],
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": [
+    "BigmarkerRoomSDK/class/BMRoom.{m,h}",
+    "MQTTKit/MQTTKit.h"
+  ],
+  "subspecs": [
+    {
+      "name": "class",
+      "subspecs": [
+        {
+          "name": "controller",
+          "source_files": "BigmarkerRoomSDK/class/controller/*.*"
+        },
+        {
+          "name": "model",
+          "source_files": "BigmarkerRoomSDK/class/model/*.*"
+        },
+        {
+          "name": "view",
+          "source_files": "BigmarkerRoomSDK/class/view/*.*"
+        },
+        {
+          "name": "cell",
+          "source_files": "BigmarkerRoomSDK/class/cell/*.*"
+        }
+      ]
+    }
+  ]
+}

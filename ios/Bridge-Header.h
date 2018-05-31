@@ -12,14 +12,16 @@
 #import <React/RCTRootView.h>
 #import <React/RCTUtils.h>
 #import <React/RCTConvert.h>
+#import <React/RCTConvert.h>
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTPushNotificationManager.h>
+#import "React/RCTUIManager.h"
 
 #import <AppCenterReactNativePush/AppCenterReactNativePush.h>
 #import <AppCenterReactNativeCrashes/AppCenterReactNativeCrashes.h>
 #import <AppCenterReactNativeAnalytics/AppCenterReactNativeAnalytics.h>
 #import <AppCenterReactNative/AppCenterReactNative.h>
 #import "SplashScreen.h"
-#import <React/RCTBundleURLProvider.h>
-#import <React/RCTPushNotificationManager.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <TwitterKit/TwitterKit.h>

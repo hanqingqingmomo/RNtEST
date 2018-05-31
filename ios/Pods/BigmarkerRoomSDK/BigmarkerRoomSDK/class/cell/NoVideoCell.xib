@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIDisplay-Bold.otf">
+            <string>SFUIDisplay-Bold</string>
+        </array>
+        <array key="SFUIDisplay-Regular.otf">
+            <string>SFUIDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NoVideoCell" id="gTV-IL-0wX" customClass="NoVideoCell" customModule="BigmarkerRoomSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="388" height="582"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="388" height="582"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lightning" translatesAutoresizingMaskIntoConstraints="NO" id="50a-Yv-4zf">
+                        <rect key="frame" x="182" y="167" width="25" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="DKN-7r-WLe"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="HY0-R3-Mrd"/>
+                            <constraint firstAttribute="width" constant="25" id="JJf-ct-0hg"/>
+                            <constraint firstAttribute="height" constant="45" id="vgx-Lm-W3N"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content will appear here when shared" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LkE-Kv-UbY">
+                        <rect key="frame" x="0.0" y="282" width="388" height="19"/>
+                        <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="16"/>
+                        <color key="textColor" red="0.75686274509999996" green="0.78823529410000004" blue="0.83529411760000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stay Tuned" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2F-dP-T3c">
+                        <rect key="frame" x="0.0" y="241" width="388" height="39"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="39" id="2g9-gf-yHV"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="39" id="p97-yW-C5P"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="16"/>
+                        <color key="textColor" red="0.75686274509999996" green="0.78823529410000004" blue="0.83529411760000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.066247396171092987" green="0.077882878482341766" blue="0.10887011885643005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="n2F-dP-T3c" secondAttribute="trailing" id="8L8-ZW-HOa"/>
+                <constraint firstItem="50a-Yv-4zf" firstAttribute="centerX" secondItem="n2F-dP-T3c" secondAttribute="centerX" id="A8X-jj-8w3"/>
+                <constraint firstItem="LkE-Kv-UbY" firstAttribute="top" secondItem="n2F-dP-T3c" secondAttribute="bottom" constant="2" id="AjC-MR-fEQ"/>
+                <constraint firstItem="n2F-dP-T3c" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="D3s-oW-Xhl"/>
+                <constraint firstItem="n2F-dP-T3c" firstAttribute="top" secondItem="50a-Yv-4zf" secondAttribute="bottom" constant="29" id="Jz1-e4-YBm"/>
+                <constraint firstAttribute="trailing" secondItem="LkE-Kv-UbY" secondAttribute="trailing" id="Nrd-zl-Fc1"/>
+                <constraint firstItem="LkE-Kv-UbY" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="OJP-mx-lOK"/>
+                <constraint firstItem="LkE-Kv-UbY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TKB-gJ-6dU"/>
+                <constraint firstItem="LkE-Kv-UbY" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="dmK-HE-42V"/>
+            </constraints>
+            <size key="customSize" width="388" height="582"/>
+            <point key="canvasLocation" x="-45" y="14"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="lightning" width="15" height="30"/>
+    </resources>
+</document>

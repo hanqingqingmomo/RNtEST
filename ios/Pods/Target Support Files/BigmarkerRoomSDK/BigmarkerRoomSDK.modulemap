@@ -1,0 +1,6 @@
+framework module BigmarkerRoomSDK {
+  umbrella header "BigmarkerRoomSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

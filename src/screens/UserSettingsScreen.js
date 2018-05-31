@@ -1,5 +1,7 @@
 // @flow
 
+import {NativeModules, NativeEventEmitte} from 'react-native';
+import ReactNative from 'react-native';
 import React, { Component } from 'react';
 import { Alert, Clipboard, TouchableOpacity } from 'react-native';
 import Config from 'react-native-config';
@@ -29,6 +31,9 @@ type Action = {
 type Props = ScreenProps<*> & {
   endSession: typeof endSession,
 };
+
+const { ConferenceManager } = NativeModules;
+
 
 const SETTINGS: Array<{ name: ActionName, iconName: IconName }> = [
   {
@@ -71,19 +76,25 @@ class UserProfileScreen extends Component<Props> {
   }
 
   signOut = () => {
-    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Sign Out',
-        onPress: this.props.endSession,
-        style: 'destructive',
-      },
-    ]);
+
+     ConferenceManager.enterConference(
+                       ReactNative.findNodeHandle(this.refs.screenView),
+                       "1" 
+                       );
+    
+    //Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      //{ text: 'Cancel', style: 'cancel' },
+      //{
+        //text: 'Sign Out',
+        //onPress: this.props.endSession,
+        //style: 'destructive',
+      //},
+    //]);
   };
 
   render() {
     return (
-      <Screen>
+      <Screen ref="screenView">
         <TableView.Table>
           <TableView.Section>
             {SETTINGS.map((setting: Action) => (

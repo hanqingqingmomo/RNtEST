@@ -76,9 +76,13 @@
 	<key>NSContactsUsageDescription</key>
 	<string>This allows $(PRODUCT_NAME) to let choose which friends to invite to download the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) location use</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) will only upload and share photos you choose.</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>pba.ttf</string>
