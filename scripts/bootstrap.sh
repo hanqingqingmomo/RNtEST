@@ -9,5 +9,5 @@ rm -rf "~/.rncache";
 yarn install;
 cd ios;
 #pod install;
-carthage bootstrap --cache-builds --platform iOS;
+#carthage bootstrap --cache-builds --platform iOS;
 yarn run env:activate
