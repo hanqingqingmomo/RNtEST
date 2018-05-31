@@ -140,7 +140,7 @@ class BMPrivateChatController: UIViewController {
     }
     
    
-     func quiteRoom(){
+    @objc func quiteRoom(){
         if PeopleMessage.totalMessages.count != 0 {
             for msg in PeopleMessage.totalMessages {
                 if msg.sid == self.userInfoId || msg.sid == self.bm.socketID {
@@ -166,7 +166,7 @@ class BMPrivateChatController: UIViewController {
 
 extension BMPrivateChatController {
     
-    func textDidChanged(notification:NSNotification) {
+   @objc func textDidChanged(notification:NSNotification) {
         if  messageInputView.inputTextView.text != "Type your message here..." {
             self.messageInputView.inputTextView.textColor = UIColor.black
         }
@@ -249,14 +249,14 @@ extension BMPrivateChatController {
         self.view.addSubview(view)
     }
     
-    func refreshChat(sender: AnyObject) {
+  @objc  func refreshChat(sender: AnyObject) {
         self.refreshButton.setTitle("REFRESHING...", for: UIControlState.normal)
         self.refreshButton.isEnabled = false
         //bm.syncChatMessages()
     }
     
     
-    func cancelKeyboard(sender: UITapGestureRecognizer) {
+   @objc func cancelKeyboard(sender: UITapGestureRecognizer) {
         self.messageInputView.inputTextView.resignFirstResponder()
     }
     
@@ -325,7 +325,7 @@ extension BMPrivateChatController : UITextViewDelegate {
     }
     
     
-    func keyboardWillShow(notification:NSNotification){
+   @objc func keyboardWillShow(notification:NSNotification){
         
         if self.messageInputView.inputTextView.text == "Type your message here..." {
             self.messageInputView.inputTextView.text = ""
@@ -351,7 +351,7 @@ extension BMPrivateChatController : UITextViewDelegate {
     }
     
     
-    func keyboardWillHide(notification:NSNotification){
+  @objc  func keyboardWillHide(notification:NSNotification){
         
         if self.messageInputView.inputTextView.text == "" {
             self.messageInputView.inputTextView.text = "Type your message here..."
@@ -395,7 +395,7 @@ extension BMPrivateChatController: BigRoomChatDelegate{
             }
         }
     }
-    func userLeaveRoom(notification:NSNotification){
+  @objc  func userLeaveRoom(notification:NSNotification){
         let sid = notification.object as! String
         if sid == self.userInfoId {
             self.quiteRoom()

@@ -83,7 +83,7 @@ class ColorView: UIView{
     
     
     
-    func selectColor(btn: UIButton){
+   @objc func selectColor(btn: UIButton){
         self.color = btn.backgroundColor!
         
         delBtnLayer()
@@ -113,7 +113,7 @@ class ColorView: UIView{
     }
     
     
-    func showSettingView(){
+   @objc func showSettingView(){
         if let whiteBoardColorToolView = self.superview as? WhiteBoardColorToolView {
             whiteBoardColorToolView.hideColorView()
             //self.delegate.notifyColorSelected!(color)

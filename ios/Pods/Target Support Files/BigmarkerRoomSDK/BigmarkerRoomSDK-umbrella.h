@@ -22,7 +22,6 @@
 #import "PopoverView.h"
 #import "YTPlayerView.h"
 
-
 FOUNDATION_EXPORT double BigmarkerRoomSDKVersionNumber;
 FOUNDATION_EXPORT const unsigned char BigmarkerRoomSDKVersionString[];
 

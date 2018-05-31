@@ -69,7 +69,7 @@ class OfferView: UIView {
         let url = URL(string: offer!.imageUrl)
         image.sd_setImage(with: url, placeholderImage: UIImage(named: "BMSDK.bundle/picdefault_profile_picture"))
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleToFill
         
         teaser = UILabel()
         teaser.text = offer?.teaser
@@ -153,11 +153,11 @@ class OfferView: UIView {
         setLayoutC()
     }
     
-    func exitView(){
+   @objc func exitView(){
         self.removeFromSuperview()
     }
     
-    func goto(){
+   @objc func goto(){
         UIApplication.shared.openURL(URL(string: offer!.buttonLink)!)
     }
     
@@ -167,13 +167,6 @@ class OfferView: UIView {
             make?.left.mas_equalTo()(self.superview!.mas_left)?.setOffset(0)
             make?.right.mas_equalTo()(self.superview!.mas_right)?.setOffset(0)
             make?.bottom.mas_equalTo()(self.superview!.mas_bottom)?.setOffset(0)
-        }
-        
-        self.adView.mas_makeConstraints { (make) in
-            make?.top.mas_equalTo()(self.mas_top)?.setOffset(100)
-            make?.left.mas_equalTo()(self.superview!.mas_left)?.setOffset(20)
-            make?.right.mas_equalTo()(self.superview!.mas_right)?.setOffset(-20)
-            make?.height.mas_equalTo()(400)
         }
         
         self.exitIcon.mas_makeConstraints { (make) in
@@ -193,6 +186,13 @@ class OfferView: UIView {
     
     func setLayoutC(){
         setLayoutBase()
+        self.adView.mas_makeConstraints { (make) in
+            make?.top.mas_equalTo()(self.mas_top)?.setOffset(100)
+            make?.left.mas_equalTo()(self.superview!.mas_left)?.setOffset(20)
+            make?.right.mas_equalTo()(self.superview!.mas_right)?.setOffset(-20)
+            make?.height.mas_equalTo()(400)
+        }
+        
         self.webView.mas_makeConstraints { (make) in
             make?.top.mas_equalTo()(self.adView!.mas_top)?.setOffset(0)
             make?.left.mas_equalTo()(self.adView!.mas_left)?.setOffset(0)
@@ -203,6 +203,13 @@ class OfferView: UIView {
     
     func setLayoutV(){
         setLayoutBase()
+        
+        self.adView.mas_makeConstraints { (make) in
+            make?.top.mas_equalTo()(self.mas_top)?.setOffset(100)
+            make?.left.mas_equalTo()(self.superview!.mas_left)?.setOffset(20)
+            make?.right.mas_equalTo()(self.superview!.mas_right)?.setOffset(-20)
+            make?.height.mas_equalTo()(400)
+        }
         
         self.image.mas_makeConstraints { (make) in
             make?.top.mas_equalTo()(self.adView.mas_top)?.setOffset(0)
@@ -248,6 +255,13 @@ class OfferView: UIView {
     
     func setLayoutH(){
         setLayoutBase()
+        
+        self.adView.mas_makeConstraints { (make) in
+            make?.top.mas_equalTo()(self.mas_top)?.setOffset(100)
+            make?.left.mas_equalTo()(self.superview!.mas_left)?.setOffset(20)
+            make?.right.mas_equalTo()(self.superview!.mas_right)?.setOffset(-20)
+            make?.height.mas_equalTo()(250)
+        }
         
         self.image.mas_makeConstraints { (make) in
             make?.top.mas_equalTo()(self.adView.mas_top)?.setOffset(0)

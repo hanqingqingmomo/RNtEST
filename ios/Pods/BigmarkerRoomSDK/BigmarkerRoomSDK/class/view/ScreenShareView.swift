@@ -115,7 +115,7 @@ class ScreenShareView: UIView {
     }
     
     
-    func switchScreen(){
+  @objc  func switchScreen(){
         if rotation {
             rotation = false
         } else {

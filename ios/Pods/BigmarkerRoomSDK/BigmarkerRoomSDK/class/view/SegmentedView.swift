@@ -55,7 +55,7 @@ class SegmentedView: UIView {
         self.layer.addSublayer(boder)
     }
     
-    func segmentedChangedValue(segmentedControl: HMSegmentedControl) {
+   @objc func segmentedChangedValue(segmentedControl: HMSegmentedControl) {
         self.switchSegmentDelegate?.notifySwitchSegment(index: segmentedControl.selectedSegmentIndex)
     }
 

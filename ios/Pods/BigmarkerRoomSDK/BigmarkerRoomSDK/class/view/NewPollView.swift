@@ -174,7 +174,7 @@ class NewPollView: UIView {
     }
 
     //点击answerView
-    func answerViewTap(tap:UITapGestureRecognizer){
+  @objc  func answerViewTap(tap:UITapGestureRecognizer){
         
         let btn = tap.view?.subviews[1] as! UIButton
         btnClick(button: btn)
@@ -184,7 +184,7 @@ class NewPollView: UIView {
     
     //点击button
 
-    func btnClick(button:UIButton){
+  @objc  func btnClick(button:UIButton){
         
         if isSingle == "multi" {
             if button.isSelected {
@@ -203,11 +203,11 @@ class NewPollView: UIView {
         }
     }
     
-    func doItLaterBtnClick(sender: AnyObject){
+  @objc  func doItLaterBtnClick(sender: AnyObject){
         self.removeFromSuperview()
     }
 
-    func submitBtnClick(sender: AnyObject){
+   @objc func submitBtnClick(sender: AnyObject){
         
         var arr = [String]()
         var pollchoice = ""

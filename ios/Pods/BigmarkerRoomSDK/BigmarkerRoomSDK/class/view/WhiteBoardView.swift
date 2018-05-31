@@ -88,7 +88,7 @@ class WhiteBoardView: UIView {
     }
     
     //控制是否能画的开关出现或隐藏
-    func changeRole(notification:NSNotification){
+   @objc func changeRole(notification:NSNotification){
         //let isAdmin = notification.object as! Bool
         DispatchQueue.main.sync{
             self.toolView.changeSettingBtn()
@@ -96,7 +96,7 @@ class WhiteBoardView: UIView {
     }
     
     //接收web页传来的clear命令
-    func clearLine(){
+   @objc func clearLine(){
         if self.loadStatus == false {
             return
         }
@@ -108,7 +108,7 @@ class WhiteBoardView: UIView {
         }
     }
     //接收web页提前传过来的字体大小
-    func changSize(notification:NSNotification){
+   @objc func changSize(notification:NSNotification){
         if self.loadStatus == false {
             return
         }
@@ -122,7 +122,7 @@ class WhiteBoardView: UIView {
         
     }
     //接收web页提前传过来的颜色
-    func changeColor(notification:NSNotification){
+ @objc func changeColor(notification:NSNotification){
         let dic = notification.userInfo
         let model = dic!["model"] as! DrawColorModel
         if model.red == CGFloat(0) && model.green == CGFloat(0) && model.blue == CGFloat(0) {
@@ -137,7 +137,7 @@ class WhiteBoardView: UIView {
     }
     
     //提前接收web页传过来的颜色和字体大小
-    func drawColorAndSize(notification:NSNotification){
+   @objc func drawColorAndSize(notification:NSNotification){
         let dic = notification.userInfo
         let model = dic!["model"] as! DrawPositionModel
         
@@ -154,7 +154,7 @@ class WhiteBoardView: UIView {
     }
     
     //web页传过来的坐标
-    func addCoorinate(notification:NSNotification){
+  @objc  func addCoorinate(notification:NSNotification){
         if self.loadStatus == false {
             return
         }

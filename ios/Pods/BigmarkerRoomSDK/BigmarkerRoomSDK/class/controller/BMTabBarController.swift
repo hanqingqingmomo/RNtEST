@@ -192,7 +192,7 @@ extension BMTabBarController {
         }
     }
     
-    func handleRouteChange(notification: NSNotification){
+   @objc func handleRouteChange(notification: NSNotification){
         let interuptionDict: NSDictionary = notification.userInfo! as NSDictionary
         let routeChangeReason: NSInteger = (interuptionDict.value(forKey: AVAudioSessionRouteChangeReasonKey)! as AnyObject).integerValue
         switch (routeChangeReason) {
@@ -218,7 +218,7 @@ extension BMTabBarController {
         return false
     }
     
-    func audioSessionWasInterrupted(notification: NSNotification) {
+  @objc  func audioSessionWasInterrupted(notification: NSNotification) {
         if notification.name != NSNotification.Name.AVAudioSessionInterruption || notification.userInfo == nil{
             return
         }
@@ -317,11 +317,13 @@ extension BMTabBarController: BMRoomDelegate, SubmitNewPollDelegate {
         let msg = Message(dictionary: message as NSDictionary)
         if msg.toId == "" {
             //chat的消息条数改变的通知
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "chatBadgeCount"), object: msg)
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeChatBadge"), object: msg)
+            self.msgController.showBadge(index: 0)
         }else{
             PeopleMessage.totalMessages.append(msg)
             PeopleMessage.bigTotalMessages.append(msg)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PeopleMsgAddNotification"), object: message)
+            self.msgController.showBadge(index: 1)
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePeopleMessageBadge"), object: message)
         }
   
     }
@@ -356,7 +358,10 @@ extension BMTabBarController: BMRoomDelegate, SubmitNewPollDelegate {
         guard let action = messageDict["action"] as? String else { return }
         
         if action == "handout:switch"  {
+            self.bmroomVideoDelegate?.bigRoomNotificationDelegateMsgAddTabbar!(message: message as [NSObject : AnyObject])
             self.bmroomHandoutDelegate?.bigRoomNotificationDelegateHandoutSwitch!(message: message as [NSObject : AnyObject])
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeHandoutBadge"), object: nil)
+            self.msgController.showBadge(index: 3)
             return
         }
         if action == "open-offer"  {
@@ -470,7 +475,8 @@ extension BMTabBarController: BMRoomDelegate, SubmitNewPollDelegate {
         if action == "questionAnswer:new" {
             self.bmroomQADelegate?.bigRoomNotificationDelegateQANew!(message: message as [NSObject : AnyObject])
             self.bmroomVideoDelegate?.bigRoomNotificationDelegateMsgAddTabbar!(message: message as [NSObject : AnyObject])
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeQA"), object: nil)
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeQABadge"), object: nil)
+            self.msgController.showBadge(index: 4)
             return
         }
         
@@ -506,7 +512,9 @@ extension BMTabBarController: BMRoomDelegate, SubmitNewPollDelegate {
                     PeopleMessage.pollCount = String(Int(PeopleMessage.pollCount)! + 1)
           
                     //如果有新的投票,发送通知,修改投票数
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollBadge"), object: nil)
+                    self.msgController.showBadge(index: 2)
                     //有新的投票
                     recieveNewPoll(message: message as [NSObject : AnyObject])
                 }
@@ -517,7 +525,9 @@ extension BMTabBarController: BMRoomDelegate, SubmitNewPollDelegate {
                         //记录新的投票数
                         PeopleMessage.pollCount = String(Int(PeopleMessage.pollCount)! + 1)
                         //如果有新的投票,发送通知,修改投票数
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
+//                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
+//                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollBadge"), object: nil)
+                        self.msgController.showBadge(index: 2)
                         //有新的投票
                         recieveNewPoll(message: message as [NSObject : AnyObject])
                     }
@@ -527,6 +537,7 @@ extension BMTabBarController: BMRoomDelegate, SubmitNewPollDelegate {
                 //记录新的投票数
                 PeopleMessage.pollCount = String(Int(PeopleMessage.pollCount)! + 1)
                 //如果有新的投票,发送通知,修改投票数
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollBadge"), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
                 //有新的投票
                 recieveNewPoll(message: message as [NSObject : AnyObject])

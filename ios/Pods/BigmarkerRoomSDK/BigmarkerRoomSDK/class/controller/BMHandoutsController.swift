@@ -9,6 +9,7 @@
 import UIKit
 
 let handoutCell = "handoutCell"
+let noHandoutCell = "nohandoutCell"
 
 class BMHandoutsController: BMMsgBaseViewController {
     
@@ -39,9 +40,17 @@ class BMHandoutsController: BMMsgBaseViewController {
         tableView.backgroundColor = UIColor.white
         tableView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.isScrollEnabled = false
         tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.register(HandoutCell.self, forCellReuseIdentifier: handoutCell)
+        tableView.register(NoHandoutsCell.self, forCellReuseIdentifier: noHandoutCell)
+        
+        tableView.addPullToRefresh(actionHandler: {
+            self?.reloadData()
+        })
+        tableView.showsInfiniteScrolling = false
+        
         tableView.layoutSubviews()
         return tableView
         }()
@@ -58,6 +67,16 @@ class BMHandoutsController: BMMsgBaseViewController {
         self.view.addSubview(self.tableView)
     }
     
+    func reloadData(){
+            Handout.requestDatas(id: conference.recordId!, successCallback: { (result: [Handout]) in
+               self.tableView.pullToRefreshView.stopAnimating()
+                self.handouts = result
+                self.tableView.reloadData()
+            }) {
+                self.tableView.pullToRefreshView.stopAnimating()
+            }
+    }
+    
     func loadData(){
         loading = MBProgressHUD.showAdded(to: self.view, animated: true)
         loading.labelText = "Loading..."
@@ -71,7 +90,7 @@ class BMHandoutsController: BMMsgBaseViewController {
     }
     
     
-    func preView(sender: UITapGestureRecognizer){
+   @objc func preView(sender: UITapGestureRecognizer){
         let index = sender.view?.tag
        // if self.handouts[index!] {
             let  vc = BMHandoutController(frame: CGRect.zero, handout: self.handouts[index!])
@@ -93,10 +112,20 @@ extension BMHandoutsController: BigRoomHandoutDelegate {
 extension BMHandoutsController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.handouts.count
+        if self.handouts.count == 0 {
+            return 1
+        } else {
+           return self.handouts.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if self.handouts.count == 0 {
+           let cell = tableView.dequeueReusableCell(withIdentifier: noHandoutCell, for: indexPath as IndexPath) as! NoHandoutsCell
+            cell.setupUI()
+            return cell
+        }
     
         let cell = tableView.dequeueReusableCell(withIdentifier: handoutCell, for: indexPath as IndexPath) as! HandoutCell
         cell.handout = self.handouts[indexPath.row]
@@ -109,7 +138,11 @@ extension BMHandoutsController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        if self.handouts.count == 0 {
+            return 400
+        } else {
+            return 80
+        }
     }
     
 }

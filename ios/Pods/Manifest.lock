@@ -29,9 +29,9 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (1.5.0):
     - AppCenter/Core (= 1.6.0)
-  - BigmarkerRoomSDK (1.2.5):
+  - BigmarkerRoomSDK (1.2.9):
     - AFNetworking (~> 2.0)
-    - BigmarkerRoomSDK/class (= 1.2.5)
+    - BigmarkerRoomSDK/class (= 1.2.9)
     - CWStatusBarNotification (~> 2.3.1)
     - HMSegmentedControl
     - Masonry
@@ -40,12 +40,12 @@ PODS:
     - SDWebImage (~> 3.6)
     - SVPullToRefresh
     - youtube-ios-player-helper
-  - BigmarkerRoomSDK/class (1.2.5):
+  - BigmarkerRoomSDK/class (1.2.9):
     - AFNetworking (~> 2.0)
-    - BigmarkerRoomSDK/class/cell (= 1.2.5)
-    - BigmarkerRoomSDK/class/controller (= 1.2.5)
-    - BigmarkerRoomSDK/class/model (= 1.2.5)
-    - BigmarkerRoomSDK/class/view (= 1.2.5)
+    - BigmarkerRoomSDK/class/cell (= 1.2.9)
+    - BigmarkerRoomSDK/class/controller (= 1.2.9)
+    - BigmarkerRoomSDK/class/model (= 1.2.9)
+    - BigmarkerRoomSDK/class/view (= 1.2.9)
     - CWStatusBarNotification (~> 2.3.1)
     - HMSegmentedControl
     - Masonry
@@ -54,17 +54,7 @@ PODS:
     - SDWebImage (~> 3.6)
     - SVPullToRefresh
     - youtube-ios-player-helper
-  - BigmarkerRoomSDK/class/cell (1.2.5):
-    - AFNetworking (~> 2.0)
-    - CWStatusBarNotification (~> 2.3.1)
-    - HMSegmentedControl
-    - Masonry
-    - MBProgressHUD (~> 1.0.0)
-    - Popover.OC
-    - SDWebImage (~> 3.6)
-    - SVPullToRefresh
-    - youtube-ios-player-helper
-  - BigmarkerRoomSDK/class/controller (1.2.5):
+  - BigmarkerRoomSDK/class/cell (1.2.9):
     - AFNetworking (~> 2.0)
     - CWStatusBarNotification (~> 2.3.1)
     - HMSegmentedControl
@@ -74,7 +64,7 @@ PODS:
     - SDWebImage (~> 3.6)
     - SVPullToRefresh
     - youtube-ios-player-helper
-  - BigmarkerRoomSDK/class/model (1.2.5):
+  - BigmarkerRoomSDK/class/controller (1.2.9):
     - AFNetworking (~> 2.0)
     - CWStatusBarNotification (~> 2.3.1)
     - HMSegmentedControl
@@ -84,7 +74,17 @@ PODS:
     - SDWebImage (~> 3.6)
     - SVPullToRefresh
     - youtube-ios-player-helper
-  - BigmarkerRoomSDK/class/view (1.2.5):
+  - BigmarkerRoomSDK/class/model (1.2.9):
+    - AFNetworking (~> 2.0)
+    - CWStatusBarNotification (~> 2.3.1)
+    - HMSegmentedControl
+    - Masonry
+    - MBProgressHUD (~> 1.0.0)
+    - Popover.OC
+    - SDWebImage (~> 3.6)
+    - SVPullToRefresh
+    - youtube-ios-player-helper
+  - BigmarkerRoomSDK/class/view (1.2.9):
     - AFNetworking (~> 2.0)
     - CWStatusBarNotification (~> 2.3.1)
     - HMSegmentedControl
@@ -125,7 +125,7 @@ DEPENDENCIES:
   - AppCenter/Crashes (~> 1.6.0)
   - AppCenter/Push (~> 1.6.0)
   - AppCenterReactNativeShared (~> 1.5.0)
-  - "BigmarkerRoomSDK (from `git@github.com:BigMarker/BigmarkerRoomSDK.git`, tag `1.2.5`)"
+  - "BigmarkerRoomSDK (from `git@github.com:BigMarker/BigmarkerRoomSDK.git`, tag `1.2.9`)"
   - FBSDKLoginKit
   - TwitterKit
 
@@ -152,18 +152,18 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BigmarkerRoomSDK:
     :git: "git@github.com:BigMarker/BigmarkerRoomSDK.git"
-    :tag: 1.2.5
+    :tag: 1.2.9
 
 CHECKOUT OPTIONS:
   BigmarkerRoomSDK:
     :git: "git@github.com:BigMarker/BigmarkerRoomSDK.git"
-    :tag: 1.2.5
+    :tag: 1.2.9
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AppCenter: 05e11ff99d3224131363abb61830172f5f28e53e
   AppCenterReactNativeShared: fac1cabd1f76cc2f7019a53a58eaae60734a68bd
-  BigmarkerRoomSDK: 29ccd27c26cba754ee497d7dc850a4acf09aacfc
+  BigmarkerRoomSDK: 620b5557537f7c4da1d1c50297b2955a4345f28c
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
@@ -179,6 +179,6 @@ SPEC CHECKSUMS:
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
 
-PODFILE CHECKSUM: 1a40c97d39651bc2940d55fcdb12ee0f6bda35b4
+PODFILE CHECKSUM: 617f334da9076ff3e6a86adfc73953f2ef273366
 
 COCOAPODS: 1.5.2

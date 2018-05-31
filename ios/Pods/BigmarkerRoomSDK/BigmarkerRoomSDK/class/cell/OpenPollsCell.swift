@@ -118,7 +118,7 @@ extension OpenPollsCell{
         return button
     }
     //点击answerView
-    func answerViewTap(tap:UITapGestureRecognizer){
+   @objc func answerViewTap(tap:UITapGestureRecognizer){
         
         let btn = tap.view?.subviews[1] as! UIButton
         btnClick(button: btn)
@@ -128,7 +128,7 @@ extension OpenPollsCell{
     
     //点击button
 
-    func btnClick(button:UIButton){
+  @objc  func btnClick(button:UIButton){
         
         if isSingle == "multi" {
             if button.isSelected {

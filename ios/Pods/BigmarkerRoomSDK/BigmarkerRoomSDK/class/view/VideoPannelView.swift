@@ -71,7 +71,7 @@ class VideoPannelView: UIView {
     }
     
     
-    func switchMute(sender: UIButton){
+   @objc func switchMute(sender: UIButton){
         if videoConnectionStatus == true {
             if mutedStatus == ButtonStatus.unmuted {
                 muteAudio(sender: sender)
@@ -81,7 +81,7 @@ class VideoPannelView: UIView {
         }
     }
     
-    func switchVideo(sender:UIButton!){
+  @objc  func switchVideo(sender:UIButton!){
         if true {
             
             if  videoStatus == ButtonStatus.close && audioStatus == ButtonStatus.close {
@@ -116,7 +116,7 @@ class VideoPannelView: UIView {
         }
     }
     
-    func switchAudio(sender:UIButton!){
+   @objc func switchAudio(sender:UIButton!){
         if true {
             if  (videoStatus == ButtonStatus.close || videoStatus == ButtonStatus.block) && audioStatus == ButtonStatus.close {
                 if muxerID == "" && audioConnectionStatus == false {
@@ -144,7 +144,7 @@ class VideoPannelView: UIView {
     }
     
     
-    func countConnectTime(){
+   @objc func countConnectTime(){
         self.connectTime += 1
         //        print("===================")
         //        print(self.connectTime)

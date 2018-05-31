@@ -14,13 +14,44 @@ private let NoResultCellID = "NoResultCellID"
 
 class BMPollsViewController: BMMsgBaseViewController {
     
-    var tableView : UITableView!
     lazy var bigRoomPollsViewModel = BMPollsViewModel()
     var loading: MBProgressHUD!
     var conference: BMConference!
     var admin = false
     var bm:BMRoom!
     var coverBoard : UIView!
+    
+    
+    lazy var statusView: StatusView = { [weak self] in
+        var view = StatusView(frame: CGRect(x: 0, y: 0, width: ScreenW, height: 50), titles: ["Open", "Closed"])
+        view.type = QAType.Active
+        view.delegate = self
+        return view
+        }()
+    
+    lazy  var tableView : UITableView = { [weak self] in
+        let tableView  = UITableView.init(frame: CGRect.init(x: 0, y: self!.statusView.frame.size.height, width: ScreenW, height: self!.view.frame.height - self!.statusView.frame.height - 155), style: .plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .singleLine
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.addPullToRefresh(actionHandler: {
+            self!.reloadData()
+        })
+        let bundle =  Bundle(path: Bundle(for: BMPollsViewController.classForCoder()).path(forResource: "BMSDK", ofType: "bundle")!)
+        let openCell     = UINib(nibName: "OpenPollsCell", bundle: bundle)
+        let closeCell    = UINib(nibName: "ClosedPollsCell", bundle: bundle)
+        let noResultCell = UINib(nibName: "NoResultTableViewCell", bundle: bundle)
+        tableView.register(openCell, forCellReuseIdentifier: OpenPollsCellId)
+        tableView.register(closeCell, forCellReuseIdentifier: ClosedPollsCellId)
+        tableView.register(noResultCell, forCellReuseIdentifier: NoResultCellID)
+        
+        tableView.layoutSubviews()
+        return tableView
+        }()
+    
+
     
     init(frame: CGRect, bm: BMRoom, conference: BMConference) {
         super.init(nibName: nil, bundle: nil)
@@ -37,16 +68,8 @@ class BMPollsViewController: BMMsgBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupData()
+        loadData()
     }
-    
-    
-    lazy var statusView: StatusView = { [weak self] in
-        var view = StatusView(frame: CGRect(x: 0, y: 0, width: ScreenW, height: 50), titles: ["Open", "Closed"])
-        view.type = QAType.Active
-        view.delegate = self
-        return view
-        }()
     
 }
 
@@ -54,33 +77,13 @@ extension BMPollsViewController{
     
     func setupUI(){
         self.view.addSubview(statusView)
-        
-        tableView = UITableView.init(frame: CGRect.init(x: 0, y: statusView.frame.size.height, width: ScreenW, height: self.view.frame.height - self.statusView.frame.height - 155), style: .plain)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.allowsSelection = false
-        tableView.separatorStyle = .singleLine
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
-        
-//        tableView.register(UINib(nibName: "OpenPollsCell",bundle: nil), forCellReuseIdentifier: OpenPollsCellId)
-//        tableView.register(UINib(nibName: "ClosedPollsCell",bundle: nil), forCellReuseIdentifier: ClosedPollsCellId)
-//        tableView.register(UINib(nibName: "NoResultTableViewCell", bundle: nil), forCellReuseIdentifier: NoResultCellID)
-        
-        let bundle =  Bundle(path: Bundle(for: BMPollsViewController.classForCoder()).path(forResource: "BMSDK", ofType: "bundle")!)
-        let openCell     = UINib(nibName: "OpenPollsCell", bundle: bundle)
-        let closeCell    = UINib(nibName: "ClosedPollsCell", bundle: bundle)
-        let noResultCell = UINib(nibName: "NoResultTableViewCell", bundle: bundle)
-        tableView.register(openCell, forCellReuseIdentifier: OpenPollsCellId)
-        tableView.register(closeCell, forCellReuseIdentifier: ClosedPollsCellId)
-        tableView.register(noResultCell, forCellReuseIdentifier: NoResultCellID)
         self.view.addSubview(tableView)
-        
     }
-    func setupData(){
+    
+    func loadData(){
         loading = MBProgressHUD.showAdded(to: self.view, animated: true)
         bigRoomPollsViewModel.requestPollsData(id: conference.obfuscatedId!, successCallback: {
-            self.loading.hide(true)
+            self.loading.hide(animated: true)
             self.tableView.reloadData()
             if (self.statusView.type == .Active){
                 if self.bigRoomPollsViewModel.openPoll.count != 0{
@@ -91,6 +94,21 @@ extension BMPollsViewController{
         
         }) {}
         
+    }
+    
+    func reloadData(){
+        bigRoomPollsViewModel.requestPollsData(id: conference.obfuscatedId!, successCallback: {
+            self.tableView.pullToRefreshView.stopAnimating()
+            self.tableView.reloadData()
+            if (self.statusView.type == .Active){
+                if self.bigRoomPollsViewModel.openPoll.count != 0{
+                    self.tableView.scrollToRow(at: NSIndexPath.init(row: self.bigRoomPollsViewModel.openPoll.count - 1, section: 0) as IndexPath, at: .bottom, animated: true)
+                }
+            }
+            
+        }) {
+            self.tableView.pullToRefreshView.stopAnimating()
+        }
     }
     
 }

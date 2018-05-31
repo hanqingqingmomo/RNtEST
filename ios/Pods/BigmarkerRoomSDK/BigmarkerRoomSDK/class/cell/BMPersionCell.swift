@@ -57,7 +57,7 @@ class BMPersionCell: UITableViewCell {
             
         }
     }
-    func chatBtnClick(){
+  @objc  func chatBtnClick(){
         self.privateChatDelegate.enterPrivateChat(userInfoId: self.userInfoId,selectIndexPath: self.selectIndexPath)
     }
     

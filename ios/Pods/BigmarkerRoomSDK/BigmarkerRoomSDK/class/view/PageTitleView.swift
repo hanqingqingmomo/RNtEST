@@ -23,12 +23,12 @@ private let progressColor: UIColor = UIColor(red: 16/255.0, green: 137/255.0, bl
 class PageTitleView: UIView {
     
     // MARK:- 定义属性
-    fileprivate var currentIndex : Int = 0
+    var currentIndex : Int = 0
     fileprivate var titles : [String]
     weak var delegate : PageTitleViewDelegate?
     
     // MARK:- 懒加载属性
-    fileprivate lazy var titleLabels : [UILabel] = [UILabel]()
+    lazy var titleLabels : [UILabel] = [UILabel]()
     fileprivate lazy var scrollView : UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
@@ -63,6 +63,7 @@ class PageTitleView: UIView {
 extension PageTitleView {
     fileprivate func setupUI() {
         self.backgroundColor = UIColor.white
+        
         // 1.添加UIScrollView
         addSubview(scrollView)
         scrollView.frame = bounds
@@ -84,11 +85,11 @@ extension PageTitleView {
         for (index, title) in titles.enumerated() {
             // 1.创建UILabel
             let label = UILabel()
-            
+
             // 2.设置Label的属性
             label.text = title
             label.tag = index
-            label.font = UIFont.systemFont(ofSize: 16.0)
+            label.font = UIFont(name: BMSFUIDisplay_Medium, size: 14)
             label.textColor = UIColor(r: kNormalColor.0, g: kNormalColor.1, b: kNormalColor.2)
             label.textAlignment = .center
             
@@ -99,6 +100,20 @@ extension PageTitleView {
             // 4.将label添加到scrollView中
             scrollView.addSubview(label)
             titleLabels.append(label)
+            
+            
+            let originalString: String = label.text!
+            let myString: NSString = originalString as NSString
+            let size: CGSize = myString.size(attributes: [NSFontAttributeName: UIFont(name: BMSFUIDisplay_Medium, size: 14)!])
+           
+            
+            let button = UIButton(frame: CGRect.init(x: label.frame.width / 2 + size.width / 2 + 5, y: 16, width: 5, height: 5))
+            button.clipsToBounds = true
+            button.backgroundColor = UIColor.init(red: 31/255, green: 196/255, blue: 166/255, alpha: 1)
+            button.layer.cornerRadius = button.bounds.size.width / 2
+            button.tag = 222
+            button.isHidden = true
+            label.addSubview(button)
             
             // 5.给Label添加手势
             label.isUserInteractionEnabled = true
@@ -153,6 +168,10 @@ extension PageTitleView {
             self.scrollLine.frame.origin.x = scrollLineX
         })
         
+        let button = currentLabel.subviews.first
+        if (button?.isKind(of: UIButton.self))! {
+            button?.isHidden = true
+        }
         // 6.通知代理
         delegate?.pageTitleView(self, selectedIndex: currentIndex)
     }

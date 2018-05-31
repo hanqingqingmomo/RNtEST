@@ -51,7 +51,7 @@ class BMNavView: UIView {
         
     }
     
-    func clickButton(sender: AnyObject){
+  @objc  func clickButton(sender: AnyObject){
         
         let audio = PopoverAction.init(image:UIImage(named: "BMSDK.bundle/white"), title: "Audio only", handler: nil)
         
@@ -75,7 +75,7 @@ class BMNavView: UIView {
     }
     
     
-    func switchChanged(mySwitch: UISwitch) {
+  @objc  func switchChanged(mySwitch: UISwitch) {
         if mySwitch.isOn {
             audioOnly = true
             self.delegate?.audioOnlyNotification!(status: audioOnly)

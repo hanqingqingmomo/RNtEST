@@ -52,13 +52,13 @@ class SettingView: UIView{
     }
     
     
-    func showColorView(sender: AnyObject){
+  @objc  func showColorView(sender: AnyObject){
         if let whiteBoardColorToolView = self.superview as? WhiteBoardColorToolView {
             whiteBoardColorToolView.showColorView()
         }
     }
     
-    func hideSettingView(sender: AnyObject){
+  @objc  func hideSettingView(sender: AnyObject){
         if let whiteBoardColorToolView = self.superview as? WhiteBoardColorToolView {
             if let whiteBoardToolView = whiteBoardColorToolView.toolView  {
                 whiteBoardToolView.toggleSettingView(sender: sender)
@@ -66,7 +66,7 @@ class SettingView: UIView{
         }
     }
     
-    func whiteBoardDel(sender: AnyObject){
+   @objc func whiteBoardDel(sender: AnyObject){
         //self.bm.whiteboardRemove([:])
     }
     

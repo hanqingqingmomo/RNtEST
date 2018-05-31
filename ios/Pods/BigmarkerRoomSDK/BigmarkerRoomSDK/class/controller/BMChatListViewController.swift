@@ -26,7 +26,7 @@ class Regex {
 
 private let ChatCellID = "chatCellID"
 private let messageInputViewH:CGFloat = 50
-private let count  = 50
+private let count  = 30
 private let titleViewH: CGFloat = 40
 
 class BMChatListViewController: UIViewController {
@@ -132,6 +132,7 @@ class BMChatListViewController: UIViewController {
 extension BMChatListViewController {
     
     func setupUI(){
+        self.view.backgroundColor = UIColor.white
         self.view.addSubview(tableView)
         self.view.addSubview(messageInputView)
     }
@@ -221,13 +222,13 @@ extension BMChatListViewController {
         self.view.addSubview(view)
     }
     
-    func refreshChat(sender: AnyObject) {
+   @objc func refreshChat(sender: AnyObject) {
         self.refreshButton.setTitle("REFRESHING...", for: UIControlState.normal)
         self.refreshButton.isEnabled = false
         //bm.syncChatMessages()
     }
     
-    func cancelKeyboard(sender: UITapGestureRecognizer) {
+   @objc func cancelKeyboard(sender: UITapGestureRecognizer) {
         self.messageInputView.inputTextView.resignFirstResponder()
     }
     
@@ -293,7 +294,7 @@ extension BMChatListViewController: UITextViewDelegate {
         return true
     }
     
-    func textDidChanged(notification:NSNotification) {
+  @objc  func textDidChanged(notification:NSNotification) {
         
         //        if  messageInputView.inputTextView.text != "Type your message here..." {
         //            self.messageInputView.inputTextView.textColor = UIColor.blackColor()
@@ -323,7 +324,7 @@ extension BMChatListViewController: UITextViewDelegate {
         
     }
     
-    func keyboardWillShow(notification:NSNotification){
+   @objc func keyboardWillShow(notification:NSNotification){
         
         if self.messageInputView.inputTextView.text == "Type your message here..." {
             self.messageInputView.inputTextView.text = ""
@@ -341,7 +342,7 @@ extension BMChatListViewController: UITextViewDelegate {
     }
     
     
-    func keyboardWillHide(notification:NSNotification){
+   @objc func keyboardWillHide(notification:NSNotification){
         
         if self.messageInputView.inputTextView.text == "" {
             self.messageInputView.inputTextView.text = "Type your message here..."

@@ -686,8 +686,6 @@ public class BMConference: NSObject {
     
     class public func requestConferenceData(id: String, token: String, finishedCallback : @escaping (_ conference: BMConference?) -> ()){
         let urlString = BMSERVICE_API_DOMAIN + "/mobile/api/v1/conferences/\(id)?mobile_token=\(token)"
-        print(urlString)
-        
         //f75f6f7ddb80ed15100f26fed2afc37c5db24a75078e781895b4c04a2d440856
         //2d4f759e712412097a0e1f03c5aaea623a57ad750b3fc0b17ebd63d25ae1f54e
         NetworkTools.requestDatas(type: .GET, URLString: urlString, parameters: nil) { (result) in

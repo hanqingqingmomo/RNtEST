@@ -54,30 +54,29 @@ class BMQAViewController: BMMsgBaseViewController {
     
     
     lazy  var tableView : UITableView = { [weak self] in
-        let h: CGFloat = ScreenH  - TabbarH - messageInputViewH - self!.statusView.frame.height - 80
+        let h: CGFloat = self!.view.frame.height - messageInputViewH - self!.statusView.frame.height
+        //let h: CGFloat = ScreenH  - TabbarH - messageInputViewH - 64 - messageInputViewH
         let frame = CGRect.init(x: 0, y: messageInputViewH, width: ScreenW, height: h)
-        
-//        let h: CGFloat = self!.view.frame.height - self!.statusView.frame.height - messageInputViewH
-//        let frame = CGRect.init(x: 0, y: self!.statusView.frame.height, width: ScreenW, height: h)
         let tableView = UITableView.init(frame: frame, style: .plain)
         tableView.dataSource    =   self
         tableView.delegate      =   self
         tableView.backgroundColor = UIColor.white
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        tableView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        tableView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
         
         let bundle =  Bundle(path: Bundle(for: BMQAViewController.classForCoder()).path(forResource: "BMSDK", ofType: "bundle")!)
         let qaCell     = UINib(nibName: "QATableViewCell", bundle: bundle)
         let noResultCell = UINib(nibName: "NoResultTableViewCell", bundle: bundle)
         tableView.register(qaCell, forCellReuseIdentifier: QACellID)
         tableView.register(noResultCell, forCellReuseIdentifier: NoResultCellID)
-        
-        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(cancelKeyboard))
         tableView.addGestureRecognizer(tap)
+        tableView.addPullToRefresh(actionHandler: {
+            self!.reloadData()
+        })
         tableView.layoutSubviews()
         return tableView
         }()
@@ -105,7 +104,7 @@ class BMQAViewController: BMMsgBaseViewController {
         setupUI()
         loadData()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+       
     }
     
     
@@ -130,6 +129,7 @@ class BMQAViewController: BMMsgBaseViewController {
 extension BMQAViewController {
     
     func setupUI(){
+        self.view.backgroundColor = UIColor.white
         self.view.addSubview(statusView)
         self.view.addSubview(tableView)
         self.view.addSubview(messageInputView)
@@ -163,19 +163,28 @@ extension BMQAViewController {
         }
     }
     
-     func loadData(){
-        loading = MBProgressHUD.showAdded(to: self.view, animated: true)
-        loading.labelText = "Loading..."
- 
+    func reloadData(){
         self.questionViewModel.requestQAData(id:self.conference!.obfuscatedId!, page: 1, count: 100, successCallback: {
-             self.loading.hide(true)
-             self.tableView.reloadData()
+            self.tableView.pullToRefreshView.stopAnimating()
+            self.tableView.reloadData()
         }) {
-             self.loading.hide(true)
+            self.tableView.pullToRefreshView.stopAnimating()
         }
     }
     
-    func cancelKeyboard(sender: UITapGestureRecognizer) {
+     func loadData(){
+        loading = MBProgressHUD.showAdded(to: self.view, animated: true)
+        loading.label.text = "Loading..."
+ 
+        self.questionViewModel.requestQAData(id:self.conference!.obfuscatedId!, page: 1, count: 100, successCallback: {
+             self.loading.hide(animated: true)
+             self.tableView.reloadData()
+        }) {
+             self.loading.hide(animated: true)
+        }
+    }
+    
+  @objc  func cancelKeyboard(sender: UITapGestureRecognizer) {
         self.messageInputView.inputTextView.resignFirstResponder()
     }
     
@@ -414,7 +423,7 @@ extension BMQAViewController: UITextViewDelegate {
         return true
     }
     
-    func textDidChanged(notification:NSNotification) {
+  @objc  func textDidChanged(notification:NSNotification) {
         
 //        if  messageInputView.inputTextView.text != "Post a question..." {
 //            self.messageInputView.inputTextView.textColor = inputViewColor
@@ -445,7 +454,7 @@ extension BMQAViewController: UITextViewDelegate {
     }
     
     
-    func keyboardWillShow(notification:NSNotification){
+  @objc  func keyboardWillShow(notification:NSNotification){
         
         if self.messageInputView.inputTextView.text == "Post a question..." {
             self.messageInputView.inputTextView.text = ""
@@ -464,7 +473,7 @@ extension BMQAViewController: UITextViewDelegate {
     }
     
     
-    func keyboardWillHide(notification:NSNotification){
+   @objc func keyboardWillHide(notification:NSNotification){
         
         if self.messageInputView.inputTextView.text == "" {
             self.messageInputView.inputTextView.text = "Post a question..."

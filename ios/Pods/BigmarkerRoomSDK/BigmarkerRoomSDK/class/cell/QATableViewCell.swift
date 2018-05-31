@@ -101,7 +101,7 @@ class QATableViewCell: UITableViewCell {
        
     }
     
-    func vote(tap: UITapGestureRecognizer){
+  @objc  func vote(tap: UITapGestureRecognizer){
          self.questionViewModel.vote(id: question!.obfuscatedId) { (result) in
             guard let status = result["status"] as? Bool else { return }
             if status {

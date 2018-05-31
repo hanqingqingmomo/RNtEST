@@ -32,9 +32,9 @@ class BMMessageController:  UIViewController {
         return navView
         }()
     
-    fileprivate lazy var pageTitleView : PageTitleView = {[weak self] in
+    lazy var pageTitleView : PageTitleView = {[weak self] in
         let titleFrame = CGRect(x: 0, y: kStatusBarH + kNavigationBarH, width: BMScreenW, height: 40)
-        let titles = ["Chat", "People", "Polls", "Q&A", "Handouts"]
+        let titles = ["Chat", "People", "Polls", "Handouts", "Q&A"]
         let titleView = PageTitleView(frame: titleFrame, titles: titles)
         titleView.delegate = self
         return titleView
@@ -60,13 +60,13 @@ class BMMessageController:  UIViewController {
         (self!.tabBarController as! BMTabBarController).bmroomPollDelegate = pollsViewController
         childVcs.append(pollsViewController)
         
-        let qaViewController = BMQAViewController(frame: CGRect.zero, bm: self!.bm, conference: self!.conference)
-        (self!.tabBarController as! BMTabBarController).bmroomQADelegate = qaViewController
-        childVcs.append(qaViewController)
-        
         let handoutController = BMHandoutsController(frame: CGRect.zero, bm: self!.bm, conference: self!.conference)
         (self!.tabBarController as! BMTabBarController).bmroomHandoutDelegate = handoutController
         childVcs.append(handoutController)
+        
+        let qaViewController = BMQAViewController(frame: CGRect.zero, bm: self!.bm, conference: self!.conference)
+        (self!.tabBarController as! BMTabBarController).bmroomQADelegate = qaViewController
+        childVcs.append(qaViewController)
         
         let contentView = PageContentView(frame: contentFrame, childVcs: childVcs, parentViewController: self)
         contentView.delegate = self
@@ -79,14 +79,15 @@ class BMMessageController:  UIViewController {
         if let youtubeView = self.tabBarController?.view.viewWithTag(100) as? YouTubeVideoView {
             youtubeView.isHidden = true
         }
-        //显示chat的badge通知
-        NotificationCenter.default.addObserver(self, selector: #selector(BMMessageController.chatBadgeCount), name: NSNotification.Name(rawValue: "chatBadgeCount"), object: nil)
-        //显示people的badge改变的通知
-        NotificationCenter.default.addObserver(self, selector: #selector(BMMessageController.changePeopleMessageCount), name: NSNotification.Name(rawValue: "peopleMessageChange"), object: nil)
-        //修改投票数
-        NotificationCenter.default.addObserver(self, selector: #selector(BMMessageController.changePollCount), name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
-        //QA
-        NotificationCenter.default.addObserver(self, selector: #selector(BMMessageController.changeQA), name: NSNotification.Name(rawValue: "changeQA"), object: nil)
+//        //显示chat的badge通知
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.changeChatBadge), name: NSNotification.Name(rawValue: "changeChatBadge"), object: nil)
+//        //显示people的badge改变的通知
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.changePeopleMessageBadge), name: NSNotification.Name(rawValue: "changePeopleMessageBadge"), object: nil)
+//        //修改投票数
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.changePollBadge), name: NSNotification.Name(rawValue: "changePollBadge"), object: nil)
+//        //QA
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.changeQABadge), name: NSNotification.Name(rawValue: "changeQABadge"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.changeHandoutBadge), name: NSNotification.Name(rawValue: "changeHandoutBadge"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,10 +95,6 @@ class BMMessageController:  UIViewController {
         if let youtubeView = self.tabBarController?.view.viewWithTag(100) as? YouTubeVideoView {
             youtubeView.isHidden = false
         }
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "chatBadgeCount"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "peopleMessageChange"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "changePollCount"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "changeQA"), object: nil)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -127,55 +124,15 @@ class BMMessageController:  UIViewController {
     }
     
     
-    func chatBadgeCount(notification:NSNotification){
-//         DispatchQueue.main.sync {
-//            let message = notification.object as! Message
-//            if self.selectIndex != 0{
-//                if message.sid != self.bm.socketID{
-//                    let x = (self.menuView?.item(at: 0).frame.width)! - 2
-//                    let y = (self.menuView?.item(at: 0).frame.height)! / 2  - 1
-//                    self.setupNumberLabel(item: (self.menuView?.item(at: 0))!, frame: CGRect(x: x, y: y, width: 7, height: 7))
-//                }
-//            }
-//        }
+    func showBadge(index: Int){
+        DispatchQueue.main.sync {
+            let label = self.pageTitleView.titleLabels[index]
+            let button = label.subviews.first
+            if (button?.isKind(of: UIButton.self))! {
+                button?.isHidden = false
+            }
+        }
     }
-    
-    func changePeopleMessageCount(notification:NSNotification){
-        
-        //DispatchQueue.main.sync {
-//            if PeopleMessage.totalMessages.count == 0 {
-//                self.menuView?.item(at: 1).numberLabel.isHidden = true
-//            }else{
-//                let x = (self.menuView?.item(at: 1).frame.width)! - 10
-//                let y = (self.menuView?.item(at: 1).frame.height)! / 2 - 2
-//                self.setupNumberLabel(item: (self.menuView?.item(at: 1))!, frame: CGRect(x: x, y: y, width: 7, height: 7))
-//            }
-        //}
-    }
-    
-    func changePollCount(){
-//         DispatchQueue.main.sync {
-//            let x = (self.menuView?.item(at: 2).frame.width)! - 5
-//            let y = (self.menuView?.item(at: 2).frame.height)! / 2
-//            self.setupNumberLabel(item: (self.menuView?.item(at: 2))!, frame: CGRect(x: x, y: y, width: 7, height: 7))
-//        }
-    }
-    
-    func changeQA(){
-//        DispatchQueue.main.sync {
-//            let x = (self.menuView?.item(at: 3).frame.width)! - 5
-//            let y = (self.menuView?.item(at: 3).frame.height)! / 2
-//            self.setupNumberLabel(item: (self.menuView?.item(at: 3))!, frame: CGRect(x: x, y: y, width: 7, height: 7))
-//        }
-    }
-    
-//    func setupNumberLabel(item: WMMenuItem, frame: CGRect){
-//        item.numberLabel.frame = frame
-//        item.numberLabel.layer.cornerRadius = item.numberLabel.frame.width/2
-//        item.numberLabel.clipsToBounds = true
-//        item.numberLabel.isHidden = false
-//        item.numberLabel.text = ""
-//    }
 
 }
 
@@ -210,5 +167,6 @@ extension BMMessageController : PageContentViewDelegate {
         pageTitleView.setTitleWithProgress(progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
     }
 }
+
 
 

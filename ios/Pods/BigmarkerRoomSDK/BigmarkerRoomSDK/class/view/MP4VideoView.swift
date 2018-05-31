@@ -56,7 +56,7 @@ class MP4VideoView: UIView {
     }
     
     
-    func text(){
+  @objc  func text(){
         let playbackState = pvc.playbackState
         
         /*

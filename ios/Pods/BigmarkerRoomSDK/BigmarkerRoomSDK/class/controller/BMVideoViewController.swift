@@ -171,24 +171,24 @@ class BMVideoViewController: UIViewController {
     }
     
     
-    func moviePlayerLoadStateDidChange(){
+  @objc  func moviePlayerLoadStateDidChange(){
         if  mp4View != nil  && self.mp4View.pvc.loadState == MPMovieLoadState.playable {
             self.mp4View.play()
         }
     }
     
     
-    func disconnectStream(notification: NSNotification){
+   @objc func disconnectStream(notification: NSNotification){
         bm.disconnectStream(selfMuxerID)
         self.selfMuxerID = ""
     }
     
     
-    func syncStreams() {
+  @objc  func syncStreams() {
         bm.getStreams()
     }
     
-    func checkYoutubeStatus(){
+   @objc func checkYoutubeStatus(){
         
         if self.mp4View != nil {
             if self.mp4View.playingState == 1 { // 播放
@@ -1102,7 +1102,7 @@ extension BMVideoViewController: BigRoomVideoDelegate {
             Offer.requestDatas(id: id, successCallback: { (offer) in
                 DispatchQueue.main.async{
                     let offerView = OfferView()
-                    self.view.window?.addSubview(offerView)
+                    self.tabBarController?.view.window?.addSubview(offerView)
                     offerView.offer = offer
                 }
             }, failCallback: {

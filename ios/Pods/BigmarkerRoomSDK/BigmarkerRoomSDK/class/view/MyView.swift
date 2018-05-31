@@ -104,7 +104,7 @@ class MyView: UIView {
     
 
     //新用户进来接收之前的坐标图片
-    func addImage(notification:NSNotification){
+  @objc  func addImage(notification:NSNotification){
 //         DispatchQueue.main.sync{
 //            let dic = notification.userInfo
 //            let model = dic!["model"] as! WhiteboardDrawModel

@@ -196,7 +196,7 @@ extension BMPeopleViewController: UITableViewDataSource,PrivateChatDelegate {
             cell.bmSoketId = self.bm.socketID
   
             cell.userInfo = bm.usersInfo[sid] as? NSDictionary
-            cell.selectIndexPath = indexPath as NSIndexPath?
+            cell.selectIndexPath = indexPath as NSIndexPath!
             
             for msg in PeopleMessage.totalMessages {
                 
@@ -278,7 +278,7 @@ extension BMPeopleViewController: BigRoomUserDelegate {
     }
     
     
-    func PeopleMsgAddNotification(notification:NSNotification){
+   @objc func PeopleMsgAddNotification(notification:NSNotification){
         
         DispatchQueue.main.sync{
             
@@ -295,7 +295,7 @@ extension BMPeopleViewController: BigRoomUserDelegate {
             }
         }
     }
-    func reducePeopleBadge(){
+  @objc  func reducePeopleBadge(){
         //累加所有的cell的badge
         for cell in self.tableView.visibleCells {
             if let cell1 = cell as? BMPersionCell{

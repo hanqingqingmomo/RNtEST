@@ -57,10 +57,10 @@ class ClosedPollsCell: UITableViewCell {
         adminView.addSubview(deletePollBtn)
         
     }
-    func closePollBtnClick(){
+   @objc func closePollBtnClick(){
         self.adminDelegate.closePoll(model: pollModel)
     }
-    func deletePollBtnClick(){
+   @objc func deletePollBtnClick(){
         self.adminDelegate.deletePoll(model: pollModel)
     }
     

@@ -69,13 +69,13 @@ class BMHandoutController: UIViewController {
        
         let urlRequest = URLRequest.init(url: url as URL)
         loading = MBProgressHUD.showAdded(to: self.webView, animated: true)
-        loading.labelText = "Loading..."
+        loading.label.text = "Loading..."
         webView.loadRequest(urlRequest)
         self.view.addSubview(webView)
     }
     
     
-    func quiteHD(){
+  @objc  func quiteHD(){
       self.dismiss(animated: false, completion: nil)
     }
 

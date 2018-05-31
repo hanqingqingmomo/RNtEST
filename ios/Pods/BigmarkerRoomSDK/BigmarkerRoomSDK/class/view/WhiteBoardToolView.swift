@@ -99,7 +99,7 @@ class WhiteBoardToolView: UIView {
         }
     }
     
-    func nextPage(btn: UIButton){
+   @objc func nextPage(btn: UIButton){
        var index = 0
         
        let nextPage = self.currentPage() + 1
@@ -120,7 +120,7 @@ class WhiteBoardToolView: UIView {
       
     }
     
-    func prePage(btn: UIButton){
+   @objc func prePage(btn: UIButton){
         var index = 0
         
         let prePage = self.currentPage() - 1
@@ -162,7 +162,7 @@ class WhiteBoardToolView: UIView {
     }
     
     
-    func toggleSettingView(sender: AnyObject){
+   @objc func toggleSettingView(sender: AnyObject){
         UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
             if self.colorToolView.isHidden == true{
                 self.colorToolView.isHidden = false
@@ -235,7 +235,7 @@ class WhiteBoardToolView: UIView {
     }
     
     
-    func fullScreen(sender:UITapGestureRecognizer){
+  @objc  func fullScreen(sender:UITapGestureRecognizer){
         if whiteboardView.rotation {
             whiteboardView.rotation = false
             whiteboardView.whiteboardFullScreen(rotation: whiteboardView.rotation)

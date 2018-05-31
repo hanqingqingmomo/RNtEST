@@ -1,6 +1,6 @@
 {
   "name": "BigmarkerRoomSDK",
-  "version": "1.2.5",
+  "version": "1.2.9",
   "summary": "BigmarkerRoomSDK",
   "description": "Bigmarker Conference Room SDK",
   "homepage": "https://github.com/BigMarker/BigmarkerRoomSDK",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "git@github.com:BigMarker/BigmarkerRoomSDK.git",
-    "tag": "1.2.5"
+    "tag": "1.2.9"
   },
   "vendored_frameworks": [
     "BMroomSDK.framework",
@@ -65,7 +65,7 @@
     "ios": "8.0"
   },
   "source_files": [
-    "BigmarkerRoomSDK/class/BMRoom.{m,h}",
+    "BigmarkerRoomSDK/class/*.{m,h}",
     "MQTTKit/MQTTKit.h"
   ],
   "subspecs": [
